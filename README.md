@@ -1,6 +1,8 @@
 渡舟平台基础框架
 ======================================
 
+<img src="https://duzhou.crazydan.io/img/logo.svg" width="172px" />
+
 ## 项目代码
 
 - 应用前端
