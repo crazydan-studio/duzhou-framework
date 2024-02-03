@@ -62,6 +62,13 @@ a {
   transition: all 0.2s ease-out;
 }
 
+.amis-scope [class*='-Toast-wrap'] > * {
+  border: none;
+  background-color: #262e49;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
 .site-page {
   // 将 css 定义在一个确定的父类下
   @import './page.scss';
