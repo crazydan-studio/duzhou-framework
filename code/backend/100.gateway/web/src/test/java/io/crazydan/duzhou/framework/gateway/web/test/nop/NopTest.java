@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.dsl.designer.test.nop;
+package io.crazydan.duzhou.framework.gateway.web.test.nop;
 
 import io.nop.api.core.config.AppConfig;
 import io.nop.core.initialize.CoreInitialization;
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 import static io.nop.core.CoreConfigs.CFG_JSON_PARSE_IGNORE_UNKNOWN_PROP;
 
 /**
- * @author <a href="mailto:dengjun_tj@dhcc.com.cn">dengjun</a>
+ * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-01-11
  */
 public class NopTest {

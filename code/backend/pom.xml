@@ -53,6 +53,7 @@
         <maven.filtering.properties.regex>^.*\.version$</maven.filtering.properties.regex>
 
         <!-- 依赖版本号 -->
+        <duzhou-framework.version>0.1.0-SNAPSHOT</duzhou-framework.version>
         <nop-entropy.version>2.0.0-SNAPSHOT</nop-entropy.version>
     </properties>
 
