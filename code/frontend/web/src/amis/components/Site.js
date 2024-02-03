@@ -19,67 +19,93 @@
 
 import { amisLib, React } from '@/amis/sdk';
 
-// https://react.dev/reference/react/Component
 /**
  * <pre>
  * { type: 'site',
- *   title: '用户登录',
- *   subTitle: '渡舟平台',
- *   logo: '/logo.svg',
- *   className: 'w-full h-full',
- *   body: { ... }
+ *   className: 'site',
+ *   schemaApi: 'get:/xxx/xx.json',
+ *   schema: { ... }
  * }
  * </pre>
  */
-class SiteComponent extends React.Component {
+// https://react.dev/reference/react/Component
+class Site extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const {
+      schema = {
+        type: 'wrapper',
+        className: 'schema-not-specified',
+        body: 'Site schema is not specified'
+      }
+    } = props;
+
+    this.state = { schema };
+  }
+
   componentDidMount() {
-    document.body.classList.add('done');
+    this.fetchSchema(() => document.body.classList.add('done'));
   }
 
   render() {
-    this.updateLogo();
-    this.updateTitle();
-
-    return this.renderBody();
-  }
-
-  renderBody() {
     // https://github.com/baidu/amis/blob/master/packages/amis/src/renderers/Wrapper.tsx#L50
-    const { body, render, disabled, className } = this.props;
+    const { render, className, disabled } = this.props;
+    const { schema } = this.state;
 
-    const $children = render('body', body, { disabled });
-
-    // https://react.dev/reference/react/createElement
-    return React.createElement('div', { className }, $children);
+    return React.createElement(
+      'div',
+      {
+        className
+      },
+      render('body', schema, { disabled })
+    );
   }
 
-  updateTitle() {
-    const { title } = this.props;
-    if (!title) {
+  async fetchSchema(cb) {
+    const { env, schemaApi } = this.props;
+    const { fetcher } = env;
+
+    if (!amisLib.isEffectiveApi(schemaApi, {})) {
+      cb();
       return;
     }
 
-    document.title = title;
-  }
-
-  updateLogo() {
-    const { logo } = this.props;
-    if (!logo) {
-      return;
+    let json;
+    try {
+      json = await fetcher(
+        schemaApi,
+        {},
+        {
+          method: 'get'
+        }
+      );
+    } catch (e) {
+      json = { ok: false, msg: e.message };
     }
 
-    let $link = document.querySelector('link[rel=icon]');
-    if (!$link) {
-      $link = document.createElement('link');
-      $link.rel = 'icon';
+    let schema;
+    if (!json.ok) {
+      schema = {
+        type: 'wrapper',
+        className: 'schema-loading-failed',
+        body: 'Loading site schema failed'
+      };
+    } else {
+      json.data = amisLib.replaceText(
+        json.data,
+        env.replaceText,
+        env.replaceTextIgnoreKeys
+      );
 
-      document.head.appendChild($link);
+      schema = json.data;
     }
+    this.setState({ schema });
 
-    $link.href = logo;
+    cb();
   }
 }
 
 amisLib.Renderer({
   test: /(^|\/)site/
-})(SiteComponent);
+})(Site);

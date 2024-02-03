@@ -62,7 +62,7 @@ a {
   transition: all 0.2s ease-out;
 }
 
-.site-page {
+.site {
   // 将 css 定义在一个确定的父类下
-  @import './page.scss';
+  @import './site.scss';
 }

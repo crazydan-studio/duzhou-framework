@@ -21,7 +21,7 @@ import { amis, pathRegex } from '@/amis/sdk';
 // https://github.com/remix-run/history/blob/dev/docs/getting-started.md
 import history from 'history/hash';
 
-import '@/amis/components/SiteLayout';
+import '@/amis/components/Site';
 
 // 全局的类 tailwindcss 风格的原子样式
 // https://baidu.github.io/amis/zh-CN/style/index
@@ -30,21 +30,20 @@ import 'amis/sdk/iconfont.css';
 import 'amis/sdk/antd.css';
 
 export default async function render({ el, layout, resources }) {
-  const app = (layout && (await layout(resources || []))) || {
-    type: 'page',
-    body: {
-      type: 'tpl',
-      tpl: 'No page'
-    }
-  };
+  const site = (layout && (await layout(resources || []))) || {};
 
   const amisScoped = amis.embed(
     el,
-    app,
+    {
+      type: 'site',
+      className: 'site',
+      schema: site.schema,
+      schemaApi: site.schemaApi
+    },
     // https://baidu.github.io/amis/zh-CN/docs/start/getting-started#%E6%8E%A7%E5%88%B6-amis-%E7%9A%84%E8%A1%8C%E4%B8%BA
     {
       location: history.location,
-      data: {},
+      data: site.data || {},
       context: {}
     },
     {

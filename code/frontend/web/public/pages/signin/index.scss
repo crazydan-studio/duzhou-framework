@@ -53,6 +53,7 @@
   --input-active-border-color: #79a6fe;
   --input-default-default-color: #d6d6d6;
   --Form-item-color: #dfdeee;
+  --body-color: var(--text-color);
   --checkbox-checkbox-default-text-color: var(--text-color);
   --checkbox-checkbox-hover-text-color: var(--text-color);
   --checkbox-checkbox-active-text-color: var(--text-color);
@@ -69,7 +70,7 @@ a {
   font-size: 0.8rem;
 }
 
-.site-page {
+.site {
   // 将 css 定义在一个确定的父类下
-  @import './page.scss';
+  @import './site.scss';
 }

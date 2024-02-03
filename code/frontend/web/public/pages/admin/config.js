@@ -1,12 +1,11 @@
 window.__APP_SITE_CONFIG__ = {
   el: '#app',
-  layout: async (resources) => {
+  layout: (resources) => {
     return {
-      type: 'site',
       data: {
         API_HOST: 'https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com'
       },
-      body: {
+      schema: {
         type: 'app',
         brandName: '后台管理',
         logo: '/logo.svg',
