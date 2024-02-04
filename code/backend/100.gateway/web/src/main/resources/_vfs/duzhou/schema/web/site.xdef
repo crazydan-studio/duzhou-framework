@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<site xmlns:x="/nop/schema/xdsl.xdef"
+      xmlns:xdef="/nop/schema/xdef.xdef"
+      x:schema="/nop/schema/xdef.xdef"
+      xdef:bean-package="io.crazydan.duzhou.framework.gateway.web.model"
+      xdef:name="WebSite"
+      id="!string" url="!string" layout="v-path"
+      title="!string" subTitle="string"
+      runInEnv="!enum:duzhou/dict/run-in-env=development"
+>
+
+    <image xdef:name="WebSiteImage" logo="string" loading="string"/>
+
+    <renderer xdef:name="WebSiteRenderer">
+        <script xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
+        <style xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
+    </renderer>
+
+    <resources xdef:body-type="list" xdef:key-attr="id">
+        <resource xdef:name="WebSiteResource"
+                  id="!string" displayName="string"
+                  url="string" icon="string"
+        >
+            <children xdef:body-type="list" xdef:key-attr="id">
+                <resource id="!string" xdef:ref="WebSiteResource"/>
+            </children>
+        </resource>
+    </resources>
+</site>

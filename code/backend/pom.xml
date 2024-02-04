@@ -28,6 +28,8 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Duzhou Framework Parent</name>
+
     <parent>
         <groupId>io.github.entropy-cloud</groupId>
         <artifactId>nop-entropy</artifactId>
@@ -58,6 +60,7 @@
     </properties>
 
     <modules>
+        <module>020.schema</module>
         <module>100.gateway</module>
     </modules>
 
@@ -87,6 +90,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 本项目子模块，便于其他项目引入 -->
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>gateway-web</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>schema</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <!-- End -->
+
         </dependencies>
     </dependencyManagement>
 </project>

@@ -1,0 +1,12 @@
+label: 服务运行环境
+locale: zh-CN
+description: 服务运行的环境类型标识，不同环境下的服务会有不同的配置数据
+options:
+  - label: 开发环境
+    value: development
+  - label: 阶段构建环境
+    value: staging
+  - label: 测试环境
+    value: testing
+  - label: 生产环境
+    value: production

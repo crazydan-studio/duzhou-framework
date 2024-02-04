@@ -25,6 +25,8 @@
 
     <artifactId>gateway-web</artifactId>
 
+    <name>Duzhou Framework Gateway - Web</name>
+
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
         <artifactId>gateway</artifactId>
@@ -38,6 +40,11 @@
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-xlang</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.crazydan.duzhou.framework</groupId>
+            <artifactId>schema</artifactId>
         </dependency>
     </dependencies>
 </project>
