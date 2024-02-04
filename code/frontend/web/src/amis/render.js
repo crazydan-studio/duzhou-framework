@@ -29,6 +29,8 @@ import 'amis/sdk/helper.css';
 import 'amis/sdk/iconfont.css';
 import 'amis/sdk/antd.css';
 
+import './style.scss';
+
 export default async function render({ el, layout, resources }) {
   const site = (layout && (await layout(resources || []))) || {};
 
@@ -38,7 +40,11 @@ export default async function render({ el, layout, resources }) {
       type: 'site',
       className: 'site',
       schema: site.schema,
-      schemaApi: site.schemaApi
+      schemaApi: site.schemaApi,
+      onReady() {
+        // 结束加载动画
+        document.querySelector(el).parentElement.classList.add('done');
+      }
     },
     // https://baidu.github.io/amis/zh-CN/docs/start/getting-started#%E6%8E%A7%E5%88%B6-amis-%E7%9A%84%E8%A1%8C%E4%B8%BA
     {

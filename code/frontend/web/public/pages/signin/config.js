@@ -9,7 +9,7 @@ window.__APP_SITE_CONFIG__ = {
   resources: [
     {
       id: 'signin-form',
-      url: '/pages/signin/page.json'
+      url: 'get:/pages/signin/page.json'
     }
   ]
 };

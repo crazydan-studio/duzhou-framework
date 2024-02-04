@@ -19,16 +19,20 @@
 
 import { amisLib, React } from '@/amis/sdk';
 
+const TYPE = 'site';
+
 /**
  * <pre>
  * { type: 'site',
  *   className: 'site',
  *   schemaApi: 'get:/xxx/xx.json',
- *   schema: { ... }
+ *   schema: { ... },
+ *   onReady() { ... }
  * }
  * </pre>
  */
 // https://react.dev/reference/react/Component
+// https://baidu.github.io/amis/zh-CN/docs/extend/custom-react
 class Site extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +49,9 @@ class Site extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSchema(() => document.body.classList.add('done'));
+    const { onReady } = this.props;
+
+    this.fetchSchema(onReady);
   }
 
   render() {
@@ -58,6 +64,8 @@ class Site extends React.Component {
       {
         className
       },
+      // 第一个参数为渲染容器名称，在同一个组件内具有唯一性
+      // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react#react-%E6%B3%A8%E5%86%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B
       render('body', schema, { disabled })
     );
   }
@@ -107,5 +115,8 @@ class Site extends React.Component {
 }
 
 amisLib.Renderer({
-  test: /(^|\/)site/
+  type: TYPE,
+  // 支持解析当前组件属性中引用的变量
+  // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react#%E5%B1%9E%E6%80%A7%E6%94%AF%E6%8C%81%E5%8F%98%E9%87%8F
+  autoVar: true
 })(Site);
