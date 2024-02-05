@@ -1,3 +1,0 @@
-<c:script><![CDATA[
-codeGenerator.renderModel('/duzhou/schema/web/sites.xdef','/nop/templates/xdsl', '/',$scope);
-]]></c:script>

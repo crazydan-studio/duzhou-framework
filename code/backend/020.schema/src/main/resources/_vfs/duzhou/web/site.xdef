@@ -22,27 +22,29 @@
 <site xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xdef="/nop/schema/xdef.xdef"
       x:schema="/nop/schema/xdef.xdef"
-      xdef:bean-package="io.crazydan.duzhou.framework.gateway.web.model"
-      xdef:name="WebSite"
-      id="!string" url="!string" layout="v-path"
+      xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
+      xdef:name="XWebSite"
+      id="!string" url="!string"
       title="!string" subTitle="string"
-      runInEnv="!enum:duzhou/dict/run-in-env=development"
+      runInEnv="!enum:duzhou/common/dict/run-in-env=development"
 >
 
-    <image xdef:name="WebSiteImage" logo="string" loading="string"/>
+    <image xdef:name="XWebSiteImage" logo="string" loading="string"/>
 
-    <renderer xdef:name="WebSiteRenderer">
-        <script xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
-        <style xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
-    </renderer>
+    <layout xdef:name="XWebSiteLayout">
+        <script xdef:name="XWebSiteScript" name="!string" url="!string" xdef:unique-attr="name"/>
+        <style xdef:name="XWebSiteStyle" name="!string" url="!string" xdef:unique-attr="name"/>
+
+        <render xdef:value="xpl"/>
+    </layout>
 
     <resources xdef:body-type="list" xdef:key-attr="id">
-        <resource xdef:name="WebSiteResource"
+        <resource xdef:name="XWebSiteResource"
                   id="!string" displayName="string"
                   url="string" icon="string"
         >
             <children xdef:body-type="list" xdef:key-attr="id">
-                <resource id="!string" xdef:ref="WebSiteResource"/>
+                <resource id="!string" xdef:ref="XWebSiteResource"/>
             </children>
         </resource>
     </resources>

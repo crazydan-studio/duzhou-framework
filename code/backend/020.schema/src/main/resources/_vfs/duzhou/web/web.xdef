@@ -19,13 +19,12 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<layout xmlns:x="/nop/schema/xdsl.xdef"
-        xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:bean-package="io.crazydan.duzhou.framework.gateway.web.model"
-        xdef:name="WebSiteLayout"
+<web xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:xdef="/nop/schema/xdef.xdef"
+     x:schema="/nop/schema/xdef.xdef"
+     xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
+     xdef:name="XWeb"
 >
 
-    <script xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
-    <style xdef:name="WebNamedFile" name="!string" url="!string" xdef:unique-attr="name"/>
-</layout>
+    <site id="!string" xdef:ref="site.xdef" xdef:unique-attr="id"/>
+</web>
