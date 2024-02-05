@@ -20,16 +20,6 @@
   -->
 
 <c:script xmlns:c="c"><![CDATA[
-    import io.nop.codegen.CodeGenConstants;
-
-    // 若是在 Maven 构建环境，则需要引用本地文件路径，
-    // 因为，默认查找的是 classpath 下的文件，
-    // 但在 Maven 构建时，当前项目下的资源文件还未添加到 classpath 中
-    let rootDir = '';
-    if ($scope.containsValue(CodeGenConstants.VAR_CODE_GEN_PROJECT)) {
-        rootDir = '../src/main/resources/_vfs';
-    }
-
-    codeGenerator.renderModel(rootDir + '/duzhou/web/site.xdef', '/nop/templates/xdsl', '/', $scope);
-    codeGenerator.renderModel(rootDir + '/duzhou/web/web.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/web/site.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/web/web.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>
