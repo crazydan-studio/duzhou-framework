@@ -1,3 +1,5 @@
+# Note：目前不支持在 xdef 中引用字典数据（如，`enum:duzhou/run-in-env`），
+# 只能通过 Java 枚举类定义字典数据（如，`enum:io.crazydan.duzhou.RunInEnv`）
 label: 服务运行环境
 locale: zh-CN
 description: 服务运行的环境类型标识，不同环境下的服务会有不同的配置数据
