@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [29:2:0:0]/duzhou/web/site.xdef <p>
+ * generate from [37:2:0:0]/duzhou/web/site.xdef <p>
  * ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
  * ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
  * ~
@@ -37,65 +37,67 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XWebSite extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  必填
      * xml name: id
-     * 
+     * 站点的唯一标识，需在同一个 `Web` 内保持唯一性
      */
     private java.lang.String _id ;
     
     /**
      *  
      * xml name: image
-     * 
+     * 站点图片资源
      */
     private io.crazydan.duzhou.framework.schema.web.XWebSiteImage _image ;
     
     /**
-     *  
+     *  必须
      * xml name: layout
-     * 
+     * 站点布局器
      */
     private io.crazydan.duzhou.framework.schema.web.XWebSiteLayout _layout ;
     
     /**
      *  
      * xml name: resources
-     * 
+     * 资源列表
      */
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteResource> _resources = KeyedList.emptyList();
     
     /**
-     *  
+     *  可选
      * xml name: runInEnv
-     * 
+     * 所处的运行环境。用于在前端显示开发状态信息、开启调试等。
+     * 默认为 `development`
      */
     private io.crazydan.duzhou.framework.schema.RunInEnv _runInEnv ;
     
     /**
-     *  
+     *  可选
      * xml name: subTitle
-     * 
+     * 站点副标题
      */
     private java.lang.String _subTitle ;
     
     /**
-     *  
+     *  必填
      * xml name: title
-     * 
+     * 站点主标题
      */
     private java.lang.String _title ;
     
     /**
-     *  
+     *  可选
      * xml name: url
-     * 
+     * 站点的访问地址，其路径相对于应用的 url。
+     * 以 `redirect:` 开头的，将视为外部站点，在访问资源时直接跳转
      */
     private java.lang.String _url ;
     
     /**
-     * 
+     * 必填
      * xml name: id
-     *  
+     *  站点的唯一标识，需在同一个 `Web` 内保持唯一性
      */
     
     public java.lang.String getId(){
@@ -114,7 +116,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     /**
      * 
      * xml name: image
-     *  
+     *  站点图片资源
      */
     
     public io.crazydan.duzhou.framework.schema.web.XWebSiteImage getImage(){
@@ -131,9 +133,9 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
+     * 必须
      * xml name: layout
-     *  
+     *  站点布局器
      */
     
     public io.crazydan.duzhou.framework.schema.web.XWebSiteLayout getLayout(){
@@ -152,7 +154,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     /**
      * 
      * xml name: resources
-     *  
+     *  资源列表
      */
     
     public java.util.List<io.crazydan.duzhou.framework.schema.web.XWebSiteResource> getResources(){
@@ -195,9 +197,10 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     }
     
     /**
-     * 
+     * 可选
      * xml name: runInEnv
-     *  
+     *  所处的运行环境。用于在前端显示开发状态信息、开启调试等。
+     * 默认为 `development`
      */
     
     public io.crazydan.duzhou.framework.schema.RunInEnv getRunInEnv(){
@@ -214,9 +217,9 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
+     * 可选
      * xml name: subTitle
-     *  
+     *  站点副标题
      */
     
     public java.lang.String getSubTitle(){
@@ -233,9 +236,9 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
+     * 必填
      * xml name: title
-     *  
+     *  站点主标题
      */
     
     public java.lang.String getTitle(){
@@ -252,9 +255,10 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
+     * 可选
      * xml name: url
-     *  
+     *  站点的访问地址，其路径相对于应用的 url。
+     * 以 `redirect:` 开头的，将视为外部站点，在访问资源时直接跳转
      */
     
     public java.lang.String getUrl(){

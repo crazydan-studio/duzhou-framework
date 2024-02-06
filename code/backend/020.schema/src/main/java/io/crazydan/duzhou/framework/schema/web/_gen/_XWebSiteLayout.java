@@ -9,38 +9,40 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [41:6:0:0]/duzhou/web/site.xdef <p>
- * 
+ * generate from [56:6:0:0]/duzhou/web/site.xdef <p>
+ * 站点布局器
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XWebSiteLayout extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  必须
      * xml name: render
-     * 
+     * 布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+     * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
      */
     private io.nop.core.lang.eval.IEvalAction _render ;
     
     /**
      *  
      * xml name: scripts
-     * 
+     * js 脚本（构建后的）资源。有顺序性，入口脚本需放在列表的最开始位置
      */
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteScript> _scripts = KeyedList.emptyList();
     
     /**
      *  
      * xml name: styles
-     * 
+     * css 样式资源。有顺序性，放在前面的最先被加载
      */
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteStyle> _styles = KeyedList.emptyList();
     
     /**
-     * 
+     * 必须
      * xml name: render
-     *  
+     *  布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+     * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
      */
     
     public io.nop.core.lang.eval.IEvalAction getRender(){
@@ -59,7 +61,7 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     /**
      * 
      * xml name: scripts
-     *  
+     *  js 脚本（构建后的）资源。有顺序性，入口脚本需放在列表的最开始位置
      */
     
     public java.util.List<io.crazydan.duzhou.framework.schema.web.XWebSiteScript> getScripts(){
@@ -104,7 +106,7 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     /**
      * 
      * xml name: styles
-     *  
+     *  css 样式资源。有顺序性，放在前面的最先被加载
      */
     
     public java.util.List<io.crazydan.duzhou.framework.schema.web.XWebSiteStyle> getStyles(){

@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [46:14:0:0]/duzhou/web/site.xdef <p>
+ * generate from [71:14:0:0]/duzhou/web/site.xdef <p>
  * 
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
@@ -17,23 +17,23 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XWebSiteStyle extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  必填
      * xml name: name
-     * 
+     * 样式名称，便于做差量修正支持
      */
     private java.lang.String _name ;
     
     /**
-     *  
+     *  必填
      * xml name: url
-     * 
+     * 样式资源路径
      */
     private java.lang.String _url ;
     
     /**
-     * 
+     * 必填
      * xml name: name
-     *  
+     *  样式名称，便于做差量修正支持
      */
     
     public java.lang.String getName(){
@@ -50,9 +50,9 @@ public abstract class _XWebSiteStyle extends io.nop.core.resource.component.Abst
 
     
     /**
-     * 
+     * 必填
      * xml name: url
-     *  
+     *  样式资源路径
      */
     
     public java.lang.String getUrl(){

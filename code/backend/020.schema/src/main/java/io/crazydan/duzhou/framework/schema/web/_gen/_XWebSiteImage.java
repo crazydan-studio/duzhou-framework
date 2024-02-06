@@ -9,31 +9,31 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [39:6:0:0]/duzhou/web/site.xdef <p>
- * 
+ * generate from [53:6:0:0]/duzhou/web/site.xdef <p>
+ * 站点图片资源
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XWebSiteImage extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  可选
      * xml name: loading
-     * 
+     * 载入动画图片的资源路径
      */
     private java.lang.String _loading ;
     
     /**
-     *  
+     *  必填
      * xml name: logo
-     * 
+     * 站点 Logo 图片的资源路径
      */
     private java.lang.String _logo ;
     
     /**
-     * 
+     * 可选
      * xml name: loading
-     *  
+     *  载入动画图片的资源路径
      */
     
     public java.lang.String getLoading(){
@@ -50,9 +50,9 @@ public abstract class _XWebSiteImage extends io.nop.core.resource.component.Abst
 
     
     /**
-     * 
+     * 必填
      * xml name: logo
-     *  
+     *  站点 Logo 图片的资源路径
      */
     
     public java.lang.String getLogo(){

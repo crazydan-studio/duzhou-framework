@@ -20,11 +20,19 @@
   -->
 
 <!--
-    站点（`Site`）：
-    每个 Web 端均由多个站点组成，
-    而一个站点就是一个独立的多页面应用（SPA），
-    其通过布局器（`Layout`）来控制其下的资源（`Resource`）组织结构。
-    注：登录、门户、后台管理等，均为一个站点
+站点（`Site`）：
+每个 Web 端均由多个站点组成，
+而一个站点就是一个独立的多页面应用（SPA），
+其通过布局器（`Layout`）来控制其下的资源（`Resource`）组织结构。
+注：登录、门户、后台管理等，均为一个站点
+
+@id [必填] 站点的唯一标识，需在同一个 `Web` 内保持唯一性
+@url [可选] 站点的访问地址，其路径相对于应用的 url。
+     以 `redirect:` 开头的，将视为外部站点，在访问资源时直接跳转
+@title [必填] 站点主标题
+@subTitle [可选] 站点副标题
+@runInEnv [可选] 所处的运行环境。用于在前端显示开发状态信息、开启调试等。
+          默认为 `development`
 -->
 <site xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xdef="/nop/schema/xdef.xdef"
@@ -36,20 +44,49 @@
       runInEnv="!enum:io.crazydan.duzhou.framework.schema.RunInEnv=development"
 >
 
+    <!--
+    站点图片资源
+
+    @logo [必填] 站点 Logo 图片的资源路径
+    @loading [可选] 载入动画图片的资源路径
+    -->
     <image xdef:name="XWebSiteImage" logo="!string" loading="string"/>
 
-    <layout xdef:name="XWebSiteLayout">
+    <!-- [必须] 站点布局器 -->
+    <layout xdef:name="XWebSiteLayout" xdef:mandatory="true">
+        <!-- js 脚本（构建后的）资源。有顺序性，入口脚本需放在列表的最开始位置 -->
         <scripts xdef:body-type="list" xdef:key-attr="name">
+            <!--
+            @name [必填] 脚本名称，便于做差量修正支持
+            @url [必填] 脚本资源路径
+            -->
             <script xdef:name="XWebSiteScript" name="!string" url="!string"/>
         </scripts>
+        <!-- css 样式资源。有顺序性，放在前面的最先被加载 -->
         <styles xdef:body-type="list" xdef:key-attr="name">
+            <!--
+            @name [必填] 样式名称，便于做差量修正支持
+            @url [必填] 样式资源路径
+            -->
             <style xdef:name="XWebSiteStyle" name="!string" url="!string"/>
         </styles>
 
+        <!--
+        [必须] 布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+        在该函数内，可通过变量 `site` 引用当前站点的配置数据
+        -->
         <render xdef:value="xpl" xdef:mandatory="true"/>
     </layout>
 
+    <!-- 资源列表 -->
     <resources xdef:body-type="list" xdef:key-attr="id">
+        <!--
+        @id [必填] 资源唯一标识，任意层级的资源均需在同一个 `Site` 内保持唯一性
+        @displayName [可选] 资源名称，一般作为导航菜单名称
+        @url [可选] 资源的页面 DSL 路径。
+             以 `redirect:` 开头的，将视为外部资源，在访问时直接跳转
+        @icon [可选] 图标 css 类名
+        -->
         <resource xdef:name="XWebSiteResource"
                   id="!string" displayName="string"
                   url="string" icon="string"

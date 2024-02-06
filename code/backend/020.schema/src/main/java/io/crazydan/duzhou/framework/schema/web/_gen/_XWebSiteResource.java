@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [53:10:0:0]/duzhou/web/site.xdef <p>
+ * generate from [90:10:0:0]/duzhou/web/site.xdef <p>
  * 
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
@@ -24,30 +24,31 @@ public abstract class _XWebSiteResource extends io.nop.core.resource.component.A
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteResource> _children = KeyedList.emptyList();
     
     /**
-     *  
+     *  可选
      * xml name: displayName
-     * 
+     * 资源名称，一般作为导航菜单名称
      */
     private java.lang.String _displayName ;
     
     /**
-     *  
+     *  可选
      * xml name: icon
-     * 
+     * 图标 css 类名
      */
     private java.lang.String _icon ;
     
     /**
-     *  
+     *  必填
      * xml name: id
-     * 
+     * 资源唯一标识，任意层级的资源均需在同一个 `Site` 内保持唯一性
      */
     private java.lang.String _id ;
     
     /**
-     *  
+     *  可选
      * xml name: url
-     * 
+     * 资源的页面 DSL 路径。
+     * 以 `redirect:` 开头的，将视为外部资源，在访问时直接跳转
      */
     private java.lang.String _url ;
     
@@ -97,9 +98,9 @@ public abstract class _XWebSiteResource extends io.nop.core.resource.component.A
     }
     
     /**
-     * 
+     * 可选
      * xml name: displayName
-     *  
+     *  资源名称，一般作为导航菜单名称
      */
     
     public java.lang.String getDisplayName(){
@@ -116,9 +117,9 @@ public abstract class _XWebSiteResource extends io.nop.core.resource.component.A
 
     
     /**
-     * 
+     * 可选
      * xml name: icon
-     *  
+     *  图标 css 类名
      */
     
     public java.lang.String getIcon(){
@@ -135,9 +136,9 @@ public abstract class _XWebSiteResource extends io.nop.core.resource.component.A
 
     
     /**
-     * 
+     * 必填
      * xml name: id
-     *  
+     *  资源唯一标识，任意层级的资源均需在同一个 `Site` 内保持唯一性
      */
     
     public java.lang.String getId(){
@@ -154,9 +155,10 @@ public abstract class _XWebSiteResource extends io.nop.core.resource.component.A
 
     
     /**
-     * 
+     * 可选
      * xml name: url
-     *  
+     *  资源的页面 DSL 路径。
+     * 以 `redirect:` 开头的，将视为外部资源，在访问时直接跳转
      */
     
     public java.lang.String getUrl(){
