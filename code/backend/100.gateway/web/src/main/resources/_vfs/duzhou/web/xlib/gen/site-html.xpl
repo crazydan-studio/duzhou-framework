@@ -23,7 +23,8 @@
     <c:script><![CDATA[
         //import xx;
 
-        const spinnerBgBase64 = '';
+        const siteElementId = 'app';
+        const spinnerBgBase64 = site.layout.spinner;
     ]]></c:script>
 
     <!DOCTYPE html>
@@ -31,7 +32,7 @@
         <head>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <link rel="icon" href="${site.image.logo}"/>
+            <link rel="icon" href="${site.logo}"/>
             <title>
                 <thisLib:GenSiteTitle site="${site}"/>
             </title>
@@ -43,10 +44,11 @@
                 html, body {
                     margin: 0; padding: 0;
                     min-width: 0; min-height: 0;
+                    /* 修改默认的 AMIS 加载动画和背景色: https://baidu.github.io/amis/zh-CN/style/css-vars#%E5%9B%BE%E7%89%87 */
                     --Spinner-bg: url('${spinnerBgBase64}');
-                    --body-bg: #1d243d;
+                    --body-bg: ${site.layout.bgColor};
                 }
-                html, body, #app {
+                html, body, #${siteElementId} {
                     width: 100%; height: 100%;
                 }
 
@@ -81,21 +83,22 @@
             ]]></style>
         </head>
         <body class="loading">
-            <div id="app"/>
+            <div id="${siteElementId}"/>
 
-            <c:for items="${site.renderer.styles}" var="style">
+            <c:for items="${site.layout.styles}" var="style">
                 <link rel="stylesheet" href="${style.url}"/>
             </c:for>
 
             <!-- 站点配置数据，填充布局函数和站点资源 -->
             <script><![CDATA[
                 window.__APP_SITE_CONFIG__ = {
-                    el: '#app',
-                    layout: async (resources) => {},
-                    resources: []
+                    el: '#${siteElementId}',
+                    layout: async () => {
+                        return ${site.renderLayout()};
+                    }
                 };
             ]]></script>
-            <c:for items="${site.renderer.scripts}" var="script" index="index">
+            <c:for items="${site.layout.scripts}" var="script" index="index">
                 <c:choose>
                     <when test="${index == 0}">
                         <script type="module" src="${script.url}"/>
