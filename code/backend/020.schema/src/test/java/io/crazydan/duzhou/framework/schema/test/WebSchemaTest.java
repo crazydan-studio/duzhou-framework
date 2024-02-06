@@ -45,10 +45,11 @@ public class WebSchemaTest extends SchemaBaseTest {
 
         for (XWebSite site : web.getSites()) {
             Assertions.assertEquals(RunInEnv.development, site.getRunInEnv());
-            Assertions.assertNotNull(site.getTitle());
+            Assertions.assertEquals("渡舟平台", site.getTitle());
             Assertions.assertNotNull(site.getSubTitle());
-            Assertions.assertNotNull(site.getImage().getLogo());
-            Assertions.assertNotNull(site.getImage().getLoading());
+            Assertions.assertEquals("/logo.svg", site.getLogo());
+            Assertions.assertEquals("#fff", site.getLayout().getBgColor());
+            Assertions.assertEquals("/loading.svg", site.getLayout().getSpinner());
             Assertions.assertTrue(site.getLayout().hasScripts());
             Assertions.assertTrue(site.getLayout().hasStyles());
 
@@ -57,9 +58,12 @@ public class WebSchemaTest extends SchemaBaseTest {
             log.info(json);
         }
 
+        XWebSite commonSite = web.getSite("common");
+        Assertions.assertNull(commonSite);
+
         XWebSite signinSite = web.getSite("signin");
         Assertions.assertNotNull(signinSite);
-        Assertions.assertEquals(signinSite.getResource("signin").getUrl(), signinSite.renderLayout().get("schemaApi"));
+        Assertions.assertEquals("/path/to/signin.page.xml", signinSite.renderLayout().get("schemaApi"));
 
         XWebSite defaultSite = web.getSiteByUrl("*");
         Assertions.assertNotNull(defaultSite);

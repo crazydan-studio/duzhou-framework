@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [37:2:0:0]/duzhou/web/site.xdef <p>
+ * generate from [38:2:0:0]/duzhou/web/site.xdef <p>
  * ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
  * ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
  * ~
@@ -44,18 +44,18 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     private java.lang.String _id ;
     
     /**
-     *  
-     * xml name: image
-     * 站点图片资源
-     */
-    private io.crazydan.duzhou.framework.schema.web.XWebSiteImage _image ;
-    
-    /**
      *  必须
      * xml name: layout
      * 站点布局器
      */
     private io.crazydan.duzhou.framework.schema.web.XWebSiteLayout _layout ;
+    
+    /**
+     *  必填
+     * xml name: logo
+     * 站点 Logo 图片的资源路径
+     */
+    private java.lang.String _logo ;
     
     /**
      *  
@@ -114,25 +114,6 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
-     * xml name: image
-     *  站点图片资源
-     */
-    
-    public io.crazydan.duzhou.framework.schema.web.XWebSiteImage getImage(){
-      return _image;
-    }
-
-    
-    public void setImage(io.crazydan.duzhou.framework.schema.web.XWebSiteImage value){
-        checkAllowChange();
-        
-        this._image = value;
-           
-    }
-
-    
-    /**
      * 必须
      * xml name: layout
      *  站点布局器
@@ -147,6 +128,25 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         checkAllowChange();
         
         this._layout = value;
+           
+    }
+
+    
+    /**
+     * 必填
+     * xml name: logo
+     *  站点 Logo 图片的资源路径
+     */
+    
+    public java.lang.String getLogo(){
+      return _logo;
+    }
+
+    
+    public void setLogo(java.lang.String value){
+        checkAllowChange();
+        
+        this._logo = value;
            
     }
 
@@ -282,8 +282,6 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._image = io.nop.api.core.util.FreezeHelper.deepFreeze(this._image);
-            
            this._layout = io.nop.api.core.util.FreezeHelper.deepFreeze(this._layout);
             
            this._resources = io.nop.api.core.util.FreezeHelper.deepFreeze(this._resources);
@@ -296,8 +294,8 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         super.outputJson(out);
         
         out.putNotNull("id",this.getId());
-        out.putNotNull("image",this.getImage());
         out.putNotNull("layout",this.getLayout());
+        out.putNotNull("logo",this.getLogo());
         out.putNotNull("resources",this.getResources());
         out.putNotNull("runInEnv",this.getRunInEnv());
         out.putNotNull("subTitle",this.getSubTitle());
@@ -315,8 +313,8 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         super.copyTo(instance);
         
         instance.setId(this.getId());
-        instance.setImage(this.getImage());
         instance.setLayout(this.getLayout());
+        instance.setLogo(this.getLogo());
         instance.setResources(this.getResources());
         instance.setRunInEnv(this.getRunInEnv());
         instance.setSubTitle(this.getSubTitle());

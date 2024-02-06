@@ -22,10 +22,10 @@
      x:schema="/duzhou/web/web.xdef"
 >
     <site id="common" x:abstract="true"
-          title="渡舟平台" runInEnv="development">
-        <image logo="/logo.svg" loading="/loading.svg"/>
-
-        <layout>
+          title="渡舟平台" logo="/logo.svg"
+          runInEnv="development"
+    >
+        <layout spinner="/loading.svg">
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js"/>
@@ -42,7 +42,8 @@
     <!-- 默认站点，匹配所有未匹配的站点，用于返回 404 页面 -->
     <site id="default" x:prototype="common"
           subTitle="页面不存在"
-          url="*">
+          url="*"
+    >
         <layout>
             <render><![CDATA[
                 return {};
@@ -53,7 +54,8 @@
     <!-- 登录 - Sign In；注册 - Sign Up；登出 - Sign Out -->
     <site id="signin" x:prototype="common"
           subTitle="用户登录"
-          url="/signin">
+          url="/signin"
+    >
         <resources>
             <resource id="signin"
                       url="/path/to/signin.page.xml">
@@ -72,7 +74,8 @@
 
     <site id="admin" x:prototype="common"
           subTitle="后台管理"
-          url="/admin">
+          url="/admin"
+    >
         <resources>
             <resource id="auth"
                       displayName="权限管理"
@@ -91,7 +94,7 @@
                   schema: {
                     type: 'app',
                     brandName: site.subTitle,
-                    logo: site.image.logo,
+                    logo: site.logo,
                     pages: site.resources
                   }
                 };

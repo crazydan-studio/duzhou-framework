@@ -31,6 +31,7 @@
      以 `redirect:` 开头的，将视为外部站点，在访问资源时直接跳转
 @title [必填] 站点主标题
 @subTitle [可选] 站点副标题
+@logo [必填] 站点 Logo 图片的资源路径
 @runInEnv [可选] 所处的运行环境。用于在前端显示开发状态信息、开启调试等。
           默认为 `development`
 -->
@@ -40,20 +41,19 @@
       xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
       xdef:name="XWebSite"
       id="!string" url="!string"
-      title="!string" subTitle="string"
+      title="!string" subTitle="string" logo="!string"
       runInEnv="!enum:io.crazydan.duzhou.framework.schema.RunInEnv=development"
 >
 
     <!--
-    站点图片资源
+    [必须] 站点布局器
 
-    @logo [必填] 站点 Logo 图片的资源路径
-    @loading [可选] 载入动画图片的资源路径
+    @bgColor [可选] 背景色
+    @spinner [可选] 载入动画图片的资源路径
     -->
-    <image xdef:name="XWebSiteImage" logo="!string" loading="string"/>
-
-    <!-- [必须] 站点布局器 -->
-    <layout xdef:name="XWebSiteLayout" xdef:mandatory="true">
+    <layout xdef:name="XWebSiteLayout" xdef:mandatory="true"
+            bgColor="!string=#fff" spinner="string"
+    >
         <!-- js 脚本（构建后的）资源。有顺序性，入口脚本需放在列表的最开始位置 -->
         <scripts xdef:body-type="list" xdef:key-attr="name">
             <!--

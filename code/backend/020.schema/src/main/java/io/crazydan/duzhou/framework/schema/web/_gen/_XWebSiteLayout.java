@@ -9,12 +9,19 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [56:6:0:0]/duzhou/web/site.xdef <p>
+ * generate from [54:6:0:0]/duzhou/web/site.xdef <p>
  * 站点布局器
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XWebSiteLayout extends io.nop.core.resource.component.AbstractComponentModel {
+    
+    /**
+     *  可选
+     * xml name: bgColor
+     * 背景色
+     */
+    private java.lang.String _bgColor  = "#fff";
     
     /**
      *  必须
@@ -32,11 +39,37 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteScript> _scripts = KeyedList.emptyList();
     
     /**
+     *  可选
+     * xml name: spinner
+     * 载入动画图片的资源路径
+     */
+    private java.lang.String _spinner ;
+    
+    /**
      *  
      * xml name: styles
      * css 样式资源。有顺序性，放在前面的最先被加载
      */
     private KeyedList<io.crazydan.duzhou.framework.schema.web.XWebSiteStyle> _styles = KeyedList.emptyList();
+    
+    /**
+     * 可选
+     * xml name: bgColor
+     *  背景色
+     */
+    
+    public java.lang.String getBgColor(){
+      return _bgColor;
+    }
+
+    
+    public void setBgColor(java.lang.String value){
+        checkAllowChange();
+        
+        this._bgColor = value;
+           
+    }
+
     
     /**
      * 必须
@@ -104,6 +137,25 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     }
     
     /**
+     * 可选
+     * xml name: spinner
+     *  载入动画图片的资源路径
+     */
+    
+    public java.lang.String getSpinner(){
+      return _spinner;
+    }
+
+    
+    public void setSpinner(java.lang.String value){
+        checkAllowChange();
+        
+        this._spinner = value;
+           
+    }
+
+    
+    /**
      * 
      * xml name: styles
      *  css 样式资源。有顺序性，放在前面的最先被加载
@@ -167,8 +219,10 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("bgColor",this.getBgColor());
         out.putNotNull("render",this.getRender());
         out.putNotNull("scripts",this.getScripts());
+        out.putNotNull("spinner",this.getSpinner());
         out.putNotNull("styles",this.getStyles());
     }
 
@@ -181,8 +235,10 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     protected void copyTo(XWebSiteLayout instance){
         super.copyTo(instance);
         
+        instance.setBgColor(this.getBgColor());
         instance.setRender(this.getRender());
         instance.setScripts(this.getScripts());
+        instance.setSpinner(this.getSpinner());
         instance.setStyles(this.getStyles());
     }
 
