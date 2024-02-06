@@ -19,11 +19,17 @@ public class SchemaCodeGen {
 
         CoreInitialization.initialize();
         try {
-            File projectDir = MavenDirHelper.projectDir(SchemaCodeGen.class);
-
-            XCodeGenerator.runPrecompile(projectDir, "/", false);
+            run();
         } finally {
             CoreInitialization.destroy();
         }
+    }
+
+    public static void run() {
+        File projectDir = MavenDirHelper.projectDir(SchemaCodeGen.class);
+
+        XCodeGenerator.runPrecompile(projectDir, "/", false);
+        XCodeGenerator.runPrecompile2(projectDir, "/", false);
+        XCodeGenerator.runPostcompile(projectDir, "/", false);
     }
 }

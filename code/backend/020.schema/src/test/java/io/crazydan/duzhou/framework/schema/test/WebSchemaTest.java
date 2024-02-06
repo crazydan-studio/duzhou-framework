@@ -19,7 +19,13 @@
 
 package io.crazydan.duzhou.framework.schema.test;
 
+import io.crazydan.duzhou.framework.schema.RunInEnv;
 import io.crazydan.duzhou.framework.schema.SchemaBaseTest;
+import io.crazydan.duzhou.framework.schema.web.XWeb;
+import io.crazydan.duzhou.framework.schema.web.XWebSite;
+import io.nop.core.lang.json.JsonTool;
+import io.nop.xlang.xdsl.DslModelParser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -27,7 +33,35 @@ import org.junit.jupiter.api.Test;
  * @date 2024-02-05
  */
 public class WebSchemaTest extends SchemaBaseTest {
+    private static final String WEB_XDEF = "/duzhou/web/web.xdef";
+    private static final String WEB_XDSL = "/duzhou/web/app.web.xml";
 
     @Test
-    public void test() {}
+    public void test_Parse_DSL() {
+        XWeb web = (XWeb) new DslModelParser(WEB_XDEF).parseFromVirtualPath(WEB_XDSL);
+
+        String json = JsonTool.serialize(web, true);
+        log.info(json);
+
+        for (XWebSite site : web.getSites()) {
+            Assertions.assertEquals(RunInEnv.development, site.getRunInEnv());
+            Assertions.assertNotNull(site.getTitle());
+            Assertions.assertNotNull(site.getSubTitle());
+            Assertions.assertNotNull(site.getImage().getLogo());
+            Assertions.assertNotNull(site.getImage().getLoading());
+            Assertions.assertTrue(site.getLayout().hasScripts());
+            Assertions.assertTrue(site.getLayout().hasStyles());
+
+            Object result = site.renderLayout();
+            json = JsonTool.serialize(result, true);
+            log.info(json);
+        }
+
+        XWebSite signinSite = web.getSite("signin");
+        Assertions.assertNotNull(signinSite);
+        Assertions.assertEquals(signinSite.getResource("signin").getUrl(), signinSite.renderLayout().get("schemaApi"));
+
+        XWebSite defaultSite = web.getSiteByUrl("*");
+        Assertions.assertNotNull(defaultSite);
+    }
 }

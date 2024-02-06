@@ -19,6 +19,11 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
+<!--
+    应用的 Web 端：
+    每个应用都只有一个 Web 端，
+    其 Web 端的页面和组织方式均集中定义在 Web DSL 中
+-->
 <web xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"

@@ -43,6 +43,9 @@ public abstract class SchemaBaseTest extends BaseTestCase {
 
         // 不初始化 Ioc
         CoreInitialization.initializeTo(new IocCoreInitializer().order() - 1);
+
+        // 确保 xdef 变更后能够生成最新的 java 代码
+        SchemaCodeGen.run();
     }
 
     @AfterAll

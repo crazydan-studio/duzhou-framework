@@ -26,17 +26,28 @@
         <image logo="/logo.svg" loading="/loading.svg"/>
 
         <layout>
-            <!-- 入口脚本放在最开始位置 -->
-            <script name="renderer" url="/js/renderer-amis-0.1.0.js"/>
-            <script name="engine" url="/js/amis/sdk-6.0.0.js"/>
+            <scripts>
+                <!-- 入口脚本放在最开始位置 -->
+                <script name="renderer" url="/js/renderer-amis-0.1.0.js"/>
+                <script name="engine" url="/js/amis/sdk-6.0.0.js"/>
+            </scripts>
 
-            <style name="engine" url="/css/amis/theme.css"/>
-            <style name="renderer" url="/css/renderer-amis-0.1.0.css"/>
+            <styles>
+                <style name="engine" url="/css/amis/theme.css"/>
+                <style name="renderer" url="/css/renderer-amis-0.1.0.css"/>
+            </styles>
         </layout>
     </site>
 
     <!-- 默认站点，匹配所有未匹配的站点，用于返回 404 页面 -->
-    <site id="default" url="*">
+    <site id="default" x:prototype="common"
+          subTitle="页面不存在"
+          url="*">
+        <layout>
+            <render><![CDATA[
+                return {};
+            ]]></render>
+        </layout>
     </site>
 
     <!-- 登录 - Sign In；注册 - Sign Up；登出 - Sign Out -->
@@ -50,16 +61,12 @@
         </resources>
 
         <layout>
-            <render>
-                <attr name="site"/>
-
-                <source><![CDATA[
-                    return {
-                      data: {},
-                      schemaApi: site.resources.signin.url
-                    };
-                ]]></source>
-            </render>
+            <render><![CDATA[
+                return {
+                  data: {},
+                  schemaApi: site.getResource('signin').url
+                };
+            ]]></render>
         </layout>
     </site>
 
@@ -78,26 +85,17 @@
         </resources>
 
         <layout>
-            <render>
-                <attr name="site"/>
-
-                <source><![CDATA[
-                    return {
-                      data: {},
-                      schema: {
-                        type: 'app',
-                        brandName: site.subTitle,
-                        logo: site.image.logo,
-                        header: {
-                          type: 'tpl',
-                          className: 'w-full',
-                          tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
-                        },
-                        pages: site.resources
-                      }
-                    };
-                ]]></source>
-            </render>
+            <render><![CDATA[
+                return {
+                  data: {},
+                  schema: {
+                    type: 'app',
+                    brandName: site.subTitle,
+                    logo: site.image.logo,
+                    pages: site.resources
+                  }
+                };
+            ]]></render>
         </layout>
     </site>
 </web>

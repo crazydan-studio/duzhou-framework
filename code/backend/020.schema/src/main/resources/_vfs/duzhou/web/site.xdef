@@ -19,6 +19,13 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
+<!--
+    站点（`Site`）：
+    每个 Web 端均由多个站点组成，
+    而一个站点就是一个独立的多页面应用（SPA），
+    其通过布局器（`Layout`）来控制其下的资源（`Resource`）组织结构。
+    注：登录、门户、后台管理等，均为一个站点
+-->
 <site xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xdef="/nop/schema/xdef.xdef"
       x:schema="/nop/schema/xdef.xdef"
@@ -29,13 +36,17 @@
       runInEnv="!enum:io.crazydan.duzhou.framework.schema.RunInEnv=development"
 >
 
-    <image xdef:name="XWebSiteImage" logo="string" loading="string"/>
+    <image xdef:name="XWebSiteImage" logo="!string" loading="string"/>
 
     <layout xdef:name="XWebSiteLayout">
-        <script xdef:name="XWebSiteScript" name="!string" url="!string" xdef:unique-attr="name"/>
-        <style xdef:name="XWebSiteStyle" name="!string" url="!string" xdef:unique-attr="name"/>
+        <scripts xdef:body-type="list" xdef:key-attr="name">
+            <script xdef:name="XWebSiteScript" name="!string" url="!string"/>
+        </scripts>
+        <styles xdef:body-type="list" xdef:key-attr="name">
+            <style xdef:name="XWebSiteStyle" name="!string" url="!string"/>
+        </styles>
 
-        <render xdef:value="xpl"/>
+        <render xdef:value="xpl" xdef:mandatory="true"/>
     </layout>
 
     <resources xdef:body-type="list" xdef:key-attr="id">
