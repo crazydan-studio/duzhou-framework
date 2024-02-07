@@ -1,15 +1,9 @@
 window.__APP_SITE_CONFIG__ = {
   el: '#app',
-  layout: async ([form]) => {
+  layout: () => {
     return {
       data: {},
-      schemaApi: form.url
+      schemaApi: 'get:/pages/signin/page.json'
     };
-  },
-  resources: [
-    {
-      id: 'signin-form',
-      url: 'get:/pages/signin/page.json'
-    }
-  ]
+  }
 };

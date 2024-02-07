@@ -31,8 +31,8 @@ import 'amis/sdk/antd.css';
 
 import './style.scss';
 
-export default async function render({ el, layout, resources }) {
-  const site = (layout && (await layout(resources || []))) || {};
+export default async function render({ el, layout }) {
+  const site = (layout && (await layout())) || {};
 
   const amisScoped = amis.embed(
     el,
