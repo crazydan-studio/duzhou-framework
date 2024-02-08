@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<web xmlns:x="/nop/schema/xdsl.xdef"
+     x:schema="/duzhou/web/web.xdef"
+>
+
+    <site id="common" x:abstract="true"
+          title="渡舟平台" logo="/logo.svg"
+          runInEnv="development"
+    >
+        <layout spinner="/loading.svg" bgColor="#1d243d">
+            <scripts>
+                <!-- 入口脚本放在最开始位置 -->
+                <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
+                <script name="engine" url="/js/amis/sdk-6.0.0.js" />
+            </scripts>
+
+            <styles>
+                <style name="engine" url="/css/amis/theme.css" />
+                <style name="renderer" url="/css/renderer-amis-0.1.0.css" />
+            </styles>
+        </layout>
+    </site>
+
+    <site id="admin" x:prototype="common"
+          subTitle="后台管理" url="/admin"
+    >
+        <resources>
+            <resource id="auth"
+                      displayName="权限管理"
+                      url="/path/to/auth.page.xml">
+            </resource>
+            <resource id="organization"
+                      displayName="组织管理"
+                      url="/path/to/org.page.xml">
+            </resource>
+        </resources>
+
+        <layout>
+            <render><![CDATA[
+                return {
+                  data: {},
+                  schema: {
+                    type: 'app',
+                    brandName: site.subTitle,
+                    logo: site.logo,
+                    pages: site.resources
+                  }
+                };
+            ]]></render>
+        </layout>
+    </site>
+</web>

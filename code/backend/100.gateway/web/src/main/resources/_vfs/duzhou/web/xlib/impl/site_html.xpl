@@ -21,25 +21,25 @@
 
 <c:unit xmlns:c="c" xmlns:thisLib="thisLib">
     <c:script><![CDATA[
-        //import xx;
+        // 已导入的 class 可以在 ${} 中直接引用
+        import io.nop.core.lang.json.JsonTool;
 
         const siteElementId = 'app';
+        // Note：在 <title/> 内调用 xpl 函数将得不到其返回值，
+        // 只能在该代码段内动态调用，再通过变量引用得到其返回值
+        const title = xpl `<thisLib:GenSiteTitle site="${site}" />`;
+
         const spinnerBgBase64 = site.layout.spinner;
     ]]></c:script>
 
-    <c:unit><![CDATA[
-        <!DOCTYPE html>
-    ]]></c:unit>
-    <html lang="en">
+    <html>
         <head>
-            <meta charset="UTF-8" />
+            <meta name="charset" charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <link rel="icon" href="${site.logo}" />
-            <title>
-            </title>
+            <link name="icon:logo" rel="icon" href="${site.logo}" />
+            <title>${title}</title>
 
-            <!-- 定义加载动画和背景色 -->
-            <style><![CDATA[
+            <style name="style:global"><![CDATA[
                 * { box-sizing: border-box; }
 
                 html, body {
@@ -52,7 +52,8 @@
                 html, body, #${siteElementId} {
                     width: 100%; height: 100%;
                 }
-
+            ]]></style>
+            <style name="style:loading"><![CDATA[
                 .loading::after {
                     z-index: 10000; opacity: 1;
                     transition: opacity 0.5s ease-out;
@@ -87,25 +88,25 @@
             <div id="${siteElementId}" />
 
             <c:for items="${site.layout.styles}" var="style">
-                <link rel="stylesheet" href="${style.url}" />
+                <link name="css:${style.name}" rel="stylesheet" href="${style.url}" />
             </c:for>
 
             <!-- 站点配置数据，填充布局函数和站点资源 -->
-            <script><![CDATA[
+            <script name="js:site-config"><![CDATA[
                 window.__APP_SITE_CONFIG__ = {
                     el: '#${siteElementId}',
                     layout: async () => {
-                        return ${site.renderLayout()};
+                        return ${JsonTool.stringify(site.renderLayout())};
                     }
                 };
             ]]></script>
             <c:for items="${site.layout.scripts}" var="script" index="index">
                 <c:choose>
                     <when test="${index == 0}">
-                        <script type="module" src="${script.url}" />
+                        <script name="js:${script.name}" type="module" src="${script.url}" />
                     </when>
                     <otherwise>
-                        <link rel="modulepreload" href="${script.url}" />
+                        <link name="js:${script.name}" rel="modulepreload" href="${script.url}" />
                     </otherwise>
                 </c:choose>
             </c:for>

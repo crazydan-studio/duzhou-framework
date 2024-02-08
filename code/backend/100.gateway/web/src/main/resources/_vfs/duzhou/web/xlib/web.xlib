@@ -24,19 +24,33 @@
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
-        <GenSiteHtml outputMode="html">
-            <attr name="site" mandatory="true"/>
+        <!-- Note：输出模式 html 为文本，只有 node 才是节点树 -->
+        <GenSiteHtml outputMode="node">
+            <attr name="site" mandatory="true" />
 
             <source>
-                <c:include src="gen/site-html.xpl"/>
+                <c:include src="impl/site_html.xpl" />
             </source>
         </GenSiteHtml>
 
-        <GenSiteTitle outputMode="text">
-            <attr name="site" mandatory="true"/>
+        <GenSiteTitle>
+            <attr name="site" mandatory="true" />
 
             <source>
-                ${site.subTitle} | ${site.title}
+                <c:script>
+                    <![CDATA[
+                        import io.crazydan.duzhou.framework.schema.RunInEnv;
+
+                        // Note：运算符 += 只能用于数字运算
+                        let suffix = '';
+                        if (site.runInEnv == RunInEnv.development) {
+                            suffix = ' (开发中...)';
+                        } else if (site.runInEnv == RunInEnv.testing) {
+                            suffix = ' (测试中...)';
+                        }
+                        return site.subTitle + ' | ' + site.title + suffix;
+                    ]]>
+                </c:script>
             </source>
         </GenSiteTitle>
     </tags>
