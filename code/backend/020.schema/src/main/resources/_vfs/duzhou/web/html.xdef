@@ -20,6 +20,12 @@
   -->
 
 <!--
+主要用于支持 site 转 html 的差量定制，
+故而仅定义了部分 html 节点，在定制时可通过 name 或 id
+进行节点定位，再对其做扩展或替换。
+
+注意，在同一节点下的所有子节点间的定位属性，不管标签名是否相同，
+其值都不能相同。
 -->
 <html xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xdef="/nop/schema/xdef.xdef"
@@ -37,15 +43,21 @@
               xdef:unknown-attr="string" />
 
         <title xdef:value="string" />
+        <!-- 在 head 中仅内嵌基础的 css，并外链站点图标 -->
         <style name="!string" xdef:ref="NormalNode" />
         <link name="!string" xdef:ref="NormalNode" />
     </head>
 
     <body xdef:unknown-attr="string">
+        <!-- 仅支持差量定制 div 节点，定制时，其余 html 节点均需放在 div 中 -->
         <div id="!string" xdef:unique-attr="id"
              xdef:value="xml"
              xdef:unknown-attr="string" />
 
+        <!--
+        外链的 css 和 js 均放在 body 末尾，
+        以避免阻塞页面加载动画等与用户体验相关的工作
+        -->
         <link name="!string" xdef:ref="NormalNode" />
         <script name="!string" xdef:ref="NormalNode" />
     </body>
