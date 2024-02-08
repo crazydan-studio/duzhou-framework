@@ -21,6 +21,7 @@
 <web xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/duzhou/web/web.xdef"
 >
+
     <site id="common" x:abstract="true"
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
@@ -28,13 +29,13 @@
         <layout spinner="/loading.svg">
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
-                <script name="renderer" url="/js/renderer-amis-0.1.0.js"/>
-                <script name="engine" url="/js/amis/sdk-6.0.0.js"/>
+                <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
+                <script name="engine" url="/js/amis/sdk-6.0.0.js" />
             </scripts>
 
             <styles>
-                <style name="engine" url="/css/amis/theme.css"/>
-                <style name="renderer" url="/css/renderer-amis-0.1.0.css"/>
+                <style name="engine" url="/css/amis/theme.css" />
+                <style name="renderer" url="/css/renderer-amis-0.1.0.css" />
             </styles>
         </layout>
     </site>

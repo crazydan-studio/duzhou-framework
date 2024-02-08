@@ -24,7 +24,6 @@ import io.crazydan.duzhou.framework.schema.SchemaBaseTest;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
 import io.nop.core.lang.json.JsonTool;
-import io.nop.xlang.xdsl.DslModelParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,12 +32,11 @@ import org.junit.jupiter.api.Test;
  * @date 2024-02-05
  */
 public class WebSchemaTest extends SchemaBaseTest {
-    private static final String WEB_XDEF = "/duzhou/web/web.xdef";
     private static final String WEB_XDSL = "/duzhou/web/app.web.xml";
 
     @Test
     public void test_Parse_DSL() {
-        XWeb web = (XWeb) new DslModelParser(WEB_XDEF).parseFromVirtualPath(WEB_XDSL);
+        XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
 
         String json = JsonTool.serialize(web, true);
         log.info(json);

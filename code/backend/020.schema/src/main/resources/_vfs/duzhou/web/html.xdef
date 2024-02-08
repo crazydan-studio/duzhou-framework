@@ -20,16 +20,33 @@
   -->
 
 <!--
-应用的 Web 端：
-每个应用都只有一个 Web 端，
-其 Web 端的页面和组织方式均集中定义在 Web DSL 中
 -->
-<web xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:xdef="/nop/schema/xdef.xdef"
-     x:schema="/nop/schema/xdef.xdef"
-     xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
-     xdef:name="XWeb"
+<html xmlns:x="/nop/schema/xdsl.xdef"
+      xmlns:xdef="/nop/schema/xdef.xdef"
+      x:schema="/nop/schema/xdef.xdef"
+      xdef:unknown-attr="string"
 >
 
-    <site id="!string" xdef:ref="site.xdef" xdef:unique-attr="id" />
-</web>
+    <xdef:define xdef:name="NormalNode" name="!string"
+                 xdef:unique-attr="name"
+                 xdef:value="string"
+                 xdef:unknown-attr="string" />
+
+    <head>
+        <meta name="!string" xdef:unique-attr="name"
+              xdef:unknown-attr="string" />
+
+        <title xdef:value="string" />
+        <style name="!string" xdef:ref="NormalNode" />
+        <link name="!string" xdef:ref="NormalNode" />
+    </head>
+
+    <body xdef:unknown-attr="string">
+        <div id="!string" xdef:unique-attr="id"
+             xdef:value="xml"
+             xdef:unknown-attr="string" />
+
+        <link name="!string" xdef:ref="NormalNode" />
+        <script name="!string" xdef:ref="NormalNode" />
+    </body>
+</html>

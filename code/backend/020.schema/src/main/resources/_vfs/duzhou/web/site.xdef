@@ -60,7 +60,7 @@
             @name [必填] 脚本名称，便于做差量修正支持
             @url [必填] 脚本资源路径
             -->
-            <script xdef:name="XWebSiteScript" name="!string" url="!string"/>
+            <script xdef:name="XWebSiteScript" name="!string" url="!string" />
         </scripts>
         <!-- css 样式资源。有顺序性，放在前面的最先被加载 -->
         <styles xdef:body-type="list" xdef:key-attr="name">
@@ -68,14 +68,14 @@
             @name [必填] 样式名称，便于做差量修正支持
             @url [必填] 样式资源路径
             -->
-            <style xdef:name="XWebSiteStyle" name="!string" url="!string"/>
+            <style xdef:name="XWebSiteStyle" name="!string" url="!string" />
         </styles>
 
         <!--
         [必须] 布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
         在该函数内，可通过变量 `site` 引用当前站点的配置数据
         -->
-        <render xdef:value="xpl" xdef:mandatory="true"/>
+        <render xdef:value="xpl" xdef:mandatory="true" />
     </layout>
 
     <!-- 资源列表 -->
@@ -92,7 +92,7 @@
                   url="string" icon="string"
         >
             <children xdef:body-type="list" xdef:key-attr="id">
-                <resource id="!string" xdef:ref="XWebSiteResource"/>
+                <resource id="!string" xdef:ref="XWebSiteResource" />
             </children>
         </resource>
     </resources>

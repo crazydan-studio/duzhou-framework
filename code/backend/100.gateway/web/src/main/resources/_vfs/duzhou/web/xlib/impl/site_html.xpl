@@ -27,14 +27,15 @@
         const spinnerBgBase64 = site.layout.spinner;
     ]]></c:script>
 
-    <!DOCTYPE html>
+    <c:unit><![CDATA[
+        <!DOCTYPE html>
+    ]]></c:unit>
     <html lang="en">
         <head>
-            <meta charset="UTF-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <link rel="icon" href="${site.logo}"/>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="icon" href="${site.logo}" />
             <title>
-                <thisLib:GenSiteTitle site="${site}"/>
             </title>
 
             <!-- 定义加载动画和背景色 -->
@@ -83,10 +84,10 @@
             ]]></style>
         </head>
         <body class="loading">
-            <div id="${siteElementId}"/>
+            <div id="${siteElementId}" />
 
             <c:for items="${site.layout.styles}" var="style">
-                <link rel="stylesheet" href="${style.url}"/>
+                <link rel="stylesheet" href="${style.url}" />
             </c:for>
 
             <!-- 站点配置数据，填充布局函数和站点资源 -->
@@ -101,10 +102,10 @@
             <c:for items="${site.layout.scripts}" var="script" index="index">
                 <c:choose>
                     <when test="${index == 0}">
-                        <script type="module" src="${script.url}"/>
+                        <script type="module" src="${script.url}" />
                     </when>
                     <otherwise>
-                        <link rel="modulepreload" href="${script.url}"/>
+                        <link rel="modulepreload" href="${script.url}" />
                     </otherwise>
                 </c:choose>
             </c:for>
