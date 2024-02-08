@@ -35,7 +35,7 @@ public class WebSchemaTest extends SchemaBaseTest {
     private static final String WEB_XDSL = "/duzhou/web/app.web.xml";
 
     @Test
-    public void test_Parse_DSL() {
+    public void test_Parse_Dsl() {
         XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
 
         String json = JsonTool.serialize(web, true);

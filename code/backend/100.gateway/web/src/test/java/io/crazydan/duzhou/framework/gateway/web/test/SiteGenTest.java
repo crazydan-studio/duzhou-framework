@@ -23,9 +23,9 @@ import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
+import io.crazydan.duzhou.framework.schema.web.XWebSiteResource;
 import io.crazydan.duzhou.framework.schema.web.XWebSiteScript;
 import io.crazydan.duzhou.framework.schema.web.XWebSiteStyle;
-import io.nop.api.core.util.IComponentModel;
 import io.nop.commons.collections.KeyedList;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
@@ -70,7 +70,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
     }
 
     @Test
-    public void test_Gen_Site_HTML() {
+    public void test_Gen_Site_Html() {
         XWebSite site = WebSiteGlobalVariable.get();
 
         XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_XDSL);
@@ -81,7 +81,12 @@ public class SiteGenTest extends GatewayWebBaseTest {
         log.info(JsonTool.serialize(obj, true));
 
         KeyedList<?> headLinks = (KeyedList<?>) obj.getComplexProp("head.links");
+        KeyedList<?> headStyles = (KeyedList<?>) obj.getComplexProp("head.styles");
         Assertions.assertEquals(site.getLogo(), ((DynamicObject) headLinks.getByKey("icon:logo")).prop_get("href"));
+        Assertions.assertTrue(((DynamicObject) headStyles.getByKey("style:global")).prop_get("body")
+                                                                                   .toString()
+                                                                                   .contains(
+                                                                                           "data:image/svg+xml;base64,"));
 
         String title = obj.getComplexProp("head.title").toString();
         Assertions.assertTrue(title.contains(site.getTitle()));
@@ -106,13 +111,20 @@ public class SiteGenTest extends GatewayWebBaseTest {
             }
         }
 
+        String siteConfig = ((DynamicObject) bodyScripts.getByKey("js:site-config")).prop_get("body").toString();
+        for (XWebSiteResource resource : site.getResources()) {
+            Assertions.assertTrue(siteConfig.contains("\"label\":\"" + resource.getDisplayName() + "\""));
+            Assertions.assertTrue(siteConfig.contains("\"url\":\"" + resource.getId() + "\""));
+            Assertions.assertTrue(siteConfig.contains("\"schemaApi\":\"" + resource.getUrl() + "\""));
+        }
+
         node = DslModelHelper.dslModelToXNode(parser.getRequiredSchema(), obj);
         String html = node.html();
         log.info(StringHelper.unescapeXml(html));
     }
 
     @Test
-    public void test_Extends_Gen_Site_HTML() {
+    public void test_Extends_Gen_Site_Html() {
         XWebSite site = WebSiteGlobalVariable.get();
 
         XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_EXTENDS_XDSL);
@@ -135,7 +147,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
     }
 
     @Test
-    public void test_Gen_Site_HTML_by_XPL() {
+    public void test_Gen_Site_Html_by_Xpl() {
         XWebSite site = WebSiteGlobalVariable.get();
 
         XLangCompileTool compiler = XLang.newCompileTool();

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <!--
   ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
   ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
@@ -18,7 +19,7 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<web xmlns:x="/nop/schema/xdsl.xdef"
+<web xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
      x:schema="/duzhou/schema/web.xdef"
 >
 
@@ -26,7 +27,7 @@
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
     >
-        <layout spinner="/loading.svg" bgColor="#1d243d">
+        <layout spinner="classpath:/META-INF/resources/loading.svg" bgColor="#1d243d">
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
@@ -56,13 +57,19 @@
 
         <layout>
             <render><![CDATA[
+                const pages = xpl `
+                    <web:GenAmisAppPages
+                        resources="${site.resources}"
+                        xpl:lib="/duzhou/web/xlib/web.xlib" />
+                `;
+
                 return {
                   data: {},
                   schema: {
                     type: 'app',
                     brandName: site.subTitle,
                     logo: site.logo,
-                    pages: site.resources
+                    pages: pages
                   }
                 };
             ]]></render>

@@ -20,11 +20,15 @@
   -->
 
 <lib xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:c="c"
+     xmlns:c="c" xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
-        <!-- Note：输出模式 html 为文本，只有 node 才是节点树 -->
+        <!--
+        站点 html 生成函数。
+        Note：输出模式 html 为文本，只有 node 才是节点树
+        @site [必填] 待转换为 html 的站点对象
+        -->
         <GenSiteHtml outputMode="node">
             <attr name="site" mandatory="true" />
 
@@ -33,25 +37,80 @@
             </source>
         </GenSiteHtml>
 
+        <!--
+        默认的站点 html 页面的 <title/> 生成函数
+        @site [必填] 待转换为 html 的站点对象
+        -->
         <GenSiteTitle>
             <attr name="site" mandatory="true" />
 
             <source>
-                <c:script>
-                    <![CDATA[
-                        import io.crazydan.duzhou.framework.schema.RunInEnv;
+                <c:script><![CDATA[
+                    import io.crazydan.duzhou.framework.schema.RunInEnv;
 
-                        // Note：运算符 += 只能用于数字运算
-                        let suffix = '';
-                        if (site.runInEnv == RunInEnv.development) {
-                            suffix = ' (开发中...)';
-                        } else if (site.runInEnv == RunInEnv.testing) {
-                            suffix = ' (测试中...)';
-                        }
-                        return site.subTitle + ' | ' + site.title + suffix;
-                    ]]>
-                </c:script>
+                    // Note：运算符 += 只能用于数字运算
+                    let suffix = '';
+                    if (site.runInEnv == RunInEnv.development) {
+                        suffix = ' (开发中...)';
+                    } else if (site.runInEnv == RunInEnv.testing) {
+                        suffix = ' (测试中...)';
+                    }
+                    return site.subTitle + ' | ' + site.title + suffix;
+                ]]></c:script>
             </source>
         </GenSiteTitle>
+
+        <!--
+        生成图片的 data url
+        @path [必填] 图片的 classpath 路径，需包含前缀 `classpath:`
+        -->
+        <GenImageDataUrl>
+            <attr name="path" mandatory="true" />
+
+            <source>
+                <c:script><![CDATA[
+                    import io.nop.commons.bytes.ByteString;
+                    import io.nop.core.resource.impl.ClassPathResource;
+                    import io.nop.core.resource.ResourceHelper;
+                    import io.nop.commons.util.StringHelper;
+
+                    const resource = new ClassPathResource(path);
+                    const bytes = ResourceHelper.readBytes(resource);
+                    const bs = ByteString.from(bytes, null);
+
+                    let type = StringHelper.fileExt(path);
+                    // io.nop.excel.model.ExcelImage#getMimeType
+                    if (type == 'svg') {
+                        type = 'svg+xml';
+                    } else if (type == 'jpg') {
+                        type = 'jpeg';
+                    }
+
+                    return bs.toImageUrl(type);
+                ]]></c:script>
+            </source>
+        </GenImageDataUrl>
+
+        <!--
+        根据站点资源列表构造 AMIS 的 App 组件的 pages 配置数据
+        @resources [必填] 站点资源列表
+        -->
+        <GenAmisAppPages>
+            <attr name="resources" />
+
+            <source>
+                <c:script><![CDATA[
+                    return resources.map((resource) => _.filterNull({
+                        label: resource.displayName,
+                        icon: resource.icon,
+                        url: resource.id,
+                        schemaApi: resource.url,
+                        children: resource.children && !resource.children.isEmpty()
+                            ? xpl('thisLib:GenAmisAppPages', resource.children)
+                            : null
+                    }));
+                ]]></c:script>
+            </source>
+        </GenAmisAppPages>
     </tags>
 </lib>

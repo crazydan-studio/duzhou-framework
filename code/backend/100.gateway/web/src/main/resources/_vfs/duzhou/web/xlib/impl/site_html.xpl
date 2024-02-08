@@ -29,7 +29,9 @@
         // 只能在该代码段内动态调用，再通过变量引用得到其返回值
         const title = xpl `<thisLib:GenSiteTitle site="${site}" />`;
 
-        const spinnerBgBase64 = site.layout.spinner;
+        const spinnerImageDataUrl = xpl `
+            <thisLib:GenImageDataUrl path="${site.layout.spinner}" />
+        `;
     ]]></c:script>
 
     <html>
@@ -46,7 +48,7 @@
                     margin: 0; padding: 0;
                     min-width: 0; min-height: 0;
                     /* 修改默认的 AMIS 加载动画和背景色: https://baidu.github.io/amis/zh-CN/style/css-vars#%E5%9B%BE%E7%89%87 */
-                    --Spinner-bg: url('${spinnerBgBase64}');
+                    --Spinner-bg: url('${spinnerImageDataUrl}');
                     --body-bg: ${site.layout.bgColor};
                 }
                 html, body, #${siteElementId} {
