@@ -23,19 +23,24 @@ import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
+import io.crazydan.duzhou.framework.schema.web.XWebSiteScript;
+import io.crazydan.duzhou.framework.schema.web.XWebSiteStyle;
 import io.nop.api.core.util.IComponentModel;
+import io.nop.commons.collections.KeyedList;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
 import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.lang.xml.parse.XNodeParser;
+import io.nop.core.model.object.DynamicObject;
 import io.nop.xlang.api.ExprEvalAction;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.ast.XLangOutputMode;
 import io.nop.xlang.xdsl.DslModelHelper;
 import io.nop.xlang.xdsl.DslModelParser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -72,8 +77,34 @@ public class SiteGenTest extends GatewayWebBaseTest {
         String xdefPath = node.attrText("x:schema");
 
         DslModelParser parser = new DslModelParser(xdefPath);
-        IComponentModel obj = parser.parseFromNode(node);
+        DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
         log.info(JsonTool.serialize(obj, true));
+
+        KeyedList<?> headLinks = (KeyedList<?>) obj.getComplexProp("head.links");
+        Assertions.assertEquals(site.getLogo(), ((DynamicObject) headLinks.getByKey("icon:logo")).prop_get("href"));
+
+        String title = obj.getComplexProp("head.title").toString();
+        Assertions.assertTrue(title.contains(site.getTitle()));
+        Assertions.assertTrue(title.contains(site.getSubTitle()));
+        Assertions.assertTrue(title.contains("开发中"));
+
+        KeyedList<?> bodyLinks = (KeyedList<?>) obj.getComplexProp("body.links");
+        KeyedList<?> bodyScripts = (KeyedList<?>) obj.getComplexProp("body.scripts");
+        for (XWebSiteStyle style : site.getLayout().getStyles()) {
+            DynamicObject link = (DynamicObject) bodyLinks.getByKey("css:" + style.getName());
+
+            Assertions.assertEquals(style.getUrl(), link.prop_get("href"));
+        }
+        for (XWebSiteScript script : site.getLayout().getScripts()) {
+            DynamicObject s = (DynamicObject) bodyLinks.getByKey("js:" + script.getName());
+
+            if (s == null) {
+                s = (DynamicObject) bodyScripts.getByKey("js:" + script.getName());
+                Assertions.assertEquals(script.getUrl(), s.prop_get("src"));
+            } else {
+                Assertions.assertEquals(script.getUrl(), s.prop_get("href"));
+            }
+        }
 
         node = DslModelHelper.dslModelToXNode(parser.getRequiredSchema(), obj);
         String html = node.html();
@@ -88,8 +119,15 @@ public class SiteGenTest extends GatewayWebBaseTest {
         String xdefPath = node.attrText("x:schema");
 
         DslModelParser parser = new DslModelParser(xdefPath);
-        IComponentModel obj = parser.parseFromNode(node);
+        DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
         log.info(JsonTool.serialize(obj, true));
+
+        String title = obj.getComplexProp("head.title").toString();
+        Assertions.assertEquals(site.getSubTitle() + " - " + site.getTitle(), title);
+
+        KeyedList<?> bodyDivs = (KeyedList<?>) obj.getComplexProp("body.divs");
+        Assertions.assertNotNull(bodyDivs.getByKey("tips"));
+        Assertions.assertNotNull(bodyDivs.getByKey("text"));
 
         node = DslModelHelper.dslModelToXNode(parser.getRequiredSchema(), obj);
         String html = node.html();

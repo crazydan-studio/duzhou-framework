@@ -19,6 +19,19 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
+<!--
+site 转 html 的 DSL 模板。
+通过全局变量 `$site` 传入待转换的 site 数据，
+再通过 web:GenSiteHtml 函数展开出 html。
+
+注意，在该 DSL 的 xpl 脚本或函数中只能引用 `$site`
+或其他内置的全局变量。
+
+根据变量展开节点，只能在 x:gen-extends 标签中进行，
+且该标签的输出结果将与其所在的父节点做合并，如，
+`<title><x:gen-extends><source>${'渡舟平台'}</source></x:gen-extends></title>`
+的合并结果为 `<title>渡舟平台</title>`。
+-->
 <html xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xpl="xpl" xmlns:web="web"
       x:schema="/duzhou/web/html.xdef"
@@ -26,7 +39,6 @@
 >
 
     <x:gen-extends>
-        <!-- Note: $site 为已注册的当前待转换的站点对象 -->
         <web:GenSiteHtml site="${$site}" xpl:lib="/duzhou/web/xlib/web.xlib" />
     </x:gen-extends>
 </html>

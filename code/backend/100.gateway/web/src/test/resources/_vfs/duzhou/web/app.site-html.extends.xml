@@ -19,18 +19,34 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<html xmlns:x="/nop/schema/xdsl.xdef"
+<html xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
       x:schema="/duzhou/web/html.xdef"
       x:extends="/duzhou/web/app.site-html.xml"
 >
 
     <head>
-        <title>${site.subTitle - site.title}</title>
+        <title>
+            <!-- 等效 #1：输出的 title 树将与父节点自身做合并 -->
+            <!--<x:gen-extends>
+                <title>${$site.subTitle + ' - ' + $site.title}</title>
+            </x:gen-extends>-->
+
+            <!-- 等效 #2：source 内的节点将与父节点的子节点合并 -->
+            <!--<x:gen-extends>
+                <c:script>
+                    const title = $site.subTitle + ' - ' + $site.title;
+                </c:script>
+                <source>${title}</source>
+            </x:gen-extends>-->
+            <x:gen-extends>
+                <source>${$site.subTitle + ' - ' + $site.title}</source>
+            </x:gen-extends>
+        </title>
     </head>
 
     <body>
         <div id="tips" class="tips">
-            <span>Tips: This is just a test.</span>
+            <span>This is just a tip.</span>
         </div>
         <div id="text">
             This is a text.
