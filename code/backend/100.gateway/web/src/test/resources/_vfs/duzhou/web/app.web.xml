@@ -19,7 +19,7 @@
   -->
 
 <web xmlns:x="/nop/schema/xdsl.xdef"
-     x:schema="/duzhou/web/web.xdef"
+     x:schema="/duzhou/schema/web.xdef"
 >
 
     <site id="common" x:abstract="true"

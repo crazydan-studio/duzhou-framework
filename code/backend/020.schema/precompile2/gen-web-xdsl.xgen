@@ -20,6 +20,6 @@
   -->
 
 <c:script xmlns:c="c"><![CDATA[
-    codeGenerator.renderModel('/duzhou/web/site.xdef', '/nop/templates/xdsl', '/', $scope);
-    codeGenerator.renderModel('/duzhou/web/web.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/schema/web/site.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/schema/web.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

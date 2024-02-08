@@ -31,5 +31,5 @@
      xdef:name="XWeb"
 >
 
-    <site id="!string" xdef:ref="site.xdef" xdef:unique-attr="id" />
+    <site id="!string" xdef:ref="web/site.xdef" xdef:unique-attr="id" />
 </web>

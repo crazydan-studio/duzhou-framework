@@ -20,7 +20,7 @@
   -->
 
 <html xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
-      x:schema="/duzhou/web/html.xdef"
+      x:schema="/duzhou/schema/web/html.xdef"
       x:extends="/duzhou/web/app.site-html.xml"
 >
 

@@ -37,7 +37,7 @@ site 转 html 的 DSL 模板。
 -->
 <html xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xpl="xpl" xmlns:web="web"
-      x:schema="/duzhou/web/html.xdef"
+      x:schema="/duzhou/schema/web/html.xdef"
       lang="en"
 >
 

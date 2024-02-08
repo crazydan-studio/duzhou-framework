@@ -19,8 +19,17 @@
 
 package io.crazydan.duzhou.framework.gateway.web;
 
+import java.util.List;
+
+import io.crazydan.duzhou.framework.schema.web.XWebSiteResource;
+
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-02-07
  */
-public class WebSiteProvider {}
+public class WebSiteProvider {
+
+    public static Object toAmisPages(List<XWebSiteResource> resources) {
+        return "";
+    }
+}
