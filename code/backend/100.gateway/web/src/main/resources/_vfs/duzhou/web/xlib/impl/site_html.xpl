@@ -19,6 +19,10 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
+<!--
+Note：在 xml 内必须有一个根节点，但在构造 dsl 时该节点需要被忽略，
+仅挂载其子节点，所以，在 xpl 中通过 c:unit 来承担该处理该需求
+-->
 <c:unit xmlns:c="c" xmlns:thisLib="thisLib">
     <c:script><![CDATA[
         // 已导入的 class 可以在 ${} 中直接引用

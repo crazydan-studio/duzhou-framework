@@ -44,20 +44,23 @@
         <GenSiteTitle>
             <attr name="site" mandatory="true" />
 
-            <source>
+            <!--
+            Note：在 source 内的文本内容与其子节点 c:script 的写法和作用相同，
+            可直接通过 return 返回当前函数的执行结果（文本内容不能使用 ${} 引用变量）。
+            若返回 node 或 xjson 等结构，则需在 c:script 中进行运算，
+            再在 source 内嵌入节点标签并通过 ${} 引用 c:script 中定义的变量
+            -->
+            <source><![CDATA[
+                return site.subTitle + ' | ' + site.title;
+            ]]></source>
+            <!-- 另一种定义方式 -->
+            <!--<source>
                 <c:script><![CDATA[
-                    import io.crazydan.duzhou.framework.schema.RunInEnv;
-
-                    // Note：运算符 += 只能用于数字运算
-                    let suffix = '';
-                    if (site.runInEnv == RunInEnv.development) {
-                        suffix = ' (开发中...)';
-                    } else if (site.runInEnv == RunInEnv.testing) {
-                        suffix = ' (测试中...)';
-                    }
-                    return site.subTitle + ' | ' + site.title + suffix;
+                    return site.subTitle + ' | ' + site.title;
                 ]]></c:script>
-            </source>
+            </source>-->
+            <!-- 错误使用：解析会失败 -->
+            <!--<source>${site.subTitle + ' | ' + site.title}</source>-->
         </GenSiteTitle>
 
         <!--

@@ -32,14 +32,21 @@
             </x:gen-extends>-->
 
             <!-- 等效 #2：source 内的节点将与父节点的子节点合并 -->
-            <!--<x:gen-extends>
-                <c:script>
-                    const title = $site.subTitle + ' - ' + $site.title;
-                </c:script>
-                <source>${title}</source>
-            </x:gen-extends>-->
             <x:gen-extends>
-                <source>${$site.subTitle + ' - ' + $site.title}</source>
+                <c:script><![CDATA[
+                    import io.crazydan.duzhou.framework.schema.RunInEnv;
+
+                    // Note：运算符 += 只能用于数字运算
+                    let suffix = '';
+                    if ($site.runInEnv == RunInEnv.development) {
+                        suffix = ' (开发中...)';
+                    } else if ($site.runInEnv == RunInEnv.testing) {
+                        suffix = ' (测试中...)';
+                    }
+
+                    const title = $site.subTitle + ' - ' + $site.title + suffix;
+                ]]></c:script>
+                <source>${title}</source>
             </x:gen-extends>
         </title>
     </head>

@@ -89,9 +89,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
                                                                                            "data:image/svg+xml;base64,"));
 
         String title = obj.getComplexProp("head.title").toString();
-        Assertions.assertTrue(title.contains(site.getTitle()));
-        Assertions.assertTrue(title.contains(site.getSubTitle()));
-        Assertions.assertTrue(title.contains("开发中"));
+        Assertions.assertEquals(site.getSubTitle() + " | " + site.getTitle(), title);
 
         KeyedList<?> bodyLinks = (KeyedList<?>) obj.getComplexProp("body.links");
         KeyedList<?> bodyScripts = (KeyedList<?>) obj.getComplexProp("body.scripts");
@@ -136,7 +134,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
         log.info(JsonTool.serialize(obj, true));
 
         String title = obj.getComplexProp("head.title").toString();
-        Assertions.assertEquals(site.getSubTitle() + " - " + site.getTitle(), title);
+        Assertions.assertEquals(site.getSubTitle() + " - " + site.getTitle() + " (开发中...)", title);
 
         KeyedList<?> bodyDivs = (KeyedList<?>) obj.getComplexProp("body.divs");
         Assertions.assertNotNull(bodyDivs.getByKey("tips"));

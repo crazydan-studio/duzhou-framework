@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.gateway.web;
 
 import io.nop.core.lang.xml.XNode;
+import io.nop.xlang.xdsl.DslModelHelper;
 import io.nop.xlang.xdsl.XDslKeys;
 import io.nop.xlang.xdsl.json.DslModelToXNodeTransformer;
 import io.nop.xlang.xmeta.IObjMeta;
@@ -33,6 +34,16 @@ import io.nop.xlang.xmeta.SchemaLoader;
  */
 public class WebDslModelHelper {
 
+    /**
+     * 将 DSL 模型转换为 HTML 节点
+     * <p/>
+     * 与 {@link DslModelHelper#dslModelToXNode} 不同的是，
+     * 其会额外做以下工作：<ul>
+     * <li>去掉 `xmlns` 等与 HTML 无关的节点属性；</li>
+     * <li>确保 html>body>div 内的子节点和文本与 dsl 中定义的结构一致，
+     * 不能再在 div 中添加 body 标签包裹其内部节点；</li>
+     * </ul>
+     */
     public static XNode toHtmlNode(String xdefPath, Object model) {
         IObjMeta objMeta = SchemaLoader.loadXMeta(xdefPath);
 
