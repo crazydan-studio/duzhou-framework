@@ -105,12 +105,23 @@
             <!-- 本项目子模块，便于其他项目引入 -->
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>schema</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>gateway-core</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>gateway-web</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>schema</artifactId>
+                <artifactId>gateway-api</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <!-- End -->

@@ -23,31 +23,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>gateway-api</artifactId>
 
-    <name>Duzhou Framework Gateway</name>
+    <name>Duzhou Framework Gateway - API</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>gateway</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <properties>
     </properties>
 
-    <modules>
-        <module>core</module>
-        <module>web</module>
-        <module>api</module>
-        <module>starter</module>
-    </modules>
-
     <dependencies>
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-http-api</artifactId>
-        </dependency>
     </dependencies>
 </project>
