@@ -78,7 +78,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
 
         DslModelParser parser = new DslModelParser(xdefPath);
         DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
-        log.info(JsonTool.serialize(obj, true));
+        this.log.info(JsonTool.serialize(obj, true));
 
         Assertions.assertEquals(site.getLocale(), obj.prop_get("lang"));
 
@@ -121,7 +121,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
         XNode htmlNode = WebDslModelHelper.toHtmlNode(parser.getRequiredSchema(), obj);
 
         String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
-        log.info(StringHelper.unescapeXml(html));
+        this.log.info(StringHelper.unescapeXml(html));
     }
 
     @Test
@@ -133,7 +133,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
 
         DslModelParser parser = new DslModelParser(xdefPath);
         DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
-        log.info(JsonTool.serialize(obj, true));
+        this.log.info(JsonTool.serialize(obj, true));
 
         Assertions.assertEquals("zh_CN", obj.prop_get("lang"));
 
@@ -152,7 +152,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
                                 htmlBodyNode.childByAttr("id", "text").innerHtml());
 
         String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
-        log.info(StringHelper.unescapeXml(html));
+        this.log.info(StringHelper.unescapeXml(html));
     }
 
     @Test
@@ -173,6 +173,6 @@ public class SiteGenTest extends GatewayWebBaseTest {
         // 通过 #generateNode 函数执行 xpl 函数并得到 XNode 树
         XNode htmlNode = action.generateNode(scope);
         String html = htmlNode.innerHtml();
-        log.info(StringHelper.unescapeXml(html));
+        this.log.info(StringHelper.unescapeXml(html));
     }
 }

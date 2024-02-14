@@ -31,5 +31,10 @@
           class="io.crazydan.duzhou.framework.gateway.web.filter.WebSiteHttpServerFilter"
           ioc:default="true">
         <!-- TODO 注入配置参数 -->
+        <property name="provider" ref="webSiteProvider" />
+    </bean>
+
+    <bean id="webSiteProvider"
+          class="io.crazydan.duzhou.framework.gateway.web.WebSiteProvider">
     </bean>
 </beans>

@@ -24,6 +24,7 @@ import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.eval.global.IGlobalVariableDefinition;
 import io.nop.core.reflect.ReflectionManager;
 import io.nop.core.type.IGenericType;
+import org.codehaus.commons.compiler.util.Producer;
 
 /**
  * 向 xlang 编译期注册的全局变量 `$site`，
@@ -49,12 +50,23 @@ public class WebSiteGlobalVariable implements IGlobalVariableDefinition {
         return var.get();
     }
 
+    public static <T> T with(XWebSite site, Producer<T> cb) {
+        XWebSite oldSite = get();
+
+        set(site);
+        try {
+            return cb.produce();
+        } finally {
+            set(oldSite);
+        }
+    }
+
     private WebSiteGlobalVariable() {
     }
 
     @Override
     public IGenericType getResolvedType() {
-        return type;
+        return this.type;
     }
 
     @Override
