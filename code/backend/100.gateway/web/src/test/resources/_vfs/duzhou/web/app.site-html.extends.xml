@@ -22,16 +22,11 @@
 <html xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
       x:schema="/duzhou/schema/web/html.xdef"
       x:extends="/duzhou/web/app.site-html.xml"
+      lang="zh_CN"
 >
 
     <head>
         <title>
-            <!-- 等效 #1：输出的 title 树将与父节点自身做合并 -->
-            <!--<x:gen-extends>
-                <title>${$site.subTitle + ' - ' + $site.title}</title>
-            </x:gen-extends>-->
-
-            <!-- 等效 #2：source 内的节点将与父节点的子节点合并 -->
             <x:gen-extends>
                 <c:script><![CDATA[
                     import io.crazydan.duzhou.framework.schema.RunInEnv;
@@ -46,7 +41,11 @@
 
                     const title = $site.subTitle + ' - ' + $site.title + suffix;
                 ]]></c:script>
-                <source>${title}</source>
+                <!--
+                任意标签名称均可，最终都是将该标签内的子节点与
+                `x:gen-extends` 父节点的子节点做合并
+                -->
+                <_>${title}</_>
             </x:gen-extends>
         </title>
     </head>

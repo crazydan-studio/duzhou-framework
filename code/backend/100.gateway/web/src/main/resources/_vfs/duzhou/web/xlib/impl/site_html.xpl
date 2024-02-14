@@ -38,7 +38,7 @@ Note：在 xml 内必须有一个根节点，但在构造 dsl 时该节点需要
         `;
     ]]></c:script>
 
-    <html>
+    <html lang="${site.locale}">
         <head>
             <meta name="charset" charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />

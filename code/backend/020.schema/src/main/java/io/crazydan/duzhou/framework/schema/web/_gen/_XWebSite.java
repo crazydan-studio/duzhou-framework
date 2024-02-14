@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [38:2:0:0]/duzhou/schema/web/site.xdef <p>
+ * generate from [39:2:0:0]/duzhou/schema/web/site.xdef <p>
  * ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
  * ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
  * ~
@@ -49,6 +49,13 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
      * 站点布局器
      */
     private io.crazydan.duzhou.framework.schema.web.XWebSiteLayout _layout ;
+    
+    /**
+     *  可选
+     * xml name: locale
+     * 多语言环境下的当前语言，默认为 `zh`
+     */
+    private java.lang.String _locale  = "zh";
     
     /**
      *  必填
@@ -128,6 +135,25 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         checkAllowChange();
         
         this._layout = value;
+           
+    }
+
+    
+    /**
+     * 可选
+     * xml name: locale
+     *  多语言环境下的当前语言，默认为 `zh`
+     */
+    
+    public java.lang.String getLocale(){
+      return _locale;
+    }
+
+    
+    public void setLocale(java.lang.String value){
+        checkAllowChange();
+        
+        this._locale = value;
            
     }
 
@@ -295,6 +321,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         
         out.putNotNull("id",this.getId());
         out.putNotNull("layout",this.getLayout());
+        out.putNotNull("locale",this.getLocale());
         out.putNotNull("logo",this.getLogo());
         out.putNotNull("resources",this.getResources());
         out.putNotNull("runInEnv",this.getRunInEnv());
@@ -314,6 +341,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
         
         instance.setId(this.getId());
         instance.setLayout(this.getLayout());
+        instance.setLocale(this.getLocale());
         instance.setLogo(this.getLogo());
         instance.setResources(this.getResources());
         instance.setRunInEnv(this.getRunInEnv());

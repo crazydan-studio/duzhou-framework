@@ -27,18 +27,13 @@ site 转 html 的 DSL 模板。
 注意，在该 DSL 的 xpl 脚本或函数中只能引用 `$site`
 或其他内置的全局变量。
 
-根据变量展开节点，只能在 x:gen-extends 标签中进行，
-且该标签的输出结果将与其所在父节点的子节点做合并，如，
-`<title><x:gen-extends><source>${'渡舟平台'}</source></x:gen-extends></title>`
-的合并结果为 `<title>渡舟平台</title>`，但是，
-若其不是通过 `<source/>` 得到输出，则其输出结果是与其父节点自身做合并，如，
-`<title><x:gen-extends><title>${'渡舟平台'}</title></x:gen-extends></title>`
-的合并结果为 `<title>渡舟平台</title>`。
+根据变量展开节点，只能在 x:gen-extends 标签中调用
+xpl 函数，且该函数生成的节点树必须以 html 为根节点，
+最终，该树与 x:gen-extends 所在的节点做合并。
 -->
 <html xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xpl="xpl" xmlns:web="web"
       x:schema="/duzhou/schema/web/html.xdef"
-      lang="en"
 >
 
     <x:gen-extends>

@@ -31,6 +31,7 @@
      以 `redirect:` 开头的，将视为外部站点，在访问资源时直接跳转
 @title [必填] 站点主标题
 @subTitle [可选] 站点副标题
+@locale [可选] 多语言环境下的当前语言，默认为 `zh`
 @logo [必填] 站点 Logo 图片的资源路径
 @runInEnv [可选] 所处的运行环境。用于在前端显示开发状态信息、开启调试等。
           默认为 `development`
@@ -40,7 +41,7 @@
       x:schema="/nop/schema/xdef.xdef"
       xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
       xdef:name="XWebSite"
-      id="!string" url="!string"
+      id="!string" url="!string" locale="string=zh"
       title="!string" subTitle="string" logo="!string"
       runInEnv="!enum:io.crazydan.duzhou.framework.schema.RunInEnv=development"
 >

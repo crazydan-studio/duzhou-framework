@@ -80,6 +80,8 @@ public class SiteGenTest extends GatewayWebBaseTest {
         DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
         log.info(JsonTool.serialize(obj, true));
 
+        Assertions.assertEquals(site.getLocale(), obj.prop_get("lang"));
+
         KeyedList<?> headLinks = (KeyedList<?>) obj.getComplexProp("head.links");
         KeyedList<?> headStyles = (KeyedList<?>) obj.getComplexProp("head.styles");
         Assertions.assertEquals(site.getLogo(), ((DynamicObject) headLinks.getByKey("icon:logo")).prop_get("href"));
@@ -132,6 +134,8 @@ public class SiteGenTest extends GatewayWebBaseTest {
         DslModelParser parser = new DslModelParser(xdefPath);
         DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
         log.info(JsonTool.serialize(obj, true));
+
+        Assertions.assertEquals("zh_CN", obj.prop_get("lang"));
 
         String title = obj.getComplexProp("head.title").toString();
         Assertions.assertEquals(site.getSubTitle() + " - " + site.getTitle() + " (开发中...)", title);
