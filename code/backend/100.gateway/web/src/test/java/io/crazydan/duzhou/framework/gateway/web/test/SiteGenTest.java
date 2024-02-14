@@ -160,8 +160,8 @@ public class SiteGenTest extends GatewayWebBaseTest {
         XWebSite site = WebSiteGlobalVariable.get();
 
         XLangCompileTool compiler = XLang.newCompileTool();
-        // Note：在解析 xpl 时会获取 ${} 中的变量，但编译器中无法注入该变量，
-        // 故而，需要忽略未注册变量，以确保解析能够正常进行
+        // Note：在编译 xpl 时需要获取 ${} 中的变量，但在编译器中无法注入该变量，
+        // 故而，需要忽略未注册变量，以确保编译能够正常进行
         compiler.getScope().setAllowUnregisteredScopeVar(true);
 
         XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_XPL);
@@ -171,8 +171,8 @@ public class SiteGenTest extends GatewayWebBaseTest {
         scope.setLocalValue("site", site);
 
         // 通过 #generateNode 函数执行 xpl 函数并得到 XNode 树
-        node = action.generateNode(scope);
-        String html = node.innerHtml();
+        XNode htmlNode = action.generateNode(scope);
+        String html = htmlNode.innerHtml();
         log.info(StringHelper.unescapeXml(html));
     }
 }

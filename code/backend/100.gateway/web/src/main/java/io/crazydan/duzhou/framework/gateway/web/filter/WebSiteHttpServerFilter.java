@@ -17,12 +17,37 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.web;
+package io.crazydan.duzhou.framework.gateway.web.filter;
+
+import java.util.concurrent.CompletionStage;
+import java.util.function.Supplier;
+
+import io.crazydan.duzhou.framework.gateway.core.GatewayConstants;
+import io.nop.http.api.HttpStatus;
+import io.nop.http.api.server.IHttpServerContext;
+import io.nop.http.api.server.IHttpServerFilter;
 
 /**
+ * HTTP 请求过滤器
+ * <p/>
+ * 对匹配请求地址的站点，返回站点的入口 HTML 内容
+ *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2024-02-07
+ * @date 2024-02-14
  */
-public class WebSiteProvider {
+public class WebSiteHttpServerFilter implements IHttpServerFilter {
 
+    @Override
+    public int order() {
+        return GatewayConstants.PRIORITY_WEB_SITE_FILTER;
+    }
+
+    @Override
+    public CompletionStage<Void> filterAsync(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
+        String path = context.getRequestPath();
+
+        context.sendResponse(HttpStatus.SC_OK, "Hello");
+
+        return null;
+    }
 }
