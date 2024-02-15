@@ -33,6 +33,7 @@ public class QuarkusStarter {
     public static int start(String... args) throws Exception {
         QuarkusIntegration.start();
 
+        // Banner 在线设计: https://patorjk.com/software/taag
         NopApplication app = new NopApplication();
 
         return app.run(args, () -> {

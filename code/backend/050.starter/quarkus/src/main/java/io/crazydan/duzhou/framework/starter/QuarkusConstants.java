@@ -19,9 +19,7 @@
 package io.crazydan.duzhou.framework.starter;
 
 public interface QuarkusConstants {
-
     String CONFIG_KEY_PROFILE_PARENT = "quarkus.config.profile.parent";
-
     String QUARKUS_ID_PREFIX = "$QUARKUS$";
 
     int PRIORITY_APP_FILTER = 5;
