@@ -28,13 +28,14 @@ import io.quarkus.runtime.ExecutorRecorder;
 
 public class QuarkusExecutorHelper {
 
+    /** 异步执行任务 */
     public static CompletionStage<Object> executeBlocking(Callable<?> task) {
         // 如果已经在工作线程上
         if (BlockingOperationControl.isBlockingAllowed()) {
             return FutureHelper.futureCall(task);
         }
 
-        // 如果当前在IO线程上，则调度到工作线程池上再执行
+        // 如果当前在 IO 线程上，则调度到工作线程池上再执行
         CompletableFuture<Object> future = new CompletableFuture<>();
         ExecutorRecorder.getCurrent().execute(() -> {
             CompletionStage<Object> promise = FutureHelper.futureCall(task);

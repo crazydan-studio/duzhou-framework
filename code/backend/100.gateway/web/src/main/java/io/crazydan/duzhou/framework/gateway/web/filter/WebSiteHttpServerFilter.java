@@ -24,7 +24,6 @@ import java.util.function.Supplier;
 
 import io.crazydan.duzhou.framework.gateway.core.GatewayConstants;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteProvider;
-import io.nop.api.core.util.FutureHelper;
 import io.nop.commons.util.StringHelper;
 import io.nop.http.api.HttpStatus;
 import io.nop.http.api.contenttype.ContentType;
@@ -60,24 +59,29 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
 
     @Override
     public CompletionStage<Void> filterAsync(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
+        // 耗时的操作不能在IO线程上执行
+        return context.executeBlocking(() -> doFilter(context, next)) //
+                      .exceptionally((e) -> {
+                          handleError(context, e);
+                          return null;
+                      }).thenApply(r -> null);
+    }
+
+    private CompletionStage<Void> doFilter(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
         String path = context.getRequestPath().replaceAll("/+$", "");
 
-        return FutureHelper.futureCall(() -> {
-            String html = getSiteHtml(path);
+        String html = getSiteHtml(path);
+        // 继续后续的路由：在 gateway-starter 中通过 QuarkusStaticResources
+        // 等适配器处理对静态资源的路由
+        if (html == null) {
+            return next.get();
+        }
 
-            // 继续后续的过滤处理
-            if (html == null) {
-                return next.get();
-            }
+        // 返回站点的入口页面
+        context.setResponseContentType(ContentType.TEXT_HTML.getMimeType());
+        context.sendResponse(HttpStatus.SC_OK, html);
 
-            context.setResponseContentType(ContentType.TEXT_HTML.getMimeType());
-            context.sendResponse(HttpStatus.SC_OK, html);
-
-            return null;
-        }).exceptionally((e) -> {
-            handleError(context, e);
-            return null;
-        }).thenApply(r -> null);
+        return null;
     }
 
     private String getSiteHtml(String path) {

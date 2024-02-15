@@ -65,31 +65,16 @@
 
         <!--
         生成图片的 data url
-        @path [必填] 图片的 classpath 路径，需包含前缀 `classpath:`
+        @path [必填] 图片的资源路径
         -->
         <GenImageDataUrl>
             <attr name="path" mandatory="true" />
 
             <source>
                 <c:script><![CDATA[
-                    import io.nop.commons.bytes.ByteString;
-                    import io.nop.core.resource.impl.ClassPathResource;
-                    import io.nop.core.resource.ResourceHelper;
-                    import io.nop.commons.util.StringHelper;
+                    import io.crazydan.duzhou.framework.gateway.web.utils.WebSiteResourceHelper;
 
-                    const resource = new ClassPathResource(path);
-                    const bytes = ResourceHelper.readBytes(resource);
-                    const bs = ByteString.from(bytes, null);
-
-                    let type = StringHelper.fileExt(path);
-                    // io.nop.excel.model.ExcelImage#getMimeType
-                    if (type == 'svg') {
-                        type = 'svg+xml';
-                    } else if (type == 'jpg') {
-                        type = 'jpeg';
-                    }
-
-                    return bs.toImageUrl(type);
+                    return WebSiteResourceHelper.getImageDataUrl(path);
                 ]]></c:script>
             </source>
         </GenImageDataUrl>

@@ -27,16 +27,16 @@
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
     >
-        <layout spinner="classpath:/META-INF/resources/loading.svg" bgColor="#1d243d">
+        <layout spinner="/loading.svg" bgColor="#1d243d">
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
-                <script name="engine" url="/js/amis/sdk-6.0.0.js" />
+                <script name="engine" url="/js/lib/amis-6.0.0.js" />
             </scripts>
 
             <styles>
-                <style name="engine" url="/css/amis/theme.css" />
-                <style name="renderer" url="/css/renderer-amis-0.1.0.css" />
+                <style name="engine" url="/assets/amis-6.0-Hnr1fvTY.css" />
+                <style name="renderer" url="/assets/renderer-amis-0.1-7QnOEB9u.css" />
             </styles>
         </layout>
     </site>
