@@ -1,0 +1,8 @@
+# 应用启动时的配置参数，
+# 由 io.nop.core.initialize.CoreInitialization.loadBootstrapConfig 读取。
+# 以 % 开头的根键，表示 profile 名称，其将与 -Dnop.profile 指定的同名 profile 配置进行合并
+"%dev":
+  # 跟踪系统内的 Java 反射调用，并自动生成 Graalvm 原生镜像所需的的配置文件，
+  # 如，proxy-config.json、reflect-config.json、nop-vfs-index.txt 等，
+  # 其定义在 io.nop.codegen.CodeGenConfigs.CFG_CODEGEN_TRACE_ENABLED
+  nop.codegen.trace.enabled: true

@@ -17,12 +17,32 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.core;
+package io.crazydan.duzhou.framework.starter;
 
-import io.nop.http.api.server.IHttpServerFilter;
+import io.nop.boot.NopApplication;
+import io.nop.core.initialize.CoreInitialization;
+import io.quarkus.runtime.Quarkus;
 
-public interface GatewayConstants {
-    /** API 过滤器优先于 Web 站点过滤器 */
-    int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
-    int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY - 100;
+/**
+ * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
+ * @date 2024-02-15
+ */
+public class QuarkusStarter {
+
+    /** 传入运行参数，再启动并等待，直到应用服务退出 */
+    public static int start(String... args) throws Exception {
+        QuarkusIntegration.start();
+
+        NopApplication app = new NopApplication();
+
+        return app.run(args, () -> {
+            Quarkus.waitForExit();
+            return 0;
+        });
+    }
+
+    /** 在应用服务退出后，做清理工作 */
+    public static void stop(int exitCode, Throwable e) {
+        CoreInitialization.destroy();
+    }
 }

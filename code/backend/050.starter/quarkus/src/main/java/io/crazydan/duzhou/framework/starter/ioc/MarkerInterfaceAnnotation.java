@@ -16,22 +16,19 @@
  * along with this program.
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
-package io.crazydan.duzhou.framework.gateway.starter.health;
+package io.crazydan.duzhou.framework.starter.ioc;
 
-import io.nop.core.initialize.CoreInitialization;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
-import org.eclipse.microprofile.health.Readiness;
+import java.lang.annotation.Annotation;
 
-/** 是否已经启动并可以对外提供服务 */
-@Readiness
-public class QuarkusReadyCheck implements HealthCheck {
-    static final String APP_NAME = "NopPlatform";
+public class MarkerInterfaceAnnotation implements Annotation {
+    private final Class<? extends Annotation> annType;
+
+    public MarkerInterfaceAnnotation(Class<? extends Annotation> annType) {
+        this.annType = annType;
+    }
 
     @Override
-    public HealthCheckResponse call() {
-        boolean inited = CoreInitialization.isInitialized();
-
-        return inited ? HealthCheckResponse.up(APP_NAME) : HealthCheckResponse.down(APP_NAME);
+    public Class<? extends Annotation> annotationType() {
+        return this.annType;
     }
 }

@@ -25,6 +25,7 @@
 
     <artifactId>gateway-starter</artifactId>
 
+    <!-- API 和 Web 站点网关的应用服务启动器 -->
     <name>Duzhou Framework Gateway - Starter</name>
 
     <parent>
@@ -43,42 +44,16 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
+            <artifactId>starter-quarkus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>gateway-web</artifactId>
         </dependency>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>gateway-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-boot</artifactId>
-        </dependency>
-
-        <!-- 使用 caffeine 提供的 graalvm 支持 -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-caffeine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-config-yaml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc</artifactId>
-        </dependency>
-        <!--
-        Note：需要排除 quarkus-bootstrap-core（被 quarkus-core-deployment 依赖），
-        否则在 IDE 中启动 @QuarkusMain 的 main 函数会失败，只能用 quarkus 插件启动
-        -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-vertx-http</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
     </dependencies>
 
@@ -86,12 +61,16 @@
         <profile>
             <id>native</id>
             <activation>
-                <property>
-                    <name>native</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <quarkus.package.type>native</quarkus.package.type>
+                <!--
+                配置 Quarkus 的默认打包类型: https://quarkus.io/guides/building-native-image
+                - native 为 Docker 镜像
+                - uber-jar 为可执行 jar 包
+                -->
+                <!--<quarkus.package.type>native</quarkus.package.type>-->
+                <quarkus.package.type>uber-jar</quarkus.package.type>
             </properties>
         </profile>
     </profiles>
@@ -99,7 +78,10 @@
     <build>
         <plugins>
             <plugin>
-                <!-- 构建可执行 jar 包: mvn package -Dquarkus.package.type=uber-jar -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>

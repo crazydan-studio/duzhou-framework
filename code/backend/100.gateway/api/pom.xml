@@ -25,6 +25,7 @@
 
     <artifactId>gateway-api</artifactId>
 
+    <!-- API 网关 -->
     <name>Duzhou Framework Gateway - API</name>
 
     <parent>

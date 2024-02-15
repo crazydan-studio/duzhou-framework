@@ -23,14 +23,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-web</artifactId>
+    <artifactId>starter-quarkus</artifactId>
 
-    <!-- Web 站点网关 -->
-    <name>Duzhou Framework Gateway - Web</name>
+    <!-- 基于 Quarkus 构建的应用服务启动器 -->
+    <name>Duzhou Framework Starter - Quarkus</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>starter</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
@@ -38,23 +38,45 @@
     </properties>
 
     <dependencies>
+        <!-- 使用 caffeine 提供的 graalvm 支持 -->
         <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>schema</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-caffeine</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>gateway-core</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-config-yaml</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc</artifactId>
         </dependency>
-        <!-- 支持注入 _vfs/nop/autoconfig/*.beans 中定义的 beans -->
+        <!--
+        Note：需要排除 quarkus-bootstrap-core（被 quarkus-core-deployment 依赖），
+        否则在 IDE 中启动 @QuarkusMain 的 main 函数会失败，只能用 quarkus 插件启动
+        -->
         <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-ioc</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+            创建 *.class 索引，并记录在 META-INF/jandex.idx 中。
+            必须创建 class 索引，否则，在运行 Quarkus 应用时，将不能扫描到
+            _vfs/nop/autoconfig 中的 beans 定义，从而导致无法通过
+            Nop Ioc 创建 bean
+            -->
+            <plugin>
+                <groupId>org.jboss.jandex</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

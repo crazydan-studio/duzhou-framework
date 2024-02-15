@@ -16,12 +16,12 @@
  * along with this program.
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
-package io.crazydan.duzhou.framework.gateway.starter.filter;
+package io.crazydan.duzhou.framework.starter.filter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.crazydan.duzhou.framework.gateway.core.GatewayConstants;
+import io.crazydan.duzhou.framework.starter.QuarkusConstants;
 import io.nop.api.core.ioc.BeanContainer;
 import io.nop.api.core.util.OrderedComparator;
 import io.nop.http.api.server.HttpServerHelper;
@@ -53,6 +53,6 @@ public class HttpServerFilterRegistrar {
                 VertxHttpServerContext ctx = new VertxHttpServerContext(rc);
                 HttpServerHelper.runWithFilters(serverFilters, ctx, ctx::proceedAsync);
             }
-        }, GatewayConstants.PRIORITY_APP_FILTER);
+        }, QuarkusConstants.PRIORITY_APP_FILTER);
     }
 }

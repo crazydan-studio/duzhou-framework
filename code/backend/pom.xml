@@ -28,7 +28,7 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Duzhou Framework Parent</name>
+    <name>Duzhou Framework</name>
 
     <parent>
         <groupId>io.github.entropy-cloud</groupId>
@@ -61,6 +61,7 @@
 
     <modules>
         <module>020.schema</module>
+        <module>050.starter</module>
         <module>100.gateway</module>
     </modules>
 
@@ -106,6 +107,11 @@
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>schema</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>starter-quarkus</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
 

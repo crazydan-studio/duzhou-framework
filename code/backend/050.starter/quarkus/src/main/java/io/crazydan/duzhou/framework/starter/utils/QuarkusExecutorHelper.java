@@ -16,7 +16,7 @@
  * along with this program.
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
-package io.crazydan.duzhou.framework.gateway.starter.utils;
+package io.crazydan.duzhou.framework.starter.utils;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;

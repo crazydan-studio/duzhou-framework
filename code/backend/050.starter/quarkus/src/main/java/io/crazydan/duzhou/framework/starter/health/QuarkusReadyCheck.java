@@ -16,13 +16,23 @@
  * along with this program.
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
+package io.crazydan.duzhou.framework.starter.health;
 
-package io.crazydan.duzhou.framework.gateway.core;
+import io.nop.core.initialize.CoreInitialization;
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Readiness;
 
-import io.nop.http.api.server.IHttpServerFilter;
+/** 是否已经启动并可以对外提供服务 */
+@Readiness
+public class QuarkusReadyCheck implements HealthCheck {
+    // TODO 通过配置注入 应用名称
+    static final String APP_NAME = "NopPlatform";
 
-public interface GatewayConstants {
-    /** API 过滤器优先于 Web 站点过滤器 */
-    int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
-    int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY - 100;
+    @Override
+    public HealthCheckResponse call() {
+        boolean inited = CoreInitialization.isInitialized();
+
+        return inited ? HealthCheckResponse.up(APP_NAME) : HealthCheckResponse.down(APP_NAME);
+    }
 }

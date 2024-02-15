@@ -17,12 +17,32 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.core;
+package io.crazydan.duzhou.framework.gateway;
 
-import io.nop.http.api.server.IHttpServerFilter;
+import io.crazydan.duzhou.framework.starter.QuarkusStarter;
+import io.quarkus.runtime.Quarkus;
+import io.quarkus.runtime.QuarkusApplication;
+import io.quarkus.runtime.annotations.QuarkusMain;
 
-public interface GatewayConstants {
-    /** API 过滤器优先于 Web 站点过滤器 */
-    int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
-    int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY - 100;
+/**
+ * Quarkus 应用启动器
+ * <p/>
+ * 该启动器只能在应用服务中实现，否则，将不会扫描到应用服务的
+ * classpath 中的资源。
+ *
+ * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
+ * @date 2024-02-15
+ */
+@QuarkusMain
+public class GatewayStarter implements QuarkusApplication {
+
+    public static void main(String... args) {
+        // https://quarkus.io/guides/lifecycle#the-main-method
+        Quarkus.run(GatewayStarter.class, QuarkusStarter::stop, args);
+    }
+
+    @Override
+    public int run(String... args) throws Exception {
+        return QuarkusStarter.start(args);
+    }
 }

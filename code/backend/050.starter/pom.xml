@@ -23,38 +23,38 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-web</artifactId>
+    <artifactId>starter</artifactId>
+    <packaging>pom</packaging>
 
-    <!-- Web 站点网关 -->
-    <name>Duzhou Framework Gateway - Web</name>
+    <!-- 应用服务启动器 -->
+    <name>Duzhou Framework Starter</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <properties>
     </properties>
 
+    <modules>
+        <module>quarkus</module>
+    </modules>
+
     <dependencies>
         <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>schema</artifactId>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-boot</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>gateway-core</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang</artifactId>
-        </dependency>
-        <!-- 支持注入 _vfs/nop/autoconfig/*.beans 中定义的 beans -->
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-ioc</artifactId>
+            <artifactId>nop-http-api</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
 </project>

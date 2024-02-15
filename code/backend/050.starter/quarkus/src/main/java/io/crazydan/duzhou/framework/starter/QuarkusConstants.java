@@ -16,13 +16,14 @@
  * along with this program.
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
+package io.crazydan.duzhou.framework.starter;
 
-package io.crazydan.duzhou.framework.gateway.core;
+public interface QuarkusConstants {
 
-import io.nop.http.api.server.IHttpServerFilter;
+    String CONFIG_KEY_PROFILE_PARENT = "quarkus.config.profile.parent";
 
-public interface GatewayConstants {
-    /** API 过滤器优先于 Web 站点过滤器 */
-    int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
-    int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY - 100;
+    String QUARKUS_ID_PREFIX = "$QUARKUS$";
+
+    int PRIORITY_APP_FILTER = 5;
+    int PRIORITY_CONTENT_ENCODING_FILTER = 10;
 }
