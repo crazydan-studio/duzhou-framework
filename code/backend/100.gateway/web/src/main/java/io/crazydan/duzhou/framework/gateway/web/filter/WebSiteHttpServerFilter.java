@@ -94,6 +94,7 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
 
         // 无入口页面，且不是静态资源文件，则返回站点页面
         if (html == null && !WebStaticResourcesHelper.isFile(path)) {
+            // TODO 内置默认页面
             html = this.provider.getSiteHtmlByRequestPath("*");
         }
 

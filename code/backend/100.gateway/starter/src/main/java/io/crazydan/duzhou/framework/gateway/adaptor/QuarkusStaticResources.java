@@ -19,11 +19,19 @@
 
 package io.crazydan.duzhou.framework.gateway.adaptor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import io.crazydan.duzhou.framework.gateway.core.GatewayConfigs;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.ResourceHelper;
 import io.quarkus.runtime.StartupEvent;
+import io.quarkus.vertx.http.runtime.HttpBuildTimeConfig;
+import io.quarkus.vertx.http.runtime.HttpCompressionHandler;
+import io.vertx.core.Handler;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.FileSystemAccess;
 import io.vertx.ext.web.handler.StaticHandler;
 import jakarta.enterprise.event.Observes;
@@ -41,34 +49,38 @@ import jakarta.enterprise.event.Observes;
  * @date 2024-02-15
  */
 public class QuarkusStaticResources {
-    private StaticHandler handler;
+    private Handler<RoutingContext> handler;
 
-    public void route(@Observes StartupEvent event, Router router) {
+    public void route(@Observes StartupEvent event, HttpBuildTimeConfig httpBuildTimeConfig, Router router) {
         router.route().handler(context -> {
-            // Note: Web 站点过滤器中已对不存在的静态资源做了处理，
-            // 这里直接路由剩余请求即可
-            getHandler().handle(context);
+            // Note: 在过滤器 WebSiteHttpServerFilter 中已对不存在的静态资源做了处理，
+            // 仅已存在的静态资源的请求才会路由到这里
+            getHandler(httpBuildTimeConfig).handle(context);
         });
     }
 
-    public StaticHandler getHandler() {
-        // Note：需要延迟到首次请求时，再创建 StaticHandler，
-        // 以确保能够获取到最终的静态资源根路径
+    /** 延迟构建 Handler，以确保能够获取到最终的静态资源根路径 */
+    public Handler<RoutingContext> getHandler(HttpBuildTimeConfig httpBuildTimeConfig) {
         if (this.handler == null) {
             // https://quarkus.io/guides/http-reference#from-a-local-directory
             String path = GatewayConfigs.WEB_STATIC_RESOURCES_PATH.get();
             String ns = ResourceHelper.getPathNamespace(path);
-            if (ns == null) {
-                return null;
-            }
 
+            // Note：由上层过滤器确保静态资源配置的有效性
             String root = ResourceHelper.removeNamespace(path, ns);
             if (ResourceConstants.FILE_NS.equals(ns)) {
                 this.handler = StaticHandler.create(FileSystemAccess.ROOT, root);
             } else if (ResourceConstants.CLASSPATH_NS.equals(ns)) {
                 this.handler = StaticHandler.create(FileSystemAccess.RELATIVE, root);
-            } else {
-                return null;
+            }
+
+            // 根据配置启用压缩：本质就是判断是否需要移除值为 HttpHeaders.IDENTITY
+            // 的响应头 HttpHeaders.CONTENT_ENCODING，若移除，则会对其 body 进行压缩
+            if (httpBuildTimeConfig.enableCompression) {
+                Set<String> compressedMediaTypes
+                        = new HashSet<>(httpBuildTimeConfig.compressMediaTypes.orElse(new ArrayList<>()));
+
+                this.handler = new HttpCompressionHandler(this.handler, compressedMediaTypes);
             }
         }
 

@@ -3,9 +3,13 @@ nop:
 
 quarkus:
   # https://quarkus.io/blog/path-resolution-in-quarkus/
+  # https://quarkus.io/guides/http-reference
   http:
     host: 0.0.0.0
     cors: true
+    # 配合 HttpCompressionHandler 启用对静态资源的压缩
+    enable-compression: true
+    compress-media-types: text/html,text/plain,text/xml,text/css,text/javascript,application/javascript,image/svg+xml
   log:
     level: INFO
     category:
