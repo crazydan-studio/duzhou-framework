@@ -22,6 +22,7 @@ package io.crazydan.duzhou.framework.gateway.web;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
 import io.nop.commons.lang.impl.Cancellable;
+import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.lang.xml.parse.XNodeParser;
@@ -93,6 +94,9 @@ public class WebSiteProvider {
         Object model = new DslModelParser(xdefPath).parseFromNode(node);
         XNode htmlNode = WebDslModelHelper.toHtmlNode(xdefPath, model);
 
-        return "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
+        String html = htmlNode.html().replaceAll("\n\\s*", "");
+        html = StringHelper.unescapeXml(html);
+
+        return "<!DOCTYPE html>" + html;
     }
 }
