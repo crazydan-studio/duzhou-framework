@@ -61,18 +61,16 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
     public CompletionStage<Void> filterAsync(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
         // 耗时的操作不能在IO线程上执行
         return context.executeBlocking(() -> doFilter(context, next)) //
-                      .exceptionally((e) -> {
-                          handleError(context, e);
-                          return null;
-                      }).thenApply(r -> null);
+                      .exceptionally((e) -> handleError(context, e)) //
+                      .thenApply(r -> null);
     }
 
     private CompletionStage<Void> doFilter(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
         String path = context.getRequestPath().replaceAll("/+$", "");
 
         String html = getSiteHtml(path);
-        // 继续后续的路由：在 gateway-starter 中通过 QuarkusStaticResources
-        // 等适配器处理对静态资源的路由
+        // 无匹配的站点，继续后续的路由，
+        // 如，静态资源路由（由 QuarkusStaticResources 处理）等
         if (html == null) {
             return next.get();
         }
@@ -92,7 +90,7 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
             html = this.provider.getSiteHtmlByRequestPath(path + "/");
         }
 
-        // 无入口页面，且不是静态资源文件，则返回站点页面
+        // 无匹配的站点，且不是请求的静态资源，则返回默认站点页面
         if (html == null && !WebStaticResourcesHelper.isFile(path)) {
             // TODO 内置默认页面
             html = this.provider.getSiteHtmlByRequestPath("*");
@@ -101,9 +99,11 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
         return html;
     }
 
-    private void handleError(IHttpServerContext context, Throwable e) {
+    private CompletionStage<Void> handleError(IHttpServerContext context, Throwable e) {
         context.sendResponse(500, "Server Error");
 
         log.error("duzhou.error.web.gen-site-html-fail:path={}", context.getRequestPath(), e);
+
+        return null;
     }
 }
