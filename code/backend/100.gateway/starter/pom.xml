@@ -59,7 +59,7 @@
 
     <profiles>
         <profile>
-            <id>native</id>
+            <id>quarkus</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>

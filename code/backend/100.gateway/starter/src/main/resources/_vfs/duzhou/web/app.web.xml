@@ -35,8 +35,8 @@
             </scripts>
 
             <styles>
-                <style name="engine" url="/assets/amis-6.0-Hnr1fvTY.css" />
-                <style name="renderer" url="/assets/renderer-amis-0.1-7QnOEB9u.css" />
+                <style name="engine" url="/assets/amis-6.0.css" />
+                <style name="renderer" url="/assets/renderer-amis-0.1.css" />
             </styles>
         </layout>
     </site>
