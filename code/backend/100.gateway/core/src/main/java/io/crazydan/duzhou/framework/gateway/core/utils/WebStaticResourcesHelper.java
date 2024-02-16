@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.web.utils;
+package io.crazydan.duzhou.framework.gateway.core.utils;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ import io.nop.core.resource.impl.FileResource;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-02-15
  */
-public class WebSiteResourceHelper {
+public class WebStaticResourcesHelper {
 
     /**
      * 获取指定路径的资源对象
@@ -73,7 +73,7 @@ public class WebSiteResourceHelper {
      */
     public static String getImageDataUrl(String path) {
         IResource resource = getResource(path);
-        if (resource == null || !resource.exists()) {
+        if (!isFile(resource)) {
             return null;
         }
 
@@ -89,5 +89,17 @@ public class WebSiteResourceHelper {
         }
 
         return bs.toImageUrl(type);
+    }
+
+    /** 判断指定路径的资源是否为文件 */
+    public static boolean isFile(String path) {
+        IResource resource = getResource(path);
+
+        return isFile(resource);
+    }
+
+    /** 判断指定的资源是否为文件 */
+    public static boolean isFile(IResource resource) {
+        return resource != null && resource.exists() && !resource.isDirectory();
     }
 }

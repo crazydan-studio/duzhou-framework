@@ -22,7 +22,8 @@ package io.crazydan.duzhou.framework.gateway.core;
 import io.nop.http.api.server.IHttpServerFilter;
 
 public interface GatewayConstants {
-    /** API 过滤器优先于 Web 站点过滤器 */
+    /** API 过滤器：其需优先于 {@link #PRIORITY_WEB_SITE_FILTER Web 站点过滤器} */
     int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
+    /** Web 站点过滤器 */
     int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY - 100;
 }

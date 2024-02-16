@@ -23,8 +23,8 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Supplier;
 
 import io.crazydan.duzhou.framework.gateway.core.GatewayConstants;
+import io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteProvider;
-import io.nop.commons.util.StringHelper;
 import io.nop.http.api.HttpStatus;
 import io.nop.http.api.contenttype.ContentType;
 import io.nop.http.api.server.IHttpServerContext;
@@ -87,10 +87,13 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
     private String getSiteHtml(String path) {
         String html = this.provider.getSiteHtmlByRequestPath(path);
 
+        // 匹配尾部含 / 的请求
         if (html == null) {
             html = this.provider.getSiteHtmlByRequestPath(path + "/");
         }
-        if (html == null && StringHelper.lastPart(path, '.', true).isEmpty()) {
+
+        // 无入口页面，且不是静态资源文件，则返回站点页面
+        if (html == null && !WebStaticResourcesHelper.isFile(path)) {
             html = this.provider.getSiteHtmlByRequestPath("*");
         }
 

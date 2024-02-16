@@ -20,8 +20,6 @@
 package io.crazydan.duzhou.framework.gateway.adaptor;
 
 import io.crazydan.duzhou.framework.gateway.core.GatewayConfigs;
-import io.crazydan.duzhou.framework.gateway.web.utils.WebSiteResourceHelper;
-import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.ResourceHelper;
 import io.quarkus.runtime.StartupEvent;
@@ -33,7 +31,8 @@ import jakarta.enterprise.event.Observes;
 /**
  * 基于 Quarkus 的静态资源路由控制
  * <p/>
- * 由 Quarkus 扫描并加载。确保支持可读取 classpath 和系统文件下的静态资源
+ * 由 Quarkus 扫描并加载。确保支持可读取 classpath 和系统文件下的静态资源，
+ * 同时保证该路由处理在过滤器链的尾部
  * <p/>
  * 注: Nop 未在过滤器中提供向客户端返回文件流的接口，故而，
  * 只能在各个启动器中为不同的服务实现提供静态资源的路由接口
@@ -46,15 +45,9 @@ public class QuarkusStaticResources {
 
     public void route(@Observes StartupEvent event, Router router) {
         router.route().handler(context -> {
-            String path = context.request().path();
-
-            IResource resource = WebSiteResourceHelper.getResource(path);
-            if (resource != null && resource.exists() && !resource.isDirectory()) {
-                getHandler().handle(context);
-                return;
-            }
-
-            context.next();
+            // Note: Web 站点过滤器中已对不存在的静态资源做了处理，
+            // 这里直接路由剩余请求即可
+            getHandler().handle(context);
         });
     }
 

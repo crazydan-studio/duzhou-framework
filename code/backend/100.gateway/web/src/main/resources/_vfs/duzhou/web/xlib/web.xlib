@@ -72,9 +72,9 @@
 
             <source>
                 <c:script><![CDATA[
-                    import io.crazydan.duzhou.framework.gateway.web.utils.WebSiteResourceHelper;
+                    import io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper;
 
-                    return WebSiteResourceHelper.getImageDataUrl(path);
+                    return WebStaticResourcesHelper.getImageDataUrl(path);
                 ]]></c:script>
             </source>
         </GenImageDataUrl>

@@ -27,7 +27,7 @@
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
     >
-        <layout spinner="classpath:/META-INF/resources/loading.svg" bgColor="#1d243d">
+        <layout spinner="/loading.svg" bgColor="#1d243d">
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
