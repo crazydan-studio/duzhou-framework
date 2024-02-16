@@ -20,8 +20,11 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import imageInliner from 'postcss-image-inliner';
-import virtualHtml from 'vite-plugin-virtual-html';
+
+import viteVirtualHtml from 'vite-plugin-virtual-html';
+import rollupCleanup from 'rollup-plugin-cleanup';
+import postcssImageInliner from 'postcss-image-inliner';
+import postcssComments from 'postcss-discard-comments';
 
 import pkg from './package.json';
 import amisPkg from './node_modules/amis/package.json';
@@ -50,8 +53,12 @@ export default defineConfig(({ command, mode }) => {
       // https://cn.vitejs.dev/config/shared-options#css-postcss
       postcss: {
         plugins: [
+          // https://www.npmjs.com/package/postcss-discard-comments
+          postcssComments({
+            removeAll: true
+          }),
           // https://github.com/bezoerb/postcss-image-inliner
-          imageInliner({
+          postcssImageInliner({
             maxFileSize: 10240,
             b64Svg: true,
             filter: /^(background(?:-image)?)|(content)|(cursor)|(--.+-bg)/
@@ -60,6 +67,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
+      minify: true,
       target: 'es2015',
       rollupOptions: {
         treeshake: true,
@@ -78,8 +86,17 @@ export default defineConfig(({ command, mode }) => {
           entryFileNames: 'js/[name].js',
           // 各个依赖模块独立打包，并放在 js 目录下
           chunkFileNames: 'js/lib/[name].js',
-          manualChunks: getLibChunks
-        }
+          manualChunks: getLibChunks,
+          // css 等资源文件名称
+          assetFileNames: 'assets/[name].[ext]'
+        },
+        plugins: [
+          // Note：对 css 的处理耗时太长，暂时不用
+          // // https://www.npmjs.com/package/rollup-plugin-cleanup#predefined-comment-filters
+          // rollupCleanup({
+          //   comments: 'license'
+          // })
+        ]
       }
     }
   };
@@ -89,7 +106,7 @@ function getDevPlugins() {
   return [
     // https://github.com/windsonR/vite-plugin-virtual-html?tab=readme-ov-file#usage
     // https://github.com/windsonR/vite-plugin-virtual-html/blob/64a3f8f/vite.config.ts
-    virtualHtml({
+    viteVirtualHtml({
       indexPage: 'signin/',
       data: {
         site_title: '渡舟平台',
