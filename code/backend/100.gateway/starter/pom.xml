@@ -53,6 +53,12 @@
         </dependency>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
+            <artifactId>gateway-web-demo</artifactId>
+            <!-- 仅用于演示功能可用性，不是强依赖模块 -->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>gateway-api</artifactId>
         </dependency>
     </dependencies>
