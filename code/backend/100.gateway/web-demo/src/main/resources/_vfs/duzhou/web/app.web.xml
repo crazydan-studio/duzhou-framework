@@ -80,11 +80,11 @@
     >
         <resources>
             <resource id="auth"
-                      displayName="权限管理"
+                      displayName="权限管理" icon="fa fa-user"
                       url="/path/to/auth.page.xml">
             </resource>
             <resource id="organization"
-                      displayName="组织管理"
+                      displayName="组织管理" icon="fa fa-sitemap"
                       url="/path/to/org.page.xml">
             </resource>
         </resources>
@@ -98,13 +98,24 @@
                 `;
 
                 return {
-                  data: {},
-                  schema: {
-                    type: 'app',
-                    brandName: site.subTitle,
-                    logo: site.logo,
-                    pages: pages
-                  }
+                    data: {},
+                    schema: {
+                        type: 'app',
+                        brandName: site.subTitle,
+                        logo: site.logo,
+                        pages: [{
+                            url: '/',
+                            schema: {
+                              type: 'page',
+                              title: '首页',
+                              headerClassName: 'hidden',
+                              body: '欢迎'
+                            }
+                        }, {
+                            // 导航菜单在第二级子节点中，第一级为菜单分组
+                            children: pages
+                        }]
+                    }
                 };
             ]]></render>
         </layout>

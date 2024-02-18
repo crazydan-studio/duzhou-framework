@@ -90,6 +90,8 @@
                 <c:script><![CDATA[
                     return resources.map((resource) => _.filterNull({
                         label: resource.displayName,
+                        // AMIS 默认采用 Font Awesome 6 Free 图标
+                        // https://fontawesome.com/v6/icons?o=r&m=free
                         icon: resource.icon,
                         url: resource.id,
                         schemaApi: resource.url,
