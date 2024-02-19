@@ -24,6 +24,7 @@ import java.util.List;
 import io.crazydan.duzhou.framework.starter.QuarkusConstants;
 import io.nop.api.core.ioc.BeanContainer;
 import io.nop.api.core.util.OrderedComparator;
+import io.nop.core.initialize.CoreInitialization;
 import io.nop.http.api.server.HttpServerHelper;
 import io.nop.http.api.server.IHttpServerFilter;
 import io.quarkus.vertx.http.runtime.filters.Filters;
@@ -35,7 +36,7 @@ public class HttpServerFilterRegistrar {
     private List<IHttpServerFilter> filters;
 
     public synchronized List<IHttpServerFilter> getFilters() {
-        if (this.filters == null) {
+        if (this.filters == null || !CoreInitialization.isInitialized()) {
             this.filters = new ArrayList<>(BeanContainer.instance().getBeansOfType(IHttpServerFilter.class).values());
             this.filters.sort(OrderedComparator.instance());
         }

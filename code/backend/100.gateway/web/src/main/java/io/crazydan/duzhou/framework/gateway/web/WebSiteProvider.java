@@ -19,16 +19,14 @@
 
 package io.crazydan.duzhou.framework.gateway.web;
 
+import io.crazydan.duzhou.framework.gateway.web.model.WebSiteHtmlLoader;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
 import io.nop.commons.lang.impl.Cancellable;
-import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
-import io.nop.core.lang.xml.XNode;
-import io.nop.core.lang.xml.parse.XNodeParser;
-import io.nop.core.resource.component.ComponentModelConfig;
+import io.nop.core.resource.IResource;
+import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.component.ResourceComponentManager;
-import io.nop.xlang.xdsl.DslModelParser;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
@@ -43,7 +41,6 @@ public class WebSiteProvider {
 
     @PostConstruct
     public void init() {
-        registerWebLoader();
         registerGlobalVars();
     }
 
@@ -53,7 +50,8 @@ public class WebSiteProvider {
     }
 
     public String getSiteHtmlByRequestPath(String path) {
-        XWeb web = (XWeb) ResourceComponentManager.instance().loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
+        XWeb web = (XWeb) ResourceComponentManager.instance() //
+                                                  .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
         XWebSite site = web.getSiteByUrl(path);
 
         if (site == null) {
@@ -63,24 +61,12 @@ public class WebSiteProvider {
         return WebSiteGlobalVariable.with(site, this::genSiteHtml);
     }
 
-    private void registerWebLoader() {
-        ComponentModelConfig config = new ComponentModelConfig();
-
-        config.modelType(WebSiteConstants.MODEL_TYPE_XWEB);
-        config.loader(WebSiteConstants.FILE_TYPE_WEB_XML, this::loadWeb);
-
-        this.cleanup.append(ResourceComponentManager.instance().registerComponentModelConfig(config));
-    }
-
-    private XWeb loadWeb(String path) {
-        return XWeb.parseFromVirtualPath(path);
-    }
-
     private void registerGlobalVars() {
         Cancellable cancellable = new Cancellable();
 
-        EvalGlobalRegistry.instance()
-                          .registerVariable(WebSiteConstants.VAR_GLOBAL_SITE, WebSiteGlobalVariable.instance());
+        EvalGlobalRegistry.instance() //
+                          .registerVariable(WebSiteConstants.VAR_GLOBAL_SITE, //
+                                            WebSiteGlobalVariable.instance());
         cancellable.appendOnCancel(r -> EvalGlobalRegistry.instance()
                                                           .unregisterVariable(WebSiteConstants.VAR_GLOBAL_SITE));
 
@@ -88,15 +74,15 @@ public class WebSiteProvider {
     }
 
     private String genSiteHtml() {
-        XNode node = XNodeParser.instance().parseFromVirtualPath(WebSiteConstants.VFS_XDSL_SITE_HTML);
-        String xdefPath = node.attrText("x:schema");
+        IResource resource = VirtualFileSystem.instance() //
+                                              .getResource(WebSiteConstants.VFS_XDSL_SITE_HTML);
+        // Note：站点 HTML 页面需要当前的站点数据动态生成，
+        // 故而，不能使用带 DSL 模型缓存的载入接口 #loadComponentModel
+        WebSiteHtmlLoader.WebSiteHtml model = //
+                (WebSiteHtmlLoader.WebSiteHtml) //
+                        ResourceComponentManager.instance() //
+                                                .parseComponentModel(resource);
 
-        Object model = new DslModelParser(xdefPath).parseFromNode(node);
-        XNode htmlNode = WebDslModelHelper.toHtmlNode(xdefPath, model);
-
-        String html = htmlNode.html().replaceAll("\n\\s*", "");
-        html = StringHelper.unescapeXml(html);
-
-        return "<!DOCTYPE html>" + html;
+        return model.getContent();
     }
 }
