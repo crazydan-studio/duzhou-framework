@@ -6,6 +6,7 @@ target/
 ### Nop
 _dump/
 nop-vfs-index.txt
+native-image/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

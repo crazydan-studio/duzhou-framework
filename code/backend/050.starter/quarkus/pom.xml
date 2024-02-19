@@ -38,7 +38,7 @@
     </properties>
 
     <dependencies>
-        <!-- 使用 caffeine 提供的 graalvm 支持 -->
+        <!-- 使用 caffeine（高性能缓存库）依赖的 graalvm 版本 -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-caffeine</artifactId>
@@ -51,6 +51,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
         </dependency>
+
         <!--
         Note：需要排除 quarkus-bootstrap-core（被 quarkus-core-deployment 依赖），
         否则在 IDE 中启动 @QuarkusMain 的 main 函数会失败，只能用 quarkus 插件启动
@@ -59,6 +60,24 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-vertx-http</artifactId>
         </dependency>
+        <!-- 用于加载 @jakarta.ws.rs.Path 标注的 Web 端点: Nop GraphQL 端点需该组件的支持 -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+
+        <!-- 用于提供 GraphiQL 控制台，并且其前端资源由依赖 vertx-web-graphql 提供 -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-graphql</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.graphql-java</groupId>
+                    <artifactId>graphql-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 应用服务的健康检查支持 -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-health</artifactId>

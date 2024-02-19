@@ -72,8 +72,10 @@
             <properties>
                 <!--
                 配置 Quarkus 的默认打包类型: https://quarkus.io/guides/building-native-image
-                - native 为 Docker 镜像
-                - uber-jar 为可执行 jar 包
+                - native: Docker 镜像打包
+                - uber-jar: 单一可执行的 jar 包
+                - fast-jar: 各依赖包分类放置的组织形式，方便复用公共基础 jar，执行入口为
+                  target/quarkus-app/quarkus-run.jar
                 -->
                 <!--<quarkus.package.type>native</quarkus.package.type>-->
                 <quarkus.package.type>uber-jar</quarkus.package.type>

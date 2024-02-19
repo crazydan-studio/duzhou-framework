@@ -59,7 +59,7 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
 
     @Override
     public CompletionStage<Void> filterAsync(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
-        // 耗时的操作不能在IO线程上执行
+        // 耗时的操作不能在 IO 线程上执行
         return context.executeBlocking(() -> doFilter(context, next)) //
                       .exceptionally((e) -> handleError(context, e)) //
                       .thenApply(r -> null);
@@ -67,6 +67,16 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
 
     private CompletionStage<Void> doFilter(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
         String path = context.getRequestPath().replaceAll("/+$", "");
+
+        // 忽略 Quarkus 内置的开发、监控等服务请求
+        // TODO 根据运行环境确定可以开放的服务
+        if (path.startsWith("/q/")
+            // 忽略后台 API 服务接口
+            || path.startsWith("/r/")
+            || path.startsWith("/p/")
+            || path.equals("/graphql")) {
+            return next.get();
+        }
 
         String html = getSiteHtml(path);
         // 无匹配的站点，继续后续的路由，
