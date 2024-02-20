@@ -29,9 +29,7 @@
 
     <bean id="webSiteHttpServerFilter"
           class="io.crazydan.duzhou.framework.gateway.web.filter.WebSiteHttpServerFilter"
-          ioc:default="true">
-        <property name="provider" ref="webSiteProvider" />
-    </bean>
+          ioc:default="true" />
 
     <bean id="webSiteProvider"
           class="io.crazydan.duzhou.framework.gateway.web.WebSiteProvider"

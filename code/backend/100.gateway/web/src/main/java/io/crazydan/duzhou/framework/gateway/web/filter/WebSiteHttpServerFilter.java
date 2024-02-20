@@ -29,6 +29,7 @@ import io.nop.http.api.HttpStatus;
 import io.nop.http.api.contenttype.ContentType;
 import io.nop.http.api.server.IHttpServerContext;
 import io.nop.http.api.server.IHttpServerFilter;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,12 +46,9 @@ import org.slf4j.LoggerFactory;
 public class WebSiteHttpServerFilter implements IHttpServerFilter {
     private static final Logger log = LoggerFactory.getLogger(WebSiteHttpServerFilter.class);
 
-    // Note: @Inject 无效，只能通过 setter 注入
-    private WebSiteProvider provider;
-
-    public void setProvider(WebSiteProvider provider) {
-        this.provider = provider;
-    }
+    // Note: @Inject 仅对可见性在 private 之外的属性有效
+    @Inject
+    protected WebSiteProvider provider;
 
     @Override
     public int order() {
@@ -72,9 +70,7 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
         // TODO 根据运行环境（从配置读取）确定可以开放的服务
         if (path.startsWith("/q/")
             // 忽略后台 API 服务接口
-            || path.startsWith("/r/")
-            || path.startsWith("/p/")
-            || path.equals("/graphql")) {
+            || path.startsWith("/r/") || path.startsWith("/p/") || path.equals("/graphql")) {
             return next.get();
         }
 
