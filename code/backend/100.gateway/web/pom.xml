@@ -56,5 +56,22 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-ioc</artifactId>
         </dependency>
+
+        <!-- 引入 Nop XView 的 Xlib 和 BizModel -->
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.github.entropy-cloud</groupId>
+                    <artifactId>nop-web-page</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 引入 Nop XView 的 Java Class -->
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-ui</artifactId>
+        </dependency>
     </dependencies>
 </project>

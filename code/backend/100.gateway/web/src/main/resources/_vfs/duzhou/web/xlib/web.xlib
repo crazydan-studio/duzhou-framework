@@ -102,5 +102,23 @@
                 ]]></c:script>
             </source>
         </GenAmisAppPages>
+
+        <!--
+        遍历所有 Web 站点的资源，并更新资源页面 url
+        以采用 /graphql 的端点获取页面结构
+        @web [必填] Web 结构
+        -->
+        <UpdateWebSiteResourceUrl>
+            <attr name="web" />
+
+            <source>
+                <c:script><![CDATA[
+                    function genPageUrl(path) {
+                        return '@query:PageProvider__getPage?path=/duzhou/web/pages' + path;
+                    }
+
+                ]]></c:script>
+            </source>
+        </UpdateWebSiteResourceUrl>
     </tags>
 </lib>

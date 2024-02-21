@@ -19,16 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<beans xmlns:x="/nop/schema/xdsl.xdef" xmlns:ioc="ioc"
+<!--
+Note：仅在 delta 层，才能以 super 方式进行同名继承
+-->
+<beans xmlns:x="/nop/schema/xdsl.xdef"
        x:schema="/nop/schema/beans.xdef"
+       x:extends="super"
 >
 
-    <bean id="webSiteHttpServerFilter"
-          class="io.crazydan.duzhou.framework.gateway.web.filter.WebSiteHttpServerFilter"
-          ioc:default="true"
-    />
-
-    <bean id="webSiteProvider"
-          class="io.crazydan.duzhou.framework.gateway.web.WebSiteProvider"
-    />
+    <!-- 去掉 Nop 中不需要的 Beans -->
+    <bean id="io.nop.web.biz.SystemJsProviderBizModel" x:override="remove" />
+    <bean id="io.nop.web.page.DynamicWebFileProvider" x:override="remove" />
+    <bean id="nopDynamicCssLoader" x:override="remove" />
+    <bean id="nopDynamicJsLoader" x:override="remove" />
+    <bean id="nopJsFunctionService" x:override="remove" />
 </beans>
