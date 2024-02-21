@@ -24,10 +24,6 @@ import io.crazydan.duzhou.framework.gateway.web.WebDslModelHelper;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
-import io.crazydan.duzhou.framework.schema.web.XWebSiteResource;
-import io.crazydan.duzhou.framework.schema.web.XWebSiteScript;
-import io.crazydan.duzhou.framework.schema.web.XWebSiteStyle;
-import io.nop.commons.collections.KeyedList;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
@@ -71,88 +67,30 @@ public class SiteGenTest extends GatewayWebBaseTest {
 
     @Test
     public void test_Gen_Site_Html() {
-        XWebSite site = WebSiteGlobalVariable.get();
+        for (String[] pair : new String[][] {
+                new String[] { SITE_HTML_XDSL, "gen.site.html" },
+                new String[] { SITE_HTML_EXTENDS_XDSL, "gen.extends.site.html" }
+        }) {
+            String dslPath = pair[0];
+            String casePath = pair[1];
 
-        XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_XDSL);
-        String xdefPath = node.attrText("x:schema");
+            XNode node = XNodeParser.instance().parseFromVirtualPath(dslPath);
+            String xdefPath = node.attrText("x:schema");
 
-        DslModelParser parser = new DslModelParser(xdefPath);
-        DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
-        this.log.info(JsonTool.serialize(obj, true));
+            DslModelParser parser = new DslModelParser(xdefPath);
+            DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
+            String json = JsonTool.serialize(obj, true);
 
-        Assertions.assertEquals(site.getLocale(), obj.prop_get("lang"));
+            this.log.info(dslPath + ":json={}", json);
+            Assertions.assertEquals(attachmentJsonText(casePath + ".json"), json);
 
-        KeyedList<?> headLinks = (KeyedList<?>) obj.getComplexProp("head.links");
-        KeyedList<?> headStyles = (KeyedList<?>) obj.getComplexProp("head.styles");
-        Assertions.assertEquals(site.getLogo(), ((DynamicObject) headLinks.getByKey("icon:logo")).prop_get("href"));
-        Assertions.assertTrue(((DynamicObject) headStyles.getByKey("style:global")).prop_get("body")
-                                                                                   .toString()
-                                                                                   .contains(
-                                                                                           "data:image/svg+xml;base64,"));
+            XNode htmlNode = WebDslModelHelper.toHtmlNode(parser.getRequiredSchema(), obj);
+            String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
+            html = StringHelper.unescapeXml(html);
 
-        String title = obj.getComplexProp("head.title").toString();
-        Assertions.assertEquals(site.getSubTitle() + " | " + site.getTitle(), title);
-
-        KeyedList<?> bodyLinks = (KeyedList<?>) obj.getComplexProp("body.links");
-        KeyedList<?> bodyScripts = (KeyedList<?>) obj.getComplexProp("body.scripts");
-        for (XWebSiteStyle style : site.getLayout().getStyles()) {
-            DynamicObject link = (DynamicObject) bodyLinks.getByKey("css:" + style.getName());
-
-            Assertions.assertEquals(style.getUrl(), link.prop_get("href"));
+            this.log.info(dslPath + ":html={}", html);
+            Assertions.assertEquals(attachmentText(casePath), html + "\n");
         }
-        for (XWebSiteScript script : site.getLayout().getScripts()) {
-            DynamicObject s = (DynamicObject) bodyLinks.getByKey("js:" + script.getName());
-
-            if (s == null) {
-                s = (DynamicObject) bodyScripts.getByKey("js:" + script.getName());
-                Assertions.assertEquals(script.getUrl(), s.prop_get("src"));
-            } else {
-                Assertions.assertEquals(script.getUrl(), s.prop_get("href"));
-            }
-        }
-
-        String siteConfig = ((DynamicObject) bodyScripts.getByKey("js:site-config")).prop_get("body").toString();
-        for (XWebSiteResource resource : site.getResources()) {
-            Assertions.assertTrue(siteConfig.contains("\"label\":\"" + resource.getDisplayName() + "\""));
-            Assertions.assertTrue(siteConfig.contains("\"url\":\"" + resource.getId() + "\""));
-            Assertions.assertTrue(siteConfig.contains("\"schemaApi\":\"" + resource.getUrl() + "\""));
-        }
-
-        XNode htmlNode = WebDslModelHelper.toHtmlNode(parser.getRequiredSchema(), obj);
-
-        String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
-        this.log.info(StringHelper.unescapeXml(html));
-    }
-
-    @Test
-    public void test_Extends_Gen_Site_Html() {
-        XWebSite site = WebSiteGlobalVariable.get();
-
-        XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_EXTENDS_XDSL);
-        String xdefPath = node.attrText("x:schema");
-
-        DslModelParser parser = new DslModelParser(xdefPath);
-        DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
-        this.log.info(JsonTool.serialize(obj, true));
-
-        Assertions.assertEquals("zh_CN", obj.prop_get("lang"));
-
-        String title = obj.getComplexProp("head.title").toString();
-        Assertions.assertEquals(site.getSubTitle() + " - " + site.getTitle() + " (开发中...)", title);
-
-        KeyedList<?> bodyDivs = (KeyedList<?>) obj.getComplexProp("body.divs");
-        Assertions.assertNotNull(bodyDivs.getByKey("tips"));
-        Assertions.assertNotNull(bodyDivs.getByKey("text"));
-
-        XNode htmlNode = WebDslModelHelper.toHtmlNode(parser.getRequiredSchema(), obj);
-
-        XNode htmlBodyNode = htmlNode.childByTag("body");
-        Assertions.assertEquals("<span>This is just a tip.</span>", htmlBodyNode.childByAttr("id", "tips").innerHtml());
-        Assertions.assertEquals("<span>Hi,</span> This is a text. <span>:)</span>",
-                                htmlBodyNode.childByAttr("id", "text").innerHtml());
-
-        String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
-        this.log.info(StringHelper.unescapeXml(html));
     }
 
     @Test

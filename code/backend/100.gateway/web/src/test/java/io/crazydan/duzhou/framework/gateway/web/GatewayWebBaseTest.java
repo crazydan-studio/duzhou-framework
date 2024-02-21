@@ -35,7 +35,7 @@ public abstract class GatewayWebBaseTest extends JunitBaseTestCase {
 
     public GatewayWebBaseTest() {
         // 统一设置测试样例数据位置为当前用例目录下
-        File dir = FileHelper.getClassPathFile("cases/sample/" + getClass().getSimpleName());
+        File dir = FileHelper.getClassPathFile("cases/" + getClass().getSimpleName());
 
         setAttachmentDir(dir);
     }

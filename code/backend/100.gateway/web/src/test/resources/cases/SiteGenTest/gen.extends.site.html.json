@@ -1,0 +1,106 @@
+{
+  "lang": "zh_CN",
+  "xmlns:x": "/nop/schema/xdsl.xdef",
+  "xmlns:xpl": "xpl",
+  "xmlns:web": "web",
+  "xmlns:c": "c",
+  "head": {
+    "metas": [
+      {
+        "name": "charset",
+        "charset": "UTF-8"
+      },
+      {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0"
+      }
+    ],
+    "links": [
+      {
+        "name": "icon:logo",
+        "rel": "icon",
+        "href": "/logo.svg"
+      }
+    ],
+    "title": "后台管理 - 渡舟平台 (开发中...)",
+    "styles": [
+      {
+        "name": "style:global",
+        "body": "\n                * { box-sizing: border-box; }\n\n                html, body {\n                    margin: 0; padding: 0;\n                    min-width: 0; min-height: 0;\n                    /* 修改默认的 AMIS 加载动画和背景色: https://baidu.github.io/amis/zh-CN/style/css-vars#%E5%9B%BE%E7%89%87 */\n                    --Spinner-bg: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggLz4KPC9zdmc+Cg==');\n                    --body-bg: #1d243d;\n                }\n                html, body, #app {\n                    width: 100%; height: 100%;\n                }\n            "
+      },
+      {
+        "name": "style:loading",
+        "body": "\n                .loading::after {\n                    z-index: 10000; opacity: 1;\n                    transition: opacity 0.5s ease-out;\n                    transition-delay: 0.2s;\n                    pointer-events: none;\n\n                    overflow: hidden;\n                    position: absolute; top: 0;\n                    width: 100%; height: 100%;\n\n                    content: '';\n                    background-image: var(--Spinner-bg);\n                    background-color: var(--body-bg);\n                    background-position: center;\n                    background-size: 12rem;\n                    background-repeat: no-repeat;\n                }\n                .loading.done::after {\n                    opacity: 0;\n                }\n\n                .loading > * {\n                    opacity: 0;\n                    transition: opacity 0.5s ease-in;\n                }\n                .loading.done > * {\n                    opacity: 1;\n                }\n            "
+      }
+    ]
+  },
+  "body": {
+    "class": "loading",
+    "divs": [
+      {
+        "id": "app"
+      },
+      {
+        "id": "tips",
+        "class": "tips",
+        "body": {
+          "$type": "_",
+          "id": "tips",
+          "class": "tips",
+          "$body": [
+            {
+              "$type": "span",
+              "$body": "This is just a tip."
+            }
+          ]
+        }
+      },
+      {
+        "id": "text",
+        "body": {
+          "$type": "_",
+          "id": "text",
+          "$body": [
+            {
+              "$type": "span",
+              "$body": "Hi,"
+            },
+            " This is a text. ",
+            {
+              "$type": "span",
+              "$body": ":)"
+            }
+          ]
+        }
+      }
+    ],
+    "links": [
+      {
+        "name": "css:engine",
+        "rel": "stylesheet",
+        "href": "/css/amis/theme.css"
+      },
+      {
+        "name": "css:renderer",
+        "rel": "stylesheet",
+        "href": "/css/renderer-amis-0.1.0.css"
+      },
+      {
+        "name": "js:engine",
+        "rel": "modulepreload",
+        "href": "/js/amis/sdk-6.0.0.js"
+      }
+    ],
+    "scripts": [
+      {
+        "name": "js:site-config",
+        "body": "\n                window.__APP_SITE_CONFIG__ = {\n                    el: '#app',\n                    layout: async () => {\n                        return {\"data\":{},\"schema\":{\"type\":\"app\",\"brandName\":\"后台管理\",\"logo\":\"/logo.svg\",\"pages\":[{\"label\":\"权限管理\",\"url\":\"auth\",\"schemaApi\":\"/path/to/auth.page.xml\"},{\"label\":\"组织管理\",\"url\":\"organization\",\"schemaApi\":\"/path/to/org.page.xml\"}]}};\n                    }\n                };\n            "
+      },
+      {
+        "name": "js:renderer",
+        "type": "module",
+        "src": "/js/renderer-amis-0.1.0.js"
+      }
+    ]
+  }
+}
