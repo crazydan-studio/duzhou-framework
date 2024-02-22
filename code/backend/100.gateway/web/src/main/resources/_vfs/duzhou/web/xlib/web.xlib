@@ -20,7 +20,7 @@
   -->
 
 <lib xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:c="c" xmlns:thisLib="thisLib"
+     xmlns:c="c" xmlns:xpl="xpl" xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
@@ -108,9 +108,26 @@
         以采用 /graphql 的端点获取页面结构。
         该函数直接修改当前已解析的 DSL 节点
         -->
-        <UpdateWebSiteResourceUrl>
+        <UpdateWebSiteResourceUrl outputMode="node">
             <!--  _dsl_root 为元编程阶段可访问的 DSL 根节点 -->
             <attr name="_dsl_root" implicit="true" />
+
+            <source>
+                <web>
+                    <c:for items="${_dsl_root.childrenByTag('site')}" var="site">
+                        <site id="${site.attrText('id')}" xpl:if="site.hasChild('resources')">
+                            <resources>
+                                <thisLib:_PatchSiteResourcesUrl
+                                        resources="${site.childByTag('resources').children}" />
+                            </resources>
+                        </site>
+                    </c:for>
+                </web>
+            </source>
+        </UpdateWebSiteResourceUrl>
+
+        <_PatchSiteResourcesUrl outputMode="node">
+            <attr name="resources" />
 
             <source>
                 <c:script><![CDATA[
@@ -120,26 +137,18 @@
                         }
                         return '@query:PageProvider__getPage?path=' + path;
                     }
-
-                    function updateResources(resources) {
-                        resources.forEach((resource) => {
-                            const url = genPageUrl(resource.getAttr('url'));
-                            resource.setAttr('url', url);
-
-                            updateResources(resource.childByTag('children')?.children || []);
-                        });
-                    }
-
-                    _dsl_root
-                        .childrenByTag('site')
-                        .filter((site) => site.hasChild('resources'))
-                        .forEach(
-                            (site) => updateResources(
-                                site.childByTag('resources').children
-                            )
-                        );
                 ]]></c:script>
+
+                <c:for items="${resources}" var="resource">
+                    <resource id="${resource.attrText('id')}"
+                              url="${genPageUrl(resource.attrText('url'))}">
+                        <children xpl:if="resource.hasChild('children')">
+                            <thisLib:_PatchSiteResourcesUrl
+                                    resources="${resource.childByTag('children').children}" />
+                        </children>
+                    </resource>
+                </c:for>
             </source>
-        </UpdateWebSiteResourceUrl>
+        </_PatchSiteResourcesUrl>
     </tags>
 </lib>
