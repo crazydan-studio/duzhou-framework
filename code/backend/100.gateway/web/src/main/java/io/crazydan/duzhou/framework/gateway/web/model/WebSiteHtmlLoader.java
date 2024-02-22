@@ -19,7 +19,7 @@
 
 package io.crazydan.duzhou.framework.gateway.web.model;
 
-import io.crazydan.duzhou.framework.gateway.web.WebDslModelHelper;
+import io.crazydan.duzhou.framework.gateway.web.utils.WebDslModelHelper;
 import io.nop.api.core.util.IComponentModel;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.StringHelper;

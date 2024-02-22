@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.web;
+package io.crazydan.duzhou.framework.gateway.web.utils;
 
 import io.nop.core.lang.xml.XNode;
 import io.nop.xlang.xdsl.DslModelHelper;

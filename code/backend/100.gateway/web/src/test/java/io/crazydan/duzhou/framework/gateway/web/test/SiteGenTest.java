@@ -20,7 +20,7 @@
 package io.crazydan.duzhou.framework.gateway.web.test;
 
 import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
-import io.crazydan.duzhou.framework.gateway.web.WebDslModelHelper;
+import io.crazydan.duzhou.framework.gateway.web.utils.WebDslModelHelper;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
