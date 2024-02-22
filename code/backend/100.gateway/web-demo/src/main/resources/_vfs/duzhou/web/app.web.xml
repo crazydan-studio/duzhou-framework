@@ -20,8 +20,15 @@
   -->
 
 <web xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:xpl="xpl" xmlns:web="web"
      x:schema="/duzhou/schema/web.xdef"
 >
+
+    <x:post-extends>
+        <!-- 在 Web DSL 生成后，更新站点资源 url 地址 -->
+        <web:UpdateWebSiteResourceUrl
+                xpl:lib="/duzhou/web/xlib/web.xlib" />
+    </x:post-extends>
 
     <site id="common" x:abstract="true"
           title="渡舟平台" logo="/logo.svg"
@@ -61,7 +68,7 @@
     >
         <resources>
             <resource id="signin"
-                      url="/path/to/signin.page.xml">
+                      url="/duzhou/web/pages/auth/signin.page.xml">
             </resource>
         </resources>
 
@@ -81,11 +88,11 @@
         <resources>
             <resource id="auth"
                       displayName="权限管理" icon="fa fa-user"
-                      url="/path/to/auth.page.xml">
+                      url="/duzhou/web/pages/admin/auth.page.xml">
             </resource>
             <resource id="organization"
                       displayName="组织管理" icon="fa fa-sitemap"
-                      url="/path/to/org.page.xml">
+                      url="/duzhou/web/pages/admin/org.page.xml">
             </resource>
         </resources>
 
