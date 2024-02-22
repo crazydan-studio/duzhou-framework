@@ -3,7 +3,7 @@
         <wrapper className="signin-page">
             <body j:list="true">
                 <wrapper className="header">
-                    <body>&lt;img class='logo' src='/logo.svg'/&gt;&lt;h3 class='title'&gt;用户登录&lt;/h3&gt;</body>
+                    <body><![CDATA[<img class='logo' src='/logo.svg'/><h3 class='title'>用户登录</h3>]]></body>
                 </wrapper>
                 <form className="signin-form" redirect="@redirect:/admin/" mode="horizontal">
                     <rules j:list="true">

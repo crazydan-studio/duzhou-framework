@@ -21,6 +21,7 @@ package io.crazydan.duzhou.framework.gateway.web.utils;
 
 import java.util.HashMap;
 
+import io.nop.commons.text.CDataText;
 import io.nop.core.lang.json.xml.DefaultJsonToXNodeAdapter;
 import io.nop.core.lang.json.xml.IJsonToXNodeAdapter;
 import io.nop.core.lang.json.xml.JsonToXNodeTransformer;
@@ -57,7 +58,6 @@ public class WebPageProviderHelper {
             NodeData node = super.getNodeData(key, obj);
             if (node.getNodeType() == null) {
                 node.setNodeType(JsonXNodeType.node);
-                node.getAttrs().remove("_");
 
                 Object type = node.getAttrs().remove("type");
                 if (type != null) {
@@ -73,7 +73,7 @@ public class WebPageProviderHelper {
                         NodeData child = new NodeData();
                         child.setNodeType(JsonXNodeType.node);
                         child.setTagName(attr);
-                        child.addChild(value);
+                        child.addChild(new CDataText(value.toString()));
 
                         node.addChild(child);
                     } else if (value instanceof Boolean) {
