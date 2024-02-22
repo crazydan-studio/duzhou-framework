@@ -73,6 +73,9 @@
         </resources>
 
         <layout>
+            <styles>
+                <style name="main" url="/pages/signin/index.css" />
+            </styles>
             <render><![CDATA[
                 return {
                   data: {},

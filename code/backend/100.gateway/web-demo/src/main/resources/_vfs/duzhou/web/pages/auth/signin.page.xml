@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!--
+Note：根节点仅用于支持挂载差量节点，没有实际用途
+-->
+<wrapper xmlns:j="j"
+         className="w-full h-full flex flex-col justify-center items-center"
+>
+
+    <!--<x:gen-extends xmlns:x="/nop/schema/xdsl.xdef"
+                   xmlns:xpl="xpl" xmlns:web="web"
+    >
+        <web:GenPage view="signin.view.xml"
+                     page="view"
+                     xpl:lib="/nop/web/xlib/web.xlib" />
+    </x:gen-extends>
+
+    &lt;!&ndash; 需按 XView 的 json 结构做差量，因为 web:GenPage 输出的是 xjson &ndash;&gt;
+    <body>
+        <form name="view" className="w-full h-full flex flex-col justify-center items-center" />
+    </body>-->
+
+    <body>
+        <wrapper className="signin-page">
+            <body>
+                <wrapper className="header">
+                    <body><![CDATA[
+                        <img class='logo' src='/logo.svg'/><h3 class='title'>用户登录</h3>
+                    ]]></body>
+                </wrapper>
+                <form className="signin-form" redirect="@redirect:/admin/" mode="horizontal">
+                    <rules j:list="true">
+                        <_ rule="!!data.account &amp;&amp; !!data.password" message="帐号或密码不能为空" />
+                    </rules>
+                    <body>
+                        <input-text name="account" className="input" placeholder="请输入帐号..." clearable="@:true"
+                                    label="@:false" />
+                        <input-password name="password" className="input" placeholder="请输入密码..." clearable="@:true"
+                                        label="@:false" />
+                        <flex justify="space-between" alignItems="center">
+                            <items j:list="true">
+                                <checkbox name="rememberMe" className="checkbox m-0 p-0" option="记住登录" />
+                                <link className="reset-link" href="/signin/password/reset/">
+                                    <body>找回密码？</body>
+                                </link>
+                            </items>
+                        </flex>
+                    </body>
+                    <actions>
+                        <submit label="登录" level="primary" />
+                    </actions>
+                </form>
+                <link href="/signup/" blank="@:false">
+                    <body>还没有帐号？点此注册一个</body>
+                </link>
+            </body>
+        </wrapper>
+        <wrapper className="footer">
+            <body><![CDATA[
+                <span>版权所有 © 2024 <a target='_blank' href='https://duzhou.crazydan.io'>渡舟平台</a></span>
+            ]]></body>
+        </wrapper>
+    </body>
+</wrapper>
