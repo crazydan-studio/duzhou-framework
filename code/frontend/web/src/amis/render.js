@@ -17,9 +17,14 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { amis, pathRegex } from '@/amis/sdk';
-// https://github.com/remix-run/history/blob/dev/docs/getting-started.md
-import history from 'history/hash';
+import { amis } from '@/amis/sdk';
+import {
+  history,
+  isCurrentUrl,
+  jumpTo,
+  updateLocation
+} from '@/amis/custom/route';
+import { requestAdaptor, responseAdaptor } from '@/amis/custom/nop';
 
 import '@/amis/components/Site';
 
@@ -54,9 +59,11 @@ export default async function render({ el, layout }) {
     },
     {
       theme: 'antd',
-      isCurrentUrl: isCurrentUrl,
-      jumpTo: jumpTo,
-      updateLocation: updateLocation
+      requestAdaptor,
+      responseAdaptor,
+      isCurrentUrl,
+      jumpTo,
+      updateLocation
     }
   );
 
@@ -65,136 +72,4 @@ export default async function render({ el, layout }) {
       location: state.location || state
     });
   });
-}
-
-function isCurrentUrl(to, ctx) {
-  if (!to) {
-    return false;
-  }
-
-  const pathname = history.location.pathname;
-  const link = normalizeLink(to, {
-    ...location,
-    pathname,
-    hash: ''
-  });
-
-  if (!~link.indexOf('http') && ~link.indexOf(':')) {
-    const strict = ctx && ctx.strict;
-
-    return pathRegex.match(link, {
-      decode: decodeURIComponent,
-      strict: typeof strict !== 'undefined' ? strict : true
-    })(pathname);
-  }
-
-  return decodeURI(pathname) === link;
-}
-
-function updateLocation(location, replace) {
-  location = normalizeLink(location);
-
-  if (location === 'goBack') {
-    return history.back();
-  }
-  // 目标地址和当前地址一样，不处理，免得重复刷新
-  else if (
-    (!/^https?\:\/\//.test(location) &&
-      location === history.location.pathname + history.location.search) ||
-    location === history.location.href
-  ) {
-    return;
-  } else if (/^https?\:\/\//.test(location) || !history) {
-    return (window.location.href = location);
-  }
-
-  history[replace ? 'replace' : 'push'](location);
-}
-
-function jumpTo(to, action) {
-  if (to === 'goBack') {
-    return history.back();
-  }
-
-  to = normalizeLink(to);
-  if (isCurrentUrl(to)) {
-    return;
-  }
-
-  if (action && action.actionType === 'url') {
-    action.blank === false
-      ? (window.location.href = to)
-      : window.open(to, '_blank');
-    return;
-  } else if (action && action.blank) {
-    window.open(to, '_blank');
-    return;
-  }
-
-  if (/^https?:\/\//.test(to)) {
-    window.location.href = to;
-  } else if (
-    (!/^https?\:\/\//.test(to) &&
-      to === history.pathname + history.location.search) ||
-    to === history.location.href
-  ) {
-    // do nothing
-  } else {
-    history.push(to);
-  }
-}
-
-function normalizeLink(link, location = history.location) {
-  if (!link) {
-    return;
-  }
-
-  if (link[0] === '#') {
-    link = location.pathname + location.search + link;
-  } else if (link[0] === '?') {
-    link = location.pathname + link;
-  } else if (link[0] === '@') {
-    const actionIndex = link.indexOf(':');
-    const pathname = link.substring(actionIndex + 1);
-    const action = link.substring(1, actionIndex);
-
-    switch (action) {
-      case 'redirect':
-        if (pathname[0] === '/') {
-          return window.location.origin + pathname;
-        }
-        return window.location.origin + window.location.pathname + pathname;
-    }
-  }
-
-  const searchIndex = link.indexOf('?');
-  const hashIndex = link.indexOf('#');
-  let pathname = ~searchIndex
-    ? link.substring(0, searchIndex)
-    : ~hashIndex
-    ? link.substring(0, hashIndex)
-    : link;
-  const search = ~searchIndex
-    ? link.substring(searchIndex, ~hashIndex ? hashIndex : undefined)
-    : '';
-  const hash = ~hashIndex ? link.substring(hashIndex) : location.hash;
-
-  if (!pathname) {
-    pathname = location.pathname;
-  } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
-    const relativeBase = location.pathname;
-    const paths = relativeBase.split('/');
-    paths.pop();
-
-    let m;
-    while ((m = /^\.\.?\//.exec(pathname))) {
-      if (m[0] === '../') {
-        paths.pop();
-      }
-      pathname = pathname.substring(m[0].length);
-    }
-    pathname = paths.concat(pathname).join('/');
-  }
-
-  return pathname + search + hash;
 }
