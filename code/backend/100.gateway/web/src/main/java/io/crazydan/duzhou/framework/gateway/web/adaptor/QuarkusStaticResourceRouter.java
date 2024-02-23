@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.adaptor;
+package io.crazydan.duzhou.framework.gateway.web.adaptor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +28,6 @@ import io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.ResourceHelper;
-import io.quarkus.runtime.StartupEvent;
 import io.quarkus.vertx.http.runtime.HttpBuildTimeConfig;
 import io.quarkus.vertx.http.runtime.HttpCompressionHandler;
 import io.vertx.core.Handler;
@@ -39,12 +38,13 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.FileSystemAccess;
 import io.vertx.ext.web.handler.StaticHandler;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 
 import static io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper.GZIP_SUFFIX;
 
 /**
- * 基于 Quarkus 的静态资源路由控制
+ * 基于 Quarkus 的静态资源路由器
  * <p/>
  * 由 Quarkus 扫描并加载。确保支持可读取 classpath 和系统文件下的静态资源，
  * 同时保证该路由处理在过滤器链的尾部
@@ -55,14 +55,15 @@ import static io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResources
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-02-15
  */
-public class QuarkusStaticResources {
+@ApplicationScoped
+public class QuarkusStaticResourceRouter {
     private Handler<RoutingContext> handler;
 
-    public void route(@Observes StartupEvent event, HttpBuildTimeConfig httpBuildTimeConfig, Router router) {
-        router.route().handler(context -> {
+    public void setupRouter(@Observes Router router, HttpBuildTimeConfig httpBuildTimeConfig) {
+        router.route().handler(rc -> {
             // Note: 在过滤器 WebSiteHttpServerFilter 中已对不存在的静态资源做了处理，
             // 仅已存在的静态资源的请求才会路由到这里
-            getHandler(httpBuildTimeConfig).handle(context);
+            getHandler(httpBuildTimeConfig).handle(rc);
         });
     }
 
@@ -106,22 +107,22 @@ public class QuarkusStaticResources {
         }
 
         @Override
-        public void handle(RoutingContext context) {
-            String path = context.normalizedPath();
+        public void handle(RoutingContext rc) {
+            String path = rc.normalizedPath();
 
             // 代码改进自 io.nop.quarkus.web.filter.ZipContentEncodingFilterRegistrar
             // 若请求资源存在压缩版本，则重新路由到其压缩文件
             if (WebStaticResourcesHelper.isFile(path + GZIP_SUFFIX)) {
-                context.reroute(path + GZIP_SUFFIX);
+                rc.reroute(path + GZIP_SUFFIX);
                 return;
             }
 
-            // 补充压缩资源响应头
+            // 设置压缩资源的响应头
             if (path.endsWith(GZIP_SUFFIX)) {
                 String fileName = StringHelper.fileFullName(path);
                 fileName = StringHelper.removeTail(fileName, GZIP_SUFFIX);
 
-                HttpServerResponse response = context.response();
+                HttpServerResponse response = rc.response();
                 response.putHeader(HttpHeaders.CONTENT_ENCODING, "gzip");
 
                 String contentType = MimeMapping.getMimeTypeForFilename(fileName);
@@ -133,7 +134,7 @@ public class QuarkusStaticResources {
                 }
             }
 
-            this.routeHandler.handle(context);
+            this.routeHandler.handle(rc);
         }
     }
 }

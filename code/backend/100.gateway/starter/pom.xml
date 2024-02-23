@@ -55,6 +55,7 @@
             <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>gateway-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>gateway-web-demo</artifactId>

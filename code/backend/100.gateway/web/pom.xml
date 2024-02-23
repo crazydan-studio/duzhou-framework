@@ -73,5 +73,27 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-ui</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-http</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+            创建 *.class 索引，并记录在 META-INF/jandex.idx 中。
+            Quarkus 依赖该索引来查找 @ApplicationScoped 等
+            Beans（https://quarkus.io/guides/cdi-reference#bean_discovery），
+            若未创建该索引，则包内标注的 @ApplicationScoped 等的 class
+            将不会被载入到 Quarkus Beans 容器中
+            -->
+            <plugin>
+                <groupId>org.jboss.jandex</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
