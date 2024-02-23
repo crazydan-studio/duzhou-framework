@@ -35,6 +35,7 @@ import io.nop.core.resource.impl.FileResource;
  * @date 2024-02-15
  */
 public class WebStaticResourcesHelper {
+    public static final String GZIP_SUFFIX = ".gz";
 
     /**
      * 获取指定路径的资源对象

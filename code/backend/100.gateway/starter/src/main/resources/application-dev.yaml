@@ -4,3 +4,10 @@ duzhou:
       static-resources:
         # 在开发阶段，Web 静态资源直接指向前端 web 项目下的构建资源目录
         path: "file:${project.basedir}/../../../frontend/web/dist"
+
+nop:
+  debug: true
+quarkus:
+  http:
+    # 开发阶段支持跨域访问
+    cors: false

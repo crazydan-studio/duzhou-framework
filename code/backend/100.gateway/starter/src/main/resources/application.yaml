@@ -1,11 +1,9 @@
-nop:
-  debug: true
-
 quarkus:
   # https://quarkus.io/blog/path-resolution-in-quarkus/
   # https://quarkus.io/guides/http-reference
   http:
     host: 0.0.0.0
+    # 禁止跨域访问
     cors: true
     # 配合 HttpCompressionHandler 启用对静态资源的压缩
     enable-compression: true

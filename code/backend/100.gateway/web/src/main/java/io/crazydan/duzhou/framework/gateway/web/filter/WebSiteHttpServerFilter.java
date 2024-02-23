@@ -33,6 +33,8 @@ import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper.GZIP_SUFFIX;
+
 /**
  * HTTP 请求过滤器
  * <p/>
@@ -97,7 +99,9 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
         }
 
         // 无匹配的站点，且不是请求的静态资源，则返回默认站点页面
-        if (html == null && !WebStaticResourcesHelper.isFile(path)) {
+        if (html == null //
+            && !WebStaticResourcesHelper.isFile(path) //
+            && !WebStaticResourcesHelper.isFile(path + GZIP_SUFFIX)) {
             // TODO 内置默认页面
             html = this.provider.getSiteHtmlByRequestPath("*");
         }

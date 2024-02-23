@@ -24,17 +24,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 import io.crazydan.duzhou.framework.gateway.core.GatewayConfigs;
+import io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper;
+import io.nop.commons.util.StringHelper;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.ResourceHelper;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.vertx.http.runtime.HttpBuildTimeConfig;
 import io.quarkus.vertx.http.runtime.HttpCompressionHandler;
 import io.vertx.core.Handler;
+import io.vertx.core.http.HttpHeaders;
+import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.http.impl.MimeMapping;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.FileSystemAccess;
 import io.vertx.ext.web.handler.StaticHandler;
 import jakarta.enterprise.event.Observes;
+
+import static io.crazydan.duzhou.framework.gateway.core.utils.WebStaticResourcesHelper.GZIP_SUFFIX;
 
 /**
  * 基于 Quarkus 的静态资源路由控制
@@ -68,6 +75,7 @@ public class QuarkusStaticResources {
 
             // Note：由上层过滤器确保静态资源配置的有效性
             String root = ResourceHelper.removeNamespace(path, ns);
+
             if (ResourceConstants.FILE_NS.equals(ns)) {
                 this.handler = StaticHandler.create(FileSystemAccess.ROOT, root);
             } else if (ResourceConstants.CLASSPATH_NS.equals(ns)) {
@@ -82,8 +90,50 @@ public class QuarkusStaticResources {
 
                 this.handler = new HttpCompressionHandler(this.handler, compressedMediaTypes);
             }
+
+            this.handler = new GzipStaticHandler(this.handler);
         }
 
         return this.handler;
+    }
+
+    /** 若请求的资源有已压缩版本，则重路由到其压缩文件 */
+    private static class GzipStaticHandler implements Handler<RoutingContext> {
+        private final Handler<RoutingContext> routeHandler;
+
+        private GzipStaticHandler(Handler<RoutingContext> routeHandler) {
+            this.routeHandler = routeHandler;
+        }
+
+        @Override
+        public void handle(RoutingContext context) {
+            String path = context.normalizedPath();
+
+            // 代码改进自 io.nop.quarkus.web.filter.ZipContentEncodingFilterRegistrar
+            // 若请求资源存在压缩版本，则重新路由到其压缩文件
+            if (WebStaticResourcesHelper.isFile(path + GZIP_SUFFIX)) {
+                context.reroute(path + GZIP_SUFFIX);
+                return;
+            }
+
+            // 补充压缩资源响应头
+            if (path.endsWith(GZIP_SUFFIX)) {
+                String fileName = StringHelper.fileFullName(path);
+                fileName = StringHelper.removeTail(fileName, GZIP_SUFFIX);
+
+                HttpServerResponse response = context.response();
+                response.putHeader(HttpHeaders.CONTENT_ENCODING, "gzip");
+
+                String contentType = MimeMapping.getMimeTypeForFilename(fileName);
+                if (contentType != null) {
+                    if (contentType.startsWith("text")) {
+                        contentType = contentType + ";charset=UTF-8";
+                    }
+                    response.putHeader(HttpHeaders.CONTENT_TYPE, contentType);
+                }
+            }
+
+            this.routeHandler.handle(context);
+        }
     }
 }
