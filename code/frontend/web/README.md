@@ -46,3 +46,4 @@ npm install \
   - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 - [Vite 中文文档](https://cn.vitejs.dev/guide/)
 - [AMIS 文档](https://baidu.github.io/amis/)
+- [Vite打包优化，通过文件，图片，字体压缩优化大小](https://juejin.cn/post/7336637599895748644)

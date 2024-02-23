@@ -3,7 +3,7 @@ window.__APP_SITE_CONFIG__ = {
   layout: () => {
     return {
       data: {},
-      schemaApi: 'get:/pages/signin/page.json'
+      schemaApi: '@query:PageProvider__getPage?path=/duzhou/web/pages/auth/signin.page.xml'
     };
   }
 };

@@ -22,7 +22,10 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 import viteVirtualHtml from 'vite-plugin-virtual-html';
+import viteCompression from 'vite-plugin-compression';
+import viteImagemin from 'vite-plugin-imagemin';
 import rollupCleanup from 'rollup-plugin-cleanup';
+import { visualizer as rollupVisualizer } from 'rollup-plugin-visualizer';
 import postcssImageInliner from 'postcss-image-inliner';
 import postcssComments from 'postcss-discard-comments';
 
@@ -48,7 +51,11 @@ export default defineConfig(({ command, mode }) => {
         '@/': absPath('src/')
       }
     },
-    plugins: [vue(), ...(mode === 'development' ? getDevPlugins() : [])],
+    plugins: [
+      vue(),
+      ...getMinifyPlugins(),
+      ...(mode === 'development' ? getDevPlugins() : [])
+    ],
     css: {
       // https://cn.vitejs.dev/config/shared-options#css-postcss
       postcss: {
@@ -88,7 +95,16 @@ export default defineConfig(({ command, mode }) => {
           chunkFileNames: 'js/lib/[name].js',
           manualChunks: getLibChunks,
           // css 等资源文件名称
-          assetFileNames: 'assets/[name].[ext]'
+          assetFileNames: (asset) => {
+            let ext = asset.name.replaceAll(/.+\.([^.]+)$/g, '$1');
+
+            if (['ttf', 'eot', 'woff', 'woff2'].includes(ext)) {
+              ext = 'fonts';
+            } else if (ext !== 'css') {
+              ext = 'images';
+            }
+            return `assets/${ext}/[name].[ext]`;
+          }
         },
         plugins: [
           // Note：对 css 的处理耗时太长，暂时不用
@@ -176,4 +192,41 @@ function getLibChunks(id) {
   ) {
     return `${amisPkg.name}-${amisPkg.version}`;
   }
+}
+
+function getMinifyPlugins() {
+  return [
+    // https://www.npmjs.com/package/rollup-plugin-visualizer?activeTab=readme
+    rollupVisualizer({
+      open: false,
+      filename: absPath('dist/stats.html')
+    }),
+    // https://github.com/vbenjs/vite-plugin-imagemin
+    viteImagemin({
+      svgo: {
+        plugins: [
+          {
+            name: 'removeViewBox'
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: false
+          }
+        ]
+      }
+    }),
+    // Note：不能对 viteImagemin 的产物压缩，只能压缩源文件？
+    // https://github.com/vbenjs/vite-plugin-compression
+    viteCompression({
+      algorithm: 'gzip',
+      ext: '.gz',
+      deleteOriginFile: true,
+      filter: (file) => {
+        if (file.endsWith('/stats.html')) {
+          return false;
+        }
+        return true;
+      }
+    })
+  ];
 }
