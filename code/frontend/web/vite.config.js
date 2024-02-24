@@ -84,11 +84,9 @@ export default defineConfig(({ command, mode }) => {
         // https://rollupjs.org/configuration-options/#input
         // https://vitejs.dev/guide/build.html#multi-page-app
         input: {
-          // main: absPath('index.html'),
-          // 指定渲染引擎的构建产物名称：
-          // 源文件指向 html 以用于构建可以在 html 中直接引入的 js（处理了依赖和浏览器兼容问题）
-          // [`renderer-other-${pkg.version}`]: absPath('src/other/index.html'),
-          [`renderer-amis-${pkg.version}`]: absPath('src/amis/index.html')
+          // 指定渲染引擎的构建产物名称
+          // [`renderer-other-${pkg.version}`]: absPath('src/other/index.js'),
+          [`renderer-amis-${pkg.version}`]: absPath('src/amis/index.js')
         },
         output: {
           // 入口脚本的位置
@@ -167,8 +165,7 @@ function getLibChunks(id) {
     'froala-editor',
     'exceljs',
     'xlsx',
-    'office-viewer',
-    'ant-design-vue'
+    'office-viewer'
   ];
   for (let lib of libs) {
     if (id.includes('node_modules/' + lib + '/')) {
@@ -189,10 +186,12 @@ function getLibChunks(id) {
     return 'echarts';
   }
 
-  if (
-    include_any(['amis', 'amis-ui', 'amis-formula', 'amis-core', 'video-react'])
-  ) {
-    return `${amisPkg.name}-${amisPkg.version}`;
+  if (include_any(['amis', 'amis-core'])) {
+    return `amis-${amisPkg.version}`;
+  }
+
+  if (include_any(['amis-ui', 'amis-formula', 'video-react'])) {
+    return `amis-ui-${amisPkg.version}`;
   }
 }
 
