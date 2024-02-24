@@ -10,7 +10,7 @@
 - 创建 Vite Vue 项目
 
 ```bash
-npm create vite@latest \
+yarn create vite \
     duzhou-web \
     -- --template vue
 ```
@@ -22,21 +22,27 @@ npm create vite@latest \
 - 安装依赖
 
 ```bash
-npm install
+yarn install
 ```
 
 - 启动开发服务
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
 - 安装第三方依赖和插件
 
 ```bash
-npm install \
-    amis@6.0.0 \
+yarn add \
+    amis \
     sass
+```
+
+- 构建产物
+
+```bash
+yarn run build
 ```
 
 ## 参考
