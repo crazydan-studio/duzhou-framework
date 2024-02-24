@@ -77,7 +77,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       minify: true,
-      target: 'es2015',
+      target: 'ES2017',
       rollupOptions: {
         treeshake: true,
         // 指定入口脚本名称

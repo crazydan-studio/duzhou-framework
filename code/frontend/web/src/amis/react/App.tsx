@@ -20,16 +20,11 @@
 import { RenderOptions, render as renderAmis } from 'amis';
 import { RootRenderProps } from 'amis-core/lib/Root';
 
-export default function App() {
+export default function App({ schema, theme }) {
+  const props: RootRenderProps = {};
   const options: RenderOptions = {
-    loadRenderer(schema: any, path: string, reRender: Function) {
-      return 'invalid';
-    }
+    theme
   };
 
-  const props: RootRenderProps = {
-    theme: 'antd'
-  };
-
-  return <>{renderAmis({} as any, props, options)}</>;
+  return <>{renderAmis(schema, props, options)}</>;
 }

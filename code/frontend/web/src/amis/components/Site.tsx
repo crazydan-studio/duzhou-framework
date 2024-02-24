@@ -17,9 +17,13 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { amisLib, React } from '@/amis/sdk';
+import React from 'react';
+import { Renderer, RendererProps, isEffectiveApi, replaceText } from 'amis';
 
 const TYPE = 'site';
+
+export interface SiteProps extends RendererProps {
+}
 
 /**
  * <pre>
@@ -33,7 +37,7 @@ const TYPE = 'site';
  */
 // https://react.dev/reference/react/Component
 // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react
-class Site extends React.Component {
+class Site extends React.Component<SiteProps, any> {
   constructor(props) {
     super(props);
 
@@ -59,14 +63,14 @@ class Site extends React.Component {
     const { render, className, disabled } = this.props;
     const { schema } = this.state;
 
-    return React.createElement(
-      'div',
-      {
-        className
-      },
-      // 第一个参数为渲染容器名称，在同一个组件内具有唯一性
-      // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react#react-%E6%B3%A8%E5%86%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B
-      render('body', schema, { disabled })
+    return (
+      <div className={className}>
+        {
+          // 第一个参数为渲染容器名称，在同一个组件内具有唯一性
+          // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react#react-%E6%B3%A8%E5%86%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B
+          render('body', schema, { disabled })
+        }
+      </div>
     );
   }
 
@@ -74,7 +78,7 @@ class Site extends React.Component {
     const { env, schemaApi } = this.props;
     const { fetcher } = env;
 
-    if (!amisLib.isEffectiveApi(schemaApi, {})) {
+    if (!isEffectiveApi(schemaApi, {})) {
       cb();
       return;
     }
@@ -100,7 +104,7 @@ class Site extends React.Component {
         body: 'Loading site schema failed'
       };
     } else {
-      json.data = amisLib.replaceText(
+      json.data = replaceText(
         json.data,
         env.replaceText,
         env.replaceTextIgnoreKeys
@@ -114,7 +118,7 @@ class Site extends React.Component {
   }
 }
 
-amisLib.Renderer({
+Renderer({
   type: TYPE,
   // 支持解析当前组件属性中引用的变量
   // https://baidu.github.io/amis/zh-CN/docs/extend/custom-react#%E5%B1%9E%E6%80%A7%E6%94%AF%E6%8C%81%E5%8F%98%E9%87%8F

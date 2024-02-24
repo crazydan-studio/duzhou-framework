@@ -19,6 +19,8 @@
 
 import { createRoot } from 'react-dom/client';
 
+import '@/amis/components/Site';
+
 import App from './App';
 
 // 全局的类 tailwindcss 风格的原子样式
@@ -32,5 +34,17 @@ import '@/amis/style.scss';
 export default async function render({ el, layout }) {
   const site = (layout && (await layout())) || {};
 
-  createRoot(document.querySelector(el)!).render(<App />);
+  const $root = document.querySelector(el);
+  const schema = {
+    type: 'site',
+    className: 'site',
+    schema: site.schema,
+    schemaApi: site.schemaApi,
+    onReady() {
+      // 结束加载动画
+      $root.parentElement.classList.add('done');
+    }
+  };
+
+  createRoot($root!).render(<App schema={schema} theme="antd" />);
 }
