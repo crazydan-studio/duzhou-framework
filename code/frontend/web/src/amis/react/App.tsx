@@ -17,9 +17,19 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import render from '@/amis/react';
+import { RenderOptions, render as renderAmis } from 'amis';
+import { RootRenderProps } from 'amis-core/lib/Root';
 
-// 从默认变量中获取配置，并直接调用渲染函数，
-// 从而支持非模块化调用
-const conf = window.__APP_SITE_CONFIG__ || { el: 'body' };
-render(conf);
+export default function App() {
+  const options: RenderOptions = {
+    loadRenderer(schema: any, path: string, reRender: Function) {
+      return 'invalid';
+    }
+  };
+
+  const props: RootRenderProps = {
+    theme: 'antd'
+  };
+
+  return <>{renderAmis({} as any, props, options)}</>;
+}

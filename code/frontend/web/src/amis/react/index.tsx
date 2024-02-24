@@ -17,9 +17,20 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import render from '@/amis/react';
+import { createRoot } from 'react-dom/client';
 
-// 从默认变量中获取配置，并直接调用渲染函数，
-// 从而支持非模块化调用
-const conf = window.__APP_SITE_CONFIG__ || { el: 'body' };
-render(conf);
+import App from './App';
+
+// 全局的类 tailwindcss 风格的原子样式
+// https://baidu.github.io/amis/zh-CN/style/index
+import 'amis/lib/helper.css';
+import 'amis/sdk/iconfont.css';
+import 'amis/lib/themes/antd.css';
+
+import '@/amis/style.scss';
+
+export default async function render({ el, layout }) {
+  const site = (layout && (await layout())) || {};
+
+  createRoot(document.querySelector(el)!).render(<App />);
+}

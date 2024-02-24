@@ -19,11 +19,12 @@
 
 import path from 'path';
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import react from '@vitejs/plugin-react';
 
 import viteVirtualHtml from 'vite-plugin-virtual-html';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
+import viteDts from 'vite-plugin-dts';
 import rollupCleanup from 'rollup-plugin-cleanup';
 import { visualizer as rollupVisualizer } from 'rollup-plugin-visualizer';
 import postcssImageInliner from 'postcss-image-inliner';
@@ -52,7 +53,8 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     plugins: [
-      vue(),
+      react(),
+      viteDts({ rollupTypes: true, logDiagnostics: true }),
       ...getMinifyPlugins(),
       ...(mode === 'development' ? getDevPlugins() : [])
     ],
