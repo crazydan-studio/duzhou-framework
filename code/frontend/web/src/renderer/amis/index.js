@@ -17,10 +17,9 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-// 仅作为多引擎构建的示例
-import render from '@/other/render';
+import render from '@/renderer/amis/react';
 
 // 从默认变量中获取配置，并直接调用渲染函数，
 // 从而支持非模块化调用
-const conf = window.__APP_SITE_CONFIG__ || { el: 'body' };
+const conf = window.__APP_SITE_CONFIG__ || { el: document.body };
 render(conf);

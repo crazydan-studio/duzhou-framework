@@ -17,22 +17,22 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { amis } from '@/amis/sdk';
+import { amis } from '@/renderer/amis/sdk';
 import {
   history,
   isCurrentUrl,
   jumpTo,
   updateLocation
-} from '@/amis/custom/route';
-import { requestAdaptor, responseAdaptor } from '@/amis/custom/nop';
+} from '@/renderer/amis/custom/route';
+import { requestAdaptor, responseAdaptor } from '@/renderer/amis/custom/nop';
 
-import '@/amis/components/Site';
+import '@/renderer/amis/components/Site';
 
 // 全局的类 tailwindcss 风格的原子样式
 // https://baidu.github.io/amis/zh-CN/style/index
-import 'amis/sdk/helper.css';
+import 'amis/lib/helper.css';
 import 'amis/sdk/iconfont.css';
-import 'amis/sdk/antd.css';
+import 'amis/lib/themes/antd.css';
 
 import './style.scss';
 

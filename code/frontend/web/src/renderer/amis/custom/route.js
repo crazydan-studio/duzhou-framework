@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { pathRegex } from '@/amis/sdk';
+import { pathRegex } from '@/renderer/amis/sdk';
 
 // https://github.com/remix-run/history/blob/dev/docs/getting-started.md
 import h from 'history/hash';

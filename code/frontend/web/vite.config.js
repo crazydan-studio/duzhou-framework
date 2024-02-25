@@ -85,8 +85,10 @@ export default defineConfig(({ command, mode }) => {
         // https://vitejs.dev/guide/build.html#multi-page-app
         input: {
           // 指定渲染引擎的构建产物名称
-          // [`renderer-other-${pkg.version}`]: absPath('src/other/index.js'),
-          [`renderer-amis-${pkg.version}`]: absPath('src/amis/index.js')
+          // [`renderer-other-${pkg.version}`]: absPath('src/renderer/other/index.js'),
+          [`renderer-amis-${pkg.version}`]: absPath(
+            'src/renderer/amis/index.js'
+          )
         },
         output: {
           // 入口脚本的位置
