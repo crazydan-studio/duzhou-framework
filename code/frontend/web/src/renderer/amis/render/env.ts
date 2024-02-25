@@ -24,72 +24,66 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-import type { RenderOptions } from 'amis-core/lib/factory';
-import { toast, ActionObject } from 'amis';
-import copy from 'copy-to-clipboard';
-import type { PageObject, FetcherRequest, FetcherResult } from '@/sdk/nop-core';
 import {
-  useDebug,
-  default_jumpTo,
+  alert,
+  confirm,
+  toast,
+  ToastLevel,
+  ToastConf,
+  dataMapping
+} from 'amis';
+import type { RenderOptions } from 'amis-core/lib/factory';
+import copy from 'copy-to-clipboard';
+import {
   isCancel,
   useAdapter,
-  default_isCurrentUrl,
   ajaxFetch,
-  default_updateLocation,
-  providePage
+  FetcherRequest,
+  FetcherResult
 } from '@/sdk/nop-core';
 
-export function createEnv(page: PageObject): RenderOptions {
-  const { debug } = useDebug();
+/** https://baidu.github.io/amis/zh-CN/docs/start/getting-started#env */
+export function createEnv(): RenderOptions {
   const adapter = useAdapter();
 
   let env: RenderOptions = {
-    session: page.id,
-    affixOffsetTop: 0,
+    // 默认为 'global'，决定 store 是否为全局共用的，如果想独占一个 store，需设置不同的值
+    session: 'global',
+    enableAMISDebug: true,
+    dataMapping,
 
     fetcher(options: FetcherRequest): Promise<FetcherResult> {
-      providePage(page);
-      options._page = page;
       return ajaxFetch(options);
     },
-
-    jumpTo(to: string, action?: ActionObject, ctx?: object) {
-      const router = adapter.useRouter();
-      return default_jumpTo(router, to);
-    },
-
     isCancel: isCancel,
 
-    isCurrentUrl: default_isCurrentUrl,
+    alert,
+    confirm,
+    notify(type: ToastLevel, msg: any, conf?: ToastConf): void {
+      if (msg.startsWith('_')) return;
 
-    updateLocation(to, replace) {
-      // 调用go将会导致页面组件重新加载
-      //const go = useGo(page.router)
-      //go(normalizeLink(to), replace)
-      default_updateLocation(to, !!replace);
+      conf = { closeButton: true, ...conf };
+      toast[type]
+        ? toast[type](msg, conf)
+        : console.warn('[notify]', type, msg);
+
+      console.log('[notify]', type, msg);
     },
-
-    notify: adapter.notify,
-
-    enableAMISDebug: debug.value,
-
-    alert: adapter.alert,
-    confirm: adapter.confirm,
 
     copy: (contents, options) => {
       if (options === void 0) {
         options = {};
       }
+
       const { t } = adapter.useI18n();
       const ret = copy(contents, options);
       ret &&
         (!options || options.shutup !== true) &&
         toast.info(t('Copy To Clipboard'));
+
       return ret;
     }
   };
 
-  (env as any)._page = page;
-  (page as any).env = env;
   return env;
 }

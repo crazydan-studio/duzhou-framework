@@ -7,9 +7,7 @@
  */
 
 import { useAdapter } from '../adapter';
-import { ajaxRequest, useDebug } from '../core';
-
-const { supportDebug, debug } = useDebug();
+import { ajaxRequest } from '../core';
 
 export const UserApis = {
   SiteMapApi__getSiteMap,
@@ -26,9 +24,6 @@ function SiteMapApi__getSiteMap() {
       siteId: 'main'
     }
   }).then((data) => {
-    supportDebug.value = data.supportDebug;
-    debug.value = data.supportDebug;
-
     return data;
   });
 }

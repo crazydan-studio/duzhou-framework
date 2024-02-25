@@ -17,59 +17,16 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { pathRegex } from '@/renderer/amis/sdk';
-
+import { match } from 'path-to-regexp';
 // https://github.com/remix-run/history/blob/dev/docs/getting-started.md
 import h from 'history/hash';
 
 export const history = h;
 
-export function isCurrentUrl(to, ctx) {
-  if (!to) {
-    return false;
-  }
-
-  const pathname = history.location.pathname;
-  const link = normalizeLink(to, {
-    ...location,
-    pathname,
-    hash: ''
-  });
-
-  if (!~link.indexOf('http') && ~link.indexOf(':')) {
-    const strict = ctx && ctx.strict;
-
-    return pathRegex.match(link, {
-      decode: decodeURIComponent,
-      strict: typeof strict !== 'undefined' ? strict : true
-    })(pathname);
-  }
-
-  return decodeURI(pathname) === link;
-}
-
-export function updateLocation(location, replace) {
-  location = normalizeLink(location);
-
-  if (location === 'goBack') {
-    return history.back();
-  }
-  // 目标地址和当前地址一样，不处理，免得重复刷新
-  else if (
-    (!/^https?\:\/\//.test(location) &&
-      location === history.location.pathname + history.location.search) ||
-    location === history.location.href
-  ) {
-    return;
-  } else if (/^https?\:\/\//.test(location) || !history) {
-    return (window.location.href = location);
-  }
-
-  history[replace ? 'replace' : 'push'](location);
-}
-
-export function jumpTo(to, action) {
-  if (to === 'goBack') {
+export function jumpTo(to: string, action: any) {
+  if (to === 'goForward') {
+    return history.forward();
+  } else if (to === 'goBack') {
     return history.back();
   }
 
@@ -92,8 +49,8 @@ export function jumpTo(to, action) {
     window.location.href = to;
   } else if (
     (!/^https?\:\/\//.test(to) &&
-      to === history.pathname + history.location.search) ||
-    to === history.location.href
+      to === history.location.pathname + history.location.search) ||
+    to === window.location.href
   ) {
     // do nothing
   } else {
@@ -101,9 +58,60 @@ export function jumpTo(to, action) {
   }
 }
 
-function normalizeLink(link, location = history.location) {
-  if (!link) {
+export function openWindow(
+  url: string,
+  opt?: { target?: string; noopener?: boolean; noreferrer?: boolean }
+) {
+  const { target = '__blank', noopener = true, noreferrer = true } = opt || {};
+  const feature: string[] = [];
+
+  noopener && feature.push('noopener=yes');
+  noreferrer && feature.push('noreferrer=yes');
+
+  window.open(url, target, feature.join(','));
+}
+
+export function updateLocation(to: any, replace: boolean) {
+  to = normalizeLink(to);
+
+  if (to === 'goBack') {
+    return history.back();
+  }
+  // 目标地址和当前地址一样，不处理，免得重复刷新
+  else if (
+    (!/^https?\:\/\//.test(to) &&
+      to === history.location.pathname + history.location.search) ||
+    to === window.location.href
+  ) {
     return;
+  } else if (/^https?\:\/\//.test(to) || !history) {
+    return (window.location.href = to);
+  }
+
+  history[replace ? 'replace' : 'push'](to);
+}
+
+export function isCurrentUrl(to: string, ctx?: any) {
+  const location = history.location;
+  const pathname = location.pathname;
+  const link = normalizeLink(to, {
+    ...location,
+    hash: ''
+  });
+
+  if (!~link.indexOf('http') && ~link.indexOf(':')) {
+    return match(link, {
+      decode: decodeURIComponent,
+      strict: ctx?.strict ?? true
+    })(pathname);
+  }
+
+  return decodeURI(pathname) === link;
+}
+
+function normalizeLink(link: string, location = history.location) {
+  if (!link) {
+    return '';
   }
 
   if (link[0] === '#') {

@@ -80,7 +80,8 @@
         opacity: 0;
         transition: opacity 0.5s ease-in;
       }
-      .loading.done > * {
+      .loading.done > *,
+      .loading > vite-error-overlay {
         opacity: 1;
       }
       /** End: 在渲染结束前，都以透明方式隐藏元素 */

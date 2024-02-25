@@ -6,17 +6,11 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-import { Pinia, Store } from 'pinia';
-import { Router } from 'vue-router';
 import { FetcherResult, FetcherRequest } from '../core/types';
 
-import {
-  default_jumpTo,
-  default_isCurrentUrl,
-  default_updateLocation
-} from './link';
+import { jumpTo, isCurrentUrl, updateLocation } from './route';
 
-export * from './link';
+export * from './route';
 
 export type Settings = {
   apiUrl: string;
@@ -66,6 +60,10 @@ const adapter = {
     return undefined;
   },
 
+  jumpTo,
+  isCurrentUrl,
+  updateLocation,
+
   /**
    * 返回当前的locale
    */
@@ -74,21 +72,6 @@ const adapter = {
   },
 
   useI18n(): I18nOperation {
-    throw new Error('not-impl');
-  },
-
-  usePinia(): Pinia {
-    throw new Error('not-impl');
-  },
-
-  /**
-   * 返回指定的Store
-   */
-  useStore(name: string): Store {
-    throw new Error('not-impl');
-  },
-
-  useRouter(): Router {
     throw new Error('not-impl');
   },
 
@@ -144,15 +127,6 @@ const adapter = {
   compileFunction(code: string, page: any): Function {
     return new Function('page', 'return ' + code).call(null, page);
   },
-
-  jumpTo(to: string, action?: any, ctx?: object) {
-    const router = adapter.useRouter();
-    return default_jumpTo(router, to);
-  },
-
-  isCurrentUrl: default_isCurrentUrl,
-
-  updateLocation: default_updateLocation,
 
   notify(type: ToastLevel, msg: any, conf?: ToastConf): void {
     throw new Error('not-impl');

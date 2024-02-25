@@ -6,16 +6,16 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-import type { AxiosRequestConfig } from 'axios';
-
 import axios from 'axios';
-
-import { handleGraphQL } from './graphql';
-
+import type { AxiosRequestConfig } from 'axios';
 import { parse as qsparse } from 'qs';
 
+import { handleGraphQL } from './graphql';
+import attachmentAdpator from './attachmentAdpator';
 import { ApiResponse, FetcherRequest, FetcherResult } from './types';
+
 import { useAdapter } from '../adapter';
+import { splitPrefixUrl } from '../page';
 import {
   HEADER_ACCESS_TOKEN,
   HEADER_APP_ID,
@@ -23,8 +23,6 @@ import {
   HEADER_TIMESTAMP,
   HEADER_VERSION
 } from './consts';
-import { splitPrefixUrl } from '../page';
-import attachmentAdpator from './attachmentAdpator';
 
 const GRAPHQL_URL = '/graphql';
 

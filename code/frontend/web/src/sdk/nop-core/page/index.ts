@@ -6,8 +6,6 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-export * from './action';
-
 export * from './processor';
 
 export * from './registry';

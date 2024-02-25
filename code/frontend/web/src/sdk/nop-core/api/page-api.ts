@@ -6,7 +6,7 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-import { ajaxRequest, useDebug } from '../core';
+import { ajaxRequest } from '../core';
 
 import { omit } from 'lodash-es';
 import { deletePageCache, withDictCache, withPageCache } from './cache';
@@ -21,13 +21,12 @@ export const PageApis = {
 };
 
 function DevTool__clearComponentCache() {
-  const { debug } = useDebug();
-  if (debug) {
-    return ajaxRequest({
-      method: 'post',
-      url: '@mutation:DevTool__clearComponentCache'
-    });
-  }
+  //   if (debug) {
+  //     return ajaxRequest({
+  //       method: 'post',
+  //       url: '@mutation:DevTool__clearComponentCache'
+  //     });
+  //   }
   return Promise.resolve({});
 }
 

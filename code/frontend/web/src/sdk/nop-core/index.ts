@@ -6,32 +6,25 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-export * from './lib';
-
-import { registerModule } from './core';
 import { registerAdapter } from './adapter';
 import { PageApis } from './api';
 import { FetcherRequest, fetcherOk } from './core';
-import { transformPageJson, bindActions } from './page';
+import { transformPageJson } from './page';
 
-import * as NopCore from './lib';
-
-registerModule('@nop-chaos/nop-core', NopCore);
+export * from './lib';
 
 registerAdapter({
-  fetchDict(dictName: string, options: FetcherRequest) {
+  async fetchDict(dictName: string, options: FetcherRequest) {
     return PageApis.DictProvider__getDict(
       dictName,
       options.silent || false
     ).then((res) => fetcherOk(res));
   },
 
-  fetchPageAndTransform(pagePath: string, options: FetcherRequest) {
+  async fetchPageAndTransform(pagePath: string, options: FetcherRequest) {
     return PageApis.PageProvider__getPage(pagePath).then(async (pageData) => {
       pageData = await transformPageJson(pagePath, pageData);
-      if (options._page) {
-        bindActions(pagePath, pageData, options._page);
-      }
+
       return fetcherOk(pageData);
     });
   },

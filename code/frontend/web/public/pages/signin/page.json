@@ -3,7 +3,7 @@
   "msg": "",
   "data": {
     "type": "wrapper",
-    "className": "w-full h-full flex flex-col justify-center items-center",
+    "className": "w-full flex flex-col justify-center items-center",
     "body": [
       {
         "type": "wrapper",
@@ -50,7 +50,7 @@
                   {
                     "type": "checkbox",
                     "name": "rememberMe",
-                    "className": "checkbox m-0 p-0",
+                    "className": "remember-me checkbox m-0 p-0",
                     "option": "记住登录"
                   },
                   {

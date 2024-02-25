@@ -103,3 +103,17 @@ export function createPage(options: PageOptions): PageObject {
   };
   return page;
 }
+
+export function splitPrefixUrl(url: string) {
+  if (url.startsWith('@')) {
+    let pos = url.indexOf(':');
+    if (pos < 0) return;
+
+    return [url.substring(1, pos), url.substring(pos + 1).trim()];
+  }
+
+  let pos = url.indexOf('://');
+  if (pos < 0) return;
+
+  return [url.substring(0, pos), url.substring(pos + 3)];
+}

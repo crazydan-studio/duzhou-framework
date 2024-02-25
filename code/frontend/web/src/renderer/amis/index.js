@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import render from '@/renderer/amis/react';
+import render from '@/renderer/amis/render';
 
 // 从默认变量中获取配置，并直接调用渲染函数，
 // 从而支持非模块化调用

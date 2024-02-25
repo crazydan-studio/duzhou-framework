@@ -7,7 +7,6 @@
  */
 
 import { createAsyncCache } from '../shared';
-import { deleteDynamicModules } from '../core';
 import { useAdapter } from '../adapter';
 
 const pageCache = createAsyncCache({ max: 50 });
@@ -22,7 +21,6 @@ function buildLocaleKey(name: string) {
 export function clearLocalCache() {
   pageCache.clear();
   dictCache.clear();
-  deleteDynamicModules();
 }
 
 export function clearPageCache() {

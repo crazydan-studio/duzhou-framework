@@ -17,16 +17,9 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { amis } from '@/renderer/amis/sdk';
-import {
-  history,
-  isCurrentUrl,
-  jumpTo,
-  updateLocation
-} from '@/renderer/amis/custom/route';
-import { requestAdaptor, responseAdaptor } from '@/renderer/amis/custom/nop';
+import { createRoot } from 'react-dom/client';
 
-import '@/renderer/amis/components/Site';
+import Site from './Site';
 
 // 全局的类 tailwindcss 风格的原子样式
 // https://baidu.github.io/amis/zh-CN/style/index
@@ -36,40 +29,60 @@ import 'amis/lib/themes/antd.css';
 
 import './style.scss';
 
+import { registerAdapter, history } from '@/sdk/nop-core';
+
 export default async function render({ el, layout }) {
   const site = (layout && (await layout())) || {};
 
-  const amisScoped = amis.embed(
-    el,
-    {
-      type: 'site',
-      className: 'site',
-      schema: site.schema,
-      schemaApi: site.schemaApi,
-      onReady() {
+  createRoot(el!).render(
+    <Site
+      theme="antd"
+      schema={site.schema}
+      schemaApi={site.schemaApi}
+      onReady={() => {
+        // 在挂载节点添加根样式
+        el.classList.add('site');
         // 结束加载动画
-        document.querySelector(el).parentElement.classList.add('done');
-      }
-    },
-    // https://baidu.github.io/amis/zh-CN/docs/start/getting-started#%E6%8E%A7%E5%88%B6-amis-%E7%9A%84%E8%A1%8C%E4%B8%BA
-    {
-      location: history.location,
-      data: site.data || {},
-      context: {}
-    },
-    {
-      theme: 'antd',
-      requestAdaptor,
-      responseAdaptor,
-      isCurrentUrl,
-      jumpTo,
-      updateLocation
-    }
+        el.parentElement.classList.add('done');
+      }}
+    />
   );
-
-  history.listen((state) => {
-    amisScoped.updateProps({
-      location: state.location || state
-    });
-  });
 }
+
+registerAdapter({
+  useLocale(): string {
+    return 'zh-CN';
+  },
+  useI18n() {
+    return {
+      t: (msg: string) => msg
+    };
+  },
+  useSettings() {
+    return {
+      apiUrl: ''
+    };
+  },
+
+  useAuthToken(): string {
+    return localStorage.getItem('nop-token') || '';
+  },
+  setAuthToken(token?: string) {
+    localStorage.setItem('nop-token', token || '');
+  },
+  isUserInRole(role: string): boolean {
+    return false;
+  },
+
+  useTenantId(): string {
+    return '';
+  },
+  useAppId(): string {
+    return 'nop-sdk-demo';
+  },
+
+  logout(): void {
+    localStorage.removeItem('nop-token');
+    history.push('/login');
+  }
+});
