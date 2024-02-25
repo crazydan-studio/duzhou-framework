@@ -34,7 +34,6 @@ import '@/amis/style.scss';
 export default async function render({ el, layout }) {
   const site = (layout && (await layout())) || {};
 
-  const $root = document.querySelector(el);
   const schema = {
     type: 'site',
     className: 'site',
@@ -42,9 +41,9 @@ export default async function render({ el, layout }) {
     schemaApi: site.schemaApi,
     onReady() {
       // 结束加载动画
-      $root.parentElement.classList.add('done');
+      el.parentElement.classList.add('done');
     }
   };
 
-  createRoot($root!).render(<App schema={schema} theme="antd" />);
+  createRoot(el!).render(<App schema={schema} theme="antd" />);
 }

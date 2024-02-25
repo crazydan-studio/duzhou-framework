@@ -16,16 +16,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.26.1",
+    "lodash-es": "^4.17.21",
     "amis": "^6.1.0",
     "amis-core": "^6.1.0",
     "amis-formula": "^6.1.0",
     "amis-ui": "^6.1.0",
     "history": "^5.3.0",
     "qs": "^6.11.2",
+    "uuid": "^9.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "copy-to-clipboard": "^3.3.2"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@types/qs": "^6.9.7",
+    "@types/uuid": "^8.3.4",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.2.1",
