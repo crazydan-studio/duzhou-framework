@@ -157,22 +157,6 @@ function getDevPlugins() {
 }
 
 function getLibChunks(id) {
-  const libs = [
-    'amis-editor',
-    'monaco-editor',
-    'tinymce',
-    'codemirror',
-    'froala-editor',
-    'exceljs',
-    'xlsx',
-    'office-viewer'
-  ];
-  for (let lib of libs) {
-    if (id.includes('node_modules/' + lib + '/')) {
-      return lib;
-    }
-  }
-
   function include_any(libs) {
     for (let lib of libs) {
       if (id.includes('/node_modules/' + lib + '/')) {
@@ -182,16 +166,21 @@ function getLibChunks(id) {
     return false;
   }
 
-  if (include_any(['echarts', 'zrender'])) {
-    return 'echarts';
-  }
+  const libs = {
+    [`amis-${amisPkg.version}`]: ['amis', 'amis-core'],
+    [`amis-ui-${amisPkg.version}`]: ['amis-ui', 'amis-formula'],
+    [`amis-editor-${amisPkg.version}`]: ['amis-editor'],
+    react: ['react', 'react-dom', 'react-cropper'],
+    echarts: ['echarts', 'zrender', 'echarts-wordcloud'],
+    medias: ['video-react', 'hls.js', 'mpegts.js'],
+    editors: ['monaco-editor', 'tinymce', 'codemirror', 'froala-editor'],
+    offices: ['exceljs', 'xlsx', 'office-viewer', 'papaparse']
+  };
 
-  if (include_any(['amis', 'amis-core'])) {
-    return `amis-${amisPkg.version}`;
-  }
-
-  if (include_any(['amis-ui', 'amis-formula', 'video-react'])) {
-    return `amis-ui-${amisPkg.version}`;
+  for (const [chunkName, libNames] of Object.entries(libs)) {
+    if (include_any(libNames)) {
+      return chunkName;
+    }
   }
 }
 
@@ -221,9 +210,9 @@ function getMinifyPlugins() {
     viteCompression({
       algorithm: 'gzip',
       ext: '.gz',
-      deleteOriginFile: true,
+      deleteOriginFile: false,
       filter: (file) => {
-        if (file.endsWith('/stats.html')) {
+        if (file.endsWith('/stats.html') || file.endsWith('.svg')) {
           return false;
         }
         return true;
