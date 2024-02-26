@@ -34,19 +34,34 @@ import { registerAdapter, history } from '@/sdk/nop-core';
 export default async function render({ el, layout }) {
   const site = (layout && (await layout())) || {};
 
-  createRoot(el!).render(
-    <Site
-      theme="antd"
-      schema={site.schema}
-      schemaApi={site.schemaApi}
-      onReady={() => {
-        // 在挂载节点添加根样式
-        el.classList.add('site');
-        // 结束加载动画
-        el.parentElement.classList.add('done');
-      }}
-    />
-  );
+  const root = createRoot(el!);
+  // https://github.com/baidu/amis/blob/master/examples/embed.tsx#L256
+  const doRender = (props: any) => {
+    root.render(
+      <Site
+        theme="antd"
+        location={props.location}
+        schema={site.schema}
+        schemaApi={site.schemaApi}
+        onReady={() => {
+          // 在挂载节点添加根样式
+          el.classList.add('site');
+          // 结束加载动画
+          el.parentElement.classList.add('done');
+        }}
+      />
+    );
+  };
+
+  doRender({
+    location: history.location
+  });
+
+  history.listen((state) => {
+    doRender({
+      location: state.location || state
+    });
+  });
 }
 
 registerAdapter({

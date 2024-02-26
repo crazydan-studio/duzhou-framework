@@ -22,16 +22,19 @@ import {
   render as renderAmis,
   setDefaultLocale,
   isEffectiveApi,
-  replaceText
+  replaceText,
+  ToastComponent,
+  AlertComponent
 } from 'amis';
 import { RootRenderProps } from 'amis-core/lib/Root';
 
-import { useAdapter, history, FetcherResult } from '@/sdk/nop-core';
+import { useAdapter, FetcherResult } from '@/sdk/nop-core';
 
 import { createEnv } from './env';
 
 export interface SiteProps {
   theme: string;
+  location?: any;
   schema?: object;
   // get:/xxx/xx.json
   schemaApi?: string;
@@ -58,9 +61,27 @@ export default class Site extends React.Component<SiteProps, any> {
 
   render() {
     const { schema } = this.state;
+    const { theme } = this.props;
 
     if (schema) {
-      return <>{this.doRender()}</>;
+      return (
+        <>
+          <ToastComponent
+            position={(env && env.toastPosition) || 'top-center'}
+            closeButton={false}
+            timeout={5000}
+            locale={env?.locale}
+            theme={theme}
+          />
+          <AlertComponent
+            locale={env?.locale}
+            theme={theme}
+            container={() => env?.getModalContainer?.() || 'body'}
+          />
+
+          {this.doRender()}
+        </>
+      );
     }
     return <></>;
   }
@@ -69,7 +90,7 @@ export default class Site extends React.Component<SiteProps, any> {
     let amisScoped: any;
 
     const { schema } = this.state;
-    const { theme } = this.props;
+    const { theme, location } = this.props;
 
     const locale = useAdapter().useLocale();
     setDefaultLocale(locale);
@@ -78,18 +99,13 @@ export default class Site extends React.Component<SiteProps, any> {
       // Note: Amis 内部会自动替换 zh_CN 为 zh-CN
       locale,
       theme,
+      location,
       data: {},
       context: {},
       scopeRef: (scoped: any) => {
         amisScoped = scoped;
       }
     };
-
-    history.listen((state) => {
-      amisScoped.updateProps({
-        location: state.location || state
-      });
-    });
 
     return renderAmis(schema, props, env);
   }

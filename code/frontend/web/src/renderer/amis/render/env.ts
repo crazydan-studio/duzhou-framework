@@ -39,7 +39,10 @@ import {
   useAdapter,
   ajaxFetch,
   FetcherRequest,
-  FetcherResult
+  FetcherResult,
+  jumpTo,
+  isCurrentUrl,
+  updateLocation
 } from '@/sdk/nop-core';
 
 /** https://baidu.github.io/amis/zh-CN/docs/start/getting-started#env */
@@ -52,10 +55,13 @@ export function createEnv(): RenderOptions {
     enableAMISDebug: true,
     dataMapping,
 
+    isCancel: isCancel,
     fetcher(options: FetcherRequest): Promise<FetcherResult> {
       return ajaxFetch(options);
     },
-    isCancel: isCancel,
+    jumpTo,
+    isCurrentUrl,
+    updateLocation,
 
     alert,
     confirm,
