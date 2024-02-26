@@ -5,7 +5,7 @@
 [这里](https://duzhou.crazydan.io/docs/platform/todo/framework)。
 
 - [x] 支持集成和构建 TypeScript 代码，以便于引入第三方的功能源码
-- [ ] 拆分构建 AMIS 代码，以充分利用前端的按需加载和并行加载机制
+- [x] 拆分构建 AMIS 代码，以充分利用前端的按需加载和并行加载机制
 - [ ] 重载或重写 AMIS 的 `App` 组件，以修改导航菜单项的 `href`，
   并在 `logo` 上添加站点链接，并且页面 `title` 需附加应用名称
 - [ ] 去掉 AMIS 主题在样式 class 上添加前缀的机制，
