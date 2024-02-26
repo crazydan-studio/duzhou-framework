@@ -6,9 +6,15 @@
  * Github: https://github.com/entropy-cloud/nop-chaos
  */
 
-import { isArray, isPlainObject, isString } from '@vue/shared';
 import { AxiosRequestConfig } from 'axios';
-import { isBoolean, isInteger, isNumber } from 'lodash-es';
+import {
+  isPlainObject,
+  isArray,
+  isBoolean,
+  isInteger,
+  isNumber,
+  isString
+} from 'lodash-es';
 import { FetcherRequest } from './types';
 import type { OrderFieldBean, QueryBean, TreeBean } from './types';
 import { splitPrefixUrl } from '../page';

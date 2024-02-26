@@ -42,8 +42,48 @@ import {
   FetcherResult,
   jumpTo,
   isCurrentUrl,
-  updateLocation
+  updateLocation,
+  registerAdapter,
+  history
 } from '@/sdk/nop-core';
+
+registerAdapter({
+  useLocale(): string {
+    return 'zh-CN';
+  },
+  useI18n() {
+    return {
+      t: (msg: string) => msg
+    };
+  },
+  useSettings() {
+    return {
+      apiUrl: ''
+    };
+  },
+
+  useAuthToken(): string {
+    return localStorage.getItem('nop-token') || '';
+  },
+  setAuthToken(token?: string) {
+    localStorage.setItem('nop-token', token || '');
+  },
+  isUserInRole(role: string): boolean {
+    return false;
+  },
+
+  useTenantId(): string {
+    return '';
+  },
+  useAppId(): string {
+    return 'nop-sdk-demo';
+  },
+
+  logout(): void {
+    localStorage.removeItem('nop-token');
+    history.push('/login');
+  }
+});
 
 /** https://baidu.github.io/amis/zh-CN/docs/start/getting-started#env */
 export function createEnv(): RenderOptions {
@@ -52,7 +92,7 @@ export function createEnv(): RenderOptions {
   let env: RenderOptions = {
     // 默认为 'global'，决定 store 是否为全局共用的，如果想独占一个 store，需设置不同的值
     session: 'global',
-    enableAMISDebug: true,
+    enableAMISDebug: false,
     dataMapping,
 
     isCancel: isCancel,

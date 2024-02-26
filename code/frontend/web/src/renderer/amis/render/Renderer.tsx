@@ -27,29 +27,28 @@ import {
   AlertComponent
 } from 'amis';
 import { RootRenderProps } from 'amis-core/lib/Root';
+import { isPlainObject } from 'lodash-es';
 
 import { useAdapter, FetcherResult } from '@/sdk/nop-core';
 
 import { createEnv } from './env';
 
-export interface SiteProps {
-  theme: string;
-  location?: any;
-  schema?: object;
+export interface Props {
   // get:/xxx/xx.json
-  schemaApi?: string;
+  schema: object | string;
+  env?: object;
+  props?: object;
   // 就绪后的响应函数
   onReady: () => any;
 }
 
 const env = createEnv();
 
-export default class Site extends React.Component<SiteProps, any> {
-  constructor(props: SiteProps) {
+export default class Renderer extends React.Component<Props, any> {
+  constructor(props: Props) {
     super(props);
 
-    const { schema } = props;
-
+    const { schema } = this.props;
     this.state = { schema };
   }
 
@@ -61,62 +60,57 @@ export default class Site extends React.Component<SiteProps, any> {
 
   render() {
     const { schema } = this.state;
-    const { theme } = this.props;
 
-    if (schema) {
-      return (
-        <>
-          <ToastComponent
-            position={(env && env.toastPosition) || 'top-center'}
-            closeButton={false}
-            timeout={5000}
-            locale={env?.locale}
-            theme={theme}
-          />
-          <AlertComponent
-            locale={env?.locale}
-            theme={theme}
-            container={() => env?.getModalContainer?.() || 'body'}
-          />
-
-          {this.doRender()}
-        </>
-      );
+    if (isPlainObject(schema)) {
+      return this.doRender();
     }
     return <></>;
   }
 
   doRender() {
-    let amisScoped: any;
-
     const { schema } = this.state;
-    const { theme, location } = this.props;
 
     const locale = useAdapter().useLocale();
     setDefaultLocale(locale);
 
-    let props: RootRenderProps = {
+    const amisProps: RootRenderProps = {
+      ...this.props.props,
       // Note: Amis 内部会自动替换 zh_CN 为 zh-CN
       locale,
-      theme,
-      location,
       data: {},
-      context: {},
-      scopeRef: (scoped: any) => {
-        amisScoped = scoped;
-      }
+      context: {}
     };
+    const amisEnv = this.props.env //
+      ? { ...env, ...this.props.env }
+      : env;
 
-    return renderAmis(schema, props, env);
+    return (
+      <>
+        <ToastComponent
+          position={amisEnv.toastPosition}
+          closeButton={false}
+          timeout={5000}
+          locale={locale}
+          theme={amisProps.theme}
+        />
+        <AlertComponent
+          locale={locale}
+          theme={amisProps.theme}
+          container={amisEnv.getModalContainer}
+        />
+
+        {renderAmis(schema, amisProps, amisEnv)}
+      </>
+    );
   }
 
   async fetchSchema(cb: () => any) {
-    if (this.state.schema) {
+    if (isPlainObject(this.state.schema)) {
       return cb();
     }
 
     let schema: any;
-    const { schemaApi } = this.props;
+    const schemaApi = this.state.schema as string;
 
     if (!isEffectiveApi(schemaApi, {})) {
       schema = {

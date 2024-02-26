@@ -19,7 +19,7 @@
 
 import { createRoot } from 'react-dom/client';
 
-import Site from './Site';
+import Renderer from './Renderer';
 
 // 全局的类 tailwindcss 风格的原子样式
 // https://baidu.github.io/amis/zh-CN/style/index
@@ -29,25 +29,37 @@ import 'amis/lib/themes/antd.css';
 
 import './style.scss';
 
-import { registerAdapter, history } from '@/sdk/nop-core';
+import { history } from '@/sdk/nop-core';
 
-export default async function render({ el, layout }) {
+export default async function render({ container, layout }) {
+  if (typeof container === 'string') {
+    container = document.querySelector(container);
+  }
+
+  if (!container) {
+    return console.error('Embed.invalidRoot');
+  } else if (container.tagName === 'BODY') {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  }
+  container.classList.add('amis-scope', 'site');
+
+  const reactRoot = createRoot(container!);
   const site = (layout && (await layout())) || {};
 
-  const root = createRoot(el!);
   // https://github.com/baidu/amis/blob/master/examples/embed.tsx#L256
   const doRender = (props: any) => {
-    root.render(
-      <Site
-        theme="antd"
-        location={props.location}
-        schema={site.schema}
-        schemaApi={site.schemaApi}
+    reactRoot.render(
+      <Renderer
+        schema={site.schema || site.schemaApi}
+        env={{
+          toastPosition: 'top-center',
+          getModalContainer: () => container
+        }}
+        props={{ ...props, theme: 'antd' }}
         onReady={() => {
-          // 在挂载节点添加根样式
-          el.classList.add('site');
           // 结束加载动画
-          el.parentElement.classList.add('done');
+          container.parentElement.classList.add('done');
         }}
       />
     );
@@ -57,47 +69,10 @@ export default async function render({ el, layout }) {
     location: history.location
   });
 
+  // 地址栏更新时，需按地址重新渲染页面
   history.listen((state) => {
     doRender({
       location: state.location || state
     });
   });
 }
-
-registerAdapter({
-  useLocale(): string {
-    return 'zh-CN';
-  },
-  useI18n() {
-    return {
-      t: (msg: string) => msg
-    };
-  },
-  useSettings() {
-    return {
-      apiUrl: ''
-    };
-  },
-
-  useAuthToken(): string {
-    return localStorage.getItem('nop-token') || '';
-  },
-  setAuthToken(token?: string) {
-    localStorage.setItem('nop-token', token || '');
-  },
-  isUserInRole(role: string): boolean {
-    return false;
-  },
-
-  useTenantId(): string {
-    return '';
-  },
-  useAppId(): string {
-    return 'nop-sdk-demo';
-  },
-
-  logout(): void {
-    localStorage.removeItem('nop-token');
-    history.push('/login');
-  }
-});

@@ -1,5 +1,5 @@
 window.__APP_SITE_CONFIG__ = {
-  el: document.querySelector('#app'),
+  container: '#app',
   layout: () => {
     return {
       data: {},
