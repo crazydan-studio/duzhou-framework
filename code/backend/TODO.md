@@ -16,4 +16,5 @@
     以生成 class 的索引文件 `META-INF/jandex.idx`，Quarkus
     依赖该索引来查找和创建 @ApplicationScoped 等标注的 Beans
 - [ ] Web 站点入口 HTML 页面的生成放到 `site` DSL
-  中，以避免使用全局变量，以缓存其编译结果
+  中，以避免使用全局变量，并可缓存其编译结果
+  - 其 XPath 路径为 `site/layout/html`
