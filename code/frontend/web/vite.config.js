@@ -31,7 +31,6 @@ import postcssImageInliner from 'postcss-image-inliner';
 import postcssComments from 'postcss-discard-comments';
 
 import pkg from './package.json';
-import amisPkg from './node_modules/amis/package.json';
 
 function absPath(...paths) {
   return path.join(__dirname, ...paths);
@@ -77,7 +76,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       minify: true,
-      target: 'ES2017',
+      target: 'ES2015',
       rollupOptions: {
         treeshake: true,
         // 指定入口脚本名称
@@ -92,6 +91,8 @@ export default defineConfig(({ command, mode }) => {
         },
         output: {
           // 入口脚本的位置
+          // Note：入口脚本的依赖可以自动导入，不需要在 html
+          // 中通过 script 标签显式引入
           entryFileNames: 'js/[name].js',
           // 各个依赖模块独立打包，并放在 js 目录下
           chunkFileNames: 'js/lib/[name].js',
@@ -159,30 +160,32 @@ function getDevPlugins() {
 }
 
 function getLibChunks(id) {
-  function include_any(libs) {
-    for (let lib of libs) {
-      if (id.includes('/node_modules/' + lib + '/')) {
-        return true;
-      }
+  // 将较大的依赖包拆分构建，以充分利用按需和并行加载，提升加载速度
+  for (let lib of [
+    // Note: amis 及其样式将被构建到入口脚本和 css 中
+    'amis-ui',
+    'amis-editor',
+    //
+    'monaco-editor',
+    'tinymce',
+    'codemirror',
+    'froala-editor',
+    'exceljs',
+    'xlsx',
+    'office-viewer',
+    'echarts'
+  ]) {
+    if (id.includes('/node_modules/' + lib + '/')) {
+      return lib;
     }
-    return false;
   }
 
-  const libs = {
-    [`amis-${amisPkg.version}`]: ['amis', 'amis-core'],
-    [`amis-ui-${amisPkg.version}`]: ['amis-ui', 'amis-formula'],
-    [`amis-editor-${amisPkg.version}`]: ['amis-editor'],
-    react: ['react', 'react-dom', 'react-cropper'],
-    echarts: ['echarts', 'zrender', 'echarts-wordcloud'],
-    medias: ['video-react', 'hls.js', 'mpegts.js'],
-    editors: ['monaco-editor', 'tinymce', 'codemirror', 'froala-editor'],
-    offices: ['exceljs', 'xlsx', 'office-viewer', 'papaparse']
-  };
-
-  for (const [chunkName, libNames] of Object.entries(libs)) {
-    if (include_any(libNames)) {
-      return chunkName;
-    }
+  // 引入的 Nop 等其他开源代码需独立打包，以保证其独立性
+  if (
+    !id.includes('/.pnpm/') && //
+    id.includes('/src/sdk/nop-core/')
+  ) {
+    return 'nop-core';
   }
 }
 

@@ -7,12 +7,13 @@
       "@/*": ["./src/*"]
     },
     "module": "ESNext",
-    "target": "ES2017",
+    "target": "ES2015",
     "lib": ["ES6", "DOM", "ES2015", "ES2021"],
     // Fix "'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.ts"
     // https://stackoverflow.com/questions/64656055/react-refers-to-a-umd-global-but-the-current-file-is-a-module#answer-65539274
     "jsx": "react-jsx",
     "moduleResolution": "node",
+    "sourceMap": true,
     "declaration": true,
     "importHelpers": true,
     "esModuleInterop": true,
