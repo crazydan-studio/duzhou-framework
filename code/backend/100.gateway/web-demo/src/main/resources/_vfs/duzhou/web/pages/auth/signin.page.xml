@@ -23,7 +23,7 @@
 Note：根节点仅用于支持挂载差量节点，没有实际用途
 -->
 <wrapper xmlns:j="j"
-         className="w-full h-full flex flex-col justify-center items-center"
+         className="w-full flex flex-col justify-center items-center"
 >
 
     <!--<x:gen-extends xmlns:x="/nop/schema/xdsl.xdef"
@@ -58,14 +58,14 @@ Note：根节点仅用于支持挂载差量节点，没有实际用途
                                         label="@:false" />
                         <flex justify="space-between" alignItems="center">
                             <items j:list="true">
-                                <checkbox name="rememberMe" className="checkbox m-0 p-0" option="记住登录" />
+                                <checkbox name="rememberMe" className="remember-me checkbox m-0 p-0" option="记住登录" />
                                 <link className="reset-link" href="/signin/password/reset/">
                                     <body>找回密码？</body>
                                 </link>
                             </items>
                         </flex>
                     </body>
-                    <actions>
+                    <actions j:list="true">
                         <submit label="登录" level="primary" />
                     </actions>
                 </form>

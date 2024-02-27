@@ -51,9 +51,13 @@ Note：在 xml 内必须有一个根节点，但在构造 dsl 时该节点需要
                 html, body {
                     margin: 0; padding: 0;
                     min-width: 0; min-height: 0;
+                    --body-bg: ${site.layout.bgColor};
                     /* 修改默认的 AMIS 加载动画和背景色: https://baidu.github.io/amis/zh-CN/style/css-vars#%E5%9B%BE%E7%89%87 */
                     --Spinner-bg: url('${spinnerImageDataUrl}');
-                    --body-bg: ${site.layout.bgColor};
+                    /* 加载动画的实际长宽比为 1:2，故需按比例重置图片高度以使其长宽比一致 */
+                    --Spinner-height: calc(var(--Spinner-width) / 2);
+                    --Spinner--lg-height: calc(var(--Spinner--lg-width) / 2);
+                    --Spinner--sm-height: calc(var(--Spinner--sm-width) / 2);
                 }
                 html, body, #${siteElementId} {
                     width: 100%; height: 100%;
@@ -66,15 +70,14 @@ Note：在 xml 内必须有一个根节点，但在构造 dsl 时该节点需要
                     transition-delay: 0.2s;
                     pointer-events: none;
 
-                    overflow: hidden;
-                    position: absolute; top: 0;
-                    width: 100%; height: 100%;
+                    overflow: hidden; position: absolute;
+                    top: 0; bottom: 0; left: 0; right: 0;
 
                     content: '';
                     background-image: var(--Spinner-bg);
                     background-color: var(--body-bg);
                     background-position: center;
-                    background-size: 12rem;
+                    background-size: 10rem;
                     background-repeat: no-repeat;
                 }
                 .loading.done::after {
@@ -100,7 +103,7 @@ Note：在 xml 内必须有一个根节点，但在构造 dsl 时该节点需要
             <!-- 站点配置数据，填充布局函数和站点资源 -->
             <script name="js:site-config"><![CDATA[
                 window.__APP_SITE_CONFIG__ = {
-                    el: '#${siteElementId}',
+                    container: '#${siteElementId}',
                     layout: async () => {
                         return ${JsonTool.stringify(site.renderLayout())};
                     }

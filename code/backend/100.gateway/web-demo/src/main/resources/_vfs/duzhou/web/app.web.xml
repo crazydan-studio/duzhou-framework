@@ -36,14 +36,12 @@
     >
         <layout spinner="/loading.svg" bgColor="#1d243d">
             <scripts>
-                <!-- 入口脚本放在最开始位置 -->
+                <!-- 入口脚本需放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
-                <script name="engine" url="/js/lib/amis-6.0.0.js" />
             </scripts>
 
             <styles>
-                <style name="engine" url="/assets/amis-6.0.css" />
-                <style name="renderer" url="/assets/renderer-amis-0.1.css" />
+                <style name="renderer" url="/assets/css/renderer-amis-0.1.css" />
             </styles>
         </layout>
     </site>
