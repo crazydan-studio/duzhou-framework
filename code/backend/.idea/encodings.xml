@@ -3,6 +3,8 @@
   <component name="Encoding" native2AsciiForPropertiesFiles="true">
     <file url="file://$PROJECT_DIR$/020.schema/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/020.schema/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/030.commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/030.commons/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/050.starter/quarkus/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/050.starter/quarkus/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/050.starter/src/main/java" charset="UTF-8" />

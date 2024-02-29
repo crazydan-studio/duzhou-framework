@@ -60,6 +60,7 @@
     </properties>
 
     <modules>
+        <module>030.commons</module>
         <module>020.schema</module>
         <module>050.starter</module>
         <module>100.gateway</module>
@@ -89,6 +90,13 @@
     </distributionManagement>
 
     <dependencies>
+        <!-- Idea 插件在调试 xlang 时需要该依赖 -->
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-xlang-debugger</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-autotest-junit</artifactId>
@@ -104,6 +112,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- 本项目子模块，便于其他项目引入 -->
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>commons</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>schema</artifactId>

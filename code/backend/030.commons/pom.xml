@@ -23,8 +23,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schema</artifactId>
-    <name>Duzhou Framework Schema</name>
+    <artifactId>commons</artifactId>
+
+    <!-- 公共库 -->
+    <name>Duzhou Framework Commons</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
@@ -37,28 +39,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>commons</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-codegen</artifactId>
-            <scope>provided</scope>
+            <artifactId>nop-commons</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
