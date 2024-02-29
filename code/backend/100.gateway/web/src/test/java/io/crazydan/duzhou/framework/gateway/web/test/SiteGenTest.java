@@ -20,24 +20,19 @@
 package io.crazydan.duzhou.framework.gateway.web.test;
 
 import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
-import io.crazydan.duzhou.framework.gateway.web.utils.WebDslModelHelper;
 import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
-import io.nop.core.lang.eval.global.EvalGlobalRegistry;
 import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.lang.xml.parse.XNodeParser;
-import io.nop.core.model.object.DynamicObject;
 import io.nop.xlang.api.ExprEvalAction;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.ast.XLangOutputMode;
-import io.nop.xlang.xdsl.DslModelParser;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -47,49 +42,24 @@ import org.junit.jupiter.api.Test;
 public class SiteGenTest extends GatewayWebBaseTest {
     private static final String WEB_XDSL = "/duzhou/web/app.web.xml";
 
-    /** site -> html 的 dsl：支持对 html 做差量修订 */
-    private static final String SITE_HTML_XDSL = "/duzhou/web/app.site-html.xml";
-    private static final String SITE_HTML_EXTENDS_XDSL = "/duzhou/web/app.site-html.extends.xml";
-
     /** site -> html 的 xpl 函数：不支持对 html 做差量修订 */
     private static final String SITE_HTML_XPL = "/duzhou/web/app.site-html.xpl";
 
-    @BeforeAll
-    public static void prepare() {
-        // 解析 XDSL 时，在 x:gen-extends 等 xpl 函数和脚本中使用的变量只能注册为全局变量
-        EvalGlobalRegistry.instance().registerVariable("$site", WebSiteGlobalVariable.instance());
-
-        XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
-        XWebSite site = web.getSite("admin");
-
-        WebSiteGlobalVariable.set(site);
-    }
-
     @Test
     public void test_Gen_Site_Html() {
-        for (String[] pair : new String[][] {
-                new String[] { SITE_HTML_XDSL, "gen.site.html" },
-                new String[] { SITE_HTML_EXTENDS_XDSL, "gen.extends.site.html" }
-        }) {
-            String dslPath = pair[0];
-            String casePath = pair[1];
+        XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
+        String json = JsonTool.serialize(web, true).replaceAll("\\s+\"(location|config|xmlns:.+)\".+", "");
+        this.log.info(json);
+        Assertions.assertEquals(attachmentJsonText("gen.app.web.json"), json);
 
-            XNode node = XNodeParser.instance().parseFromVirtualPath(dslPath);
-            String xdefPath = node.attrText("x:schema");
+        for (XWebSite site : web.getSites()) {
+            XNode node = site.getLayoutHtml();
+            String html = node.html().replaceAll("(?m)^\\s+| +$", "");
+            this.log.info(html);
 
-            DslModelParser parser = new DslModelParser(xdefPath);
-            DynamicObject obj = (DynamicObject) parser.parseFromNode(node);
-            String json = JsonTool.serialize(obj, true);
-
-            this.log.info(dslPath + ":json={}", json);
-            Assertions.assertEquals(attachmentJsonText(casePath + ".json"), json);
-
-            XNode htmlNode = WebDslModelHelper.toHtmlNode(parser.getRequiredSchema(), obj);
-            String html = "<!DOCTYPE html>" + htmlNode.html().replaceAll("\n\\s*", "");
-            html = StringHelper.unescapeXml(html);
-
-            this.log.info(dslPath + ":html={}", html);
-            Assertions.assertEquals(attachmentText(casePath), html + "\n");
+            String expected = attachmentXml("gen." + site.getId() + ".site.html").html()
+                                                                                 .replaceAll("(?m)^\\s+| +$", "");
+            Assertions.assertEquals(expected, html);
         }
     }
 

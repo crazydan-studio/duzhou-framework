@@ -81,15 +81,20 @@ public class WebStaticResourcesHelper {
         byte[] bytes = ResourceHelper.readBytes(resource);
         ByteString bs = ByteString.from(bytes, null);
 
+        String mimeType = getImageMimeType(path);
+        return bs.toDataUrl(mimeType);
+    }
+
+    public static String getImageMimeType(String path) {
         String type = StringHelper.fileExt(path);
+
         // 参考: io.nop.excel.model.ExcelImage#getMimeType
         if (type.equals("svg")) {
             type = "svg+xml";
         } else if (type.equals("jpg")) {
             type = "jpeg";
         }
-
-        return bs.toImageUrl(type);
+        return "image/" + type;
     }
 
     /** 判断指定路径的资源是否为文件 */

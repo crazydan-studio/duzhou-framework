@@ -26,8 +26,5 @@
 
     <loaders>
         <xdsl-loader fileType="web.xml" schemaPath="/duzhou/schema/web.xdef" />
-        <loader fileType="site-html.xml"
-                class="io.crazydan.duzhou.framework.gateway.web.model.WebSiteHtmlLoader"
-        />
     </loaders>
 </model>

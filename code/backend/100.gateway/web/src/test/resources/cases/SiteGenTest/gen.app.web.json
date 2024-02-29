@@ -1,0 +1,87 @@
+{
+  "sites": [
+    {
+      "id": "main",
+      "layout": {
+        "bgColor": "#1d243d",
+        "html": "/duzhou/web/app.site-html.xml",
+        "scripts": [
+          {
+            "name": "renderer",
+            "url": "/js/renderer-amis-0.1.0.js"
+          },
+          {
+            "name": "engine",
+            "url": "/js/amis/sdk-6.0.0.js"
+          }
+        ],
+        "spinner": "/loading.svg",
+        "styles": [
+          {
+            "name": "engine",
+            "url": "/css/amis/theme.css"
+          },
+          {
+            "name": "renderer",
+            "url": "/css/renderer-amis-0.1.0.css"
+          }
+        ]
+      },
+      "locale": "zh",
+      "logo": "/logo.svg",
+      "resources": [],
+      "runInEnv": "development",
+      "subTitle": "门户首页",
+      "title": "渡舟平台",
+      "url": "/"
+    },
+    {
+      "id": "admin",
+      "layout": {
+        "bgColor": "#1d243d",
+        "html": "/duzhou/web/app.site-html.extends.xml",
+        "scripts": [
+          {
+            "name": "renderer",
+            "url": "/js/renderer-amis-0.1.0.js"
+          },
+          {
+            "name": "engine",
+            "url": "/js/amis/sdk-6.0.0.js"
+          }
+        ],
+        "spinner": "/loading.svg",
+        "styles": [
+          {
+            "name": "engine",
+            "url": "/css/amis/theme.css"
+          },
+          {
+            "name": "renderer",
+            "url": "/css/renderer-amis-0.1.0.css"
+          }
+        ]
+      },
+      "locale": "zh",
+      "logo": "/logo.svg",
+      "resources": [
+        {
+          "children": [],
+          "displayName": "权限管理",
+          "id": "auth",
+          "url": "/path/to/auth.page.xml"
+        },
+        {
+          "children": [],
+          "displayName": "组织管理",
+          "id": "organization",
+          "url": "/path/to/org.page.xml"
+        }
+      ],
+      "runInEnv": "development",
+      "subTitle": "后台管理",
+      "title": "渡舟平台",
+      "url": "/admin"
+    }
+  ]
+}

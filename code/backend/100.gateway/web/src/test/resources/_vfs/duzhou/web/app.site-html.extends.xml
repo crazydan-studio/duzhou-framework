@@ -48,9 +48,15 @@
                 <_>${title}</_>
             </x:gen-extends>
         </title>
+        <style name="style:loading" x:override="append">
+            .loading::after {
+                background-size: 12rem;
+            }
+        </style>
     </head>
 
     <body>
+        <div id="app-site" x:override="remove" />
         <div id="tips" class="tips">
             <span>This is just a tip.</span>
         </div>

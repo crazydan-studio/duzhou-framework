@@ -46,14 +46,36 @@
       runInEnv="!enum:io.crazydan.duzhou.framework.schema.RunInEnv=development"
 >
 
+    <!-- [可选] 资源列表 -->
+    <resources xdef:body-type="list" xdef:key-attr="id">
+        <!--
+        @id [必填] 资源唯一标识，任意层级的资源均需在同一个 `Site` 内保持唯一性
+        @displayName [可选] 资源名称，一般作为导航菜单名称
+        @url [可选] 资源的页面 DSL 路径。
+             以 `redirect:` 开头的，将视为外部资源，在访问时直接跳转
+        @icon [可选] 图标 css 类名
+        -->
+        <resource xdef:name="XWebSiteResource"
+                  id="!string" displayName="string"
+                  url="string" icon="string"
+        >
+            <children xdef:body-type="list" xdef:key-attr="id">
+                <resource id="!string" xdef:ref="XWebSiteResource" />
+            </children>
+        </resource>
+    </resources>
+
     <!--
     [必须] 站点布局器
 
+    @html [必填] html 页面 DSL 定义位置，在其 xpl
+          脚本中可引用全局变量 `$site`，以获取当前站点的 DSL 模型
     @bgColor [可选] 背景色
     @spinner [可选] 载入动画图片的资源路径
     -->
     <layout xdef:name="XWebSiteLayout" xdef:mandatory="true"
             bgColor="!string=#fff" spinner="string"
+            html="!v-path"
     >
         <!-- js 脚本（构建后的）资源。有顺序性，入口脚本需放在列表的最开始位置 -->
         <scripts xdef:body-type="list" xdef:key-attr="name">
@@ -73,28 +95,9 @@
         </styles>
 
         <!--
-        [必须] 布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+        [必须] 布局器的配置函数，需返回页面渲染引擎所支持的 JSON 数据。
         在该函数内，可通过变量 `site` 引用当前站点的配置数据
         -->
-        <render xdef:value="xpl" xdef:mandatory="true" />
+        <config xdef:value="xpl" xdef:mandatory="true" />
     </layout>
-
-    <!-- 资源列表 -->
-    <resources xdef:body-type="list" xdef:key-attr="id">
-        <!--
-        @id [必填] 资源唯一标识，任意层级的资源均需在同一个 `Site` 内保持唯一性
-        @displayName [可选] 资源名称，一般作为导航菜单名称
-        @url [可选] 资源的页面 DSL 路径。
-             以 `redirect:` 开头的，将视为外部资源，在访问时直接跳转
-        @icon [可选] 图标 css 类名
-        -->
-        <resource xdef:name="XWebSiteResource"
-                  id="!string" displayName="string"
-                  url="string" icon="string"
-        >
-            <children xdef:body-type="list" xdef:key-attr="id">
-                <resource id="!string" xdef:ref="XWebSiteResource" />
-            </children>
-        </resource>
-    </resources>
 </site>

@@ -19,7 +19,8 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<web xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+<web xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:xpl="xpl" xmlns:web="web"
      x:schema="/duzhou/schema/web.xdef"
 >
 
@@ -27,7 +28,9 @@
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
     >
-        <layout spinner="/loading.svg" bgColor="#1d243d">
+        <layout spinner="/loading.svg" bgColor="#1d243d"
+                html="/duzhou/web/app.site-html.xml"
+        >
             <scripts>
                 <!-- 入口脚本放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
@@ -38,6 +41,16 @@
                 <style name="engine" url="/css/amis/theme.css" />
                 <style name="renderer" url="/css/renderer-amis-0.1.0.css" />
             </styles>
+        </layout>
+    </site>
+
+    <site id="main" x:prototype="common"
+          subTitle="门户首页" url="/"
+    >
+        <layout>
+            <config><![CDATA[
+                return {};
+            ]]></config>
         </layout>
     </site>
 
@@ -55,8 +68,8 @@
             </resource>
         </resources>
 
-        <layout>
-            <render><![CDATA[
+        <layout html="/duzhou/web/app.site-html.extends.xml">
+            <config><![CDATA[
                 const pages = xpl `
                     <web:GenAmisAppPages
                         resources="${site.resources}"
@@ -72,7 +85,7 @@
                     pages: pages
                   }
                 };
-            ]]></render>
+            ]]></config>
         </layout>
     </site>
 </web>

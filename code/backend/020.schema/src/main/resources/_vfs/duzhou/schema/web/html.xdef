@@ -33,19 +33,18 @@
       xdef:unknown-attr="string"
 >
 
-    <xdef:define xdef:name="NormalNode" name="!string"
-                 xdef:unique-attr="name"
+    <xdef:define name="!string" xdef:unique-attr="name"
+                 xdef:name="HtmlNameNode"
                  xdef:value="string"
                  xdef:unknown-attr="string" />
 
     <head>
-        <meta name="!string" xdef:unique-attr="name"
-              xdef:unknown-attr="string" />
+        <meta name="!string" xdef:ref="HtmlNameNode" />
 
         <title xdef:value="string" />
         <!-- 在 head 中仅内嵌基础的 css，并外链站点图标 -->
-        <style name="!string" xdef:ref="NormalNode" />
-        <link name="!string" xdef:ref="NormalNode" />
+        <style name="!string" xdef:ref="HtmlNameNode" />
+        <link name="!string" xdef:ref="HtmlNameNode" />
     </head>
 
     <body xdef:unknown-attr="string">
@@ -58,7 +57,7 @@
         外链的 css 和 js 均放在 body 末尾，
         以避免阻塞页面加载动画等与用户体验相关的工作
         -->
-        <link name="!string" xdef:ref="NormalNode" />
-        <script name="!string" xdef:ref="NormalNode" />
+        <link name="!string" xdef:ref="HtmlNameNode" />
+        <script name="!string" xdef:ref="HtmlNameNode" />
     </body>
 </html>

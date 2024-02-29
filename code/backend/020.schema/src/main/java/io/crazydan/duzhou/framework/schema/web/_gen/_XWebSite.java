@@ -65,7 +65,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     private java.lang.String _logo ;
     
     /**
-     *  
+     *  可选
      * xml name: resources
      * 资源列表
      */
@@ -178,7 +178,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
 
     
     /**
-     * 
+     * 可选
      * xml name: resources
      *  资源列表
      */

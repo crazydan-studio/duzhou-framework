@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [55:6:0:0]/duzhou/schema/web/site.xdef <p>
+ * generate from [76:6:0:0]/duzhou/schema/web/site.xdef <p>
  * 站点布局器
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
@@ -25,11 +25,19 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     
     /**
      *  必须
-     * xml name: render
-     * 布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+     * xml name: config
+     * 布局器的配置函数，需返回页面渲染引擎所支持的 JSON 数据。
      * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
      */
-    private io.nop.core.lang.eval.IEvalAction _render ;
+    private io.nop.core.lang.eval.IEvalAction _config ;
+    
+    /**
+     *  必填
+     * xml name: html
+     * html 页面 DSL 定义位置，在其 `x:gen-extends`
+     * 标签中可引用变量 `site`，以获取当前站点的 DSL 模型
+     */
+    private java.lang.String _html ;
     
     /**
      *  
@@ -73,20 +81,40 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     
     /**
      * 必须
-     * xml name: render
-     *  布局渲染函数，需返回页面渲染引擎支持的 JSON 数据。
+     * xml name: config
+     *  布局器的配置函数，需返回页面渲染引擎所支持的 JSON 数据。
      * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
      */
     
-    public io.nop.core.lang.eval.IEvalAction getRender(){
-      return _render;
+    public io.nop.core.lang.eval.IEvalAction getConfig(){
+      return _config;
     }
 
     
-    public void setRender(io.nop.core.lang.eval.IEvalAction value){
+    public void setConfig(io.nop.core.lang.eval.IEvalAction value){
         checkAllowChange();
         
-        this._render = value;
+        this._config = value;
+           
+    }
+
+    
+    /**
+     * 必填
+     * xml name: html
+     *  html 页面 DSL 定义位置，在其 `x:gen-extends`
+     * 标签中可引用变量 `site`，以获取当前站点的 DSL 模型
+     */
+    
+    public java.lang.String getHtml(){
+      return _html;
+    }
+
+    
+    public void setHtml(java.lang.String value){
+        checkAllowChange();
+        
+        this._html = value;
            
     }
 
@@ -220,7 +248,8 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
         super.outputJson(out);
         
         out.putNotNull("bgColor",this.getBgColor());
-        out.putNotNull("render",this.getRender());
+        out.putNotNull("config",this.getConfig());
+        out.putNotNull("html",this.getHtml());
         out.putNotNull("scripts",this.getScripts());
         out.putNotNull("spinner",this.getSpinner());
         out.putNotNull("styles",this.getStyles());
@@ -236,7 +265,8 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
         super.copyTo(instance);
         
         instance.setBgColor(this.getBgColor());
-        instance.setRender(this.getRender());
+        instance.setConfig(this.getConfig());
+        instance.setHtml(this.getHtml());
         instance.setScripts(this.getScripts());
         instance.setSpinner(this.getSpinner());
         instance.setStyles(this.getStyles());
