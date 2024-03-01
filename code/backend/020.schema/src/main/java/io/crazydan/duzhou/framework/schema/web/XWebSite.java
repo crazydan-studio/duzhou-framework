@@ -9,16 +9,21 @@ import io.nop.core.lang.eval.IEvalAction;
 import io.nop.core.lang.xml.XNode;
 
 public class XWebSite extends _XWebSite {
+    private XNode layoutHtmlNode;
+
     public XWebSite() {
 
     }
 
     /** 获取入口 html 页面 {@link XNode} 节点 */
     public XNode getLayoutHtml() {
-        // TODO 若 node 结构不再变化，可以放在成员变量中以缓存解析结果
-        XNode node = XDslHelper.loadXNodeFromResource(getLayout().getHtml(), new Object[] { "$site", this });
+        if (this.layoutHtmlNode == null) {
+            XNode node = XDslHelper.loadXNodeFromResource(getLayout().getHtml(), new Object[] { "$site", this });
 
-        return XDslHelper.toHtml(node);
+            this.layoutHtmlNode = XDslHelper.toHtmlNode(node);
+        }
+
+        return this.layoutHtmlNode;
     }
 
     /** 获取布局器的配置数据 */

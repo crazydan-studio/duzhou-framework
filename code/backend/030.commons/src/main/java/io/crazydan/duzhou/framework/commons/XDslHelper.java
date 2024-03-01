@@ -19,7 +19,16 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import java.util.HashMap;
+
+import io.nop.commons.text.CDataText;
+import io.nop.core.lang.json.xml.DefaultJsonToXNodeAdapter;
+import io.nop.core.lang.json.xml.IJsonToXNodeAdapter;
+import io.nop.core.lang.json.xml.JsonToXNodeTransformer;
+import io.nop.core.lang.json.xml.JsonXNodeType;
+import io.nop.core.lang.json.xml.NodeData;
 import io.nop.core.lang.xml.XNode;
+import io.nop.core.lang.xml.handler.CollectXNodeHandler;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.VirtualFileSystem;
 import io.nop.xlang.xdsl.DslNodeLoader;
@@ -55,7 +64,7 @@ public class XDslHelper {
      * <li>去掉 style/script 节点内容中的注释；</li>
      * </ul>
      */
-    public static XNode toHtml(XNode node) {
+    public static XNode toHtmlNode(XNode node) {
         XNode html = node.cloneInstance();
 
         html.clearComment();
@@ -77,5 +86,63 @@ public class XDslHelper {
         content = content.replaceAll("[ \\t\\x0B\\f]*//.*$", "") //
                          .replaceAll("[ \\t\\x0B\\f]*/\\*.*\\*/[ \\t\\x0B\\f]*", "");
         node.content(content);
+    }
+
+    /** 将 JSON 对象状换为 {@link XNode} */
+    public static XNode jsonToXNode(Object json) {
+        IJsonToXNodeAdapter adapter = new JsonToXNodeAdapter();
+        JsonToXNodeTransformer transformer = new JsonToXNodeTransformer(adapter);
+
+        CollectXNodeHandler out = new CollectXNodeHandler();
+        transformer.transform(json, out);
+
+        return out.root();
+    }
+
+    private static class JsonToXNodeAdapter extends DefaultJsonToXNodeAdapter {
+
+        @Override
+        public NodeData getNodeData(String key, Object obj) {
+            if (obj instanceof NodeData) {
+                return (NodeData) obj;
+            }
+
+            NodeData node = super.getNodeData(key, obj);
+            if (node.getNodeType() == null) {
+                node.setNodeType(JsonXNodeType.node);
+
+                Object type = node.getAttrs().remove("type");
+                if (type != null) {
+                    node.setTagName(type.toString());
+                }
+            }
+
+            if (node.getAttrs() != null) {
+                (new HashMap<>(node.getAttrs())).forEach((attr, value) -> {
+                    // 对文本内容，采用 CDATA 节点
+                    if (attr.equals("body") && value instanceof String) {
+                        node.getAttrs().remove(attr);
+
+                        NodeData child = new NodeData();
+                        child.setNodeType(JsonXNodeType.node);
+                        child.setTagName(attr);
+                        child.addChild(new CDataText(value.toString()));
+
+                        node.addChild(child);
+                    }
+                    // 值为 boolean 时，需为属性值添加 `@:` 前缀
+                    else if (value instanceof Boolean) {
+                        node.getAttrs().put(attr, "@:" + value);
+                    }
+                });
+            }
+
+            // 对 list 类型，设置节点属性 `j:list="true"`
+            if (node.getNodeType() == JsonXNodeType.list) {
+                node.addAttr("j:list", true);
+            }
+
+            return node;
+        }
     }
 }

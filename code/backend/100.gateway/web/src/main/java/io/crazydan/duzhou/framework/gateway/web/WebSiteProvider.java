@@ -19,16 +19,11 @@
 
 package io.crazydan.duzhou.framework.gateway.web;
 
-import io.crazydan.duzhou.framework.gateway.web.model.WebSiteHtmlLoader;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
-import io.nop.commons.lang.impl.Cancellable;
-import io.nop.core.lang.eval.global.EvalGlobalRegistry;
-import io.nop.core.resource.IResource;
-import io.nop.core.resource.VirtualFileSystem;
+import io.nop.commons.util.StringHelper;
+import io.nop.core.lang.xml.XNode;
 import io.nop.core.resource.component.ResourceComponentManager;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 
 /**
  * 其实例在 /duzhou/web/beans/default.beans.xml 中注册
@@ -37,52 +32,24 @@ import jakarta.annotation.PreDestroy;
  * @date 2024-02-07
  */
 public class WebSiteProvider {
-    private final Cancellable cleanup = new Cancellable();
-
-    @PostConstruct
-    public void init() {
-        registerGlobalVars();
-    }
-
-    @PreDestroy
-    public void destroy() {
-        this.cleanup.cancel();
-    }
 
     public String getSiteHtmlByRequestPath(String path) {
         XWeb web = (XWeb) ResourceComponentManager.instance() //
                                                   .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
-        XWebSite site = web.getSiteByUrl(path);
 
-        if (site == null) {
+        XWebSite site = web.getSiteByUrl(path);
+        XNode htmlNode = site != null ? site.getLayoutHtml() : null;
+        if (htmlNode == null) {
             return null;
         }
 
-        return WebSiteGlobalVariable.with(site, this::genSiteHtml);
+        return toHtml(htmlNode);
     }
 
-    private void registerGlobalVars() {
-        Cancellable cancellable = new Cancellable();
+    private String toHtml(XNode node) {
+        String html = node.html().replaceAll("\n\\s*", "");
+        html = StringHelper.unescapeXml(html);
 
-        EvalGlobalRegistry.instance() //
-                          .registerVariable(WebSiteConstants.VAR_GLOBAL_SITE, //
-                                            WebSiteGlobalVariable.instance());
-        cancellable.appendOnCancel(r -> EvalGlobalRegistry.instance()
-                                                          .unregisterVariable(WebSiteConstants.VAR_GLOBAL_SITE));
-
-        this.cleanup.append(cancellable);
-    }
-
-    private String genSiteHtml() {
-        IResource resource = VirtualFileSystem.instance() //
-                                              .getResource(WebSiteConstants.VFS_XDSL_SITE_HTML);
-        // Note：站点 HTML 页面需要当前的站点数据动态生成，
-        // 故而，不能使用带 DSL 模型缓存的载入接口 #loadComponentModel
-        WebSiteHtmlLoader.WebSiteHtml model = //
-                (WebSiteHtmlLoader.WebSiteHtml) //
-                        ResourceComponentManager.instance() //
-                                                .parseComponentModel(resource);
-
-        return model.getContent();
+        return "<!DOCTYPE html>" + html;
     }
 }

@@ -78,7 +78,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
             scope.setLocalValue("site", site);
 
             // 通过 #generateNode 函数执行 xpl 函数并得到 XNode 树
-            XNode htmlNode = XDslHelper.toHtml(action.generateNode(scope).firstChild());
+            XNode htmlNode = XDslHelper.toHtmlNode(action.generateNode(scope).firstChild());
             String html = toHtml(htmlNode);
             this.log.info(html);
 

@@ -17,10 +17,10 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.web.test;
+package io.crazydan.duzhou.framework.commons.test;
 
-import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
-import io.crazydan.duzhou.framework.gateway.web.utils.WebPageProviderHelper;
+import io.crazydan.duzhou.framework.commons.XDslHelper;
+import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import org.junit.jupiter.api.Assertions;
@@ -28,16 +28,16 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2024-02-22
+ * @date 2024-03-01
  */
-public class WebPageProviderTest extends GatewayWebBaseTest {
+public class XDslHelperTest extends NopJunitTestCase {
 
     @Test
-    public void test_Json_to_Xml() {
-        Object page = JsonTool.loadJson("/duzhou/web/signin.page.json");
+    public void test_Json_to_XNode() {
+        Object page = JsonTool.loadJson("/commons/test/signin.page.json");
         Assertions.assertNotNull(page);
 
-        XNode node = WebPageProviderHelper.jsonToXNode(page);
+        XNode node = XDslHelper.jsonToXNode(page);
         this.log.info("json to xml: \n{}", node.xml());
 
         Assertions.assertEquals(attachmentXml("signin.page.xml").xml(), node.xml());

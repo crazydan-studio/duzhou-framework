@@ -24,14 +24,8 @@ package io.crazydan.duzhou.framework.gateway.web;
  * @date 2024-02-14
  */
 public interface WebSiteConstants {
-    String MODEL_TYPE_XWEB = "xweb";
     String FILE_TYPE_WEB_XML = "web.xml";
 
     /** 站点的 DSL 定义的虚拟文件路径 */
     String VFS_XDSL_XWEB = "/duzhou/web/app." + FILE_TYPE_WEB_XML;
-    /** 站点入口 HTML 的 DSL 定义的虚拟文件路径 */
-    String VFS_XDSL_SITE_HTML = "/duzhou/web/app.site-html.xml";
-
-    /** 全局变量：站点 */
-    String VAR_GLOBAL_SITE = "$site";
 }
