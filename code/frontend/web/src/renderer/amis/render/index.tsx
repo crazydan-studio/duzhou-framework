@@ -18,6 +18,8 @@
  */
 
 import { createRoot } from 'react-dom/client';
+import { history } from '@/sdk/nop-core';
+import '@/renderer/amis/components';
 
 import Renderer from './Renderer';
 
@@ -28,8 +30,6 @@ import 'amis/sdk/iconfont.css';
 import 'amis/lib/themes/antd.css';
 
 import './style.scss';
-
-import { history } from '@/sdk/nop-core';
 
 export default async function render({ container, ...site }) {
   if (typeof container === 'string') {
