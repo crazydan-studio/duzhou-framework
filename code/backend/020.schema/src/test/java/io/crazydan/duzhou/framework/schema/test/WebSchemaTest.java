@@ -19,11 +19,11 @@
 
 package io.crazydan.duzhou.framework.schema.test;
 
-import io.crazydan.duzhou.framework.schema.RunInEnv;
 import io.crazydan.duzhou.framework.schema.SchemaBaseTest;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
 import io.nop.core.lang.json.JsonTool;
+import io.nop.core.lang.xml.XNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,22 +38,22 @@ public class WebSchemaTest extends SchemaBaseTest {
     public void test_Parse_Dsl() {
         XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
 
-        String json = JsonTool.serialize(web, true);
-        log.info(json);
+        String json = JsonTool.serialize(web, true).replaceAll("\\s+\"(location|config|xmlns:x)\".+", "");
+        this.log.info(json);
+        Assertions.assertEquals(attachmentJsonText("app.web.json"), json);
 
         for (XWebSite site : web.getSites()) {
-            Assertions.assertEquals(RunInEnv.development, site.getRunInEnv());
-            Assertions.assertEquals("渡舟平台", site.getTitle());
-            Assertions.assertNotNull(site.getSubTitle());
-            Assertions.assertEquals("/logo.svg", site.getLogo());
-            Assertions.assertEquals("#fff", site.getLayout().getBgColor());
-            Assertions.assertEquals("/loading.svg", site.getLayout().getSpinner());
-            Assertions.assertTrue(site.getLayout().hasScripts());
-            Assertions.assertTrue(site.getLayout().hasStyles());
-
-            Object result = site.renderLayout();
+            Object result = site.getLayoutConfig();
             json = JsonTool.serialize(result, true);
-            log.info(json);
+            this.log.info(json);
+
+            XNode node = site.getLayoutHtml();
+            String html = node.html().replaceAll("(?m)^\\s+", "");
+            this.log.info(html);
+
+            String expected = attachmentXml("app.web-site." + site.getId() + ".html").html()
+                                                                                     .replaceAll("(?m)^\\s+", "");
+            Assertions.assertEquals(expected, html);
         }
 
         XWebSite commonSite = web.getSite("common");
@@ -61,7 +61,7 @@ public class WebSchemaTest extends SchemaBaseTest {
 
         XWebSite signinSite = web.getSite("signin");
         Assertions.assertNotNull(signinSite);
-        Assertions.assertEquals("/path/to/signin.page.xml", signinSite.renderLayout().get("schemaApi"));
+        Assertions.assertEquals("/path/to/signin.page.xml", signinSite.getLayoutConfig().get("schemaApi"));
 
         XWebSite defaultSite = web.getSiteByUrl("*");
         Assertions.assertNotNull(defaultSite);

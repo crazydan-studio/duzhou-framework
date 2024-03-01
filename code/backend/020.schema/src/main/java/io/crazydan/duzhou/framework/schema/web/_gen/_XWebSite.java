@@ -46,7 +46,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     /**
      *  必须
      * xml name: layout
-     * 站点布局器
+     * 站点布局配置
      */
     private io.crazydan.duzhou.framework.schema.web.XWebSiteLayout _layout ;
     
@@ -123,7 +123,7 @@ public abstract class _XWebSite extends io.nop.core.resource.component.AbstractC
     /**
      * 必须
      * xml name: layout
-     *  站点布局器
+     *  站点布局配置
      */
     
     public io.crazydan.duzhou.framework.schema.web.XWebSiteLayout getLayout(){

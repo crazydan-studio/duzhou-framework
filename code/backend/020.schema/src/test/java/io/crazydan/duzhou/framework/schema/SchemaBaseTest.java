@@ -19,37 +19,18 @@
 
 package io.crazydan.duzhou.framework.schema;
 
-import io.nop.api.core.config.AppConfig;
-import io.nop.core.initialize.CoreInitialization;
-import io.nop.core.unittest.BaseTestCase;
-import io.nop.ioc.initialize.IocCoreInitializer;
-import org.junit.jupiter.api.AfterAll;
+import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import org.junit.jupiter.api.BeforeAll;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static io.nop.core.CoreConfigs.CFG_JSON_PARSE_IGNORE_UNKNOWN_PROP;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-02-05
  */
-public abstract class SchemaBaseTest extends BaseTestCase {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+public abstract class SchemaBaseTest extends NopJunitTestCase {
 
     @BeforeAll
-    public static void init() {
-        AppConfig.getConfigProvider().updateConfigValue(CFG_JSON_PARSE_IGNORE_UNKNOWN_PROP, true);
-
-        // 不初始化 Ioc
-        CoreInitialization.initializeTo(new IocCoreInitializer().order() - 1);
-
+    public static void _init() {
         // 确保 xdef 变更后能够生成最新的 java 代码
         SchemaCodeGen.run();
-    }
-
-    @AfterAll
-    public static void destroy() {
-        CoreInitialization.destroy();
     }
 }

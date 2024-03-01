@@ -10,7 +10,7 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from [76:6:0:0]/duzhou/schema/web/site.xdef <p>
- * 站点布局器
+ * 站点布局配置
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -26,16 +26,16 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     /**
      *  必须
      * xml name: config
-     * 布局器的配置函数，需返回页面渲染引擎所支持的 JSON 数据。
-     * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
+     * 布局的配置数据函数，通过该函数返回页面渲染引擎所支持的数据结构（JSON 形式）。
+     * 在该函数内，可通过变量 `site` 引用当前站点的模型对象
      */
     private io.nop.core.lang.eval.IEvalAction _config ;
     
     /**
      *  必填
      * xml name: html
-     * html 页面 DSL 定义位置，在其 `x:gen-extends`
-     * 标签中可引用变量 `site`，以获取当前站点的 DSL 模型
+     * HTML 页面 DSL 定义文件的 VPath 路径，在其 xpl
+     * 脚本中可通过全局变量 `$site` 引用当前站点的模型对象
      */
     private java.lang.String _html ;
     
@@ -82,8 +82,8 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     /**
      * 必须
      * xml name: config
-     *  布局器的配置函数，需返回页面渲染引擎所支持的 JSON 数据。
-     * 在该函数内，可通过变量 `site` 引用当前站点的配置数据
+     *  布局的配置数据函数，通过该函数返回页面渲染引擎所支持的数据结构（JSON 形式）。
+     * 在该函数内，可通过变量 `site` 引用当前站点的模型对象
      */
     
     public io.nop.core.lang.eval.IEvalAction getConfig(){
@@ -102,8 +102,8 @@ public abstract class _XWebSiteLayout extends io.nop.core.resource.component.Abs
     /**
      * 必填
      * xml name: html
-     *  html 页面 DSL 定义位置，在其 `x:gen-extends`
-     * 标签中可引用变量 `site`，以获取当前站点的 DSL 模型
+     *  HTML 页面 DSL 定义文件的 VPath 路径，在其 xpl
+     * 脚本中可通过全局变量 `$site` 引用当前站点的模型对象
      */
     
     public java.lang.String getHtml(){
