@@ -52,6 +52,7 @@ public class XDslHelper {
      * 返回的是 {@link XNode} 的副本，其会对该副本做以下工作：<ul>
      * <li>去掉注释节点；</li>
      * <li>去掉 `xmlns` 等与 HTML 无关的节点属性；</li>
+     * <li>去掉 style/script 节点内容中的注释；</li>
      * </ul>
      */
     public static XNode toHtml(XNode node) {
@@ -60,7 +61,21 @@ public class XDslHelper {
         html.clearComment();
         html.clearLocation();
         html.removeAttrsWithPrefix("xmlns:");
+        html.findAllByTag("style").forEach(XDslHelper::removeContentComments);
+        html.findAllByTag("script").forEach(XDslHelper::removeContentComments);
 
         return html;
+    }
+
+    /** 移除 {@link XNode} 节点内容中的注释 */
+    public static void removeContentComments(XNode node) {
+        if (!node.hasContent()) {
+            return;
+        }
+
+        String content = node.contentText();
+        content = content.replaceAll("[ \\t\\x0B\\f]*//.*$", "") //
+                         .replaceAll("[ \\t\\x0B\\f]*/\\*.*\\*/[ \\t\\x0B\\f]*", "");
+        node.content(content);
     }
 }
