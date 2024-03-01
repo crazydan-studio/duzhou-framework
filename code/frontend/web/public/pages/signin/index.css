@@ -210,6 +210,10 @@ a {
   margin-right: 0.5rem;
 }
 
+.site .signin-page .signin-form .remember-me {
+  margin-bottom: 0;
+}
+
 .site .signin-page .signin-form .checkbox>label,
 .site .signin-page .signin-form .reset-link {
   line-height: 1.35;

@@ -17,6 +17,6 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-export default async function render({ el, layout, resources }) {
+export default async function render({ container, ...site }) {
   // 仅作为多引擎构建的示例
 }

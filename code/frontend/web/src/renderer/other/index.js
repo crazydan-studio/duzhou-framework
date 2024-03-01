@@ -22,5 +22,5 @@ import render from '@/renderer/other/render';
 
 // 从默认变量中获取配置，并直接调用渲染函数，
 // 从而支持非模块化调用
-const conf = window.__APP_SITE_CONFIG__ || { el: document.body };
+const conf = window.__APP_SITE_CONFIG__ || { container: document.body };
 render(conf);

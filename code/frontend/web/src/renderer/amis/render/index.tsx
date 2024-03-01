@@ -31,7 +31,7 @@ import './style.scss';
 
 import { history } from '@/sdk/nop-core';
 
-export default async function render({ container, layout }) {
+export default async function render({ container, ...site }) {
   if (typeof container === 'string') {
     container = document.querySelector(container);
   }
@@ -45,7 +45,6 @@ export default async function render({ container, layout }) {
   container.classList.add('amis-scope', 'site');
 
   const reactRoot = createRoot(container!);
-  const site = (layout && (await layout())) || {};
 
   // https://github.com/baidu/amis/blob/master/examples/embed.tsx#L256
   const doRender = (props: any) => {
