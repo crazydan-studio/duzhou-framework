@@ -86,6 +86,8 @@ public class EvalExecutor {
 
     /**
      * 注册全局变量，并执行消费函数，并在返回结果前，移除全局变量
+     * <p/>
+     * 需在单线程内完成同名变量的使用，避免在多线程内引用同名变量
      */
     public static <T> T withGlobalVars(Supplier<T> cb, Object[]... vars) {
         if (vars == null) {

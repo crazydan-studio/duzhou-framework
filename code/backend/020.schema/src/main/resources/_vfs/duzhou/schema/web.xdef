@@ -26,10 +26,18 @@
 -->
 <web xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:xdef="/nop/schema/xdef.xdef"
+     xmlns:c="c"
      x:schema="/nop/schema/xdef.xdef"
      xdef:bean-package="io.crazydan.duzhou.framework.schema.web"
      xdef:name="XWeb"
 >
+
+    <xdef:post-parse>
+        <!-- 确保在单线程内完成对全局变量 `$site` 的使用，以避免出现多线程并发问题 -->
+        <c:script>
+            _dsl_model.sites?.forEach(site => site.init());
+        </c:script>
+    </xdef:post-parse>
 
     <site id="!string" xdef:ref="web/site.xdef" xdef:unique-attr="id" />
 </web>

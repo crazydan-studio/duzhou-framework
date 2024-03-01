@@ -38,7 +38,7 @@ public class WebSiteProvider {
                                                   .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
 
         XWebSite site = web.getSiteByUrl(path);
-        XNode htmlNode = site != null ? site.getLayoutHtml() : null;
+        XNode htmlNode = site != null ? site.getLayoutHtmlNode() : null;
         if (htmlNode == null) {
             return null;
         }

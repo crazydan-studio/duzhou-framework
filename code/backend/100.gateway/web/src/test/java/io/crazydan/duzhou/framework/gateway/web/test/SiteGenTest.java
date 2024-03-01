@@ -52,7 +52,7 @@ public class SiteGenTest extends GatewayWebBaseTest {
         Assertions.assertEquals(attachmentJsonText("gen.app.web.json"), json);
 
         for (XWebSite site : web.getSites()) {
-            XNode node = site.getLayoutHtml();
+            XNode node = site.getLayoutHtmlNode();
             String html = toHtml(node);
             this.log.info(html);
 

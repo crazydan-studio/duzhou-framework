@@ -47,7 +47,7 @@ public class WebSchemaTest extends SchemaBaseTest {
             json = JsonTool.serialize(result, true);
             this.log.info(json);
 
-            XNode node = site.getLayoutHtml();
+            XNode node = site.getLayoutHtmlNode();
             String html = node.html().replaceAll("(?m)^\\s+", "");
             this.log.info(html);
 
