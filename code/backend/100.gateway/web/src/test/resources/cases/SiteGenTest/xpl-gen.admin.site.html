@@ -1,0 +1,59 @@
+<html lang="zh">
+<head>
+	<meta name="charset" charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link name="icon:logo" rel="icon" type="image/svg+xml" href="/logo.svg"/>
+	<title>后台管理 | 渡舟平台</title>
+	<style name="style:global">
+		* { box-sizing: border-box; }
+		html, body {
+		margin: 0; padding: 0;
+		min-width: 0; min-height: 0;
+		--body-bg: #1d243d;
+		--Spinner-bg: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggLz4KPC9zdmc+Cg==');
+		--Spinner-height: calc(var(--Spinner-width) / 2);
+		--Spinner--lg-height: calc(var(--Spinner--lg-width) / 2);
+		--Spinner--sm-height: calc(var(--Spinner--sm-width) / 2);
+		}
+		html, body, #app-site {
+		width: 100%; height: 100%;
+		}
+	</style>
+	<style name="style:loading">
+		.loading::after {
+		z-index: 10000; opacity: 1;
+		transition: opacity 0.5s ease-out;
+		transition-delay: 0.2s;
+		pointer-events: none;
+		overflow: hidden; position: absolute;
+		top: 0; bottom: 0; left: 0; right: 0;
+		content: '';
+		background-image: var(--Spinner-bg);
+		background-color: var(--body-bg);
+		background-position: center;
+		background-size: 10rem;
+		background-repeat: no-repeat;
+		}
+		.loading.done::after {
+		opacity: 0;
+		}
+		.loading &gt; * {
+		opacity: 0;
+		transition: opacity 0.5s ease-in;
+		}
+		.loading.done &gt; * {
+		opacity: 1;
+		}
+	</style>
+</head>
+<body class="loading">
+	<div id="app-site"></div>
+	<link name="css:engine" rel="stylesheet" href="/css/amis/theme.css"/>
+	<link name="css:renderer" rel="stylesheet" href="/css/renderer-amis-0.1.0.css"/>
+	<script name="js:site-config">
+		window.__APP_SITE_CONFIG__ = {"data":{},"schema":{"type":"app","brandName":"后台管理","logo":"/logo.svg","pages":[{"label":"权限管理","url":"auth","schemaApi":"/path/to/auth.page.xml"},{"label":"组织管理","url":"organization","schemaApi":"/path/to/org.page.xml"}]},"container":"#app-site"};
+	</script>
+	<script name="js:renderer" type="module" src="/js/renderer-amis-0.1.0.js"></script>
+	<link name="js:engine" rel="modulepreload" href="/js/amis/sdk-6.0.0.js"/>
+</body>
+</html>

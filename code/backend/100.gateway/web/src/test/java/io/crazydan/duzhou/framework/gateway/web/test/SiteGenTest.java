@@ -19,11 +19,10 @@
 
 package io.crazydan.duzhou.framework.gateway.web.test;
 
+import io.crazydan.duzhou.framework.commons.XDslHelper;
 import io.crazydan.duzhou.framework.gateway.web.GatewayWebBaseTest;
-import io.crazydan.duzhou.framework.gateway.web.WebSiteGlobalVariable;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
-import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
@@ -54,33 +53,41 @@ public class SiteGenTest extends GatewayWebBaseTest {
 
         for (XWebSite site : web.getSites()) {
             XNode node = site.getLayoutHtml();
-            String html = node.html().replaceAll("(?m)^\\s+| +$", "");
+            String html = toHtml(node);
             this.log.info(html);
 
-            String expected = attachmentXml("gen." + site.getId() + ".site.html").html()
-                                                                                 .replaceAll("(?m)^\\s+| +$", "");
+            String expected = toHtml(attachmentXml("gen." + site.getId() + ".site.html"));
             Assertions.assertEquals(expected, html);
         }
     }
 
     @Test
     public void test_Gen_Site_Html_by_Xpl() {
-        XWebSite site = WebSiteGlobalVariable.get();
+        XWeb web = XWeb.parseFromVirtualPath(WEB_XDSL);
 
-        XLangCompileTool compiler = XLang.newCompileTool();
-        // Note：在编译 xpl 时需要获取 ${} 中的变量，但在编译器中无法注入该变量，
-        // 故而，需要忽略未注册变量，以确保编译能够正常进行
-        compiler.getScope().setAllowUnregisteredScopeVar(true);
+        for (XWebSite site : web.getSites()) {
+            XLangCompileTool compiler = XLang.newCompileTool();
+            // Note：在编译 xpl 时需要获取 ${} 中的变量，但在编译器中无法注入该变量，
+            // 故而，需要忽略未注册变量，以确保编译能够正常进行
+            compiler.getScope().setAllowUnregisteredScopeVar(true);
 
-        XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_XPL);
-        ExprEvalAction action = compiler.compileTagBody(node, XLangOutputMode.node);
+            XNode node = XNodeParser.instance().parseFromVirtualPath(SITE_HTML_XPL);
+            ExprEvalAction action = compiler.compileTagBody(node, XLangOutputMode.node);
 
-        IEvalScope scope = XLang.newEvalScope();
-        scope.setLocalValue("site", site);
+            IEvalScope scope = XLang.newEvalScope();
+            scope.setLocalValue("site", site);
 
-        // 通过 #generateNode 函数执行 xpl 函数并得到 XNode 树
-        XNode htmlNode = action.generateNode(scope);
-        String html = htmlNode.innerHtml();
-        this.log.info(StringHelper.unescapeXml(html));
+            // 通过 #generateNode 函数执行 xpl 函数并得到 XNode 树
+            XNode htmlNode = XDslHelper.toHtml(action.generateNode(scope).firstChild());
+            String html = toHtml(htmlNode);
+            this.log.info(html);
+
+            String expected = toHtml(attachmentXml("xpl-gen." + site.getId() + ".site.html"));
+            Assertions.assertEquals(expected, html);
+        }
+    }
+
+    private String toHtml(XNode node) {
+        return node.html().replaceAll("(?m)^\\s+| +$", "");
     }
 }

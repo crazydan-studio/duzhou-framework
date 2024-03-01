@@ -19,26 +19,10 @@
 
 package io.crazydan.duzhou.framework.gateway.web;
 
-import java.io.File;
-
-import io.nop.autotest.junit.JunitBaseTestCase;
-import io.nop.commons.util.FileHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-02-07
  */
-public abstract class GatewayWebBaseTest extends JunitBaseTestCase {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    public GatewayWebBaseTest() {
-        // 统一设置测试样例数据位置为当前用例目录下
-        try {
-            File dir = FileHelper.getClassPathFile("cases/" + getClass().getSimpleName());
-            setAttachmentDir(dir);
-        } catch (Exception ignore) {
-        }
-    }
-}
+public abstract class GatewayWebBaseTest extends NopJunitTestCase {}
