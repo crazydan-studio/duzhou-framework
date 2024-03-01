@@ -60,8 +60,9 @@
     </properties>
 
     <modules>
-        <module>030.commons</module>
         <module>020.schema</module>
+        <module>030.commons</module>
+        <module>035.autotest</module>
         <module>050.starter</module>
         <module>100.gateway</module>
     </modules>
@@ -96,17 +97,6 @@
             <artifactId>nop-xlang-debugger</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-autotest-junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -115,6 +105,11 @@
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>commons</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>autotest</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>

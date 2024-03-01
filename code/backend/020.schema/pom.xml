@@ -45,11 +45,16 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-xlang</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-codegen</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.crazydan.duzhou.framework</groupId>
+            <artifactId>autotest</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
