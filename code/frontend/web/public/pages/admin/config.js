@@ -7,6 +7,7 @@ window.__APP_SITE_CONFIG__ = {
     type: 'app',
     brandName: '后台管理',
     logo: '/logo.svg',
+    showBreadcrumb: true,
     header: {
       type: 'tpl',
       className: 'w-full',

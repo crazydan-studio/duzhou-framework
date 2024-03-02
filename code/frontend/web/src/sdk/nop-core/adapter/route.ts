@@ -23,6 +23,16 @@ import h from 'history/hash';
 
 export const history = h;
 
+/** 创建路由链接 */
+export function createRouteLink(link: string) {
+  return `#${link}`;
+}
+
+/** 清除路由链接 */
+export function purgeRouteLink(link: string) {
+  return link.replaceAll(/^#/g, '');
+}
+
 export function jumpTo(to: string, action: any) {
   if (to === 'goForward') {
     return history.forward();

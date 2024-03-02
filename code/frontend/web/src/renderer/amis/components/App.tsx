@@ -17,20 +17,109 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { unRegisterRenderer, Renderer } from 'amis';
+import React from 'react';
+import { unRegisterRenderer, Renderer, AppStore, autobind } from 'amis';
 import AmisApp from 'amis/lib/renderers/App';
-import { AppStore } from 'amis-core';
+
+import { createRouteLink, purgeRouteLink } from '@/sdk/nop-core';
+import { travelElementMutation, updateElementProps } from '@/sdk/utils/react';
 
 const TYPE = 'app';
-
-export default class App extends AmisApp {
-  // renderHeader() {
-  //   return <></>;
-  // }
-}
-
 unRegisterRenderer(TYPE);
-Renderer({
+
+@Renderer({
   type: TYPE,
   storeType: AppStore.name
-})(App);
+})
+export default class App extends AmisApp {
+  @autobind
+  handleNavClick(e: React.MouseEvent) {
+    e.preventDefault();
+
+    const env = this.props.env;
+    let link = e.currentTarget.getAttribute('href')!;
+    link = purgeRouteLink(link);
+
+    env.jumpTo(link, undefined, this.props.data);
+  }
+
+  renderHeader() {
+    const { classnames: cx } = this.props;
+
+    let header = super.renderHeader();
+    if (!header) {
+      return header;
+    }
+
+    header = travelElementMutation(header, (el) => {
+      if (!el.props || el.props.className !== cx('Layout-brand')) {
+        return el;
+      }
+
+      return updateElementProps(el, {
+        children: (
+          <a href={createRouteLink('/')} onClick={this.handleNavClick}>
+            {el.props.children}
+          </a>
+        )
+      });
+    });
+
+    return header;
+  }
+
+  renderAside() {
+    let aside = super.renderAside();
+
+    aside = travelElementMutation(aside, (el) => {
+      const oldRenderLink = el.props && el.props.renderLink;
+      if (!oldRenderLink) {
+        return el;
+      }
+
+      const newRenderLink = (...args: any[]) => {
+        let links = oldRenderLink(...args);
+
+        links = travelElementMutation(links, (lnk) => {
+          let href = !!lnk.props && !lnk.props.target && lnk.props.href;
+          if (!href) {
+            return lnk;
+          }
+
+          return updateElementProps(lnk, {
+            href: createRouteLink(href)
+          });
+        });
+
+        return links;
+      };
+
+      return updateElementProps(el, {
+        renderLink: newRenderLink
+      });
+    });
+
+    return aside;
+  }
+
+  render() {
+    const { classnames: cx } = this.props;
+    let root = super.render();
+
+    root = travelElementMutation(root, (el) => {
+      if (!el.props || el.props.className !== cx('AppBcn-item')) {
+        return el;
+      }
+
+      return travelElementMutation(el, (e) => {
+        return e.type !== 'a'
+          ? e
+          : updateElementProps(e, {
+              href: createRouteLink(e.props.href)
+            });
+      });
+    });
+
+    return root;
+  }
+}
