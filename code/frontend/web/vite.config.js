@@ -52,7 +52,14 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     plugins: [
-      react(),
+      react({
+        babel: {
+          parserOpts: {
+            // 启用 ts 的 @ 语法装饰器
+            plugins: ['decorators-legacy', 'classProperties']
+          }
+        }
+      }),
       viteDts({ rollupTypes: true, logDiagnostics: true }),
       ...getMinifyPlugins(),
       ...(mode === 'development' ? getDevPlugins() : [])
@@ -76,7 +83,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       minify: true,
-      target: 'ES2015',
+      target: 'es5',
       rollupOptions: {
         treeshake: true,
         // 指定入口脚本名称
