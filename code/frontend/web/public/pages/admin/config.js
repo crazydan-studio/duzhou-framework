@@ -5,8 +5,8 @@ window.__APP_SITE_CONFIG__ = {
   },
   schema: {
     type: 'app',
-    brandName: '后台管理',
     logo: '/logo.svg',
+    brandName: '后台管理',
     showBreadcrumb: true,
     header: {
       type: 'tpl',

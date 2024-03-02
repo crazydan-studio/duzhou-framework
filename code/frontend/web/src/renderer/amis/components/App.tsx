@@ -17,9 +17,10 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
+// import { addMiddleware } from 'mobx-state-tree';
 import React from 'react';
 import { unRegisterRenderer, Renderer, AppStore, autobind } from 'amis';
-import AmisApp from 'amis/lib/renderers/App';
+import AmisApp, { AppProps } from 'amis/lib/renderers/App';
 
 import { createRouteLink, purgeRouteLink } from '@/sdk/nop-core';
 import { travelElementMutation, updateElementProps } from '@/sdk/utils/react';
@@ -32,6 +33,19 @@ unRegisterRenderer(TYPE);
   storeType: AppStore.name
 })
 export default class App extends AmisApp {
+  constructor(props: AppProps) {
+    super(props);
+
+    // const { store, docTitle } = this.props;
+    // https://mobx-state-tree.js.org/concepts/middleware
+    // addMiddleware(store, (call, next, abort) => {
+    //   console.log(call.type, call.name, call.args);
+
+    //   next(call);
+    //   document.title = docTitle;
+    // });
+  }
+
   @autobind
   handleNavClick(e: React.MouseEvent) {
     e.preventDefault();
