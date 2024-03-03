@@ -17,25 +17,13 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { AppStore, RegisterStore } from 'amis';
+// 从 amis-ui/scss/themes/antd.scss 中复制
+@import 'amis-ui/scss/properties.scss';
+@import 'amis-ui/scss/components.scss';
+@import 'amis-ui/scss/themes/antd-variables.scss';
 
-// see amis-core/src/store/app.ts
-// Note：备用代码，用于演示如何创建并注册新的 Store
-export const NewAppStore = AppStore.named('NewAppStore').actions((self) => ({
-  // afterCreate() {
-  //   // console.log('create', this.setActivePage, self.setActivePage);
-  //   const old_setActivePage = self.setActivePage;
-  //   self.setActivePage = (...args) => {
-  //     console.log('set', ...args);
-  //     old_setActivePage.call(...args);
-  //   };
-  // },
-  // setActivePage() {
-  //   console.log('set', this, self);
-  // },
-  // updateActivePage() {
-  //   console.log('update', this.setActivePage, self.setActivePage);
-  // }
-}));
-
-RegisterStore(NewAppStore);
+// 覆盖在 antd-variables.scss 中定义的 $ns 默认值，
+// 将其改为通用名称，并配合 amis-core/src/theme.tsx
+// 提供的主题注册函数，将组件的 class 名称也添加与 $ns 相同的前缀
+$ns: 'amis-';
+@import 'amis-ui/scss/themes/common.scss';

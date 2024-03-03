@@ -18,16 +18,23 @@
  */
 
 import { createRoot } from 'react-dom/client';
+import { theme as registerTheme } from 'amis-core';
+
 import { history } from '@/sdk/nop-core';
 import '@/renderer/amis/components';
 
 import Renderer from './Renderer';
 
+// 引入 FA 字体图标
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/css/v4-shims.css';
+import 'amis/sdk/iconfont.css';
 // 全局的类 tailwindcss 风格的原子样式
 // https://baidu.github.io/amis/zh-CN/style/index
-import 'amis/lib/helper.css';
-import 'amis/sdk/iconfont.css';
-import 'amis/lib/themes/antd.css';
+import 'amis-ui/scss/helper.scss';
+
+// 在该 scss 文件中定制 AMIS 自带的主题
+import '@/renderer/amis/themes/antd.scss';
 
 import './style.scss';
 
@@ -37,13 +44,14 @@ export default async function render({ container, ...site }) {
   }
 
   if (!container) {
-    return console.error('Embed.invalidRoot');
+    return console.error('Amis.invalidRoot');
   } else if (container.tagName === 'BODY') {
     container = document.createElement('div');
     document.body.appendChild(container);
   }
   container.classList.add('amis-scope', 'site');
 
+  const theme = 'antd';
   const reactRoot = createRoot(container!);
 
   // https://github.com/baidu/amis/blob/master/examples/embed.tsx#L256
@@ -55,7 +63,7 @@ export default async function render({ container, ...site }) {
           toastPosition: 'top-center',
           getModalContainer: () => container
         }}
-        props={{ ...props, theme: 'antd' }}
+        props={{ ...props, theme: theme }}
         onReady={() => {
           // 结束加载动画
           container.parentElement.classList.add('done');
@@ -73,6 +81,12 @@ export default async function render({ container, ...site }) {
       // 中直接对 document.title 赋值以修改浏览器标签名称，
       // 当前只能重定义该属性的 setter 接口，以使其修改无效
     }
+  });
+
+  // see amis-core/src/theme.tsx
+  // 所有主题的 class 名称都设置相同前缀，以便于统一对主题进行定制
+  registerTheme(theme, {
+    classPrefix: 'amis-'
   });
 
   doRender({
