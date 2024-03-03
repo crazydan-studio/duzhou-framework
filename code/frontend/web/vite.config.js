@@ -83,7 +83,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       minify: true,
-      target: 'es5',
+      target: 'es6',
       rollupOptions: {
         treeshake: true,
         // 指定入口脚本名称
