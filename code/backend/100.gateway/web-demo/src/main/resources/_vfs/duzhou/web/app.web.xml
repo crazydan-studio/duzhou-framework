@@ -34,13 +34,16 @@
           title="渡舟平台" logo="/logo.svg"
           runInEnv="development"
     >
-        <layout spinner="/loading.svg" bgColor="#1d243d">
+        <layout spinner="/loading.svg" bgColor="#1d243d"
+                html="/duzhou/web/app.site-html.xml"
+        >
             <scripts>
                 <!-- 入口脚本需放在最开始位置 -->
                 <script name="renderer" url="/js/renderer-amis-0.1.0.js" />
             </scripts>
 
             <styles>
+                <style name="amis-ui" url="/assets/css/amis-ui.css" />
                 <style name="renderer" url="/assets/css/renderer-amis-0.1.css" />
             </styles>
         </layout>
@@ -51,9 +54,9 @@
           subTitle="资源不存在" url="*"
     >
         <layout>
-            <render><![CDATA[
+            <config><![CDATA[
                 return {};
-            ]]></render>
+            ]]></config>
         </layout>
     </site>
 
@@ -74,12 +77,12 @@
             <styles>
                 <style name="main" url="/pages/signin/index.css" />
             </styles>
-            <render><![CDATA[
+            <config><![CDATA[
                 return {
                   data: {},
                   schemaApi: site.getResource('signin').url
                 };
-            ]]></render>
+            ]]></config>
         </layout>
     </site>
 
@@ -108,7 +111,7 @@
         </resources>
 
         <layout>
-            <render><![CDATA[
+            <config><![CDATA[
                 const pages = xpl `
                     <web:GenAmisAppPages
                         resources="${site.resources}"
@@ -135,7 +138,7 @@
                         }]
                     }
                 };
-            ]]></render>
+            ]]></config>
         </layout>
     </site>
 </web>
