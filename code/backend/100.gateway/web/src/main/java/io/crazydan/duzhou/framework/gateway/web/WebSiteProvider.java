@@ -34,16 +34,36 @@ import io.nop.core.resource.component.ResourceComponentManager;
 public class WebSiteProvider {
 
     public String getSiteHtmlByRequestPath(String path) {
+        XWebSite site = getSiteByPath(path);
+        return getSiteHtml(site);
+    }
+
+    public String getDefaultSiteLogo() {
+        XWebSite site = getDefaultSite();
+        return site != null ? site.getLogo() : null;
+    }
+
+    public String getDefaultSiteHtml() {
+        XWebSite site = getDefaultSite();
+        return getSiteHtml(site);
+    }
+
+    private XWebSite getDefaultSite() {
+        // TODO 内置默认页面
+        return getSiteByPath("*");
+    }
+
+    private XWebSite getSiteByPath(String path) {
         XWeb web = (XWeb) ResourceComponentManager.instance() //
                                                   .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
 
-        XWebSite site = web.getSiteByUrl(path);
-        XNode htmlNode = site != null ? site.getLayoutHtmlNode() : null;
-        if (htmlNode == null) {
-            return null;
-        }
+        return web.getSiteByUrl(path);
+    }
 
-        return toHtml(htmlNode);
+    private String getSiteHtml(XWebSite site) {
+        XNode htmlNode = site != null ? site.getLayoutHtmlNode() : null;
+
+        return htmlNode != null ? toHtml(htmlNode) : null;
     }
 
     private String toHtml(XNode node) {

@@ -68,6 +68,14 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
     private CompletionStage<Void> doFilter(IHttpServerContext context, Supplier<CompletionStage<Void>> next) {
         String path = context.getRequestPath().replaceAll("/+$", "");
 
+        if (path.endsWith("/favicon.ico")) {
+            String logo = this.provider.getDefaultSiteLogo();
+            if (logo != null) {
+                context.sendRedirect(logo);
+                return null;
+            }
+        }
+
         // 忽略 Quarkus 内置的开发、监控等服务请求
         // TODO 根据运行环境（从配置读取）确定可以开放的服务
         if (path.startsWith("/q/")
@@ -102,8 +110,7 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
         if (html == null //
             && !WebStaticResourcesHelper.isFile(path) //
             && !WebStaticResourcesHelper.isFile(path + GZIP_SUFFIX)) {
-            // TODO 内置默认页面
-            html = this.provider.getSiteHtmlByRequestPath("*");
+            html = this.provider.getDefaultSiteHtml();
         }
 
         return html;
