@@ -72,14 +72,17 @@ export default async function render({ container, ...site }) {
     );
   };
 
+  // Note：重载 document.title 之后，只能通过 <title/> 标签修改其值
+  const $title = document.head.getElementsByTagName('title')[0];
   Object.defineProperty(document, 'title', {
-    // get() {
-    //   return 'a | b';
-    // },
+    get() {
+      return $title?.innerText.trim();
+    },
     set(newValue) {
       // Note: AMIS 的 App 组件默认在 AppStore#setActivePage
       // 中直接对 document.title 赋值以修改浏览器标签名称，
       // 当前只能重定义该属性的 setter 接口，以使其修改无效
+      // $title && ($title.innerText = newValue + ' | 渡舟平台');
     }
   });
 
