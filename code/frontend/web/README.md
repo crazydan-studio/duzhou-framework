@@ -52,4 +52,6 @@ yarn run build
   - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 - [Vite 中文文档](https://cn.vitejs.dev/guide/)
 - [AMIS 文档](https://baidu.github.io/amis/)
-- [Vite打包优化，通过文件，图片，字体压缩优化大小](https://juejin.cn/post/7336637599895748644)
+- [Vite 打包优化，通过文件，图片，字体压缩优化大小](https://juejin.cn/post/7336637599895748644)
+- [AntV X6](https://x6.antv.antgroup.com/tutorial/getting-started)：
+  基于 HTML 和 SVG 的图编辑引擎，提供低成本的定制能力和开箱即用的内置扩展，方便快速搭建 DAG 图、ER 图、流程图、血缘图等应用
