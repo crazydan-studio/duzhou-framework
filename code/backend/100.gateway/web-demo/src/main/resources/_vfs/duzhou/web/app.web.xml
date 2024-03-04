@@ -75,7 +75,7 @@
 
         <layout>
             <styles>
-                <style name="main" url="/pages/signin/index.css" />
+                <style name="main" url="/assets/css/pages/signin/index.css" />
             </styles>
             <config><![CDATA[
                 return {
@@ -111,6 +111,10 @@
         </resources>
 
         <layout>
+            <styles>
+                <style name="main" url="/assets/css/pages/admin/index.css" />
+            </styles>
+
             <config><![CDATA[
                 const pages = xpl `
                     <web:GenAmisAppPages
