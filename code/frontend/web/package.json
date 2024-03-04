@@ -12,7 +12,9 @@
   "contributors": [],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "yarn build:js && yarn build:css",
+    "build:js": "vite build --config ./vite.config.js",
+    "build:css": "vite build --config ./vite.css-build.config.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -40,6 +42,7 @@
     "@types/react-dom": "^18.2.6",
     "@types/uuid": "^8.3.4",
     "@vitejs/plugin-react": "^4.2.1",
+    "glob": "^10.3.10",
     "postcss-discard-comments": "^6.0.1",
     "postcss-image-inliner": "^7.0.1",
     "rollup-plugin-cleanup": "^3.2.1",

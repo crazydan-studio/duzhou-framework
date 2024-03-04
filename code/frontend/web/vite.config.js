@@ -60,8 +60,8 @@ export default defineConfig(({ command, mode }) => {
           }
         }
       }),
-      // Note：暂时无法排除对 css 生成 d.ts，故而禁用之，即，均不生成 d.ts
-      // viteDts({ rollupTypes: true, logDiagnostics: true }),
+      // 构建 *.d.ts
+      viteDts({ rollupTypes: true, logDiagnostics: true }),
       ...getMinifyPlugins(),
       ...(mode === 'development' ? getDevPlugins() : [])
     ],
@@ -83,8 +83,9 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      minify: true,
       target: 'es6',
+      minify: true,
+      // 生成 *.js.map 以用于调试
       sourcemap: true,
       rollupOptions: {
         treeshake: true,
@@ -96,10 +97,7 @@ export default defineConfig(({ command, mode }) => {
           // [`renderer-other-${pkg.version}`]: absPath('src/renderer/other/index.js'),
           [`renderer-amis-${pkg.version}`]: absPath(
             'src/renderer/amis/index.js'
-          ),
-          // 单独构建 scss
-          'pages/signin/index.css': absPath('public/pages/signin/index.scss'),
-          'pages/admin/index.css': absPath('public/pages/admin/index.scss')
+          )
         },
         output: {
           // 入口脚本的位置
