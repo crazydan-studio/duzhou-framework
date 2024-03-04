@@ -44,6 +44,17 @@
         </layout>
     </site>
 
+    <!-- 默认站点，匹配所有未匹配的站点，用于返回 404 页面等 -->
+    <defaultSite id="default" x:prototype="common"
+                 subTitle="页面不存在"
+    >
+        <layout>
+            <config><![CDATA[
+                return {};
+            ]]></config>
+        </layout>
+    </defaultSite>
+
     <site id="main" x:prototype="common"
           subTitle="门户首页" url="/"
     >

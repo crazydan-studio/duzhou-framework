@@ -49,16 +49,16 @@
         </layout>
     </site>
 
-    <!-- 默认站点，匹配所有未匹配的站点，用于返回 404 页面 -->
-    <site id="default" x:prototype="common"
-          subTitle="资源不存在" url="*"
+    <!-- 默认站点，匹配所有未匹配的站点，用于返回 404 页面等 -->
+    <defaultSite id="default" x:prototype="common"
+                 subTitle="页面不存在"
     >
         <layout>
             <config><![CDATA[
                 return {};
             ]]></config>
         </layout>
-    </site>
+    </defaultSite>
 
     <site id="main" x:prototype="signin"
           url="/" />
@@ -122,8 +122,9 @@
                     data: {},
                     schema: {
                         type: 'app',
-                        brandName: site.subTitle,
                         logo: site.logo,
+                        brandName: site.subTitle,
+                        showBreadcrumb: false,
                         pages: [{
                             url: '/',
                             schema: {

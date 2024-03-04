@@ -1,4 +1,39 @@
 {
+  "defaultSite": {
+    "id": "default",
+    "layout": {
+      "bgColor": "#1d243d",
+      "html": "/duzhou/web/app.site-html.xml",
+      "scripts": [
+        {
+          "name": "renderer",
+          "url": "/js/renderer-amis-0.1.0.js"
+        },
+        {
+          "name": "engine",
+          "url": "/js/amis/sdk-6.0.0.js"
+        }
+      ],
+      "spinner": "/loading.svg",
+      "styles": [
+        {
+          "name": "engine",
+          "url": "/css/amis/theme.css"
+        },
+        {
+          "name": "renderer",
+          "url": "/css/renderer-amis-0.1.0.css"
+        }
+      ]
+    },
+    "locale": "zh",
+    "logo": "/logo.svg",
+    "resources": [],
+    "runInEnv": "development",
+    "subTitle": "页面不存在",
+    "title": "渡舟平台",
+    "url": "*"
+  },
   "sites": [
     {
       "id": "main",

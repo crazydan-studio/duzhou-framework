@@ -19,6 +19,9 @@
 
 package io.crazydan.duzhou.framework.schema.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.crazydan.duzhou.framework.schema.SchemaBaseTest;
 import io.crazydan.duzhou.framework.schema.web.XWeb;
 import io.crazydan.duzhou.framework.schema.web.XWebSite;
@@ -42,7 +45,12 @@ public class WebSchemaTest extends SchemaBaseTest {
         this.log.info(json);
         Assertions.assertEquals(attachmentJsonText("app.web.json"), json);
 
-        for (XWebSite site : web.getSites()) {
+        XWebSite defaultSite = web.getDefaultSite();
+        Assertions.assertNotNull(defaultSite);
+
+        List<XWebSite> sites = new ArrayList<>(web.getSites());
+        sites.add(web.getDefaultSite());
+        for (XWebSite site : sites) {
             Object result = site.getLayoutConfig();
             json = JsonTool.serialize(result, true);
             this.log.info(json);
@@ -55,15 +63,5 @@ public class WebSchemaTest extends SchemaBaseTest {
                                                                                      .replaceAll("(?m)^\\s+", "");
             Assertions.assertEquals(expected, html);
         }
-
-        XWebSite commonSite = web.getSite("common");
-        Assertions.assertNull(commonSite);
-
-        XWebSite signinSite = web.getSite("signin");
-        Assertions.assertNotNull(signinSite);
-        Assertions.assertEquals("/path/to/signin.page.xml", signinSite.getLayoutConfig().get("schemaApi"));
-
-        XWebSite defaultSite = web.getSiteByUrl("*");
-        Assertions.assertNotNull(defaultSite);
     }
 }

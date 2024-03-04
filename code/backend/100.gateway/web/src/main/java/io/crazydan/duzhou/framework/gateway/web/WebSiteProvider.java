@@ -39,25 +39,21 @@ public class WebSiteProvider {
     }
 
     public String getDefaultSiteLogo() {
-        XWebSite site = getDefaultSite();
-        return site != null ? site.getLogo() : null;
+        return getWeb().getDefaultSite().getLogo();
     }
 
     public String getDefaultSiteHtml() {
-        XWebSite site = getDefaultSite();
+        XWebSite site = getWeb().getDefaultSite();
         return getSiteHtml(site);
     }
 
-    private XWebSite getDefaultSite() {
-        // TODO 内置默认页面
-        return getSiteByPath("*");
+    private XWebSite getSiteByPath(String path) {
+        return getWeb().getSiteByUrl(path);
     }
 
-    private XWebSite getSiteByPath(String path) {
-        XWeb web = (XWeb) ResourceComponentManager.instance() //
-                                                  .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
-
-        return web.getSiteByUrl(path);
+    private XWeb getWeb() {
+        return (XWeb) ResourceComponentManager.instance() //
+                                              .loadComponentModel(WebSiteConstants.VFS_XDSL_XWEB);
     }
 
     private String getSiteHtml(XWebSite site) {
