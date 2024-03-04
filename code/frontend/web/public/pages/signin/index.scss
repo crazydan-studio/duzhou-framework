@@ -19,31 +19,12 @@
 
 /* 样式参考: https://codepen.io/lordgamer2354/embed/NEroLg */
 
-/* Start：在内容溢出的情况下 justify-center 不能居中第一个子节点，
- * 使得第一个子节点被遮挡，只能通过 margin auto 控制其子节点的居中
- * https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container#answer-33455342
- */
-.flex.justify-center {
-  justify-content: unset;
+/* 垂直居中登录窗口 */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.flex.flex-col.justify-center > *:first-child {
-  margin-top: auto !important;
-}
-
-.flex.flex-col.justify-center > *:last-child {
-  margin-bottom: auto !important;
-}
-
-.flex.flex-row.justify-center > *:first-child {
-  margin-left: auto !important;
-}
-
-.flex.flex-row.justify-center > *:last-child {
-  margin-right: auto !important;
-}
-
-/* End */
 
 :root {
   --text-color: #78797d;
