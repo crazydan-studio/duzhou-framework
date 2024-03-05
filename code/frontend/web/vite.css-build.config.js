@@ -85,7 +85,7 @@ export default defineConfig(({ command, mode }) => {
         ext: '.gz',
         deleteOriginFile: false,
         filter: (file) => {
-          return file.includes('/assets/css/pages/');
+          return file.includes('/assets/css/pages/') && !file.endsWith('.gz');
         }
       })
     ]

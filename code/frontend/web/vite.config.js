@@ -230,6 +230,7 @@ function getMinifyPlugins() {
         if (
           file.endsWith('/stats.html') ||
           file.endsWith('.svg') ||
+          file.endsWith('.gz') ||
           file.includes('/pages/')
         ) {
           return false;
