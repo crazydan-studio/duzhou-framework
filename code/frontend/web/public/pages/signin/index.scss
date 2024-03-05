@@ -19,13 +19,6 @@
 
 /* 样式参考: https://codepen.io/lordgamer2354/embed/NEroLg */
 
-/* 垂直居中登录窗口 */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 :root {
   --text-color: #78797d;
   --link-color: #5c7fda;
@@ -40,15 +33,15 @@ body {
   --checkbox-checkbox-active-text-color: var(--text-color);
 }
 
-a {
-  transition: all 0.2s ease-out;
+/* 垂直居中登录窗口 */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.amis-scope [class*='-Toast-wrap'] > * {
-  border: none;
-  background-color: #262e49;
-  color: #fff;
-  font-size: 0.8rem;
+a {
+  transition: all 0.2s ease-out;
 }
 
 .site {

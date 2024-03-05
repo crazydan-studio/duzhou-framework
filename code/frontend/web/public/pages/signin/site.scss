@@ -19,6 +19,13 @@
 
 /* 样式参考: https://codepen.io/lordgamer2354/embed/NEroLg */
 
+.amis-Toast-wrap > * {
+  border: none;
+  background-color: #262e49;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
 .header {
   padding: 2rem 0 0 0;
 
@@ -72,7 +79,7 @@
   --Checkbox-onHover-color: var(--input-active-border-color);
   --checkbox-checked-hover-bg-color: var(--Checkbox-onHover-color);
 
-  [class*='-Panel-heading'] {
+  .amis-Panel-heading {
     display: none;
   }
 
@@ -124,7 +131,7 @@
     background: #5d33e6;
   }
 
-  [class*='-Form-restError'] {
+  .amis-Form-restError {
     background: #f23d3d;
     text-align: center;
     width: 100%;
@@ -138,11 +145,11 @@
 
   .signin-form {
     /* :focus-within 设置子孙节点聚焦时，当前节点的样式 */
-    .input [class*='-Form-control']:focus-within {
+    .input .amis-Form-control:focus-within {
       border-color: #79a6fe;
     }
 
-    .input [class*='-Form-control'] {
+    .input .amis-Form-control {
       background: #262e49;
       /* 边框占位，以避免聚焦时出现高度变化 */
       border: 1px solid transparent;
@@ -152,22 +159,22 @@
       transition: all 0.2s ease-out;
     }
 
-    .input [class*='-Form-control'] [class*='-TextControl-input'] {
+    .input .amis-Form-control .amis-TextControl-input {
       border: none;
       background-color: transparent;
       box-shadow: none;
     }
 
-    .input [class*='-Form-control'].error {
+    .input .amis-Form-control.error {
       border-color: #f23d3d;
     }
 
     .input .InputText-clear svg,
-    .input [class*='-TextControl-revealPassword'] svg {
+    .input .amis-TextControl-revealPassword svg {
       transition: all 0.2s ease-out;
     }
 
-    .input [class*='-TextControl-revealPassword'] svg:hover {
+    .input .amis-TextControl-revealPassword svg:hover {
       fill: var(--input-clearable-hover-color);
       color: var(--input-clearable-hover-color);
     }
