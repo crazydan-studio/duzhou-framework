@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  - Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!--
+应用的后端服务
+
+@id [必填] 服务的唯一标识。采用英文字符串。
+      同一服务的多实例具有相同的标识，
+      该标识也是路由接口到对应服务的依据
+@name [必填] 服务的名称
+@version [必填] 服务的版本号
+-->
+<service xmlns:x="/nop/schema/xdsl.xdef"
+         xmlns:xdef="/nop/schema/xdef.xdef"
+         x:schema="/nop/schema/xdef.xdef"
+         id="!string" name="!string"
+         version="!string"
+>
+
+    <!-- 业务逻辑库，指向 *.xbiz -->
+    <bizLibs xdef:body-type="list" xdef:key-attr="path">
+        <biz path="!v-path" />
+    </bizLibs>
+
+    <!-- 业务模型库，指向 *.xmeta -->
+    <metaLibs xdef:body-type="list" xdef:key-attr="path">
+        <meta path="!v-path" />
+    </metaLibs>
+</service>

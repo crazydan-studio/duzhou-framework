@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<app xmlns:x="/nop/schema/xdsl.xdef"
+     x:schema="/duzhou/schema/app.xdef"
+     xmlns:task="task" xmlns:i18n="i18n"
+     i18n:use="/duzhou/app/assets.app.i18n.xml"
+     i18n:name="app.name"
+     url="https://assets.duzhou.crazydan.io"
+     logo="/logo.svg"
+     task:name="资产管理系统开发"
+>
+
+    <!--<web task:name="Web 端开发">
+        <site id="admin" task:status="pending" />
+    </web>-->
+
+    <services task:status="doing" task:name="服务后端开发">
+        <service id="user-auth" version="0.1.0"
+                 i18n:name="app.service.user-auth.name"
+                 task:status="doing">
+            <bizLibs task:name="业务逻辑">
+                <biz path="model/Account/Account.xbiz"
+                     task:name="Account 接口"
+                     task:status="doing" />
+            </bizLibs>
+
+            <metaLibs task:name="业务模型">
+                <meta path="model/Account/Account.xmeta"
+                      task:name="Account" task:status="done" />
+            </metaLibs>
+        </service>
+    </services>
+</app>
