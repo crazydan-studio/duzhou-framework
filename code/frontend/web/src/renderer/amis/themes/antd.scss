@@ -24,6 +24,6 @@
 
 // 覆盖在 antd-variables.scss 中定义的 $ns 默认值，
 // 将其改为通用名称，并配合 amis-core/src/theme.tsx
-// 提供的主题注册函数，将组件的 class 名称也添加与 $ns 相同的前缀
+// 提供的主题注册函数，将组件的 class 名称也设置为与 $ns 相同的前缀
 $ns: 'amis-';
 @import 'amis-ui/scss/themes/common.scss';
