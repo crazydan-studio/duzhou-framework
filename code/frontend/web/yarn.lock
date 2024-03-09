@@ -23,6 +23,26 @@
   resolved "https://registry.npmjs.org/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz#c158317d74135bedd78c2fdeb76f9c7cfa0ef0aa"
   integrity sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==
 
+"@antv/x6-plugin-minimap@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-minimap/-/x6-plugin-minimap-2.0.7.tgz#1f319ac04de7d05ca895ea6e2784489efe068791"
+  integrity sha512-8zzESCx0jguFPCOKCA0gPFb6JmRgq81CXXtgJYe34XhySdZ6PB23I5Po062lNsEuTjTjnzli4lju8vvU+jzlGw==
+
+"@antv/x6-plugin-scroller@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-scroller/-/x6-plugin-scroller-2.0.10.tgz#bdd39d3530e469bbe72c5feca3b6787512232a3d"
+  integrity sha512-CrC5zCbtPe7LJEKK8ucLcDN+9lMtTJNApFmFObAiR/y2LO1QFCHz8GGLVeNOZaIEmJbR/Z/etpJkvc1LE7WhTg==
+
+"@antv/x6-plugin-selection@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-selection/-/x6-plugin-selection-2.2.2.tgz#681c843124c2150af51594e8e1fc947b5e95e858"
+  integrity sha512-s2gtR9Onlhr7HOHqyqg0d+4sG76JCcQEbvrZZ64XmSChlvieIPlC3YtH4dg1KMNhYIuBmBmpSum6S0eVTEiPQw==
+
+"@antv/x6-plugin-snapline@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-snapline/-/x6-plugin-snapline-2.1.7.tgz#1b4e3be0a281ba324117b7ac7b9b8c39e484cce2"
+  integrity sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==
+
 "@antv/x6-react-shape@^2.2.3":
   version "2.2.3"
   resolved "https://registry.npmjs.org/@antv/x6-react-shape/-/x6-react-shape-2.2.3.tgz#3b2d07f216f501e1b394b612ee2e0e3d49e18143"
@@ -5320,6 +5340,7 @@ string-argv@~0.3.1:
   integrity sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -5352,6 +5373,7 @@ string_decoder@~1.1.1:
     safe-buffer "~5.1.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -5930,6 +5952,7 @@ word@~0.3.0:
   integrity sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

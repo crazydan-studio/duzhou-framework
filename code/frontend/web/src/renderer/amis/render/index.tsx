@@ -26,6 +26,7 @@ import '@/renderer/amis/components';
 import Renderer from './Renderer';
 
 // 引入 FA 字体图标
+// https://fontawesome.com/v6/icons?o=r&m=free
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
 import 'amis/sdk/iconfont.css';

@@ -18,3 +18,4 @@
  */
 
 export * from './App';
+export * from './Designer';
