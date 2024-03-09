@@ -50,7 +50,7 @@ export default class Designer extends React.Component<DesignerProps, object> {
     }
 
     this.graph = createGraph({
-      dom: {
+      containers: {
         graph: this.graphDom,
         minimap: this.minimapDom
       }

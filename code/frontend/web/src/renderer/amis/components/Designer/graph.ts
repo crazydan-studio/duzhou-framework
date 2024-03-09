@@ -26,7 +26,7 @@ import { Snapline } from '@antv/x6-plugin-snapline';
 export { Graph } from '@antv/x6';
 
 interface Options {
-  dom: {
+  containers: {
     graph: HTMLElement;
     minimap: HTMLElement;
   };
@@ -34,7 +34,7 @@ interface Options {
 
 export function createGraph(options: Options) {
   const graph = new Graph({
-    container: options.dom.graph!,
+    container: options.containers.graph!,
     autoResize: true,
     grid: {
       visible: true,
@@ -56,7 +56,7 @@ export function createGraph(options: Options) {
   });
 
   installPlugins(graph, {
-    minimapContainer: options.dom.minimap
+    minimapContainer: options.containers.minimap
   });
 
   return graph;
@@ -69,11 +69,21 @@ function installPlugins(
   const plugins = [
     // https://x6.antv.antgroup.com/tutorial/plugins/selection
     new Selection({
-      enabled: true
+      enabled: true,
+      multiple: true,
+      rubberband: true,
+      movable: true,
+      showNodeSelectionBox: true,
+      showEdgeSelectionBox: true
     }),
     // https://x6.antv.antgroup.com/tutorial/plugins/scroller
     new Scroller({
-      enabled: true
+      enabled: true,
+      autoResize: true,
+      autoResizeOptions: {
+        minHeight: 1000,
+        border: 200
+      }
     }),
     // https://x6.antv.antgroup.com/tutorial/plugins/minimap
     new MiniMap({
