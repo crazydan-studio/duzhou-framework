@@ -140,7 +140,8 @@ function getDevPlugins() {
       data: {
         site_title: '渡舟平台',
         site_logoImage: '/logo.svg',
-        site_loadingImage: './public/loading.svg'
+        site_loadingImage: './public/loading.svg',
+        site_bgColor: '#fff'
       },
       pages: {
         // signin/ -> /signin/
@@ -148,6 +149,7 @@ function getDevPlugins() {
         'signin/': {
           template: '/public/template.html',
           data: {
+            site_bgColor: '#1d243d',
             site_subTitle: '用户登录',
             // 指定 lang="scss" 以支持通过 sass-loader 载入编译后的 scss
             styles:
