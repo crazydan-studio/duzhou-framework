@@ -31,7 +31,7 @@
       defaultLang="!string"
 >
 
-    <trans key="string" xdef:unique-attr="key">
+    <trans key="!string" xdef:unique-attr="key">
         <xdef:unknown-tag xdef:value="string" />
     </trans>
 </i18n>

@@ -21,9 +21,8 @@
 
 <app xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/duzhou/schema/app.xdef"
-     xmlns:task="task" xmlns:i18n="i18n"
-     i18n:use="/duzhou/app/assets.app.i18n.xml"
-     i18n:name="app.name"
+     xmlns:task="task"
+     name="资产管理系统"
      url="https://assets.duzhou.crazydan.io"
      logo="/logo.svg"
      task:name="资产管理系统开发"
@@ -35,7 +34,7 @@
 
     <services task:status="doing" task:name="服务后端开发">
         <service id="user-auth" version="0.1.0"
-                 i18n:name="app.service.user-auth.name"
+                 name="用户认证服务"
                  task:status="doing">
             <bizLibs task:name="业务逻辑">
                 <biz path="model/Account/Account.xbiz"

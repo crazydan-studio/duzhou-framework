@@ -1,0 +1,7 @@
+<node id="root" name="根节点" desc="根节点。。。">
+    <node id="child-1" name="子节点 #1">
+        <node id="child-1-1" name="子节点 #1/1"/>
+        <node id="child-1-2" name="子节点 #1/2"/>
+    </node>
+    <node id="child-2" name="子节点 #2"/>
+</node>

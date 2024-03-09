@@ -19,24 +19,17 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<i18n xmlns:x="/nop/schema/xdsl.xdef"
-      x:schema="/duzhou/schema/i18n.xdef"
-      defaultLang="zh_CN"
+<!-- 以差量定制方式进行国际化支持 -->
+<node xmlns:x="/nop/schema/xdsl.xdef"
+      x:schema="/schema/i18n.test.xdef"
+      x:extends="/duzhou/i18n/with-delta.i18n.test.xml"
+      id="root" name="Root Node" desc="Root Node ..."
 >
 
-    <trans key="common.hello">
-        <zh_CN>您好，${name}</zh_CN>
-        <en_US>Welcome, ${name}</en_US>
-    </trans>
+    <node id="child-1" name="Child Node #1">
+        <node id="child-1-1" name="Child Node #1/1" />
+        <node id="child-1-2" name="Child Node #1/2" />
+    </node>
 
-    <trans key="app.name">
-        <zh_CN>
-            资产管理系统
-        </zh_CN>
-        <en_US>Assets Management System</en_US>
-    </trans>
-    <trans key="app.service.user-auth.name">
-        <zh_CN>用户认证服务</zh_CN>
-        <en_US>User Auth Service</en_US>
-    </trans>
-</i18n>
+    <node id="child-2" name="Child Node #2" />
+</node>
