@@ -20,9 +20,9 @@
 import React from 'react';
 import { RendererProps, Renderer, autobind } from 'amis-core';
 
-import { Graph, createGraph } from './Designer/graph';
+import { Graph, createGraph } from './graph';
 
-import './Designer/style.scss';
+import './style.scss';
 
 const TYPE = 'designer';
 

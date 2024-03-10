@@ -23,7 +23,14 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
+        label: '可视化设计',
         children: [
+          {
+            label: 'DSL 编辑器',
+            url: 'dsl-editor',
+            icon: 'fa fa-cubes',
+            schemaApi: 'get:/pages/admin/demo/dsl-editor.json'
+          },
           {
             label: '设计器',
             url: 'designer',
