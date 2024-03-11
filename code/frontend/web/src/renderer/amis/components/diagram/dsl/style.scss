@@ -29,8 +29,12 @@
     }
   }
 
-  .react-flow__node:focus {
-    outline: none;
+  .react-flow__node {
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .react-flow__edge .react-flow__edge-path > * {

@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   RendererProps,
   Renderer,
@@ -25,16 +25,21 @@ import {
   autobind
 } from 'amis-core';
 import ReactFlow, {
+  ReactFlowProvider,
   MiniMap,
   Controls,
   Background,
   useNodesState,
   useEdgesState,
-  addEdge
+  useStore,
+  useReactFlow,
+  useNodesInitialized
 } from 'reactflow';
 
-import dagre from 'dagre';
 import { v4 as uuid } from 'uuid';
+import { stratify } from 'd3-hierarchy';
+import { flextree } from 'd3-flextree';
+import { timer } from 'd3-timer';
 
 import DslNode from './dsl/Node';
 import DslNewNode from './dsl/NewNode';
@@ -56,7 +61,14 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   componentDidMount() {}
 
   render(): React.ReactNode {
-    return <ReactFlowEditor />;
+    return (
+      // Note：在存在多实例和单页面应用环境中，需通过 ReactFlowProvider
+      // 保证实例间的 Store 是各自独立的
+      // https://reactflow.dev/examples/misc/provider
+      <ReactFlowProvider>
+        <ReactFlowEditor />
+      </ReactFlowProvider>
+    );
   }
 }
 
@@ -77,31 +89,13 @@ const defaultEdgeOptions = {
 function ReactFlowEditor() {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
-
-  const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-    initialNodes,
-    initialEdges,
-    'LR'
-  );
-
-  const [nodes, setNodes, defaultOnNodesChange] = useNodesState(layoutedNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
-
   // https://react.dev/reference/react/useCallback
-  const onConnect = useCallback(
-    (edge) => setEdges((edges) => addEdge(edge, edges)),
-    []
-  );
-  const onLayout = useCallback(
-    (direction) => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(nodes, edges, direction);
 
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
-    },
-    [nodes, edges]
-  );
+  const [nodes, , defaultOnNodesChange] = useNodesState(initialNodes);
+  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
+
+  const { getNodes, setNodes, setEdges, getEdges } = useReactFlow();
+
   const onNodesChange = useCallback((changes) => {
     const targets = {};
     changes.forEach(({ id, type, selected }) => {
@@ -122,41 +116,42 @@ function ReactFlowEditor() {
 
     defaultOnNodesChange(changes);
   }, []);
-  const onNodeClick = useCallback(
-    (event, node) => {
-      if (node.type === 'dsl-new-node') {
-        const { parent, create } = node.data;
-        const newNode = create();
-        newNode.id = uuid();
+  const onNodeClick = useCallback((event, node) => {
+    if (node.type === 'dsl-new-node') {
+      const { parent, create } = node.data;
+      const newNode = create();
+      newNode.id = uuid();
+      newNode.position = { ...node.position };
 
-        const newEdge = {
-          id: `e:${parent}->${newNode.id}`,
-          source: parent,
-          target: newNode.id
-        };
+      const newEdge = {
+        id: `e:${parent}->${newNode.id}`,
+        source: parent,
+        target: newNode.id
+      };
 
-        const newNodes = [...nodes];
-        newNodes.splice(
-          nodes.findIndex((n) => n.id === node.id),
-          0,
-          newNode
-        );
-        const newEdges = [...edges];
-        newEdges.splice(
-          edges.findIndex((e) => e.source === parent && e.target === node.id),
-          0,
-          newEdge
-        );
+      const nodes = getNodes();
+      const edges = getEdges();
 
-        const { nodes: layoutedNodes, edges: layoutedEdges } =
-          getLayoutedElements(newNodes, newEdges, 'LR');
+      const newNodes = [...nodes];
+      newNodes.splice(
+        nodes.findIndex((n) => n.id === node.id),
+        0,
+        newNode
+      );
+      const newEdges = [...edges];
+      newEdges.splice(
+        edges.findIndex((e) => e.source === parent && e.target === node.id),
+        0,
+        newEdge
+      );
 
-        setNodes([...layoutedNodes]);
-        setEdges([...layoutedEdges]);
-      }
-    },
-    [nodes, edges]
-  );
+      setNodes(newNodes);
+      setEdges(newEdges);
+    }
+  }, []);
+
+  const layout = useAutoLayout();
+  layout({ duration: 300 });
 
   return (
     <ReactFlow
@@ -173,7 +168,6 @@ function ReactFlowEditor() {
       className="dsl-editor"
       nodes={nodes}
       edges={edges}
-      onConnect={onConnect}
       onNodeClick={onNodeClick}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
@@ -185,43 +179,91 @@ function ReactFlowEditor() {
   );
 }
 
-const nodeWidth = 16 * 14;
-const nodeHeight = 36;
+const useAutoLayout = () => {
+  //https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
 
-const getLayoutedElements = (nodes, edges, direction = 'TB') => {
-  const isHorizontal = direction === 'LR';
+  const layout = flextree()
+    .nodeSize((node) => [node.data.width - 40, node.data.height + 16 * 14])
+    .spacing(() => 1);
 
-  // https://reactflow.dev/examples/layout/dagre
-  const dagreGraph = new dagre.graphlib.Graph();
-  dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: direction });
+  function layoutNodes(nodes, edges) {
+    const tree = stratify()
+      .id((d) => d.id)
+      .parentId((d) => edges.find((e) => e.target === d.id)?.source)(nodes);
 
-  nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
-  });
+    const root = layout(tree);
 
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
+    return root.descendants().map((d) => ({
+      ...d.data,
+      position: {
+        // x，y 交换位置后，便变为水平布局
+        x: d.y,
+        y: d.x
+      }
+    }));
+  }
 
-  dagre.layout(dagreGraph);
+  const nodeCountSelector = (state) => state.nodeInternals.size;
 
-  nodes.forEach((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? 'left' : 'top';
-    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
+  function Layout(options) {
+    const initial = useRef(false);
 
-    // We are shifting the dagre node position (anchor=center center) to the top left
-    // so it matches the React Flow node anchor point (top left).
-    node.position = {
-      x: nodeWithPosition.x - nodeWidth / 2,
-      y: nodeWithPosition.y - nodeHeight / 2
-    };
+    const nodeCount = useStore(nodeCountSelector);
+    const nodesInitialized = useNodesInitialized();
 
-    return node;
-  });
+    const { getNodes, getNode, setNodes, getEdges, fitView } = useReactFlow();
 
-  return { nodes, edges };
+    useEffect(() => {
+      if (nodeCount < 2 || !nodesInitialized) {
+        return () => {};
+      }
+
+      const nodes = getNodes();
+      const edges = getEdges();
+
+      const transitions = layoutNodes(nodes, edges).map((node) => {
+        return {
+          id: node.id,
+          from: getNode(node.id)?.position || node.position,
+          to: node.position,
+          node
+        };
+      });
+
+      const t = timer((elapsed) => {
+        if (elapsed < options.duration) {
+          const s = elapsed / options.duration;
+
+          setNodes(
+            transitions.map(({ node, from, to }) => ({
+              ...node,
+              position: {
+                x: from.x + (to.x - from.x) * s,
+                y: from.y + (to.y - from.y) * s
+              }
+            }))
+          );
+        } else {
+          t.stop();
+
+          setNodes(
+            transitions.map(({ node, to }) => ({
+              ...node,
+              position: { ...to }
+            }))
+          );
+
+          if (!initial.current) {
+            initial.current = true;
+            fitView({ duration: 200, padding: 0.2 });
+          }
+        }
+      });
+
+      return () => t.stop();
+    }, [nodeCount, nodesInitialized]);
+  }
+  return Layout;
 };
 
 const position = { x: 0, y: 0 };

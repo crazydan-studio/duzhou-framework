@@ -16,3 +16,6 @@
   - 从 `amis-ui` 中导入对应主题的 `${theme}.scss` 文件，并在
     `@import 'amis-ui/scss/themes/common.scss'`
     之前覆盖定义变量为 `$ns: 'amis-'`
+- [x] DSL 编辑器在增删节点时需采用动画以平滑布局
+  - 参考代码: https://reactflow.dev/learn/layouting/layouting#d3-force
+  - 参考代码: https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
