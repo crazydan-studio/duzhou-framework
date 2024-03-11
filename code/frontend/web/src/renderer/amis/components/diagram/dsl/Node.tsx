@@ -25,7 +25,7 @@ function Node({ data, selected }) {
     <div
       className={
         'px-4 py-2 shadow-md rounded-md bg-white border-solid border-2' +
-        (selected ? ' border-pink-600' : ' border-white')
+        (selected ? ' border-pink-600' : ' border-gray-300')
       }
     >
       <div className="flex">
@@ -42,8 +42,8 @@ function Node({ data, selected }) {
         </div>
       </div>
 
-      <Handle type="target" position={Position.Left} className="bg-transparent -left-0.5" />
-      <Handle type="source" position={Position.Right} className="bg-transparent -right-0.5" />
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
     </div>
   );
 }

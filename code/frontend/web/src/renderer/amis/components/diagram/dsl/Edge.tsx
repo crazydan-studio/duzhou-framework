@@ -17,25 +17,41 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-.dsl-editor {
-  .react-flow__handle {
-    opacity: 0;
+import { EdgeProps, getBezierPath } from 'reactflow';
 
-    &.source {
-      right: 0px;
-    }
-    &.target {
-      left: -10px;
-    }
-  }
+export default function Edge({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  markerEnd
+}: EdgeProps) {
+  const xEqual = sourceX === targetX;
+  const yEqual = sourceY === targetY;
 
-  .react-flow__node:focus {
-    outline: none;
-  }
+  const [edgePath] = getBezierPath({
+    // we need this little hack in order to display the gradient for a straight line
+    sourceX: xEqual ? sourceX + 0.0001 : sourceX,
+    sourceY: yEqual ? sourceY + 0.0001 : sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition
+  });
 
-  .react-flow__edge .react-flow__edge-path {
-    stroke: #2a8af6;
-    stroke-width: 2;
-    stroke-opacity: 0.75;
-  }
+  return (
+    <>
+      <path
+        id={id}
+        style={style}
+        className="react-flow__edge-path"
+        d={edgePath}
+        markerEnd={markerEnd}
+      />
+    </>
+  );
 }

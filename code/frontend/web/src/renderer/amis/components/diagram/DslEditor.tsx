@@ -28,7 +28,6 @@ import ReactFlow, {
   MiniMap,
   Controls,
   Background,
-  ConnectionLineType,
   useNodesState,
   useEdgesState,
   addEdge
@@ -36,6 +35,7 @@ import ReactFlow, {
 import dagre from 'dagre';
 
 import DslNode from './dsl/Node';
+import DslEdge from './dsl/Edge';
 
 import 'reactflow/dist/style.css';
 import './dsl/style.scss';
@@ -60,6 +60,14 @@ export default class DslEditor extends React.Component<EditorProps, object> {
 const nodeTypes = {
   'dsl-node': DslNode
 };
+const edgeTypes = {
+  'dsl-edge': DslEdge
+};
+
+const defaultEdgeOptions = {
+  type: 'dsl-edge',
+  markerEnd: 'edge-circle'
+};
 
 // https://reactflow.dev/learn
 function ReactFlowEditor() {
@@ -76,10 +84,7 @@ function ReactFlowEditor() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
 
   const onConnect = useCallback(
-    (params) =>
-      setEdges((eds) =>
-        addEdge({ ...params, type: ConnectionLineType.SmoothStep }, eds)
-      ),
+    (params) => setEdges((eds) => addEdge(params, eds)),
     []
   );
   const onLayout = useCallback(
@@ -102,16 +107,42 @@ function ReactFlowEditor() {
       nodesDraggable={false}
       nodesConnectable={false}
       nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
+      defaultEdgeOptions={defaultEdgeOptions}
+      className="dsl-editor"
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      connectionLineType={ConnectionLineType.SmoothStep}
+      // connectionLineType={ConnectionLineType.SmoothStep}
     >
-      <Controls />
+      <Controls showInteractive={false} />
       <MiniMap />
       <Background variant="dots" gap={12} size={1} />
+      <svg>
+        <defs>
+          <marker
+            id="edge-circle"
+            viewBox="-5 -5 10 10"
+            refX="-2" // 与连线端点的偏移
+            refY="0"
+            markerUnits="strokeWidth"
+            markerWidth="10"
+            markerHeight="10"
+            orient="auto"
+          >
+            <circle
+              stroke="#2a8af6"
+              fillOpacity="0"
+              strokeOpacity="0.75"
+              r="2"
+              cx="0"
+              cy="0"
+            />
+          </marker>
+        </defs>
+      </svg>
     </ReactFlow>
   );
 }
@@ -156,7 +187,6 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 };
 
 const position = { x: 0, y: 0 };
-const edgeType = 'smoothstep';
 
 const initialNodes = [
   {
@@ -257,44 +287,39 @@ const initialNodes = [
   }
 ];
 const initialEdges = [
-  { id: 'e-3', source: 'app', target: 'web', type: edgeType },
-  { id: 'e-1', source: 'app', target: 'service:auth', type: edgeType },
-  { id: 'e-2', source: 'app', target: 'service:org', type: edgeType },
+  { id: 'e-3', source: 'app', target: 'web' },
+  { id: 'e-1', source: 'app', target: 'service:auth' },
+  { id: 'e-2', source: 'app', target: 'service:org' },
   {
     id: 'e-4',
     source: 'service:auth',
-    target: 'meta:permission',
-    type: edgeType
+    target: 'meta:permission'
   },
-  { id: 'e-5', source: 'service:auth', target: 'meta:role', type: edgeType },
-  { id: 'e-6', source: 'service:auth', target: 'meta:account', type: edgeType },
-  { id: 'e-7', source: 'service:org', target: 'meta:user', type: edgeType },
+  { id: 'e-5', source: 'service:auth', target: 'meta:role' },
+  { id: 'e-6', source: 'service:auth', target: 'meta:account' },
+  { id: 'e-7', source: 'service:org', target: 'meta:user' },
   {
     id: 'e-8',
     source: 'service:org',
-    target: 'meta:department',
-    type: edgeType
+    target: 'meta:department'
   },
-  { id: 'e-9', source: 'web', target: 'site:signin', type: edgeType },
-  { id: 'e-10', source: 'web', target: 'site:admin', type: edgeType },
+  { id: 'e-9', source: 'web', target: 'site:signin' },
+  { id: 'e-10', source: 'web', target: 'site:admin' },
   {
     id: 'e-11',
     source: 'site:signin',
-    target: 'resource:signin',
-    type: edgeType
+    target: 'resource:signin'
   },
-  { id: 'e-12', source: 'site:admin', target: 'resource:auth', type: edgeType },
-  { id: 'e-13', source: 'site:admin', target: 'resource:org', type: edgeType },
+  { id: 'e-12', source: 'site:admin', target: 'resource:auth' },
+  { id: 'e-13', source: 'site:admin', target: 'resource:org' },
   {
     id: 'e-14',
     source: 'resource:auth',
-    target: 'resource:permission',
-    type: edgeType
+    target: 'resource:permission'
   },
   {
     id: 'e-15',
     source: 'resource:auth',
-    target: 'resource:role',
-    type: edgeType
+    target: 'resource:role'
   }
 ];
