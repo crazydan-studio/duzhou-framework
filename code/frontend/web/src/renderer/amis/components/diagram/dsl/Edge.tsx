@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import { EdgeProps, getBezierPath } from 'reactflow';
+import { EdgeProps, getSmoothStepPath } from 'reactflow';
 
 export default function Edge({
   id,
@@ -27,16 +27,11 @@ export default function Edge({
   targetY,
   sourcePosition,
   targetPosition,
-  style = {},
-  markerEnd
+  style = {}
 }: EdgeProps) {
-  const xEqual = sourceX === targetX;
-  const yEqual = sourceY === targetY;
-
-  const [edgePath] = getBezierPath({
-    // we need this little hack in order to display the gradient for a straight line
-    sourceX: xEqual ? sourceX + 0.0001 : sourceX,
-    sourceY: yEqual ? sourceY + 0.0001 : sourceY,
+  const [edgePath] = getSmoothStepPath({
+    sourceX,
+    sourceY,
     sourcePosition,
     targetX,
     targetY,
@@ -44,14 +39,10 @@ export default function Edge({
   });
 
   return (
-    <>
-      <path
-        id={id}
-        style={style}
-        className="react-flow__edge-path"
-        d={edgePath}
-        markerEnd={markerEnd}
-      />
-    </>
+    <g className="react-flow__edge-path">
+      <path id={id} className="path" style={style} d={edgePath} />
+      // Note：避免使用 svg 的 marker，以确保线和 marker 可设置为相同颜色
+      <circle className="marker-end" cx={targetX} cy={targetY} r={4} />
+    </g>
   );
 }

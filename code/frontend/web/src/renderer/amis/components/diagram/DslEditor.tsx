@@ -32,9 +32,12 @@ import ReactFlow, {
   useEdgesState,
   addEdge
 } from 'reactflow';
+
 import dagre from 'dagre';
+import { v4 as uuid } from 'uuid';
 
 import DslNode from './dsl/Node';
+import DslNewNode from './dsl/NewNode';
 import DslEdge from './dsl/Edge';
 
 import 'reactflow/dist/style.css';
@@ -58,15 +61,16 @@ export default class DslEditor extends React.Component<EditorProps, object> {
 }
 
 const nodeTypes = {
-  'dsl-node': DslNode
+  'dsl-node': DslNode,
+  'dsl-new-node': DslNewNode
 };
 const edgeTypes = {
-  'dsl-edge': DslEdge
+  'dsl-edge': DslEdge,
+  'dsl-new-node-edge': DslEdge
 };
 
 const defaultEdgeOptions = {
-  type: 'dsl-edge',
-  markerEnd: 'edge-circle'
+  type: 'dsl-edge'
 };
 
 // https://reactflow.dev/learn
@@ -80,11 +84,12 @@ function ReactFlowEditor() {
     'LR'
   );
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
+  const [nodes, setNodes, defaultOnNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
 
+  // https://react.dev/reference/react/useCallback
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (edge) => setEdges((edges) => addEdge(edge, edges)),
     []
   );
   const onLayout = useCallback(
@@ -97,6 +102,61 @@ function ReactFlowEditor() {
     },
     [nodes, edges]
   );
+  const onNodesChange = useCallback((changes) => {
+    const targets = {};
+    changes.forEach(({ id, type, selected }) => {
+      if (type === 'select') {
+        targets[id] = selected;
+      }
+    });
+
+    if (Object.keys(targets).length > 0) {
+      setEdges((edges) =>
+        edges.map((e) =>
+          e.target in targets && e.type !== 'dsl-new-node-edge'
+            ? { ...e, animated: targets[e.target] }
+            : e
+        )
+      );
+    }
+
+    defaultOnNodesChange(changes);
+  }, []);
+  const onNodeClick = useCallback(
+    (event, node) => {
+      if (node.type === 'dsl-new-node') {
+        const { parent, create } = node.data;
+        const newNode = create();
+        newNode.id = uuid();
+
+        const newEdge = {
+          id: `e:${parent}->${newNode.id}`,
+          source: parent,
+          target: newNode.id
+        };
+
+        const newNodes = [...nodes];
+        newNodes.splice(
+          nodes.findIndex((n) => n.id === node.id),
+          0,
+          newNode
+        );
+        const newEdges = [...edges];
+        newEdges.splice(
+          edges.findIndex((e) => e.source === parent && e.target === node.id),
+          0,
+          newEdge
+        );
+
+        const { nodes: layoutedNodes, edges: layoutedEdges } =
+          getLayoutedElements(newNodes, newEdges, 'LR');
+
+        setNodes([...layoutedNodes]);
+        setEdges([...layoutedEdges]);
+      }
+    },
+    [nodes, edges]
+  );
 
   return (
     <ReactFlow
@@ -106,56 +166,34 @@ function ReactFlowEditor() {
       elementsSelectable
       nodesDraggable={false}
       nodesConnectable={false}
+      zoomOnDoubleClick={false}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       defaultEdgeOptions={defaultEdgeOptions}
       className="dsl-editor"
       nodes={nodes}
       edges={edges}
+      onConnect={onConnect}
+      onNodeClick={onNodeClick}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      // connectionLineType={ConnectionLineType.SmoothStep}
     >
       <Controls showInteractive={false} />
       <MiniMap />
       <Background variant="dots" gap={12} size={1} />
-      <svg>
-        <defs>
-          <marker
-            id="edge-circle"
-            viewBox="-5 -5 10 10"
-            refX="-2" // 与连线端点的偏移
-            refY="0"
-            markerUnits="strokeWidth"
-            markerWidth="10"
-            markerHeight="10"
-            orient="auto"
-          >
-            <circle
-              stroke="#2a8af6"
-              fillOpacity="0"
-              strokeOpacity="0.75"
-              r="2"
-              cx="0"
-              cy="0"
-            />
-          </marker>
-        </defs>
-      </svg>
     </ReactFlow>
   );
 }
-
-// https://reactflow.dev/examples/layout/dagre
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const nodeWidth = 16 * 14;
 const nodeHeight = 36;
 
 const getLayoutedElements = (nodes, edges, direction = 'TB') => {
   const isHorizontal = direction === 'LR';
+
+  // https://reactflow.dev/examples/layout/dagre
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes.forEach((node) => {
@@ -187,6 +225,14 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 };
 
 const position = { x: 0, y: 0 };
+const newNodeProps = {
+  type: 'dsl-new-node',
+  position
+};
+const newNodeEdgeProps = {
+  type: 'dsl-new-node-edge',
+  className: 'new-node-edge'
+};
 
 const initialNodes = [
   {
@@ -228,13 +274,13 @@ const initialNodes = [
   {
     id: 'resource:permission',
     type: 'dsl-node',
-    data: { title: '#/auth/permission', icon: 'fa-regular fa-newspaper' },
+    data: { title: '#/permission', icon: 'fa-regular fa-newspaper' },
     position
   },
   {
     id: 'resource:role',
     type: 'dsl-node',
-    data: { title: '#/auth/role', icon: 'fa-regular fa-newspaper' },
+    data: { title: '#/role', icon: 'fa-regular fa-newspaper' },
     position
   },
   {
@@ -285,7 +331,44 @@ const initialNodes = [
     data: { title: 'Department', icon: 'fa-solid fa-cube' },
     position
   }
-];
+].concat([
+  {
+    id: 'service:new',
+    ...newNodeProps,
+    data: {
+      parent: 'app',
+      create: () => ({
+        type: 'dsl-node',
+        data: { title: '未命名', icon: 'fa-brands fa-docker' },
+        position
+      })
+    }
+  },
+  {
+    id: 'service:auth:meta:new',
+    ...newNodeProps,
+    data: {
+      parent: 'service:auth',
+      create: () => ({
+        type: 'dsl-node',
+        data: { title: '未命名', icon: 'fa-solid fa-cube' },
+        position
+      })
+    }
+  },
+  {
+    id: 'service:org:meta:new',
+    ...newNodeProps,
+    data: {
+      parent: 'service:org',
+      create: () => ({
+        type: 'dsl-node',
+        data: { title: '未命名', icon: 'fa-solid fa-cube' },
+        position
+      })
+    }
+  }
+]);
 const initialEdges = [
   { id: 'e-3', source: 'app', target: 'web' },
   { id: 'e-1', source: 'app', target: 'service:auth' },
@@ -322,4 +405,23 @@ const initialEdges = [
     source: 'resource:auth',
     target: 'resource:role'
   }
-];
+].concat([
+  {
+    id: 'e-service:new',
+    source: 'app',
+    target: 'service:new',
+    ...newNodeEdgeProps
+  },
+  {
+    id: 'e-service:auth:meta:new',
+    source: 'service:auth',
+    target: 'service:auth:meta:new',
+    ...newNodeEdgeProps
+  },
+  {
+    id: 'e-service:org:meta:new',
+    source: 'service:org',
+    target: 'service:org:meta:new',
+    ...newNodeEdgeProps
+  }
+]);

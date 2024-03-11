@@ -17,37 +17,20 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-.dsl-editor {
-  .react-flow__handle {
-    opacity: 0;
+import { memo } from 'react';
+import { Handle, Position } from 'reactflow';
 
-    &.source {
-      right: 0px;
-    }
-    &.target {
-      left: -5px;
-    }
-  }
+function Node({ data }) {
+  return (
+    <div className="px-12 py-3 rounded-md bg-white border-dashed border-2 border-gray-300">
+      <div className="flex">
+        <i className="fa-solid fa-plus text-2xl text-center leading-none text-gray-300"></i>
+      </div>
 
-  .react-flow__node:focus {
-    outline: none;
-  }
-
-  .react-flow__edge .react-flow__edge-path > * {
-    stroke: #2a8af6;
-    stroke-width: 2;
-    stroke-opacity: 0.75;
-  }
-
-  .react-flow__edge .react-flow__edge-path > .marker-end {
-    fill: #fff;
-  }
-
-  .react-flow__edge.new-node-edge .react-flow__edge-path > * {
-    stroke: #d1d5db;
-  }
-
-  .react-flow__edge.new-node-edge .react-flow__edge-path > .path {
-    stroke-dasharray: 5 5;
-  }
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
+    </div>
+  );
 }
+
+export default memo(Node);
