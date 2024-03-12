@@ -94,7 +94,7 @@ function ReactFlowEditor() {
   const [nodes, , defaultOnNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
-  const { getNodes, setNodes, setEdges, getEdges } = useReactFlow();
+  const { getNode, getNodes, setNodes, setEdges, getEdges } = useReactFlow();
 
   const onNodesChange = useCallback((changes) => {
     const targets = {};
@@ -106,11 +106,10 @@ function ReactFlowEditor() {
 
     if (Object.keys(targets).length > 0) {
       setEdges((edges) =>
-        edges.map((e) =>
-          e.target in targets && e.type !== 'dsl-new-node-edge'
-            ? { ...e, animated: targets[e.target] }
-            : e
-        )
+        edges.map((e) => ({
+          ...e,
+          animated: e.type !== 'dsl-new-node-edge' && targets[e.target]
+        }))
       );
     }
 
@@ -149,6 +148,52 @@ function ReactFlowEditor() {
       setEdges(newEdges);
     }
   }, []);
+  const onNodeDoubleClick = useCallback((event, node) => {
+    if (node.type === 'dsl-node') {
+      const targets = {};
+      const collapsed = !!!node._collapsed;
+
+      const links = {};
+      const edges = getEdges();
+      edges.forEach(({ source, target }) => {
+        (links[source] ||= []).push(target);
+      });
+
+      const travel = (ids) => {
+        (ids || []).forEach((id) => {
+          const n = getNode(id);
+          targets[id] = {
+            ...n,
+            hidden: false,
+            _hidden: collapsed,
+            // 子孙节点的展开状态与当前节点的一致
+            _collapsed: collapsed
+          };
+
+          const subIds = links[id];
+          delete links[id];
+
+          travel(subIds);
+        });
+      };
+      travel(links[node.id]);
+
+      setEdges(
+        edges.map((e) =>
+          targets[e.target] ? { ...e, hidden: false, _hidden: collapsed } : e
+        )
+      );
+
+      const nodes = getNodes();
+      setNodes(
+        nodes.map(
+          (n) =>
+            targets[n.id] ||
+            (n.id === node.id ? { ...n, _collapsed: collapsed } : n)
+        )
+      );
+    }
+  }, []);
 
   const layout = useAutoLayout();
   layout({ duration: 300 });
@@ -169,6 +214,7 @@ function ReactFlowEditor() {
       nodes={nodes}
       edges={edges}
       onNodeClick={onNodeClick}
+      onNodeDoubleClick={onNodeDoubleClick}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
     >
@@ -183,38 +229,70 @@ const useAutoLayout = () => {
   //https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
 
   const layout = flextree()
-    .nodeSize((node) => [node.data.width - 40, node.data.height + 16 * 14])
+    // 节点的占位空间（在水平和垂直布局方向发生切换时，需交换数组元素位置）
+    .nodeSize((node) => [node.data.height * 1.5, node.data.width * 1.5])
     .spacing(() => 1);
 
   function layoutNodes(nodes, edges) {
+    const parents = {};
+    edges.forEach((e) => {
+      parents[e.target] = e.source;
+    });
+
+    let collapsed = { id: '', position: {} };
+    nodes.forEach((n) => {
+      n.selected && (collapsed = n);
+    });
+
+    // stratify() 用于将扁平数据转换为树形结构
     const tree = stratify()
       .id((d) => d.id)
-      .parentId((d) => edges.find((e) => e.target === d.id)?.source)(nodes);
+      .parentId((d) => parents[d.id])(nodes.filter((n) => !n._hidden));
 
+    const map = {};
     const root = layout(tree);
+    root.descendants().forEach((d) => {
+      map[d.id] = d;
+    });
 
-    return root.descendants().map((d) => ({
-      ...d.data,
-      position: {
-        // x，y 交换位置后，便变为水平布局
-        x: d.y,
-        y: d.x
-      }
-    }));
+    return nodes.map((node) => {
+      const d = map[node.id];
+      const pd = map[collapsed.id];
+      return {
+        ...node,
+        position: d
+          ? {
+              // x，y 交换位置后，便变为水平布局
+              x: d.y,
+              y: d.x
+            }
+          : // 待隐藏节点向父节点靠拢
+            { x: pd.y, y: pd.x }
+      };
+    });
   }
-
-  const nodeCountSelector = (state) => state.nodeInternals.size;
 
   function Layout(options) {
     const initial = useRef(false);
 
-    const nodeCount = useStore(nodeCountSelector);
     const nodesInitialized = useNodesInitialized();
+    // 在节点待隐藏、节点增删时，均触发重新布局
+    const nodeCount = useStore(({ nodeInternals }) => {
+      let count = 0;
+      nodeInternals.forEach((node) => {
+        if (!node._hidden) {
+          count += 1;
+        }
+      });
 
-    const { getNodes, getNode, setNodes, getEdges, fitView } = useReactFlow();
+      return count;
+    });
+
+    const { getNodes, getNode, setNodes, getEdges, setEdges, fitView } =
+      useReactFlow();
 
     useEffect(() => {
-      if (nodeCount < 2 || !nodesInitialized) {
+      if (nodeCount < 1 || !nodesInitialized) {
         return () => {};
       }
 
@@ -249,9 +327,12 @@ const useAutoLayout = () => {
           setNodes(
             transitions.map(({ node, to }) => ({
               ...node,
+              // 在动画结束后隐藏节点
+              hidden: node._hidden,
               position: { ...to }
             }))
           );
+          setEdges(edges.map((e) => ({ ...e, hidden: e._hidden })));
 
           if (!initial.current) {
             initial.current = true;
