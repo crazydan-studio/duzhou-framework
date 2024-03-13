@@ -53,5 +53,5 @@ yarn run build
 - [Vite 中文文档](https://cn.vitejs.dev/guide/)
 - [AMIS 文档](https://baidu.github.io/amis/)
 - [Vite 打包优化，通过文件，图片，字体压缩优化大小](https://juejin.cn/post/7336637599895748644)
-- [AntV X6](https://x6.antv.antgroup.com/tutorial/getting-started)：
-  基于 HTML 和 SVG 的图编辑引擎，提供低成本的定制能力和开箱即用的内置扩展，方便快速搭建 DAG 图、ER 图、流程图、血缘图等应用
+- [React Flow](https://reactflow.dev/learn)：
+  采用 HTML 绘制节点、SVG 绘制连线，整体集成和定制较容易，完成度也很高（AntV X6 对细节的处理则没那么理想）

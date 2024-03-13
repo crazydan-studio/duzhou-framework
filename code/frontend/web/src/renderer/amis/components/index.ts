@@ -19,5 +19,4 @@
 
 export * from './App';
 
-export * from './designer/Designer';
 export * from './diagram/DslEditor';

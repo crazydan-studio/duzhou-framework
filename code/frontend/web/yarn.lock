@@ -10,53 +10,6 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@antv/x6-common@^2.0.16":
-  version "2.0.17"
-  resolved "https://registry.npmjs.org/@antv/x6-common/-/x6-common-2.0.17.tgz#a40a0920859faadf567452dea81132783a19aaa4"
-  integrity sha512-37g7vmRkNdYzZPdwjaMSZEGv/MMH0S4r70/Jwoab1mioycmuIBN73iyziX8m56BvJSDucZ3J/6DU07otWqzS6A==
-  dependencies:
-    lodash-es "^4.17.15"
-    utility-types "^3.10.0"
-
-"@antv/x6-geometry@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz#c158317d74135bedd78c2fdeb76f9c7cfa0ef0aa"
-  integrity sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==
-
-"@antv/x6-plugin-minimap@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/@antv/x6-plugin-minimap/-/x6-plugin-minimap-2.0.7.tgz#1f319ac04de7d05ca895ea6e2784489efe068791"
-  integrity sha512-8zzESCx0jguFPCOKCA0gPFb6JmRgq81CXXtgJYe34XhySdZ6PB23I5Po062lNsEuTjTjnzli4lju8vvU+jzlGw==
-
-"@antv/x6-plugin-scroller@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.npmjs.org/@antv/x6-plugin-scroller/-/x6-plugin-scroller-2.0.10.tgz#bdd39d3530e469bbe72c5feca3b6787512232a3d"
-  integrity sha512-CrC5zCbtPe7LJEKK8ucLcDN+9lMtTJNApFmFObAiR/y2LO1QFCHz8GGLVeNOZaIEmJbR/Z/etpJkvc1LE7WhTg==
-
-"@antv/x6-plugin-selection@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.npmjs.org/@antv/x6-plugin-selection/-/x6-plugin-selection-2.2.2.tgz#681c843124c2150af51594e8e1fc947b5e95e858"
-  integrity sha512-s2gtR9Onlhr7HOHqyqg0d+4sG76JCcQEbvrZZ64XmSChlvieIPlC3YtH4dg1KMNhYIuBmBmpSum6S0eVTEiPQw==
-
-"@antv/x6-plugin-snapline@^2.1.7":
-  version "2.1.7"
-  resolved "https://registry.npmjs.org/@antv/x6-plugin-snapline/-/x6-plugin-snapline-2.1.7.tgz#1b4e3be0a281ba324117b7ac7b9b8c39e484cce2"
-  integrity sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==
-
-"@antv/x6-react-shape@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.npmjs.org/@antv/x6-react-shape/-/x6-react-shape-2.2.3.tgz#3b2d07f216f501e1b394b612ee2e0e3d49e18143"
-  integrity sha512-42PGxk3XLnx9bsHQiRPauai5UQCrsh0MbWI3MyHRpjQaC30FK1rqyjH/EJ8qH0p6/cAndszZzCaiPqBbs3FqLQ==
-
-"@antv/x6@^2.18.1":
-  version "2.18.1"
-  resolved "https://registry.npmjs.org/@antv/x6/-/x6-2.18.1.tgz#4f3fab8c24119ca5f83583188657fc243cc5a0bc"
-  integrity sha512-FkWdbLOpN9J7dfJ+kiBxzowSx2N6syBily13NMVdMs+wqC6Eo5sLXWCZjQHateTFWgFw7ZGi2y9o3Pmdov1sXw==
-  dependencies:
-    "@antv/x6-common" "^2.0.16"
-    "@antv/x6-geometry" "^2.0.5"
-    utility-types "^3.10.0"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.23.5":
   version "7.23.5"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.23.5.tgz#9009b69a8c602293476ad598ff53e4562e15c244"
@@ -6150,11 +6103,6 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
-
-utility-types@^3.10.0:
-  version "3.11.0"
-  resolved "https://registry.npmjs.org/utility-types/-/utility-types-3.11.0.tgz#607c40edb4f258915e901ea7995607fdf319424c"
-  integrity sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==
 
 uuid@^3.0.1:
   version "3.4.0"

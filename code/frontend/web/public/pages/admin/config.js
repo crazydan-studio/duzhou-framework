@@ -30,12 +30,6 @@ window.__APP_SITE_CONFIG__ = {
             url: 'dsl-editor',
             icon: 'fa fa-cubes',
             schemaApi: 'get:/pages/admin/demo/dsl-editor.json'
-          },
-          {
-            label: '设计器',
-            url: 'designer',
-            icon: 'fa fa-cubes',
-            schemaApi: 'get:/pages/admin/demo/designer.json'
           }
         ]
       },
