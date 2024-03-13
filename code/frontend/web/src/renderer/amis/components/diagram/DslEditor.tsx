@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import {
   RendererProps,
   Renderer,
@@ -31,16 +31,12 @@ import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
-  useStore,
-  useReactFlow,
-  useNodesInitialized
+  useReactFlow
 } from 'reactflow';
 
 import { v4 as uuid } from 'uuid';
-import { stratify } from 'd3-hierarchy';
-import { flextree } from 'd3-flextree';
-import { timer } from 'd3-timer';
 
+import { useAutoLayout, collapseTree } from './dsl/useAutoLayout';
 import DslNode from './dsl/Node';
 import DslNewNode from './dsl/NewNode';
 import DslEdge from './dsl/Edge';
@@ -51,7 +47,54 @@ import './dsl/style.scss';
 const TYPE = 'dsl-editor';
 unRegisterRenderer(TYPE);
 
-export interface EditorProps extends RendererProps {}
+/** DSL 树的布局方向 */
+export type LayoutDirection = 'horizontal' | 'vertical';
+/** DSL 结构定义 */
+export interface DslDef {
+  /** 节点定义，用于定义基础结构，方便在子树内通过 `x:extends` 进行扩展或循环定义 */
+  'x:define'?: {
+    [propName: string]: DslDef;
+  };
+  /** 派生的目标定义名称 */
+  'x:extends'?: string;
+  /** 作为节点唯一标识的属性名称。在直接兄弟节点之间，该属性值需唯一 */
+  'x:unique-attr': string | 'type';
+
+  /** 节点类型 */
+  type: string;
+  /** 是否必须 */
+  mandatory?: boolean;
+  /** 是否可重复 */
+  multiple?: boolean;
+  /** 是否为分组 */
+  group?: boolean;
+  /** 子节点 */
+  children?: DslDef[];
+  /** 节点配置属性，用于设置属性的默认值，并最终按节点路径与真实节点做合并 */
+  props: {
+    title?: string;
+    desc?: string;
+    icon?: string;
+    [propName: string]: any;
+  };
+}
+
+export interface EditorProps extends RendererProps {
+  /** 是否只读 */
+  readonly?: boolean;
+  api: {
+    /** DSL 数据更新接口 */
+    mutation?: string;
+    /** DSL 数据获取接口 */
+    query: string;
+  };
+  layout: {
+    /** DSL 树的布局方向 */
+    direction: LayoutDirection;
+  };
+  /** DSL 结构定义 */
+  xdef: DslDef;
+}
 
 @Renderer({
   type: TYPE,
@@ -66,7 +109,10 @@ export default class DslEditor extends React.Component<EditorProps, object> {
       // 保证实例间的 Store 是各自独立的
       // https://reactflow.dev/examples/misc/provider
       <ReactFlowProvider>
-        <ReactFlowEditor />
+        <ReactFlowEditor
+          initialNodes={initialNodes}
+          initialEdges={initialEdges}
+        />
       </ReactFlowProvider>
     );
   }
@@ -86,7 +132,7 @@ const defaultEdgeOptions = {
 };
 
 // https://reactflow.dev/learn
-function ReactFlowEditor() {
+function ReactFlowEditor({ initialNodes, initialEdges }) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
@@ -151,59 +197,14 @@ function ReactFlowEditor() {
   }, []);
   const onNodeDoubleClick = useCallback((event, node) => {
     if (node.type === 'dsl-node') {
-      const targets = {};
-      const collapsed = !!!node._collapsed;
-
-      const links = {};
-      const edges = getEdges();
-      edges.forEach(({ source, target }) => {
-        (links[source] ||= []).push(target);
+      collapseTree({
+        node,
+        getNode,
+        getNodes,
+        setNodes,
+        getEdges,
+        setEdges
       });
-
-      const travel = (ids) => {
-        (ids || []).forEach((id) => {
-          const n = getNode(id);
-          targets[id] = {
-            ...n,
-            // 已隐藏的，先保持隐藏状态，
-            // 以避免动画移动出现闪跳（移动的初始位置需要在重新布局后才能确定）
-            // hidden: n.hidden,
-            _hidden: collapsed
-          };
-
-          const subIds = links[id];
-          delete links[id];
-
-          // 忽略已收缩的树，确保其收缩状态保持不变
-          if (!n._collapsed) {
-            travel(subIds);
-          }
-        });
-      };
-      travel(links[node.id]);
-
-      setEdges(
-        edges.map((e) =>
-          targets[e.target]
-            ? {
-                ...e,
-                // 保持展开树中的连线隐藏状态，仅在开始发生位置变化时才显示，
-                // 以避免目标节点位置未确定而出现连线闪跳
-                _hidden: collapsed,
-                _collapsed: true
-              }
-            : e
-        )
-      );
-
-      const nodes = getNodes();
-      setNodes(
-        nodes.map(
-          (n) =>
-            targets[n.id] ||
-            (n.id === node.id ? { ...n, _collapsed: collapsed } : n)
-        )
-      );
     }
   }, []);
 
@@ -236,152 +237,6 @@ function ReactFlowEditor() {
     </ReactFlow>
   );
 }
-
-const useAutoLayout = () => {
-  //https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
-
-  const layout = flextree()
-    // 节点的占位空间（在水平和垂直布局方向发生切换时，需交换数组元素位置）
-    .nodeSize((node) => [node.data.height * 1.5, node.data.width * 1.5])
-    .spacing(() => 1);
-
-  function layoutNodes(nodes, isInCollapseTree) {
-    // stratify() 用于将扁平数据转换为树形结构
-    const tree = stratify()
-      .id((d) => d.id)
-      .parentId((d) => d.parent)(
-      // 仅对不需要隐藏的节点进行布局
-      nodes.filter((n) => !n._hidden)
-    );
-
-    const positions = {};
-    layout(tree)
-      .descendants()
-      .forEach((d) => {
-        // 交换 tree 布局的 x/y 坐标，以将垂直方向布局转换为水平方向布局
-        positions[d.id] = { x: d.y, y: d.x };
-      });
-
-    const collapseRoot = nodes.find((n) => n.selected);
-    const collapseRootPos = positions[collapseRoot?.id];
-    let isCollapseNode = false;
-
-    return nodes.map(
-      (node) => (
-        (isCollapseNode = isInCollapseTree(node, collapseRoot?.id)),
-        {
-          id: node.id,
-          node: {
-            ...node,
-            // 若不在展开树中，则保持隐藏状态，否则，始终不隐藏
-            hidden: node.hidden && !isCollapseNode
-          },
-          // 若节点需显示且其在展开书中，则从展开树的根节点的位置移动节点
-          from:
-            !node._hidden && isCollapseNode
-              ? collapseRoot.position
-              : node.position,
-          // 需显示的节点采用布局后的坐标，待隐藏的节点采用待收缩树的根节点坐标，余下节点的坐标不变
-          to:
-            positions[node.id] ||
-            (node._hidden ? collapseRootPos : node.position)
-        }
-      )
-    );
-  }
-
-  function Layout(options) {
-    const initial = useRef(false);
-
-    const nodesInitialized = useNodesInitialized();
-    // 在节点待隐藏、节点增删时，均触发重新布局
-    const nodeCount = useStore(({ nodeInternals }) => {
-      let count = 0;
-      nodeInternals.forEach((node) => {
-        if (!node._hidden) {
-          count += 1;
-        }
-      });
-
-      return count;
-    });
-
-    const { getNodes, getNode, setNodes, getEdges, setEdges, fitView } =
-      useReactFlow();
-
-    useEffect(() => {
-      if (nodeCount < 1 || !nodesInitialized) {
-        return () => {};
-      }
-
-      const nodes = getNodes();
-      const edges = getEdges();
-
-      // 检查节点是否在展开树中
-      const isInCollapseTree = (node, rootId, level = 0) =>
-        rootId && node && !(level > 0 && node._collapsed) && node.parent
-          ? node.parent === rootId ||
-            isInCollapseTree(getNode(node.parent), rootId, level + 1)
-          : false;
-
-      const transitions = layoutNodes(nodes, isInCollapseTree);
-      // 为待移动节点设置初始位置
-      setNodes(
-        transitions.map(({ node, from }) => ({
-          ...node,
-          position: from
-        }))
-      );
-
-      const t = timer((elapsed) => {
-        if (elapsed < options.duration) {
-          const s = elapsed / options.duration;
-
-          setNodes(
-            transitions.map(({ node, from, to }) => ({
-              ...node,
-              position: {
-                x: from.x + (to.x - from.x) * s,
-                y: from.y + (to.y - from.y) * s
-              }
-            }))
-          );
-
-          setEdges(
-            edges.map((e) => (e._collapsed ? { ...e, hidden: false } : e))
-          );
-        } else {
-          t.stop();
-
-          setNodes(
-            transitions.map(({ node, to }) => ({
-              ...node,
-              // 在动画结束后隐藏节点
-              hidden: node._hidden,
-              position: { ...to }
-            }))
-          );
-
-          setEdges(
-            edges.map((e) => ({
-              ...e,
-              hidden: e._hidden,
-              _collapsed: false
-            }))
-          );
-
-          if (!initial.current) {
-            initial.current = true;
-            fitView({ duration: 200, padding: 0.2 });
-          }
-        }
-      });
-
-      return () => t.stop();
-    }, [nodeCount, nodesInitialized]);
-  }
-  return Layout;
-};
 
 const position = { x: 0, y: 0 };
 const newNodeProps = {
