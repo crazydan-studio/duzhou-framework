@@ -252,7 +252,7 @@ const initialNodes = [
   {
     id: 'app',
     type: 'dsl-node',
-    data: { title: '部门管理系统', icon: 'fa-solid fa-globe' },
+    data: { title: '渡舟平台', icon: 'fa-solid fa-globe' },
     position
   },
   {

@@ -33,17 +33,26 @@
                 {
                   "type": "input-text",
                   "name": "name",
-                  "label": "名称"
+                  "label": "名称",
+                  "required": true
                 },
                 {
                   "type": "input-text",
                   "name": "code",
-                  "label": "编码"
+                  "label": "编码",
+                  "required": true
                 },
                 {
                   "type": "input-text",
                   "name": "url",
                   "label": "访问地址"
+                },
+                {
+                  "type": "textarea",
+                  "name": "description",
+                  "label": "描述",
+                  "showCounter": true,
+                  "clearable": true
                 }
               ]
             }
@@ -82,10 +91,30 @@
       ],
       "columns": [
         {
-          "name": "name",
-          "type": "text",
+          "type": "container",
           "label": "名称",
-          "fixed": "left"
+          "width": 200,
+          "fixed": "left",
+          "body": [
+            {
+              "type": "tpl",
+              "tpl": "<h3>${name}</h3>"
+            },
+            {
+              "type": "tpl",
+              "className": "text-ellipsis amis-Form-description",
+              "tpl": "${description}",
+              "style": {
+                "max-width": "200px"
+              }
+            }
+          ],
+          "popOver": {
+            "body": {
+              "type": "tpl",
+              "tpl": "${description}"
+            }
+          }
         },
         {
           "name": "logo",
@@ -110,6 +139,7 @@
         {
           "type": "operation",
           "label": "操作",
+          "fixed": "right",
           "buttons": [
             {
               "label": "编辑",
@@ -136,19 +166,30 @@
                       "type": "input-text",
                       "name": "name",
                       "label": "名称",
-                      "value": "${name}"
+                      "value": "${name}",
+                      "required": true
                     },
                     {
                       "type": "input-text",
                       "name": "code",
                       "label": "编码",
-                      "value": "${code}"
+                      "value": "${code}",
+                      "required": true,
+                      "disabled": true
                     },
                     {
                       "type": "input-text",
                       "name": "url",
                       "label": "访问地址",
                       "value": "${url}"
+                    },
+                    {
+                      "type": "textarea",
+                      "name": "description",
+                      "label": "描述",
+                      "value": "${description}",
+                      "showCounter": true,
+                      "clearable": true
                     }
                   ]
                 }
@@ -157,7 +198,9 @@
             {
               "label": "设计",
               "type": "button",
-              "level": "success"
+              "level": "success",
+              "actionType": "link",
+              "link": "/app/dsl-editor?id=${id}"
             },
             {
               "label": "删除",

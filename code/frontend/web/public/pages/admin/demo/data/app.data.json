@@ -11,6 +11,7 @@
         "code": "duzhou-platform",
         "name": "渡舟平台",
         "url": "https://duzhou.crazydan.io",
+        "description": "基于可逆计算理论及其框架代码搭建的自运维、自监控、可演化的全功能型应用平台",
         "progress": 30
       },
       {
@@ -19,6 +20,7 @@
         "code": "duzhou-cloud-platform",
         "name": "渡舟云平台",
         "url": "https://duzhou.cloud.crazydan.io",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodtion tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "progress": 80
       }
     ]
