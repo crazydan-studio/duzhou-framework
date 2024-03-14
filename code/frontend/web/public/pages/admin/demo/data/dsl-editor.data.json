@@ -1,0 +1,162 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "app",
+    "props": {
+      "title": "渡舟平台"
+    },
+    "children": [
+      {
+        "type": "web",
+        "children": [
+          {
+            "type": "defaultSite",
+            "props": {
+              "id": "default",
+              "title": "页面不存在"
+            }
+          },
+          {
+            "type": "site",
+            "props": {
+              "id": "signin",
+              "title": "用户登录",
+              "url": "/signin"
+            },
+            "children": [
+              {
+                "type": "resources",
+                "children": [
+                  {
+                    "type": "resource",
+                    "props": {
+                      "id": "signin",
+                      "title": "登录表单"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "site",
+            "props": {
+              "id": "admin",
+              "title": "后台管理",
+              "url": "/admin"
+            },
+            "children": [
+              {
+                "type": "resources",
+                "children": [
+                  {
+                    "type": "resource",
+                    "props": {
+                      "id": "auth",
+                      "title": "权限管理"
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "props": {
+                      "id": "organization",
+                      "title": "组织管理"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "services",
+        "children": [
+          {
+            "type": "service",
+            "props": {
+              "id": "user-auth",
+              "title": "用户认证服务",
+              "version": "0.1.0"
+            },
+            "children": [
+              {
+                "type": "bizLibs",
+                "children": [
+                  {
+                    "type": "biz",
+                    "props": {
+                      "title": "Account 接口"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "metaLibs",
+                "children": [
+                  {
+                    "type": "meta",
+                    "props": {
+                      "title": "Account"
+                    }
+                  },
+                  {
+                    "type": "meta",
+                    "props": {
+                      "title": "Role"
+                    }
+                  },
+                  {
+                    "type": "meta",
+                    "props": {
+                      "title": "Permission"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "service",
+            "props": {
+              "id": "org",
+              "title": "组织机构服务",
+              "version": "0.1.0"
+            },
+            "children": [
+              {
+                "type": "bizLibs",
+                "children": [
+                  {
+                    "type": "biz",
+                    "props": {
+                      "title": "User 接口"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "metaLibs",
+                "children": [
+                  {
+                    "type": "meta",
+                    "props": {
+                      "title": "User"
+                    }
+                  },
+                  {
+                    "type": "meta",
+                    "props": {
+                      "title": "Department"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

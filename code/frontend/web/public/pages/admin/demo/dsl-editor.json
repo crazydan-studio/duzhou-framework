@@ -1,3 +1,139 @@
 {
-  "type": "dsl-editor"
+  "type": "dsl-editor",
+  "api": {
+    "mutation": "",
+    "query": "get:/pages/admin/demo/data/dsl-editor.data.json"
+  },
+  "layout": {
+    "direction": "horizontal"
+  },
+  "xdef": {
+    "type": "app",
+    "props": {
+      "title": "应用",
+      "icon": "fa-solid fa-globe"
+    },
+    "children": [
+      {
+        "type": "web",
+        "mandatory": true,
+        "props": {
+          "title": "Web 前端",
+          "icon": "fa-solid fa-computer"
+        },
+        "x:define": {
+          "site": {
+            "x:unique-attr": "id",
+            "props": {
+              "icon": "fa-solid fa-table-columns"
+            },
+            "children": [
+              {
+                "type": "resources",
+                "group": true,
+                "props": {
+                  "title": "资源集",
+                  "icon": "fa-solid fa-layer-group"
+                },
+                "children": [
+                  {
+                    "x:extends": "site:resource"
+                  }
+                ]
+              }
+            ]
+          },
+          "site:resource": {
+            "x:unique-attr": "id",
+            "type": "resource",
+            "multiple": true,
+            "props": {
+              "title": "资源",
+              "icon": "fa-regular fa-newspaper"
+            },
+            "children": [
+              {
+                "x:extends": "site:resource"
+              }
+            ]
+          }
+        },
+        "children": [
+          {
+            "x:extends": "site",
+            "type": "defaultSite",
+            "mandatory": true,
+            "props": {
+              "title": "默认站点",
+              "desc": "在访问未定义站点时，返回该站点页面"
+            }
+          },
+          {
+            "x:extends": "site",
+            "type": "site",
+            "multiple": true,
+            "props": {
+              "title": "功能站点"
+            }
+          }
+        ]
+      },
+      {
+        "type": "services",
+        "group": true,
+        "props": {
+          "title": "后端服务集",
+          "icon": "fa-solid fa-layer-group"
+        },
+        "children": [
+          {
+            "x:unique-attr": "id",
+            "type": "service",
+            "multiple": true,
+            "props": {
+              "title": "后端服务",
+              "icon": "fa-brands fa-docker"
+            },
+            "children": [
+              {
+                "type": "bizLibs",
+                "group": true,
+                "props": {
+                  "title": "业务接口库",
+                  "icon": "fa-solid fa-layer-group"
+                },
+                "children": [
+                  {
+                    "type": "biz",
+                    "multiple": true,
+                    "props": {
+                      "title": "业务接口",
+                      "icon": "fa-solid fa-code"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "metaLibs",
+                "group": true,
+                "props": {
+                  "title": "业务模型库"
+                },
+                "children": [
+                  {
+                    "type": "meta",
+                    "multiple": true,
+                    "props": {
+                      "title": "业务模型",
+                      "icon": "fa-solid fa-cube"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

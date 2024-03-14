@@ -1,0 +1,26 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "total": 100,
+    "page": 1,
+    "items": [
+      {
+        "id": "37701",
+        "logo": "/logo.svg",
+        "code": "duzhou-platform",
+        "name": "渡舟平台",
+        "url": "https://duzhou.crazydan.io",
+        "progress": 30
+      },
+      {
+        "id": "37702",
+        "logo": "/logo.svg",
+        "code": "duzhou-cloud-platform",
+        "name": "渡舟云平台",
+        "url": "https://duzhou.cloud.crazydan.io",
+        "progress": 80
+      }
+    ]
+  }
+}

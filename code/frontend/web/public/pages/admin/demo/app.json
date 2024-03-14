@@ -1,0 +1,176 @@
+{
+  "type": "page",
+  "title": "应用管理",
+  "subTitle": "应用开发的操作流程演示",
+  "body": [
+    {
+      "type": "crud",
+      "name": "app-table",
+      "api": "get:/pages/admin/demo/data/app.data.json",
+      "syncLocation": false,
+      "autoFillHeight": true,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "level": "primary",
+          "icon": "fa-solid fa-plus",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "添加新应用",
+            "body": {
+              "type": "form",
+              "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample",
+              "body": [
+                {
+                  "type": "input-image",
+                  "name": "image",
+                  "label": "图标",
+                  "accept": ".jpeg,.jpg,.png,.gif,.svg",
+                  "uploadBtnText": "点击上传应用图标",
+                  "receiver": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/upload/file"
+                },
+                {
+                  "type": "input-text",
+                  "name": "name",
+                  "label": "名称"
+                },
+                {
+                  "type": "input-text",
+                  "name": "code",
+                  "label": "编码"
+                },
+                {
+                  "type": "input-text",
+                  "name": "url",
+                  "label": "访问地址"
+                }
+              ]
+            }
+          }
+        },
+        "bulkActions",
+        {
+          "label": "刷新列表",
+          "type": "button",
+          "icon": "fa fa-repeat",
+          "actionType": "reload",
+          "target": "app-table"
+        },
+        {
+          "type": "columns-toggler",
+          "align": "right",
+          "icon": "fas fa-cog"
+        },
+        {
+          "type": "search-box",
+          "name": "keyword",
+          "align": "right",
+          "placeholder": "请输入关键字 ..."
+        }
+      ],
+      "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+      "bulkActions": [
+        {
+          "label": "删除选中",
+          "icon": "fa-solid fa-trash-can",
+          "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${ids|raw}",
+          "actionType": "ajax",
+          "confirmTitle": "删除确认",
+          "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.name + ' (' + e.code + ')</li>'), '')}</ul>"
+        }
+      ],
+      "columns": [
+        {
+          "name": "name",
+          "type": "text",
+          "label": "名称",
+          "fixed": "left"
+        },
+        {
+          "name": "logo",
+          "type": "image",
+          "label": "图标"
+        },
+        {
+          "name": "code",
+          "type": "text",
+          "label": "编码"
+        },
+        {
+          "name": "url",
+          "type": "link",
+          "label": "访问地址"
+        },
+        {
+          "name": "progress",
+          "type": "progress",
+          "label": "开发进度"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "level": "primary",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "编辑应用",
+                "body": {
+                  "type": "form",
+                  "initApi": "get:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${id}",
+                  "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${id}",
+                  "body": [
+                    {
+                      "type": "input-image",
+                      "name": "image",
+                      "label": "图标",
+                      "value": "${logo}",
+                      "accept": ".jpeg,.jpg,.png,.gif,.svg",
+                      "uploadBtnText": "点击上传应用图标",
+                      "receiver": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/upload/file"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "name",
+                      "label": "名称",
+                      "value": "${name}"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "code",
+                      "label": "编码",
+                      "value": "${code}"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "url",
+                      "label": "访问地址",
+                      "value": "${url}"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": "设计",
+              "type": "button",
+              "level": "success"
+            },
+            {
+              "label": "删除",
+              "type": "button",
+              "level": "danger",
+              "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${ids|raw}",
+              "actionType": "ajax",
+              "confirmTitle": "删除确认",
+              "confirmText": "确定要删除应用「<b>${name} (${code})</b>」？"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

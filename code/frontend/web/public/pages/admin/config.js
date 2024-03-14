@@ -23,13 +23,19 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
-        label: '可视化设计',
+        label: '应用设计',
         children: [
           {
             label: 'DSL 编辑器',
             url: 'dsl-editor',
             icon: 'fa fa-cubes',
             schemaApi: 'get:/pages/admin/demo/dsl-editor.json'
+          },
+          {
+            label: '应用管理',
+            url: 'app',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/app.json'
           }
         ]
       },
