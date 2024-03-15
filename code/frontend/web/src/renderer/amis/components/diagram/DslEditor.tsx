@@ -23,7 +23,8 @@ import {
   Renderer,
   unRegisterRenderer,
   autobind,
-  replaceText
+  replaceText,
+  ScopedContext
 } from 'amis-core';
 import ReactFlow, {
   ReactFlowProvider,
@@ -47,6 +48,9 @@ import './dsl/style.scss';
 
 const TYPE = 'dsl-editor';
 unRegisterRenderer(TYPE);
+
+const EVENT_NODE_SELECTED = 'node:selected';
+const EVENT_NODE_DESELECTED = 'node:deselected';
 
 /** DSL 树的布局方向 */
 export type LayoutDirection = 'horizontal' | 'vertical';
@@ -102,6 +106,8 @@ export interface EditorProps extends RendererProps {
   autoVar: true
 })
 export default class DslEditor extends React.Component<EditorProps, object> {
+  static contextType = ScopedContext;
+
   constructor(props: EditorProps) {
     super(props);
 
@@ -114,8 +120,15 @@ export default class DslEditor extends React.Component<EditorProps, object> {
     this.fetchData(env, api.query);
   }
 
+  componentWillUnmount(): void {
+    const actions = this.props.onEvent?.[EVENT_NODE_DESELECTED]?.actions || [];
+
+    this.context.doAction(actions);
+  }
+
   render(): React.ReactNode {
     const {
+      dispatchEvent,
       layout: { direction }
     } = this.props;
 
@@ -130,9 +143,37 @@ export default class DslEditor extends React.Component<EditorProps, object> {
           position: { x: 0, y: 0 },
           data: {
             direction,
+            type: d.type,
             title: d.title,
             subTitle: d.subTitle,
-            icon: d.icon || 'fa-solid fa-circle-question'
+            icon: d.icon || 'fa-solid fa-circle-question',
+            editor: JSON.stringify({
+              type: 'form',
+              title: '',
+              mode: 'horizontal',
+              body: [
+                {
+                  type: 'input-text',
+                  name: 'var1',
+                  label: '输入框',
+                  value: '${node.data.title}'
+                },
+                {
+                  type: 'input-color',
+                  name: 'var2',
+                  label: '颜色选择',
+                  value: '#F0F'
+                },
+                {
+                  type: 'switch',
+                  name: 'switch',
+                  label: '开关',
+                  option: '开关说明',
+                  value: true
+                }
+              ],
+              actions: []
+            })
           }
         };
 
@@ -168,6 +209,7 @@ export default class DslEditor extends React.Component<EditorProps, object> {
           direction={direction}
           initialNodes={initialNodes}
           initialEdges={initialEdges}
+          dispatchEvent={dispatchEvent}
         />
       </ReactFlowProvider>
     );
@@ -215,7 +257,12 @@ const defaultEdgeOptions = {
 };
 
 // https://reactflow.dev/learn
-function ReactFlowEditor({ direction, initialNodes, initialEdges }) {
+function ReactFlowEditor({
+  direction,
+  initialNodes,
+  initialEdges,
+  dispatchEvent
+}) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
@@ -230,6 +277,11 @@ function ReactFlowEditor({ direction, initialNodes, initialEdges }) {
     changes.forEach(({ id, type, selected }) => {
       if (type === 'select') {
         targets[id] = selected;
+
+        selected &&
+          dispatchEvent(EVENT_NODE_SELECTED, {
+            node: getNode(id)
+          });
       }
     });
 
@@ -291,6 +343,9 @@ function ReactFlowEditor({ direction, initialNodes, initialEdges }) {
       });
     }
   }, []);
+  const onPaneClick = useCallback(() => {
+    dispatchEvent(EVENT_NODE_DESELECTED, {});
+  }, []);
 
   const layout = useAutoLayout({ direction });
   layout({ duration: 300 });
@@ -310,6 +365,7 @@ function ReactFlowEditor({ direction, initialNodes, initialEdges }) {
       className="dsl-editor"
       nodes={nodes}
       edges={edges}
+      onPaneClick={onPaneClick}
       onNodeClick={onNodeClick}
       onNodeDoubleClick={onNodeDoubleClick}
       onNodesChange={onNodesChange}

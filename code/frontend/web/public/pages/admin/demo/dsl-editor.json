@@ -7,6 +7,60 @@
   "layout": {
     "direction": "vertical"
   },
+  "onEvent": {
+    "node:deselected": {
+      "actions": [
+        {
+          "actionType": "closeDrawer",
+          "componentId": "props-editor"
+        }
+      ]
+    },
+    "node:selected": {
+      "actions": [
+        {
+          "actionType": "drawer",
+          "drawer": {
+            "type": "drawer",
+            "id": "props-editor",
+            "title": "${node.data.title}",
+            "overlay": false,
+            "resizable": true,
+            "closeOnEsc": true,
+            "position": "bottom",
+            "body": [
+              {
+                "type": "amis",
+                "name": "node.data.editor"
+              }
+            ],
+            "onEvent": {
+              "confirm": {
+                "actions": [
+                  {
+                    "actionType": "toast",
+                    "args": {
+                      "msg": "confirm"
+                    }
+                  }
+                ]
+              },
+              "cancel": {
+                "actions": [
+                  {
+                    "actionType": "toast",
+                    "args": {
+                      "msg": "cancel"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
   "xdef": {
     "type": "app",
     "props": {

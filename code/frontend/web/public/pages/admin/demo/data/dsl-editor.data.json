@@ -15,75 +15,73 @@
           "icon": "fa-solid fa-computer",
           "children": [
             {
-              "id": "sites",
-              "title": "功能站点",
+              "id": "default",
+              "title": "默认站点",
+              "subTitle": "/*",
               "icon": "fa-solid fa-globe",
+              "props": {},
               "children": [
                 {
-                  "id": "default",
-                  "title": "默认站点",
-                  "icon": "fa-solid fa-globe",
-                  "props": {},
-                  "children": [
-                    {
-                      "id": "not-found",
-                      "title": "站点不存在",
-                      "icon": "fa-solid fa-file-lines"
-                    }
-                  ]
-                },
+                  "id": "not-found",
+                  "title": "站点不存在",
+                  "icon": "fa-solid fa-file-lines"
+                }
+              ]
+            },
+            {
+              "id": "signin",
+              "title": "用户登录",
+              "subTitle": "/signin",
+              "type": "site",
+              "icon": "fa-solid fa-globe",
+              "props": {},
+              "children": [
                 {
                   "id": "signin",
-                  "title": "用户登录",
-                  "icon": "fa-solid fa-globe",
-                  "props": {},
+                  "title": "用户登录表单",
+                  "icon": "fa-solid fa-file-lines"
+                }
+              ]
+            },
+            {
+              "id": "admin",
+              "title": "后台管理",
+              "subTitle": "/admin",
+              "type": "site",
+              "icon": "fa-solid fa-globe",
+              "props": {},
+              "children": [
+                {
+                  "id": "auth",
+                  "title": "用户权限",
+                  "icon": "fa-solid fa-file-lines",
                   "children": [
                     {
-                      "id": "signin",
-                      "title": "用户登录表单",
+                      "id": "user",
+                      "title": "用户",
+                      "icon": "fa-solid fa-file-lines"
+                    },
+                    {
+                      "id": "role",
+                      "title": "角色",
                       "icon": "fa-solid fa-file-lines"
                     }
                   ]
                 },
                 {
-                  "id": "admin",
-                  "title": "后台管理",
-                  "icon": "fa-solid fa-globe",
-                  "props": {},
+                  "id": "org",
+                  "title": "组织机构",
+                  "icon": "fa-solid fa-file-lines",
                   "children": [
                     {
-                      "id": "auth",
-                      "title": "用户权限",
-                      "icon": "fa-solid fa-file-lines",
-                      "children": [
-                        {
-                          "id": "user",
-                          "title": "用户",
-                          "icon": "fa-solid fa-file-lines"
-                        },
-                        {
-                          "id": "role",
-                          "title": "角色",
-                          "icon": "fa-solid fa-file-lines"
-                        }
-                      ]
+                      "id": "dep",
+                      "title": "部门",
+                      "icon": "fa-solid fa-file-lines"
                     },
                     {
-                      "id": "org",
-                      "title": "组织机构",
-                      "icon": "fa-solid fa-file-lines",
-                      "children": [
-                        {
-                          "id": "dep",
-                          "title": "部门",
-                          "icon": "fa-solid fa-file-lines"
-                        },
-                        {
-                          "id": "staff",
-                          "title": "人员",
-                          "icon": "fa-solid fa-file-lines"
-                        }
-                      ]
+                      "id": "staff",
+                      "title": "人员",
+                      "icon": "fa-solid fa-file-lines"
                     }
                   ]
                 }
@@ -99,6 +97,7 @@
             {
               "id": "user-auth",
               "title": "用户鉴权",
+              "type": "service",
               "icon": "fa-solid fa-gear",
               "props": {},
               "children": [
@@ -157,6 +156,7 @@
             {
               "id": "organization",
               "title": "组织机构",
+              "type": "service",
               "icon": "fa-solid fa-gear",
               "props": {},
               "children": [
