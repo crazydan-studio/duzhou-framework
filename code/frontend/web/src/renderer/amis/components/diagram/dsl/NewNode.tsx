@@ -27,8 +27,16 @@ function Node({ data }) {
         <i className="fa-solid fa-plus text-2xl text-center leading-none text-gray-300"></i>
       </div>
 
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
+      <Handle
+        type="target"
+        position={data.direction === 'vertical' ? Position.Top : Position.Left}
+      />
+      <Handle
+        type="source"
+        position={
+          data.direction === 'vertical' ? Position.Bottom : Position.Right
+        }
+      />
     </div>
   );
 }

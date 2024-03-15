@@ -2,10 +2,10 @@
   "type": "dsl-editor",
   "api": {
     "mutation": "",
-    "query": "get:/pages/admin/demo/data/dsl-editor.data.json"
+    "query": "/pages/admin/demo/data/dsl-editor.data.json"
   },
   "layout": {
-    "direction": "horizontal"
+    "direction": "vertical"
   },
   "xdef": {
     "type": "app",

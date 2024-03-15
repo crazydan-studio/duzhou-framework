@@ -30,20 +30,28 @@ function Node({ data, selected }) {
     >
       <div className="flex">
         <div className="rounded-full flex justify-center items-center">
-          <i
-            className={
-              (data.icon ?? 'fa-solid fa-circle-question') + ' text-3xl'
-            }
-          ></i>
+          {data.icon.includes('/') ? (
+            <img src={data.icon} className="w-12 h-12" />
+          ) : (
+            <i className={data.icon + ' text-3xl'}></i>
+          )}
         </div>
         <div className="ml-2">
           <div className="text-lg font-bold">{data.title}</div>
-          <div className="text-gray-500">{data.subTitle}</div>
+          <div className="text-gray-500 max-w-xs">{data.subTitle}</div>
         </div>
       </div>
 
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
+      <Handle
+        type="target"
+        position={data.direction === 'vertical' ? Position.Top : Position.Left}
+      />
+      <Handle
+        type="source"
+        position={
+          data.direction === 'vertical' ? Position.Bottom : Position.Right
+        }
+      />
     </div>
   );
 }

@@ -22,7 +22,8 @@ import {
   RendererProps,
   Renderer,
   unRegisterRenderer,
-  autobind
+  autobind,
+  replaceText
 } from 'amis-core';
 import ReactFlow, {
   ReactFlowProvider,
@@ -93,7 +94,7 @@ export interface EditorProps extends RendererProps {
     direction: LayoutDirection;
   };
   /** DSL 结构定义 */
-  xdef: DslDef;
+  xdef?: DslDef;
 }
 
 @Renderer({
@@ -101,20 +102,102 @@ export interface EditorProps extends RendererProps {
   autoVar: true
 })
 export default class DslEditor extends React.Component<EditorProps, object> {
-  componentDidMount() {}
+  constructor(props: EditorProps) {
+    super(props);
+
+    this.state = { data: [] };
+  }
+
+  componentDidMount() {
+    const { env, api } = this.props;
+
+    this.fetchData(env, api.query);
+  }
 
   render(): React.ReactNode {
+    const {
+      layout: { direction }
+    } = this.props;
+
+    const buildNodes = (data, initialNodes, initialEdges, parentNode = {}) => {
+      const source = parentNode.id || '';
+
+      data.forEach((d) => {
+        const node = {
+          id: `${source}/${d.id}`,
+          parent: source || null,
+          type: 'dsl-node',
+          position: { x: 0, y: 0 },
+          data: {
+            direction,
+            title: d.title,
+            subTitle: d.subTitle,
+            icon: d.icon || 'fa-solid fa-circle-question'
+          }
+        };
+
+        initialNodes.push(node);
+        buildNodes(d.children || [], initialNodes, initialEdges, node);
+
+        const target = node.id;
+        if (source) {
+          initialEdges.push({
+            id: `${source} -> ${target}`,
+            type: 'dsl-edge',
+            source,
+            target
+          });
+        }
+      });
+    };
+
+    if (this.state.data.length === 0) {
+      return <ReactFlowProvider></ReactFlowProvider>;
+    }
+
+    const initialNodes = [];
+    const initialEdges = [];
+    buildNodes(this.state.data, initialNodes, initialEdges);
+
     return (
       // Note：在存在多实例和单页面应用环境中，需通过 ReactFlowProvider
       // 保证实例间的 Store 是各自独立的
       // https://reactflow.dev/examples/misc/provider
       <ReactFlowProvider>
         <ReactFlowEditor
+          direction={direction}
           initialNodes={initialNodes}
           initialEdges={initialEdges}
         />
       </ReactFlowProvider>
     );
+  }
+
+  async fetchData(env, api: string) {
+    let data: any;
+
+    try {
+      const json = await env.fetcher({ url: api, method: 'get' });
+
+      data = json || { status: -1, msg: 'No data' };
+    } catch (e) {
+      data = { status: -1, msg: e.message };
+    }
+
+    if (data.status != 0) {
+      data = [
+        {
+          id: 'error',
+          icon: 'fa-solid fa-triangle-exclamation',
+          title: '拉取数据出现异常',
+          subTitle: data.msg
+        }
+      ];
+    } else {
+      data = replaceText(data.data, env.replaceText, env.replaceTextIgnoreKeys);
+    }
+
+    this.setState({ data });
   }
 }
 
@@ -132,7 +215,7 @@ const defaultEdgeOptions = {
 };
 
 // https://reactflow.dev/learn
-function ReactFlowEditor({ initialNodes, initialEdges }) {
+function ReactFlowEditor({ direction, initialNodes, initialEdges }) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
@@ -167,6 +250,7 @@ function ReactFlowEditor({ initialNodes, initialEdges }) {
       const newNode = create();
       newNode.id = uuid();
       newNode.parent = parent;
+      newNode.data.direction = direction;
       newNode.position = { ...node.position };
 
       const newEdge = {
@@ -208,7 +292,7 @@ function ReactFlowEditor({ initialNodes, initialEdges }) {
     }
   }, []);
 
-  const layout = useAutoLayout();
+  const layout = useAutoLayout({ direction });
   layout({ duration: 300 });
 
   return (
@@ -237,210 +321,3 @@ function ReactFlowEditor({ initialNodes, initialEdges }) {
     </ReactFlow>
   );
 }
-
-const position = { x: 0, y: 0 };
-const newNodeProps = {
-  type: 'dsl-new-node',
-  position
-};
-const newNodeEdgeProps = {
-  type: 'dsl-new-node-edge',
-  className: 'new-node-edge'
-};
-
-const initialNodes = [
-  {
-    id: 'app',
-    type: 'dsl-node',
-    data: { title: '渡舟平台', icon: 'fa-solid fa-globe' },
-    position
-  },
-  {
-    id: 'web',
-    type: 'dsl-node',
-    data: { title: 'Web 前端', icon: 'fa-solid fa-computer' },
-    position
-  },
-  {
-    id: 'site:signin',
-    type: 'dsl-node',
-    data: { title: '/signin/', icon: 'fa-solid fa-table-columns' },
-    position
-  },
-  {
-    id: 'resource:signin',
-    type: 'dsl-node',
-    data: { title: '#/signin', icon: 'fa-regular fa-newspaper' },
-    position
-  },
-  {
-    id: 'site:admin',
-    type: 'dsl-node',
-    data: { title: '/admin/', icon: 'fa-solid fa-table-columns' },
-    position
-  },
-  {
-    id: 'resource:auth',
-    type: 'dsl-node',
-    data: { title: '#/auth', icon: 'fa-regular fa-newspaper' },
-    position
-  },
-  {
-    id: 'resource:permission',
-    type: 'dsl-node',
-    data: { title: '#/permission', icon: 'fa-regular fa-newspaper' },
-    position
-  },
-  {
-    id: 'resource:role',
-    type: 'dsl-node',
-    data: { title: '#/role', icon: 'fa-regular fa-newspaper' },
-    position
-  },
-  {
-    id: 'resource:org',
-    type: 'dsl-node',
-    data: { title: '#/org', icon: 'fa-regular fa-newspaper' },
-    position
-  },
-  {
-    id: 'service:auth',
-    type: 'dsl-node',
-    data: { title: '用户认证', icon: 'fa-brands fa-docker' },
-    position
-  },
-  {
-    id: 'service:org',
-    type: 'dsl-node',
-    data: { title: '组织机构', icon: 'fa-brands fa-docker' },
-    position
-  },
-  {
-    id: 'meta:permission',
-    type: 'dsl-node',
-    data: { title: 'Permission', icon: 'fa-solid fa-cube' },
-    position
-  },
-  {
-    id: 'meta:role',
-    type: 'dsl-node',
-    data: { title: 'Role', icon: 'fa-solid fa-cube' },
-    position
-  },
-  {
-    id: 'meta:account',
-    type: 'dsl-node',
-    data: { title: 'Account', icon: 'fa-solid fa-cube' },
-    position
-  },
-  {
-    id: 'meta:user',
-    type: 'dsl-node',
-    data: { title: 'User', icon: 'fa-solid fa-cube' },
-    position
-  },
-  {
-    id: 'meta:department',
-    type: 'dsl-node',
-    data: { title: 'Department', icon: 'fa-solid fa-cube' },
-    position
-  }
-].concat([
-  {
-    id: 'service:new',
-    ...newNodeProps,
-    data: {
-      parent: 'app',
-      create: () => ({
-        type: 'dsl-node',
-        data: { title: '未命名', icon: 'fa-brands fa-docker' },
-        position
-      })
-    }
-  },
-  {
-    id: 'service:auth:meta:new',
-    ...newNodeProps,
-    data: {
-      parent: 'service:auth',
-      create: () => ({
-        type: 'dsl-node',
-        data: { title: '未命名', icon: 'fa-solid fa-cube' },
-        position
-      })
-    }
-  },
-  {
-    id: 'service:org:meta:new',
-    ...newNodeProps,
-    data: {
-      parent: 'service:org',
-      create: () => ({
-        type: 'dsl-node',
-        data: { title: '未命名', icon: 'fa-solid fa-cube' },
-        position
-      })
-    }
-  }
-]);
-const initialEdges = [
-  { id: 'e-3', source: 'app', target: 'web' },
-  { id: 'e-1', source: 'app', target: 'service:auth' },
-  { id: 'e-2', source: 'app', target: 'service:org' },
-  {
-    id: 'e-4',
-    source: 'service:auth',
-    target: 'meta:permission'
-  },
-  { id: 'e-5', source: 'service:auth', target: 'meta:role' },
-  { id: 'e-6', source: 'service:auth', target: 'meta:account' },
-  { id: 'e-7', source: 'service:org', target: 'meta:user' },
-  {
-    id: 'e-8',
-    source: 'service:org',
-    target: 'meta:department'
-  },
-  { id: 'e-9', source: 'web', target: 'site:signin' },
-  { id: 'e-10', source: 'web', target: 'site:admin' },
-  {
-    id: 'e-11',
-    source: 'site:signin',
-    target: 'resource:signin'
-  },
-  { id: 'e-12', source: 'site:admin', target: 'resource:auth' },
-  { id: 'e-13', source: 'site:admin', target: 'resource:org' },
-  {
-    id: 'e-14',
-    source: 'resource:auth',
-    target: 'resource:permission'
-  },
-  {
-    id: 'e-15',
-    source: 'resource:auth',
-    target: 'resource:role'
-  }
-].concat([
-  {
-    id: 'e-service:new',
-    source: 'app',
-    target: 'service:new',
-    ...newNodeEdgeProps
-  },
-  {
-    id: 'e-service:auth:meta:new',
-    source: 'service:auth',
-    target: 'service:auth:meta:new',
-    ...newNodeEdgeProps
-  },
-  {
-    id: 'e-service:org:meta:new',
-    source: 'service:org',
-    target: 'service:org:meta:new',
-    ...newNodeEdgeProps
-  }
-]);
-
-initialNodes.forEach((node) => {
-  const edge = initialEdges.find((edge) => edge.target === node.id);
-  edge && (node.parent = edge.source);
-});

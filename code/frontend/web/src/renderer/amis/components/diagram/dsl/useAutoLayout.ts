@@ -87,12 +87,16 @@ export function collapseTree({
   );
 }
 
-export function useAutoLayout() {
+export function useAutoLayout({ direction }) {
   //https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
 
   const layout = flextree()
     // 节点的占位空间（在水平和垂直布局方向发生切换时，需交换数组元素位置）
-    .nodeSize((node) => [node.data.height * 1.5, node.data.width * 1.5])
+    .nodeSize((node) => {
+      const w = node.data.width * 1.5;
+      const h = node.data.height * 1.5;
+      return direction === 'vertical' ? [w, node.data.height * 2] : [h, w];
+    })
     .spacing(() => 1);
 
   function layoutNodes(nodes, isInCollapseTree) {
@@ -109,7 +113,8 @@ export function useAutoLayout() {
       .descendants()
       .forEach((d) => {
         // 交换 tree 布局的 x/y 坐标，以将垂直方向布局转换为水平方向布局
-        positions[d.id] = { x: d.y, y: d.x };
+        positions[d.id] =
+          direction === 'vertical' ? { x: d.x, y: d.y } : { x: d.y, y: d.x };
       });
 
     const collapseRoot = nodes.find((n) => n.selected);

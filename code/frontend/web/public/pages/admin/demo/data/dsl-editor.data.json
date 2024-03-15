@@ -1,162 +1,208 @@
 {
   "status": 0,
   "msg": "",
-  "data": {
-    "type": "app",
-    "props": {
-      "title": "渡舟平台"
-    },
-    "children": [
-      {
-        "type": "web",
-        "children": [
-          {
-            "type": "defaultSite",
-            "props": {
-              "id": "default",
-              "title": "页面不存在"
-            }
-          },
-          {
-            "type": "site",
-            "props": {
-              "id": "signin",
-              "title": "用户登录",
-              "url": "/signin"
-            },
-            "children": [
-              {
-                "type": "resources",
-                "children": [
-                  {
-                    "type": "resource",
-                    "props": {
+  "data": [
+    {
+      "id": "app",
+      "title": "渡舟平台",
+      "subTitle": "以先进的软件构造理论——可逆计算为核心思想，并基于及其理论实现 Nop 而搭建的自运维、自监控、可演化的全功能型应用平台",
+      "icon": "/logo.svg",
+      "props": {},
+      "children": [
+        {
+          "id": "web",
+          "title": "Web 前端",
+          "icon": "fa-solid fa-computer",
+          "children": [
+            {
+              "id": "sites",
+              "title": "功能站点",
+              "icon": "fa-solid fa-globe",
+              "children": [
+                {
+                  "id": "default",
+                  "title": "默认站点",
+                  "icon": "fa-solid fa-globe",
+                  "props": {},
+                  "children": [
+                    {
+                      "id": "not-found",
+                      "title": "站点不存在",
+                      "icon": "fa-solid fa-file-lines"
+                    }
+                  ]
+                },
+                {
+                  "id": "signin",
+                  "title": "用户登录",
+                  "icon": "fa-solid fa-globe",
+                  "props": {},
+                  "children": [
+                    {
                       "id": "signin",
-                      "title": "登录表单"
+                      "title": "用户登录表单",
+                      "icon": "fa-solid fa-file-lines"
                     }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "site",
-            "props": {
-              "id": "admin",
-              "title": "后台管理",
-              "url": "/admin"
-            },
-            "children": [
-              {
-                "type": "resources",
-                "children": [
-                  {
-                    "type": "resource",
-                    "props": {
+                  ]
+                },
+                {
+                  "id": "admin",
+                  "title": "后台管理",
+                  "icon": "fa-solid fa-globe",
+                  "props": {},
+                  "children": [
+                    {
                       "id": "auth",
-                      "title": "权限管理"
+                      "title": "用户权限",
+                      "icon": "fa-solid fa-file-lines",
+                      "children": [
+                        {
+                          "id": "user",
+                          "title": "用户",
+                          "icon": "fa-solid fa-file-lines"
+                        },
+                        {
+                          "id": "role",
+                          "title": "角色",
+                          "icon": "fa-solid fa-file-lines"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "org",
+                      "title": "组织机构",
+                      "icon": "fa-solid fa-file-lines",
+                      "children": [
+                        {
+                          "id": "dep",
+                          "title": "部门",
+                          "icon": "fa-solid fa-file-lines"
+                        },
+                        {
+                          "id": "staff",
+                          "title": "人员",
+                          "icon": "fa-solid fa-file-lines"
+                        }
+                      ]
                     }
-                  },
-                  {
-                    "type": "resource",
-                    "props": {
-                      "id": "organization",
-                      "title": "组织管理"
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "services",
-        "children": [
-          {
-            "type": "service",
-            "props": {
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "services",
+          "title": "后端服务",
+          "icon": "fa-solid fa-gears",
+          "children": [
+            {
               "id": "user-auth",
-              "title": "用户认证服务",
-              "version": "0.1.0"
+              "title": "用户鉴权",
+              "icon": "fa-solid fa-gear",
+              "props": {},
+              "children": [
+                {
+                  "id": "apis",
+                  "title": "业务接口",
+                  "icon": "fa-solid fa-right-left",
+                  "children": [
+                    {
+                      "id": "account",
+                      "title": "Account 接口",
+                      "icon": "fa-solid fa-angles-up",
+                      "props": {}
+                    },
+                    {
+                      "id": "role",
+                      "title": "Role 接口",
+                      "icon": "fa-solid fa-angles-up",
+                      "props": {}
+                    },
+                    {
+                      "id": "permission",
+                      "title": "Permission 接口",
+                      "icon": "fa-solid fa-angles-up",
+                      "props": {}
+                    }
+                  ]
+                },
+                {
+                  "id": "metas",
+                  "title": "业务模型",
+                  "icon": "fa-solid fa-cubes",
+                  "children": [
+                    {
+                      "id": "account",
+                      "title": "Account",
+                      "icon": "fa-solid fa-cube",
+                      "props": {}
+                    },
+                    {
+                      "id": "role",
+                      "title": "Role",
+                      "icon": "fa-solid fa-cube",
+                      "props": {}
+                    },
+                    {
+                      "id": "permission",
+                      "title": "Permission",
+                      "icon": "fa-solid fa-cube",
+                      "props": {}
+                    }
+                  ]
+                }
+              ]
             },
-            "children": [
-              {
-                "type": "bizLibs",
-                "children": [
-                  {
-                    "type": "biz",
-                    "props": {
-                      "title": "Account 接口"
+            {
+              "id": "organization",
+              "title": "组织机构",
+              "icon": "fa-solid fa-gear",
+              "props": {},
+              "children": [
+                {
+                  "id": "apis",
+                  "title": "业务接口",
+                  "icon": "fa-solid fa-right-left",
+                  "children": [
+                    {
+                      "id": "user",
+                      "title": "User 接口",
+                      "icon": "fa-solid fa-angles-up",
+                      "props": {}
+                    },
+                    {
+                      "id": "department",
+                      "title": "Department 接口",
+                      "icon": "fa-solid fa-angles-up",
+                      "props": {}
                     }
-                  }
-                ]
-              },
-              {
-                "type": "metaLibs",
-                "children": [
-                  {
-                    "type": "meta",
-                    "props": {
-                      "title": "Account"
+                  ]
+                },
+                {
+                  "id": "metas",
+                  "title": "业务模型",
+                  "icon": "fa-solid fa-cubes",
+                  "children": [
+                    {
+                      "id": "user",
+                      "title": "User",
+                      "icon": "fa-solid fa-cube",
+                      "props": {}
+                    },
+                    {
+                      "id": "department",
+                      "title": "Department",
+                      "icon": "fa-solid fa-cube",
+                      "props": {}
                     }
-                  },
-                  {
-                    "type": "meta",
-                    "props": {
-                      "title": "Role"
-                    }
-                  },
-                  {
-                    "type": "meta",
-                    "props": {
-                      "title": "Permission"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "service",
-            "props": {
-              "id": "org",
-              "title": "组织机构服务",
-              "version": "0.1.0"
-            },
-            "children": [
-              {
-                "type": "bizLibs",
-                "children": [
-                  {
-                    "type": "biz",
-                    "props": {
-                      "title": "User 接口"
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "metaLibs",
-                "children": [
-                  {
-                    "type": "meta",
-                    "props": {
-                      "title": "User"
-                    }
-                  },
-                  {
-                    "type": "meta",
-                    "props": {
-                      "title": "Department"
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
