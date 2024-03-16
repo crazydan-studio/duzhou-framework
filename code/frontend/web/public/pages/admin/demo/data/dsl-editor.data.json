@@ -1,208 +1,249 @@
 {
   "status": 0,
   "msg": "",
-  "data": [
-    {
-      "id": "app",
+  "data": {
+    "id": "app",
+    "type": "app",
+    "props": {
       "title": "渡舟平台",
       "subTitle": "以先进的软件构造理论——可逆计算为核心思想，并基于及其理论实现 Nop 而搭建的自运维、自监控、可演化的全功能型应用平台",
-      "icon": "/logo.svg",
-      "props": {},
-      "children": [
-        {
-          "id": "web",
-          "title": "Web 前端",
-          "icon": "fa-solid fa-computer",
-          "children": [
-            {
-              "id": "default",
-              "title": "默认站点",
-              "subTitle": "/*",
-              "icon": "fa-solid fa-globe",
-              "props": {},
-              "children": [
-                {
-                  "id": "not-found",
+      "code": "duzhou-platfrom",
+      "url": "https://duzhou.crazydan.io",
+      "logo": "/logo.svg",
+      "groupId": "io.crazydan.duzhou"
+    },
+    "children": [
+      {
+        "id": "web",
+        "type": "web",
+        "children": [
+          {
+            "id": "default",
+            "type": "defaultSite",
+            "props": {},
+            "children": [
+              {
+                "id": "not-found",
+                "type": "resource",
+                "props": {
                   "title": "站点不存在",
-                  "icon": "fa-solid fa-file-lines"
+                  "url": "/duzhou/web/pages/not-found.page.xml"
                 }
-              ]
-            },
-            {
-              "id": "signin",
+              }
+            ]
+          },
+          {
+            "id": "signin",
+            "type": "site",
+            "props": {
               "title": "用户登录",
-              "subTitle": "/signin",
-              "type": "site",
-              "icon": "fa-solid fa-globe",
-              "props": {},
-              "children": [
-                {
-                  "id": "signin",
+              "subTitle": "/signin"
+            },
+            "children": [
+              {
+                "id": "signin",
+                "type": "resource",
+                "props": {
                   "title": "用户登录表单",
-                  "icon": "fa-solid fa-file-lines"
+                  "url": "/duzhou/web/pages/signin.page.xml"
                 }
-              ]
-            },
-            {
-              "id": "admin",
+              }
+            ]
+          },
+          {
+            "id": "admin",
+            "type": "site",
+            "props": {
               "title": "后台管理",
-              "subTitle": "/admin",
-              "type": "site",
-              "icon": "fa-solid fa-globe",
-              "props": {},
-              "children": [
-                {
-                  "id": "auth",
-                  "title": "用户权限",
-                  "icon": "fa-solid fa-file-lines",
-                  "children": [
-                    {
-                      "id": "user",
-                      "title": "用户",
-                      "icon": "fa-solid fa-file-lines"
-                    },
-                    {
-                      "id": "role",
-                      "title": "角色",
-                      "icon": "fa-solid fa-file-lines"
-                    }
-                  ]
-                },
-                {
-                  "id": "org",
-                  "title": "组织机构",
-                  "icon": "fa-solid fa-file-lines",
-                  "children": [
-                    {
-                      "id": "dep",
-                      "title": "部门",
-                      "icon": "fa-solid fa-file-lines"
-                    },
-                    {
-                      "id": "staff",
-                      "title": "人员",
-                      "icon": "fa-solid fa-file-lines"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "services",
-          "title": "后端服务",
-          "icon": "fa-solid fa-gears",
-          "children": [
-            {
-              "id": "user-auth",
-              "title": "用户鉴权",
-              "type": "service",
-              "icon": "fa-solid fa-gear",
-              "props": {},
-              "children": [
-                {
-                  "id": "apis",
-                  "title": "业务接口",
-                  "icon": "fa-solid fa-right-left",
-                  "children": [
-                    {
-                      "id": "account",
-                      "title": "Account 接口",
-                      "icon": "fa-solid fa-angles-up",
-                      "props": {}
-                    },
-                    {
-                      "id": "role",
-                      "title": "Role 接口",
-                      "icon": "fa-solid fa-angles-up",
-                      "props": {}
-                    },
-                    {
-                      "id": "permission",
-                      "title": "Permission 接口",
-                      "icon": "fa-solid fa-angles-up",
-                      "props": {}
-                    }
-                  ]
-                },
-                {
-                  "id": "metas",
-                  "title": "业务模型",
-                  "icon": "fa-solid fa-cubes",
-                  "children": [
-                    {
-                      "id": "account",
-                      "title": "Account",
-                      "icon": "fa-solid fa-cube",
-                      "props": {}
-                    },
-                    {
-                      "id": "role",
-                      "title": "Role",
-                      "icon": "fa-solid fa-cube",
-                      "props": {}
-                    },
-                    {
-                      "id": "permission",
-                      "title": "Permission",
-                      "icon": "fa-solid fa-cube",
-                      "props": {}
-                    }
-                  ]
-                }
-              ]
+              "subTitle": "/admin"
             },
-            {
-              "id": "organization",
-              "title": "组织机构",
-              "type": "service",
-              "icon": "fa-solid fa-gear",
-              "props": {},
-              "children": [
-                {
-                  "id": "apis",
-                  "title": "业务接口",
-                  "icon": "fa-solid fa-right-left",
-                  "children": [
-                    {
-                      "id": "user",
-                      "title": "User 接口",
-                      "icon": "fa-solid fa-angles-up",
-                      "props": {}
-                    },
-                    {
-                      "id": "department",
-                      "title": "Department 接口",
-                      "icon": "fa-solid fa-angles-up",
-                      "props": {}
-                    }
-                  ]
+            "children": [
+              {
+                "id": "auth",
+                "type": "resource",
+                "props": {
+                  "title": "用户权限",
+                  "url": "/duzhou/web/pages/auth.page.xml"
                 },
-                {
-                  "id": "metas",
-                  "title": "业务模型",
-                  "icon": "fa-solid fa-cubes",
-                  "children": [
-                    {
-                      "id": "user",
-                      "title": "User",
-                      "icon": "fa-solid fa-cube",
-                      "props": {}
-                    },
-                    {
-                      "id": "department",
-                      "title": "Department",
-                      "icon": "fa-solid fa-cube",
-                      "props": {}
+                "children": [
+                  {
+                    "id": "user",
+                    "type": "resource",
+                    "props": {
+                      "title": "用户",
+                      "url": "/duzhou/web/pages/auth.user.page.xml"
                     }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+                  },
+                  {
+                    "id": "role",
+                    "type": "resource",
+                    "props": {
+                      "title": "角色",
+                      "url": "/duzhou/web/pages/auth.role.page.xml"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "org",
+                "type": "resource",
+                "props": {
+                  "title": "组织机构",
+                  "url": "/duzhou/web/pages/org.page.xml"
+                },
+                "children": [
+                  {
+                    "id": "dep",
+                    "type": "resource",
+                    "props": {
+                      "title": "部门",
+                      "url": "/duzhou/web/pages/org.dep.page.xml"
+                    }
+                  },
+                  {
+                    "id": "staff",
+                    "type": "resource",
+                    "props": {
+                      "title": "人员",
+                      "url": "/duzhou/web/pages/org.staff.page.xml"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "type": "services",
+        "children": [
+          {
+            "id": "user-auth",
+            "type": "service",
+            "props": {
+              "code": "user-auth",
+              "title": "用户鉴权"
+            },
+            "children": [
+              {
+                "id": "apis",
+                "type": "bizLibs",
+                "children": [
+                  {
+                    "id": "account",
+                    "type": "biz",
+                    "props": {
+                      "title": "Account 接口",
+                      "path": "/duzhou/app/biz/Account.xbiz"
+                    }
+                  },
+                  {
+                    "id": "role",
+                    "type": "biz",
+                    "props": {
+                      "title": "Role 接口",
+                      "path": "/duzhou/app/biz/Role.xbiz"
+                    }
+                  },
+                  {
+                    "id": "permission",
+                    "type": "biz",
+                    "props": {
+                      "title": "Permission 接口",
+                      "path": "/duzhou/app/biz/Permission.xbiz"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "metas",
+                "type": "metaLibs",
+                "children": [
+                  {
+                    "id": "account",
+                    "type": "meta",
+                    "props": {
+                      "title": "Account",
+                      "path": "/duzhou/app/meta/Account.xmeta"
+                    }
+                  },
+                  {
+                    "id": "role",
+                    "type": "meta",
+                    "props": {
+                      "title": "Role",
+                      "path": "/duzhou/app/meta/Role.xmeta"
+                    }
+                  },
+                  {
+                    "id": "permission",
+                    "type": "meta",
+                    "props": {
+                      "title": "Permission",
+                      "path": "/duzhou/app/meta/Permission.xmeta"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "organization",
+            "type": "service",
+            "props": {
+              "code": "organization",
+              "title": "组织机构"
+            },
+            "children": [
+              {
+                "id": "apis",
+                "type": "bizLibs",
+                "children": [
+                  {
+                    "id": "user",
+                    "type": "biz",
+                    "props": {
+                      "title": "User 接口",
+                      "path": "/duzhou/app/biz/User.xbiz"
+                    }
+                  },
+                  {
+                    "id": "department",
+                    "type": "biz",
+                    "props": {
+                      "title": "Department 接口",
+                      "path": "/duzhou/app/biz/Department.xbiz"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "metas",
+                "type": "metaLibs",
+                "children": [
+                  {
+                    "id": "user",
+                    "type": "meta",
+                    "props": {
+                      "title": "User",
+                      "path": "/duzhou/app/meta/User.xmeta"
+                    }
+                  },
+                  {
+                    "id": "department",
+                    "type": "meta",
+                    "props": {
+                      "title": "Department",
+                      "path": "/duzhou/app/meta/Department.xmeta"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

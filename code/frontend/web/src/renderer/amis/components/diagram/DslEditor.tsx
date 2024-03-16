@@ -37,6 +37,7 @@ import ReactFlow, {
 } from 'reactflow';
 
 import { v4 as uuid } from 'uuid';
+import { isEmpty } from 'lodash-es';
 
 import { useAutoLayout, collapseTree } from './dsl/useAutoLayout';
 import DslNode from './dsl/Node';
@@ -62,26 +63,25 @@ export interface DslDef {
   };
   /** 派生的目标定义名称 */
   'x:extends'?: string;
-  /** 作为节点唯一标识的属性名称。在直接兄弟节点之间，该属性值需唯一 */
-  'x:unique-attr': string | 'type';
 
-  /** 节点类型 */
+  /** 节点类型，对应于 DSL 的标签名称 */
   type: string;
-  /** 是否必须 */
+  /** 节点标题 */
+  title: string;
+  /** 节点副标题 */
+  subTitle?: string;
+  /** 节点图标 */
+  icon: string;
+  /** 节点是否必要。必要节点将会自动创建，且不可删除，仅需要调整配置或增减子节点 */
   mandatory?: boolean;
-  /** 是否可重复 */
+  /** 节点是否可重复。针对列表节点，可不断增加兄弟节点 */
   multiple?: boolean;
-  /** 是否为分组 */
-  group?: boolean;
-  /** 子节点 */
-  children?: DslDef[];
-  /** 节点配置属性，用于设置属性的默认值，并最终按节点路径与真实节点做合并 */
+  /** 节点配置属性，结构为 `属性名称: '属性类型名称'`，其中，属性类型对应于其编辑器 */
   props: {
-    title?: string;
-    desc?: string;
-    icon?: string;
-    [propName: string]: any;
+    [propName: string]: string;
   };
+  /** 子节点的 DSL 结构 */
+  children?: DslDef[];
 }
 
 export interface EditorProps extends RendererProps {
@@ -98,7 +98,7 @@ export interface EditorProps extends RendererProps {
     direction: LayoutDirection;
   };
   /** DSL 结构定义 */
-  xdef?: DslDef;
+  xdef: DslDef;
 }
 
 @Renderer({
@@ -111,7 +111,7 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   constructor(props: EditorProps) {
     super(props);
 
-    this.state = { data: [] };
+    this.state = { data: {} };
   }
 
   componentDidMount() {
@@ -130,10 +130,11 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   render(): React.ReactNode {
     const {
       dispatchEvent,
-      layout: { direction }
+      layout: { direction },
+      xdef
     } = this.props;
 
-    if (this.state.data.length === 0) {
+    if (isEmpty(this.state.data)) {
       return <ReactFlowProvider></ReactFlowProvider>;
     }
 
@@ -143,8 +144,9 @@ export default class DslEditor extends React.Component<EditorProps, object> {
       // https://reactflow.dev/examples/misc/provider
       <ReactFlowProvider>
         <ReactFlowEditor
+          xdef={xdef}
+          data={[this.state.data]}
           direction={direction}
-          data={this.state.data}
           dispatchEvent={dispatchEvent}
         />
       </ReactFlowProvider>
@@ -163,14 +165,12 @@ export default class DslEditor extends React.Component<EditorProps, object> {
     }
 
     if (data.status != 0) {
-      data = [
-        {
-          id: 'error',
-          icon: 'fa-solid fa-triangle-exclamation',
-          title: '拉取数据出现异常',
-          subTitle: data.msg
-        }
-      ];
+      data = {
+        id: 'error',
+        icon: 'fa-solid fa-triangle-exclamation',
+        title: '拉取数据出现异常',
+        subTitle: data.msg
+      };
     } else {
       data = replaceText(data.data, env.replaceText, env.replaceTextIgnoreKeys);
     }
@@ -193,28 +193,40 @@ const defaultEdgeOptions = {
 };
 
 // https://reactflow.dev/learn
-function ReactFlowEditor({ direction, data, dispatchEvent }) {
+function ReactFlowEditor({ xdef, data, direction, dispatchEvent }) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
 
   const { getNode, getNodes, setNodes, setEdges, getEdges } = useReactFlow();
 
-  const buildNodes = (data, initialNodes, initialEdges, parentNode = {}) => {
+  const buildNodes = (
+    data,
+    initialNodes,
+    initialEdges,
+    parentNode = {},
+    topTypePath: string[] = []
+  ) => {
     const source = parentNode.id || '';
 
     data.forEach((d) => {
+      const nodeTypePath = [...topTypePath, d.type];
+      const nodeXDef = getXDefByTypePath(nodeTypePath, [xdef]);
+
       const node = {
         id: `${source}/${d.id}`,
-        parent: source || null,
         type: 'dsl-node',
+        parent: source || null,
         position: { x: 0, y: 0 },
         data: {
           direction,
           type: d.type,
-          title: d.title,
-          subTitle: d.subTitle,
-          icon: d.icon || 'fa-solid fa-circle-question',
+          title: d.props?.title || nodeXDef.title,
+          subTitle: d.props?.subTitle || nodeXDef.subTitle,
+          icon: d.props?.icon || nodeXDef.icon,
+          mandatory: nodeXDef.mandatory,
+          onEvent: {},
+          props: d.props || {},
           editor: JSON.stringify({
             type: 'form',
             title: '',
@@ -246,18 +258,26 @@ function ReactFlowEditor({ direction, data, dispatchEvent }) {
       };
 
       initialNodes.push(node);
-      buildNodes(d.children || [], initialNodes, initialEdges, node);
+      buildNodes(
+        d.children || [],
+        initialNodes,
+        initialEdges,
+        node,
+        nodeTypePath
+      );
 
       const target = node.id;
-      node.data.onShowPreference = () => {
-        const node = getNode(target);
-        dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
-          node
+      !isEmpty(node.data.props) &&
+        (node.data.onEvent.onShowPreference = () => {
+          const node = getNode(target);
+          dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
+            node
+          });
         });
-      };
-      // node.data.onRemove = () => {
-      //   alert('Remove');
-      // };
+      !node.data.mandatory &&
+        (node.data.onEvent.onRemove = () => {
+          alert('Remove');
+        });
 
       if (source) {
         initialEdges.push({
@@ -378,4 +398,41 @@ function ReactFlowEditor({ direction, data, dispatchEvent }) {
       <Background variant="dots" gap={12} size={1} />
     </ReactFlow>
   );
+}
+
+function getXDefByTypePath(
+  typePath: string[],
+  xdefs: DslDef[],
+  xdefines: object = {}
+): DslDef | null {
+  if (isEmpty(typePath) || isEmpty(xdefs)) {
+    return null;
+  }
+
+  const [type, ...typePathLeft] = typePath;
+  for (let xdef of xdefs) {
+    const copiedXDef = {
+      ...xdef,
+      ...(xdefines[xdef['x:extends'] || ''] || {})
+    };
+    const children = copiedXDef.children || [];
+    delete copiedXDef.children;
+    delete copiedXDef['x:define'];
+    delete copiedXDef['x:extends'];
+
+    if (copiedXDef.type !== type) {
+      continue;
+    }
+
+    if (isEmpty(typePathLeft)) {
+      return copiedXDef;
+    } else if (isEmpty(children)) {
+      return null;
+    }
+    return getXDefByTypePath(typePathLeft, children, {
+      ...xdefines,
+      ...(xdef['x:define'] || {})
+    });
+  }
+  return null;
 }

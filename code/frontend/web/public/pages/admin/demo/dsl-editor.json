@@ -63,47 +63,46 @@
   },
   "xdef": {
     "type": "app",
+    "title": "应用",
+    "icon": "fa-brands fa-docker",
+    "mandatory": true,
     "props": {
-      "title": "应用",
-      "icon": "fa-solid fa-globe"
+      "title": "string",
+      "subTitle": "text",
+      "code": "code",
+      "url": "url",
+      "logo": "image",
+      "groupId": "code"
     },
     "children": [
       {
         "type": "web",
+        "title": "Web 前端",
+        "icon": "fa-solid fa-computer",
         "mandatory": true,
-        "props": {
-          "title": "Web 前端",
-          "icon": "fa-solid fa-computer"
-        },
+        "props": {},
         "x:define": {
           "site": {
-            "x:unique-attr": "id",
+            "icon": "fa-solid fa-globe",
             "props": {
-              "icon": "fa-solid fa-table-columns"
+              "title": "string",
+              "subTitle": "url"
             },
             "children": [
               {
-                "type": "resources",
-                "group": true,
-                "props": {
-                  "title": "资源集",
-                  "icon": "fa-solid fa-layer-group"
-                },
-                "children": [
-                  {
-                    "x:extends": "site:resource"
-                  }
-                ]
+                "x:extends": "site:resource"
               }
             ]
           },
           "site:resource": {
-            "x:unique-attr": "id",
             "type": "resource",
+            "title": "资源",
+            "icon": "fa-solid fa-file-lines",
             "multiple": true,
             "props": {
-              "title": "资源",
-              "icon": "fa-regular fa-newspaper"
+              "title": "string",
+              "icon": "icon",
+              "url": "v-path"
             },
             "children": [
               {
@@ -116,70 +115,70 @@
           {
             "x:extends": "site",
             "type": "defaultSite",
+            "title": "默认站点",
+            "subTitle": "/*",
             "mandatory": true,
-            "props": {
-              "title": "默认站点",
-              "desc": "在访问未定义站点时，返回该站点页面"
-            }
+            "props": {}
           },
           {
             "x:extends": "site",
             "type": "site",
-            "multiple": true,
-            "props": {
-              "title": "功能站点"
-            }
+            "title": "功能站点",
+            "multiple": true
           }
         ]
       },
       {
         "type": "services",
-        "group": true,
-        "props": {
-          "title": "后端服务集",
-          "icon": "fa-solid fa-layer-group"
-        },
+        "title": "后端服务",
+        "icon": "fa-solid fa-gears",
+        "mandatory": true,
+        "props": {},
         "children": [
           {
-            "x:unique-attr": "id",
             "type": "service",
+            "title": "后端服务",
+            "icon": "fa-solid fa-gear",
             "multiple": true,
             "props": {
-              "title": "后端服务",
-              "icon": "fa-brands fa-docker"
+              "code": "code",
+              "title": "string"
             },
             "children": [
               {
                 "type": "bizLibs",
-                "group": true,
-                "props": {
-                  "title": "业务接口库",
-                  "icon": "fa-solid fa-layer-group"
-                },
+                "title": "业务接口",
+                "icon": "fa-solid fa-right-left",
+                "mandatory": true,
+                "props": {},
                 "children": [
                   {
                     "type": "biz",
+                    "title": "业务接口",
+                    "icon": "fa-solid fa-angles-up",
                     "multiple": true,
                     "props": {
-                      "title": "业务接口",
-                      "icon": "fa-solid fa-code"
+                      "title": "string",
+                      "path": "v-path"
                     }
                   }
                 ]
               },
               {
                 "type": "metaLibs",
-                "group": true,
-                "props": {
-                  "title": "业务模型库"
-                },
+                "title": "业务模型",
+                "icon": "fa-solid fa-cubes",
+                "mandatory": true,
+                "props": {},
                 "children": [
                   {
                     "type": "meta",
+                    "title": "业务模型",
+                    "icon": "fa-solid fa-cube",
                     "multiple": true,
                     "props": {
-                      "title": "业务模型",
-                      "icon": "fa-solid fa-cube"
+                      "title": "string",
+                      "path": "v-path"
                     }
                   }
                 ]

@@ -21,6 +21,8 @@ import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 
 function Node({ data }) {
+  const hasFooter = data.onEvent?.onShowPreference || data.onEvent?.onRemove;
+
   return (
     <>
       <div className="body">
@@ -51,25 +53,29 @@ function Node({ data }) {
           }
         />
       </div>
-      <div className="footer">
-        <div className="toolbar">
-          <div
-            className={'item' + (data.onRemove ? '' : ' disabled')}
-            title="移除"
-            onClick={data.onRemove}
-          >
-            <i className="fa-solid fa-trash-can"></i>
-          </div>
-          <div className="divider"></div>
-          <div
-            className={'item' + (data.onShowPreference ? '' : ' disabled')}
-            title="配置"
-            onClick={data.onShowPreference}
-          >
-            <i className="fa-solid fa-sliders"></i>
+      {hasFooter && (
+        <div className="footer">
+          <div className="toolbar">
+            <div
+              className={'item' + (data.onEvent?.onRemove ? '' : ' disabled')}
+              title="移除"
+              onClick={data.onEvent?.onRemove}
+            >
+              <i className="fa-solid fa-trash-can"></i>
+            </div>
+            <div className="divider"></div>
+            <div
+              className={
+                'item' + (data.onEvent?.onShowPreference ? '' : ' disabled')
+              }
+              title="配置"
+              onClick={data.onEvent?.onShowPreference}
+            >
+              <i className="fa-solid fa-sliders"></i>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

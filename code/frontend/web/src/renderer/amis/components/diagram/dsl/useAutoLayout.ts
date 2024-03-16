@@ -94,7 +94,7 @@ export function useAutoLayout({ direction }) {
     // 节点的占位空间（在水平和垂直布局方向发生切换时，需交换数组元素位置）
     .nodeSize((node) => {
       const w = node.data.width * 1.5;
-      const h = node.data.height * 1.5;
+      const h = node.data.height * 1.8;
       return direction === 'vertical' ? [w, node.data.height * 2] : [h, w];
     })
     .spacing(() => 1);
