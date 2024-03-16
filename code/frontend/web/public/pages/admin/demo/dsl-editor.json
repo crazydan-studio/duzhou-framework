@@ -5,24 +5,24 @@
     "query": "/pages/admin/demo/data/dsl-editor.data.json"
   },
   "layout": {
-    "direction": "vertical"
+    "direction": "horizontal"
   },
   "onEvent": {
-    "node:deselected": {
+    "node:preference:close": {
       "actions": [
         {
           "actionType": "closeDrawer",
-          "componentId": "props-editor"
+          "componentId": "node-preference-editor"
         }
       ]
     },
-    "node:selected": {
+    "node:preference:show": {
       "actions": [
         {
           "actionType": "drawer",
           "drawer": {
             "type": "drawer",
-            "id": "props-editor",
+            "id": "node-preference-editor",
             "title": "${node.data.title}",
             "overlay": false,
             "resizable": true,

@@ -18,6 +18,12 @@
  */
 
 .dsl-editor {
+  $shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  $bgColor: #fff;
+  $hlgColor: #db2777;
+  $dividerColor: #d1d5db;
+  $nodeBorderSize: 2px;
+
   .react-flow__handle {
     opacity: 0;
 
@@ -30,10 +36,93 @@
   }
 
   .react-flow__node {
-    cursor: pointer;
+    transition-property: border;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    cursor: auto;
+
+    min-width: 10rem;
+    padding: 0.5rem 1rem;
+    border: solid $nodeBorderSize $dividerColor;
+    border-radius: 0.375rem;
+    background: $bgColor;
+    box-shadow: $shadow;
 
     &:focus {
       outline: none;
+    }
+
+    &:hover,
+    &.selected {
+      border-color: $hlgColor;
+    }
+    &:hover {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .footer {
+        opacity: 1;
+        pointer-events: all;
+
+        border-color: $hlgColor;
+      }
+    }
+
+    .body {
+      cursor: pointer;
+    }
+
+    .footer {
+      transition: all 0.5s ease-out;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      cursor: auto;
+
+      position: absolute;
+      left: -$nodeBorderSize;
+      right: -$nodeBorderSize;
+      background: $bgColor;
+      padding: 0.5rem 1rem 0rem 1rem;
+
+      border: solid $nodeBorderSize $dividerColor;
+      border-top: none;
+
+      border-radius: 0.375rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+
+      box-shadow: $shadow;
+
+      .toolbar {
+        display: flex;
+        justify-content: center;
+
+        padding: 0.5rem 0rem;
+        border-top: solid 1px $dividerColor;
+
+        .item {
+          transition: all 0.5s ease-out;
+          cursor: pointer;
+
+          flex: 1;
+          padding: 0 0.5rem;
+          text-align: center;
+
+          &:hover {
+            color: #2a8af6;
+          }
+
+          &.disabled {
+            cursor: auto;
+            color: $dividerColor;
+          }
+        }
+        .divider {
+          border: solid 0px $dividerColor;
+          border-left-width: 1px;
+        }
+      }
     }
   }
 
@@ -44,11 +133,11 @@
   }
 
   .react-flow__edge .react-flow__edge-path > .marker-end {
-    fill: #fff;
+    fill: $bgColor;
   }
 
   .react-flow__edge.new-node-edge .react-flow__edge-path > * {
-    stroke: #d1d5db;
+    stroke: $dividerColor;
   }
 
   .react-flow__edge.new-node-edge .react-flow__edge-path > .path {

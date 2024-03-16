@@ -17,6 +17,6 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-export * from './App';
+import './App';
 
-export * from './diagram/DslEditor';
+import './diagram/DslEditor';

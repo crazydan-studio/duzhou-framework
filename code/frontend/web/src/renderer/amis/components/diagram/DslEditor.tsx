@@ -49,8 +49,8 @@ import './dsl/style.scss';
 const TYPE = 'dsl-editor';
 unRegisterRenderer(TYPE);
 
-const EVENT_NODE_SELECTED = 'node:selected';
-const EVENT_NODE_DESELECTED = 'node:deselected';
+const EVENT_NODE_PREFERENCE_SHOW = 'node:preference:show';
+const EVENT_NODE_PREFERENCE_CLOSE = 'node:preference:close';
 
 /** DSL 树的布局方向 */
 export type LayoutDirection = 'horizontal' | 'vertical';
@@ -121,7 +121,8 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   }
 
   componentWillUnmount(): void {
-    const actions = this.props.onEvent?.[EVENT_NODE_DESELECTED]?.actions || [];
+    const actions =
+      this.props.onEvent?.[EVENT_NODE_PREFERENCE_CLOSE]?.actions || [];
 
     this.context.doAction(actions);
   }
@@ -132,73 +133,9 @@ export default class DslEditor extends React.Component<EditorProps, object> {
       layout: { direction }
     } = this.props;
 
-    const buildNodes = (data, initialNodes, initialEdges, parentNode = {}) => {
-      const source = parentNode.id || '';
-
-      data.forEach((d) => {
-        const node = {
-          id: `${source}/${d.id}`,
-          parent: source || null,
-          type: 'dsl-node',
-          position: { x: 0, y: 0 },
-          data: {
-            direction,
-            type: d.type,
-            title: d.title,
-            subTitle: d.subTitle,
-            icon: d.icon || 'fa-solid fa-circle-question',
-            editor: JSON.stringify({
-              type: 'form',
-              title: '',
-              mode: 'horizontal',
-              body: [
-                {
-                  type: 'input-text',
-                  name: 'var1',
-                  label: '输入框',
-                  value: '${node.data.title}'
-                },
-                {
-                  type: 'input-color',
-                  name: 'var2',
-                  label: '颜色选择',
-                  value: '#F0F'
-                },
-                {
-                  type: 'switch',
-                  name: 'switch',
-                  label: '开关',
-                  option: '开关说明',
-                  value: true
-                }
-              ],
-              actions: []
-            })
-          }
-        };
-
-        initialNodes.push(node);
-        buildNodes(d.children || [], initialNodes, initialEdges, node);
-
-        const target = node.id;
-        if (source) {
-          initialEdges.push({
-            id: `${source} -> ${target}`,
-            type: 'dsl-edge',
-            source,
-            target
-          });
-        }
-      });
-    };
-
     if (this.state.data.length === 0) {
       return <ReactFlowProvider></ReactFlowProvider>;
     }
-
-    const initialNodes = [];
-    const initialEdges = [];
-    buildNodes(this.state.data, initialNodes, initialEdges);
 
     return (
       // Note：在存在多实例和单页面应用环境中，需通过 ReactFlowProvider
@@ -207,8 +144,7 @@ export default class DslEditor extends React.Component<EditorProps, object> {
       <ReactFlowProvider>
         <ReactFlowEditor
           direction={direction}
-          initialNodes={initialNodes}
-          initialEdges={initialEdges}
+          data={this.state.data}
           dispatchEvent={dispatchEvent}
         />
       </ReactFlowProvider>
@@ -257,31 +193,95 @@ const defaultEdgeOptions = {
 };
 
 // https://reactflow.dev/learn
-function ReactFlowEditor({
-  direction,
-  initialNodes,
-  initialEdges,
-  dispatchEvent
-}) {
+function ReactFlowEditor({ direction, data, dispatchEvent }) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
 
-  const [nodes, , defaultOnNodesChange] = useNodesState(initialNodes);
-  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
-
   const { getNode, getNodes, setNodes, setEdges, getEdges } = useReactFlow();
+
+  const buildNodes = (data, initialNodes, initialEdges, parentNode = {}) => {
+    const source = parentNode.id || '';
+
+    data.forEach((d) => {
+      const node = {
+        id: `${source}/${d.id}`,
+        parent: source || null,
+        type: 'dsl-node',
+        position: { x: 0, y: 0 },
+        data: {
+          direction,
+          type: d.type,
+          title: d.title,
+          subTitle: d.subTitle,
+          icon: d.icon || 'fa-solid fa-circle-question',
+          editor: JSON.stringify({
+            type: 'form',
+            title: '',
+            mode: 'horizontal',
+            body: [
+              {
+                type: 'input-text',
+                name: 'var1',
+                label: '输入框',
+                value: '${node.data.title}'
+              },
+              {
+                type: 'input-color',
+                name: 'var2',
+                label: '颜色选择',
+                value: '#F0F'
+              },
+              {
+                type: 'switch',
+                name: 'switch',
+                label: '开关',
+                option: '开关说明',
+                value: true
+              }
+            ],
+            actions: []
+          })
+        }
+      };
+
+      initialNodes.push(node);
+      buildNodes(d.children || [], initialNodes, initialEdges, node);
+
+      const target = node.id;
+      node.data.onShowPreference = () => {
+        const node = getNode(target);
+        dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
+          node
+        });
+      };
+      // node.data.onRemove = () => {
+      //   alert('Remove');
+      // };
+
+      if (source) {
+        initialEdges.push({
+          id: `${source} -> ${target}`,
+          type: 'dsl-edge',
+          source,
+          target
+        });
+      }
+    });
+  };
+
+  const initialNodes = [];
+  const initialEdges = [];
+  buildNodes(data, initialNodes, initialEdges);
+
+  const [nodes, , defaultOnNodesChange] = useNodesState(initialNodes);
+  const [edges, ,] = useEdgesState(initialEdges);
 
   const onNodesChange = useCallback((changes) => {
     const targets = {};
     changes.forEach(({ id, type, selected }) => {
       if (type === 'select') {
         targets[id] = selected;
-
-        selected &&
-          dispatchEvent(EVENT_NODE_SELECTED, {
-            node: getNode(id)
-          });
       }
     });
 
@@ -331,20 +331,23 @@ function ReactFlowEditor({
       setEdges(newEdges);
     }
   }, []);
-  const onNodeDoubleClick = useCallback((event, node) => {
-    if (node.type === 'dsl-node') {
-      collapseTree({
-        node,
-        getNode,
-        getNodes,
-        setNodes,
-        getEdges,
-        setEdges
-      });
-    }
-  }, []);
+  const onNodeDoubleClick = useCallback(
+    (event, node) => {
+      if (node.type === 'dsl-node') {
+        collapseTree({
+          node,
+          getNode,
+          getNodes,
+          setNodes,
+          getEdges,
+          setEdges
+        });
+      }
+    },
+    [setNodes]
+  );
   const onPaneClick = useCallback(() => {
-    dispatchEvent(EVENT_NODE_DESELECTED, {});
+    dispatchEvent(EVENT_NODE_PREFERENCE_CLOSE, {});
   }, []);
 
   const layout = useAutoLayout({ direction });
@@ -365,11 +368,10 @@ function ReactFlowEditor({
       className="dsl-editor"
       nodes={nodes}
       edges={edges}
+      onNodesChange={onNodesChange}
       onPaneClick={onPaneClick}
       onNodeClick={onNodeClick}
       onNodeDoubleClick={onNodeDoubleClick}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
     >
       <Controls showInteractive={false} />
       <MiniMap />

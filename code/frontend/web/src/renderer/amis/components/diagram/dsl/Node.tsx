@@ -20,39 +20,57 @@
 import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 
-function Node({ data, selected }) {
+function Node({ data }) {
   return (
-    <div
-      className={
-        'px-4 py-2 shadow-md rounded-md bg-white border-solid border-2' +
-        (selected ? ' border-pink-600' : ' border-gray-300')
-      }
-    >
-      <div className="flex">
-        <div className="rounded-full flex justify-center items-center">
-          {data.icon.includes('/') ? (
-            <img src={data.icon} className="w-12 h-12" />
-          ) : (
-            <i className={data.icon + ' text-3xl'}></i>
-          )}
+    <>
+      <div className="body">
+        <div className="flex">
+          <div className="rounded-full flex justify-center items-center">
+            {data.icon.includes('/') ? (
+              <img src={data.icon} className="w-12 h-12" />
+            ) : (
+              <i className={data.icon + ' text-3xl'}></i>
+            )}
+          </div>
+          <div className="ml-2">
+            <div className="text-lg font-bold">{data.title}</div>
+            <div className="text-gray-500 max-w-xs">{data.subTitle}</div>
+          </div>
         </div>
-        <div className="ml-2">
-          <div className="text-lg font-bold">{data.title}</div>
-          <div className="text-gray-500 max-w-xs">{data.subTitle}</div>
+
+        <Handle
+          type="target"
+          position={
+            data.direction === 'vertical' ? Position.Top : Position.Left
+          }
+        />
+        <Handle
+          type="source"
+          position={
+            data.direction === 'vertical' ? Position.Bottom : Position.Right
+          }
+        />
+      </div>
+      <div className="footer">
+        <div className="toolbar">
+          <div
+            className={'item' + (data.onRemove ? '' : ' disabled')}
+            title="移除"
+            onClick={data.onRemove}
+          >
+            <i className="fa-solid fa-trash-can"></i>
+          </div>
+          <div className="divider"></div>
+          <div
+            className={'item' + (data.onShowPreference ? '' : ' disabled')}
+            title="配置"
+            onClick={data.onShowPreference}
+          >
+            <i className="fa-solid fa-sliders"></i>
+          </div>
         </div>
       </div>
-
-      <Handle
-        type="target"
-        position={data.direction === 'vertical' ? Position.Top : Position.Left}
-      />
-      <Handle
-        type="source"
-        position={
-          data.direction === 'vertical' ? Position.Bottom : Position.Right
-        }
-      />
-    </div>
+    </>
   );
 }
 
