@@ -50,19 +50,39 @@ import './dsl/style.scss';
 const TYPE = 'dsl-editor';
 unRegisterRenderer(TYPE);
 
+const TYPE_NODE_DEFAULT = 'dsl-node';
+const TYPE_NODE_NEW = 'dsl-new-node';
+const TYPE_EDGE_DEFAULT = 'dsl-edge';
+const TYPE_EDGE_NEW_NODE = 'dsl-new-node-edge';
 const EVENT_NODE_PREFERENCE_SHOW = 'node:preference:show';
 const EVENT_NODE_PREFERENCE_CLOSE = 'node:preference:close';
+
+const PROP_X_DEFINE = 'x:define';
+const PROP_X_EXTENDS = 'x:extends';
+
+const nodeTypes = {
+  [TYPE_NODE_DEFAULT]: DslNode,
+  [TYPE_NODE_NEW]: DslNewNode
+};
+const edgeTypes = {
+  [TYPE_EDGE_DEFAULT]: DslEdge,
+  [TYPE_EDGE_NEW_NODE]: DslEdge
+};
+
+const defaultEdgeOptions = {
+  type: TYPE_EDGE_DEFAULT
+};
 
 /** DSL 树的布局方向 */
 export type LayoutDirection = 'horizontal' | 'vertical';
 /** DSL 结构定义 */
 export interface DslDef {
   /** 节点定义，用于定义基础结构，方便在子树内通过 `x:extends` 进行扩展或循环定义 */
-  'x:define'?: {
+  [PROP_X_DEFINE]?: {
     [propName: string]: DslDef;
   };
   /** 派生的目标定义名称 */
-  'x:extends'?: string;
+  [PROP_X_EXTENDS]?: string;
 
   /** 节点类型，对应于 DSL 的标签名称 */
   type: string;
@@ -107,11 +127,13 @@ export interface EditorProps extends RendererProps {
 })
 export default class DslEditor extends React.Component<EditorProps, object> {
   static contextType = ScopedContext;
+  xdefGetter: any;
 
   constructor(props: EditorProps) {
     super(props);
 
     this.state = { data: {} };
+    this.xdefGetter = buildXDefGetter(props.xdef);
   }
 
   componentDidMount() {
@@ -129,9 +151,9 @@ export default class DslEditor extends React.Component<EditorProps, object> {
 
   render(): React.ReactNode {
     const {
+      readonly,
       dispatchEvent,
-      layout: { direction },
-      xdef
+      layout: { direction }
     } = this.props;
 
     if (isEmpty(this.state.data)) {
@@ -144,8 +166,9 @@ export default class DslEditor extends React.Component<EditorProps, object> {
       // https://reactflow.dev/examples/misc/provider
       <ReactFlowProvider>
         <ReactFlowEditor
-          xdef={xdef}
-          data={[this.state.data]}
+          readonly={readonly}
+          xdefGetter={this.xdefGetter}
+          data={this.state.data}
           direction={direction}
           dispatchEvent={dispatchEvent}
         />
@@ -179,120 +202,25 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   }
 }
 
-const nodeTypes = {
-  'dsl-node': DslNode,
-  'dsl-new-node': DslNewNode
-};
-const edgeTypes = {
-  'dsl-edge': DslEdge,
-  'dsl-new-node-edge': DslEdge
-};
-
-const defaultEdgeOptions = {
-  type: 'dsl-edge'
-};
-
 // https://reactflow.dev/learn
-function ReactFlowEditor({ xdef, data, direction, dispatchEvent }) {
+function ReactFlowEditor({
+  readonly,
+  xdefGetter,
+  data,
+  direction,
+  dispatchEvent
+}) {
   // Note：以 use 开头的函数，都是 React 的 Hooks，只能在 函数组件 中使用
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
 
   const { getNode, getNodes, setNodes, setEdges, getEdges } = useReactFlow();
 
-  const buildNodes = (
+  const { nodes: initialNodes, edges: initialEdges } = buildNodes(
     data,
-    initialNodes,
-    initialEdges,
-    parentNode = {},
-    topTypePath: string[] = []
-  ) => {
-    const source = parentNode.id || '';
-
-    data.forEach((d) => {
-      const nodeTypePath = [...topTypePath, d.type];
-      const nodeXDef = getXDefByTypePath(nodeTypePath, [xdef]);
-
-      const node = {
-        id: `${source}/${d.id}`,
-        type: 'dsl-node',
-        parent: source || null,
-        position: { x: 0, y: 0 },
-        data: {
-          direction,
-          type: d.type,
-          title: d.props?.title || nodeXDef.title,
-          subTitle: d.props?.subTitle || nodeXDef.subTitle,
-          icon: d.props?.icon || nodeXDef.icon,
-          mandatory: nodeXDef.mandatory,
-          onEvent: {},
-          props: d.props || {},
-          editor: JSON.stringify({
-            type: 'form',
-            title: '',
-            mode: 'horizontal',
-            body: [
-              {
-                type: 'input-text',
-                name: 'var1',
-                label: '输入框',
-                value: '${node.data.title}'
-              },
-              {
-                type: 'input-color',
-                name: 'var2',
-                label: '颜色选择',
-                value: '#F0F'
-              },
-              {
-                type: 'switch',
-                name: 'switch',
-                label: '开关',
-                option: '开关说明',
-                value: true
-              }
-            ],
-            actions: []
-          })
-        }
-      };
-
-      initialNodes.push(node);
-      buildNodes(
-        d.children || [],
-        initialNodes,
-        initialEdges,
-        node,
-        nodeTypePath
-      );
-
-      const target = node.id;
-      !isEmpty(node.data.props) &&
-        (node.data.onEvent.onShowPreference = () => {
-          const node = getNode(target);
-          dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
-            node
-          });
-        });
-      !node.data.mandatory &&
-        (node.data.onEvent.onRemove = () => {
-          alert('Remove');
-        });
-
-      if (source) {
-        initialEdges.push({
-          id: `${source} -> ${target}`,
-          type: 'dsl-edge',
-          source,
-          target
-        });
-      }
-    });
-  };
-
-  const initialNodes = [];
-  const initialEdges = [];
-  buildNodes(data, initialNodes, initialEdges);
+    xdefGetter,
+    { direction, dispatchEvent, getNode, readonly }
+  );
 
   const [nodes, , defaultOnNodesChange] = useNodesState(initialNodes);
   const [edges, ,] = useEdgesState(initialEdges);
@@ -318,10 +246,10 @@ function ReactFlowEditor({ xdef, data, direction, dispatchEvent }) {
   }, []);
   const onNodeClick = useCallback((event, node) => {
     if (node.type === 'dsl-new-node') {
-      const { parent, create } = node.data;
+      const { create } = node.data;
       const newNode = create();
       newNode.id = uuid();
-      newNode.parent = parent;
+      newNode.parent = node.parent;
       newNode.data.direction = direction;
       newNode.position = { ...node.position };
 
@@ -400,39 +328,228 @@ function ReactFlowEditor({ xdef, data, direction, dispatchEvent }) {
   );
 }
 
-function getXDefByTypePath(
-  typePath: string[],
-  xdefs: DslDef[],
-  xdefines: object = {}
-): DslDef | null {
-  if (isEmpty(typePath) || isEmpty(xdefs)) {
-    return null;
+function buildNodes(
+  nodeData,
+  nodeXDefGetter,
+  opts,
+  nodeParent = {}
+): { nodes: object[]; edges: object[] } {
+  const { direction, getNode, dispatchEvent, readonly } = opts;
+  const nodeXDef = nodeXDefGetter ? nodeXDefGetter() : null;
+
+  let nodes: object[] = [];
+  let edges: object[] = [];
+  // 节点结构不匹配
+  if (
+    !nodeXDef ||
+    !nodeXDef.type ||
+    (nodeData.type && nodeData.type !== nodeXDef.type)
+  ) {
+    return { nodes, edges };
   }
 
-  const [type, ...typePathLeft] = typePath;
-  for (let xdef of xdefs) {
-    const copiedXDef = {
-      ...xdef,
-      ...(xdefines[xdef['x:extends'] || ''] || {})
+  const createNode = (data, xdef, nodeId, nodeParentId): object => {
+    const node = {
+      id: nodeId,
+      type: TYPE_NODE_DEFAULT,
+      parent: nodeParentId || null,
+      position: { x: 0, y: 0 },
+      data: {
+        type: xdef.type,
+        title: data.props?.title || xdef.title,
+        subTitle: data.props?.subTitle || xdef.subTitle,
+        icon: data.props?.icon || xdef.icon,
+        deletable: xdef.mandatory,
+        //
+        direction,
+        onEvent: {},
+        editor: JSON.stringify({
+          type: 'form',
+          title: '',
+          mode: 'horizontal',
+          body: [
+            {
+              type: 'input-text',
+              name: 'var1',
+              label: '输入框',
+              value: '${node.data.title}'
+            },
+            {
+              type: 'input-color',
+              name: 'var2',
+              label: '颜色选择',
+              value: '#F0F'
+            },
+            {
+              type: 'switch',
+              name: 'switch',
+              label: '开关',
+              option: '开关说明',
+              value: true
+            }
+          ],
+          actions: []
+        })
+      }
     };
-    const children = copiedXDef.children || [];
-    delete copiedXDef.children;
-    delete copiedXDef['x:define'];
-    delete copiedXDef['x:extends'];
 
-    if (copiedXDef.type !== type) {
-      continue;
-    }
+    !isEmpty(data.props) &&
+      (node.data.onEvent.onShowPreference = () => {
+        const node = getNode(nodeId);
+        dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
+          node
+        });
+      });
+    !readonly &&
+      !xdef.mandatory &&
+      (node.data.onEvent.onRemove = () => {
+        alert('Remove');
+      });
 
-    if (isEmpty(typePathLeft)) {
-      return copiedXDef;
-    } else if (isEmpty(children)) {
-      return null;
-    }
-    return getXDefByTypePath(typePathLeft, children, {
-      ...xdefines,
-      ...(xdef['x:define'] || {})
+    return node;
+  };
+
+  const nodeParentId = nodeParent.id || '';
+  const nodeId = `${nodeParentId}/${nodeData.id || nodeXDef.type}`;
+  const node = createNode(nodeData, nodeXDef, nodeId, nodeParentId);
+
+  nodes.push(node);
+  nodeParentId &&
+    edges.push({
+      id: `${nodeParentId} -> ${nodeId}`,
+      type: TYPE_EDGE_DEFAULT,
+      source: nodeParentId,
+      target: nodeId
     });
-  }
-  return null;
+
+  const childNodeXDefGetters = nodeXDef.children();
+  const childrenBuildResult: { nodes: object[]; edges: object[] } = {
+    nodes: [],
+    edges: []
+  };
+  (nodeData.children || []).forEach((childNodeData) => {
+    const result = buildNodes(
+      childNodeData,
+      childNodeXDefGetters[childNodeData.type],
+      opts,
+      node
+    );
+
+    !isEmpty(result.nodes) &&
+      (childrenBuildResult.nodes = [
+        ...childrenBuildResult.nodes,
+        ...result.nodes
+      ]);
+    !isEmpty(result.edges) &&
+      (childrenBuildResult.edges = [
+        ...childrenBuildResult.edges,
+        ...result.edges
+      ]);
+  });
+
+  const createNewNode = (xdef, nodeParentId): object => ({
+    id: `${nodeParentId}/new/${xdef.type}`,
+    type: TYPE_NODE_NEW,
+    parent: nodeParentId || null,
+    className: 'new-node',
+    position: { x: 0, y: 0 },
+    data: {
+      type: xdef.type,
+      title: xdef.title,
+      icon: xdef.icon,
+      //
+      direction,
+      create: () => ({ data: {} })
+    }
+  });
+
+  Object.keys(childNodeXDefGetters).forEach((type) => {
+    const childNodeXDefGetter = childNodeXDefGetters[type];
+    const childNodeXDef = childNodeXDefGetter();
+
+    let childNodeIndex = -1;
+    childrenBuildResult.nodes.forEach((childNode, index) => {
+      if (childNode.data.type === type) {
+        childNodeIndex = index;
+      }
+    });
+
+    let childNode: object | null = null;
+    // 添加必要子节点
+    if (childNodeXDef.mandatory && childNodeIndex < 0) {
+      childNode = createNode(
+        {},
+        childNodeXDefGetter,
+        `${nodeId}/${type}`,
+        nodeId
+      );
+    }
+    // 子节点的新增占位
+    else if (!readonly && childNodeXDef.multiple) {
+      childNodeIndex =
+        childNodeIndex < 0
+          ? childrenBuildResult.nodes.length || -1
+          : childNodeIndex;
+
+      childNode = createNewNode(childNodeXDef, nodeId);
+    }
+
+    if (childNode) {
+      childrenBuildResult.nodes.splice(childNodeIndex + 1, 0, childNode);
+
+      childrenBuildResult.edges.push({
+        id: `${childNode.parent} -> ${childNode.id}`,
+        type:
+          childNode.type === TYPE_NODE_NEW
+            ? TYPE_EDGE_NEW_NODE
+            : TYPE_EDGE_DEFAULT,
+        className: childNode.type === TYPE_NODE_NEW ? 'new-node-edge' : '',
+        source: childNode.parent,
+        target: childNode.id
+      });
+    }
+  });
+
+  !isEmpty(childrenBuildResult.nodes) &&
+    (nodes = [...nodes, ...childrenBuildResult.nodes]);
+  !isEmpty(childrenBuildResult.edges) &&
+    (edges = [...edges, ...childrenBuildResult.edges]);
+
+  return { nodes, edges };
+}
+
+function buildXDefGetter(xdef: DslDef) {
+  // 通过对函数参数进行解构，以实现克隆时对无关属性的过滤
+  // https://www.codemzy.com/blog/copying-object-without-property-javascript
+  const build = (xdef: DslDef, topXDefines: object = {}) => {
+    const xdefines = xdef[PROP_X_DEFINE]
+      ? { ...topXDefines, ...xdef[PROP_X_DEFINE] }
+      : topXDefines;
+    const xextends = xdef[PROP_X_EXTENDS] ? xdefines[xdef[PROP_X_EXTENDS]] : {};
+
+    const clonedXDef = {
+      ...xextends,
+      // 内部定义优先于基础定义
+      ...xdef,
+      // 子节点通过函数做延迟加载，以避免出现 x:extends 的无限递归
+      children: () => {
+        const map = {};
+
+        const children = xdef.children || xextends.children || [];
+        children.forEach((child) => {
+          const newChild = build(child, xdefines)();
+          // Note: type 可能定义在 x:extends 中
+          map[newChild.type] = () => newChild;
+        });
+
+        return map;
+      }
+    };
+    delete clonedXDef[PROP_X_DEFINE];
+    delete clonedXDef[PROP_X_EXTENDS];
+
+    return () => clonedXDef;
+  };
+
+  return build(xdef);
 }

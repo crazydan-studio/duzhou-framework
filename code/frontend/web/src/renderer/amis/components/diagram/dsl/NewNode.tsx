@@ -20,11 +20,14 @@
 import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 
-function Node({ data }) {
+function NewNode({ data }) {
   return (
-    <div className="px-12 py-3 rounded-md bg-white border-dashed border-2 border-gray-300">
-      <div className="flex">
+    <div className="body">
+      <div className="flex flex-col items-center">
         <i className="fa-solid fa-plus text-2xl text-center leading-none text-gray-300"></i>
+        <span>
+          新增<span className="font-bold">{data.title}</span>
+        </span>
       </div>
 
       <Handle
@@ -41,4 +44,4 @@ function Node({ data }) {
   );
 }
 
-export default memo(Node);
+export default memo(NewNode);

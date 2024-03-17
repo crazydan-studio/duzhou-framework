@@ -1,5 +1,6 @@
 {
   "type": "dsl-editor",
+  "readonly": false,
   "api": {
     "mutation": "",
     "query": "/pages/admin/demo/data/dsl-editor.data.json"

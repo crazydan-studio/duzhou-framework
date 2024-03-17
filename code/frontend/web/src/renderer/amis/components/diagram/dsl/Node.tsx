@@ -28,7 +28,7 @@ function Node({ data }) {
       <div className="body">
         <div className="flex">
           <div className="rounded-full flex justify-center items-center">
-            {data.icon.includes('/') ? (
+            {data.icon?.includes('/') ? (
               <img src={data.icon} className="w-12 h-12" />
             ) : (
               <i className={data.icon + ' text-3xl'}></i>
