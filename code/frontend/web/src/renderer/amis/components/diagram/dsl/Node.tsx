@@ -21,12 +21,13 @@ import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 
 function Node({ data }) {
+  // Note：只有放在 data 中的数据才能够自由变更
   const hasFooter = data.onEvent?.onShowPreference || data.onEvent?.onRemove;
 
   return (
     <>
-      <div className="body">
-        <div className="flex">
+      <div className="body flex flex-row justify-between">
+        <div className="left flex">
           <div className="rounded-full flex justify-center items-center">
             {data.icon?.includes('/') ? (
               <img src={data.icon} className="w-12 h-12" />
@@ -39,25 +40,39 @@ function Node({ data }) {
             <div className="text-gray-500 max-w-xs">{data.subTitle}</div>
           </div>
         </div>
-
-        <Handle
-          type="target"
-          position={
-            data.direction === 'vertical' ? Position.Top : Position.Left
-          }
-        />
-        <Handle
-          type="source"
-          position={
-            data.direction === 'vertical' ? Position.Bottom : Position.Right
-          }
-        />
+        {data.onEvent?.onCollapse && (
+          <div className="right flex items-center ml-4">
+            <div className="btn">
+              <i
+                className={
+                  data.collapsed
+                    ? 'fa-solid fa-circle-chevron-right'
+                    : 'fa-solid fa-circle-chevron-left'
+                }
+                title={data.collapsed ? '展开子节点' : '收起子节点'}
+                onClick={data.onEvent?.onCollapse}
+              ></i>
+            </div>
+          </div>
+        )}
       </div>
+      <Handle
+        type="target"
+        position={data.direction === 'vertical' ? Position.Top : Position.Left}
+      />
+      <Handle
+        type="source"
+        position={
+          data.direction === 'vertical' ? Position.Bottom : Position.Right
+        }
+      />
       {hasFooter && (
         <div className="footer">
           <div className="toolbar">
             <div
-              className={'item' + (data.onEvent?.onRemove ? '' : ' disabled')}
+              className={
+                'item btn' + (data.onEvent?.onRemove ? '' : ' disabled')
+              }
               title="移除"
               onClick={data.onEvent?.onRemove}
             >
@@ -66,7 +81,7 @@ function Node({ data }) {
             <div className="divider"></div>
             <div
               className={
-                'item' + (data.onEvent?.onShowPreference ? '' : ' disabled')
+                'item btn' + (data.onEvent?.onShowPreference ? '' : ' disabled')
               }
               title="配置"
               onClick={data.onEvent?.onShowPreference}

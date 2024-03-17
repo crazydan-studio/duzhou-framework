@@ -87,7 +87,7 @@ export function collapseTree({
   );
 }
 
-export function useAutoLayout({ direction }) {
+export function useAutoLayout({ direction, setNodes, setEdges }) {
   //https://codesandbox.io/p/sandbox/reactflow-demo-8h7hsx?file=%2Fsrc%2Fhooks%2FuseAutoLayout.js%3A97%2C36
 
   const layout = flextree()
@@ -128,6 +128,8 @@ export function useAutoLayout({ direction }) {
           id: node.id,
           node: {
             ...node,
+            // Note：只有放在 data 中的变更数据才会传递到 Node 的构造函数中
+            data: { ...node.data, collapsed: node._collapsed },
             // 若不在展开树中，则保持隐藏状态，否则，始终不隐藏
             hidden: node.hidden && !isCollapseNode
           },
@@ -145,7 +147,9 @@ export function useAutoLayout({ direction }) {
     );
   }
 
-  function Layout(options) {
+  const { getNode, getNodes, getEdges, fitView } = useReactFlow();
+
+  function Layout({ duration }) {
     const initial = useRef(false);
 
     const nodesInitialized = useNodesInitialized();
@@ -161,16 +165,10 @@ export function useAutoLayout({ direction }) {
       return count;
     });
 
-    const { getNodes, getNode, setNodes, getEdges, setEdges, fitView } =
-      useReactFlow();
-
     useEffect(() => {
       if (nodeCount < 1 || !nodesInitialized) {
         return () => {};
       }
-
-      const nodes = getNodes();
-      const edges = getEdges();
 
       // 检查节点是否在展开树中
       const isInCollapseTree = (node, rootId, level = 0) =>
@@ -179,6 +177,8 @@ export function useAutoLayout({ direction }) {
             isInCollapseTree(getNode(node.parent), rootId, level + 1)
           : false;
 
+      const edges = getEdges();
+      const nodes = getNodes();
       const transitions = layoutNodes(nodes, isInCollapseTree);
       // 为待移动节点设置初始位置
       setNodes(
@@ -189,8 +189,8 @@ export function useAutoLayout({ direction }) {
       );
 
       const t = timer((elapsed) => {
-        if (elapsed < options.duration) {
-          const s = elapsed / options.duration;
+        if (elapsed < duration) {
+          const s = elapsed / duration;
 
           setNodes(
             transitions.map(({ node, from, to }) => ({

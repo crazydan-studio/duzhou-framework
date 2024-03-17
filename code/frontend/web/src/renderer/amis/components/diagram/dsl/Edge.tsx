@@ -41,7 +41,7 @@ export default function Edge({
   return (
     <g className="react-flow__edge-path">
       <path id={id} className="path" style={style} d={edgePath} />
-      // Note：避免使用 svg 的 marker，以确保线和 marker 可设置为相同颜色
+      {/* Note：避免使用 svg 的 marker，以确保线和 marker 可设置为相同颜色 */}
       <circle className="marker-end" cx={targetX} cy={targetY} r={4} />
     </g>
   );
