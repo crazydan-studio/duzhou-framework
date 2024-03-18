@@ -22,35 +22,36 @@ import { Handle, Position } from 'reactflow';
 
 function Node({ data }) {
   // Note：只有放在 data 中的数据才能够自由变更
-  const hasFooter = data.onEvent?.onShowPreference || data.onEvent?.onRemove;
+  const { props, onEvent, collapsed, direction } = data;
+  const hasFooter = onEvent.onShowEditor || onEvent.onRemove;
 
   return (
     <>
       <div className="body flex flex-row justify-between">
         <div className="left flex">
           <div className="rounded-full flex justify-center items-center">
-            {data.icon?.includes('/') ? (
-              <img src={data.icon} className="w-12 h-12" />
+            {props.icon?.includes('/') ? (
+              <img src={props.icon} className="w-12 h-12" />
             ) : (
-              <i className={data.icon + ' text-3xl'}></i>
+              <i className={props.icon + ' text-3xl'}></i>
             )}
           </div>
           <div className="ml-2">
-            <div className="text-lg font-bold">{data.title}</div>
-            <div className="text-gray-500 max-w-xs">{data.subTitle}</div>
+            <div className="text-lg font-bold">{props.title}</div>
+            <div className="text-gray-500 max-w-xs">{props.subTitle}</div>
           </div>
         </div>
-        {data.onEvent?.onCollapse && (
+        {onEvent.onCollapse && (
           <div className="right flex items-center ml-4">
             <div className="btn">
               <i
                 className={
-                  data.collapsed
+                  collapsed
                     ? 'fa-solid fa-circle-chevron-right'
                     : 'fa-solid fa-circle-chevron-left'
                 }
-                title={data.collapsed ? '展开子节点' : '收起子节点'}
-                onClick={data.onEvent?.onCollapse}
+                title={collapsed ? '展开子节点' : '收起子节点'}
+                onClick={onEvent.onCollapse}
               ></i>
             </div>
           </div>
@@ -58,33 +59,27 @@ function Node({ data }) {
       </div>
       <Handle
         type="target"
-        position={data.direction === 'vertical' ? Position.Top : Position.Left}
+        position={direction === 'vertical' ? Position.Top : Position.Left}
       />
       <Handle
         type="source"
-        position={
-          data.direction === 'vertical' ? Position.Bottom : Position.Right
-        }
+        position={direction === 'vertical' ? Position.Bottom : Position.Right}
       />
       {hasFooter && (
         <div className="footer">
           <div className="toolbar">
             <div
-              className={
-                'item btn' + (data.onEvent?.onRemove ? '' : ' disabled')
-              }
+              className={'item btn' + (onEvent.onRemove ? '' : ' disabled')}
               title="移除"
-              onClick={data.onEvent?.onRemove}
+              onClick={onEvent.onRemove}
             >
               <i className="fa-solid fa-trash-can"></i>
             </div>
             <div className="divider"></div>
             <div
-              className={
-                'item btn' + (data.onEvent?.onShowPreference ? '' : ' disabled')
-              }
+              className={'item btn' + (onEvent.onShowEditor ? '' : ' disabled')}
               title="配置"
-              onClick={data.onEvent?.onShowPreference}
+              onClick={onEvent.onShowEditor}
             >
               <i className="fa-solid fa-sliders"></i>
             </div>

@@ -9,54 +9,51 @@
     "direction": "horizontal"
   },
   "onEvent": {
-    "node:preference:close": {
+    "node:editor:close": {
       "actions": [
         {
           "actionType": "closeDrawer",
-          "componentId": "node-preference-editor"
+          "componentId": "node-editor"
         }
       ]
     },
-    "node:preference:show": {
+    "node:editor:show": {
       "actions": [
         {
           "actionType": "drawer",
           "drawer": {
             "type": "drawer",
-            "id": "node-preference-editor",
-            "title": "${node.data.title}",
+            "id": "node-editor",
+            "title": "${node.props.title}",
             "overlay": false,
             "resizable": true,
             "closeOnEsc": true,
             "position": "bottom",
             "body": [
               {
-                "type": "amis",
-                "name": "node.data.editor"
+                "type": "form",
+                "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/saveForm",
+                "body": [
+                  {
+                    "type": "amis",
+                    "name": "node.editor"
+                  }
+                ]
               }
             ],
-            "onEvent": {
-              "confirm": {
-                "actions": [
-                  {
-                    "actionType": "toast",
-                    "args": {
-                      "msg": "confirm"
-                    }
-                  }
-                ]
+            "actions": [
+              {
+                "type": "button",
+                "label": "确定",
+                "primary": true,
+                "actionType": "submit"
               },
-              "cancel": {
-                "actions": [
-                  {
-                    "actionType": "toast",
-                    "args": {
-                      "msg": "cancel"
-                    }
-                  }
-                ]
+              {
+                "type": "button",
+                "label": "关闭",
+                "actionType": "close"
               }
-            }
+            ]
           }
         }
       ]
@@ -64,31 +61,87 @@
   },
   "xdef": {
     "type": "app",
-    "title": "应用",
-    "icon": "fa-brands fa-docker",
     "mandatory": true,
     "props": {
-      "title": "string",
-      "subTitle": "text",
-      "code": "code",
-      "url": "url",
-      "logo": "image",
-      "groupId": "code"
+      "title": "应用",
+      "icon": "fa-brands fa-docker"
+    },
+    "editor": {
+      "type": "group",
+      "direction": "vertical",
+      "body": [
+        {
+          "type": "input-image",
+          "name": "logo",
+          "label": "图标",
+          "value": "${node.props.logo}",
+          "accept": ".jpeg,.jpg,.png,.gif,.svg",
+          "uploadBtnText": "点击上传应用图标",
+          "receiver": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/upload/file"
+        },
+        {
+          "type": "group",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "title",
+              "label": "名称",
+              "value": "${node.props.title}",
+              "required": true
+            },
+            {
+              "type": "input-text",
+              "name": "url",
+              "label": "访问地址",
+              "value": "${node.props.url}"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "code",
+              "label": "编码",
+              "value": "${node.props.code}",
+              "required": true,
+              "disabled": true
+            },
+            {
+              "type": "input-text",
+              "name": "groupId",
+              "label": "所属组织标识",
+              "value": "${node.props.groupId}",
+              "required": true,
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "name": "subTitle",
+          "label": "描述",
+          "value": "${node.props.subTitle}",
+          "showCounter": true,
+          "clearable": true
+        }
+      ]
     },
     "children": [
       {
         "type": "web",
-        "title": "Web 前端",
-        "icon": "fa-solid fa-computer",
         "mandatory": true,
-        "props": {},
+        "props": {
+          "title": "Web 前端",
+          "icon": "fa-solid fa-computer"
+        },
         "x:define": {
           "site": {
-            "icon": "fa-solid fa-globe",
             "props": {
-              "title": "string",
-              "subTitle": "url"
+              "icon": "fa-solid fa-globe"
             },
+            "editor": {},
             "children": [
               {
                 "x:extends": "site:resource"
@@ -97,14 +150,12 @@
           },
           "site:resource": {
             "type": "resource",
-            "title": "资源",
-            "icon": "fa-solid fa-file-lines",
             "multiple": true,
             "props": {
-              "title": "string",
-              "icon": "icon",
-              "url": "v-path"
+              "title": "资源",
+              "icon": "fa-solid fa-file-lines"
             },
+            "editor": {},
             "children": [
               {
                 "x:extends": "site:resource"
@@ -116,71 +167,75 @@
           {
             "x:extends": "site",
             "type": "defaultSite",
-            "title": "默认站点",
-            "subTitle": "/*",
             "mandatory": true,
-            "props": {}
+            "props": {
+              "title": "默认站点",
+              "subTitle": "/*"
+            },
+            "editor": null
           },
           {
             "x:extends": "site",
             "type": "site",
-            "title": "功能站点",
-            "multiple": true
+            "multiple": true,
+            "props": {
+              "title": "功能站点"
+            }
           }
         ]
       },
       {
         "type": "services",
-        "title": "后端服务",
-        "icon": "fa-solid fa-gears",
         "mandatory": true,
-        "props": {},
+        "props": {
+          "title": "后端服务",
+          "icon": "fa-solid fa-gears"
+        },
         "children": [
           {
             "type": "service",
-            "title": "后端服务",
-            "icon": "fa-solid fa-gear",
             "multiple": true,
             "props": {
-              "code": "code",
-              "title": "string"
+              "title": "后端服务",
+              "icon": "fa-solid fa-gear"
             },
+            "editor": {},
             "children": [
               {
                 "type": "bizLibs",
-                "title": "业务接口",
-                "icon": "fa-solid fa-right-left",
                 "mandatory": true,
-                "props": {},
+                "props": {
+                  "title": "业务接口",
+                  "icon": "fa-solid fa-right-left"
+                },
                 "children": [
                   {
                     "type": "biz",
-                    "title": "业务接口",
-                    "icon": "fa-solid fa-angles-up",
                     "multiple": true,
                     "props": {
-                      "title": "string",
-                      "path": "v-path"
-                    }
+                      "title": "业务接口",
+                      "icon": "fa-solid fa-angles-up"
+                    },
+                    "editor": {}
                   }
                 ]
               },
               {
                 "type": "metaLibs",
-                "title": "业务模型",
-                "icon": "fa-solid fa-cubes",
                 "mandatory": true,
-                "props": {},
+                "props": {
+                  "title": "业务模型",
+                  "icon": "fa-solid fa-cubes"
+                },
                 "children": [
                   {
                     "type": "meta",
-                    "title": "业务模型",
-                    "icon": "fa-solid fa-cube",
                     "multiple": true,
                     "props": {
-                      "title": "string",
-                      "path": "v-path"
-                    }
+                      "title": "业务模型",
+                      "icon": "fa-solid fa-cube"
+                    },
+                    "editor": {}
                   }
                 ]
               }

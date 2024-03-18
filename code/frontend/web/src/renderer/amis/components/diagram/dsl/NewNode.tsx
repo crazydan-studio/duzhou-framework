@@ -21,24 +21,24 @@ import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 
 function NewNode({ data }) {
+  const { props, direction } = data;
+
   return (
     <div className="body">
       <div className="flex flex-col items-center">
         <i className="fa-solid fa-plus text-2xl text-center leading-none text-gray-300"></i>
         <span>
-          新增<span className="font-bold">{data.title}</span>
+          新增<span className="font-bold">{props.title}</span>
         </span>
       </div>
 
       <Handle
         type="target"
-        position={data.direction === 'vertical' ? Position.Top : Position.Left}
+        position={direction === 'vertical' ? Position.Top : Position.Left}
       />
       <Handle
         type="source"
-        position={
-          data.direction === 'vertical' ? Position.Bottom : Position.Right
-        }
+        position={direction === 'vertical' ? Position.Bottom : Position.Right}
       />
     </div>
   );

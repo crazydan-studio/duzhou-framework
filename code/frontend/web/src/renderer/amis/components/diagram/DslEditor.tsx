@@ -22,7 +22,6 @@ import {
   RendererProps,
   Renderer,
   unRegisterRenderer,
-  autobind,
   replaceText,
   ScopedContext
 } from 'amis-core';
@@ -54,8 +53,8 @@ const TYPE_NODE_DEFAULT = 'dsl-node';
 const TYPE_NODE_NEW = 'dsl-new-node';
 const TYPE_EDGE_DEFAULT = 'dsl-edge';
 const TYPE_EDGE_NEW_NODE = 'dsl-new-node-edge';
-const EVENT_NODE_PREFERENCE_SHOW = 'node:preference:show';
-const EVENT_NODE_PREFERENCE_CLOSE = 'node:preference:close';
+const EVENT_NODE_EDITOR_SHOW = 'node:editor:show';
+const EVENT_NODE_EDITOR_CLOSE = 'node:editor:close';
 
 const PROP_X_DEFINE = 'x:define';
 const PROP_X_EXTENDS = 'x:extends';
@@ -86,20 +85,25 @@ export interface DslDef {
 
   /** 节点类型，对应于 DSL 的标签名称 */
   type: string;
-  /** 节点标题 */
-  title: string;
-  /** 节点副标题 */
-  subTitle?: string;
-  /** 节点图标 */
-  icon: string;
   /** 节点是否必要。必要节点将会自动创建，且不可删除，仅需要调整配置或增减子节点 */
   mandatory?: boolean;
   /** 节点是否可重复。针对列表节点，可不断增加兄弟节点 */
   multiple?: boolean;
-  /** 节点配置属性，结构为 `属性名称: '属性类型名称'`，其中，属性类型对应于其编辑器 */
+  /** 节点配置属性，结构为 `属性名称: '属性默认值'` */
   props: {
-    [propName: string]: string;
+    /** 节点标题 */
+    title: string;
+    /** 节点副标题 */
+    subTitle: string;
+    /** 节点图标 */
+    icon: string;
+    [propName: string]: any;
   };
+  /**
+   * 节点编辑器，其为 AMIS Form 表单的 body 部分，
+   * 可以通过 group 类型对表单项分组布局
+   */
+  editor?: object;
   /** 子节点的 DSL 结构 */
   children?: DslDef[];
 }
@@ -145,7 +149,7 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   componentWillUnmount(): void {
     // 通过 AMIS ScopedContext 执行绑定的 配置窗口关闭 事件的动作
     const actions =
-      this.props.onEvent?.[EVENT_NODE_PREFERENCE_CLOSE]?.actions || [];
+      this.props.onEvent?.[EVENT_NODE_EDITOR_CLOSE]?.actions || [];
 
     this.context.doAction(actions);
   }
@@ -279,7 +283,7 @@ function ReactFlowEditor({
     }
   }, []);
   const onPaneClick = useCallback(() => {
-    dispatchEvent(EVENT_NODE_PREFERENCE_CLOSE, {});
+    dispatchEvent(EVENT_NODE_EDITOR_CLOSE, {});
   }, []);
 
   const layout = useAutoLayout({ direction, setNodes, setEdges });
@@ -337,52 +341,32 @@ function buildNodes(
       type: TYPE_NODE_DEFAULT,
       parent: nodeParentId || null,
       position: { x: 0, y: 0 },
-      deletable: !!!xdef.mandatory,
       data: {
         type: xdef.type,
-        title: data.props?.title || xdef.title,
-        subTitle: data.props?.subTitle || xdef.subTitle,
-        icon: data.props?.icon || xdef.icon,
-        //
+        editor: isEmpty(xdef.editor) ? '' : JSON.stringify(xdef.editor),
         direction,
         onEvent: {},
-        editor: JSON.stringify({
-          type: 'form',
-          title: '',
-          mode: 'horizontal',
-          body: [
-            {
-              type: 'input-text',
-              name: 'var1',
-              label: '输入框',
-              value: '${node.data.title}'
-            },
-            {
-              type: 'input-color',
-              name: 'var2',
-              label: '颜色选择',
-              value: '#F0F'
-            },
-            {
-              type: 'switch',
-              name: 'switch',
-              label: '开关',
-              option: '开关说明',
-              value: true
-            }
-          ],
-          actions: []
-        })
+        //
+        props: {
+          ...(xdef.props || {}),
+          ...(data.props || {})
+        }
       }
     };
 
-    !isEmpty(xdef.children()) &&
+    // 只读状态下，仅数据含子节点时，才支持展开/收起
+    ((!readonly && !isEmpty(xdef.children())) ||
+      (readonly && !isEmpty(data.children))) &&
       (node.data.onEvent.onCollapse = () => onCollapse(getNode(nodeId)));
-    !isEmpty(data.props) &&
-      (node.data.onEvent.onShowPreference = () => {
+
+    !isEmpty(xdef.editor) &&
+      (node.data.onEvent.onShowEditor = () => {
         const node = getNode(nodeId);
-        dispatchEvent(EVENT_NODE_PREFERENCE_SHOW, {
-          node
+        dispatchEvent(EVENT_NODE_EDITOR_SHOW, {
+          node: {
+            editor: node.data.editor,
+            props: { ...node.data.props }
+          }
         });
       });
     !readonly &&
@@ -440,12 +424,11 @@ function buildNodes(
     position: { x: 0, y: 0 },
     data: {
       type: xdef.type,
-      title: xdef.title,
-      icon: xdef.icon,
-      //
       direction,
       create: () =>
-        buildNodes({ id: uuid() }, () => xdef, opts, { id: nodeParentId })
+        buildNodes({ id: uuid() }, () => xdef, opts, { id: nodeParentId }),
+      //
+      props: { ...xdef.props } || {}
     }
   });
 
@@ -524,6 +507,10 @@ function buildXDefGetter(xdef: DslDef) {
       ...xextends,
       // 内部定义优先于基础定义
       ...xdef,
+      props: {
+        ...(xextends.props || {}),
+        ...(xdef.props || {})
+      },
       // 子节点通过函数做延迟加载，以避免出现 x:extends 的无限递归
       children: () => {
         const map = {};
