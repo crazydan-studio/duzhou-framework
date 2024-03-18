@@ -23,7 +23,7 @@ import { Handle, Position } from 'reactflow';
 function Node({ data }) {
   // Note：只有放在 data 中的数据才能够自由变更
   const { props, onEvent, collapsed, direction } = data;
-  const hasFooter = onEvent.onShowEditor || onEvent.onRemove;
+  const hasFooter = onEvent.onShowEditor || onEvent.onDelete;
 
   return (
     <>
@@ -69,9 +69,9 @@ function Node({ data }) {
         <div className="footer">
           <div className="toolbar">
             <div
-              className={'item btn' + (onEvent.onRemove ? '' : ' disabled')}
+              className={'item btn' + (onEvent.onDelete ? '' : ' disabled')}
               title="移除"
-              onClick={onEvent.onRemove}
+              onClick={onEvent.onDelete}
             >
               <i className="fa-solid fa-trash-can"></i>
             </div>

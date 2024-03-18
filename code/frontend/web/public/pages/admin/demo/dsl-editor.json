@@ -4,7 +4,7 @@
   "readonly": false,
   "api": {
     "mutation": "",
-    "query": "/pages/admin/demo/data/dsl-editor.data.empty.json"
+    "query": "/pages/admin/demo/data/dsl-editor.data.json"
   },
   "layout": {
     "direction": "horizontal"
@@ -43,11 +43,6 @@
                 "type": "form",
                 "body": [
                   {
-                    "type": "hidden",
-                    "name": "id",
-                    "value": "${node.id}"
-                  },
-                  {
                     "type": "amis",
                     "name": "node.editor"
                   }
@@ -59,7 +54,10 @@
                         "actionType": "setValue",
                         "componentId": "dsl-editor",
                         "args": {
-                          "value": "${event.data}"
+                          "value": {
+                            "props": "${event.data}",
+                            "updater": "${node.updater}"
+                          }
                         }
                       },
                       {
@@ -136,14 +134,14 @@
           "body": [
             {
               "type": "input-text",
-              "name": "props.title",
+              "name": "title",
               "label": "名称",
               "value": "${node.props.title}",
               "required": true
             },
             {
               "type": "input-text",
-              "name": "props.url",
+              "name": "url",
               "label": "访问地址",
               "value": "${node.props.url}"
             }
@@ -154,7 +152,7 @@
           "body": [
             {
               "type": "input-text",
-              "name": "props.code",
+              "name": "code",
               "label": "编码",
               "value": "${node.props.code}",
               "required": true,
@@ -162,7 +160,7 @@
             },
             {
               "type": "input-text",
-              "name": "props.groupId",
+              "name": "groupId",
               "label": "所属组织标识",
               "value": "${node.props.groupId}",
               "required": true,
@@ -172,7 +170,7 @@
         },
         {
           "type": "textarea",
-          "name": "props.subTitle",
+          "name": "subTitle",
           "label": "描述",
           "value": "${node.props.subTitle}",
           "showCounter": true,
@@ -198,14 +196,14 @@
               "body": [
                 {
                   "type": "input-text",
-                  "name": "props.title",
+                  "name": "title",
                   "label": "名称",
                   "value": "${node.props.title}",
                   "required": true
                 },
                 {
                   "type": "input-text",
-                  "name": "props.subTitle",
+                  "name": "subTitle",
                   "label": "URL 相对路径",
                   "value": "${node.props.subTitle}",
                   "required": true
@@ -230,14 +228,14 @@
               "body": [
                 {
                   "type": "input-text",
-                  "name": "props.title",
+                  "name": "title",
                   "label": "名称",
                   "value": "${node.props.title}",
                   "required": true
                 },
                 {
                   "type": "input-text",
-                  "name": "props.url",
+                  "name": "url",
                   "label": "页面",
                   "value": "${node.props.url}",
                   "required": true
@@ -292,14 +290,14 @@
               "body": [
                 {
                   "type": "input-text",
-                  "name": "props.title",
+                  "name": "title",
                   "label": "名称",
                   "value": "${node.props.title}",
                   "required": true
                 },
                 {
                   "type": "input-text",
-                  "name": "props.code",
+                  "name": "code",
                   "label": "编码",
                   "value": "${node.props.code}",
                   "required": true
@@ -327,14 +325,14 @@
                       "body": [
                         {
                           "type": "input-text",
-                          "name": "props.title",
+                          "name": "title",
                           "label": "名称",
                           "value": "${node.props.title}",
                           "required": true
                         },
                         {
                           "type": "input-text",
-                          "name": "props.path",
+                          "name": "path",
                           "label": "定义",
                           "value": "${node.props.path}",
                           "required": true
@@ -364,14 +362,14 @@
                       "body": [
                         {
                           "type": "input-text",
-                          "name": "props.title",
+                          "name": "title",
                           "label": "名称",
                           "value": "${node.props.title}",
                           "required": true
                         },
                         {
                           "type": "input-text",
-                          "name": "props.path",
+                          "name": "path",
                           "label": "定义",
                           "value": "${node.props.path}",
                           "required": true

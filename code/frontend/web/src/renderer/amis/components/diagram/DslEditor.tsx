@@ -24,8 +24,6 @@ import {
   unRegisterRenderer,
   replaceText,
   ScopedContext,
-  ListenerAction,
-  ActionObject,
   IScopedContext
 } from 'amis-core';
 import ReactFlow, {
@@ -159,8 +157,9 @@ export default class DslEditor extends React.Component<EditorProps> {
     scoped.unRegisterComponent(this);
   }
 
-  setData(value: { id: string; props: object }) {
-    const { id, props } = value;
+  setData(value: { props: object; updater: (props: object) => void }) {
+    const { props, updater } = value;
+    updater(props);
   }
 
   getData() {
@@ -241,24 +240,42 @@ function ReactFlowEditor({
   // https://react.dev/warnings/invalid-hook-call-warning
   // https://react.dev/reference/react/useCallback
 
-  const { getNode, getNodes, getEdges } = useReactFlow();
+  const { getNode } = useReactFlow();
 
   const { nodes: initialNodes, edges: initialEdges } = buildNodes(
     data,
     xdefGetter,
     {
       direction,
-      dispatchEvent,
-      getNode,
       readonly,
-      onCollapse: (node) => {
+      // Note: setNodes/setEdges 为后序逻辑提供，
+      // 故而，需采用函数以做延迟调用
+      onNodeDelete: (nodeId: string) => {
+        onNodeDelete(nodeId);
+      },
+      onNodeCollapse: (nodeId: string) => {
         collapseTree({
-          node,
+          nodeId,
           getNode,
-          getNodes,
           setNodes,
-          getEdges,
           setEdges
+        });
+      },
+      onNodeShowEditor: (nodeId: string) => {
+        const node = getNode(nodeId);
+        if (!node) {
+          return;
+        }
+
+        dispatchEvent(EVENT_NODE_EDITOR_SHOW, {
+          node: {
+            editor: node.data.editor,
+            props: { ...node.data.props },
+            // Note：无法从 AMIS 组件对节点进行更新，
+            // 故而，将更新函数传递到外部组件，并在更新节点配置时回传给组件，
+            // 再调用该函数进行更新即可
+            updater: (props: object) => onNodeUpdate(nodeId, props)
+          }
         });
       }
     }
@@ -287,21 +304,62 @@ function ReactFlowEditor({
 
     defaultOnNodesChange(changes);
   }, []);
+  const onNodeUpdate = useCallback((nodeId: string, props: object) => {
+    const node = getNode(nodeId);
+    if (!node || isEmpty(props)) {
+      return;
+    }
+
+    node.data.props = { ...node.data.props, ...props };
+
+    setNodes((nodes) => nodes.map((n) => (n.id === nodeId ? node : n)));
+  }, []);
+  const onNodeDelete = useCallback((nodeId: string) => {
+    const deleted = { [nodeId]: true };
+    const collect = (source, links) => {
+      const targets = links[source];
+      if (!deleted[source] || !targets) {
+        return;
+      }
+
+      delete links[source];
+      Object.assign(deleted, targets);
+
+      Object.keys(targets).forEach((target) => {
+        collect(target, links);
+      });
+    };
+
+    setEdges((edges) => {
+      const links = {};
+      edges.forEach((edge) => {
+        let link = links[edge.source];
+        !link && (links[edge.source] = link = {});
+
+        link[edge.target] = true;
+      });
+
+      collect(nodeId, links);
+
+      return edges.filter((edge) => !deleted[edge.target]);
+    });
+
+    setNodes((nodes) => nodes.filter((node) => !deleted[node.id]));
+  }, []);
   const onNodeClick = useCallback((event, node) => {
     if (node.type === 'dsl-new-node') {
       const { nodes: newNodes, edges: newEdges } = node.data.create();
 
-      const nodes = getNodes();
-      const edges = getEdges();
+      setNodes((nodes) => {
+        nodes.splice(
+          nodes.findIndex((n) => n.id === node.id),
+          0,
+          ...newNodes.map((n) => ({ ...n, position: { ...node.position } }))
+        );
 
-      nodes.splice(
-        nodes.findIndex((n) => n.id === node.id),
-        0,
-        ...newNodes.map((n) => ({ ...n, position: { ...node.position } }))
-      );
-
-      setNodes(nodes);
-      setEdges(edges.concat(newEdges));
+        return nodes;
+      });
+      setEdges((edges) => edges.concat(newEdges));
     }
   }, []);
   const onPaneClick = useCallback(() => {
@@ -343,7 +401,13 @@ function buildNodes(
   opts,
   nodeParent = {}
 ): { nodes: object[]; edges: object[] } {
-  const { direction, getNode, dispatchEvent, readonly, onCollapse } = opts;
+  const {
+    direction,
+    readonly,
+    onNodeDelete,
+    onNodeCollapse,
+    onNodeShowEditor
+  } = opts;
   const nodeXDef = nodeXDefGetter ? nodeXDefGetter() : null;
 
   let nodes: object[] = [];
@@ -379,24 +443,13 @@ function buildNodes(
     // 只读状态下，仅数据含子节点时，才支持展开/收起
     ((!readonly && !isEmpty(xdef.children())) ||
       (readonly && !isEmpty(data.children))) &&
-      (node.data.onEvent.onCollapse = () => onCollapse(getNode(nodeId)));
+      (node.data.onEvent.onCollapse = () => onNodeCollapse(nodeId));
 
     !isEmpty(xdef.editor) &&
-      (node.data.onEvent.onShowEditor = () => {
-        const node = getNode(nodeId);
-        dispatchEvent(EVENT_NODE_EDITOR_SHOW, {
-          node: {
-            id: node.id,
-            editor: node.data.editor,
-            props: { ...node.data.props }
-          }
-        });
-      });
+      (node.data.onEvent.onShowEditor = () => onNodeShowEditor(nodeId));
     !readonly &&
       !xdef.mandatory &&
-      (node.data.onEvent.onRemove = () => {
-        alert('Remove');
-      });
+      (node.data.onEvent.onDelete = () => onNodeDelete(nodeId));
 
     return node;
   };
@@ -406,13 +459,7 @@ function buildNodes(
   const node = createNode(nodeData, nodeXDef, nodeId, nodeParentId);
 
   nodes.push(node);
-  nodeParentId &&
-    edges.push({
-      id: `${nodeParentId} -> ${nodeId}`,
-      type: TYPE_EDGE_DEFAULT,
-      source: nodeParentId,
-      target: nodeId
-    });
+  nodeParentId && edges.push(createEdge(nodeParentId, nodeId));
 
   const childNodeXDefGetters = nodeXDef.children();
   const childrenBuildResult: { nodes: object[]; edges: object[] } = {
@@ -492,14 +539,13 @@ function buildNodes(
       childNodes = [newChildNode];
       childEdges = [
         {
-          id: `${newChildNode.parent} -> ${newChildNode.id}`,
-          type:
-            newChildNode.type === TYPE_NODE_NEW
-              ? TYPE_EDGE_NEW_NODE
-              : TYPE_EDGE_DEFAULT,
-          className: newChildNode.type === TYPE_NODE_NEW ? 'new-node-edge' : '',
-          source: newChildNode.parent,
-          target: newChildNode.id
+          ...createEdge(newChildNode.parent, newChildNode.id),
+          ...(newChildNode.type === TYPE_NODE_NEW
+            ? {
+                type: TYPE_EDGE_NEW_NODE,
+                className: 'new-node-edge'
+              }
+            : {})
         }
       ];
     }
@@ -556,4 +602,13 @@ function buildXDefGetter(xdef: DslDef) {
   };
 
   return build(xdef);
+}
+
+function createEdge(source: string, target: string) {
+  return {
+    id: `${source} -> ${target}`,
+    type: TYPE_EDGE_DEFAULT,
+    source,
+    target
+  };
 }

@@ -24,22 +24,15 @@ import { stratify } from 'd3-hierarchy';
 import { flextree } from 'd3-flextree';
 import { timer } from 'd3-timer';
 
-export function collapseTree({
-  node,
-  getNode,
-  getNodes,
-  setNodes,
-  getEdges,
-  setEdges
-}) {
+export function collapseTree({ nodeId, getNode, setNodes, setEdges }) {
+  const node = getNode(nodeId);
+  if (!node) {
+    return;
+  }
+
   const collapsed = !!!node._collapsed;
 
   const links = {};
-  const edges = getEdges();
-  edges.forEach(({ source, target }) => {
-    (links[source] ||= []).push(target);
-  });
-
   const targets = {};
   const travel = (ids) => {
     (ids || []).forEach((id) => {
@@ -61,10 +54,14 @@ export function collapseTree({
       }
     });
   };
-  travel(links[node.id]);
 
-  setEdges(
-    edges.map((e) =>
+  setEdges((edges) => {
+    edges.forEach(({ source, target }) => {
+      (links[source] ||= []).push(target);
+    });
+    travel(links[nodeId]);
+
+    return edges.map((e) =>
       targets[e.target]
         ? {
             ...e,
@@ -74,15 +71,13 @@ export function collapseTree({
             _collapsed: true
           }
         : e
-    )
-  );
+    );
+  });
 
-  const nodes = getNodes();
-  setNodes(
+  setNodes((nodes) =>
     nodes.map(
       (n) =>
-        targets[n.id] ||
-        (n.id === node.id ? { ...n, _collapsed: collapsed } : n)
+        targets[n.id] || (n.id === nodeId ? { ...n, _collapsed: collapsed } : n)
     )
   );
 }
