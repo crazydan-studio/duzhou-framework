@@ -1,9 +1,10 @@
 {
+  "id": "dsl-editor",
   "type": "dsl-editor",
   "readonly": false,
   "api": {
     "mutation": "",
-    "query": "/pages/admin/demo/data/dsl-editor.data.json"
+    "query": "/pages/admin/demo/data/dsl-editor.data.empty.json"
   },
   "layout": {
     "direction": "horizontal"
@@ -12,7 +13,11 @@
     "node:editor:close": {
       "actions": [
         {
-          "actionType": "closeDrawer",
+          "actionType": "clear",
+          "componentId": "node-editor"
+        },
+        {
+          "actionType": "close",
           "componentId": "node-editor"
         }
       ]
@@ -20,10 +25,14 @@
     "node:editor:show": {
       "actions": [
         {
+          "actionType": "reset",
+          "componentId": "node-editor"
+        },
+        {
           "actionType": "drawer",
           "drawer": {
-            "type": "drawer",
             "id": "node-editor",
+            "type": "drawer",
             "title": "${node.props.title}",
             "overlay": false,
             "resizable": true,
@@ -32,13 +41,34 @@
             "body": [
               {
                 "type": "form",
-                "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/saveForm",
                 "body": [
+                  {
+                    "type": "hidden",
+                    "name": "id",
+                    "value": "${node.id}"
+                  },
                   {
                     "type": "amis",
                     "name": "node.editor"
                   }
-                ]
+                ],
+                "onEvent": {
+                  "validateSucc": {
+                    "actions": [
+                      {
+                        "actionType": "setValue",
+                        "componentId": "dsl-editor",
+                        "args": {
+                          "value": "${event.data}"
+                        }
+                      },
+                      {
+                        "actionType": "close",
+                        "componentId": "node-editor"
+                      }
+                    ]
+                  }
+                }
               }
             ],
             "actions": [
@@ -46,12 +76,34 @@
                 "type": "button",
                 "label": "确定",
                 "primary": true,
-                "actionType": "submit"
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "validate",
+                        "componentId": "node-editor"
+                      }
+                    ]
+                  }
+                }
               },
               {
                 "type": "button",
                 "label": "关闭",
-                "actionType": "close"
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "clear",
+                        "componentId": "node-editor"
+                      },
+                      {
+                        "actionType": "close",
+                        "componentId": "node-editor"
+                      }
+                    ]
+                  }
+                }
               }
             ]
           }
@@ -84,14 +136,14 @@
           "body": [
             {
               "type": "input-text",
-              "name": "title",
+              "name": "props.title",
               "label": "名称",
               "value": "${node.props.title}",
               "required": true
             },
             {
               "type": "input-text",
-              "name": "url",
+              "name": "props.url",
               "label": "访问地址",
               "value": "${node.props.url}"
             }
@@ -102,25 +154,25 @@
           "body": [
             {
               "type": "input-text",
-              "name": "code",
+              "name": "props.code",
               "label": "编码",
               "value": "${node.props.code}",
               "required": true,
-              "disabled": true
+              "disabledOn": "${!!node.props.code}"
             },
             {
               "type": "input-text",
-              "name": "groupId",
+              "name": "props.groupId",
               "label": "所属组织标识",
               "value": "${node.props.groupId}",
               "required": true,
-              "disabled": true
+              "disabledOn": "${!!node.props.groupId}"
             }
           ]
         },
         {
           "type": "textarea",
-          "name": "subTitle",
+          "name": "props.subTitle",
           "label": "描述",
           "value": "${node.props.subTitle}",
           "showCounter": true,
@@ -141,7 +193,25 @@
             "props": {
               "icon": "fa-solid fa-globe"
             },
-            "editor": {},
+            "editor": {
+              "type": "group",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "props.title",
+                  "label": "名称",
+                  "value": "${node.props.title}",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "props.subTitle",
+                  "label": "URL 相对路径",
+                  "value": "${node.props.subTitle}",
+                  "required": true
+                }
+              ]
+            },
             "children": [
               {
                 "x:extends": "site:resource"
@@ -155,7 +225,25 @@
               "title": "资源",
               "icon": "fa-solid fa-file-lines"
             },
-            "editor": {},
+            "editor": {
+              "type": "group",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "props.title",
+                  "label": "名称",
+                  "value": "${node.props.title}",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "props.url",
+                  "label": "页面",
+                  "value": "${node.props.url}",
+                  "required": true
+                }
+              ]
+            },
             "children": [
               {
                 "x:extends": "site:resource"
@@ -199,7 +287,25 @@
               "title": "后端服务",
               "icon": "fa-solid fa-gear"
             },
-            "editor": {},
+            "editor": {
+              "type": "group",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "props.title",
+                  "label": "名称",
+                  "value": "${node.props.title}",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "props.code",
+                  "label": "编码",
+                  "value": "${node.props.code}",
+                  "required": true
+                }
+              ]
+            },
             "children": [
               {
                 "type": "bizLibs",
@@ -216,7 +322,25 @@
                       "title": "业务接口",
                       "icon": "fa-solid fa-angles-up"
                     },
-                    "editor": {}
+                    "editor": {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "name": "props.title",
+                          "label": "名称",
+                          "value": "${node.props.title}",
+                          "required": true
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "props.path",
+                          "label": "定义",
+                          "value": "${node.props.path}",
+                          "required": true
+                        }
+                      ]
+                    }
                   }
                 ]
               },
@@ -235,7 +359,25 @@
                       "title": "业务模型",
                       "icon": "fa-solid fa-cube"
                     },
-                    "editor": {}
+                    "editor": {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "name": "props.title",
+                          "label": "名称",
+                          "value": "${node.props.title}",
+                          "required": true
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "props.path",
+                          "label": "定义",
+                          "value": "${node.props.path}",
+                          "required": true
+                        }
+                      ]
+                    }
                   }
                 ]
               }

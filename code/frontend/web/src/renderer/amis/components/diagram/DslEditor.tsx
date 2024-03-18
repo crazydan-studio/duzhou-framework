@@ -23,7 +23,10 @@ import {
   Renderer,
   unRegisterRenderer,
   replaceText,
-  ScopedContext
+  ScopedContext,
+  ListenerAction,
+  ActionObject,
+  IScopedContext
 } from 'amis-core';
 import ReactFlow, {
   ReactFlowProvider,
@@ -129,15 +132,18 @@ export interface EditorProps extends RendererProps {
   type: TYPE,
   autoVar: true
 })
-export default class DslEditor extends React.Component<EditorProps, object> {
+export default class DslEditor extends React.Component<EditorProps> {
   static contextType = ScopedContext;
   xdefGetter: any;
 
-  constructor(props: EditorProps) {
+  constructor(props: EditorProps, context: IScopedContext) {
     super(props);
 
     this.state = { data: null };
     this.xdefGetter = buildXDefGetter(props.xdef);
+
+    const scoped = context;
+    scoped.registerComponent(this);
   }
 
   componentDidMount() {
@@ -147,11 +153,18 @@ export default class DslEditor extends React.Component<EditorProps, object> {
   }
 
   componentWillUnmount(): void {
-    // 通过 AMIS ScopedContext 执行绑定的 配置窗口关闭 事件的动作
-    const actions =
-      this.props.onEvent?.[EVENT_NODE_EDITOR_CLOSE]?.actions || [];
+    this.doNodeEditorClose();
 
-    this.context.doAction(actions);
+    const scoped = this.context as IScopedContext;
+    scoped.unRegisterComponent(this);
+  }
+
+  setData(value: { id: string; props: object }) {
+    const { id, props } = value;
+  }
+
+  getData() {
+    return {};
   }
 
   render(): React.ReactNode {
@@ -179,6 +192,15 @@ export default class DslEditor extends React.Component<EditorProps, object> {
         />
       </ReactFlowProvider>
     );
+  }
+
+  doNodeEditorClose() {
+    // 通过 AMIS ScopedContext 执行绑定的 配置窗口关闭 事件的动作
+    const actions =
+      this.props.onEvent?.[EVENT_NODE_EDITOR_CLOSE]?.actions || [];
+
+    const scoped = this.context as IScopedContext;
+    scoped.doAction(actions);
   }
 
   async fetchData(env, api: string) {
@@ -343,7 +365,7 @@ function buildNodes(
       position: { x: 0, y: 0 },
       data: {
         type: xdef.type,
-        editor: isEmpty(xdef.editor) ? '' : JSON.stringify(xdef.editor),
+        editor: isEmpty(xdef.editor) ? '' : xdef.editor,
         direction,
         onEvent: {},
         //
@@ -364,6 +386,7 @@ function buildNodes(
         const node = getNode(nodeId);
         dispatchEvent(EVENT_NODE_EDITOR_SHOW, {
           node: {
+            id: node.id,
             editor: node.data.editor,
             props: { ...node.data.props }
           }
@@ -437,6 +460,7 @@ function buildNodes(
     const childNodeXDef = childNodeXDefGetter();
 
     let childNodeIndex = -1;
+    // 新增节点放在同类型节点的最后位置
     childrenBuildResult.nodes.forEach((childNode, index) => {
       if (childNode.data.type === type) {
         childNodeIndex = index;
