@@ -19,29 +19,6 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!--
-应用的后端服务
+<dsl-editor>
 
-@code [必填] 服务的编码，具备唯一性，只能包含字母、数字和短横线。
-      用于创建代码工程目录，在微服务中也作为服务的标识，
-      用于接口路由和多实例管理等。注：多实例的 ID 为运行期动态生成的随机字符串
-@name [必填] 服务的名称
-@status [必填] 服务的状态：激活、禁用、已废弃等
--->
-<service xmlns:x="/nop/schema/xdsl.xdef"
-         xmlns:xdef="/nop/schema/xdef.xdef"
-         x:schema="/nop/schema/xdef.xdef"
-         code="!string" name="!string"
-         status="!string"
->
-
-    <!-- 业务逻辑库，指向 *.xbiz -->
-    <bizLibs xdef:body-type="list" xdef:key-attr="path">
-        <biz path="!v-path" />
-    </bizLibs>
-
-    <!-- 业务模型库，指向 *.xmeta -->
-    <metaLibs xdef:body-type="list" xdef:key-attr="path">
-        <meta path="!v-path" />
-    </metaLibs>
-</service>
+</dsl-editor>

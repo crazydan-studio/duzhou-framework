@@ -20,18 +20,43 @@
   -->
 
 <!--
-应用：面向某类业务的前后端服务的组织节点
+应用：面向某类业务的前后端服务的组织节点。
 
+注：
+- 版本号针对的是整个应用，仅在开发到达某个确定的阶段后，
+  对所开发应用的全部变更而做的一个标记。
+  因此，版本号即表示应用所具备的能力达到某个程度，
+  也表示到达该版本所经历的变化过程。
+  只有已部署的应用才具备某个确定的版本号，
+  其余阶段都只有一个变更号
+
+@code [必填] 应用的编码，具备唯一性，只能包含字母、数字和短横线。
+      用于创建代码工程根目录
 @name [必填] 应用的名称
 @url [必填] 应用的 URL 地址。若包含域名，则按绝对路径匹配，
      否则，按相对路径匹配
-@logo [必填] 应用 Logo 的图片资源路径
+@logo [必填] 应用的 Logo 资源路径
+@status [必填] 应用的状态：激活、禁用、已废弃等
+@groupId [必填] 应用所属组织的标识，如，`io.crazydan.duzhou`。
+         其将作为 Maven 工程的 `groupId`，并且以应用 `code`
+         作为 Maven 根工程的 `artifactId`，同时，Java
+         代码的包名将命名为 `${groupId}.${code}`（`code`
+         中的短横线将替换为下划线）。对于应用的服务模块，
+         则会在应用的 `${groupId}.${artifactId}`
+         作为模块的 `groupId`，而模块的 `code` 作为模块的
+         `artifactId`，Java 包名依然为 `${groupId}.${code}`
+         结构，但值为当前模块的 `groupId` 和 `code`
 -->
 <app xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"
-     name="!string" url="!string" logo="!string"
+     code="!string" name="!string"
+     url="!string" logo="!string"
+     status="!string" groupId="!string"
 >
+
+    <!-- [可选] 应用的描述说明 -->
+    <description xdef:value="string" />
 
     <!-- 应用的 Web 端配置 -->
     <web xdef:ref="web.xdef" />
