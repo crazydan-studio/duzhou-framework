@@ -185,7 +185,10 @@ function getLibChunks(id) {
     'exceljs',
     'xlsx',
     'office-viewer',
-    'echarts'
+    'echarts',
+    //
+    'echarts-stat',
+    'react-json-view'
   ]) {
     if (id.includes('/node_modules/' + lib + '/')) {
       return lib;
