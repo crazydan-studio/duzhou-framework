@@ -144,10 +144,10 @@ export function ajaxFetch(options: FetcherRequest): Promise<FetcherResult> {
     headers: options.headers || {},
     data: data,
     params: query,
-    responseType: options.responseType
+    responseType: options.responseType || options.config.responseType
   };
 
-  if (options.config?.cancelExecutor) {
+  if (options.config.cancelExecutor) {
     const controller = new AbortController();
     options.config.cancelExecutor(() => {
       controller.abort();
@@ -207,7 +207,7 @@ export function ajaxFetch(options: FetcherRequest): Promise<FetcherResult> {
       return response;
     })
     .then((response) => {
-      if (options.responseType == 'blob') {
+      if (config.responseType == 'blob') {
         if (response.status == 401) {
           doLogout('401');
           return response;
@@ -215,7 +215,6 @@ export function ajaxFetch(options: FetcherRequest): Promise<FetcherResult> {
 
         const __ = useI18n().t;
         return attachmentAdpator(response, __);
-        //return response
       }
       let data = response.data || {};
       if (response.status == 401 || data.status == 401) {
