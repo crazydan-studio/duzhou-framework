@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 根据应用信息生成指定的 Service 模块的工程代码 -->
+<c:script xmlns:c="c"><![CDATA[
+    let moduleConfigs = {
+        // 服务模块定义文件，其位置相对于该 xgen 脚本所在的目录
+        '800.app': '../model/app.service.xlsx',
+    };
+
+    moduleConfigs.forEach((mavenModuleDir, serviceXlsxPath) => {
+        codeGenerator
+            // 设置生成代码放置目录，其位置相对于当前工程根目录
+            .withTargetDir('../' + mavenModuleDir)
+            .renderModel(
+                serviceXlsxPath,
+                // 代码模板资源的 classpath 位置
+                '/duzhou/templates/service',
+                // 以下参数保持不变
+                '/', $scope
+            );
+    });
+]]></c:script>

@@ -1,0 +1,9 @@
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.orm;
+
+/** ORM 字典常量定义 */
+public interface ${moduleClassShortPrefix}OrmConstants extends _${moduleClassShortPrefix}OrmConstants {
+
+}
+]]></c:unit>

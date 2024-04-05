@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<model xmlns:x="/nop/schema/xdsl.xdef"
+       x:schema="/nop/schema/register-model.xdef"
+       name="service"
+>
+
+    <loaders>
+        <xlsx-loader fileType="service.xlsx"
+                     impPath="service.imp.xml" />
+    </loaders>
+</model>

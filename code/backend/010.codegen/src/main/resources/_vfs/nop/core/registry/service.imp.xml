@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<imp xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+     x:schema="/nop/schema/excel/imp.xdef"
+     x:extends="/nop/orm/imp/orm.imp.xml">
+
+    <sheets>
+        <sheet name="配置">
+            <normalizeFieldsExpr>
+                <c:script><![CDATA[
+                    record['ext:moduleName'] = record['ext:code'];
+                    record['ext:registerShortName'] = true;
+                    record['ext:basePackageName'] =
+                        record['ext:mavenGroupId'].replaceAll('-', '_') +
+                        '.' + record['ext:mavenArtifactId'].replaceAll('-', '_');
+
+                    // 按内置规则设置 ORM 实体包名
+                    record['ext:entityPackageName'] = record['ext:basePackageName'] + '.orm.entity';
+                ]]></c:script>
+            </normalizeFieldsExpr>
+
+            <fields>
+                <field name="ext:title" displayName="title"
+                       mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="ext:code" displayName="code"
+                       mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="ext:description" displayName="description">
+                    <schema stdDomain="string" />
+                </field>
+
+                <field name="ext:mavenGroupId" mandatory="true" />
+                <field name="ext:mavenArtifactId" mandatory="true" />
+                <field name="ext:mavenVersion" mandatory="true" />
+
+                <field name="ext:dialect" displayName="db.dialect" />
+            </fields>
+        </sheet>
+
+        <sheet name="字典定义">
+            <fields>
+                <field name="options">
+                    <fields>
+                        <field name="code" displayName="编码" />
+                    </fields>
+                </field>
+            </fields>
+        </sheet>
+
+        <sheet name="entity">
+            <fields>
+                <field name="comments" displayName="填写说明" virtual="true" />
+            </fields>
+        </sheet>
+    </sheets>
+</imp>

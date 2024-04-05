@@ -1,0 +1,7 @@
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[${ormModel['ext:title']}
+===================================
+
+${ormModel['ext:description']}
+]]></c:unit>

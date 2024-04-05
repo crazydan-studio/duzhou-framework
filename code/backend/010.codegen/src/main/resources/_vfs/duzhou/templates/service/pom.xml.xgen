@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<gen:MergeXml
+        xmlns:gen="gen" xmlns:xpl="xpl"
+        xpl:lib="/nop/codegen/xlib/gen.xlib"
+        resource="${targetResource}"
+>
+    <update>
+        <!-- 如果pom文件已经存在，则只是追加module定义 -->
+        <project>
+            <modules>
+                <module xml:multiple="true">biz</module>
+                <module xml:multiple="true">orm</module>
+                <module xml:multiple="true">starter</module>
+            </modules>
+        </project>
+    </update>
+    <create>
+        <project xmlns="http://maven.apache.org/POM/4.0.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+            <modelVersion>4.0.0</modelVersion>
+
+            <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <version>${ormModel['ext:mavenVersion']}</version>
+            <packaging>pom</packaging>
+
+            <parent>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>parent</artifactId>
+                <version>0.1.0-SNAPSHOT</version>
+            </parent>
+
+            <modules>
+                <module>biz</module>
+                <module>orm</module>
+                <module>starter</module>
+            </modules>
+        </project>
+    </create>
+</gen:MergeXml>

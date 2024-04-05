@@ -1,0 +1,25 @@
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${entityModel.classPackageName};
+
+import io.nop.api.core.annotations.biz.BizObjName;
+import ${entityModel.classPackageName}._gen._${entityModel.simpleClassName};
+]]>
+    <c:if test="${entityModel.compositePk}"><![CDATA[
+import ${entityModel.classPackageName}._gen.${entityModel.simpleClassName}PkBuilder;
+    ]]></c:if>
+    <![CDATA[
+/** ${entityModel.displayName}的 ORM 实体 */
+@BizObjName("${entityModel.shortName}")
+public class ${entityModel.simpleClassName} extends _${entityModel.simpleClassName} {
+    ]]>
+
+    <c:if test="${entityModel.compositePk}"><![CDATA[
+    public static ${entityModel.simpleClassName}PkBuilder newPk() {
+        return new ${entityModel.simpleClassName}PkBuilder();
+    }
+    ]]></c:if>
+    <![CDATA[
+}
+    ]]>
+</c:unit>

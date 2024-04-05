@@ -1,0 +1,11 @@
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.orm.mapper;
+
+import io.nop.api.core.annotations.orm.SqlLibMapper;
+
+@SqlLibMapper("/${moduleId}/orm/mapper/${entityModel.shortName}.sql-lib.xml")
+public interface ${entityModel.shortName}Mapper {
+
+}
+]]></c:unit>

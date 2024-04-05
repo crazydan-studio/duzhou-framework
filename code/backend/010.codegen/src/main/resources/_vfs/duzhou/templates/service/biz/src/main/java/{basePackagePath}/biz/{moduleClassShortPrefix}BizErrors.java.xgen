@@ -1,0 +1,9 @@
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.biz;
+
+/** 业务{@link io.nop.api.core.exceptions.ErrorCode 错误信息}定义 */
+public interface ${moduleClassShortPrefix}BizErrors {
+
+}
+]]></c:unit>

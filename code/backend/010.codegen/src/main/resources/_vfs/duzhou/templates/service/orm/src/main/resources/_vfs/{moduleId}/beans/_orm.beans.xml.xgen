@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:x="/nop/schema/xdsl.xdef"
+       xmlns:ioc="ioc" xmlns:c="c"
+       x:schema="/nop/schema/beans.xdef"
+       x:extends="${deltaDir? 'super':null}">
+
+    <c:for var="entityModel" items="${ormModel.entityModels.filter(m=>m.tagSet?.contains('mapper'))}">
+        <bean id="${basePackageName}.orm.mapper.${entityModel.shortName}Mapper"
+              class="io.nop.orm.sql_lib.proxy.SqlLibProxyFactoryBean"
+              ioc:type="@bean:id" ioc:bean-method="build">
+            <property name="mapperClass" value="@bean:type" />
+        </bean>
+    </c:for>
+</beans>

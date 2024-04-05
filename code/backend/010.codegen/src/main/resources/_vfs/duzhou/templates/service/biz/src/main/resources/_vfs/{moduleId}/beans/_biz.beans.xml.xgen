@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:x="/nop/schema/xdsl.xdef"
+       xmlns:ioc="ioc" xmlns:c="c" xmlns:xpl="xpl"
+       x:schema="/nop/schema/beans.xdef">
+
+    <c:for var="entityModel" items="${ormModel.entityModels}">
+        <bean id="${basePackageName}.biz.${entityModel.shortName}BizModel"
+              ioc:type="@bean:id"
+              ioc:default="true" xpl:if="!entityModel.notGenCode" />
+    </c:for>
+</beans>
