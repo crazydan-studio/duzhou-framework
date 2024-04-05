@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import io.nop.core.lang.eval.EvalRuntime;
 import io.nop.core.lang.eval.IEvalAction;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
@@ -125,7 +126,7 @@ public class EvalExecutor {
         }
 
         @Override
-        public Object getValue(IEvalScope scope) {
+        public Object getValue(EvalRuntime rt) {
             return this.var;
         }
     }
