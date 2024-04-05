@@ -60,12 +60,23 @@
     </properties>
 
     <modules>
+        <module>010.codegen</module>
         <module>020.schema</module>
         <module>030.commons</module>
         <module>035.autotest</module>
         <module>050.starter</module>
         <module>100.gateway</module>
+        <module>800.app</module>
     </modules>
+
+    <dependencies>
+        <!-- Idea 插件在调试 xlang 时需要该依赖 -->
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-xlang-debugger</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <licenses>
         <license>
@@ -90,14 +101,18 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <dependencies>
-        <!-- Idea 插件在调试 xlang 时需要该依赖 -->
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang-debugger</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <repositories>
+        <repository>
+            <id>nop-repo</id>
+            <url>https://nop.repo.crazydan.io/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nop-repo</id>
+            <url>https://nop.repo.crazydan.io/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
@@ -141,6 +156,17 @@
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>gateway-api</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>app-biz</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>app-orm</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <!-- End -->

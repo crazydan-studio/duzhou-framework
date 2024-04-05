@@ -11,7 +11,19 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/100.gateway/web/pom.xml" />
         <option value="$PROJECT_DIR$/020.schema/pom.xml" />
+        <option value="$PROJECT_DIR$/200.auth/pom.xml" />
+        <option value="$PROJECT_DIR$/800.builder/pom.xml" />
+        <option value="$PROJECT_DIR$/010.codegen/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app/orm/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app/biz/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app/starter/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/800.builder/codegen/pom.xml" />
+        <option value="$PROJECT_DIR$/800.builder/starter/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">

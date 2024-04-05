@@ -46,6 +46,7 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-xlang</artifactId>
         </dependency>
+        <!-- 支持开发期在 IDE 中运行 XCodeGenerator 以生成代码 -->
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-codegen</artifactId>

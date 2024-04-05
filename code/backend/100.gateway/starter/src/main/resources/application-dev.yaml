@@ -8,8 +8,15 @@ duzhou:
 nop:
   debug: true
   profile: dev
+  orm:
+    init-database-schema: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    jdbc-url: jdbc:h2:./db/duzhou
+    username: sa
+    password:
   file:
-    #store-dir: "${project.build.directory}/files"
+    store-dir: "${project.build.directory}/files"
 quarkus:
   profile: dev
   http:
