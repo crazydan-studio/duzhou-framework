@@ -78,7 +78,8 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
         // TODO 根据运行环境（从配置读取）确定可以开放的服务
         if (path.startsWith("/q/")
             // 忽略后台 API 服务接口
-            || path.startsWith("/r/") || path.startsWith("/p/") || path.equals("/graphql")) {
+            || path.startsWith("/f/") || path.startsWith("/r/") //
+            || path.startsWith("/p/") || path.equals("/graphql")) {
             return next.get();
         }
 
