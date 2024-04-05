@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[# __XGEN_FORCE_OVERRIDE__
+label: ${dict.label}
+locale: ${dict.locale || 'zh-CN'}
+valueType: ${dict.valueType}
+description: ${dict.description}
+options:]]>
+    <c:for var="option" items="${dict.options}"><![CDATA[
+  - label: ${option.label.$escapeYaml()}
+    value: ${dict.valueType == 'int' ? option.value : option.value.toString().$escapeYaml()}
+    description: ${option.description?.$escapeYaml()}
+    ]]></c:for>
+</c:unit>
