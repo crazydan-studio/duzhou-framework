@@ -4,7 +4,7 @@
   "readonly": false,
   "api": {
     "mutation": "",
-    "query": "/pages/admin/demo/data/dsl-editor.data.json"
+    "query": "/pages/admin/demo/data/dsl-editor.data.empty.json"
   },
   "layout": {
     "direction": "horizontal"

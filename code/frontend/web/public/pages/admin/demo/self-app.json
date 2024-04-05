@@ -1,14 +1,44 @@
 {
   "type": "page",
-  "title": "应用管理",
-  "subTitle": "应用开发的操作流程演示",
+  "title": "应用开发（自举）",
+  "subTitle": "自举阶段的应用开发",
   "body": [
     {
       "type": "crud",
       "name": "app-table",
-      "api": "get:/pages/admin/demo/data/app.data.json",
-      "syncLocation": false,
+      "syncLocation": true,
       "autoFillHeight": true,
+      "pageField": "page",
+      "perPageField": "pageSize",
+      "api": {
+        "url": "@query:App__findPage",
+        "gql:selection": "total,items{id,ver,title,code,status,version,logo,url,classPkgName,description}",
+        "filter_": {
+          "$type": "or",
+          "$body": [
+            {
+              "$type": "eq",
+              "name": "title",
+              "value": ""
+            },
+            {
+              "$type": "eq",
+              "name": "code",
+              "value": ""
+            }
+          ]
+        },
+        "data": {
+          "offset": "${(page - 1) * pageSize}",
+          "limit": "${pageSize}",
+          "orderBy": [
+            {
+              "name": "title",
+              "desc": true
+            }
+          ]
+        }
+      },
       "headerToolbar": [
         {
           "type": "button",
@@ -20,19 +50,23 @@
             "title": "添加新应用",
             "body": {
               "type": "form",
-              "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample",
+              "api": {
+                "url": "@mutation:App__save",
+                "gql:selection": "id"
+              },
               "body": [
                 {
                   "type": "input-image",
-                  "name": "image",
+                  "name": "logo",
                   "label": "图标",
+                  "required": true,
                   "accept": ".jpeg,.jpg,.png,.gif,.svg",
                   "uploadBtnText": "点击上传应用图标",
-                  "receiver": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/upload/file"
+                  "receiver": "/f/upload?bizObjName=App&fieldName=logo"
                 },
                 {
                   "type": "input-text",
-                  "name": "name",
+                  "name": "title",
                   "label": "名称",
                   "required": true
                 },
@@ -40,6 +74,27 @@
                   "type": "input-text",
                   "name": "code",
                   "label": "编码",
+                  "required": true
+                },
+                {
+                  "type": "list-select",
+                  "name": "status",
+                  "label": "状态",
+                  "required": true,
+                  "clearable": true,
+                  "source": "@dict:app/app-status",
+                  "value": -1
+                },
+                {
+                  "type": "input-text",
+                  "name": "version",
+                  "label": "版本号",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "classPkgName",
+                  "label": "代码包名",
                   "required": true
                 },
                 {
@@ -84,10 +139,10 @@
           "type": "button",
           "label": "删除选中",
           "icon": "fa-solid fa-trash-can",
-          "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${ids|raw}",
+          "api": "@mutaion:App__batchDelete?ids=${ids|raw}",
           "actionType": "ajax",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.name + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.code + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
@@ -99,7 +154,7 @@
           "body": [
             {
               "type": "tpl",
-              "tpl": "<h3>${name}</h3>"
+              "tpl": "<h3>${title}</h3>"
             },
             {
               "type": "tpl",
@@ -128,14 +183,26 @@
           "label": "编码"
         },
         {
+          "type": "list-select",
+          "name": "status",
+          "label": "状态",
+          "static": true,
+          "source": "@dict:app/app-status"
+        },
+        {
+          "type": "text",
+          "name": "version",
+          "label": "版本号"
+        },
+        {
+          "type": "text",
+          "name": "classPkgName",
+          "label": "包名"
+        },
+        {
           "type": "link",
           "name": "url",
           "label": "访问地址"
-        },
-        {
-          "type": "progress",
-          "name": "progress",
-          "label": "开发进度"
         },
         {
           "type": "operation",
@@ -143,31 +210,39 @@
           "fixed": "right",
           "buttons": [
             {
-              "type": "button",
               "label": "编辑",
+              "type": "button",
               "level": "primary",
               "actionType": "dialog",
               "dialog": {
                 "title": "编辑应用",
                 "body": {
                   "type": "form",
-                  "initApi": "get:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${id}",
-                  "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${id}",
+                  "api": {
+                    "url": "@mutation:App__update?id=${id}",
+                    "gql:selection": "id"
+                  },
                   "body": [
                     {
+                      "type": "hidden",
+                      "name": "ver",
+                      "value": "${ver}"
+                    },
+                    {
                       "type": "input-image",
-                      "name": "image",
+                      "name": "logo",
                       "label": "图标",
                       "value": "${logo}",
+                      "required": true,
                       "accept": ".jpeg,.jpg,.png,.gif,.svg",
                       "uploadBtnText": "点击上传应用图标",
-                      "receiver": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/upload/file"
+                      "receiver": "/f/upload?bizObjName=App&fieldName=logo&bizObjId=${id}"
                     },
                     {
                       "type": "input-text",
-                      "name": "name",
+                      "name": "title",
                       "label": "名称",
-                      "value": "${name}",
+                      "value": "${title}",
                       "required": true
                     },
                     {
@@ -177,6 +252,29 @@
                       "value": "${code}",
                       "required": true,
                       "disabled": true
+                    },
+                    {
+                      "type": "list-select",
+                      "name": "status",
+                      "label": "状态",
+                      "required": true,
+                      "clearable": true,
+                      "source": "@dict:app/app-status",
+                      "value": "${status}"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "version",
+                      "label": "版本号",
+                      "required": true,
+                      "value": "${version}"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "classPkgName",
+                      "label": "代码包名",
+                      "required": true,
+                      "value": "${classPkgName}"
                     },
                     {
                       "type": "input-text",
@@ -197,20 +295,13 @@
               }
             },
             {
-              "type": "button",
-              "label": "设计",
-              "level": "success",
-              "actionType": "link",
-              "link": "/app/dsl-editor?id=${id}"
-            },
-            {
-              "type": "button",
               "label": "删除",
+              "type": "button",
               "level": "danger",
-              "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/sample/${ids|raw}",
+              "api": "@mutation:App__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除应用「<b>${name} (${code})</b>」？"
+              "confirmText": "确定要删除应用「<b>${title} (${code})</b>」？"
             }
           ]
         }

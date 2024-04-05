@@ -42,7 +42,8 @@ export default defineConfig(({ command, mode }) => {
     server: {
       // https://cn.vitejs.dev/config/server-options#server-proxy
       proxy: {
-        '/graphql': 'http://localhost:8080'
+        '/graphql': 'http://localhost:8080',
+        '/f/': 'http://localhost:8080',
       }
     },
     resolve: {

@@ -23,6 +23,16 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
+        children: [
+          {
+            label: '应用开发（自举）',
+            url: 'app-self',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/self-app.json'
+          }
+        ]
+      },
+      {
         label: '应用开发',
         children: [
           {
