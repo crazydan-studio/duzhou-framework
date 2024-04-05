@@ -38,8 +38,12 @@
         </dependency>
 
         <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[
-        <!-- 支持 OSS 存储 -->
+        <!-- 支持文件上传和 OSS 存储 -->
         ]]></c:unit>
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-file-quarkus</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-integration-oss</artifactId>

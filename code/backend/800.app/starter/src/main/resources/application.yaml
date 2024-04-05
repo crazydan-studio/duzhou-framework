@@ -44,7 +44,7 @@ quarkus:
 
   http:
     host: 0.0.0.0
-    cors: true
+    cors: false
 
   log:
     level: INFO

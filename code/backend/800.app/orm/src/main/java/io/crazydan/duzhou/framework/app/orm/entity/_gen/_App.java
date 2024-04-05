@@ -20,9 +20,9 @@ import io.crazydan.duzhou.framework.app.orm.entity.App;
         "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})
 public class _App extends DynamicOrmEntity{
     
-    /* ID: EID VARCHAR */
-    public static final String PROP_NAME_eid = "eid";
-    public static final int PROP_ID_eid = 1;
+    /* ID: ID VARCHAR */
+    public static final String PROP_NAME_id = "id";
+    public static final int PROP_ID_id = 1;
     
     /* 创建人: CREATED_BY VARCHAR */
     public static final String PROP_NAME_createdBy = "createdBy";
@@ -92,15 +92,15 @@ public class _App extends DynamicOrmEntity{
     public static final String PROP_NAME_services = "services";
     
 
-    protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_eid);
-    protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_eid};
+    protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
+    protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
     private static final String[] PROP_ID_TO_NAME = new String[17];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
-          PROP_ID_TO_NAME[PROP_ID_eid] = PROP_NAME_eid;
-          PROP_NAME_TO_ID.put(PROP_NAME_eid, PROP_ID_eid);
+          PROP_ID_TO_NAME[PROP_ID_id] = PROP_NAME_id;
+          PROP_NAME_TO_ID.put(PROP_NAME_id, PROP_ID_id);
       
           PROP_ID_TO_NAME[PROP_ID_createdBy] = PROP_NAME_createdBy;
           PROP_NAME_TO_ID.put(PROP_NAME_createdBy, PROP_ID_createdBy);
@@ -150,8 +150,8 @@ public class _App extends DynamicOrmEntity{
     }
 
     
-    /* ID: EID */
-    private java.lang.String _eid;
+    /* ID: ID */
+    private java.lang.String _id;
     
     /* 创建人: CREATED_BY */
     private java.lang.String _createdBy;
@@ -236,14 +236,14 @@ public class _App extends DynamicOrmEntity{
     @Override
     public Object orm_id() {
     
-        return buildSimpleId(PROP_ID_eid);
+        return buildSimpleId(PROP_ID_id);
      
     }
 
     @Override
     public boolean orm_isPrimary(int propId) {
         
-            return propId == PROP_ID_eid;
+            return propId == PROP_ID_id;
           
     }
 
@@ -269,8 +269,8 @@ public class _App extends DynamicOrmEntity{
     public Object orm_propValue(int propId) {
         switch(propId){
         
-            case PROP_ID_eid:
-               return getEid();
+            case PROP_ID_id:
+               return getId();
         
             case PROP_ID_createdBy:
                return getCreatedBy();
@@ -328,13 +328,13 @@ public class _App extends DynamicOrmEntity{
     public void orm_propValue(int propId, Object value){
         switch(propId){
         
-            case PROP_ID_eid:{
+            case PROP_ID_id:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_eid));
+                       err-> newTypeConversionError(PROP_NAME_id));
                }
-               setEid(typedValue);
+               setId(typedValue);
                break;
             }
         
@@ -497,9 +497,9 @@ public class _App extends DynamicOrmEntity{
     public void orm_internalSet(int propId, Object value) {
         switch(propId){
         
-            case PROP_ID_eid:{
+            case PROP_ID_id:{
                onInitProp(propId);
-               this._eid = (java.lang.String)value;
+               this._id = (java.lang.String)value;
                orm_id(); // 如果是设置主键字段，则触发watcher
                break;
             }
@@ -616,20 +616,20 @@ public class _App extends DynamicOrmEntity{
 
     
     /**
-     * ID: EID
+     * ID: ID
      */
-    public java.lang.String getEid(){
-         onPropGet(PROP_ID_eid);
-         return _eid;
+    public java.lang.String getId(){
+         onPropGet(PROP_ID_id);
+         return _id;
     }
 
     /**
-     * ID: EID
+     * ID: ID
      */
-    public void setEid(java.lang.String value){
-        if(onPropSet(PROP_ID_eid,value)){
-            this._eid = value;
-            internalClearRefs(PROP_ID_eid);
+    public void setId(java.lang.String value){
+        if(onPropSet(PROP_ID_id,value)){
+            this._id = value;
+            internalClearRefs(PROP_ID_id);
             orm_id();
         }
     }

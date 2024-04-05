@@ -5,7 +5,7 @@
 
     <entityName>io.crazydan.duzhou.framework.app.orm.entity.AppService</entityName>
 
-    <primaryKey>eid</primaryKey>
+    <primaryKey>id</primaryKey>
 
     <x:gen-extends>
         <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
@@ -24,7 +24,7 @@
     </orderBy>
 
     <props>
-        <prop name="eid" displayName="ID" propId="1" tagSet="seq" mandatory="true" queryable="true" sortable="true"
+        <prop name="id" displayName="ID" propId="1" tagSet="seq" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="false">
             <schema type="java.lang.String" precision="32"/>
         </prop>
@@ -73,11 +73,11 @@
             <schema type="java.lang.String" precision="2000"/>
         </prop>
         <prop name="app" tagSet="pub,ref-pub" ext:kind="to-one" internal="true" queryable="true"
-              ext:joinLeftProp="appId" ext:joinRightProp="eid" insertable="false" updatable="false" mandatory="true"
+              ext:joinLeftProp="appId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
               lazy="true">
             <schema bizObjName="App"/>
         </prop>
-        <prop name="entities" tagSet="pub" ext:kind="to-many" internal="true" ext:joinLeftProp="eid"
+        <prop name="entities" tagSet="pub" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
               ext:joinRightProp="serviceId" insertable="false" updatable="false" lazy="true">
             <schema>
                 <item bizObjName="AppEntity"/>

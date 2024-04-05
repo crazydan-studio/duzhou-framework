@@ -34,11 +34,16 @@
             <artifactId>starter-quarkus</artifactId>
         </dependency>
 
-        <!--支持 OSS 存储-->
+        <!-- 支持文件上传和 OSS 存储 -->
+        <dependency>
+            <groupId>io.github.entropy-cloud</groupId>
+            <artifactId>nop-file-quarkus</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-integration-oss</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-mysql</artifactId>
