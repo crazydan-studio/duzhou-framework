@@ -1,6 +1,6 @@
 {
   "type": "page",
-  "title": "应用 API 服务",
+  "title": "应用 ORM 模型",
   "asideResizor": true,
   "asideMinWidth": 150,
   "asideMaxWidth": 400,
@@ -183,7 +183,7 @@
                         "name": "status",
                         "label": "状态",
                         "static": true,
-                        "source": "@dict:app_designer/app-status"
+                        "source": "@dict:app_dev/app-status"
                       },
                       {
                         "type": "text",
@@ -199,7 +199,7 @@
                   "label": "状态",
                   "required": true,
                   "clearable": true,
-                  "source": "@dict:app_designer/service-status",
+                  "source": "@dict:app_dev/service-status",
                   "value": -1
                 },
                 {
@@ -323,7 +323,7 @@
                       "type": "list-select",
                       "name": "status",
                       "label": "状态",
-                      "source": "@dict:app_designer/app-status"
+                      "source": "@dict:app_dev/app-status"
                     },
                     {
                       "type": "group",
@@ -381,7 +381,7 @@
           "name": "status",
           "label": "状态",
           "static": true,
-          "source": "@dict:app_designer/service-status"
+          "source": "@dict:app_dev/service-status"
         },
         {
           "type": "operation",
@@ -501,7 +501,7 @@
                             "name": "status",
                             "label": "状态",
                             "static": true,
-                            "source": "@dict:app_designer/app-status"
+                            "source": "@dict:app_dev/app-status"
                           },
                           {
                             "type": "text",
@@ -517,7 +517,7 @@
                       "label": "状态",
                       "required": true,
                       "clearable": true,
-                      "source": "@dict:app_designer/service-status"
+                      "source": "@dict:app_dev/service-status"
                     },
                     {
                       "type": "textarea",

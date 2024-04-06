@@ -23,32 +23,35 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
-        label: '应用设计',
+        label: '应用开发',
         children: [
           {
             label: '应用管理',
-            url: 'app-designer',
+            url: 'app-dev',
             icon: 'fa-solid fa-globe',
-            schemaApi: 'get:/pages/admin/demo/app-designer.json',
+            schemaApi: 'get:/pages/admin/demo/app-dev.json',
             children: [
               {
                 label: 'API 服务',
-                url: 'services',
+                url: 'service',
                 icon: 'fa-solid fa-globe',
-                schemaApi: 'get:/pages/admin/demo/app-designer-services.json'
-              },
-              {
-                label: 'ORM 模型',
-                url: 'entities',
-                icon: 'fa-solid fa-globe',
-                schemaApi: 'get:/pages/admin/demo/app-designer-entities.json'
+                schemaApi: 'get:/pages/admin/demo/app-dev-service.json',
+                children: [
+                  {
+                    label: 'ORM 模型',
+                    url: 'entity',
+                    icon: 'fa-solid fa-globe',
+                    schemaApi:
+                      'get:/pages/admin/demo/app-dev-service-entity.json'
+                  }
+                ]
               }
             ]
           }
         ]
       },
       {
-        label: '应用开发',
+        label: '应用设计',
         children: [
           {
             label: '应用管理',

@@ -19,3 +19,66 @@
 
 /* 样式参考:  */
 
+.amis-Form-item.amis-Form-item--horizontal {
+  .amis-Form-label {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 0;
+  }
+}
+
+.amis-Form-group.amis-Form-group--horizontal {
+  display: flex;
+  align-items: center;
+}
+
+.service-app-nav {
+  .logo {
+    min-width: 2rem;
+    min-height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
+    margin-right: 0.5rem;
+  }
+
+  .amis-Tree-itemArrowPlaceholder {
+    width: 0;
+  }
+
+  .amis-Tree-item {
+    padding: 0.25rem;
+
+    &:hover .amis-Tree-itemText {
+      color: #2468f2;
+    }
+
+    &:has(.amis-Tree-itemLabel.is-checked) {
+      &,
+      .amis-Tree-itemLabel-item {
+        background-color: #e8e9eb;
+      }
+
+      .amis-Tree-itemText {
+        color: #2468f2;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        border-right: 0.1875rem solid #2468f2;
+        transform: scaleY(1);
+        opacity: 1;
+        transition: transform 0.15s cubic-bezier(0.645, 0.045, 0.355, 1),
+          opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+    }
+
+    .amis-Tree-itemLabel {
+      margin-bottom: 0;
+    }
+  }
+}
