@@ -1,7 +1,7 @@
 {
   "type": "page",
-  "title": "应用开发（自举）",
-  "subTitle": "自举阶段的应用开发",
+  "title": "应用设计器",
+  "subTitle": "应用设计与应用开发",
   "body": [
     {
       "type": "crud",
@@ -11,7 +11,7 @@
       "pageField": "page",
       "perPageField": "pageSize",
       "api": {
-        "url": "@query:App__findPage",
+        "url": "@query:DevApp__findPage",
         "gql:selection": "total,items{id,ver,title,code,status,version,logo,url,classPkgName,description}",
         "filter_": {
           "$type": "or",
@@ -51,7 +51,7 @@
             "body": {
               "type": "form",
               "api": {
-                "url": "@mutation:App__save",
+                "url": "@mutation:DevApp__save",
                 "gql:selection": "id"
               },
               "body": [
@@ -62,7 +62,7 @@
                   "required": true,
                   "accept": ".jpeg,.jpg,.png,.gif,.svg",
                   "uploadBtnText": "点击上传应用图标",
-                  "receiver": "/f/upload?bizObjName=App&fieldName=logo"
+                  "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo"
                 },
                 {
                   "type": "input-text",
@@ -82,7 +82,7 @@
                   "label": "状态",
                   "required": true,
                   "clearable": true,
-                  "source": "@dict:app/app-status",
+                  "source": "@dict:app_designer/app-status",
                   "value": -1
                 },
                 {
@@ -136,11 +136,10 @@
       "footerToolbar": ["switch-per-page", "statistics", "pagination"],
       "bulkActions": [
         {
-          "type": "button",
           "label": "删除选中",
           "icon": "fa-solid fa-trash-can",
-          "api": "@mutaion:App__batchDelete?ids=${ids|raw}",
           "actionType": "ajax",
+          "api": "@mutation:DevApp__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
           "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.code + ')</li>'), '')}</ul>"
         }
@@ -187,7 +186,7 @@
           "name": "status",
           "label": "状态",
           "static": true,
-          "source": "@dict:app/app-status"
+          "source": "@dict:app_designer/app-status"
         },
         {
           "type": "text",
@@ -219,7 +218,7 @@
                 "body": {
                   "type": "form",
                   "api": {
-                    "url": "@mutation:App__update?id=${id}",
+                    "url": "@mutation:DevApp__update?id=${id}",
                     "gql:selection": "id"
                   },
                   "body": [
@@ -236,7 +235,7 @@
                       "required": true,
                       "accept": ".jpeg,.jpg,.png,.gif,.svg",
                       "uploadBtnText": "点击上传应用图标",
-                      "receiver": "/f/upload?bizObjName=App&fieldName=logo&bizObjId=${id}"
+                      "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${id}"
                     },
                     {
                       "type": "input-text",
@@ -259,7 +258,7 @@
                       "label": "状态",
                       "required": true,
                       "clearable": true,
-                      "source": "@dict:app/app-status",
+                      "source": "@dict:app_designer/app-status",
                       "value": "${status}"
                     },
                     {
@@ -298,7 +297,7 @@
               "label": "删除",
               "type": "button",
               "level": "danger",
-              "api": "@mutation:App__delete?id=${id}",
+              "api": "@mutation:DevApp__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
               "confirmText": "确定要删除应用「<b>${title} (${code})</b>」？"

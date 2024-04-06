@@ -25,10 +25,10 @@ window.__APP_SITE_CONFIG__ = {
       {
         children: [
           {
-            label: '应用开发（自举）',
+            label: '应用设计器',
             url: 'app-self',
             icon: 'fa-solid fa-globe',
-            schemaApi: 'get:/pages/admin/demo/self-app.json'
+            schemaApi: 'get:/pages/admin/demo/app-designer.json'
           }
         ]
       },
