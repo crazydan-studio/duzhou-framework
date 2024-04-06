@@ -17,6 +17,9 @@
         <option value="$PROJECT_DIR$/800.app/orm/pom.xml" />
         <option value="$PROJECT_DIR$/800.app/biz/pom.xml" />
         <option value="$PROJECT_DIR$/800.app/starter/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app-designer/orm/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app-designer/starter/pom.xml" />
+        <option value="$PROJECT_DIR$/800.app-designer/biz/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

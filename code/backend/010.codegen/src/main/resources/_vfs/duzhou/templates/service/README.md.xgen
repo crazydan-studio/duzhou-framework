@@ -4,4 +4,10 @@
 ===================================
 
 ${ormModel['ext:description']}
-]]></c:unit>
+]]>
+    <c:if test="${ormModel['ext:license']}"><![CDATA[
+## 许可协议
+
+${ormModel['ext:license']}
+]]></c:if>
+</c:unit>

@@ -1,0 +1,16 @@
+package io.crazydan.duzhou.framework.app_designer.orm.entity;
+
+import io.nop.api.core.annotations.biz.BizObjName;
+import io.crazydan.duzhou.framework.app_designer.orm.entity._gen._DevAppEntity;
+
+    
+    
+/** 应用 ORM 实体的 ORM 实体 */
+@BizObjName("DevAppEntity")
+public class DevAppEntity extends _DevAppEntity {
+    
+
+    
+    
+}
+    

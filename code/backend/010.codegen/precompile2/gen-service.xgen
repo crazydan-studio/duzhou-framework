@@ -3,7 +3,7 @@
 <c:script xmlns:c="c"><![CDATA[
     let moduleConfigs = {
         // 服务模块定义文件，其位置相对于该 xgen 脚本所在的目录
-        '800.app': '../model/app.service.xlsx',
+        '800.app-designer': '../model/app-designer.service.xlsx',
     };
 
     moduleConfigs.forEach((mavenModuleDir, serviceXlsxPath) => {

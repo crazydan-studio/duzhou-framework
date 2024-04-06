@@ -35,7 +35,9 @@
                 <field name="ext:mavenArtifactId" mandatory="true" />
                 <field name="ext:mavenVersion" mandatory="true" />
 
+                <field name="ext:dbName" displayName="db.name" />
                 <field name="ext:dialect" displayName="db.dialect" />
+                <field name="ext:license" displayName="许可协议" />
             </fields>
         </sheet>
 

@@ -1,12 +1,10 @@
-<c:unit xmlns:c="c" xmlns:xpl="xpl"
-        xpl:outputMode="text"
-><![CDATA[nop:
+nop:
   debug: true
   orm:
     init-database-schema: true
   datasource:
     driver-class-name: org.h2.Driver
-    jdbc-url: jdbc:h2:./db/${ormModel['ext:dbName']}
+    jdbc-url: jdbc:h2:./db/duzhou_app
     username: sa
     password:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,7 +14,7 @@
   file:
     # 可选值: local, oss
     store-impl: local
-    store-dir: "${'$'}{project.build.directory}/files"
+    store-dir: "${project.build.directory}/files"
   integration:
     # MinIO 容器部署文档: https://min.io/docs/minio/container/operations/install-deploy-manage/deploy-minio-single-node-single-drive.html#minio-snsd
     oss:
@@ -46,7 +44,7 @@ quarkus:
 
   http:
     host: 0.0.0.0
-    cors: true
+    cors: false
 
   log:
     level: INFO
@@ -54,4 +52,3 @@ quarkus:
     category:
       "io.nop":
         level: INFO
-]]></c:unit>
