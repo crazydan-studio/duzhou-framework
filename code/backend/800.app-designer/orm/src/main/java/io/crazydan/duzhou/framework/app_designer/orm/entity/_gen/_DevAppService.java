@@ -60,16 +60,12 @@ public class _DevAppService extends DynamicOrmEntity{
     public static final String PROP_NAME_status = "status";
     public static final int PROP_ID_status = 10;
     
-    /* 版本号: VERSION VARCHAR */
-    public static final String PROP_NAME_version = "version";
-    public static final int PROP_ID_version = 11;
-    
     /* 说明: DESCRIPTION VARCHAR */
     public static final String PROP_NAME_description = "description";
-    public static final int PROP_ID_description = 12;
+    public static final int PROP_ID_description = 11;
     
 
-    private static int _PROP_ID_BOUND = 13;
+    private static int _PROP_ID_BOUND = 12;
 
     
     /* relation:  */
@@ -82,7 +78,7 @@ public class _DevAppService extends DynamicOrmEntity{
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[13];
+    private static final String[] PROP_ID_TO_NAME = new String[12];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -115,9 +111,6 @@ public class _DevAppService extends DynamicOrmEntity{
       
           PROP_ID_TO_NAME[PROP_ID_status] = PROP_NAME_status;
           PROP_NAME_TO_ID.put(PROP_NAME_status, PROP_ID_status);
-      
-          PROP_ID_TO_NAME[PROP_ID_version] = PROP_NAME_version;
-          PROP_NAME_TO_ID.put(PROP_NAME_version, PROP_ID_version);
       
           PROP_ID_TO_NAME[PROP_ID_description] = PROP_NAME_description;
           PROP_NAME_TO_ID.put(PROP_NAME_description, PROP_ID_description);
@@ -154,9 +147,6 @@ public class _DevAppService extends DynamicOrmEntity{
     
     /* 状态: STATUS */
     private java.lang.Integer _status;
-    
-    /* 版本号: VERSION */
-    private java.lang.String _version;
     
     /* 说明: DESCRIPTION */
     private java.lang.String _description;
@@ -261,9 +251,6 @@ public class _DevAppService extends DynamicOrmEntity{
         
             case PROP_ID_status:
                return getStatus();
-        
-            case PROP_ID_version:
-               return getVersion();
         
             case PROP_ID_description:
                return getDescription();
@@ -379,16 +366,6 @@ public class _DevAppService extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_version:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_version));
-               }
-               setVersion(typedValue);
-               break;
-            }
-        
             case PROP_ID_description:{
                java.lang.String typedValue = null;
                if(value != null){
@@ -474,13 +451,6 @@ public class _DevAppService extends DynamicOrmEntity{
             case PROP_ID_status:{
                onInitProp(propId);
                this._status = (java.lang.Integer)value;
-               
-               break;
-            }
-        
-            case PROP_ID_version:{
-               onInitProp(propId);
-               this._version = (java.lang.String)value;
                
                break;
             }
@@ -684,25 +654,6 @@ public class _DevAppService extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_status,value)){
             this._status = value;
             internalClearRefs(PROP_ID_status);
-            
-        }
-    }
-    
-    /**
-     * 版本号: VERSION
-     */
-    public java.lang.String getVersion(){
-         onPropGet(PROP_ID_version);
-         return _version;
-    }
-
-    /**
-     * 版本号: VERSION
-     */
-    public void setVersion(java.lang.String value){
-        if(onPropSet(PROP_ID_version,value)){
-            this._version = value;
-            internalClearRefs(PROP_ID_version);
             
         }
     }

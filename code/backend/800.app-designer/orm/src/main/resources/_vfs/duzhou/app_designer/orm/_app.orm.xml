@@ -19,11 +19,13 @@
 
     <dicts>
         <dict label="应用状态" name="app_designer/app-status" valueType="int" i18n-en:label="Application Status">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
             <option code="unset" label="待定" value="-1"/>
             <option code="disabled" label="已禁用" value="0"/>
             <option code="enabled" label="已启用" value="1"/>
         </dict>
         <dict label="服务状态" name="app_designer/service-status" valueType="int" i18n-en:label="Service Status">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
             <option code="unset" label="待定" value="-1"/>
             <option code="disabled" label="已禁用" value="0"/>
             <option code="enabled" label="已启用" value="1"/>
@@ -63,8 +65,8 @@
                         propId="6" stdDataType="int" stdSqlType="INTEGER"/>
                 <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
                         propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CODE" comment="唯一编码，包含小写字母、短横线或数字" displayName="编码" mandatory="true" name="code"
-                        precision="50" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
+                        mandatory="true" name="code" precision="50" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="9"
                         stdDataType="int" stdSqlType="INTEGER" ext:dict="app_designer/app-status"/>
                 <column code="VERSION" displayName="版本号" mandatory="true" name="version" precision="50" propId="10"
@@ -81,6 +83,8 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="LICENSE" displayName="许可协议" name="license" precision="2000" propId="16"
                         stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="URL_PROTO" defaultValue="https" displayName="访问地址协议" name="urlProto" precision="10"
+                        propId="17" stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
             <relations>
                 <to-many name="services"
@@ -168,13 +172,12 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CODE" comment="唯一编码，包含小写字母、短横线或数字" displayName="编码" mandatory="true" name="code"
-                        precision="100" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
+                        mandatory="true" name="code" precision="100" propId="9" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
                 <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="10"
                         stdDataType="int" stdSqlType="INTEGER" ext:dict="app_designer/service-status"/>
-                <column code="VERSION" comment="未设置时，与应用版本号一致" displayName="版本号" name="version" precision="50"
-                        propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="12"
+                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="11"
                         stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的后台服务</comment>

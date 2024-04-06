@@ -84,8 +84,12 @@ public class _DevApp extends DynamicOrmEntity{
     public static final String PROP_NAME_license = "license";
     public static final int PROP_ID_license = 16;
     
+    /* 访问地址协议: URL_PROTO VARCHAR */
+    public static final String PROP_NAME_urlProto = "urlProto";
+    public static final int PROP_ID_urlProto = 17;
+    
 
-    private static int _PROP_ID_BOUND = 17;
+    private static int _PROP_ID_BOUND = 18;
 
     
     /* relation:  */
@@ -95,7 +99,7 @@ public class _DevApp extends DynamicOrmEntity{
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[17];
+    private static final String[] PROP_ID_TO_NAME = new String[18];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -147,6 +151,9 @@ public class _DevApp extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_license] = PROP_NAME_license;
           PROP_NAME_TO_ID.put(PROP_NAME_license, PROP_ID_license);
       
+          PROP_ID_TO_NAME[PROP_ID_urlProto] = PROP_NAME_urlProto;
+          PROP_NAME_TO_ID.put(PROP_NAME_urlProto, PROP_ID_urlProto);
+      
     }
 
     
@@ -197,6 +204,9 @@ public class _DevApp extends DynamicOrmEntity{
     
     /* 许可协议: LICENSE */
     private java.lang.String _license;
+    
+    /* 访问地址协议: URL_PROTO */
+    private java.lang.String _urlProto;
     
 
     public _DevApp(){
@@ -316,6 +326,9 @@ public class _DevApp extends DynamicOrmEntity{
         
             case PROP_ID_license:
                return getLicense();
+        
+            case PROP_ID_urlProto:
+               return getUrlProto();
         
            default:
               return super.orm_propValue(propId);
@@ -488,6 +501,16 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
+            case PROP_ID_urlProto:{
+               java.lang.String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_urlProto));
+               }
+               setUrlProto(typedValue);
+               break;
+            }
+        
            default:
               super.orm_propValue(propId,value);
         }
@@ -605,6 +628,13 @@ public class _DevApp extends DynamicOrmEntity{
             case PROP_ID_license:{
                onInitProp(propId);
                this._license = (java.lang.String)value;
+               
+               break;
+            }
+        
+            case PROP_ID_urlProto:{
+               onInitProp(propId);
+               this._urlProto = (java.lang.String)value;
                
                break;
             }
@@ -915,6 +945,25 @@ public class _DevApp extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_license,value)){
             this._license = value;
             internalClearRefs(PROP_ID_license);
+            
+        }
+    }
+    
+    /**
+     * 访问地址协议: URL_PROTO
+     */
+    public java.lang.String getUrlProto(){
+         onPropGet(PROP_ID_urlProto);
+         return _urlProto;
+    }
+
+    /**
+     * 访问地址协议: URL_PROTO
+     */
+    public void setUrlProto(java.lang.String value){
+        if(onPropSet(PROP_ID_urlProto,value)){
+            this._urlProto = value;
+            internalClearRefs(PROP_ID_urlProto);
             
         }
     }
