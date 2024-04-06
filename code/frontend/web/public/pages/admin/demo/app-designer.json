@@ -1,18 +1,17 @@
 {
   "type": "page",
-  "title": "应用设计器",
-  "subTitle": "应用设计与应用开发",
+  "title": "应用列表",
   "body": [
     {
       "type": "crud",
-      "name": "app-table",
+      "name": "data-table",
       "syncLocation": true,
       "autoFillHeight": true,
       "pageField": "page",
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevApp__findPage",
-        "gql:selection": "total,items{id,ver,title,code,status,version,logo,url,classPkgName,description}",
+        "gql:selection": "total,items{id,ver,title,code,status,version,logo,url,urlProto,classPkgName,description}",
         "filter_": {
           "$type": "or",
           "$body": [
@@ -89,7 +88,8 @@
                   "type": "input-text",
                   "name": "version",
                   "label": "版本号",
-                  "required": true
+                  "required": true,
+                  "value": "0.1.0-SNAPSHOT"
                 },
                 {
                   "type": "input-text",
@@ -98,9 +98,29 @@
                   "required": true
                 },
                 {
-                  "type": "input-text",
-                  "name": "url",
-                  "label": "访问地址"
+                  "type": "input-group",
+                  "label": "访问地址",
+                  "body": [
+                    {
+                      "type": "select",
+                      "name": "urlProto",
+                      "value": "https",
+                      "options": [
+                        {
+                          "label": "https://",
+                          "value": "https"
+                        },
+                        {
+                          "label": "http://",
+                          "value": "http"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "url"
+                    }
+                  ]
                 },
                 {
                   "type": "textarea",
@@ -119,7 +139,7 @@
           "label": "刷新列表",
           "icon": "fa fa-repeat",
           "actionType": "reload",
-          "target": "app-table"
+          "target": "data-table"
         },
         {
           "type": "columns-toggler",
@@ -172,9 +192,15 @@
           }
         },
         {
-          "type": "image",
-          "name": "logo",
-          "label": "图标"
+          "type": "container",
+          "label": "图标",
+          "body": {
+            "type": "image",
+            "name": "logo",
+            "enlargeAble": true,
+            "width": "48px",
+            "height": "48px"
+          }
         },
         {
           "type": "text",
@@ -199,9 +225,14 @@
           "label": "包名"
         },
         {
-          "type": "link",
-          "name": "url",
-          "label": "访问地址"
+          "type": "container",
+          "label": "访问地址",
+          "body": {
+            "type": "link",
+            "hiddenOn": "${!url}",
+            "label": "访问地址",
+            "href": "${urlProto}://${url}"
+          }
         },
         {
           "type": "operation",
@@ -224,14 +255,12 @@
                   "body": [
                     {
                       "type": "hidden",
-                      "name": "ver",
-                      "value": "${ver}"
+                      "name": "ver"
                     },
                     {
                       "type": "input-image",
                       "name": "logo",
                       "label": "图标",
-                      "value": "${logo}",
                       "required": true,
                       "accept": ".jpeg,.jpg,.png,.gif,.svg",
                       "uploadBtnText": "点击上传应用图标",
@@ -241,14 +270,12 @@
                       "type": "input-text",
                       "name": "title",
                       "label": "名称",
-                      "value": "${title}",
                       "required": true
                     },
                     {
                       "type": "input-text",
                       "name": "code",
                       "label": "编码",
-                      "value": "${code}",
                       "required": true,
                       "disabled": true
                     },
@@ -258,34 +285,48 @@
                       "label": "状态",
                       "required": true,
                       "clearable": true,
-                      "source": "@dict:app_designer/app-status",
-                      "value": "${status}"
+                      "source": "@dict:app_designer/app-status"
                     },
                     {
                       "type": "input-text",
                       "name": "version",
                       "label": "版本号",
-                      "required": true,
-                      "value": "${version}"
+                      "required": true
                     },
                     {
                       "type": "input-text",
                       "name": "classPkgName",
                       "label": "代码包名",
-                      "required": true,
-                      "value": "${classPkgName}"
+                      "required": true
                     },
                     {
-                      "type": "input-text",
-                      "name": "url",
+                      "type": "input-group",
                       "label": "访问地址",
-                      "value": "${url}"
+                      "body": [
+                        {
+                          "type": "select",
+                          "name": "urlProto",
+                          "options": [
+                            {
+                              "label": "https://",
+                              "value": "https"
+                            },
+                            {
+                              "label": "http://",
+                              "value": "http"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "url"
+                        }
+                      ]
                     },
                     {
                       "type": "textarea",
                       "name": "description",
                       "label": "描述",
-                      "value": "${description}",
                       "showCounter": true,
                       "clearable": true
                     }

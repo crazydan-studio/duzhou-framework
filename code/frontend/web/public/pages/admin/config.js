@@ -23,12 +23,27 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
+        label: '应用设计',
         children: [
           {
-            label: '应用设计器',
-            url: 'app-self',
+            label: '应用管理',
+            url: 'app-designer',
             icon: 'fa-solid fa-globe',
-            schemaApi: 'get:/pages/admin/demo/app-designer.json'
+            schemaApi: 'get:/pages/admin/demo/app-designer.json',
+            children: [
+              {
+                label: 'API 服务',
+                url: 'services',
+                icon: 'fa-solid fa-globe',
+                schemaApi: 'get:/pages/admin/demo/app-designer-services.json'
+              },
+              {
+                label: 'ORM 模型',
+                url: 'entities',
+                icon: 'fa-solid fa-globe',
+                schemaApi: 'get:/pages/admin/demo/app-designer-entities.json'
+              }
+            ]
           }
         ]
       },
