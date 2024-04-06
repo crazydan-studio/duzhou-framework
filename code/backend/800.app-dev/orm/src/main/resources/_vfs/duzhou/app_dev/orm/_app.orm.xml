@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="app-dev" ext:entityPackageName="io.crazydan.duzhou.framework.app_dev.orm.entity"
+     ext:moduleName="duzhou-app_dev" ext:basePackageName="io.crazydan.duzhou.framework.app_dev"
+     ext:mavenVersion="0.1.0-SNAPSHOT" ext:dbName="duzhou_app" ext:code="duzhou-app_dev" ext:title="应用设计器"
+     ext:registerShortName="true"
+     ext:license="[LGPL 3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html)
+
+许可协议要点：
+- 本产品的源码不能够用于闭源软件，也不能在闭源软件中引入本产品源码，并且对本产品源码的修改部分需开源
+  - 若仅仅是将本产品编译构建后的产物作为依赖引入或独立/集成部署，则没有开源要求，可以闭源使用
+- 对于新增代码或衍生代码没有开源要求，并可采用其他许可协议发布"
+     ext:description="应用设计与应用开发" ext:mavenGroupId="io.crazydan.duzhou.framework" ext:dialect="mysql"
+     x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en"
+     xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl" xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <dicts>
+        <dict label="应用状态" name="app_dev/app-status" valueType="int" i18n-en:label="Application Status">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="unset" label="待定" value="-1"/>
+            <option code="disabled" label="已禁用" value="0"/>
+            <option code="enabled" label="已启用" value="1"/>
+        </dict>
+        <dict label="服务状态" name="app_dev/service-status" valueType="int" i18n-en:label="Service Status">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="unset" label="待定" value="-1"/>
+            <option code="disabled" label="已禁用" value="0"/>
+            <option code="enabled" label="已启用" value="1"/>
+        </dict>
+    </dicts>
+
+    <domains>
+        <domain name="createdBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="updatedBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="createTime" stdSqlType="TIMESTAMP"/>
+        <domain name="updateTime" stdSqlType="TIMESTAMP"/>
+        <domain name="version" stdSqlType="INTEGER"/>
+        <domain name="image" precision="200" stdDomain="file" stdSqlType="VARCHAR"/>
+        <domain name="file" precision="200" stdDomain="file" stdSqlType="VARCHAR"/>
+        <domain name="email" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="phone" precision="100" stdSqlType="VARCHAR"/>
+    </domains>
+
+    <entities>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevApp" createTimeProp="createdAt"
+                createrProp="createdBy" displayName="应用" name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevApp"
+                registerShortName="true" tableName="duzhou_dev_app" updateTimeProp="updatedAt" updaterProp="updatedBy"
+                versionProp="ver" i18n-en:displayName="Application">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="CREATED_BY" displayName="创建人" domain="createdBy" name="createdBy" precision="50"
+                        propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATED_AT" displayName="创建时间" domain="createTime" mandatory="true" name="createdAt"
+                        propId="3" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+                <column code="UPDATED_BY" displayName="更新人" domain="updatedBy" name="updatedBy" precision="50"
+                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATED_AT" displayName="更新时间" domain="updateTime" mandatory="true" name="updatedAt"
+                        propId="5" stdDataType="timestamp" stdSqlType="TIMESTAMP" tagSet="sort,sort-desc"/>
+                <column code="VER" defaultValue="0" displayName="数据版本" domain="version" mandatory="true" name="ver"
+                        propId="6" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
+                        propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
+                        mandatory="true" name="code" precision="50" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="9"
+                        stdDataType="int" stdSqlType="INTEGER" ext:dict="app_dev/app-status"/>
+                <column code="VERSION" displayName="版本号" mandatory="true" name="version" precision="50" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LOGO" displayName="图片" domain="image" name="logo" precision="200" propId="11"
+                        stdDataType="string" stdDomain="file" stdSqlType="VARCHAR"/>
+                <column code="URL" displayName="访问地址" name="url" precision="200" propId="12" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CLASS_PKG_NAME" displayName="代码包名" mandatory="true" name="classPkgName" precision="200"
+                        propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COPYRIGHT" displayName="版权声明" name="copyright" precision="2000" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LICENSE" displayName="许可协议" name="license" precision="2000" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="URL_PROTO" defaultValue="https" displayName="访问地址协议" name="urlProto" precision="10"
+                        propId="17" stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <relations>
+                <to-many name="services" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService"
+                         refPropName="app" tagSet="pub">
+                    <join>
+                        <on leftProp="id" rightProp="appId"/>
+                    </join>
+                </to-many>
+            </relations>
+            <unique-keys>
+                <unique-key columns="code" constraint="UK_DEV_APP_CODE" name="codeKey"/>
+            </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain" displayName="域定义"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain" registerShortName="true"
+                tableName="duzhou_dev_app_domain" i18n-en:displayName="Domain">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
+                <column code="CODE" comment="唯一标识，按变量命名规范定义" displayName="编码" mandatory="true" name="code"
+                        precision="50" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STD_DOMAIN" displayName="标准域" name="stdDomain" precision="50" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-domain"/>
+                <column code="STD_SQL_TYPE" displayName="标准 SQL 数据类型" mandatory="true" name="stdSqlType" precision="50"
+                        propId="6" stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-sql-type"/>
+                <column code="PRECISION" displayName="数据长度" name="precision" propId="7" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="SCALE" displayName="小数位数" name="scale" propId="8" stdDataType="int" stdSqlType="INTEGER"/>
+            </columns>
+            <comment>对应 ORM 实体的字段属性【数据域】</comment>
+            <unique-keys>
+                <unique-key columns="code,appId" constraint="UK_DEV_APP_DOMAIN_CODE" name="codeKey">
+                    <comment>在应用内唯一</comment>
+                </unique-key>
+            </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict" displayName="字典定义"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict" registerShortName="true"
+                tableName="duzhou_dev_app_dict" i18n-en:displayName="Dict">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
+                <column code="CODE" comment="唯一标识，按文件命名规范定义" displayName="编码" mandatory="true" name="code"
+                        precision="100" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OPTION_TYPE" displayName="字典项类型" mandatory="true" name="optionType" precision="50"
+                        propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OPTIONS" comment="以 JSON 形式存储" displayName="字典项列表" mandatory="true" name="options"
+                        precision="2000" propId="6" stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <comment>对应 ORM 实体的字段属性【字典】</comment>
+            <unique-keys>
+                <unique-key columns="code,appId" constraint="UK_DEV_APP_DICT_CODE" name="codeKey">
+                    <comment>在应用内唯一</comment>
+                </unique-key>
+            </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService" createTimeProp="createdAt"
+                createrProp="createdBy" displayName="应用服务"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService" registerShortName="true"
+                tableName="duzhou_dev_app_service" updateTimeProp="updatedAt" updaterProp="updatedBy" versionProp="ver"
+                i18n-en:displayName="Application Service">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="CREATED_BY" displayName="创建人" domain="createdBy" name="createdBy" precision="50"
+                        propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATED_AT" displayName="创建时间" domain="createTime" mandatory="true" name="createdAt"
+                        propId="3" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+                <column code="UPDATED_BY" displayName="更新人" domain="updatedBy" name="updatedBy" precision="50"
+                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATED_AT" displayName="更新时间" domain="updateTime" mandatory="true" name="updatedAt"
+                        propId="5" stdDataType="timestamp" stdSqlType="TIMESTAMP" tagSet="sort,sort-desc"/>
+                <column code="VER" defaultValue="0" displayName="数据版本" domain="version" mandatory="true" name="ver"
+                        propId="6" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
+                        mandatory="true" name="code" precision="100" propId="9" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="10"
+                        stdDataType="int" stdSqlType="INTEGER" ext:dict="app_dev/service-status"/>
+                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <comment>应用的后台服务</comment>
+            <relations>
+                <to-one name="app" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevApp"
+                        refPropName="services" tagSet="pub,ref-pub">
+                    <join>
+                        <on leftProp="appId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+                <to-many name="entities" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
+                         refPropName="service" tagSet="pub">
+                    <join>
+                        <on leftProp="id" rightProp="serviceId"/>
+                    </join>
+                </to-many>
+            </relations>
+            <unique-keys>
+                <unique-key columns="code,appId" constraint="UK_DEV_APP_SERVICE_CODE" name="codeKey">
+                    <comment>在应用内唯一</comment>
+                </unique-key>
+            </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity" createTimeProp="createdAt"
+                createrProp="createdBy" displayName="应用 ORM 实体"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity" registerShortName="true"
+                tableName="duzhou_dev_app_entity" updateTimeProp="updatedAt" updaterProp="updatedBy" versionProp="ver"
+                i18n-en:displayName="Application ORM Entity">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="CREATED_BY" displayName="创建人" domain="createdBy" name="createdBy" precision="50"
+                        propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATED_AT" displayName="创建时间" domain="createTime" mandatory="true" name="createdAt"
+                        propId="3" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+                <column code="UPDATED_BY" displayName="更新人" domain="updatedBy" name="updatedBy" precision="50"
+                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATED_AT" displayName="更新时间" domain="updateTime" mandatory="true" name="updatedAt"
+                        propId="5" stdDataType="timestamp" stdSqlType="TIMESTAMP" tagSet="sort,sort-desc"/>
+                <column code="VER" defaultValue="0" displayName="数据版本" domain="version" mandatory="true" name="ver"
+                        propId="6" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="SERVICE_ID" displayName="所属服务" mandatory="true" name="serviceId" precision="32" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CLASS_NAME" displayName="类名" mandatory="true" name="className" precision="100" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TABLE_NAME" displayName="数据库表名" mandatory="true" name="tableName" precision="100"
+                        propId="10" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COLUMNS" comment="以 JSON 形式存储" displayName="字段列表" mandatory="true" name="columns"
+                        precision="4000" propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UNIQUE_KEYS" comment="以 JSON 形式存储" displayName="唯一键列表" name="uniqueKeys" precision="4000"
+                        propId="12" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RELATIONS" comment="以 JSON 形式存储" displayName="关联列表" name="relations" precision="4000"
+                        propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <comment>应用的持久化实体</comment>
+            <relations>
+                <to-one name="service" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService"
+                        refPropName="entities" tagSet="pub,ref-pub">
+                    <join>
+                        <on leftProp="serviceId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+            </relations>
+            <unique-keys>
+                <unique-key columns="className,serviceId" constraint="UK_DEV_APP_ENTITY_CLASS_NAME" name="classNameKey">
+                    <comment>在服务内唯一</comment>
+                </unique-key>
+            </unique-keys>
+        </entity>
+    </entities>
+</orm>
