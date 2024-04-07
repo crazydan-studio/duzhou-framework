@@ -1,7 +1,7 @@
-<c:unit xpl:outputMode="text">package ${entityModel.classPackageName}._gen;
+<c:unit xpl:outputMode="text">package ${basePackageName}.orm.entity._gen;
 
 import io.nop.orm.support.OrmCompositePk;
-import ${entityModel.classPackageName}.${entityModel.simpleClassName};
+import ${basePackageName}.orm.entity.${entityModel.simpleClassName};
 
 /**
  * 用于生成复合主键的帮助类

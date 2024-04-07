@@ -5,6 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text">
+        <![CDATA[<!-- 服务启动器，用于启动单体服务，或者本地开发 -->]]></c:unit>
     <artifactId>${ormModel['ext:mavenArtifactId']}-starter</artifactId>
 
     <parent>
@@ -25,11 +27,11 @@
     <dependencies>
         <dependency>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-            <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
+            <artifactId>${ormModel['ext:mavenArtifactId']}-delta</artifactId>
         </dependency>
         <dependency>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-            <artifactId>${ormModel['ext:mavenArtifactId']}-orm</artifactId>
+            <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
         </dependency>
 
         <dependency>

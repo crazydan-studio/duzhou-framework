@@ -5,6 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<!-- 当前服务的业务逻辑实现 -->]]></c:unit>
     <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
 
     <parent>

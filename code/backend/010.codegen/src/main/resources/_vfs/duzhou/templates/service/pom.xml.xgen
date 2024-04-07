@@ -9,8 +9,10 @@
         <!-- 如果pom文件已经存在，则只是追加module定义 -->
         <project>
             <modules>
+                <module xml:multiple="true">api</module>
                 <module xml:multiple="true">biz</module>
                 <module xml:multiple="true">orm</module>
+                <module xml:multiple="true">delta</module>
                 <module xml:multiple="true">starter</module>
             </modules>
         </project>
@@ -34,8 +36,10 @@
             </parent>
 
             <modules>
+                <module>api</module>
                 <module>biz</module>
                 <module>orm</module>
+                <module>delta</module>
                 <module>starter</module>
             </modules>
         </project>
