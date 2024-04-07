@@ -1,6 +1,6 @@
 {
   "type": "page",
-  "title": "应用 ORM 模型",
+  "title": "应用实体模型列表",
   "asideResizor": true,
   "asideMinWidth": 150,
   "asideMaxWidth": 400,
@@ -8,6 +8,7 @@
     "type": "form",
     "wrapWithPanel": false,
     "submitOnInit": true,
+    "className": "app-dev-nav",
     "target": "data-table",
     "body": {
       "type": "input-tree",
@@ -16,8 +17,7 @@
       "submitOnChange": true,
       "selectFirst": true,
       "showIcon": false,
-      "itemHeight": 42,
-      "menuTpl": "<span class='flex flex-row items-center'><img src='${logo}' class='w-8 h-8 mr-2' /> <span>${label} (${code})</span></span>",
+      "menuTpl": "<span class='flex flex-row items-center'><img src='${logo}' class='logo' /> <span>${label} (${code})</span></span>",
       "searchable": true,
       "searchConfig": {
         "sticky": true
@@ -44,19 +44,14 @@
       "pageField": "page",
       "perPageField": "pageSize",
       "api": {
-        "url": "@query:DevAppService__findPage",
-        "gql:selection": "total,items{id,ver,appId,app{id,title,code},title,code,status,description}",
+        "url": "@query:DevAppEntity__findPage",
+        "gql:selection": "total,items{id,ver,serviceId,service{id,title,code},title,entityName,tableName,tagSet}",
         "filter_": {
           "$type": "or",
           "$body": [
             {
               "$type": "eq",
               "name": "title",
-              "value": ""
-            },
-            {
-              "$type": "eq",
-              "name": "code",
               "value": ""
             }
           ]
@@ -65,6 +60,7 @@
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
           "filter_appId__eq": "${appId}",
+          "filter_serviceId__eq": "${serviceId}",
           "orderBy": [
             {
               "name": "title",
@@ -81,11 +77,11 @@
           "icon": "fa-solid fa-plus",
           "actionType": "dialog",
           "dialog": {
-            "title": "添加新服务",
+            "title": "添加新实体模型",
             "body": {
               "type": "form",
               "api": {
-                "url": "@mutation:DevAppService__save",
+                "url": "@mutation:DevAppEntity__save",
                 "gql:selection": "id"
               },
               "body": [
@@ -97,21 +93,27 @@
                 },
                 {
                   "type": "input-text",
-                  "name": "code",
-                  "label": "编码",
+                  "name": "entityName",
+                  "label": "实体名",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "tableName",
+                  "label": "数据库表名",
                   "required": true
                 },
                 {
                   "type": "picker",
-                  "name": "appId",
-                  "label": "所属应用",
+                  "name": "serviceId",
+                  "label": "所属服务",
                   "required": true,
                   "valueField": "id",
                   "labelField": "title",
                   "size": "lg",
                   "source": {
-                    "url": "@query:DevApp__findPage",
-                    "gql:selection": "total,items{id,title,code,status,version,logo}",
+                    "url": "@query:DevAppService__findPage",
+                    "gql:selection": "total,items{id,title,code,app{id,title,code}}",
                     "filter_": {
                       "$type": "or",
                       "$body": [
@@ -119,17 +121,13 @@
                           "$type": "eq",
                           "name": "title",
                           "value": ""
-                        },
-                        {
-                          "$type": "eq",
-                          "name": "code",
-                          "value": ""
                         }
                       ]
                     },
                     "data": {
                       "offset": "${(page - 1) * pageSize}",
                       "limit": "${pageSize}",
+                      "filter_appId__eq": "${appId}",
                       "orderBy": [
                         {
                           "name": "title",
@@ -138,7 +136,7 @@
                       ]
                     }
                   },
-                  "modalTitle": "请选择服务所属的应用",
+                  "modalTitle": "请选择实体模型所属的服务",
                   "pickerSchema": {
                     "type": "crud",
                     "pageField": "page",
@@ -169,45 +167,84 @@
                         "fixed": "left"
                       },
                       {
-                        "type": "image",
-                        "name": "logo",
-                        "label": "图标"
-                      },
-                      {
                         "type": "text",
                         "name": "code",
                         "label": "编码"
                       },
                       {
-                        "type": "list-select",
-                        "name": "status",
-                        "label": "状态",
-                        "static": true,
-                        "source": "@dict:app_dev/app-status"
-                      },
-                      {
-                        "type": "text",
-                        "name": "version",
-                        "label": "版本号"
+                        "type": "container",
+                        "label": "所属应用",
+                        "body": [
+                          {
+                            "type": "button",
+                            "label": "${app.title} (${app.code})",
+                            "level": "link",
+                            "actionType": "dialog",
+                            "dialog": {
+                              "title": "应用信息",
+                              "size": "lg",
+                              "body": {
+                                "type": "form",
+                                "static": true,
+                                "initApi": {
+                                  "url": "@query:DevApp__get?id=${app.id}",
+                                  "gql:selection": "id,title,code,version,logo,classPkgName"
+                                },
+                                "body": [
+                                  {
+                                    "type": "static-image",
+                                    "name": "logo",
+                                    "label": "图标",
+                                    "enlargeAble": true,
+                                    "width": "128px",
+                                    "height": "128px"
+                                  },
+                                  {
+                                    "type": "group",
+                                    "body": [
+                                      {
+                                        "type": "input-text",
+                                        "name": "title",
+                                        "label": "名称"
+                                      },
+                                      {
+                                        "type": "input-text",
+                                        "name": "code",
+                                        "label": "编码"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "group",
+                                    "body": [
+                                      {
+                                        "type": "input-text",
+                                        "name": "classPkgName",
+                                        "label": "代码包名"
+                                      },
+                                      {
+                                        "type": "input-text",
+                                        "name": "version",
+                                        "label": "版本号"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   }
                 },
                 {
                   "type": "list-select",
-                  "name": "status",
-                  "label": "状态",
-                  "required": true,
+                  "name": "tagSet",
+                  "label": "标签",
+                  "multiple": true,
                   "clearable": true,
-                  "source": "@dict:app_dev/service-status",
-                  "value": -1
-                },
-                {
-                  "type": "textarea",
-                  "name": "description",
-                  "label": "描述",
-                  "showCounter": true,
-                  "clearable": true
+                  "source": "@dict:app_dev/entity-tagset"
                 }
               ]
             }
@@ -239,71 +276,56 @@
           "label": "删除选中",
           "icon": "fa-solid fa-trash-can",
           "actionType": "ajax",
-          "api": "@mutation:DevAppService__batchDelete?ids=${ids|raw}",
+          "api": "@mutation:DevAppEntity__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下服务？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下实体模型？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.entityName + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
         {
-          "type": "container",
-          "label": "名称",
-          "width": 200,
-          "fixed": "left",
-          "body": [
-            {
-              "type": "tpl",
-              "tpl": "<h3>${title}</h3>"
-            },
-            {
-              "type": "tpl",
-              "className": "text-ellipsis amis-Form-description",
-              "tpl": "${description}",
-              "style": {
-                "max-width": "200px"
-              }
-            }
-          ],
-          "popOver": {
-            "body": {
-              "type": "tpl",
-              "tpl": "${description}"
-            }
-          }
+          "type": "text",
+          "name": "title",
+          "label": "名称"
         },
         {
           "type": "text",
-          "name": "code",
-          "label": "编码"
+          "name": "entityName",
+          "label": "实体名"
         },
         {
           "type": "container",
-          "label": "所属应用",
+          "name": "serviceId",
+          "label": "所属服务",
+          "filterable": {
+            "searchable": true,
+            "source": {
+              "url": "@query:DevAppService__findList/label:title,value:id",
+              "gql:selection": "id,title,code",
+              "responseData": {
+                "options": "${items}"
+              },
+              "data": {
+                "filter_appId__eq": "${appId}"
+              }
+            }
+          },
           "body": [
             {
               "type": "button",
-              "label": "${app.title} (${app.code})",
+              "label": "${service.title} (${service.code})",
               "level": "link",
               "actionType": "dialog",
               "dialog": {
-                "title": "应用信息",
+                "title": "服务信息",
                 "size": "lg",
                 "body": {
                   "type": "form",
                   "static": true,
                   "initApi": {
-                    "url": "@query:DevApp__get?id=${appId}",
-                    "gql:selection": "id,title,code,status,version,logo,url,urlProto,classPkgName,description"
+                    "url": "@query:DevAppService__get?id=${serviceId}",
+                    "gql:selection": "id,title,code"
                   },
                   "body": [
-                    {
-                      "type": "static-image",
-                      "name": "logo",
-                      "label": "图标",
-                      "enlargeAble": true,
-                      "width": "128px",
-                      "height": "128px"
-                    },
                     {
                       "type": "group",
                       "body": [
@@ -318,57 +340,6 @@
                           "label": "编码"
                         }
                       ]
-                    },
-                    {
-                      "type": "list-select",
-                      "name": "status",
-                      "label": "状态",
-                      "source": "@dict:app_dev/app-status"
-                    },
-                    {
-                      "type": "group",
-                      "body": [
-                        {
-                          "type": "input-text",
-                          "name": "classPkgName",
-                          "label": "代码包名"
-                        },
-                        {
-                          "type": "input-text",
-                          "name": "version",
-                          "label": "版本号"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "control",
-                      "label": "访问地址",
-                      "body": {
-                        "type": "flex",
-                        "justify": "flex-start",
-                        "alignItems": "flex-start",
-                        "items": [
-                          {
-                            "type": "link",
-                            "hiddenOn": "${!url}",
-                            "className": "mr-4",
-                            "href": "${urlProto}://${url}"
-                          },
-                          {
-                            "type": "qr-code",
-                            "hiddenOn": "${!url}",
-                            "codeSize": 48,
-                            "backgroundColor": "#fff",
-                            "foregroundColor": "#108cee",
-                            "value": "${urlProto}://${url}"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "textarea",
-                      "name": "description",
-                      "label": "描述"
                     }
                   ]
                 }
@@ -377,11 +348,17 @@
           ]
         },
         {
+          "type": "text",
+          "name": "tableName",
+          "label": "数据库表名"
+        },
+        {
           "type": "list-select",
-          "name": "status",
-          "label": "状态",
+          "name": "tagSet",
+          "label": "标签",
           "static": true,
-          "source": "@dict:app_dev/service-status"
+          "multiple": true,
+          "source": "@dict:app_dev/entity-tagset"
         },
         {
           "type": "operation",
@@ -394,11 +371,11 @@
               "level": "primary",
               "actionType": "dialog",
               "dialog": {
-                "title": "编辑服务",
+                "title": "编辑实体模型",
                 "body": {
                   "type": "form",
                   "api": {
-                    "url": "@mutation:DevAppService__update?id=${id}",
+                    "url": "@mutation:DevAppEntity__update?id=${id}",
                     "gql:selection": "id"
                   },
                   "body": [
@@ -414,22 +391,27 @@
                     },
                     {
                       "type": "input-text",
-                      "name": "code",
-                      "label": "编码",
-                      "required": true,
-                      "disabled": true
+                      "name": "entityName",
+                      "label": "实体名",
+                      "required": true
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "tableName",
+                      "label": "数据库表名",
+                      "required": true
                     },
                     {
                       "type": "picker",
-                      "name": "appId",
-                      "label": "所属应用",
+                      "name": "serviceId",
+                      "label": "所属服务",
                       "required": true,
                       "valueField": "id",
                       "labelField": "title",
                       "size": "lg",
                       "source": {
-                        "url": "@query:DevApp__findPage",
-                        "gql:selection": "total,items{id,title,code,status,version,logo}",
+                        "url": "@query:DevAppService__findPage",
+                        "gql:selection": "total,items{id,title,code,app{id,title,code}}",
                         "filter_": {
                           "$type": "or",
                           "$body": [
@@ -437,17 +419,13 @@
                               "$type": "eq",
                               "name": "title",
                               "value": ""
-                            },
-                            {
-                              "$type": "eq",
-                              "name": "code",
-                              "value": ""
                             }
                           ]
                         },
                         "data": {
                           "offset": "${(page - 1) * pageSize}",
                           "limit": "${pageSize}",
+                          "filter_appId__eq": "${appId}",
                           "orderBy": [
                             {
                               "name": "title",
@@ -456,7 +434,7 @@
                           ]
                         }
                       },
-                      "modalTitle": "请选择服务所属的应用",
+                      "modalTitle": "请选择实体模型所属的服务",
                       "pickerSchema": {
                         "type": "crud",
                         "pageField": "page",
@@ -487,44 +465,84 @@
                             "fixed": "left"
                           },
                           {
-                            "type": "image",
-                            "name": "logo",
-                            "label": "图标"
-                          },
-                          {
                             "type": "text",
                             "name": "code",
                             "label": "编码"
                           },
                           {
-                            "type": "list-select",
-                            "name": "status",
-                            "label": "状态",
-                            "static": true,
-                            "source": "@dict:app_dev/app-status"
-                          },
-                          {
-                            "type": "text",
-                            "name": "version",
-                            "label": "版本号"
+                            "type": "container",
+                            "label": "所属应用",
+                            "body": [
+                              {
+                                "type": "button",
+                                "label": "${app.title} (${app.code})",
+                                "level": "link",
+                                "actionType": "dialog",
+                                "dialog": {
+                                  "title": "应用信息",
+                                  "size": "lg",
+                                  "body": {
+                                    "type": "form",
+                                    "static": true,
+                                    "initApi": {
+                                      "url": "@query:DevApp__get?id=${app.id}",
+                                      "gql:selection": "id,title,code,version,logo,classPkgName"
+                                    },
+                                    "body": [
+                                      {
+                                        "type": "static-image",
+                                        "name": "logo",
+                                        "label": "图标",
+                                        "enlargeAble": true,
+                                        "width": "128px",
+                                        "height": "128px"
+                                      },
+                                      {
+                                        "type": "group",
+                                        "body": [
+                                          {
+                                            "type": "input-text",
+                                            "name": "title",
+                                            "label": "名称"
+                                          },
+                                          {
+                                            "type": "input-text",
+                                            "name": "code",
+                                            "label": "编码"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "group",
+                                        "body": [
+                                          {
+                                            "type": "input-text",
+                                            "name": "classPkgName",
+                                            "label": "代码包名"
+                                          },
+                                          {
+                                            "type": "input-text",
+                                            "name": "version",
+                                            "label": "版本号"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
                     },
                     {
                       "type": "list-select",
-                      "name": "status",
-                      "label": "状态",
-                      "required": true,
+                      "name": "tagSet",
+                      "label": "标签",
+                      "multiple": true,
                       "clearable": true,
-                      "source": "@dict:app_dev/service-status"
-                    },
-                    {
-                      "type": "textarea",
-                      "name": "description",
-                      "label": "描述",
-                      "showCounter": true,
-                      "clearable": true
+                      "source": "@dict:app_dev/entity-tagset"
                     }
                   ]
                 }
@@ -534,10 +552,10 @@
               "label": "删除",
               "type": "button",
               "level": "danger",
-              "api": "@mutation:DevAppService__delete?id=${id}",
+              "api": "@mutation:DevAppEntity__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除服务「<b>${title} (${code})</b>」？"
+              "confirmText": "确定要删除实体模型「<b>${title} (${entityName})</b>」？"
             }
           ]
         }

@@ -1,6 +1,6 @@
 {
   "type": "page",
-  "title": "应用 API 服务",
+  "title": "应用后端服务列表",
   "asideResizor": true,
   "asideMinWidth": 150,
   "asideMaxWidth": 400,
@@ -8,7 +8,7 @@
     "type": "form",
     "wrapWithPanel": false,
     "submitOnInit": true,
-    "className": "service-app-nav",
+    "className": "app-dev-nav",
     "target": "data-table",
     "body": {
       "type": "input-tree",
@@ -46,7 +46,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppService__findPage",
-        "gql:selection": "total,items{id,ver,appId,app{id,title,code},title,code,status,description}",
+        "gql:selection": "total,items{id,ver,appId,app{id,title,code},title,code}",
         "filter_": {
           "$type": "or",
           "$body": [
@@ -130,7 +130,7 @@
                   "size": "lg",
                   "source": {
                     "url": "@query:DevApp__findPage",
-                    "gql:selection": "total,items{id,title,code,status,version,logo}",
+                    "gql:selection": "total,items{id,title,code,version,logo}",
                     "filter_": {
                       "$type": "or",
                       "$body": [
@@ -198,35 +198,12 @@
                         "label": "编码"
                       },
                       {
-                        "type": "list-select",
-                        "name": "status",
-                        "label": "状态",
-                        "static": true,
-                        "source": "@dict:app_dev/app-status"
-                      },
-                      {
                         "type": "text",
                         "name": "version",
                         "label": "版本号"
                       }
                     ]
                   }
-                },
-                {
-                  "type": "list-select",
-                  "name": "status",
-                  "label": "状态",
-                  "required": true,
-                  "clearable": true,
-                  "source": "@dict:app_dev/service-status",
-                  "value": -1
-                },
-                {
-                  "type": "textarea",
-                  "name": "description",
-                  "label": "描述",
-                  "showCounter": true,
-                  "clearable": true
                 }
               ]
             }
@@ -312,7 +289,7 @@
                   "static": true,
                   "initApi": {
                     "url": "@query:DevApp__get?id=${appId}",
-                    "gql:selection": "id,title,code,status,version,logo,url,urlProto,classPkgName,description"
+                    "gql:selection": "id,title,code,version,logo,classPkgName"
                   },
                   "body": [
                     {
@@ -342,45 +319,9 @@
                       "type": "group",
                       "body": [
                         {
-                          "type": "list-select",
-                          "name": "status",
-                          "label": "状态",
-                          "source": "@dict:app_dev/app-status"
-                        },
-                        {
                           "type": "input-text",
                           "name": "classPkgName",
                           "label": "代码包名"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "group",
-                      "body": [
-                        {
-                          "type": "control",
-                          "label": "访问地址",
-                          "body": {
-                            "type": "flex",
-                            "justify": "flex-start",
-                            "alignItems": "center",
-                            "items": [
-                              {
-                                "type": "link",
-                                "hiddenOn": "${!url}",
-                                "className": "mr-4",
-                                "href": "${urlProto}://${url}"
-                              },
-                              {
-                                "type": "qr-code",
-                                "hiddenOn": "${!url}",
-                                "codeSize": 48,
-                                "backgroundColor": "#fff",
-                                "foregroundColor": "#108cee",
-                                "value": "${urlProto}://${url}"
-                              }
-                            ]
-                          }
                         },
                         {
                           "type": "input-text",
@@ -388,24 +329,12 @@
                           "label": "版本号"
                         }
                       ]
-                    },
-                    {
-                      "type": "textarea",
-                      "name": "description",
-                      "label": "描述"
                     }
                   ]
                 }
               }
             }
           ]
-        },
-        {
-          "type": "list-select",
-          "name": "status",
-          "label": "状态",
-          "static": true,
-          "source": "@dict:app_dev/service-status"
         },
         {
           "type": "operation",
@@ -453,7 +382,7 @@
                       "size": "lg",
                       "source": {
                         "url": "@query:DevApp__findPage",
-                        "gql:selection": "total,items{id,title,code,status,version,logo}",
+                        "gql:selection": "total,items{id,title,code,version,logo}",
                         "filter_": {
                           "$type": "or",
                           "$body": [
@@ -521,34 +450,12 @@
                             "label": "编码"
                           },
                           {
-                            "type": "list-select",
-                            "name": "status",
-                            "label": "状态",
-                            "static": true,
-                            "source": "@dict:app_dev/app-status"
-                          },
-                          {
                             "type": "text",
                             "name": "version",
                             "label": "版本号"
                           }
                         ]
                       }
-                    },
-                    {
-                      "type": "list-select",
-                      "name": "status",
-                      "label": "状态",
-                      "required": true,
-                      "clearable": true,
-                      "source": "@dict:app_dev/service-status"
-                    },
-                    {
-                      "type": "textarea",
-                      "name": "description",
-                      "label": "描述",
-                      "showCounter": true,
-                      "clearable": true
                     }
                   ]
                 }

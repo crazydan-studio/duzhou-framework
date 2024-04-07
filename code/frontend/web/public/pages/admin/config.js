@@ -26,27 +26,22 @@ window.__APP_SITE_CONFIG__ = {
         label: '应用开发',
         children: [
           {
-            label: '应用管理',
-            url: 'app-dev',
+            label: '应用',
+            url: 'app-dev/app',
             icon: 'fa-solid fa-globe',
-            schemaApi: 'get:/pages/admin/demo/app-dev.json',
-            children: [
-              {
-                label: 'API 服务',
-                url: 'service',
-                icon: 'fa-solid fa-globe',
-                schemaApi: 'get:/pages/admin/demo/app-dev-service.json',
-                children: [
-                  {
-                    label: 'ORM 模型',
-                    url: 'entity',
-                    icon: 'fa-solid fa-globe',
-                    schemaApi:
-                      'get:/pages/admin/demo/app-dev-service-entity.json'
-                  }
-                ]
-              }
-            ]
+            schemaApi: 'get:/pages/admin/demo/app-dev.json'
+          },
+          {
+            label: '后端服务',
+            url: 'app-dev/service',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/app-dev-service.json'
+          },
+          {
+            label: '实体模型',
+            url: 'app-dev/entity',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/app-dev-entity.json'
           }
         ]
       },
