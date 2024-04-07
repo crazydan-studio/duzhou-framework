@@ -169,6 +169,16 @@
                 <artifactId>app-dev-orm</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>app-dev-delta</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>app-dev-api</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
             <!-- End -->
 
         </dependencies>

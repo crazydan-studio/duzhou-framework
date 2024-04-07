@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/xmeta.xdef" x:extends="_DevAppEntityRelation.xmeta">
+
+    <props/>
+</meta>

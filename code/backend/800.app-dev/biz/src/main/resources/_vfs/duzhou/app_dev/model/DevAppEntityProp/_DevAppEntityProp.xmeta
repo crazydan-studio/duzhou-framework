@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext" xmlns:xpl="xpl" xmlns:c="c"
+      xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz" xmlns:ui="ui" xmlns:orm="orm"
+      x:schema="/nop/schema/xmeta.xdef" ext:model="orm" displayName="应用 ORM 实体属性"
+      i18n-en:displayName="Application ORM Entity Property">
+
+    <entityName>io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp</entityName>
+
+    <primaryKey>id</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys>
+        <key name="nameKey" props="name,entityId"/>
+    </keys>
+
+    <props>
+        <prop name="id" displayName="ID" propId="1" tagSet="seq" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="false">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="entityId" displayName="所属实体" propId="2" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true" ext:relation="entity">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="title" displayName="名称" propId="3" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="name" displayName="属性名" propId="4" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="200"/>
+        </prop>
+        <prop name="index" displayName="序号" propId="5" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="tagSet" displayName="标签" propId="6" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="isPrimary" displayName="是否为主键" propId="7" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true" defaultValue="0">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="isMandatory" displayName="是否非空" propId="8" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true" defaultValue="0">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="domainId" displayName="数据域" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true" ext:relation="domain">
+            <schema type="java.lang.String" precision="50"/>
+        </prop>
+        <prop name="dictId" displayName="引用字典" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true" ext:relation="dict">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="valueType" displayName="值类型" propId="11" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="50"/>
+        </prop>
+        <prop name="valuePrecision" displayName="值长度" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="valueScale" displayName="值精度" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="valueDefault" displayName="默认值" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="entity" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
+              ext:joinLeftProp="entityId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
+              lazy="true">
+            <schema bizObjName="DevAppEntity"/>
+        </prop>
+        <prop name="domain" tagSet="pub" ext:kind="to-one" internal="true" queryable="true" ext:joinLeftProp="domainId"
+              ext:joinRightProp="id" insertable="false" updatable="false" lazy="true">
+            <schema bizObjName="DevAppDomain"/>
+        </prop>
+        <prop name="dict" tagSet="pub" ext:kind="to-one" internal="true" queryable="true" ext:joinLeftProp="dictId"
+              ext:joinRightProp="id" insertable="false" updatable="false" lazy="true">
+            <schema bizObjName="DevAppDict"/>
+        </prop>
+    </props>
+</meta>

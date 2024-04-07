@@ -64,32 +64,12 @@ public class _DevApp extends DynamicOrmEntity{
     public static final String PROP_NAME_logo = "logo";
     public static final int PROP_ID_logo = 11;
     
-    /* 访问地址: URL VARCHAR */
-    public static final String PROP_NAME_url = "url";
-    public static final int PROP_ID_url = 12;
-    
     /* 代码包名: CLASS_PKG_NAME VARCHAR */
     public static final String PROP_NAME_classPkgName = "classPkgName";
-    public static final int PROP_ID_classPkgName = 13;
-    
-    /* 说明: DESCRIPTION VARCHAR */
-    public static final String PROP_NAME_description = "description";
-    public static final int PROP_ID_description = 14;
-    
-    /* 版权声明: COPYRIGHT VARCHAR */
-    public static final String PROP_NAME_copyright = "copyright";
-    public static final int PROP_ID_copyright = 15;
-    
-    /* 许可协议: LICENSE VARCHAR */
-    public static final String PROP_NAME_license = "license";
-    public static final int PROP_ID_license = 16;
-    
-    /* 访问地址协议: URL_PROTO VARCHAR */
-    public static final String PROP_NAME_urlProto = "urlProto";
-    public static final int PROP_ID_urlProto = 17;
+    public static final int PROP_ID_classPkgName = 12;
     
 
-    private static int _PROP_ID_BOUND = 18;
+    private static int _PROP_ID_BOUND = 13;
 
     
     /* relation:  */
@@ -99,7 +79,7 @@ public class _DevApp extends DynamicOrmEntity{
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[18];
+    private static final String[] PROP_ID_TO_NAME = new String[13];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -136,23 +116,8 @@ public class _DevApp extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_logo] = PROP_NAME_logo;
           PROP_NAME_TO_ID.put(PROP_NAME_logo, PROP_ID_logo);
       
-          PROP_ID_TO_NAME[PROP_ID_url] = PROP_NAME_url;
-          PROP_NAME_TO_ID.put(PROP_NAME_url, PROP_ID_url);
-      
           PROP_ID_TO_NAME[PROP_ID_classPkgName] = PROP_NAME_classPkgName;
           PROP_NAME_TO_ID.put(PROP_NAME_classPkgName, PROP_ID_classPkgName);
-      
-          PROP_ID_TO_NAME[PROP_ID_description] = PROP_NAME_description;
-          PROP_NAME_TO_ID.put(PROP_NAME_description, PROP_ID_description);
-      
-          PROP_ID_TO_NAME[PROP_ID_copyright] = PROP_NAME_copyright;
-          PROP_NAME_TO_ID.put(PROP_NAME_copyright, PROP_ID_copyright);
-      
-          PROP_ID_TO_NAME[PROP_ID_license] = PROP_NAME_license;
-          PROP_NAME_TO_ID.put(PROP_NAME_license, PROP_ID_license);
-      
-          PROP_ID_TO_NAME[PROP_ID_urlProto] = PROP_NAME_urlProto;
-          PROP_NAME_TO_ID.put(PROP_NAME_urlProto, PROP_ID_urlProto);
       
     }
 
@@ -190,23 +155,8 @@ public class _DevApp extends DynamicOrmEntity{
     /* 图片: LOGO */
     private java.lang.String _logo;
     
-    /* 访问地址: URL */
-    private java.lang.String _url;
-    
     /* 代码包名: CLASS_PKG_NAME */
     private java.lang.String _classPkgName;
-    
-    /* 说明: DESCRIPTION */
-    private java.lang.String _description;
-    
-    /* 版权声明: COPYRIGHT */
-    private java.lang.String _copyright;
-    
-    /* 许可协议: LICENSE */
-    private java.lang.String _license;
-    
-    /* 访问地址协议: URL_PROTO */
-    private java.lang.String _urlProto;
     
 
     public _DevApp(){
@@ -312,23 +262,8 @@ public class _DevApp extends DynamicOrmEntity{
             case PROP_ID_logo:
                return getLogo();
         
-            case PROP_ID_url:
-               return getUrl();
-        
             case PROP_ID_classPkgName:
                return getClassPkgName();
-        
-            case PROP_ID_description:
-               return getDescription();
-        
-            case PROP_ID_copyright:
-               return getCopyright();
-        
-            case PROP_ID_license:
-               return getLicense();
-        
-            case PROP_ID_urlProto:
-               return getUrlProto();
         
            default:
               return super.orm_propValue(propId);
@@ -451,16 +386,6 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_url:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_url));
-               }
-               setUrl(typedValue);
-               break;
-            }
-        
             case PROP_ID_classPkgName:{
                java.lang.String typedValue = null;
                if(value != null){
@@ -468,46 +393,6 @@ public class _DevApp extends DynamicOrmEntity{
                        err-> newTypeConversionError(PROP_NAME_classPkgName));
                }
                setClassPkgName(typedValue);
-               break;
-            }
-        
-            case PROP_ID_description:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_description));
-               }
-               setDescription(typedValue);
-               break;
-            }
-        
-            case PROP_ID_copyright:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_copyright));
-               }
-               setCopyright(typedValue);
-               break;
-            }
-        
-            case PROP_ID_license:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_license));
-               }
-               setLicense(typedValue);
-               break;
-            }
-        
-            case PROP_ID_urlProto:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_urlProto));
-               }
-               setUrlProto(typedValue);
                break;
             }
         
@@ -597,44 +482,9 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_url:{
-               onInitProp(propId);
-               this._url = (java.lang.String)value;
-               
-               break;
-            }
-        
             case PROP_ID_classPkgName:{
                onInitProp(propId);
                this._classPkgName = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_description:{
-               onInitProp(propId);
-               this._description = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_copyright:{
-               onInitProp(propId);
-               this._copyright = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_license:{
-               onInitProp(propId);
-               this._license = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_urlProto:{
-               onInitProp(propId);
-               this._urlProto = (java.lang.String)value;
                
                break;
             }
@@ -855,25 +705,6 @@ public class _DevApp extends DynamicOrmEntity{
     }
     
     /**
-     * 访问地址: URL
-     */
-    public java.lang.String getUrl(){
-         onPropGet(PROP_ID_url);
-         return _url;
-    }
-
-    /**
-     * 访问地址: URL
-     */
-    public void setUrl(java.lang.String value){
-        if(onPropSet(PROP_ID_url,value)){
-            this._url = value;
-            internalClearRefs(PROP_ID_url);
-            
-        }
-    }
-    
-    /**
      * 代码包名: CLASS_PKG_NAME
      */
     public java.lang.String getClassPkgName(){
@@ -888,82 +719,6 @@ public class _DevApp extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_classPkgName,value)){
             this._classPkgName = value;
             internalClearRefs(PROP_ID_classPkgName);
-            
-        }
-    }
-    
-    /**
-     * 说明: DESCRIPTION
-     */
-    public java.lang.String getDescription(){
-         onPropGet(PROP_ID_description);
-         return _description;
-    }
-
-    /**
-     * 说明: DESCRIPTION
-     */
-    public void setDescription(java.lang.String value){
-        if(onPropSet(PROP_ID_description,value)){
-            this._description = value;
-            internalClearRefs(PROP_ID_description);
-            
-        }
-    }
-    
-    /**
-     * 版权声明: COPYRIGHT
-     */
-    public java.lang.String getCopyright(){
-         onPropGet(PROP_ID_copyright);
-         return _copyright;
-    }
-
-    /**
-     * 版权声明: COPYRIGHT
-     */
-    public void setCopyright(java.lang.String value){
-        if(onPropSet(PROP_ID_copyright,value)){
-            this._copyright = value;
-            internalClearRefs(PROP_ID_copyright);
-            
-        }
-    }
-    
-    /**
-     * 许可协议: LICENSE
-     */
-    public java.lang.String getLicense(){
-         onPropGet(PROP_ID_license);
-         return _license;
-    }
-
-    /**
-     * 许可协议: LICENSE
-     */
-    public void setLicense(java.lang.String value){
-        if(onPropSet(PROP_ID_license,value)){
-            this._license = value;
-            internalClearRefs(PROP_ID_license);
-            
-        }
-    }
-    
-    /**
-     * 访问地址协议: URL_PROTO
-     */
-    public java.lang.String getUrlProto(){
-         onPropGet(PROP_ID_urlProto);
-         return _urlProto;
-    }
-
-    /**
-     * 访问地址协议: URL_PROTO
-     */
-    public void setUrlProto(java.lang.String value){
-        if(onPropSet(PROP_ID_urlProto,value)){
-            this._urlProto = value;
-            internalClearRefs(PROP_ID_urlProto);
             
         }
     }

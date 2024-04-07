@@ -52,38 +52,40 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final String PROP_NAME_title = "title";
     public static final int PROP_ID_title = 8;
     
-    /* 类名: CLASS_NAME VARCHAR */
-    public static final String PROP_NAME_className = "className";
-    public static final int PROP_ID_className = 9;
+    /* 实体名: ENTITY_NAME VARCHAR */
+    public static final String PROP_NAME_entityName = "entityName";
+    public static final int PROP_ID_entityName = 9;
     
     /* 数据库表名: TABLE_NAME VARCHAR */
     public static final String PROP_NAME_tableName = "tableName";
     public static final int PROP_ID_tableName = 10;
     
-    /* 字段列表: COLUMNS VARCHAR */
-    public static final String PROP_NAME_columns = "columns";
-    public static final int PROP_ID_columns = 11;
+    /* 标签: TAG_SET VARCHAR */
+    public static final String PROP_NAME_tagSet = "tagSet";
+    public static final int PROP_ID_tagSet = 11;
     
     /* 唯一键列表: UNIQUE_KEYS VARCHAR */
     public static final String PROP_NAME_uniqueKeys = "uniqueKeys";
     public static final int PROP_ID_uniqueKeys = 12;
     
-    /* 关联列表: RELATIONS VARCHAR */
-    public static final String PROP_NAME_relations = "relations";
-    public static final int PROP_ID_relations = 13;
-    
 
-    private static int _PROP_ID_BOUND = 14;
+    private static int _PROP_ID_BOUND = 13;
 
     
     /* relation:  */
     public static final String PROP_NAME_service = "service";
     
+    /* relation:  */
+    public static final String PROP_NAME_props = "props";
+    
+    /* relation:  */
+    public static final String PROP_NAME_relations = "relations";
+    
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[14];
+    private static final String[] PROP_ID_TO_NAME = new String[13];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -111,20 +113,17 @@ public class _DevAppEntity extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_title] = PROP_NAME_title;
           PROP_NAME_TO_ID.put(PROP_NAME_title, PROP_ID_title);
       
-          PROP_ID_TO_NAME[PROP_ID_className] = PROP_NAME_className;
-          PROP_NAME_TO_ID.put(PROP_NAME_className, PROP_ID_className);
+          PROP_ID_TO_NAME[PROP_ID_entityName] = PROP_NAME_entityName;
+          PROP_NAME_TO_ID.put(PROP_NAME_entityName, PROP_ID_entityName);
       
           PROP_ID_TO_NAME[PROP_ID_tableName] = PROP_NAME_tableName;
           PROP_NAME_TO_ID.put(PROP_NAME_tableName, PROP_ID_tableName);
       
-          PROP_ID_TO_NAME[PROP_ID_columns] = PROP_NAME_columns;
-          PROP_NAME_TO_ID.put(PROP_NAME_columns, PROP_ID_columns);
+          PROP_ID_TO_NAME[PROP_ID_tagSet] = PROP_NAME_tagSet;
+          PROP_NAME_TO_ID.put(PROP_NAME_tagSet, PROP_ID_tagSet);
       
           PROP_ID_TO_NAME[PROP_ID_uniqueKeys] = PROP_NAME_uniqueKeys;
           PROP_NAME_TO_ID.put(PROP_NAME_uniqueKeys, PROP_ID_uniqueKeys);
-      
-          PROP_ID_TO_NAME[PROP_ID_relations] = PROP_NAME_relations;
-          PROP_NAME_TO_ID.put(PROP_NAME_relations, PROP_ID_relations);
       
     }
 
@@ -153,20 +152,17 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /* 名称: TITLE */
     private java.lang.String _title;
     
-    /* 类名: CLASS_NAME */
-    private java.lang.String _className;
+    /* 实体名: ENTITY_NAME */
+    private java.lang.String _entityName;
     
     /* 数据库表名: TABLE_NAME */
     private java.lang.String _tableName;
     
-    /* 字段列表: COLUMNS */
-    private java.lang.String _columns;
+    /* 标签: TAG_SET */
+    private java.lang.String _tagSet;
     
     /* 唯一键列表: UNIQUE_KEYS */
     private java.lang.String _uniqueKeys;
-    
-    /* 关联列表: RELATIONS */
-    private java.lang.String _relations;
     
 
     public _DevAppEntity(){
@@ -263,20 +259,17 @@ public class _DevAppEntity extends DynamicOrmEntity{
             case PROP_ID_title:
                return getTitle();
         
-            case PROP_ID_className:
-               return getClassName();
+            case PROP_ID_entityName:
+               return getEntityName();
         
             case PROP_ID_tableName:
                return getTableName();
         
-            case PROP_ID_columns:
-               return getColumns();
+            case PROP_ID_tagSet:
+               return getTagSet();
         
             case PROP_ID_uniqueKeys:
                return getUniqueKeys();
-        
-            case PROP_ID_relations:
-               return getRelations();
         
            default:
               return super.orm_propValue(propId);
@@ -369,13 +362,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_className:{
+            case PROP_ID_entityName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_className));
+                       err-> newTypeConversionError(PROP_NAME_entityName));
                }
-               setClassName(typedValue);
+               setEntityName(typedValue);
                break;
             }
         
@@ -389,13 +382,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_columns:{
+            case PROP_ID_tagSet:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_columns));
+                       err-> newTypeConversionError(PROP_NAME_tagSet));
                }
-               setColumns(typedValue);
+               setTagSet(typedValue);
                break;
             }
         
@@ -406,16 +399,6 @@ public class _DevAppEntity extends DynamicOrmEntity{
                        err-> newTypeConversionError(PROP_NAME_uniqueKeys));
                }
                setUniqueKeys(typedValue);
-               break;
-            }
-        
-            case PROP_ID_relations:{
-               java.lang.String typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_relations));
-               }
-               setRelations(typedValue);
                break;
             }
         
@@ -484,9 +467,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_className:{
+            case PROP_ID_entityName:{
                onInitProp(propId);
-               this._className = (java.lang.String)value;
+               this._entityName = (java.lang.String)value;
                
                break;
             }
@@ -498,9 +481,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_columns:{
+            case PROP_ID_tagSet:{
                onInitProp(propId);
-               this._columns = (java.lang.String)value;
+               this._tagSet = (java.lang.String)value;
                
                break;
             }
@@ -508,13 +491,6 @@ public class _DevAppEntity extends DynamicOrmEntity{
             case PROP_ID_uniqueKeys:{
                onInitProp(propId);
                this._uniqueKeys = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_relations:{
-               onInitProp(propId);
-               this._relations = (java.lang.String)value;
                
                break;
             }
@@ -678,20 +654,20 @@ public class _DevAppEntity extends DynamicOrmEntity{
     }
     
     /**
-     * 类名: CLASS_NAME
+     * 实体名: ENTITY_NAME
      */
-    public java.lang.String getClassName(){
-         onPropGet(PROP_ID_className);
-         return _className;
+    public java.lang.String getEntityName(){
+         onPropGet(PROP_ID_entityName);
+         return _entityName;
     }
 
     /**
-     * 类名: CLASS_NAME
+     * 实体名: ENTITY_NAME
      */
-    public void setClassName(java.lang.String value){
-        if(onPropSet(PROP_ID_className,value)){
-            this._className = value;
-            internalClearRefs(PROP_ID_className);
+    public void setEntityName(java.lang.String value){
+        if(onPropSet(PROP_ID_entityName,value)){
+            this._entityName = value;
+            internalClearRefs(PROP_ID_entityName);
             
         }
     }
@@ -716,20 +692,20 @@ public class _DevAppEntity extends DynamicOrmEntity{
     }
     
     /**
-     * 字段列表: COLUMNS
+     * 标签: TAG_SET
      */
-    public java.lang.String getColumns(){
-         onPropGet(PROP_ID_columns);
-         return _columns;
+    public java.lang.String getTagSet(){
+         onPropGet(PROP_ID_tagSet);
+         return _tagSet;
     }
 
     /**
-     * 字段列表: COLUMNS
+     * 标签: TAG_SET
      */
-    public void setColumns(java.lang.String value){
-        if(onPropSet(PROP_ID_columns,value)){
-            this._columns = value;
-            internalClearRefs(PROP_ID_columns);
+    public void setTagSet(java.lang.String value){
+        if(onPropSet(PROP_ID_tagSet,value)){
+            this._tagSet = value;
+            internalClearRefs(PROP_ID_tagSet);
             
         }
     }
@@ -749,25 +725,6 @@ public class _DevAppEntity extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_uniqueKeys,value)){
             this._uniqueKeys = value;
             internalClearRefs(PROP_ID_uniqueKeys);
-            
-        }
-    }
-    
-    /**
-     * 关联列表: RELATIONS
-     */
-    public java.lang.String getRelations(){
-         onPropGet(PROP_ID_relations);
-         return _relations;
-    }
-
-    /**
-     * 关联列表: RELATIONS
-     */
-    public void setRelations(java.lang.String value){
-        if(onPropSet(PROP_ID_relations,value)){
-            this._relations = value;
-            internalClearRefs(PROP_ID_relations);
             
         }
     }
@@ -793,6 +750,26 @@ public class _DevAppEntity extends DynamicOrmEntity{
            });
            }
        
+    }
+       
+    private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp> _props = new OrmEntitySet<>(this, PROP_NAME_props,
+        io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp.PROP_NAME_entity, null,io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp.class);
+
+    /**
+     * 。 refPropName: entity, keyProp: {rel.keyProp}
+     */
+    public IOrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp> getProps(){
+       return _props;
+    }
+       
+    private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation> _relations = new OrmEntitySet<>(this, PROP_NAME_relations,
+        io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation.PROP_NAME_source, null,io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation.class);
+
+    /**
+     * 。 refPropName: source, keyProp: {rel.keyProp}
+     */
+    public IOrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation> getRelations(){
+       return _relations;
     }
        
 }

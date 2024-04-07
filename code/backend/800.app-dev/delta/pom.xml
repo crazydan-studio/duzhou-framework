@@ -4,28 +4,15 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>app-dev</artifactId>
-
-    <packaging>pom</packaging>
-
-    <name>Duzhou Framework Application Development</name>
+    <!--针对当前服务模块的差量内容-->
+    <artifactId>app-dev-delta</artifactId>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>app-dev</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <properties/>
-
     <dependencies/>
-
-    <modules>
-        <module>biz</module>
-        <module>orm</module>
-        <module>starter</module>
-        <module>api</module>
-        <module>delta</module>
-    </modules>
 </project>

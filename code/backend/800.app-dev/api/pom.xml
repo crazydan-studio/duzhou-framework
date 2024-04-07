@@ -4,8 +4,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!--当前服务的 ORM 模型定义-->
-    <artifactId>app-dev-orm</artifactId>
+    <!--用于服务间的 API 调用-->
+    <artifactId>app-dev-api</artifactId>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
@@ -19,9 +19,18 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-api-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-orm</artifactId>
-        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -30,6 +30,36 @@
             <option code="disabled" label="已禁用" value="0"/>
             <option code="enabled" label="已启用" value="1"/>
         </dict>
+        <dict label="实体标签" name="app_dev/entity-tagset" valueType="string" i18n-en:label="Entity Tag Set">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="not_gen" label="不生成代码" value="not-gen"/>
+            <option code="del" label="删除该对象" value="del"/>
+            <option code="mapper" label="需生成 SqlMapper 代码" value="mapper"/>
+        </dict>
+        <dict label="实体字段标签" name="app_dev/entity-prop-tagset" valueType="string"
+              i18n-en:label="Entity Property Tag Set">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="not_gen" label="不生成代码" value="not-gen"/>
+            <option code="seq" label="生成唯一主键" value="seq"/>
+            <option code="del" label="删除该属性" value="del"/>
+            <option code="var" label="生成随机值" value="var"/>
+            <option code="masked" label="在日志中打印掩码" value="masked"/>
+            <option code="not_pub" label="值不可见" value="not-pub"/>
+            <option code="sort" label="默认排序属性（升序）" value="sort"/>
+            <option code="sort_desc" label="默认排序属性（降序）" value="sort-desc"/>
+        </dict>
+        <dict label="实体关联类型" name="app_dev/entity-relation-type" valueType="string" i18n-en:label="Entity Relation Type">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="to_one" label="一对一关联" value="to-one"/>
+            <option code="to_many" label="一对多关联" value="to-many"/>
+        </dict>
+        <dict label="实体关联标签" name="app_dev/entity-relation-tagset" valueType="string"
+              i18n-en:label="Entity Relation Tag Set">
+            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
+            <option code="pub" label="该关联可访问" value="pub"/>
+            <option code="ref_pub" label="对端关联可访问" value="ref-pub"/>
+            <option code="ref_cascade_delete" label="级联删除" value="ref-cascade-delete"/>
+        </dict>
     </dicts>
 
     <domains>
@@ -72,22 +102,13 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="LOGO" displayName="图片" domain="image" name="logo" precision="200" propId="11"
                         stdDataType="string" stdDomain="file" stdSqlType="VARCHAR"/>
-                <column code="URL" displayName="访问地址" name="url" precision="200" propId="12" stdDataType="string"
-                        stdSqlType="VARCHAR"/>
                 <column code="CLASS_PKG_NAME" displayName="代码包名" mandatory="true" name="classPkgName" precision="200"
-                        propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="14"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="COPYRIGHT" displayName="版权声明" name="copyright" precision="2000" propId="15"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="LICENSE" displayName="许可协议" name="license" precision="2000" propId="16"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="URL_PROTO" defaultValue="https" displayName="访问地址协议" name="urlProto" precision="10"
-                        propId="17" stdDataType="string" stdSqlType="VARCHAR"/>
+                        propId="12" stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
             <relations>
-                <to-many name="services" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService"
-                         refPropName="app" tagSet="pub">
+                <to-many cascadeDelete="true" name="services"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService" refPropName="app"
+                         tagSet="pub,cascade-delete">
                     <join>
                         <on leftProp="id" rightProp="appId"/>
                     </join>
@@ -95,6 +116,7 @@
             </relations>
             <unique-keys>
                 <unique-key columns="code" constraint="UK_DEV_APP_CODE" name="codeKey"/>
+                <unique-key columns="title" constraint="UK_DEV_APP_TITLE" name="titleKey"/>
             </unique-keys>
         </entity>
         <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain" displayName="域定义"
@@ -175,20 +197,19 @@
                         stdSqlType="VARCHAR"/>
                 <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="10"
                         stdDataType="int" stdSqlType="INTEGER" ext:dict="app_dev/service-status"/>
-                <column code="DESCRIPTION" displayName="说明" name="description" precision="2000" propId="11"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的后台服务</comment>
             <relations>
                 <to-one name="app" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevApp"
-                        refPropName="services" tagSet="pub,ref-pub">
+                        refPropName="services" tagSet="pub,ref-pub,ref-cascade-delete">
                     <join>
                         <on leftProp="appId" rightProp="id"/>
                     </join>
                     <ref-set/>
                 </to-one>
-                <to-many name="entities" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
-                         refPropName="service" tagSet="pub">
+                <to-many cascadeDelete="true" name="entities"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
+                         refPropName="service" tagSet="pub,cascade-delete">
                     <join>
                         <on leftProp="id" rightProp="serviceId"/>
                     </join>
@@ -222,32 +243,151 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CLASS_NAME" displayName="类名" mandatory="true" name="className" precision="100" propId="9"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENTITY_NAME" displayName="实体名" mandatory="true" name="entityName" precision="100"
+                        propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TABLE_NAME" displayName="数据库表名" mandatory="true" name="tableName" precision="100"
                         propId="10" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="COLUMNS" comment="以 JSON 形式存储" displayName="字段列表" mandatory="true" name="columns"
-                        precision="4000" propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="UNIQUE_KEYS" comment="以 JSON 形式存储" displayName="唯一键列表" name="uniqueKeys" precision="4000"
-                        propId="12" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="RELATIONS" comment="以 JSON 形式存储" displayName="关联列表" name="relations" precision="4000"
-                        propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="11" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" defaultValue="[]" displayName="唯一键列表"
+                        mandatory="true" name="uniqueKeys" precision="200" propId="12" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体</comment>
             <relations>
                 <to-one name="service" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService"
-                        refPropName="entities" tagSet="pub,ref-pub">
+                        refPropName="entities" tagSet="pub,ref-pub,ref-cascade-delete">
                     <join>
                         <on leftProp="serviceId" rightProp="id"/>
                     </join>
                     <ref-set/>
                 </to-one>
+                <to-many cascadeDelete="true" name="props"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp"
+                         refPropName="entity" tagSet="pub,cascade-delete">
+                    <join>
+                        <on leftProp="id" rightProp="entityId"/>
+                    </join>
+                </to-many>
+                <to-many cascadeDelete="true" name="relations"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation"
+                         refPropName="source" tagSet="pub,cascade-delete">
+                    <join>
+                        <on leftProp="id" rightProp="sourceId"/>
+                    </join>
+                </to-many>
             </relations>
             <unique-keys>
-                <unique-key columns="className,serviceId" constraint="UK_DEV_APP_ENTITY_CLASS_NAME" name="classNameKey">
+                <unique-key columns="entityName,serviceId" constraint="UK_DEV_APP_ENTITY_ENTITY_NAME"
+                            name="entityNameKey">
                     <comment>在服务内唯一</comment>
                 </unique-key>
             </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp" displayName="应用 ORM 实体属性"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp" registerShortName="true"
+                tableName="duzhou_dev_app_entity_prop" i18n-en:displayName="Application ORM Entity Property">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="ENTITY_ID" displayName="所属实体" mandatory="true" name="entityId" precision="32" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" comment="采用驼峰命名规范" displayName="属性名" mandatory="true" name="name" precision="200"
+                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="INDEX" displayName="序号" mandatory="true" name="index" propId="5" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="TAG_SET" displayName="标签" mandatory="true" name="tagSet" precision="100" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IS_PRIMARY" defaultValue="0" displayName="是否为主键" mandatory="true" name="isPrimary"
+                        propId="7" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="IS_MANDATORY" defaultValue="0" displayName="是否非空" mandatory="true" name="isMandatory"
+                        propId="8" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="DOMAIN_ID" displayName="数据域" name="domainId" precision="50" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DICT_ID" displayName="引用字典" name="dictId" precision="32" propId="10" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="VALUE_TYPE" displayName="值类型" mandatory="true" name="valueType" precision="50" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VALUE_PRECISION" displayName="值长度" name="valuePrecision" propId="12" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="VALUE_SCALE" displayName="值精度" name="valueScale" propId="13" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="VALUE_DEFAULT" displayName="默认值" name="valueDefault" precision="100" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <comment>应用的持久化实体的属性</comment>
+            <relations>
+                <to-one name="entity" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
+                        refPropName="props" tagSet="pub,ref-pub,ref-cascade-delete">
+                    <join>
+                        <on leftProp="entityId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+                <to-one name="domain" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain"
+                        tagSet="pub">
+                    <join>
+                        <on leftProp="domainId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+                <to-one name="dict" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict"
+                        tagSet="pub">
+                    <join>
+                        <on leftProp="dictId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+            </relations>
+            <unique-keys>
+                <unique-key columns="name,entityId" constraint="UK_DEV_APP_ENTITY_PROP_NAME" name="nameKey">
+                    <comment>在实体内唯一</comment>
+                </unique-key>
+            </unique-keys>
+        </entity>
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation"
+                displayName="应用 ORM 实体关联" name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation"
+                registerShortName="true" tableName="duzhou_dev_app_entity_relation"
+                i18n-en:displayName="Application ORM Entity Relation">
+            <columns>
+                <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="SOURCE_ID" displayName="关联源实体" mandatory="true" name="sourceId" precision="32" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TARGET_ID" displayName="关联目标实体" mandatory="true" name="targetId" precision="32" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SOURCE_PROP_NAME" displayName="关联源实体侧属性名" name="sourcePropName" precision="200" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TARGET_PROP_NAME" displayName="关联目标实体侧属性名" name="targetPropName" precision="200"
+                        propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TYPE" displayName="关联类型" mandatory="true" name="type" precision="20" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR" ext:dict="app_dev/entity-relation-type"/>
+                <column code="TAG_SET" displayName="标签" mandatory="true" name="tagSet" precision="200" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TABLE_NAME" comment="一对多时需要中间表" displayName="中间表表名" name="tableName" precision="200"
+                        propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="JOIN_ON_CONDS" comment="JSON 数组，元素为逗号分隔的左右连接的实体属性名" displayName="关联条件列表" mandatory="true"
+                        name="joinOnConds" precision="200" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+            <comment>应用的持久化实体间的关联</comment>
+            <relations>
+                <to-one name="source" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
+                        refPropName="relations" tagSet="pub,ref-pub,ref-cascade-delete">
+                    <join>
+                        <on leftProp="sourceId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+                <to-one name="target" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
+                        tagSet="pub,ref-pub,ref-cascade-delete">
+                    <join>
+                        <on leftProp="targetId" rightProp="id"/>
+                    </join>
+                    <ref-set/>
+                </to-one>
+            </relations>
         </entity>
     </entities>
 </orm>

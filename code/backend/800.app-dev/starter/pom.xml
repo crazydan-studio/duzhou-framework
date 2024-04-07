@@ -4,6 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!--服务启动器，用于启动单体服务，或者本地开发-->
     <artifactId>app-dev-starter</artifactId>
 
     <parent>
@@ -23,11 +24,11 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>app-dev-biz</artifactId>
+            <artifactId>app-dev-delta</artifactId>
         </dependency>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>app-dev-orm</artifactId>
+            <artifactId>app-dev-biz</artifactId>
         </dependency>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
