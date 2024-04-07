@@ -60,10 +60,6 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="status" displayName="状态" propId="10" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true" defaultValue="-1">
-            <schema type="java.lang.Integer" dict="app_dev/service-status"/>
-        </prop>
         <prop name="app" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
               ext:joinLeftProp="appId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
               lazy="true">

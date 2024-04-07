@@ -90,5 +90,9 @@
                 <item bizObjName="DevAppEntityRelation"/>
             </schema>
         </prop>
+        <prop name="appId" displayName="应用" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
+              updatable="true" queryable="true" lazy="true">
+            <schema type="java.lang.String"/>
+        </prop>
     </props>
 </meta>

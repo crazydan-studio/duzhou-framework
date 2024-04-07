@@ -81,6 +81,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /* relation:  */
     public static final String PROP_NAME_relations = "relations";
     
+    /* alias: service.appId 应用 */
+    public static final String PROP_NAME_appId = "appId";
+    
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
@@ -772,5 +775,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
        return _relations;
     }
        
+   public java.lang.String getAppId(){
+      return (java.lang.String)internalGetAliasValue("service.appId");
+   }
+
+   public void setAppId(java.lang.String value){
+      internalSetAliasValue("service.appId",value);
+   }
+
 }
 // resume CPD analysis - CPD-ON

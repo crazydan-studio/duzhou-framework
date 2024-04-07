@@ -52,24 +52,20 @@ public class _DevApp extends DynamicOrmEntity{
     public static final String PROP_NAME_code = "code";
     public static final int PROP_ID_code = 8;
     
-    /* 状态: STATUS INTEGER */
-    public static final String PROP_NAME_status = "status";
-    public static final int PROP_ID_status = 9;
-    
     /* 版本号: VERSION VARCHAR */
     public static final String PROP_NAME_version = "version";
-    public static final int PROP_ID_version = 10;
+    public static final int PROP_ID_version = 9;
     
     /* 图片: LOGO VARCHAR */
     public static final String PROP_NAME_logo = "logo";
-    public static final int PROP_ID_logo = 11;
+    public static final int PROP_ID_logo = 10;
     
     /* 代码包名: CLASS_PKG_NAME VARCHAR */
     public static final String PROP_NAME_classPkgName = "classPkgName";
-    public static final int PROP_ID_classPkgName = 12;
+    public static final int PROP_ID_classPkgName = 11;
     
 
-    private static int _PROP_ID_BOUND = 13;
+    private static int _PROP_ID_BOUND = 12;
 
     
     /* relation:  */
@@ -79,7 +75,7 @@ public class _DevApp extends DynamicOrmEntity{
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[13];
+    private static final String[] PROP_ID_TO_NAME = new String[12];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -106,9 +102,6 @@ public class _DevApp extends DynamicOrmEntity{
       
           PROP_ID_TO_NAME[PROP_ID_code] = PROP_NAME_code;
           PROP_NAME_TO_ID.put(PROP_NAME_code, PROP_ID_code);
-      
-          PROP_ID_TO_NAME[PROP_ID_status] = PROP_NAME_status;
-          PROP_NAME_TO_ID.put(PROP_NAME_status, PROP_ID_status);
       
           PROP_ID_TO_NAME[PROP_ID_version] = PROP_NAME_version;
           PROP_NAME_TO_ID.put(PROP_NAME_version, PROP_ID_version);
@@ -145,9 +138,6 @@ public class _DevApp extends DynamicOrmEntity{
     
     /* 编码: CODE */
     private java.lang.String _code;
-    
-    /* 状态: STATUS */
-    private java.lang.Integer _status;
     
     /* 版本号: VERSION */
     private java.lang.String _version;
@@ -253,9 +243,6 @@ public class _DevApp extends DynamicOrmEntity{
             case PROP_ID_code:
                return getCode();
         
-            case PROP_ID_status:
-               return getStatus();
-        
             case PROP_ID_version:
                return getVersion();
         
@@ -356,16 +343,6 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_status:{
-               java.lang.Integer typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toInteger(value,
-                       err-> newTypeConversionError(PROP_NAME_status));
-               }
-               setStatus(typedValue);
-               break;
-            }
-        
             case PROP_ID_version:{
                java.lang.String typedValue = null;
                if(value != null){
@@ -457,13 +434,6 @@ public class _DevApp extends DynamicOrmEntity{
             case PROP_ID_code:{
                onInitProp(propId);
                this._code = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_status:{
-               onInitProp(propId);
-               this._status = (java.lang.Integer)value;
                
                break;
             }
@@ -643,25 +613,6 @@ public class _DevApp extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_code,value)){
             this._code = value;
             internalClearRefs(PROP_ID_code);
-            
-        }
-    }
-    
-    /**
-     * 状态: STATUS
-     */
-    public java.lang.Integer getStatus(){
-         onPropGet(PROP_ID_status);
-         return _status;
-    }
-
-    /**
-     * 状态: STATUS
-     */
-    public void setStatus(java.lang.Integer value){
-        if(onPropSet(PROP_ID_status,value)){
-            this._status = value;
-            internalClearRefs(PROP_ID_status);
             
         }
     }

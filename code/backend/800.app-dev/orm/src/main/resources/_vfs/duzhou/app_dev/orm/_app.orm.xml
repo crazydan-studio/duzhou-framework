@@ -18,18 +18,6 @@
     </x:post-extends>
 
     <dicts>
-        <dict label="应用状态" name="app_dev/app-status" valueType="int" i18n-en:label="Application Status">
-            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
-            <option code="unset" label="待定" value="-1"/>
-            <option code="disabled" label="已禁用" value="0"/>
-            <option code="enabled" label="已启用" value="1"/>
-        </dict>
-        <dict label="服务状态" name="app_dev/service-status" valueType="int" i18n-en:label="Service Status">
-            <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
-            <option code="unset" label="待定" value="-1"/>
-            <option code="disabled" label="已禁用" value="0"/>
-            <option code="enabled" label="已启用" value="1"/>
-        </dict>
         <dict label="实体标签" name="app_dev/entity-tagset" valueType="string" i18n-en:label="Entity Tag Set">
             <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
             <option code="not_gen" label="不生成代码" value="not-gen"/>
@@ -96,14 +84,12 @@
                         propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
                         mandatory="true" name="code" precision="50" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="9"
-                        stdDataType="int" stdSqlType="INTEGER" ext:dict="app_dev/app-status"/>
-                <column code="VERSION" displayName="版本号" mandatory="true" name="version" precision="50" propId="10"
+                <column code="VERSION" displayName="版本号" mandatory="true" name="version" precision="50" propId="9"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="LOGO" displayName="图片" domain="image" name="logo" precision="200" propId="11"
+                <column code="LOGO" displayName="图片" domain="image" name="logo" precision="200" propId="10"
                         stdDataType="string" stdDomain="file" stdSqlType="VARCHAR"/>
                 <column code="CLASS_PKG_NAME" displayName="代码包名" mandatory="true" name="classPkgName" precision="200"
-                        propId="12" stdDataType="string" stdSqlType="VARCHAR"/>
+                        propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
             <relations>
                 <to-many cascadeDelete="true" name="services"
@@ -195,8 +181,6 @@
                 <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
                         mandatory="true" name="code" precision="100" propId="9" stdDataType="string"
                         stdSqlType="VARCHAR"/>
-                <column code="STATUS" defaultValue="-1" displayName="状态" mandatory="true" name="status" propId="10"
-                        stdDataType="int" stdSqlType="INTEGER" ext:dict="app_dev/service-status"/>
             </columns>
             <comment>应用的后台服务</comment>
             <relations>
@@ -226,6 +210,9 @@
                 name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity" registerShortName="true"
                 tableName="duzhou_dev_app_entity" updateTimeProp="updatedAt" updaterProp="updatedBy" versionProp="ver"
                 i18n-en:displayName="Application ORM Entity">
+            <aliases>
+                <alias displayName="应用" name="appId" propPath="service.appId" tagSet="pub" type="String"/>
+            </aliases>
             <columns>
                 <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>

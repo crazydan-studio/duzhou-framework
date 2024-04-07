@@ -56,12 +56,8 @@ public class _DevAppService extends DynamicOrmEntity{
     public static final String PROP_NAME_code = "code";
     public static final int PROP_ID_code = 9;
     
-    /* 状态: STATUS INTEGER */
-    public static final String PROP_NAME_status = "status";
-    public static final int PROP_ID_status = 10;
-    
 
-    private static int _PROP_ID_BOUND = 11;
+    private static int _PROP_ID_BOUND = 10;
 
     
     /* relation:  */
@@ -74,7 +70,7 @@ public class _DevAppService extends DynamicOrmEntity{
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[11];
+    private static final String[] PROP_ID_TO_NAME = new String[10];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -105,9 +101,6 @@ public class _DevAppService extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_code] = PROP_NAME_code;
           PROP_NAME_TO_ID.put(PROP_NAME_code, PROP_ID_code);
       
-          PROP_ID_TO_NAME[PROP_ID_status] = PROP_NAME_status;
-          PROP_NAME_TO_ID.put(PROP_NAME_status, PROP_ID_status);
-      
     }
 
     
@@ -137,9 +130,6 @@ public class _DevAppService extends DynamicOrmEntity{
     
     /* 编码: CODE */
     private java.lang.String _code;
-    
-    /* 状态: STATUS */
-    private java.lang.Integer _status;
     
 
     public _DevAppService(){
@@ -238,9 +228,6 @@ public class _DevAppService extends DynamicOrmEntity{
         
             case PROP_ID_code:
                return getCode();
-        
-            case PROP_ID_status:
-               return getStatus();
         
            default:
               return super.orm_propValue(propId);
@@ -343,16 +330,6 @@ public class _DevAppService extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_status:{
-               java.lang.Integer typedValue = null;
-               if(value != null){
-                   typedValue = ConvertHelper.toInteger(value,
-                       err-> newTypeConversionError(PROP_NAME_status));
-               }
-               setStatus(typedValue);
-               break;
-            }
-        
            default:
               super.orm_propValue(propId,value);
         }
@@ -421,13 +398,6 @@ public class _DevAppService extends DynamicOrmEntity{
             case PROP_ID_code:{
                onInitProp(propId);
                this._code = (java.lang.String)value;
-               
-               break;
-            }
-        
-            case PROP_ID_status:{
-               onInitProp(propId);
-               this._status = (java.lang.Integer)value;
                
                break;
             }
@@ -605,25 +575,6 @@ public class _DevAppService extends DynamicOrmEntity{
         if(onPropSet(PROP_ID_code,value)){
             this._code = value;
             internalClearRefs(PROP_ID_code);
-            
-        }
-    }
-    
-    /**
-     * 状态: STATUS
-     */
-    public java.lang.Integer getStatus(){
-         onPropGet(PROP_ID_status);
-         return _status;
-    }
-
-    /**
-     * 状态: STATUS
-     */
-    public void setStatus(java.lang.Integer value){
-        if(onPropSet(PROP_ID_status,value)){
-            this._status = value;
-            internalClearRefs(PROP_ID_status);
             
         }
     }

@@ -57,19 +57,15 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="50"/>
         </prop>
-        <prop name="status" displayName="状态" propId="9" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true" defaultValue="-1">
-            <schema type="java.lang.Integer" dict="app_dev/app-status"/>
-        </prop>
-        <prop name="version" displayName="版本号" propId="10" mandatory="true" queryable="true" sortable="true"
+        <prop name="version" displayName="版本号" propId="9" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="50"/>
         </prop>
-        <prop name="logo" displayName="图片" propId="11" queryable="true" sortable="true" insertable="true"
+        <prop name="logo" displayName="图片" propId="10" queryable="true" sortable="true" insertable="true"
               updatable="true">
             <schema stdDomain="file" domain="image" type="java.lang.String" precision="200"/>
         </prop>
-        <prop name="classPkgName" displayName="代码包名" propId="12" mandatory="true" queryable="true" sortable="true"
+        <prop name="classPkgName" displayName="代码包名" propId="11" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="200"/>
         </prop>
