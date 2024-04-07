@@ -148,11 +148,12 @@
 
                 const insertable = !alias.tagSet?.contains('view');
                 const updatable = !alias.tagSet?.contains('view');
+                const queryable = alias.tagSet?.contains('pub');
             ]]></c:script>
             <prop name="${alias.name}" displayName="${alias.displayName}"
                   i18n-en:displayName="${alias['i18n-en:displayName']}" tagSet="${_.join(alias.tagSet,',')}"
                   ext:kind="alias" internal="${alias.tagSet?.contains('sys')}" ui:control="${alias['ui:control']}"
-                  insertable="${insertable}" updatable="${updatable}"
+                  insertable="${insertable}" updatable="${updatable}" queryable="${queryable}"
                   mandatory="${alias.mandatory || null}" lazy="${alias.tagSet?.contains('eager')?false:true}"
                   published="${alias.tagSet?.contains('not-pub') ? false : null}">
                 <schema type="${alias.javaTypeName}" />
