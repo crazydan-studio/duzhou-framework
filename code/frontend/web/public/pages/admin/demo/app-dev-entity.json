@@ -162,6 +162,25 @@
               }
             },
             {
+              "label": "字段管理",
+              "type": "button",
+              "level": "info",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "${title} - ${entityName} 的字段管理",
+                "closeOnEsc": true,
+                "size": "lg",
+                "actions": [],
+                "body": {
+                  "type": "service",
+                  "data": {
+                    "entityId": "${id}"
+                  },
+                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-fields-man.json"
+                }
+              }
+            },
+            {
               "label": "删除",
               "type": "button",
               "level": "danger",

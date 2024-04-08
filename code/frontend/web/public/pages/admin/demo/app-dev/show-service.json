@@ -15,7 +15,7 @@
         "type": "form",
         "static": true,
         "initApi": {
-          "url": "@query:DevAppService__get?id=${serviceId}",
+          "url": "@query:DevAppService__get?id=${service.id}",
           "gql:selection": "id,title,code,app{id,title,code}"
         },
         "body": [

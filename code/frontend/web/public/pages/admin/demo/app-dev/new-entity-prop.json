@@ -1,0 +1,86 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevAppEntityProp__save?entityId=${entityId}",
+      "gql:selection": "id"
+    },
+    "body": [
+      {
+        "type": "input-number",
+        "name": "index",
+        "label": "序号",
+        "required": true,
+        "min": 1,
+        "max": 1999
+      },
+      {
+        "type": "input-text",
+        "name": "title",
+        "label": "名称",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "name",
+        "label": "字段名",
+        "required": true
+      },
+      {
+        "type": "group",
+        "body": [
+          {
+            "type": "switch",
+            "name": "isPrimary",
+            "label": "是否主键"
+          },
+          {
+            "type": "switch",
+            "name": "isMandatory",
+            "label": "是否非空",
+            "value": "${isPrimary}",
+            "disabledOn": "${isPrimary}"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "name": "tagSet",
+        "label": "标签",
+        "multiple": true,
+        "clearable": true,
+        "source": "@dict:app_dev/entity-prop-tagset"
+      },
+      {
+        "type": "select",
+        "name": "valueType",
+        "label": "字段类型",
+        "source": "@dict:core/std-sql-type",
+        "required": true
+      },
+      {
+        "type": "input-number",
+        "name": "valuePrecision",
+        "label": "字段长度",
+        "min": 0
+      },
+      {
+        "type": "input-number",
+        "name": "valueScale",
+        "label": "小数精度",
+        "min": 0
+      },
+      {
+        "type": "input-text",
+        "name": "valueDefault",
+        "label": "默认值"
+      }
+    ]
+  }
+}
