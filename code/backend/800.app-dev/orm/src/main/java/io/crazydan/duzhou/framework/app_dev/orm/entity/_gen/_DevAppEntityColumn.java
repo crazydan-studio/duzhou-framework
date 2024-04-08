@@ -10,15 +10,15 @@ import java.util.HashMap;
 import java.util.Arrays;
 import java.util.List;
 
-import io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp;
+import io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- *  应用 ORM 实体属性: duzhou_dev_app_entity_prop
+ *  应用 ORM 实体字段: duzhou_dev_app_entity_column
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable","java:S3008","java:S1602","java:S1128","java:S1161",
         "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})
-public class _DevAppEntityProp extends DynamicOrmEntity{
+public class _DevAppEntityColumn extends DynamicOrmEntity{
     
     /* ID: ID VARCHAR */
     public static final String PROP_NAME_id = "id";
@@ -28,29 +28,29 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     public static final String PROP_NAME_entityId = "entityId";
     public static final int PROP_ID_entityId = 2;
     
-    /* 名称: TITLE VARCHAR */
-    public static final String PROP_NAME_title = "title";
-    public static final int PROP_ID_title = 3;
+    /* 显示名称: DISPLAY_NAME VARCHAR */
+    public static final String PROP_NAME_displayName = "displayName";
+    public static final int PROP_ID_displayName = 3;
     
-    /* 属性名: NAME VARCHAR */
+    /* 字段名: NAME VARCHAR */
     public static final String PROP_NAME_name = "name";
     public static final int PROP_ID_name = 4;
     
-    /* 序号: INDEX INTEGER */
-    public static final String PROP_NAME_index = "index";
-    public static final int PROP_ID_index = 5;
+    /* 编号: PROP_ID INTEGER */
+    public static final String PROP_NAME_propId = "propId";
+    public static final int PROP_ID_propId = 5;
     
     /* 标签: TAG_SET VARCHAR */
     public static final String PROP_NAME_tagSet = "tagSet";
     public static final int PROP_ID_tagSet = 6;
     
-    /* 是否为主键: IS_PRIMARY BOOLEAN */
-    public static final String PROP_NAME_isPrimary = "isPrimary";
-    public static final int PROP_ID_isPrimary = 7;
+    /* 是否主键: PRIMARY BOOLEAN */
+    public static final String PROP_NAME_primary = "primary";
+    public static final int PROP_ID_primary = 7;
     
-    /* 是否非空: IS_MANDATORY BOOLEAN */
-    public static final String PROP_NAME_isMandatory = "isMandatory";
-    public static final int PROP_ID_isMandatory = 8;
+    /* 是否非空: MANDATORY BOOLEAN */
+    public static final String PROP_NAME_mandatory = "mandatory";
+    public static final int PROP_ID_mandatory = 8;
     
     /* 数据域: DOMAIN_ID VARCHAR */
     public static final String PROP_NAME_domainId = "domainId";
@@ -60,21 +60,21 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     public static final String PROP_NAME_dictId = "dictId";
     public static final int PROP_ID_dictId = 10;
     
-    /* 值类型: VALUE_TYPE VARCHAR */
-    public static final String PROP_NAME_valueType = "valueType";
-    public static final int PROP_ID_valueType = 11;
+    /* 字段类型: STD_SQL_TYPE VARCHAR */
+    public static final String PROP_NAME_stdSqlType = "stdSqlType";
+    public static final int PROP_ID_stdSqlType = 11;
     
-    /* 值长度: VALUE_PRECISION INTEGER */
-    public static final String PROP_NAME_valuePrecision = "valuePrecision";
-    public static final int PROP_ID_valuePrecision = 12;
+    /* 字段长度: PRECISION INTEGER */
+    public static final String PROP_NAME_precision = "precision";
+    public static final int PROP_ID_precision = 12;
     
-    /* 值精度: VALUE_SCALE INTEGER */
-    public static final String PROP_NAME_valueScale = "valueScale";
-    public static final int PROP_ID_valueScale = 13;
+    /* 小数位数: SCALE INTEGER */
+    public static final String PROP_NAME_scale = "scale";
+    public static final int PROP_ID_scale = 13;
     
-    /* 默认值: VALUE_DEFAULT VARCHAR */
-    public static final String PROP_NAME_valueDefault = "valueDefault";
-    public static final int PROP_ID_valueDefault = 14;
+    /* 默认值: DEFAULT_VALUE VARCHAR */
+    public static final String PROP_NAME_defaultValue = "defaultValue";
+    public static final int PROP_ID_defaultValue = 14;
     
 
     private static int _PROP_ID_BOUND = 15;
@@ -103,23 +103,23 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_entityId] = PROP_NAME_entityId;
           PROP_NAME_TO_ID.put(PROP_NAME_entityId, PROP_ID_entityId);
       
-          PROP_ID_TO_NAME[PROP_ID_title] = PROP_NAME_title;
-          PROP_NAME_TO_ID.put(PROP_NAME_title, PROP_ID_title);
+          PROP_ID_TO_NAME[PROP_ID_displayName] = PROP_NAME_displayName;
+          PROP_NAME_TO_ID.put(PROP_NAME_displayName, PROP_ID_displayName);
       
           PROP_ID_TO_NAME[PROP_ID_name] = PROP_NAME_name;
           PROP_NAME_TO_ID.put(PROP_NAME_name, PROP_ID_name);
       
-          PROP_ID_TO_NAME[PROP_ID_index] = PROP_NAME_index;
-          PROP_NAME_TO_ID.put(PROP_NAME_index, PROP_ID_index);
+          PROP_ID_TO_NAME[PROP_ID_propId] = PROP_NAME_propId;
+          PROP_NAME_TO_ID.put(PROP_NAME_propId, PROP_ID_propId);
       
           PROP_ID_TO_NAME[PROP_ID_tagSet] = PROP_NAME_tagSet;
           PROP_NAME_TO_ID.put(PROP_NAME_tagSet, PROP_ID_tagSet);
       
-          PROP_ID_TO_NAME[PROP_ID_isPrimary] = PROP_NAME_isPrimary;
-          PROP_NAME_TO_ID.put(PROP_NAME_isPrimary, PROP_ID_isPrimary);
+          PROP_ID_TO_NAME[PROP_ID_primary] = PROP_NAME_primary;
+          PROP_NAME_TO_ID.put(PROP_NAME_primary, PROP_ID_primary);
       
-          PROP_ID_TO_NAME[PROP_ID_isMandatory] = PROP_NAME_isMandatory;
-          PROP_NAME_TO_ID.put(PROP_NAME_isMandatory, PROP_ID_isMandatory);
+          PROP_ID_TO_NAME[PROP_ID_mandatory] = PROP_NAME_mandatory;
+          PROP_NAME_TO_ID.put(PROP_NAME_mandatory, PROP_ID_mandatory);
       
           PROP_ID_TO_NAME[PROP_ID_domainId] = PROP_NAME_domainId;
           PROP_NAME_TO_ID.put(PROP_NAME_domainId, PROP_ID_domainId);
@@ -127,17 +127,17 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_dictId] = PROP_NAME_dictId;
           PROP_NAME_TO_ID.put(PROP_NAME_dictId, PROP_ID_dictId);
       
-          PROP_ID_TO_NAME[PROP_ID_valueType] = PROP_NAME_valueType;
-          PROP_NAME_TO_ID.put(PROP_NAME_valueType, PROP_ID_valueType);
+          PROP_ID_TO_NAME[PROP_ID_stdSqlType] = PROP_NAME_stdSqlType;
+          PROP_NAME_TO_ID.put(PROP_NAME_stdSqlType, PROP_ID_stdSqlType);
       
-          PROP_ID_TO_NAME[PROP_ID_valuePrecision] = PROP_NAME_valuePrecision;
-          PROP_NAME_TO_ID.put(PROP_NAME_valuePrecision, PROP_ID_valuePrecision);
+          PROP_ID_TO_NAME[PROP_ID_precision] = PROP_NAME_precision;
+          PROP_NAME_TO_ID.put(PROP_NAME_precision, PROP_ID_precision);
       
-          PROP_ID_TO_NAME[PROP_ID_valueScale] = PROP_NAME_valueScale;
-          PROP_NAME_TO_ID.put(PROP_NAME_valueScale, PROP_ID_valueScale);
+          PROP_ID_TO_NAME[PROP_ID_scale] = PROP_NAME_scale;
+          PROP_NAME_TO_ID.put(PROP_NAME_scale, PROP_ID_scale);
       
-          PROP_ID_TO_NAME[PROP_ID_valueDefault] = PROP_NAME_valueDefault;
-          PROP_NAME_TO_ID.put(PROP_NAME_valueDefault, PROP_ID_valueDefault);
+          PROP_ID_TO_NAME[PROP_ID_defaultValue] = PROP_NAME_defaultValue;
+          PROP_NAME_TO_ID.put(PROP_NAME_defaultValue, PROP_ID_defaultValue);
       
     }
 
@@ -148,23 +148,23 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     /* 所属实体: ENTITY_ID */
     private java.lang.String _entityId;
     
-    /* 名称: TITLE */
-    private java.lang.String _title;
+    /* 显示名称: DISPLAY_NAME */
+    private java.lang.String _displayName;
     
-    /* 属性名: NAME */
+    /* 字段名: NAME */
     private java.lang.String _name;
     
-    /* 序号: INDEX */
-    private java.lang.Integer _index;
+    /* 编号: PROP_ID */
+    private java.lang.Integer _propId;
     
     /* 标签: TAG_SET */
     private java.lang.String _tagSet;
     
-    /* 是否为主键: IS_PRIMARY */
-    private java.lang.Boolean _isPrimary;
+    /* 是否主键: PRIMARY */
+    private java.lang.Boolean _primary;
     
-    /* 是否非空: IS_MANDATORY */
-    private java.lang.Boolean _isMandatory;
+    /* 是否非空: MANDATORY */
+    private java.lang.Boolean _mandatory;
     
     /* 数据域: DOMAIN_ID */
     private java.lang.String _domainId;
@@ -172,30 +172,30 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     /* 引用字典: DICT_ID */
     private java.lang.String _dictId;
     
-    /* 值类型: VALUE_TYPE */
-    private java.lang.String _valueType;
+    /* 字段类型: STD_SQL_TYPE */
+    private java.lang.String _stdSqlType;
     
-    /* 值长度: VALUE_PRECISION */
-    private java.lang.Integer _valuePrecision;
+    /* 字段长度: PRECISION */
+    private java.lang.Integer _precision;
     
-    /* 值精度: VALUE_SCALE */
-    private java.lang.Integer _valueScale;
+    /* 小数位数: SCALE */
+    private java.lang.Integer _scale;
     
-    /* 默认值: VALUE_DEFAULT */
-    private java.lang.String _valueDefault;
+    /* 默认值: DEFAULT_VALUE */
+    private java.lang.String _defaultValue;
     
 
-    public _DevAppEntityProp(){
+    public _DevAppEntityColumn(){
         // for debug
     }
 
-    protected DevAppEntityProp newInstance(){
-       return new DevAppEntityProp();
+    protected DevAppEntityColumn newInstance(){
+       return new DevAppEntityColumn();
     }
 
     @Override
-    public DevAppEntityProp cloneInstance() {
-        DevAppEntityProp entity = newInstance();
+    public DevAppEntityColumn cloneInstance() {
+        DevAppEntityColumn entity = newInstance();
         orm_forEachInitedProp((value, propId) -> {
             entity.onInitProp(propId);
         });
@@ -208,7 +208,7 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
       IEntityModel entityModel = orm_entityModel();
       if(entityModel != null)
           return entityModel.getName();
-      return "io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp";
+      return "io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn";
     }
 
     @Override
@@ -261,23 +261,23 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
             case PROP_ID_entityId:
                return getEntityId();
         
-            case PROP_ID_title:
-               return getTitle();
+            case PROP_ID_displayName:
+               return getDisplayName();
         
             case PROP_ID_name:
                return getName();
         
-            case PROP_ID_index:
-               return getIndex();
+            case PROP_ID_propId:
+               return getPropId();
         
             case PROP_ID_tagSet:
                return getTagSet();
         
-            case PROP_ID_isPrimary:
-               return getIsPrimary();
+            case PROP_ID_primary:
+               return getPrimary();
         
-            case PROP_ID_isMandatory:
-               return getIsMandatory();
+            case PROP_ID_mandatory:
+               return getMandatory();
         
             case PROP_ID_domainId:
                return getDomainId();
@@ -285,17 +285,17 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
             case PROP_ID_dictId:
                return getDictId();
         
-            case PROP_ID_valueType:
-               return getValueType();
+            case PROP_ID_stdSqlType:
+               return getStdSqlType();
         
-            case PROP_ID_valuePrecision:
-               return getValuePrecision();
+            case PROP_ID_precision:
+               return getPrecision();
         
-            case PROP_ID_valueScale:
-               return getValueScale();
+            case PROP_ID_scale:
+               return getScale();
         
-            case PROP_ID_valueDefault:
-               return getValueDefault();
+            case PROP_ID_defaultValue:
+               return getDefaultValue();
         
            default:
               return super.orm_propValue(propId);
@@ -328,13 +328,13 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_title));
+                       err-> newTypeConversionError(PROP_NAME_displayName));
                }
-               setTitle(typedValue);
+               setDisplayName(typedValue);
                break;
             }
         
@@ -348,13 +348,13 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_index:{
+            case PROP_ID_propId:{
                java.lang.Integer typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toInteger(value,
-                       err-> newTypeConversionError(PROP_NAME_index));
+                       err-> newTypeConversionError(PROP_NAME_propId));
                }
-               setIndex(typedValue);
+               setPropId(typedValue);
                break;
             }
         
@@ -368,23 +368,23 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_isPrimary:{
+            case PROP_ID_primary:{
                java.lang.Boolean typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toBoolean(value,
-                       err-> newTypeConversionError(PROP_NAME_isPrimary));
+                       err-> newTypeConversionError(PROP_NAME_primary));
                }
-               setIsPrimary(typedValue);
+               setPrimary(typedValue);
                break;
             }
         
-            case PROP_ID_isMandatory:{
+            case PROP_ID_mandatory:{
                java.lang.Boolean typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toBoolean(value,
-                       err-> newTypeConversionError(PROP_NAME_isMandatory));
+                       err-> newTypeConversionError(PROP_NAME_mandatory));
                }
-               setIsMandatory(typedValue);
+               setMandatory(typedValue);
                break;
             }
         
@@ -408,43 +408,43 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_valueType:{
+            case PROP_ID_stdSqlType:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_valueType));
+                       err-> newTypeConversionError(PROP_NAME_stdSqlType));
                }
-               setValueType(typedValue);
+               setStdSqlType(typedValue);
                break;
             }
         
-            case PROP_ID_valuePrecision:{
+            case PROP_ID_precision:{
                java.lang.Integer typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toInteger(value,
-                       err-> newTypeConversionError(PROP_NAME_valuePrecision));
+                       err-> newTypeConversionError(PROP_NAME_precision));
                }
-               setValuePrecision(typedValue);
+               setPrecision(typedValue);
                break;
             }
         
-            case PROP_ID_valueScale:{
+            case PROP_ID_scale:{
                java.lang.Integer typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toInteger(value,
-                       err-> newTypeConversionError(PROP_NAME_valueScale));
+                       err-> newTypeConversionError(PROP_NAME_scale));
                }
-               setValueScale(typedValue);
+               setScale(typedValue);
                break;
             }
         
-            case PROP_ID_valueDefault:{
+            case PROP_ID_defaultValue:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_valueDefault));
+                       err-> newTypeConversionError(PROP_NAME_defaultValue));
                }
-               setValueDefault(typedValue);
+               setDefaultValue(typedValue);
                break;
             }
         
@@ -471,9 +471,9 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                onInitProp(propId);
-               this._title = (java.lang.String)value;
+               this._displayName = (java.lang.String)value;
                
                break;
             }
@@ -485,9 +485,9 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_index:{
+            case PROP_ID_propId:{
                onInitProp(propId);
-               this._index = (java.lang.Integer)value;
+               this._propId = (java.lang.Integer)value;
                
                break;
             }
@@ -499,16 +499,16 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_isPrimary:{
+            case PROP_ID_primary:{
                onInitProp(propId);
-               this._isPrimary = (java.lang.Boolean)value;
+               this._primary = (java.lang.Boolean)value;
                
                break;
             }
         
-            case PROP_ID_isMandatory:{
+            case PROP_ID_mandatory:{
                onInitProp(propId);
-               this._isMandatory = (java.lang.Boolean)value;
+               this._mandatory = (java.lang.Boolean)value;
                
                break;
             }
@@ -527,30 +527,30 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_valueType:{
+            case PROP_ID_stdSqlType:{
                onInitProp(propId);
-               this._valueType = (java.lang.String)value;
+               this._stdSqlType = (java.lang.String)value;
                
                break;
             }
         
-            case PROP_ID_valuePrecision:{
+            case PROP_ID_precision:{
                onInitProp(propId);
-               this._valuePrecision = (java.lang.Integer)value;
+               this._precision = (java.lang.Integer)value;
                
                break;
             }
         
-            case PROP_ID_valueScale:{
+            case PROP_ID_scale:{
                onInitProp(propId);
-               this._valueScale = (java.lang.Integer)value;
+               this._scale = (java.lang.Integer)value;
                
                break;
             }
         
-            case PROP_ID_valueDefault:{
+            case PROP_ID_defaultValue:{
                onInitProp(propId);
-               this._valueDefault = (java.lang.String)value;
+               this._defaultValue = (java.lang.String)value;
                
                break;
             }
@@ -600,26 +600,26 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     }
     
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public java.lang.String getTitle(){
-         onPropGet(PROP_ID_title);
-         return _title;
+    public java.lang.String getDisplayName(){
+         onPropGet(PROP_ID_displayName);
+         return _displayName;
     }
 
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public void setTitle(java.lang.String value){
-        if(onPropSet(PROP_ID_title,value)){
-            this._title = value;
-            internalClearRefs(PROP_ID_title);
+    public void setDisplayName(java.lang.String value){
+        if(onPropSet(PROP_ID_displayName,value)){
+            this._displayName = value;
+            internalClearRefs(PROP_ID_displayName);
             
         }
     }
     
     /**
-     * 属性名: NAME
+     * 字段名: NAME
      */
     public java.lang.String getName(){
          onPropGet(PROP_ID_name);
@@ -627,7 +627,7 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     }
 
     /**
-     * 属性名: NAME
+     * 字段名: NAME
      */
     public void setName(java.lang.String value){
         if(onPropSet(PROP_ID_name,value)){
@@ -638,20 +638,20 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     }
     
     /**
-     * 序号: INDEX
+     * 编号: PROP_ID
      */
-    public java.lang.Integer getIndex(){
-         onPropGet(PROP_ID_index);
-         return _index;
+    public java.lang.Integer getPropId(){
+         onPropGet(PROP_ID_propId);
+         return _propId;
     }
 
     /**
-     * 序号: INDEX
+     * 编号: PROP_ID
      */
-    public void setIndex(java.lang.Integer value){
-        if(onPropSet(PROP_ID_index,value)){
-            this._index = value;
-            internalClearRefs(PROP_ID_index);
+    public void setPropId(java.lang.Integer value){
+        if(onPropSet(PROP_ID_propId,value)){
+            this._propId = value;
+            internalClearRefs(PROP_ID_propId);
             
         }
     }
@@ -676,39 +676,39 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     }
     
     /**
-     * 是否为主键: IS_PRIMARY
+     * 是否主键: PRIMARY
      */
-    public java.lang.Boolean getIsPrimary(){
-         onPropGet(PROP_ID_isPrimary);
-         return _isPrimary;
+    public java.lang.Boolean getPrimary(){
+         onPropGet(PROP_ID_primary);
+         return _primary;
     }
 
     /**
-     * 是否为主键: IS_PRIMARY
+     * 是否主键: PRIMARY
      */
-    public void setIsPrimary(java.lang.Boolean value){
-        if(onPropSet(PROP_ID_isPrimary,value)){
-            this._isPrimary = value;
-            internalClearRefs(PROP_ID_isPrimary);
+    public void setPrimary(java.lang.Boolean value){
+        if(onPropSet(PROP_ID_primary,value)){
+            this._primary = value;
+            internalClearRefs(PROP_ID_primary);
             
         }
     }
     
     /**
-     * 是否非空: IS_MANDATORY
+     * 是否非空: MANDATORY
      */
-    public java.lang.Boolean getIsMandatory(){
-         onPropGet(PROP_ID_isMandatory);
-         return _isMandatory;
+    public java.lang.Boolean getMandatory(){
+         onPropGet(PROP_ID_mandatory);
+         return _mandatory;
     }
 
     /**
-     * 是否非空: IS_MANDATORY
+     * 是否非空: MANDATORY
      */
-    public void setIsMandatory(java.lang.Boolean value){
-        if(onPropSet(PROP_ID_isMandatory,value)){
-            this._isMandatory = value;
-            internalClearRefs(PROP_ID_isMandatory);
+    public void setMandatory(java.lang.Boolean value){
+        if(onPropSet(PROP_ID_mandatory,value)){
+            this._mandatory = value;
+            internalClearRefs(PROP_ID_mandatory);
             
         }
     }
@@ -752,77 +752,77 @@ public class _DevAppEntityProp extends DynamicOrmEntity{
     }
     
     /**
-     * 值类型: VALUE_TYPE
+     * 字段类型: STD_SQL_TYPE
      */
-    public java.lang.String getValueType(){
-         onPropGet(PROP_ID_valueType);
-         return _valueType;
+    public java.lang.String getStdSqlType(){
+         onPropGet(PROP_ID_stdSqlType);
+         return _stdSqlType;
     }
 
     /**
-     * 值类型: VALUE_TYPE
+     * 字段类型: STD_SQL_TYPE
      */
-    public void setValueType(java.lang.String value){
-        if(onPropSet(PROP_ID_valueType,value)){
-            this._valueType = value;
-            internalClearRefs(PROP_ID_valueType);
+    public void setStdSqlType(java.lang.String value){
+        if(onPropSet(PROP_ID_stdSqlType,value)){
+            this._stdSqlType = value;
+            internalClearRefs(PROP_ID_stdSqlType);
             
         }
     }
     
     /**
-     * 值长度: VALUE_PRECISION
+     * 字段长度: PRECISION
      */
-    public java.lang.Integer getValuePrecision(){
-         onPropGet(PROP_ID_valuePrecision);
-         return _valuePrecision;
+    public java.lang.Integer getPrecision(){
+         onPropGet(PROP_ID_precision);
+         return _precision;
     }
 
     /**
-     * 值长度: VALUE_PRECISION
+     * 字段长度: PRECISION
      */
-    public void setValuePrecision(java.lang.Integer value){
-        if(onPropSet(PROP_ID_valuePrecision,value)){
-            this._valuePrecision = value;
-            internalClearRefs(PROP_ID_valuePrecision);
+    public void setPrecision(java.lang.Integer value){
+        if(onPropSet(PROP_ID_precision,value)){
+            this._precision = value;
+            internalClearRefs(PROP_ID_precision);
             
         }
     }
     
     /**
-     * 值精度: VALUE_SCALE
+     * 小数位数: SCALE
      */
-    public java.lang.Integer getValueScale(){
-         onPropGet(PROP_ID_valueScale);
-         return _valueScale;
+    public java.lang.Integer getScale(){
+         onPropGet(PROP_ID_scale);
+         return _scale;
     }
 
     /**
-     * 值精度: VALUE_SCALE
+     * 小数位数: SCALE
      */
-    public void setValueScale(java.lang.Integer value){
-        if(onPropSet(PROP_ID_valueScale,value)){
-            this._valueScale = value;
-            internalClearRefs(PROP_ID_valueScale);
+    public void setScale(java.lang.Integer value){
+        if(onPropSet(PROP_ID_scale,value)){
+            this._scale = value;
+            internalClearRefs(PROP_ID_scale);
             
         }
     }
     
     /**
-     * 默认值: VALUE_DEFAULT
+     * 默认值: DEFAULT_VALUE
      */
-    public java.lang.String getValueDefault(){
-         onPropGet(PROP_ID_valueDefault);
-         return _valueDefault;
+    public java.lang.String getDefaultValue(){
+         onPropGet(PROP_ID_defaultValue);
+         return _defaultValue;
     }
 
     /**
-     * 默认值: VALUE_DEFAULT
+     * 默认值: DEFAULT_VALUE
      */
-    public void setValueDefault(java.lang.String value){
-        if(onPropSet(PROP_ID_valueDefault,value)){
-            this._valueDefault = value;
-            internalClearRefs(PROP_ID_valueDefault);
+    public void setDefaultValue(java.lang.String value){
+        if(onPropSet(PROP_ID_defaultValue,value)){
+            this._defaultValue = value;
+            internalClearRefs(PROP_ID_defaultValue);
             
         }
     }

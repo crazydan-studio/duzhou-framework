@@ -44,9 +44,9 @@ public class _DevApp extends DynamicOrmEntity{
     public static final String PROP_NAME_ver = "ver";
     public static final int PROP_ID_ver = 6;
     
-    /* 名称: TITLE VARCHAR */
-    public static final String PROP_NAME_title = "title";
-    public static final int PROP_ID_title = 7;
+    /* 显示名称: DISPLAY_NAME VARCHAR */
+    public static final String PROP_NAME_displayName = "displayName";
+    public static final int PROP_ID_displayName = 7;
     
     /* 编码: CODE VARCHAR */
     public static final String PROP_NAME_code = "code";
@@ -97,8 +97,8 @@ public class _DevApp extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_ver] = PROP_NAME_ver;
           PROP_NAME_TO_ID.put(PROP_NAME_ver, PROP_ID_ver);
       
-          PROP_ID_TO_NAME[PROP_ID_title] = PROP_NAME_title;
-          PROP_NAME_TO_ID.put(PROP_NAME_title, PROP_ID_title);
+          PROP_ID_TO_NAME[PROP_ID_displayName] = PROP_NAME_displayName;
+          PROP_NAME_TO_ID.put(PROP_NAME_displayName, PROP_ID_displayName);
       
           PROP_ID_TO_NAME[PROP_ID_code] = PROP_NAME_code;
           PROP_NAME_TO_ID.put(PROP_NAME_code, PROP_ID_code);
@@ -133,8 +133,8 @@ public class _DevApp extends DynamicOrmEntity{
     /* 数据版本: VER */
     private java.lang.Integer _ver;
     
-    /* 名称: TITLE */
-    private java.lang.String _title;
+    /* 显示名称: DISPLAY_NAME */
+    private java.lang.String _displayName;
     
     /* 编码: CODE */
     private java.lang.String _code;
@@ -237,8 +237,8 @@ public class _DevApp extends DynamicOrmEntity{
             case PROP_ID_ver:
                return getVer();
         
-            case PROP_ID_title:
-               return getTitle();
+            case PROP_ID_displayName:
+               return getDisplayName();
         
             case PROP_ID_code:
                return getCode();
@@ -323,13 +323,13 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_title));
+                       err-> newTypeConversionError(PROP_NAME_displayName));
                }
-               setTitle(typedValue);
+               setDisplayName(typedValue);
                break;
             }
         
@@ -424,9 +424,9 @@ public class _DevApp extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                onInitProp(propId);
-               this._title = (java.lang.String)value;
+               this._displayName = (java.lang.String)value;
                
                break;
             }
@@ -580,20 +580,20 @@ public class _DevApp extends DynamicOrmEntity{
     }
     
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public java.lang.String getTitle(){
-         onPropGet(PROP_ID_title);
-         return _title;
+    public java.lang.String getDisplayName(){
+         onPropGet(PROP_ID_displayName);
+         return _displayName;
     }
 
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public void setTitle(java.lang.String value){
-        if(onPropSet(PROP_ID_title,value)){
-            this._title = value;
-            internalClearRefs(PROP_ID_title);
+    public void setDisplayName(java.lang.String value){
+        if(onPropSet(PROP_ID_displayName,value)){
+            this._displayName = value;
+            internalClearRefs(PROP_ID_displayName);
             
         }
     }

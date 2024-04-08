@@ -22,42 +22,42 @@ public interface _AppDevOrmConstants {
     /**
      * 实体字段标签: 不生成代码 
      */
-    String ENTITY_PROP_TAGSET_not_gen = "not-gen";
+    String ENTITY_COLUMN_TAGSET_not_gen = "not-gen";
                         
     /**
      * 实体字段标签: 生成唯一主键 UUID 字符串或递增序列
      */
-    String ENTITY_PROP_TAGSET_seq = "seq";
+    String ENTITY_COLUMN_TAGSET_seq = "seq";
                         
     /**
      * 实体字段标签: 删除该属性 
      */
-    String ENTITY_PROP_TAGSET_del = "del";
+    String ENTITY_COLUMN_TAGSET_del = "del";
                         
     /**
      * 实体字段标签: 生成随机值 
      */
-    String ENTITY_PROP_TAGSET_var = "var";
+    String ENTITY_COLUMN_TAGSET_var = "var";
                         
     /**
      * 实体字段标签: 在日志中打印掩码 在日志中隐藏敏感信息
      */
-    String ENTITY_PROP_TAGSET_masked = "masked";
+    String ENTITY_COLUMN_TAGSET_masked = "masked";
                         
     /**
      * 实体字段标签: 值不可见 
      */
-    String ENTITY_PROP_TAGSET_not_pub = "not-pub";
+    String ENTITY_COLUMN_TAGSET_not_pub = "not-pub";
                         
     /**
      * 实体字段标签: 默认排序属性（升序） 
      */
-    String ENTITY_PROP_TAGSET_sort = "sort";
+    String ENTITY_COLUMN_TAGSET_sort = "sort";
                         
     /**
      * 实体字段标签: 默认排序属性（降序） 
      */
-    String ENTITY_PROP_TAGSET_sort_desc = "sort-desc";
+    String ENTITY_COLUMN_TAGSET_sort_desc = "sort-desc";
                         
     /**
      * 实体关联类型: 一对一关联 

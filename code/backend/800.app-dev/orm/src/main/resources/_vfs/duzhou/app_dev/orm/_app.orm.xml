@@ -24,8 +24,8 @@
             <option code="del" label="删除该对象" value="del"/>
             <option code="mapper" label="需生成 SqlMapper 代码" value="mapper"/>
         </dict>
-        <dict label="实体字段标签" name="app_dev/entity-prop-tagset" valueType="string"
-              i18n-en:label="Entity Property Tag Set">
+        <dict label="实体字段标签" name="app_dev/entity-column-tagset" valueType="string"
+              i18n-en:label="Entity Column Tag Set">
             <description>自动以 code（短横线替换为下划线） 为父目录名称</description>
             <option code="not_gen" label="不生成代码" value="not-gen"/>
             <option code="seq" label="生成唯一主键" value="seq"/>
@@ -80,7 +80,7 @@
                         propId="5" stdDataType="timestamp" stdSqlType="TIMESTAMP" tagSet="sort,sort-desc"/>
                 <column code="VER" defaultValue="0" displayName="数据版本" domain="version" mandatory="true" name="ver"
                         propId="6" stdDataType="int" stdSqlType="INTEGER"/>
-                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
                         propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
                         mandatory="true" name="code" precision="50" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
@@ -102,7 +102,7 @@
             </relations>
             <unique-keys>
                 <unique-key columns="code" constraint="UK_DEV_APP_CODE" name="codeKey"/>
-                <unique-key columns="title" constraint="UK_DEV_APP_TITLE" name="titleKey"/>
+                <unique-key columns="displayName" constraint="UK_DEV_APP_DISPLAY_NAME" name="displayNameKey"/>
             </unique-keys>
         </entity>
         <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain" displayName="域定义"
@@ -113,10 +113,10 @@
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
                 <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="2"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
-                        propId="3" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
-                <column code="CODE" comment="唯一标识，按变量命名规范定义" displayName="编码" mandatory="true" name="code"
-                        precision="50" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CODE" displayName="编码" mandatory="true" name="code" precision="100" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="STD_DOMAIN" displayName="标准域" name="stdDomain" precision="50" propId="5"
                         stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-domain"/>
                 <column code="STD_SQL_TYPE" displayName="标准 SQL 数据类型" mandatory="true" name="stdSqlType" precision="50"
@@ -140,10 +140,10 @@
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
                 <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="2"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TITLE" comment="显示用" displayName="名称" mandatory="true" name="title" precision="100"
-                        propId="3" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="CODE" comment="唯一标识，按文件命名规范定义" displayName="编码" mandatory="true" name="code"
-                        precision="100" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                        precision="100" propId="4" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="OPTION_TYPE" displayName="字典项类型" mandatory="true" name="optionType" precision="50"
                         propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="OPTIONS" comment="以 JSON 形式存储" displayName="字典项列表" mandatory="true" name="options"
@@ -176,8 +176,8 @@
                         propId="6" stdDataType="int" stdSqlType="INTEGER"/>
                 <column code="APP_ID" displayName="所属应用" mandatory="true" name="appId" precision="32" propId="7"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
+                        propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="CODE" comment="唯一标识，用于代码生成，可含字母、数字、下划线，其包含且仅包含两级标识，通过短横线区分" displayName="编码"
                         mandatory="true" name="code" precision="100" propId="9" stdDataType="string"
                         stdSqlType="VARCHAR"/>
@@ -228,12 +228,12 @@
                         propId="6" stdDataType="int" stdSqlType="INTEGER"/>
                 <column code="SERVICE_ID" displayName="所属服务" mandatory="true" name="serviceId" precision="32" propId="7"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="8"
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
+                        propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="实体名" mandatory="true" name="name" precision="100" propId="9"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="ENTITY_NAME" displayName="实体名" mandatory="true" name="entityName" precision="100"
-                        propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TABLE_NAME" displayName="数据库表名" mandatory="true" name="tableName" precision="100"
-                        propId="10" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TABLE_NAME" displayName="表名" mandatory="true" name="tableName" precision="100" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="11" stdDataType="string"
                         stdSqlType="VARCHAR"/>
                 <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" defaultValue="[]" displayName="唯一键列表"
@@ -250,7 +250,7 @@
                     <ref-set/>
                 </to-one>
                 <to-many cascadeDelete="true" name="props"
-                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn"
                          refPropName="entity" tagSet="pub,cascade-delete">
                     <join>
                         <on leftProp="id" rightProp="entityId"/>
@@ -265,46 +265,44 @@
                 </to-many>
             </relations>
             <unique-keys>
-                <unique-key columns="entityName,serviceId" constraint="UK_DEV_APP_ENTITY_ENTITY_NAME"
-                            name="entityNameKey">
+                <unique-key columns="name,serviceId" constraint="UK_DEV_APP_ENTITY_NAME" name="nameKey">
                     <comment>在服务内唯一</comment>
                 </unique-key>
             </unique-keys>
         </entity>
-        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp" displayName="应用 ORM 实体属性"
-                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp" registerShortName="true"
-                tableName="duzhou_dev_app_entity_prop" i18n-en:displayName="Application ORM Entity Property">
+        <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn" displayName="应用 ORM 实体字段"
+                name="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn" registerShortName="true"
+                tableName="duzhou_dev_app_entity_column" i18n-en:displayName="Application ORM Entity Column">
             <columns>
                 <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
                 <column code="ENTITY_ID" displayName="所属实体" mandatory="true" name="entityId" precision="32" propId="2"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="TITLE" displayName="名称" mandatory="true" name="title" precision="100" propId="3"
+                <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="字段名" mandatory="true" name="name" precision="200" propId="4"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="NAME" comment="采用驼峰命名规范" displayName="属性名" mandatory="true" name="name" precision="200"
-                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="INDEX" displayName="序号" mandatory="true" name="index" propId="5" stdDataType="int"
+                <column code="PROP_ID" displayName="编号" mandatory="true" name="propId" propId="5" stdDataType="int"
                         stdSqlType="INTEGER"/>
-                <column code="TAG_SET" displayName="标签" mandatory="true" name="tagSet" precision="100" propId="6"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="IS_PRIMARY" defaultValue="0" displayName="是否为主键" mandatory="true" name="isPrimary"
-                        propId="7" stdDataType="boolean" stdSqlType="BOOLEAN"/>
-                <column code="IS_MANDATORY" defaultValue="0" displayName="是否非空" mandatory="true" name="isMandatory"
+                <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PRIMARY" defaultValue="0" displayName="是否主键" mandatory="true" name="primary" propId="7"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="MANDATORY" defaultValue="0" displayName="是否非空" mandatory="true" name="mandatory"
                         propId="8" stdDataType="boolean" stdSqlType="BOOLEAN"/>
                 <column code="DOMAIN_ID" displayName="数据域" name="domainId" precision="50" propId="9"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="DICT_ID" displayName="引用字典" name="dictId" precision="32" propId="10" stdDataType="string"
                         stdSqlType="VARCHAR"/>
-                <column code="VALUE_TYPE" displayName="值类型" mandatory="true" name="valueType" precision="50" propId="11"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="VALUE_PRECISION" displayName="值长度" name="valuePrecision" propId="12" stdDataType="int"
+                <column code="STD_SQL_TYPE" displayName="字段类型" mandatory="true" name="stdSqlType" precision="50"
+                        propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PRECISION" displayName="字段长度" name="precision" propId="12" stdDataType="int"
                         stdSqlType="INTEGER"/>
-                <column code="VALUE_SCALE" displayName="值精度" name="valueScale" propId="13" stdDataType="int"
-                        stdSqlType="INTEGER"/>
-                <column code="VALUE_DEFAULT" displayName="默认值" name="valueDefault" precision="100" propId="14"
+                <column code="SCALE" displayName="小数位数" name="scale" propId="13" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="DEFAULT_VALUE" displayName="默认值" name="defaultValue" precision="500" propId="14"
                         stdDataType="string" stdSqlType="VARCHAR"/>
             </columns>
-            <comment>应用的持久化实体的属性</comment>
+            <comment>应用的持久化实体的字段</comment>
             <relations>
                 <to-one name="entity" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
                         refPropName="props" tagSet="pub,ref-pub,ref-cascade-delete">

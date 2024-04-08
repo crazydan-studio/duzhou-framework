@@ -9,7 +9,8 @@
 
     <bean id="io.crazydan.duzhou.framework.app_dev.biz.DevAppEntityBizModel" ioc:type="@bean:id" ioc:default="true"/>
 
-    <bean id="io.crazydan.duzhou.framework.app_dev.biz.DevAppEntityPropBizModel" ioc:type="@bean:id" ioc:default="true"/>
+    <bean id="io.crazydan.duzhou.framework.app_dev.biz.DevAppEntityColumnBizModel" ioc:type="@bean:id"
+          ioc:default="true"/>
 
     <bean id="io.crazydan.duzhou.framework.app_dev.biz.DevAppEntityRelationBizModel" ioc:type="@bean:id"
           ioc:default="true"/>

@@ -48,15 +48,15 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final String PROP_NAME_serviceId = "serviceId";
     public static final int PROP_ID_serviceId = 7;
     
-    /* 名称: TITLE VARCHAR */
-    public static final String PROP_NAME_title = "title";
-    public static final int PROP_ID_title = 8;
+    /* 显示名称: DISPLAY_NAME VARCHAR */
+    public static final String PROP_NAME_displayName = "displayName";
+    public static final int PROP_ID_displayName = 8;
     
-    /* 实体名: ENTITY_NAME VARCHAR */
-    public static final String PROP_NAME_entityName = "entityName";
-    public static final int PROP_ID_entityName = 9;
+    /* 实体名: NAME VARCHAR */
+    public static final String PROP_NAME_name = "name";
+    public static final int PROP_ID_name = 9;
     
-    /* 数据库表名: TABLE_NAME VARCHAR */
+    /* 表名: TABLE_NAME VARCHAR */
     public static final String PROP_NAME_tableName = "tableName";
     public static final int PROP_ID_tableName = 10;
     
@@ -113,11 +113,11 @@ public class _DevAppEntity extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_serviceId] = PROP_NAME_serviceId;
           PROP_NAME_TO_ID.put(PROP_NAME_serviceId, PROP_ID_serviceId);
       
-          PROP_ID_TO_NAME[PROP_ID_title] = PROP_NAME_title;
-          PROP_NAME_TO_ID.put(PROP_NAME_title, PROP_ID_title);
+          PROP_ID_TO_NAME[PROP_ID_displayName] = PROP_NAME_displayName;
+          PROP_NAME_TO_ID.put(PROP_NAME_displayName, PROP_ID_displayName);
       
-          PROP_ID_TO_NAME[PROP_ID_entityName] = PROP_NAME_entityName;
-          PROP_NAME_TO_ID.put(PROP_NAME_entityName, PROP_ID_entityName);
+          PROP_ID_TO_NAME[PROP_ID_name] = PROP_NAME_name;
+          PROP_NAME_TO_ID.put(PROP_NAME_name, PROP_ID_name);
       
           PROP_ID_TO_NAME[PROP_ID_tableName] = PROP_NAME_tableName;
           PROP_NAME_TO_ID.put(PROP_NAME_tableName, PROP_ID_tableName);
@@ -152,13 +152,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /* 所属服务: SERVICE_ID */
     private java.lang.String _serviceId;
     
-    /* 名称: TITLE */
-    private java.lang.String _title;
+    /* 显示名称: DISPLAY_NAME */
+    private java.lang.String _displayName;
     
-    /* 实体名: ENTITY_NAME */
-    private java.lang.String _entityName;
+    /* 实体名: NAME */
+    private java.lang.String _name;
     
-    /* 数据库表名: TABLE_NAME */
+    /* 表名: TABLE_NAME */
     private java.lang.String _tableName;
     
     /* 标签: TAG_SET */
@@ -259,11 +259,11 @@ public class _DevAppEntity extends DynamicOrmEntity{
             case PROP_ID_serviceId:
                return getServiceId();
         
-            case PROP_ID_title:
-               return getTitle();
+            case PROP_ID_displayName:
+               return getDisplayName();
         
-            case PROP_ID_entityName:
-               return getEntityName();
+            case PROP_ID_name:
+               return getName();
         
             case PROP_ID_tableName:
                return getTableName();
@@ -355,23 +355,23 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_title));
+                       err-> newTypeConversionError(PROP_NAME_displayName));
                }
-               setTitle(typedValue);
+               setDisplayName(typedValue);
                break;
             }
         
-            case PROP_ID_entityName:{
+            case PROP_ID_name:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_entityName));
+                       err-> newTypeConversionError(PROP_NAME_name));
                }
-               setEntityName(typedValue);
+               setName(typedValue);
                break;
             }
         
@@ -463,16 +463,16 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_title:{
+            case PROP_ID_displayName:{
                onInitProp(propId);
-               this._title = (java.lang.String)value;
+               this._displayName = (java.lang.String)value;
                
                break;
             }
         
-            case PROP_ID_entityName:{
+            case PROP_ID_name:{
                onInitProp(propId);
-               this._entityName = (java.lang.String)value;
+               this._name = (java.lang.String)value;
                
                break;
             }
@@ -638,45 +638,45 @@ public class _DevAppEntity extends DynamicOrmEntity{
     }
     
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public java.lang.String getTitle(){
-         onPropGet(PROP_ID_title);
-         return _title;
+    public java.lang.String getDisplayName(){
+         onPropGet(PROP_ID_displayName);
+         return _displayName;
     }
 
     /**
-     * 名称: TITLE
+     * 显示名称: DISPLAY_NAME
      */
-    public void setTitle(java.lang.String value){
-        if(onPropSet(PROP_ID_title,value)){
-            this._title = value;
-            internalClearRefs(PROP_ID_title);
+    public void setDisplayName(java.lang.String value){
+        if(onPropSet(PROP_ID_displayName,value)){
+            this._displayName = value;
+            internalClearRefs(PROP_ID_displayName);
             
         }
     }
     
     /**
-     * 实体名: ENTITY_NAME
+     * 实体名: NAME
      */
-    public java.lang.String getEntityName(){
-         onPropGet(PROP_ID_entityName);
-         return _entityName;
+    public java.lang.String getName(){
+         onPropGet(PROP_ID_name);
+         return _name;
     }
 
     /**
-     * 实体名: ENTITY_NAME
+     * 实体名: NAME
      */
-    public void setEntityName(java.lang.String value){
-        if(onPropSet(PROP_ID_entityName,value)){
-            this._entityName = value;
-            internalClearRefs(PROP_ID_entityName);
+    public void setName(java.lang.String value){
+        if(onPropSet(PROP_ID_name,value)){
+            this._name = value;
+            internalClearRefs(PROP_ID_name);
             
         }
     }
     
     /**
-     * 数据库表名: TABLE_NAME
+     * 表名: TABLE_NAME
      */
     public java.lang.String getTableName(){
          onPropGet(PROP_ID_tableName);
@@ -684,7 +684,7 @@ public class _DevAppEntity extends DynamicOrmEntity{
     }
 
     /**
-     * 数据库表名: TABLE_NAME
+     * 表名: TABLE_NAME
      */
     public void setTableName(java.lang.String value){
         if(onPropSet(PROP_ID_tableName,value)){
@@ -755,13 +755,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
        
     }
        
-    private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp> _props = new OrmEntitySet<>(this, PROP_NAME_props,
-        io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp.PROP_NAME_entity, null,io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp.class);
+    private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn> _props = new OrmEntitySet<>(this, PROP_NAME_props,
+        io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn.PROP_NAME_entity, null,io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn.class);
 
     /**
      * 。 refPropName: entity, keyProp: {rel.keyProp}
      */
-    public IOrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityProp> getProps(){
+    public IOrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn> getProps(){
        return _props;
     }
        

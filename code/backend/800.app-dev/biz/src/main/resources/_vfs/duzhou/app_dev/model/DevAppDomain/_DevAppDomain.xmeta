@@ -20,7 +20,7 @@
     </keys>
 
     <orderBy>
-        <field name="title" desc="false"/>
+        <field name="code" desc="false"/>
     </orderBy>
 
     <props>
@@ -32,13 +32,13 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="32"/>
         </prop>
-        <prop name="title" displayName="名称" propId="3" tagSet="sort" mandatory="true" queryable="true" sortable="true"
+        <prop name="displayName" displayName="显示名称" propId="3" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="code" displayName="编码" propId="4" mandatory="true" queryable="true" sortable="true"
+        <prop name="code" displayName="编码" propId="4" tagSet="sort" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
-            <schema type="java.lang.String" precision="50"/>
+            <schema type="java.lang.String" precision="100"/>
         </prop>
         <prop name="stdDomain" displayName="标准域" propId="5" queryable="true" sortable="true" insertable="true"
               updatable="true">

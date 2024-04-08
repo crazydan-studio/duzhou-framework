@@ -17,7 +17,7 @@
     </x:post-extends>
 
     <keys>
-        <key name="entityNameKey" props="entityName,serviceId"/>
+        <key name="nameKey" props="name,serviceId"/>
     </keys>
 
     <orderBy>
@@ -53,15 +53,15 @@
               insertable="true" updatable="true" ext:relation="service">
             <schema type="java.lang.String" precision="32"/>
         </prop>
-        <prop name="title" displayName="名称" propId="8" mandatory="true" queryable="true" sortable="true"
+        <prop name="displayName" displayName="显示名称" propId="8" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="entityName" displayName="实体名" propId="9" mandatory="true" queryable="true" sortable="true"
+        <prop name="name" displayName="实体名" propId="9" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="tableName" displayName="数据库表名" propId="10" mandatory="true" queryable="true" sortable="true"
+        <prop name="tableName" displayName="表名" propId="10" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
@@ -81,7 +81,7 @@
         <prop name="props" tagSet="pub,cascade-delete" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
               ext:joinRightProp="entityId" insertable="false" updatable="false" lazy="true">
             <schema>
-                <item bizObjName="DevAppEntityProp"/>
+                <item bizObjName="DevAppEntityColumn"/>
             </schema>
         </prop>
         <prop name="relations" tagSet="pub,cascade-delete" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
