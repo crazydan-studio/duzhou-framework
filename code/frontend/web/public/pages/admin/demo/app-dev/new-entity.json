@@ -14,13 +14,13 @@
     "body": [
       {
         "type": "input-text",
-        "name": "title",
+        "name": "displayName",
         "label": "名称",
         "required": true
       },
       {
         "type": "input-text",
-        "name": "entityName",
+        "name": "name",
         "label": "实体名",
         "required": true
       },
@@ -36,7 +36,7 @@
         "schemaApi": "get:/pages/admin/demo/app-dev/pick-service.json"
       },
       {
-        "type": "list-select",
+        "type": "select",
         "name": "tagSet",
         "label": "标签",
         "multiple": true,

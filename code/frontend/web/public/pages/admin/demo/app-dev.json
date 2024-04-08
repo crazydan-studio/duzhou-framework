@@ -11,28 +11,13 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevApp__findPage",
-        "gql:selection": "total,items{id,ver,title,code,version,logo,classPkgName}",
-        "filter_": {
-          "$type": "or",
-          "$body": [
-            {
-              "$type": "eq",
-              "name": "title",
-              "value": ""
-            },
-            {
-              "$type": "eq",
-              "name": "code",
-              "value": ""
-            }
-          ]
-        },
+        "gql:selection": "total,items{id,ver,displayName,code,version,logo,classPkgName}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
           "orderBy": [
             {
-              "name": "title",
+              "name": "displayName",
               "desc": true
             }
           ]
@@ -82,35 +67,15 @@
           "actionType": "ajax",
           "api": "@mutation:DevApp__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下应用？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.code + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
         {
-          "type": "container",
+          "type": "text",
+          "name": "displayName",
           "label": "名称",
-          "width": 200,
-          "fixed": "left",
-          "body": [
-            {
-              "type": "tpl",
-              "tpl": "<h3>${title}</h3>"
-            },
-            {
-              "type": "tpl",
-              "className": "text-ellipsis amis-Form-description",
-              "tpl": "${description}",
-              "style": {
-                "max-width": "200px"
-              }
-            }
-          ],
-          "popOver": {
-            "body": {
-              "type": "tpl",
-              "tpl": "${description}"
-            }
-          }
+          "fixed": "left"
         },
         {
           "type": "container",
@@ -164,7 +129,7 @@
               "api": "@mutation:DevApp__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除应用「<b>${title} (${code})</b>」？"
+              "confirmText": "确定要删除应用「<b>${displayName} (${code})</b>」？"
             }
           ]
         }

@@ -25,17 +25,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppEntity__findPage",
-        "gql:selection": "total,items{id,ver,serviceId,service{id,title,code},title,entityName,tableName,tagSet}",
-        "filter_": {
-          "$type": "or",
-          "$body": [
-            {
-              "$type": "eq",
-              "name": "title",
-              "value": ""
-            }
-          ]
-        },
+        "gql:selection": "total,items{id,ver,serviceId,service{id,displayName,code},displayName,name,tableName,tagSet}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -43,7 +33,7 @@
           "filter_serviceId__eq": "${serviceId}",
           "orderBy": [
             {
-              "name": "title",
+              "name": "displayName",
               "desc": true
             }
           ]
@@ -93,18 +83,18 @@
           "actionType": "ajax",
           "api": "@mutation:DevAppEntity__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下实体模型？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.entityName + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下实体模型？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.name + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
         {
           "type": "text",
-          "name": "title",
+          "name": "displayName",
           "label": "名称"
         },
         {
           "type": "text",
-          "name": "entityName",
+          "name": "name",
           "label": "实体名"
         },
         {
@@ -114,8 +104,8 @@
           "filterable": {
             "searchable": true,
             "source": {
-              "url": "@query:DevAppService__findList/label:title,value:id",
-              "gql:selection": "id,title,code",
+              "url": "@query:DevAppService__findList/label:displayName,value:id",
+              "gql:selection": "id,displayName,code",
               "responseData": {
                 "options": "${items}"
               },
@@ -167,7 +157,7 @@
               "level": "info",
               "actionType": "dialog",
               "dialog": {
-                "title": "${title} - ${entityName} 的字段管理",
+                "title": "${displayName} - ${name} 的字段管理",
                 "closeOnEsc": true,
                 "size": "lg",
                 "actions": [],
@@ -176,7 +166,7 @@
                   "data": {
                     "entityId": "${id}"
                   },
-                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-fields-man.json"
+                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-list.json"
                 }
               }
             },
@@ -187,7 +177,7 @@
               "api": "@mutation:DevAppEntity__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除实体模型「<b>${title} (${entityName})</b>」？"
+              "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
             }
           ]
         }

@@ -3,7 +3,7 @@
   "msg": "",
   "data": {
     "type": "button",
-    "label": "${app.title} (${app.code})",
+    "label": "${app.displayName} (${app.code})",
     "level": "link",
     "className": "pl-0",
     "actionType": "dialog",
@@ -16,7 +16,7 @@
         "static": true,
         "initApi": {
           "url": "@query:DevApp__get?id=${app.id}",
-          "gql:selection": "id,title,code,version,logo,classPkgName"
+          "gql:selection": "id,displayName,code,version,logo,classPkgName"
         },
         "body": [
           {
@@ -32,7 +32,7 @@
             "body": [
               {
                 "type": "input-text",
-                "name": "title",
+                "name": "displayName",
                 "label": "名称"
               },
               {

@@ -7,32 +7,17 @@
     "label": "所属应用",
     "required": true,
     "valueField": "id",
-    "labelField": "title",
+    "labelField": "displayName",
     "size": "lg",
     "source": {
       "url": "@query:DevApp__findPage",
-      "gql:selection": "total,items{id,title,code,version,logo}",
-      "filter_": {
-        "$type": "or",
-        "$body": [
-          {
-            "$type": "eq",
-            "name": "title",
-            "value": ""
-          },
-          {
-            "$type": "eq",
-            "name": "code",
-            "value": ""
-          }
-        ]
-      },
+      "gql:selection": "total,items{id,displayName,code,version,logo}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
         "orderBy": [
           {
-            "name": "title",
+            "name": "displayName",
             "desc": true
           }
         ]
@@ -60,7 +45,7 @@
       "columns": [
         {
           "type": "text",
-          "name": "title",
+          "name": "displayName",
           "label": "名称",
           "fixed": "left"
         },

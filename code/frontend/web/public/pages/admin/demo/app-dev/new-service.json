@@ -15,7 +15,7 @@
     "body": [
       {
         "type": "input-text",
-        "name": "title",
+        "name": "displayName",
         "label": "名称",
         "required": true
       },

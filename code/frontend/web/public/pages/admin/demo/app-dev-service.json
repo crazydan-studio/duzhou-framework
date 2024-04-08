@@ -25,29 +25,14 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppService__findPage",
-        "gql:selection": "total,items{id,ver,appId,app{id,title,code},title,code}",
-        "filter_": {
-          "$type": "or",
-          "$body": [
-            {
-              "$type": "eq",
-              "name": "title",
-              "value": ""
-            },
-            {
-              "$type": "eq",
-              "name": "code",
-              "value": ""
-            }
-          ]
-        },
+        "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},displayName,code}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
           "filter_appId__eq": "${appId}",
           "orderBy": [
             {
-              "name": "title",
+              "name": "displayName",
               "desc": true
             }
           ]
@@ -97,35 +82,16 @@
           "actionType": "ajax",
           "api": "@mutation:DevAppService__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下服务？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下服务？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.code + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
         {
-          "type": "container",
+          "type": "text",
+          "name": "displayName",
           "label": "名称",
           "width": 200,
-          "fixed": "left",
-          "body": [
-            {
-              "type": "tpl",
-              "tpl": "<h3>${title}</h3>"
-            },
-            {
-              "type": "tpl",
-              "className": "text-ellipsis amis-Form-description",
-              "tpl": "${description}",
-              "style": {
-                "max-width": "200px"
-              }
-            }
-          ],
-          "popOver": {
-            "body": {
-              "type": "tpl",
-              "tpl": "${description}"
-            }
-          }
+          "fixed": "left"
         },
         {
           "type": "text",
@@ -166,7 +132,7 @@
               "api": "@mutation:DevAppService__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除服务「<b>${title} (${code})</b>」？"
+              "confirmText": "确定要删除服务「<b>${displayName} (${code})</b>」？"
             }
           ]
         }

@@ -3,7 +3,7 @@
   "msg": "",
   "data": {
     "type": "button",
-    "label": "${service.title} (${service.code})",
+    "label": "${service.displayName} (${service.code})",
     "level": "link",
     "className": "pl-0",
     "actionType": "dialog",
@@ -16,7 +16,7 @@
         "static": true,
         "initApi": {
           "url": "@query:DevAppService__get?id=${service.id}",
-          "gql:selection": "id,title,code,app{id,title,code}"
+          "gql:selection": "id,displayName,code,app{id,displayName,code}"
         },
         "body": [
           {
@@ -24,7 +24,7 @@
             "body": [
               {
                 "type": "input-text",
-                "name": "title",
+                "name": "displayName",
                 "label": "名称"
               },
               {

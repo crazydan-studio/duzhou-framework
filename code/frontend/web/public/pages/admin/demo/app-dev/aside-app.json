@@ -14,11 +14,11 @@
       "sticky": true
     },
     "source": {
-      "url": "@query:DevApp__findList/value:id,label:title,code,logo",
+      "url": "@query:DevApp__findList/value:id,label:displayName,code,logo",
       "data": {
         "orderBy": [
           {
-            "name": "title",
+            "name": "displayName",
             "desc": true
           }
         ]

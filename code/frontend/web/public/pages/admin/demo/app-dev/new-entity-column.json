@@ -8,21 +8,13 @@
     "mode": "horizontal",
     "wrapWithPanel": false,
     "api": {
-      "url": "@mutation:DevAppEntityProp__save?entityId=${entityId}",
+      "url": "@mutation:DevAppEntityColumn__save?entityId=${entityId}",
       "gql:selection": "id"
     },
     "body": [
       {
-        "type": "input-number",
-        "name": "index",
-        "label": "序号",
-        "required": true,
-        "min": 1,
-        "max": 1999
-      },
-      {
         "type": "input-text",
-        "name": "title",
+        "name": "displayName",
         "label": "名称",
         "required": true
       },
@@ -37,15 +29,15 @@
         "body": [
           {
             "type": "switch",
-            "name": "isPrimary",
+            "name": "primary",
             "label": "是否主键"
           },
           {
             "type": "switch",
-            "name": "isMandatory",
+            "name": "mandatory",
             "label": "是否非空",
-            "value": "${isPrimary}",
-            "disabledOn": "${isPrimary}"
+            "value": "${primary}",
+            "disabledOn": "${primary}"
           }
         ]
       },
@@ -55,30 +47,37 @@
         "label": "标签",
         "multiple": true,
         "clearable": true,
-        "source": "@dict:app_dev/entity-prop-tagset"
+        "source": "@dict:app_dev/entity-column-tagset"
       },
       {
         "type": "select",
-        "name": "valueType",
+        "name": "stdSqlType",
         "label": "字段类型",
         "source": "@dict:core/std-sql-type",
         "required": true
       },
       {
-        "type": "input-number",
-        "name": "valuePrecision",
-        "label": "字段长度",
-        "min": 0
-      },
-      {
-        "type": "input-number",
-        "name": "valueScale",
-        "label": "小数精度",
-        "min": 0
+        "type": "group",
+        "body": [
+          {
+            "type": "input-number",
+            "name": "precision",
+            "label": "字段长度",
+            "min": 0,
+            "requiredOn": "${ARRAYINCLUDES(['CHAR', 'VARCHAR', 'VARBINARY', 'JSON'], stdSqlType)}"
+          },
+          {
+            "type": "input-number",
+            "name": "scale",
+            "label": "小数精度",
+            "min": 0,
+            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE'], stdSqlType)}"
+          }
+        ]
       },
       {
         "type": "input-text",
-        "name": "valueDefault",
+        "name": "defaultValue",
         "label": "默认值"
       }
     ]

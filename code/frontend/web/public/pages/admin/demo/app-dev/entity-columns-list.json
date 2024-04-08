@@ -9,15 +9,15 @@
     "pageField": "page",
     "perPageField": "pageSize",
     "api": {
-      "url": "@query:DevAppEntityProp__findPage",
-      "gql:selection": "total,items{id,entityId,title,name,index,tagSet,isPrimary,isMandatory,valueType,valuePrecision,valueScale,valueDefault,domainId,dictId}",
+      "url": "@query:DevAppEntityColumn__findPage",
+      "gql:selection": "total,items{id,entityId,displayName,name,propId,tagSet,primary,mandatory,stdSqlType,precision,scale,defaultValue,domainId,dictId}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
         "filter_entityId__eq": "${entityId}",
         "orderBy": [
           {
-            "name": "title",
+            "name": "displayName",
             "desc": true
           }
         ]
@@ -33,9 +33,12 @@
         "dialog": {
           "title": "添加新字段",
           "closeOnEsc": true,
+          "data": {
+            "entityId": "${entityId}"
+          },
           "body": {
             "type": "service",
-            "schemaApi": "get:/pages/admin/demo/app-dev/new-entity-prop.json"
+            "schemaApi": "get:/pages/admin/demo/app-dev/new-entity-column.json"
           }
         }
       },
@@ -62,24 +65,24 @@
     "footerToolbar": ["switch-per-page", "statistics", "pagination"],
     "bulkActions": [
       {
-        "label": "删除选中",
+        "label": "废弃选中",
         "icon": "fa-solid fa-trash-can",
         "actionType": "ajax",
-        "api": "@mutation:DevAppEntityProp__batchDelete?ids=${ids|raw}",
-        "confirmTitle": "删除确认",
-        "confirmText": "确定要删除以下字段？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.title + ' (' + e.name + ')</li>'), '')}</ul>"
+        "api": "@mutation:DevAppEntityColumn__batchDelete?ids=${ids|raw}",
+        "confirmTitle": "废弃确认",
+        "confirmText": "确定要废弃以下字段？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.name + ')</li>'), '')}</ul>"
       }
     ],
     "columns": [
       {
         "type": "text",
-        "name": "index",
-        "label": "序号",
+        "name": "propId",
+        "label": "编号",
         "fixed": "left"
       },
       {
         "type": "text",
-        "name": "title",
+        "name": "displayName",
         "label": "名称",
         "fixed": "left"
       },
@@ -90,7 +93,7 @@
       },
       {
         "type": "switch",
-        "name": "isPrimary",
+        "name": "primary",
         "label": "是否主键",
         "static": true,
         "onText": "是",
@@ -98,7 +101,7 @@
       },
       {
         "type": "switch",
-        "name": "isMandatory",
+        "name": "mandatory",
         "label": "是否非空",
         "static": true,
         "onText": "是",
@@ -110,28 +113,28 @@
         "label": "标签",
         "static": true,
         "multiple": true,
-        "source": "@dict:app_dev/entity-prop-tagset"
+        "source": "@dict:app_dev/entity-column-tagset"
       },
       {
         "type": "list-select",
-        "name": "valueType",
+        "name": "stdSqlType",
         "label": "字段类型",
         "static": true,
         "source": "@dict:core/std-sql-type"
       },
       {
         "type": "text",
-        "name": "valuePrecision",
+        "name": "precision",
         "label": "字段长度"
       },
       {
         "type": "text",
-        "name": "valueScale",
+        "name": "scale",
         "label": "小数精度"
       },
       {
         "type": "text",
-        "name": "valueDefault",
+        "name": "defaultValue",
         "label": "默认值"
       },
       {
@@ -149,18 +152,18 @@
               "closeOnEsc": true,
               "body": {
                 "type": "service",
-                "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-prop.json"
+                "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-column.json"
               }
             }
           },
           {
-            "label": "删除",
+            "label": "废弃",
             "type": "button",
             "level": "danger",
-            "api": "@mutation:DevAppEntityProp__delete?id=${id}",
+            "api": "@mutation:DevAppEntityColumn__delete?id=${id}",
             "actionType": "ajax",
-            "confirmTitle": "删除确认",
-            "confirmText": "确定要删除字段「<b>${title} (${name})</b>」？"
+            "confirmTitle": "废弃确认",
+            "confirmText": "确定要废弃字段「<b>${displayName} (${name})</b>」？"
           }
         ]
       }
