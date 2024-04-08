@@ -1,0 +1,85 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "picker",
+    "name": "appId",
+    "label": "所属应用",
+    "required": true,
+    "valueField": "id",
+    "labelField": "title",
+    "size": "lg",
+    "source": {
+      "url": "@query:DevApp__findPage",
+      "gql:selection": "total,items{id,title,code,version,logo}",
+      "filter_": {
+        "$type": "or",
+        "$body": [
+          {
+            "$type": "eq",
+            "name": "title",
+            "value": ""
+          },
+          {
+            "$type": "eq",
+            "name": "code",
+            "value": ""
+          }
+        ]
+      },
+      "data": {
+        "offset": "${(page - 1) * pageSize}",
+        "limit": "${pageSize}",
+        "orderBy": [
+          {
+            "name": "title",
+            "desc": true
+          }
+        ]
+      }
+    },
+    "modalTitle": "请选择服务所属的应用",
+    "pickerSchema": {
+      "type": "crud",
+      "pageField": "page",
+      "perPageField": "pageSize",
+      "headerToolbar": [
+        {
+          "type": "columns-toggler",
+          "align": "right",
+          "icon": "fas fa-cog"
+        },
+        {
+          "type": "search-box",
+          "name": "keyword",
+          "align": "right",
+          "placeholder": "请输入关键字 ..."
+        }
+      ],
+      "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+      "columns": [
+        {
+          "type": "text",
+          "name": "title",
+          "label": "名称",
+          "fixed": "left"
+        },
+        {
+          "type": "image",
+          "name": "logo",
+          "label": "图标"
+        },
+        {
+          "type": "text",
+          "name": "code",
+          "label": "编码"
+        },
+        {
+          "type": "text",
+          "name": "version",
+          "label": "版本号"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevAppService__update?id=${id}",
+      "gql:selection": "id"
+    },
+    "body": [
+      {
+        "type": "hidden",
+        "name": "ver"
+      },
+      {
+        "type": "input-text",
+        "name": "title",
+        "label": "名称",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "code",
+        "label": "编码",
+        "required": true,
+        "disabled": true
+      },
+      {
+        "type": "service",
+        "className": "amis-Form-item",
+        "schemaApi": "get:/pages/admin/demo/app-dev/pick-app.json"
+      }
+    ]
+  }
+}

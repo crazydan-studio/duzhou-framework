@@ -1,0 +1,55 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevApp__update?id=${id}",
+      "gql:selection": "id"
+    },
+    "body": [
+      {
+        "type": "hidden",
+        "name": "ver"
+      },
+      {
+        "type": "input-image",
+        "name": "logo",
+        "label": "图标",
+        "required": true,
+        "accept": ".jpeg,.jpg,.png,.gif,.svg",
+        "uploadBtnText": "点击上传应用图标",
+        "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${id}"
+      },
+      {
+        "type": "input-text",
+        "name": "title",
+        "label": "名称",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "code",
+        "label": "编码",
+        "required": true,
+        "disabled": true
+      },
+      {
+        "type": "input-text",
+        "name": "version",
+        "label": "版本号",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "classPkgName",
+        "label": "代码包名",
+        "required": true
+      }
+    ]
+  }
+}

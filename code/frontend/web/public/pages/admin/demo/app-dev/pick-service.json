@@ -1,0 +1,79 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "picker",
+    "name": "serviceId",
+    "label": "所属服务",
+    "required": true,
+    "valueField": "id",
+    "labelField": "title",
+    "size": "lg",
+    "source": {
+      "url": "@query:DevAppService__findPage",
+      "gql:selection": "total,items{id,title,code,app{id,title,code}}",
+      "filter_": {
+        "$type": "or",
+        "$body": [
+          {
+            "$type": "eq",
+            "name": "title",
+            "value": ""
+          }
+        ]
+      },
+      "data": {
+        "offset": "${(page - 1) * pageSize}",
+        "limit": "${pageSize}",
+        "filter_appId__eq": "${appId}",
+        "orderBy": [
+          {
+            "name": "title",
+            "desc": true
+          }
+        ]
+      }
+    },
+    "modalTitle": "请选择实体模型所属的服务",
+    "pickerSchema": {
+      "type": "crud",
+      "pageField": "page",
+      "perPageField": "pageSize",
+      "headerToolbar": [
+        {
+          "type": "columns-toggler",
+          "align": "right",
+          "icon": "fas fa-cog"
+        },
+        {
+          "type": "search-box",
+          "name": "keyword",
+          "align": "right",
+          "placeholder": "请输入关键字 ..."
+        }
+      ],
+      "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+      "columns": [
+        {
+          "type": "text",
+          "name": "title",
+          "label": "名称",
+          "fixed": "left"
+        },
+        {
+          "type": "text",
+          "name": "code",
+          "label": "编码"
+        },
+        {
+          "type": "container",
+          "label": "所属应用",
+          "body": {
+            "type": "service",
+            "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
+          }
+        }
+      ]
+    }
+  }
+}

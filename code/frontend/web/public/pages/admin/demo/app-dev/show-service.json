@@ -1,0 +1,49 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "button",
+    "label": "${service.title} (${service.code})",
+    "level": "link",
+    "className": "pl-0",
+    "actionType": "dialog",
+    "dialog": {
+      "title": "服务信息",
+      "size": "lg",
+      "closeOnEsc": true,
+      "body": {
+        "type": "form",
+        "static": true,
+        "initApi": {
+          "url": "@query:DevAppService__get?id=${serviceId}",
+          "gql:selection": "id,title,code,app{id,title,code}"
+        },
+        "body": [
+          {
+            "type": "group",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "title",
+                "label": "名称"
+              },
+              {
+                "type": "input-text",
+                "name": "code",
+                "label": "编码"
+              }
+            ]
+          },
+          {
+            "type": "control",
+            "label": "所属应用",
+            "body": {
+              "type": "service",
+              "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

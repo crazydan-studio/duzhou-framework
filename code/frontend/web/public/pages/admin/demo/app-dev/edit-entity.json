@@ -1,0 +1,52 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevAppEntity__update?id=${id}",
+      "gql:selection": "id"
+    },
+    "body": [
+      {
+        "type": "hidden",
+        "name": "ver"
+      },
+      {
+        "type": "input-text",
+        "name": "title",
+        "label": "名称",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "entityName",
+        "label": "实体名",
+        "required": true
+      },
+      {
+        "type": "input-text",
+        "name": "tableName",
+        "label": "数据库表名",
+        "required": true
+      },
+      {
+        "type": "service",
+        "className": "amis-Form-item",
+        "schemaApi": "get:/pages/admin/demo/app-dev/pick-service.json"
+      },
+      {
+        "type": "list-select",
+        "name": "tagSet",
+        "label": "标签",
+        "multiple": true,
+        "clearable": true,
+        "source": "@dict:app_dev/entity-tagset"
+      }
+    ]
+  }
+}

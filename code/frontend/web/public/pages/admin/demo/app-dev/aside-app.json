@@ -1,0 +1,28 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "input-tree",
+    "name": "appId",
+    "heightAuto": true,
+    "submitOnChange": true,
+    "selectFirst": true,
+    "showIcon": false,
+    "menuTpl": "<span class='flex flex-row items-center'><img src='${logo}' class='logo' /> <span>${label} (${code})</span></span>",
+    "searchable": true,
+    "searchConfig": {
+      "sticky": true
+    },
+    "source": {
+      "url": "@query:DevApp__findList/value:id,label:title,code,logo",
+      "data": {
+        "orderBy": [
+          {
+            "name": "title",
+            "desc": true
+          }
+        ]
+      }
+    }
+  }
+}

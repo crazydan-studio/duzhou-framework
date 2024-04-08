@@ -1,0 +1,64 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "button",
+    "label": "${app.title} (${app.code})",
+    "level": "link",
+    "className": "pl-0",
+    "actionType": "dialog",
+    "dialog": {
+      "title": "应用信息",
+      "size": "lg",
+      "closeOnEsc": true,
+      "body": {
+        "type": "form",
+        "static": true,
+        "initApi": {
+          "url": "@query:DevApp__get?id=${appId}",
+          "gql:selection": "id,title,code,version,logo,classPkgName"
+        },
+        "body": [
+          {
+            "type": "static-image",
+            "name": "logo",
+            "label": "图标",
+            "enlargeAble": true,
+            "width": "128px",
+            "height": "128px"
+          },
+          {
+            "type": "group",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "title",
+                "label": "名称"
+              },
+              {
+                "type": "input-text",
+                "name": "code",
+                "label": "编码"
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "classPkgName",
+                "label": "代码包名"
+              },
+              {
+                "type": "input-text",
+                "name": "version",
+                "label": "版本号"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

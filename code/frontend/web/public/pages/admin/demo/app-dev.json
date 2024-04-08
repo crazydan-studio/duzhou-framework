@@ -47,66 +47,10 @@
           "actionType": "dialog",
           "dialog": {
             "title": "添加新应用",
+            "closeOnEsc": true,
             "body": {
-              "type": "form",
-              "api": {
-                "url": "@mutation:DevApp__save",
-                "gql:selection": "id",
-                "requestAdaptor": "return {...api, data: {...api.data, code: api.data.code1 + '-' + api.data.code2, code1: undefined, code2: undefined}};"
-              },
-              "body": [
-                {
-                  "type": "input-image",
-                  "name": "logo",
-                  "label": "图标",
-                  "required": true,
-                  "accept": ".jpeg,.jpg,.png,.gif,.svg",
-                  "uploadBtnText": "点击上传应用图标",
-                  "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo"
-                },
-                {
-                  "type": "input-text",
-                  "name": "title",
-                  "label": "名称",
-                  "required": true
-                },
-                {
-                  "type": "input-group",
-                  "name": "code",
-                  "label": "编码",
-                  "required": true,
-                  "body": [
-                    {
-                      "type": "input-text",
-                      "name": "code1",
-                      "required": true,
-                      "label": "第一级编码",
-                      "placeholder": "第一级编码"
-                    },
-                    {
-                      "type": "input-text",
-                      "name": "code2",
-                      "prefix": "-",
-                      "required": true,
-                      "label": "第二级编码",
-                      "placeholder": "第二级编码"
-                    }
-                  ]
-                },
-                {
-                  "type": "input-text",
-                  "name": "version",
-                  "label": "版本号",
-                  "required": true,
-                  "value": "0.1.0-SNAPSHOT"
-                },
-                {
-                  "type": "input-text",
-                  "name": "classPkgName",
-                  "label": "代码包名",
-                  "required": true
-                }
-              ]
+              "type": "service",
+              "schemaApi": "get:/pages/admin/demo/app-dev/new-app.json"
             }
           }
         },
@@ -206,52 +150,10 @@
               "actionType": "dialog",
               "dialog": {
                 "title": "编辑应用",
+                "closeOnEsc": true,
                 "body": {
-                  "type": "form",
-                  "api": {
-                    "url": "@mutation:DevApp__update?id=${id}",
-                    "gql:selection": "id"
-                  },
-                  "body": [
-                    {
-                      "type": "hidden",
-                      "name": "ver"
-                    },
-                    {
-                      "type": "input-image",
-                      "name": "logo",
-                      "label": "图标",
-                      "required": true,
-                      "accept": ".jpeg,.jpg,.png,.gif,.svg",
-                      "uploadBtnText": "点击上传应用图标",
-                      "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${id}"
-                    },
-                    {
-                      "type": "input-text",
-                      "name": "title",
-                      "label": "名称",
-                      "required": true
-                    },
-                    {
-                      "type": "input-text",
-                      "name": "code",
-                      "label": "编码",
-                      "required": true,
-                      "disabled": true
-                    },
-                    {
-                      "type": "input-text",
-                      "name": "version",
-                      "label": "版本号",
-                      "required": true
-                    },
-                    {
-                      "type": "input-text",
-                      "name": "classPkgName",
-                      "label": "代码包名",
-                      "required": true
-                    }
-                  ]
+                  "type": "service",
+                  "schemaApi": "get:/pages/admin/demo/app-dev/edit-app.json"
                 }
               }
             },
