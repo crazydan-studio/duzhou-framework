@@ -1,0 +1,100 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevAppDict__update?id=${id}",
+      "gql:selection": "id",
+      "data": {
+        "&": "$$",
+        "options": "${ENCODEJSON(options)}"
+      }
+    },
+    "body": [
+      {
+        "type": "group",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "displayName",
+            "label": "名称",
+            "fixed": "left",
+            "required": true
+          },
+          {
+            "type": "input-text",
+            "name": "code",
+            "label": "编码",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "body": [
+          {
+            "type": "service",
+            "className": "amis-Form-item",
+            "schemaApi": "get:/pages/admin/demo/app-dev/pick-app.json"
+          },
+          {
+            "type": "select",
+            "name": "optionType",
+            "label": "字典项类型",
+            "source": "@dict:core/std-data-type",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": "combo",
+        "name": "options",
+        "value": "${options}",
+        "label": "字典项列表",
+        "required": true,
+        "multiple": true,
+        "items": [
+          {
+            "type": "group",
+            "mode": "horizontal",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "code",
+                "label": "编码",
+                "required": true
+              },
+              {
+                "type": "input-text",
+                "name": "value",
+                "label": "值",
+                "required": true
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "mode": "horizontal",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "label",
+                "label": "名称"
+              },
+              {
+                "type": "input-text",
+                "name": "description",
+                "label": "描述"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -50,11 +50,21 @@
         "source": "@dict:app_dev/entity-column-tagset"
       },
       {
-        "type": "select",
-        "name": "stdSqlType",
-        "label": "字段类型",
-        "source": "@dict:core/std-sql-type",
-        "required": true
+        "type": "group",
+        "body": [
+          {
+            "type": "select",
+            "name": "stdSqlType",
+            "label": "字段类型",
+            "source": "@dict:core/std-sql-type",
+            "required": true
+          },
+          {
+            "type": "input-text",
+            "name": "defaultValue",
+            "label": "默认值"
+          }
+        ]
       },
       {
         "type": "group",
@@ -76,9 +86,21 @@
         ]
       },
       {
-        "type": "input-text",
-        "name": "defaultValue",
-        "label": "默认值"
+        "type": "group",
+        "body": [
+          {
+            "type": "select",
+            "name": "domainId",
+            "label": "数据域",
+            "source": "@query:DevAppDomain__findList/label:displayName,value:id?appId=${appId}"
+          },
+          {
+            "type": "select",
+            "name": "dictId",
+            "label": "字典",
+            "source": "@query:DevAppDict__findList/label:displayName,value:id?appId=${appId}"
+          }
+        ]
       }
     ]
   }

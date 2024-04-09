@@ -32,9 +32,11 @@
         "actionType": "dialog",
         "dialog": {
           "title": "添加新字段",
+          "size": "lg",
           "closeOnEsc": true,
           "data": {
-            "entityId": "${entityId}"
+            "entityId": "${entityId}",
+            "appId": "${appId}"
           },
           "body": {
             "type": "service",
@@ -124,6 +126,11 @@
       },
       {
         "type": "text",
+        "name": "defaultValue",
+        "label": "默认值"
+      },
+      {
+        "type": "text",
         "name": "precision",
         "label": "字段长度"
       },
@@ -133,9 +140,18 @@
         "label": "小数精度"
       },
       {
-        "type": "text",
-        "name": "defaultValue",
-        "label": "默认值"
+        "type": "list-select",
+        "name": "domainId",
+        "label": "数据域",
+        "static": true,
+        "source": "@query:DevAppDomain__findList/label:displayName,value:id?appId=${appId}"
+      },
+      {
+        "type": "list-select",
+        "name": "dictId",
+        "label": "字典",
+        "static": true,
+        "source": "@query:DevAppDict__findList/label:displayName,value:id?appId=${appId}"
       },
       {
         "type": "operation",
@@ -149,6 +165,7 @@
             "actionType": "dialog",
             "dialog": {
               "title": "编辑字段",
+              "size": "lg",
               "closeOnEsc": true,
               "body": {
                 "type": "service",

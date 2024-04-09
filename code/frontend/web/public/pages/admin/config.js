@@ -32,6 +32,18 @@ window.__APP_SITE_CONFIG__ = {
             schemaApi: 'get:/pages/admin/demo/app-dev.json'
           },
           {
+            label: '域定义',
+            url: 'app-dev/domain',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/app-dev-domain.json'
+          },
+          {
+            label: '字典定义',
+            url: 'app-dev/dict',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/app-dev-dict.json'
+          },
+          {
             label: '后端服务',
             url: 'app-dev/service',
             icon: 'fa-solid fa-globe',
