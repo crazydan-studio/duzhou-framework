@@ -1,0 +1,125 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "api": {
+      "url": "@mutation:DevAppEntityRelation__save",
+      "gql:selection": "id",
+      "requestAdaptor": "return {...api, data: {...api.data, joinOnConds: JSON.stringify(api.data.joinOnConds)}};"
+    },
+    "body": [
+      {
+        "type": "input-group",
+        "label": "源实体",
+        "required": true,
+        "body": [
+          {
+            "type": "select",
+            "name": "sourceId",
+            "value": "${sourceId}",
+            "required": true,
+            "label": false,
+            "disabled": true,
+            "source": {
+              "url": "@query:DevAppEntity__findList/label:name,value:id"
+            }
+          },
+          {
+            "type": "input-text",
+            "name": "sourcePropName",
+            "prefix": "#",
+            "required": true,
+            "label": false,
+            "placeholder": "源实体侧的关联属性名"
+          }
+        ]
+      },
+      {
+        "type": "input-group",
+        "label": "目标实体",
+        "required": true,
+        "body": [
+          {
+            "type": "select",
+            "name": "targetId",
+            "required": true,
+            "label": false,
+            "source": {
+              "url": "@query:DevAppEntity__findList/label:name,value:id"
+            }
+          },
+          {
+            "type": "input-text",
+            "name": "targetPropName",
+            "prefix": "#",
+            "label": false,
+            "placeholder": "目标实体侧的关联属性名"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "name": "type",
+        "label": "关联类型",
+        "source": "@dict:app_dev/entity-relation-type",
+        "required": true
+      },
+      {
+        "type": "select",
+        "name": "tagSet",
+        "label": "标签",
+        "multiple": true,
+        "clearable": true,
+        "source": "@dict:app_dev/entity-relation-tagset"
+      },
+      {
+        "type": "combo",
+        "name": "joinOnConds",
+        "label": "关联条件",
+        "required": true,
+        "multiple": true,
+        "disabledOn": "${!targetId}",
+        "items": [
+          {
+            "type": "select",
+            "name": "leftProp",
+            "label": false,
+            "placeholder": "源实体字段",
+            "required": true,
+            "mode": "horizontal",
+            "source": {
+              "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
+              "data": {
+                "filter_entityId__eq": "${sourceId}"
+              }
+            }
+          },
+          {
+            "type": "icon",
+            "icon": "equals",
+            "className": "text-info text-xl entity-relation-op"
+          },
+          {
+            "type": "select",
+            "name": "rightProp",
+            "label": false,
+            "placeholder": "目标实体字段",
+            "mode": "horizontal",
+            "required": true,
+            "source": {
+              "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
+              "data": {
+                "filter_entityId__eq": "${targetId}"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

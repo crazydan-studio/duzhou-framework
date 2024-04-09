@@ -65,12 +65,12 @@
     "footerToolbar": ["switch-per-page", "statistics", "pagination"],
     "bulkActions": [
       {
-        "label": "废弃选中",
+        "label": "删除选中",
         "icon": "fa-solid fa-trash-can",
         "actionType": "ajax",
         "api": "@mutation:DevAppEntityColumn__batchDelete?ids=${ids|raw}",
-        "confirmTitle": "废弃确认",
-        "confirmText": "确定要废弃以下字段？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.name + ')</li>'), '')}</ul>"
+        "confirmTitle": "删除确认",
+        "confirmText": "确定要删除以下字段？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.name + ')</li>'), '')}</ul>"
       }
     ],
     "columns": [
@@ -157,10 +157,31 @@
             }
           },
           {
+            "label": "启用",
+            "type": "button",
+            "level": "info",
+            "visibleOn": "${ARRAYINCLUDES(SPLIT(tagSet, ','), 'del')}",
+            "api": {
+              "url": "@mutation:DevAppEntityColumn__update/id?id=${id}",
+              "data": {
+                "tagSet": "${JOIN(ARRAYFILTER(SPLIT(tagSet, ','), t => t != 'del'), ',')}"
+              }
+            },
+            "actionType": "ajax",
+            "confirmTitle": "启用确认",
+            "confirmText": "确定要启用字段「<b>${displayName} (${name})</b>」？"
+          },
+          {
             "label": "废弃",
             "type": "button",
             "level": "danger",
-            "api": "@mutation:DevAppEntityColumn__delete?id=${id}",
+            "visibleOn": "${!ARRAYINCLUDES(SPLIT(tagSet, ','), 'del')}",
+            "api": {
+              "url": "@mutation:DevAppEntityColumn__update/id?id=${id}",
+              "data": {
+                "tagSet": "${JOIN(CONCAT(tagSet ? SPLIT(tagSet, ',') : [], ['del']), ',')}"
+              }
+            },
             "actionType": "ajax",
             "confirmTitle": "废弃确认",
             "confirmText": "确定要废弃字段「<b>${displayName} (${name})</b>」？"

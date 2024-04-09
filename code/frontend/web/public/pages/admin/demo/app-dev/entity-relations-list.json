@@ -1,0 +1,138 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "crud",
+    "name": "data-table",
+    "syncLocation": false,
+    "autoFillHeight": true,
+    "pageField": "page",
+    "perPageField": "pageSize",
+    "api": {
+      "url": "@query:DevAppEntityRelation__findPage",
+      "gql:selection": "total,items{id,sourceId,source{id,displayName,name},targetId,target{id,displayName,name},sourcePropName,targetPropName,type,tagSet,tableName,joinOnConds}",
+      "data": {
+        "offset": "${(page - 1) * pageSize}",
+        "limit": "${pageSize}",
+        "filter_sourceId__eq": "${entityId}",
+        "orderBy": [
+          {
+            "name": "sourcePropName",
+            "desc": true
+          }
+        ]
+      }
+    },
+    "headerToolbar": [
+      {
+        "type": "button",
+        "label": "新增",
+        "level": "primary",
+        "icon": "fa-solid fa-plus",
+        "actionType": "dialog",
+        "dialog": {
+          "title": "添加新关联",
+          "closeOnEsc": true,
+          "data": {
+            "sourceId": "${entityId}"
+          },
+          "body": {
+            "type": "service",
+            "schemaApi": "get:/pages/admin/demo/app-dev/new-entity-relation.json"
+          }
+        }
+      },
+      "bulkActions",
+      {
+        "type": "button",
+        "label": "刷新列表",
+        "icon": "fa fa-repeat",
+        "actionType": "reload",
+        "target": "data-table"
+      },
+      {
+        "type": "columns-toggler",
+        "align": "right",
+        "icon": "fas fa-cog"
+      },
+      {
+        "type": "search-box",
+        "name": "keyword",
+        "align": "right",
+        "placeholder": "请输入关键字 ..."
+      }
+    ],
+    "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+    "bulkActions": [
+      {
+        "label": "删除选中",
+        "icon": "fa-solid fa-trash-can",
+        "actionType": "ajax",
+        "api": "@mutation:DevAppEntityRelation__batchDelete?ids=${ids|raw}",
+        "confirmTitle": "删除确认",
+        "confirmText": "确定要删除以下关联？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.source.name + '#' + e.sourcePropName + ' -> ' + e.target.name + '#' + e.targetPropName + '</li>'), '')}</ul>"
+      }
+    ],
+    "columns": [
+      {
+        "type": "text",
+        "label": "源实体",
+        "value": "${source.name}#${sourcePropName}"
+      },
+      {
+        "type": "text",
+        "label": "目标实体",
+        "value": "${target.name}#${targetPropName}"
+      },
+      {
+        "type": "list-select",
+        "name": "type",
+        "label": "关联类型",
+        "static": true,
+        "source": "@dict:app_dev/entity-relation-type"
+      },
+      {
+        "type": "list-select",
+        "name": "tagSet",
+        "label": "标签",
+        "static": true,
+        "multiple": true,
+        "source": "@dict:app_dev/entity-relation-tagset"
+      },
+      {
+        "type": "operation",
+        "label": "操作",
+        "fixed": "right",
+        "buttons": [
+          {
+            "label": "编辑",
+            "type": "button",
+            "level": "primary",
+            "actionType": "dialog",
+            "dialog": {
+              "title": "编辑关联",
+              "closeOnEsc": true,
+              "data": {
+                "&": "$$",
+                "joinOnConds": "${DECODEJSON(joinOnConds)}"
+              },
+              "body": {
+                "type": "service",
+                "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-relation.json"
+              }
+            }
+          },
+          {
+            "label": "删除",
+            "type": "button",
+            "level": "danger",
+            "api": "@mutation:DevAppEntityRelation__delete?id=${id}",
+            "actionType": "ajax",
+            "confirmTitle": "删除确认",
+            "confirmText": "确定要删除关联「<b>${source.name}#${sourcePropName} -> ${target.name}#${targetPropName}</b>」？"
+          }
+        ]
+      }
+    ]
+  }
+}

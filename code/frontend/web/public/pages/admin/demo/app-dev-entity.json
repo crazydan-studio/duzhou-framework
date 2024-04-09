@@ -152,6 +152,15 @@
               }
             },
             {
+              "label": "删除",
+              "type": "button",
+              "level": "danger",
+              "api": "@mutation:DevAppEntity__delete?id=${id}",
+              "actionType": "ajax",
+              "confirmTitle": "删除确认",
+              "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
+            },
+            {
               "label": "字段管理",
               "type": "button",
               "level": "info",
@@ -164,20 +173,12 @@
                 "body": {
                   "type": "service",
                   "data": {
-                    "entityId": "${id}"
+                    "entityId": "${id}",
+                    "entityName": "${name}"
                   },
-                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-list.json"
+                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
                 }
               }
-            },
-            {
-              "label": "删除",
-              "type": "button",
-              "level": "danger",
-              "api": "@mutation:DevAppEntity__delete?id=${id}",
-              "actionType": "ajax",
-              "confirmTitle": "删除确认",
-              "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
             }
           ]
         }

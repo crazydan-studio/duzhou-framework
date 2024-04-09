@@ -86,3 +86,13 @@
     }
   }
 }
+
+.amis-Form-col:has(.entity-relation-op) {
+  padding: 0.5rem;
+  flex-basis: fit-content;
+  flex-grow: 0;
+
+  .entity-relation-op {
+    line-height: 1;
+  }
+}
