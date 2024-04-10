@@ -7,13 +7,38 @@
     };
 
     moduleConfigs.forEach((mavenModuleDir, serviceXlsxPath) => {
+        const targetDir = '../' + mavenModuleDir;
         codeGenerator
             // 设置生成代码放置目录，其位置相对于当前工程根目录
-            .withTargetDir('../' + mavenModuleDir)
+            .withTargetDir(targetDir)
             .renderModel(
                 serviceXlsxPath,
                 // 代码模板资源的 classpath 位置
                 '/duzhou/templates/service',
+                // 以下参数保持不变
+                '/', $scope
+            );
+
+        // Note：在 app.orm.xml 中存在 x:post-extends 等后处理，
+        // 不能在生成 app.orm.xml 的时候生成 xmeta 和 orm 的 java class，
+        // 因为，此时并不会执行 x:post-extends 的函数，导致部分 orm 配置还未展开
+        const moduleId = 'duzhou/app_dev';
+        const moduleOrmPath = '../' + targetDir + '/orm/src/main/resources/_vfs/' + moduleId + '/orm/app.orm.xml';
+        codeGenerator
+            .withTargetDir(targetDir + '/biz')
+            .renderModel(
+                moduleOrmPath,
+                // 代码模板资源的 classpath 位置
+                '/nop/templates/meta',
+                // 以下参数保持不变
+                '/', $scope
+            );
+        codeGenerator
+            .withTargetDir(targetDir + '/orm/src/main/java')
+            .renderModel(
+                moduleOrmPath,
+                // 代码模板资源的 classpath 位置
+                '/nop/templates/orm-entity',
                 // 以下参数保持不变
                 '/', $scope
             );
