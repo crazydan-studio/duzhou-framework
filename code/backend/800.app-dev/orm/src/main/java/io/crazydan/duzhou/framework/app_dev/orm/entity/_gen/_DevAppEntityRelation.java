@@ -66,6 +66,9 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     /* relation:  */
     public static final String PROP_NAME_target = "target";
     
+    /* component:  */
+    public static final String PROP_NAME_joinOnCondsComponent = "joinOnCondsComponent";
+    
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
@@ -625,5 +628,22 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
        
     }
        
+   private io.nop.orm.component.JsonOrmComponent _joinOnCondsComponent;
+
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_joinOnCondsComponent = new HashMap<>();
+   static{
+      
+         COMPONENT_PROP_ID_MAP_joinOnCondsComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_joinOnConds);
+      
+   }
+
+   public io.nop.orm.component.JsonOrmComponent getJoinOnCondsComponent(){
+      if(_joinOnCondsComponent == null){
+          _joinOnCondsComponent = new io.nop.orm.component.JsonOrmComponent();
+          _joinOnCondsComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_joinOnCondsComponent);
+      }
+      return _joinOnCondsComponent;
+   }
+
 }
 // resume CPD analysis - CPD-ON

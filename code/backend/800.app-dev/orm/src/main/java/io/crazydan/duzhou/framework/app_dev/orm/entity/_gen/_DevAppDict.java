@@ -32,9 +32,9 @@ public class _DevAppDict extends DynamicOrmEntity{
     public static final String PROP_NAME_displayName = "displayName";
     public static final int PROP_ID_displayName = 3;
     
-    /* 编码: CODE VARCHAR */
-    public static final String PROP_NAME_code = "code";
-    public static final int PROP_ID_code = 4;
+    /* 名称: NAME VARCHAR */
+    public static final String PROP_NAME_name = "name";
+    public static final int PROP_ID_name = 4;
     
     /* 字典项类型: OPTION_TYPE VARCHAR */
     public static final String PROP_NAME_optionType = "optionType";
@@ -47,6 +47,9 @@ public class _DevAppDict extends DynamicOrmEntity{
 
     private static int _PROP_ID_BOUND = 7;
 
+    
+    /* component:  */
+    public static final String PROP_NAME_optionsComponent = "optionsComponent";
     
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
@@ -65,8 +68,8 @@ public class _DevAppDict extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_displayName] = PROP_NAME_displayName;
           PROP_NAME_TO_ID.put(PROP_NAME_displayName, PROP_ID_displayName);
       
-          PROP_ID_TO_NAME[PROP_ID_code] = PROP_NAME_code;
-          PROP_NAME_TO_ID.put(PROP_NAME_code, PROP_ID_code);
+          PROP_ID_TO_NAME[PROP_ID_name] = PROP_NAME_name;
+          PROP_NAME_TO_ID.put(PROP_NAME_name, PROP_ID_name);
       
           PROP_ID_TO_NAME[PROP_ID_optionType] = PROP_NAME_optionType;
           PROP_NAME_TO_ID.put(PROP_NAME_optionType, PROP_ID_optionType);
@@ -86,8 +89,8 @@ public class _DevAppDict extends DynamicOrmEntity{
     /* 显示名称: DISPLAY_NAME */
     private java.lang.String _displayName;
     
-    /* 编码: CODE */
-    private java.lang.String _code;
+    /* 名称: NAME */
+    private java.lang.String _name;
     
     /* 字典项类型: OPTION_TYPE */
     private java.lang.String _optionType;
@@ -175,8 +178,8 @@ public class _DevAppDict extends DynamicOrmEntity{
             case PROP_ID_displayName:
                return getDisplayName();
         
-            case PROP_ID_code:
-               return getCode();
+            case PROP_ID_name:
+               return getName();
         
             case PROP_ID_optionType:
                return getOptionType();
@@ -225,13 +228,13 @@ public class _DevAppDict extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_code:{
+            case PROP_ID_name:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_code));
+                       err-> newTypeConversionError(PROP_NAME_name));
                }
-               setCode(typedValue);
+               setName(typedValue);
                break;
             }
         
@@ -285,9 +288,9 @@ public class _DevAppDict extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_code:{
+            case PROP_ID_name:{
                onInitProp(propId);
-               this._code = (java.lang.String)value;
+               this._name = (java.lang.String)value;
                
                break;
             }
@@ -370,20 +373,20 @@ public class _DevAppDict extends DynamicOrmEntity{
     }
     
     /**
-     * 编码: CODE
+     * 名称: NAME
      */
-    public java.lang.String getCode(){
-         onPropGet(PROP_ID_code);
-         return _code;
+    public java.lang.String getName(){
+         onPropGet(PROP_ID_name);
+         return _name;
     }
 
     /**
-     * 编码: CODE
+     * 名称: NAME
      */
-    public void setCode(java.lang.String value){
-        if(onPropSet(PROP_ID_code,value)){
-            this._code = value;
-            internalClearRefs(PROP_ID_code);
+    public void setName(java.lang.String value){
+        if(onPropSet(PROP_ID_name,value)){
+            this._name = value;
+            internalClearRefs(PROP_ID_name);
             
         }
     }
@@ -426,5 +429,22 @@ public class _DevAppDict extends DynamicOrmEntity{
         }
     }
     
+   private io.nop.orm.component.JsonOrmComponent _optionsComponent;
+
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_optionsComponent = new HashMap<>();
+   static{
+      
+         COMPONENT_PROP_ID_MAP_optionsComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_options);
+      
+   }
+
+   public io.nop.orm.component.JsonOrmComponent getOptionsComponent(){
+      if(_optionsComponent == null){
+          _optionsComponent = new io.nop.orm.component.JsonOrmComponent();
+          _optionsComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_optionsComponent);
+      }
+      return _optionsComponent;
+   }
+
 }
 // resume CPD analysis - CPD-ON

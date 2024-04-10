@@ -31,7 +31,7 @@
               insertable="true" updatable="true" ext:relation="target">
             <schema type="java.lang.String" precision="32"/>
         </prop>
-        <prop name="sourcePropName" displayName="关联源实体侧属性名" propId="4" queryable="true" sortable="true"
+        <prop name="sourcePropName" displayName="关联源实体侧属性名" propId="4" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="200"/>
         </prop>
@@ -52,8 +52,8 @@
             <schema type="java.lang.String" precision="200"/>
         </prop>
         <prop name="joinOnConds" displayName="关联条件列表" propId="9" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true">
-            <schema type="java.lang.String" precision="200"/>
+              insertable="true" updatable="true" graphql:jsonComponentProp="joinOnCondsComponent">
+            <schema stdDomain="json" domain="json-1k" type="java.lang.String" precision="1024"/>
         </prop>
         <prop name="source" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
               ext:joinLeftProp="sourceId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
@@ -64,6 +64,10 @@
               ext:joinLeftProp="targetId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
               lazy="true">
             <schema bizObjName="DevAppEntity"/>
+        </prop>
+        <prop name="joinOnCondsComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
+              updatable="true" mandatory="true" lazy="true">
+            <schema type="io.nop.orm.component.JsonOrmComponent"/>
         </prop>
     </props>
 </meta>

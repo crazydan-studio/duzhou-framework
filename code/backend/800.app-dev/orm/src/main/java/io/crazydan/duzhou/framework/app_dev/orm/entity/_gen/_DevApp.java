@@ -71,6 +71,9 @@ public class _DevApp extends DynamicOrmEntity{
     /* relation:  */
     public static final String PROP_NAME_services = "services";
     
+    /* component:  */
+    public static final String PROP_NAME_logoComponent = "logoComponent";
+    
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
@@ -684,5 +687,22 @@ public class _DevApp extends DynamicOrmEntity{
        return _services;
     }
        
+   private io.nop.orm.component.OrmFileComponent _logoComponent;
+
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_logoComponent = new HashMap<>();
+   static{
+      
+         COMPONENT_PROP_ID_MAP_logoComponent.put(io.nop.orm.component.OrmFileComponent.PROP_NAME_filePath,PROP_ID_logo);
+      
+   }
+
+   public io.nop.orm.component.OrmFileComponent getLogoComponent(){
+      if(_logoComponent == null){
+          _logoComponent = new io.nop.orm.component.OrmFileComponent();
+          _logoComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_logoComponent);
+      }
+      return _logoComponent;
+   }
+
 }
 // resume CPD analysis - CPD-ON

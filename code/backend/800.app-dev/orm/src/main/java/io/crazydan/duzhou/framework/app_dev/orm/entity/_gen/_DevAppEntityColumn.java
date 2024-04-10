@@ -52,13 +52,13 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
     public static final String PROP_NAME_mandatory = "mandatory";
     public static final int PROP_ID_mandatory = 8;
     
-    /* 数据域: DOMAIN_ID VARCHAR */
-    public static final String PROP_NAME_domainId = "domainId";
-    public static final int PROP_ID_domainId = 9;
+    /* 数据域: DOMAIN_NAME VARCHAR */
+    public static final String PROP_NAME_domainName = "domainName";
+    public static final int PROP_ID_domainName = 9;
     
-    /* 引用字典: DICT_ID VARCHAR */
-    public static final String PROP_NAME_dictId = "dictId";
-    public static final int PROP_ID_dictId = 10;
+    /* 引用字典: DICT_NAME VARCHAR */
+    public static final String PROP_NAME_dictName = "dictName";
+    public static final int PROP_ID_dictName = 10;
     
     /* 字段类型: STD_SQL_TYPE VARCHAR */
     public static final String PROP_NAME_stdSqlType = "stdSqlType";
@@ -82,12 +82,6 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
     
     /* relation:  */
     public static final String PROP_NAME_entity = "entity";
-    
-    /* relation:  */
-    public static final String PROP_NAME_domain = "domain";
-    
-    /* relation:  */
-    public static final String PROP_NAME_dict = "dict";
     
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
@@ -121,11 +115,11 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_mandatory] = PROP_NAME_mandatory;
           PROP_NAME_TO_ID.put(PROP_NAME_mandatory, PROP_ID_mandatory);
       
-          PROP_ID_TO_NAME[PROP_ID_domainId] = PROP_NAME_domainId;
-          PROP_NAME_TO_ID.put(PROP_NAME_domainId, PROP_ID_domainId);
+          PROP_ID_TO_NAME[PROP_ID_domainName] = PROP_NAME_domainName;
+          PROP_NAME_TO_ID.put(PROP_NAME_domainName, PROP_ID_domainName);
       
-          PROP_ID_TO_NAME[PROP_ID_dictId] = PROP_NAME_dictId;
-          PROP_NAME_TO_ID.put(PROP_NAME_dictId, PROP_ID_dictId);
+          PROP_ID_TO_NAME[PROP_ID_dictName] = PROP_NAME_dictName;
+          PROP_NAME_TO_ID.put(PROP_NAME_dictName, PROP_ID_dictName);
       
           PROP_ID_TO_NAME[PROP_ID_stdSqlType] = PROP_NAME_stdSqlType;
           PROP_NAME_TO_ID.put(PROP_NAME_stdSqlType, PROP_ID_stdSqlType);
@@ -166,11 +160,11 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
     /* 是否非空: MANDATORY */
     private java.lang.Boolean _mandatory;
     
-    /* 数据域: DOMAIN_ID */
-    private java.lang.String _domainId;
+    /* 数据域: DOMAIN_NAME */
+    private java.lang.String _domainName;
     
-    /* 引用字典: DICT_ID */
-    private java.lang.String _dictId;
+    /* 引用字典: DICT_NAME */
+    private java.lang.String _dictName;
     
     /* 字段类型: STD_SQL_TYPE */
     private java.lang.String _stdSqlType;
@@ -279,11 +273,11 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
             case PROP_ID_mandatory:
                return getMandatory();
         
-            case PROP_ID_domainId:
-               return getDomainId();
+            case PROP_ID_domainName:
+               return getDomainName();
         
-            case PROP_ID_dictId:
-               return getDictId();
+            case PROP_ID_dictName:
+               return getDictName();
         
             case PROP_ID_stdSqlType:
                return getStdSqlType();
@@ -388,23 +382,23 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_domainId:{
+            case PROP_ID_domainName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_domainId));
+                       err-> newTypeConversionError(PROP_NAME_domainName));
                }
-               setDomainId(typedValue);
+               setDomainName(typedValue);
                break;
             }
         
-            case PROP_ID_dictId:{
+            case PROP_ID_dictName:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_dictId));
+                       err-> newTypeConversionError(PROP_NAME_dictName));
                }
-               setDictId(typedValue);
+               setDictName(typedValue);
                break;
             }
         
@@ -513,16 +507,16 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_domainId:{
+            case PROP_ID_domainName:{
                onInitProp(propId);
-               this._domainId = (java.lang.String)value;
+               this._domainName = (java.lang.String)value;
                
                break;
             }
         
-            case PROP_ID_dictId:{
+            case PROP_ID_dictName:{
                onInitProp(propId);
-               this._dictId = (java.lang.String)value;
+               this._dictName = (java.lang.String)value;
                
                break;
             }
@@ -714,39 +708,39 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
     }
     
     /**
-     * 数据域: DOMAIN_ID
+     * 数据域: DOMAIN_NAME
      */
-    public java.lang.String getDomainId(){
-         onPropGet(PROP_ID_domainId);
-         return _domainId;
+    public java.lang.String getDomainName(){
+         onPropGet(PROP_ID_domainName);
+         return _domainName;
     }
 
     /**
-     * 数据域: DOMAIN_ID
+     * 数据域: DOMAIN_NAME
      */
-    public void setDomainId(java.lang.String value){
-        if(onPropSet(PROP_ID_domainId,value)){
-            this._domainId = value;
-            internalClearRefs(PROP_ID_domainId);
+    public void setDomainName(java.lang.String value){
+        if(onPropSet(PROP_ID_domainName,value)){
+            this._domainName = value;
+            internalClearRefs(PROP_ID_domainName);
             
         }
     }
     
     /**
-     * 引用字典: DICT_ID
+     * 引用字典: DICT_NAME
      */
-    public java.lang.String getDictId(){
-         onPropGet(PROP_ID_dictId);
-         return _dictId;
+    public java.lang.String getDictName(){
+         onPropGet(PROP_ID_dictName);
+         return _dictName;
     }
 
     /**
-     * 引用字典: DICT_ID
+     * 引用字典: DICT_NAME
      */
-    public void setDictId(java.lang.String value){
-        if(onPropSet(PROP_ID_dictId,value)){
-            this._dictId = value;
-            internalClearRefs(PROP_ID_dictId);
+    public void setDictName(java.lang.String value){
+        if(onPropSet(PROP_ID_dictName,value)){
+            this._dictName = value;
+            internalClearRefs(PROP_ID_dictName);
             
         }
     }
@@ -844,52 +838,6 @@ public class _DevAppEntityColumn extends DynamicOrmEntity{
            internalSetRefEntity(PROP_NAME_entity, refEntity,()->{
            
                            this.setEntityId(refEntity.getId());
-                       
-           });
-           }
-       
-    }
-       
-    /**
-     * 
-     */
-    public io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain getDomain(){
-       return (io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain)internalGetRefEntity(PROP_NAME_domain);
-    }
-
-    public void setDomain(io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain refEntity){
-   
-           if(refEntity == null){
-           
-                   this.setDomainId(null);
-               
-           }else{
-           internalSetRefEntity(PROP_NAME_domain, refEntity,()->{
-           
-                           this.setDomainId(refEntity.getId());
-                       
-           });
-           }
-       
-    }
-       
-    /**
-     * 
-     */
-    public io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict getDict(){
-       return (io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict)internalGetRefEntity(PROP_NAME_dict);
-    }
-
-    public void setDict(io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict refEntity){
-   
-           if(refEntity == null){
-           
-                   this.setDictId(null);
-               
-           }else{
-           internalSetRefEntity(PROP_NAME_dict, refEntity,()->{
-           
-                           this.setDictId(refEntity.getId());
                        
            });
            }

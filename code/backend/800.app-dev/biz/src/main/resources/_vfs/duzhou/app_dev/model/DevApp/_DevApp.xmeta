@@ -75,5 +75,9 @@
                 <item bizObjName="DevAppService"/>
             </schema>
         </prop>
+        <prop name="logoComponent" ext:kind="component" internal="true" insertable="true" updatable="true" lazy="true"
+              published="false">
+            <schema type="io.nop.orm.component.OrmFileComponent"/>
+        </prop>
     </props>
 </meta>

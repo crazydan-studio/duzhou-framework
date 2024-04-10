@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <meta xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/xmeta.xdef" x:extends="_DevAppDict.xmeta">
 
-    <props/>
+    <props>
+        <prop name="optionsComponent" internal="true" />
+        <prop name="opts" mapToProp="optionsComponent.opts" />
+    </props>
 </meta>

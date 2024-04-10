@@ -60,6 +60,9 @@
         <domain name="file" precision="200" stdDomain="file" stdSqlType="VARCHAR"/>
         <domain name="email" precision="100" stdSqlType="VARCHAR"/>
         <domain name="phone" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="json-1k" precision="1024" stdDomain="json" stdSqlType="VARCHAR"/>
+        <domain name="json-4k" precision="4096" stdDomain="json" stdSqlType="VARCHAR"/>
+        <domain name="json-16m" precision="16777216" stdDomain="json" stdSqlType="VARCHAR"/>
     </domains>
 
     <entities>
@@ -115,7 +118,7 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
                         propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CODE" displayName="编码" mandatory="true" name="code" precision="100" propId="4"
+                <column code="NAME" displayName="编码" mandatory="true" name="name" precision="100" propId="4"
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="STD_DOMAIN" displayName="标准域" name="stdDomain" precision="50" propId="5"
                         stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-domain"/>
@@ -127,7 +130,7 @@
             </columns>
             <comment>对应 ORM 实体的字段属性【数据域】</comment>
             <unique-keys>
-                <unique-key columns="code,appId" constraint="UK_DEV_APP_DOMAIN_CODE" name="codeKey">
+                <unique-key columns="name,appId" constraint="UK_DEV_APP_DOMAIN_NAME" name="nameKey">
                     <comment>在应用内唯一</comment>
                 </unique-key>
             </unique-keys>
@@ -142,16 +145,16 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="DISPLAY_NAME" displayName="显示名称" mandatory="true" name="displayName" precision="100"
                         propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CODE" comment="唯一标识，按文件命名规范定义" displayName="编码" mandatory="true" name="code"
+                <column code="NAME" comment="唯一标识，按文件命名规范定义" displayName="名称" mandatory="true" name="name"
                         precision="100" propId="4" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="OPTION_TYPE" displayName="字典项类型" mandatory="true" name="optionType" precision="50"
                         propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="OPTIONS" comment="以 JSON 形式存储" displayName="字典项列表" mandatory="true" name="options"
-                        precision="2000" propId="6" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OPTIONS" displayName="字典项列表" domain="json-4k" mandatory="true" name="options"
+                        precision="4096" propId="6" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>对应 ORM 实体的字段属性【字典】</comment>
             <unique-keys>
-                <unique-key columns="code,appId" constraint="UK_DEV_APP_DICT_CODE" name="codeKey">
+                <unique-key columns="name,appId" constraint="UK_DEV_APP_DICT_NAME" name="nameKey">
                     <comment>在应用内唯一</comment>
                 </unique-key>
             </unique-keys>
@@ -236,9 +239,11 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="11" stdDataType="string"
                         stdSqlType="VARCHAR"/>
-                <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" defaultValue="[]" displayName="唯一键列表"
-                        mandatory="true" name="uniqueKeys" precision="200" propId="12" stdDataType="string"
+                <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="唯一键列表" domain="json-1k"
+                        name="uniqueKeys" precision="1024" propId="12" stdDataType="string" stdDomain="json"
                         stdSqlType="VARCHAR"/>
+                <column code="ALIASES" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="别名列表" domain="json-1k" name="aliases"
+                        precision="1024" propId="13" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体</comment>
             <relations>
@@ -290,10 +295,10 @@
                         stdDataType="boolean" stdSqlType="BOOLEAN"/>
                 <column code="MANDATORY" defaultValue="0" displayName="是否非空" mandatory="true" name="mandatory"
                         propId="8" stdDataType="boolean" stdSqlType="BOOLEAN"/>
-                <column code="DOMAIN_ID" displayName="数据域" name="domainId" precision="50" propId="9"
+                <column code="DOMAIN_NAME" displayName="数据域" name="domainName" precision="50" propId="9"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="DICT_ID" displayName="引用字典" name="dictId" precision="32" propId="10" stdDataType="string"
-                        stdSqlType="VARCHAR"/>
+                <column code="DICT_NAME" displayName="引用字典" name="dictName" precision="32" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="STD_SQL_TYPE" displayName="字段类型" mandatory="true" name="stdSqlType" precision="50"
                         propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="PRECISION" displayName="字段长度" name="precision" propId="12" stdDataType="int"
@@ -308,20 +313,6 @@
                         refPropName="props" tagSet="pub,ref-pub,ref-cascade-delete">
                     <join>
                         <on leftProp="entityId" rightProp="id"/>
-                    </join>
-                    <ref-set/>
-                </to-one>
-                <to-one name="domain" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDomain"
-                        tagSet="pub">
-                    <join>
-                        <on leftProp="domainId" rightProp="id"/>
-                    </join>
-                    <ref-set/>
-                </to-one>
-                <to-one name="dict" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppDict"
-                        tagSet="pub">
-                    <join>
-                        <on leftProp="dictId" rightProp="id"/>
                     </join>
                     <ref-set/>
                 </to-one>
@@ -343,8 +334,8 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TARGET_ID" displayName="关联目标实体" mandatory="true" name="targetId" precision="32" propId="3"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="SOURCE_PROP_NAME" displayName="关联源实体侧属性名" name="sourcePropName" precision="200" propId="4"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SOURCE_PROP_NAME" displayName="关联源实体侧属性名" mandatory="true" name="sourcePropName"
+                        precision="200" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TARGET_PROP_NAME" displayName="关联目标实体侧属性名" name="targetPropName" precision="200"
                         propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TYPE" displayName="关联类型" mandatory="true" name="type" precision="20" propId="6"
@@ -353,8 +344,9 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TABLE_NAME" comment="一对多时需要中间表" displayName="中间表表名" name="tableName" precision="200"
                         propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="JOIN_ON_CONDS" comment="JSON 数组，元素为逗号分隔的左右连接的实体属性名" displayName="关联条件列表" mandatory="true"
-                        name="joinOnConds" precision="200" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="JOIN_ON_CONDS" comment="JSON 数组，元素为逗号分隔的左右连接的实体属性名" displayName="关联条件列表" domain="json-1k"
+                        mandatory="true" name="joinOnConds" precision="1024" propId="9" stdDataType="string"
+                        stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体间的关联</comment>
             <relations>

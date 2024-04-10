@@ -16,11 +16,11 @@
     </x:post-extends>
 
     <keys>
-        <key name="codeKey" props="code,appId"/>
+        <key name="nameKey" props="name,appId"/>
     </keys>
 
     <orderBy>
-        <field name="code" desc="false"/>
+        <field name="name" desc="false"/>
     </orderBy>
 
     <props>
@@ -36,7 +36,7 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="code" displayName="编码" propId="4" tagSet="sort" mandatory="true" queryable="true" sortable="true"
+        <prop name="name" displayName="编码" propId="4" tagSet="sort" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>

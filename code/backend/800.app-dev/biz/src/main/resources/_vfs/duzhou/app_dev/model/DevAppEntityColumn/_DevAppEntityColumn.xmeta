@@ -53,12 +53,12 @@
               insertable="true" updatable="true" defaultValue="0">
             <schema type="java.lang.Boolean"/>
         </prop>
-        <prop name="domainId" displayName="数据域" propId="9" queryable="true" sortable="true" insertable="true"
-              updatable="true" ext:relation="domain">
+        <prop name="domainName" displayName="数据域" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
             <schema type="java.lang.String" precision="50"/>
         </prop>
-        <prop name="dictId" displayName="引用字典" propId="10" queryable="true" sortable="true" insertable="true"
-              updatable="true" ext:relation="dict">
+        <prop name="dictName" displayName="引用字典" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true">
             <schema type="java.lang.String" precision="32"/>
         </prop>
         <prop name="stdSqlType" displayName="字段类型" propId="11" mandatory="true" queryable="true" sortable="true"
@@ -81,14 +81,6 @@
               ext:joinLeftProp="entityId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
               lazy="true">
             <schema bizObjName="DevAppEntity"/>
-        </prop>
-        <prop name="domain" tagSet="pub" ext:kind="to-one" internal="true" queryable="true" ext:joinLeftProp="domainId"
-              ext:joinRightProp="id" insertable="false" updatable="false" lazy="true">
-            <schema bizObjName="DevAppDomain"/>
-        </prop>
-        <prop name="dict" tagSet="pub" ext:kind="to-one" internal="true" queryable="true" ext:joinLeftProp="dictId"
-              ext:joinRightProp="id" insertable="false" updatable="false" lazy="true">
-            <schema bizObjName="DevAppDict"/>
         </prop>
     </props>
 </meta>

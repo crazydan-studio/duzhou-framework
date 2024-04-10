@@ -68,8 +68,12 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final String PROP_NAME_uniqueKeys = "uniqueKeys";
     public static final int PROP_ID_uniqueKeys = 12;
     
+    /* 别名列表: ALIASES VARCHAR */
+    public static final String PROP_NAME_aliases = "aliases";
+    public static final int PROP_ID_aliases = 13;
+    
 
-    private static int _PROP_ID_BOUND = 13;
+    private static int _PROP_ID_BOUND = 14;
 
     
     /* relation:  */
@@ -84,11 +88,17 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /* alias: service.appId 应用 */
     public static final String PROP_NAME_appId = "appId";
     
+    /* component:  */
+    public static final String PROP_NAME_uniqueKeysComponent = "uniqueKeysComponent";
+    
+    /* component:  */
+    public static final String PROP_NAME_aliasesComponent = "aliasesComponent";
+    
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
     protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_id};
 
-    private static final String[] PROP_ID_TO_NAME = new String[13];
+    private static final String[] PROP_ID_TO_NAME = new String[14];
     private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
     static{
       
@@ -128,6 +138,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_uniqueKeys] = PROP_NAME_uniqueKeys;
           PROP_NAME_TO_ID.put(PROP_NAME_uniqueKeys, PROP_ID_uniqueKeys);
       
+          PROP_ID_TO_NAME[PROP_ID_aliases] = PROP_NAME_aliases;
+          PROP_NAME_TO_ID.put(PROP_NAME_aliases, PROP_ID_aliases);
+      
     }
 
     
@@ -166,6 +179,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
     
     /* 唯一键列表: UNIQUE_KEYS */
     private java.lang.String _uniqueKeys;
+    
+    /* 别名列表: ALIASES */
+    private java.lang.String _aliases;
     
 
     public _DevAppEntity(){
@@ -273,6 +289,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
         
             case PROP_ID_uniqueKeys:
                return getUniqueKeys();
+        
+            case PROP_ID_aliases:
+               return getAliases();
         
            default:
               return super.orm_propValue(propId);
@@ -405,6 +424,16 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
+            case PROP_ID_aliases:{
+               java.lang.String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_aliases));
+               }
+               setAliases(typedValue);
+               break;
+            }
+        
            default:
               super.orm_propValue(propId,value);
         }
@@ -494,6 +523,13 @@ public class _DevAppEntity extends DynamicOrmEntity{
             case PROP_ID_uniqueKeys:{
                onInitProp(propId);
                this._uniqueKeys = (java.lang.String)value;
+               
+               break;
+            }
+        
+            case PROP_ID_aliases:{
+               onInitProp(propId);
+               this._aliases = (java.lang.String)value;
                
                break;
             }
@@ -733,6 +769,25 @@ public class _DevAppEntity extends DynamicOrmEntity{
     }
     
     /**
+     * 别名列表: ALIASES
+     */
+    public java.lang.String getAliases(){
+         onPropGet(PROP_ID_aliases);
+         return _aliases;
+    }
+
+    /**
+     * 别名列表: ALIASES
+     */
+    public void setAliases(java.lang.String value){
+        if(onPropSet(PROP_ID_aliases,value)){
+            this._aliases = value;
+            internalClearRefs(PROP_ID_aliases);
+            
+        }
+    }
+    
+    /**
      * 
      */
     public io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService getService(){
@@ -781,6 +836,40 @@ public class _DevAppEntity extends DynamicOrmEntity{
 
    public void setAppId(java.lang.String value){
       internalSetAliasValue("service.appId",value);
+   }
+
+   private io.nop.orm.component.JsonOrmComponent _uniqueKeysComponent;
+
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_uniqueKeysComponent = new HashMap<>();
+   static{
+      
+         COMPONENT_PROP_ID_MAP_uniqueKeysComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_uniqueKeys);
+      
+   }
+
+   public io.nop.orm.component.JsonOrmComponent getUniqueKeysComponent(){
+      if(_uniqueKeysComponent == null){
+          _uniqueKeysComponent = new io.nop.orm.component.JsonOrmComponent();
+          _uniqueKeysComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_uniqueKeysComponent);
+      }
+      return _uniqueKeysComponent;
+   }
+
+   private io.nop.orm.component.JsonOrmComponent _aliasesComponent;
+
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_aliasesComponent = new HashMap<>();
+   static{
+      
+         COMPONENT_PROP_ID_MAP_aliasesComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_aliases);
+      
+   }
+
+   public io.nop.orm.component.JsonOrmComponent getAliasesComponent(){
+      if(_aliasesComponent == null){
+          _aliasesComponent = new io.nop.orm.component.JsonOrmComponent();
+          _aliasesComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_aliasesComponent);
+      }
+      return _aliasesComponent;
    }
 
 }

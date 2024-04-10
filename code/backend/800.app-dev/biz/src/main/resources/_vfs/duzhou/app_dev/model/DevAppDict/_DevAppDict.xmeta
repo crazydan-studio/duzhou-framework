@@ -16,11 +16,11 @@
     </x:post-extends>
 
     <keys>
-        <key name="codeKey" props="code,appId"/>
+        <key name="nameKey" props="name,appId"/>
     </keys>
 
     <orderBy>
-        <field name="code" desc="false"/>
+        <field name="name" desc="false"/>
     </orderBy>
 
     <props>
@@ -36,7 +36,7 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="code" displayName="编码" propId="4" tagSet="sort" mandatory="true" queryable="true" sortable="true"
+        <prop name="name" displayName="名称" propId="4" tagSet="sort" mandatory="true" queryable="true" sortable="true"
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
@@ -45,8 +45,12 @@
             <schema type="java.lang.String" precision="50"/>
         </prop>
         <prop name="options" displayName="字典项列表" propId="6" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true">
-            <schema type="java.lang.String" precision="2000"/>
+              insertable="true" updatable="true" graphql:jsonComponentProp="optionsComponent">
+            <schema stdDomain="json" domain="json-4k" type="java.lang.String" precision="4096"/>
+        </prop>
+        <prop name="optionsComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
+              updatable="true" mandatory="true" lazy="true">
+            <schema type="io.nop.orm.component.JsonOrmComponent"/>
         </prop>
     </props>
 </meta>
