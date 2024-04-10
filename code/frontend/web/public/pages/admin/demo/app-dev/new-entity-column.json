@@ -7,6 +7,19 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "data-table"
+          }
+        ]
+      }
+    },
     "api": {
       "url": "@mutation:DevAppEntityColumn__save?entityId=${entityId}",
       "gql:selection": "id"
@@ -90,15 +103,17 @@
         "body": [
           {
             "type": "select",
-            "name": "domainId",
+            "name": "domainName",
             "label": "数据域",
-            "source": "@query:DevAppDomain__findList/label:displayName,value:id?appId=${appId}"
+            "clearable": true,
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
           },
           {
             "type": "select",
-            "name": "dictId",
+            "name": "dictName",
             "label": "字典",
-            "source": "@query:DevAppDict__findList/label:displayName,value:id?appId=${appId}"
+            "clearable": true,
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
           }
         ]
       }

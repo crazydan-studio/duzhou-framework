@@ -7,6 +7,19 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "data-table"
+          }
+        ]
+      }
+    },
     "api": {
       "url": "@mutation:DevApp__update?id=${id}",
       "gql:selection": "id"

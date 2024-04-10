@@ -25,7 +25,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppDomain__findPage",
-        "gql:selection": "total,items{id,appId,displayName,code,stdDomain,stdSqlType,precision,scale}",
+        "gql:selection": "total,items{id,appId,displayName,name,stdDomain,stdSqlType,precision,scale}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -83,7 +83,7 @@
           "actionType": "ajax",
           "api": "@mutation:DevAppDomain__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下域定义？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下域定义？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.name + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
@@ -95,7 +95,7 @@
         },
         {
           "type": "text",
-          "name": "code",
+          "name": "name",
           "label": "编码"
         },
         {
@@ -149,7 +149,7 @@
               "api": "@mutation:DevAppDomain__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除域定义「<b>${displayName} (${code})</b>」？"
+              "confirmText": "确定要删除域定义「<b>${displayName} (${name})</b>」？"
             }
           ]
         }

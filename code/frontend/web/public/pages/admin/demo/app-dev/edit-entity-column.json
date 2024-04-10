@@ -7,6 +7,19 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "data-table"
+          }
+        ]
+      }
+    },
     "api": {
       "url": "@mutation:DevAppEntityColumn__update?id=${id}&entityId=${entityId}",
       "gql:selection": "id"
@@ -36,7 +49,7 @@
             "type": "switch",
             "name": "mandatory",
             "label": "是否非空",
-            "value": "${primary}",
+            "value": "${primary || mandatory}",
             "disabledOn": "${primary}"
           }
         ]
@@ -81,7 +94,8 @@
             "name": "scale",
             "label": "小数精度",
             "min": 0,
-            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE'], stdSqlType)}"
+            "disabledOn": "${!ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}",
+            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}"
           }
         ]
       },
@@ -90,15 +104,17 @@
         "body": [
           {
             "type": "select",
-            "name": "domainId",
+            "name": "domainName",
             "label": "数据域",
-            "source": "@query:DevAppDomain__findList/label:displayName,value:id?appId=${appId}"
+            "clearable": true,
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
           },
           {
             "type": "select",
-            "name": "dictId",
+            "name": "dictName",
             "label": "字典",
-            "source": "@query:DevAppDict__findList/label:displayName,value:id?appId=${appId}"
+            "clearable": true,
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
           }
         ]
       }

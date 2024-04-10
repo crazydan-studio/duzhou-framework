@@ -7,6 +7,19 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "data-table"
+          }
+        ]
+      }
+    },
     "api": {
       "url": "@mutation:DevAppDict__update?id=${id}",
       "gql:selection": "id",
@@ -28,7 +41,7 @@
           },
           {
             "type": "input-text",
-            "name": "code",
+            "name": "name",
             "label": "编码",
             "required": true
           }

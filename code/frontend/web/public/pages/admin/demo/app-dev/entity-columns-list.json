@@ -10,7 +10,7 @@
     "perPageField": "pageSize",
     "api": {
       "url": "@query:DevAppEntityColumn__findPage",
-      "gql:selection": "total,items{id,entityId,displayName,name,propId,tagSet,primary,mandatory,stdSqlType,precision,scale,defaultValue,domainId,dictId}",
+      "gql:selection": "total,items{id,entityId,displayName,name,propId,tagSet,primary,mandatory,stdSqlType,precision,scale,defaultValue,domainName,dictName}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -141,17 +141,17 @@
       },
       {
         "type": "list-select",
-        "name": "domainId",
+        "name": "domainName",
         "label": "数据域",
         "static": true,
-        "source": "@query:DevAppDomain__findList/label:displayName,value:id?appId=${appId}"
+        "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
       },
       {
         "type": "list-select",
-        "name": "dictId",
+        "name": "dictName",
         "label": "字典",
         "static": true,
-        "source": "@query:DevAppDict__findList/label:displayName,value:id?appId=${appId}"
+        "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
       },
       {
         "type": "operation",
