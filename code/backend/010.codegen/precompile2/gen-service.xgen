@@ -29,7 +29,7 @@
             .renderModel(
                 moduleOrmPath,
                 // 代码模板资源的 classpath 位置
-                '/nop/templates/meta',
+                '/duzhou/templates/meta',
                 // 以下参数保持不变
                 '/', $scope
             );
