@@ -25,7 +25,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppDict__findPage",
-        "gql:selection": "total,items{id,appId,displayName,name,optionType,options}",
+        "gql:selection": "total,items{id,appId,displayName,name,optionType}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -119,10 +119,6 @@
                 "title": "编辑字典定义",
                 "size": "lg",
                 "closeOnEsc": true,
-                "data": {
-                  "&": "$$",
-                  "options": "${DECODEJSON(options)}"
-                },
                 "body": {
                   "type": "service",
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-app-dict.json"

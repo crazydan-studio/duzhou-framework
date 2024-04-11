@@ -8,20 +8,17 @@
     "wrapWithPanel": true,
     "initApi": {
       "url": "@query:DevAppEntity__get?id=${entityId}",
-      "gql:selection": "uniqueKeys",
-      "adaptor": "return {...payload, data:{...payload.data, uniqueKeys: JSON.parse(payload.data.uniqueKeys)}}"
+      "gql:selection": "uniqueKeys"
     },
     "api": {
       "url": "@mutation:DevAppEntity__update?id=${entityId}",
-      "gql:selection": "id",
-      "requestAdaptor": "return {...api, data: {...api.data, uniqueKeys: JSON.stringify(api.data.uniqueKeys)}};"
+      "gql:selection": "id"
     },
     "body": [
       {
         "type": "combo",
         "name": "uniqueKeys",
         "label": "唯一键列表",
-        "value": "${uniqueKeys}",
         "multiple": true,
         "flat": true,
         "items": [

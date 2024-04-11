@@ -20,10 +20,13 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevAppEntityRelation__get?id=${id}",
+      "gql:selection": "id,sourceId,targetId,sourcePropName,targetPropName,type,tagSet,joinOnConds"
+    },
     "api": {
       "url": "@mutation:DevAppEntityRelation__update?id=${id}&sourceId=${sourceId}",
-      "gql:selection": "id",
-      "requestAdaptor": "return {...api, data: {...api.data, joinOnConds: JSON.stringify(api.data.joinOnConds)}};"
+      "gql:selection": "id"
     },
     "body": [
       {

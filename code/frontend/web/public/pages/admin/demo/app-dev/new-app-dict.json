@@ -22,11 +22,7 @@
     },
     "api": {
       "url": "@mutation:DevAppDict__save",
-      "gql:selection": "id",
-      "data": {
-        "&": "$$",
-        "options": "${ENCODEJSON(options)}"
-      }
+      "gql:selection": "id"
     },
     "body": [
       {
@@ -65,45 +61,35 @@
         ]
       },
       {
-        "type": "combo",
+        "type": "input-table",
         "name": "options",
         "label": "字典项列表",
         "required": true,
-        "multiple": true,
-        "items": [
+        "needConfirm": false,
+        "addable": true,
+        "removable": true,
+        "columns": [
           {
-            "type": "group",
-            "mode": "horizontal",
-            "body": [
-              {
-                "type": "input-text",
-                "name": "code",
-                "label": "编码",
-                "required": true
-              },
-              {
-                "type": "input-text",
-                "name": "value",
-                "label": "值",
-                "required": true
-              }
-            ]
+            "type": "input-text",
+            "name": "code",
+            "label": "编码",
+            "required": true
           },
           {
-            "type": "group",
-            "mode": "horizontal",
-            "body": [
-              {
-                "type": "input-text",
-                "name": "label",
-                "label": "名称"
-              },
-              {
-                "type": "input-text",
-                "name": "description",
-                "label": "描述"
-              }
-            ]
+            "type": "input-text",
+            "name": "value",
+            "label": "值",
+            "required": true
+          },
+          {
+            "type": "input-text",
+            "name": "label",
+            "label": "名称"
+          },
+          {
+            "type": "input-text",
+            "name": "description",
+            "label": "描述"
           }
         ]
       }

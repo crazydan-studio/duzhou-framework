@@ -22,8 +22,7 @@
     },
     "api": {
       "url": "@mutation:DevAppEntityRelation__save",
-      "gql:selection": "id",
-      "requestAdaptor": "return {...api, data: {...api.data, joinOnConds: JSON.stringify(api.data.joinOnConds)}};"
+      "gql:selection": "id"
     },
     "body": [
       {

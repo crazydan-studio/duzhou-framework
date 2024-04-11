@@ -112,10 +112,6 @@
             "dialog": {
               "title": "编辑关联",
               "closeOnEsc": true,
-              "data": {
-                "&": "$$",
-                "joinOnConds": "${DECODEJSON(joinOnConds)}"
-              },
               "body": {
                 "type": "service",
                 "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-relation.json"
