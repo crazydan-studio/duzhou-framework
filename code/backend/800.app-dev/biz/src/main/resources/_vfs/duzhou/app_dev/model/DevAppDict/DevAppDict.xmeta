@@ -2,7 +2,14 @@
 <meta xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/xmeta.xdef" x:extends="_DevAppDict.xmeta">
 
     <props>
-        <prop name="optionsComponent" internal="true" />
-        <prop name="opts" mapToProp="optionsComponent.opts" />
+        <!--
+        - 对于 json 类型的属性，可以直接在其对应的 xxComponent 属性上配置 graphql:type="[Map]"
+          以自动将 json 字符串转换为 json 对象，但其为只读的，不能直接对其做修改
+        - 也可以对 xxComponent 的内部结构映射一个新的属性（如，data），并在该属性上配置
+          mapToProp 为 xxComponent.data，同时设置 graphql:type="[Map]"
+          - 需要引入依赖 nop-graphql-orm
+        -->
+        <!--<prop name="optionsComponent" graphql:type="[Map]" />-->
+        <prop name="optionsData" mapToProp="optionsComponent.data" graphql:type="[Map]" />
     </props>
 </meta>
