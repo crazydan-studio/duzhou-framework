@@ -149,7 +149,7 @@
                         precision="100" propId="4" stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="OPTION_TYPE" displayName="字典项类型" mandatory="true" name="optionType" precision="50"
                         propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="OPTIONS" displayName="字典项列表" domain="json-4k" mandatory="true" name="options"
+                <column code="OPTIONS" displayName="字典项列表" domain="json-4k" mandatory="true" name="optionsJsonText"
                         precision="4096" propId="6" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>对应 ORM 实体的字段属性【字典】</comment>
@@ -240,10 +240,11 @@
                 <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="11" stdDataType="string"
                         stdSqlType="VARCHAR"/>
                 <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="唯一键列表" domain="json-1k"
-                        name="uniqueKeys" precision="1024" propId="12" stdDataType="string" stdDomain="json"
+                        name="uniqueKeysJsonText" precision="1024" propId="12" stdDataType="string" stdDomain="json"
                         stdSqlType="VARCHAR"/>
-                <column code="ALIASES" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="别名列表" domain="json-1k" name="aliases"
-                        precision="1024" propId="13" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
+                <column code="ALIASES" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="别名列表" domain="json-1k"
+                        name="aliasesJsonText" precision="1024" propId="13" stdDataType="string" stdDomain="json"
+                        stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体</comment>
             <relations>
@@ -345,7 +346,7 @@
                 <column code="TABLE_NAME" comment="一对多时需要中间表" displayName="中间表表名" name="tableName" precision="200"
                         propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="JOIN_ON_CONDS" comment="JSON 数组，元素为逗号分隔的左右连接的实体属性名" displayName="关联条件列表" domain="json-1k"
-                        mandatory="true" name="joinOnConds" precision="1024" propId="9" stdDataType="string"
+                        mandatory="true" name="joinOnCondsJsonText" precision="1024" propId="9" stdDataType="string"
                         stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体间的关联</comment>

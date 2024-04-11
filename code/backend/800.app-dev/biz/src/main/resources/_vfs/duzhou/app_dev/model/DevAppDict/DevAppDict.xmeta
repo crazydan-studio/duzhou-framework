@@ -10,6 +10,6 @@
           - 需要引入依赖 nop-graphql-orm
         -->
         <!--<prop name="optionsComponent" graphql:type="[Map]" />-->
-        <prop name="optionsData" mapToProp="optionsComponent.data" graphql:type="[Map]" />
+        <!--<prop name="optionsData" mapToProp="optionsComponent.data" graphql:type="[Map]" />-->
     </props>
 </meta>

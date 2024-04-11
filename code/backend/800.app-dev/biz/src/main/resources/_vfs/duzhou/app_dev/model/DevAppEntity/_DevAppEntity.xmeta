@@ -69,12 +69,12 @@
               updatable="true">
             <schema type="java.lang.String" precision="100"/>
         </prop>
-        <prop name="uniqueKeys" displayName="唯一键列表" propId="12" queryable="true" sortable="true" insertable="true"
-              updatable="true" graphql:jsonComponentProp="uniqueKeysComponent">
+        <prop name="uniqueKeysJsonText" displayName="唯一键列表" propId="12" queryable="true" sortable="true"
+              insertable="true" updatable="true" internal="true" graphql:jsonComponentProp="uniqueKeysJsonTextComponent">
             <schema stdDomain="json" domain="json-1k" type="java.lang.String" precision="1024"/>
         </prop>
-        <prop name="aliases" displayName="别名列表" propId="13" queryable="true" sortable="true" insertable="true"
-              updatable="true" graphql:jsonComponentProp="aliasesComponent">
+        <prop name="aliasesJsonText" displayName="别名列表" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true" internal="true" graphql:jsonComponentProp="aliasesJsonTextComponent">
             <schema stdDomain="json" domain="json-1k" type="java.lang.String" precision="1024"/>
         </prop>
         <prop name="service" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
@@ -94,14 +94,16 @@
                 <item bizObjName="DevAppEntityRelation"/>
             </schema>
         </prop>
-        <prop name="uniqueKeysComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
+        <prop name="uniqueKeysJsonTextComponent" tagSet="json,pub" ext:kind="component" internal="true"
+              insertable="true" updatable="true" lazy="true">
+            <schema type="io.nop.orm.component.JsonOrmComponent"/>
+        </prop>
+        <prop name="uniqueKeys" mapToProp="uniqueKeysJsonTextComponent.data" graphql:type="[Map]"/>
+        <prop name="aliasesJsonTextComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
               updatable="true" lazy="true">
             <schema type="io.nop.orm.component.JsonOrmComponent"/>
         </prop>
-        <prop name="aliasesComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
-              updatable="true" lazy="true">
-            <schema type="io.nop.orm.component.JsonOrmComponent"/>
-        </prop>
+        <prop name="aliases" mapToProp="aliasesJsonTextComponent.data" graphql:type="[Map]"/>
         <prop name="appId" displayName="应用" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
               updatable="true" queryable="true" lazy="true">
             <schema type="java.lang.String"/>

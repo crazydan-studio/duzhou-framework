@@ -51,8 +51,9 @@
               updatable="true">
             <schema type="java.lang.String" precision="200"/>
         </prop>
-        <prop name="joinOnConds" displayName="关联条件列表" propId="9" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true" graphql:jsonComponentProp="joinOnCondsComponent">
+        <prop name="joinOnCondsJsonText" displayName="关联条件列表" propId="9" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true" internal="true"
+              graphql:jsonComponentProp="joinOnCondsJsonTextComponent">
             <schema stdDomain="json" domain="json-1k" type="java.lang.String" precision="1024"/>
         </prop>
         <prop name="source" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
@@ -65,9 +66,10 @@
               lazy="true">
             <schema bizObjName="DevAppEntity"/>
         </prop>
-        <prop name="joinOnCondsComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
-              updatable="true" mandatory="true" lazy="true">
+        <prop name="joinOnCondsJsonTextComponent" tagSet="json,pub" ext:kind="component" internal="true"
+              insertable="true" updatable="true" mandatory="true" lazy="true">
             <schema type="io.nop.orm.component.JsonOrmComponent"/>
         </prop>
+        <prop name="joinOnConds" mapToProp="joinOnCondsJsonTextComponent.data" graphql:type="[Map]"/>
     </props>
 </meta>

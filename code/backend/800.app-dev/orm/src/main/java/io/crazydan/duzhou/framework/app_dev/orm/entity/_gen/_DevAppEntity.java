@@ -65,12 +65,12 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final int PROP_ID_tagSet = 11;
     
     /* 唯一键列表: UNIQUE_KEYS VARCHAR */
-    public static final String PROP_NAME_uniqueKeys = "uniqueKeys";
-    public static final int PROP_ID_uniqueKeys = 12;
+    public static final String PROP_NAME_uniqueKeysJsonText = "uniqueKeysJsonText";
+    public static final int PROP_ID_uniqueKeysJsonText = 12;
     
     /* 别名列表: ALIASES VARCHAR */
-    public static final String PROP_NAME_aliases = "aliases";
-    public static final int PROP_ID_aliases = 13;
+    public static final String PROP_NAME_aliasesJsonText = "aliasesJsonText";
+    public static final int PROP_ID_aliasesJsonText = 13;
     
 
     private static int _PROP_ID_BOUND = 14;
@@ -89,10 +89,10 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final String PROP_NAME_appId = "appId";
     
     /* component:  */
-    public static final String PROP_NAME_uniqueKeysComponent = "uniqueKeysComponent";
+    public static final String PROP_NAME_uniqueKeysJsonTextComponent = "uniqueKeysJsonTextComponent";
     
     /* component:  */
-    public static final String PROP_NAME_aliasesComponent = "aliasesComponent";
+    public static final String PROP_NAME_aliasesJsonTextComponent = "aliasesJsonTextComponent";
     
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
@@ -135,11 +135,11 @@ public class _DevAppEntity extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_tagSet] = PROP_NAME_tagSet;
           PROP_NAME_TO_ID.put(PROP_NAME_tagSet, PROP_ID_tagSet);
       
-          PROP_ID_TO_NAME[PROP_ID_uniqueKeys] = PROP_NAME_uniqueKeys;
-          PROP_NAME_TO_ID.put(PROP_NAME_uniqueKeys, PROP_ID_uniqueKeys);
+          PROP_ID_TO_NAME[PROP_ID_uniqueKeysJsonText] = PROP_NAME_uniqueKeysJsonText;
+          PROP_NAME_TO_ID.put(PROP_NAME_uniqueKeysJsonText, PROP_ID_uniqueKeysJsonText);
       
-          PROP_ID_TO_NAME[PROP_ID_aliases] = PROP_NAME_aliases;
-          PROP_NAME_TO_ID.put(PROP_NAME_aliases, PROP_ID_aliases);
+          PROP_ID_TO_NAME[PROP_ID_aliasesJsonText] = PROP_NAME_aliasesJsonText;
+          PROP_NAME_TO_ID.put(PROP_NAME_aliasesJsonText, PROP_ID_aliasesJsonText);
       
     }
 
@@ -178,10 +178,10 @@ public class _DevAppEntity extends DynamicOrmEntity{
     private java.lang.String _tagSet;
     
     /* 唯一键列表: UNIQUE_KEYS */
-    private java.lang.String _uniqueKeys;
+    private java.lang.String _uniqueKeysJsonText;
     
     /* 别名列表: ALIASES */
-    private java.lang.String _aliases;
+    private java.lang.String _aliasesJsonText;
     
 
     public _DevAppEntity(){
@@ -287,11 +287,11 @@ public class _DevAppEntity extends DynamicOrmEntity{
             case PROP_ID_tagSet:
                return getTagSet();
         
-            case PROP_ID_uniqueKeys:
-               return getUniqueKeys();
+            case PROP_ID_uniqueKeysJsonText:
+               return getUniqueKeysJsonText();
         
-            case PROP_ID_aliases:
-               return getAliases();
+            case PROP_ID_aliasesJsonText:
+               return getAliasesJsonText();
         
            default:
               return super.orm_propValue(propId);
@@ -414,23 +414,23 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_uniqueKeys:{
+            case PROP_ID_uniqueKeysJsonText:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_uniqueKeys));
+                       err-> newTypeConversionError(PROP_NAME_uniqueKeysJsonText));
                }
-               setUniqueKeys(typedValue);
+               setUniqueKeysJsonText(typedValue);
                break;
             }
         
-            case PROP_ID_aliases:{
+            case PROP_ID_aliasesJsonText:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_aliases));
+                       err-> newTypeConversionError(PROP_NAME_aliasesJsonText));
                }
-               setAliases(typedValue);
+               setAliasesJsonText(typedValue);
                break;
             }
         
@@ -520,16 +520,16 @@ public class _DevAppEntity extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_uniqueKeys:{
+            case PROP_ID_uniqueKeysJsonText:{
                onInitProp(propId);
-               this._uniqueKeys = (java.lang.String)value;
+               this._uniqueKeysJsonText = (java.lang.String)value;
                
                break;
             }
         
-            case PROP_ID_aliases:{
+            case PROP_ID_aliasesJsonText:{
                onInitProp(propId);
-               this._aliases = (java.lang.String)value;
+               this._aliasesJsonText = (java.lang.String)value;
                
                break;
             }
@@ -752,18 +752,18 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /**
      * 唯一键列表: UNIQUE_KEYS
      */
-    public java.lang.String getUniqueKeys(){
-         onPropGet(PROP_ID_uniqueKeys);
-         return _uniqueKeys;
+    public java.lang.String getUniqueKeysJsonText(){
+         onPropGet(PROP_ID_uniqueKeysJsonText);
+         return _uniqueKeysJsonText;
     }
 
     /**
      * 唯一键列表: UNIQUE_KEYS
      */
-    public void setUniqueKeys(java.lang.String value){
-        if(onPropSet(PROP_ID_uniqueKeys,value)){
-            this._uniqueKeys = value;
-            internalClearRefs(PROP_ID_uniqueKeys);
+    public void setUniqueKeysJsonText(java.lang.String value){
+        if(onPropSet(PROP_ID_uniqueKeysJsonText,value)){
+            this._uniqueKeysJsonText = value;
+            internalClearRefs(PROP_ID_uniqueKeysJsonText);
             
         }
     }
@@ -771,18 +771,18 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /**
      * 别名列表: ALIASES
      */
-    public java.lang.String getAliases(){
-         onPropGet(PROP_ID_aliases);
-         return _aliases;
+    public java.lang.String getAliasesJsonText(){
+         onPropGet(PROP_ID_aliasesJsonText);
+         return _aliasesJsonText;
     }
 
     /**
      * 别名列表: ALIASES
      */
-    public void setAliases(java.lang.String value){
-        if(onPropSet(PROP_ID_aliases,value)){
-            this._aliases = value;
-            internalClearRefs(PROP_ID_aliases);
+    public void setAliasesJsonText(java.lang.String value){
+        if(onPropSet(PROP_ID_aliasesJsonText,value)){
+            this._aliasesJsonText = value;
+            internalClearRefs(PROP_ID_aliasesJsonText);
             
         }
     }
@@ -838,38 +838,38 @@ public class _DevAppEntity extends DynamicOrmEntity{
       internalSetAliasValue("service.appId",value);
    }
 
-   private io.nop.orm.component.JsonOrmComponent _uniqueKeysComponent;
+   private io.nop.orm.component.JsonOrmComponent _uniqueKeysJsonTextComponent;
 
-   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_uniqueKeysComponent = new HashMap<>();
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_uniqueKeysJsonTextComponent = new HashMap<>();
    static{
       
-         COMPONENT_PROP_ID_MAP_uniqueKeysComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_uniqueKeys);
+         COMPONENT_PROP_ID_MAP_uniqueKeysJsonTextComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_uniqueKeysJsonText);
       
    }
 
-   public io.nop.orm.component.JsonOrmComponent getUniqueKeysComponent(){
-      if(_uniqueKeysComponent == null){
-          _uniqueKeysComponent = new io.nop.orm.component.JsonOrmComponent();
-          _uniqueKeysComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_uniqueKeysComponent);
+   public io.nop.orm.component.JsonOrmComponent getUniqueKeysJsonTextComponent(){
+      if(_uniqueKeysJsonTextComponent == null){
+          _uniqueKeysJsonTextComponent = new io.nop.orm.component.JsonOrmComponent();
+          _uniqueKeysJsonTextComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_uniqueKeysJsonTextComponent);
       }
-      return _uniqueKeysComponent;
+      return _uniqueKeysJsonTextComponent;
    }
 
-   private io.nop.orm.component.JsonOrmComponent _aliasesComponent;
+   private io.nop.orm.component.JsonOrmComponent _aliasesJsonTextComponent;
 
-   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_aliasesComponent = new HashMap<>();
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_aliasesJsonTextComponent = new HashMap<>();
    static{
       
-         COMPONENT_PROP_ID_MAP_aliasesComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_aliases);
+         COMPONENT_PROP_ID_MAP_aliasesJsonTextComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_aliasesJsonText);
       
    }
 
-   public io.nop.orm.component.JsonOrmComponent getAliasesComponent(){
-      if(_aliasesComponent == null){
-          _aliasesComponent = new io.nop.orm.component.JsonOrmComponent();
-          _aliasesComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_aliasesComponent);
+   public io.nop.orm.component.JsonOrmComponent getAliasesJsonTextComponent(){
+      if(_aliasesJsonTextComponent == null){
+          _aliasesJsonTextComponent = new io.nop.orm.component.JsonOrmComponent();
+          _aliasesJsonTextComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_aliasesJsonTextComponent);
       }
-      return _aliasesComponent;
+      return _aliasesJsonTextComponent;
    }
 
 }

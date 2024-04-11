@@ -53,8 +53,8 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     public static final int PROP_ID_tableName = 8;
     
     /* 关联条件列表: JOIN_ON_CONDS VARCHAR */
-    public static final String PROP_NAME_joinOnConds = "joinOnConds";
-    public static final int PROP_ID_joinOnConds = 9;
+    public static final String PROP_NAME_joinOnCondsJsonText = "joinOnCondsJsonText";
+    public static final int PROP_ID_joinOnCondsJsonText = 9;
     
 
     private static int _PROP_ID_BOUND = 10;
@@ -67,7 +67,7 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     public static final String PROP_NAME_target = "target";
     
     /* component:  */
-    public static final String PROP_NAME_joinOnCondsComponent = "joinOnCondsComponent";
+    public static final String PROP_NAME_joinOnCondsJsonTextComponent = "joinOnCondsJsonTextComponent";
     
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
@@ -101,8 +101,8 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_tableName] = PROP_NAME_tableName;
           PROP_NAME_TO_ID.put(PROP_NAME_tableName, PROP_ID_tableName);
       
-          PROP_ID_TO_NAME[PROP_ID_joinOnConds] = PROP_NAME_joinOnConds;
-          PROP_NAME_TO_ID.put(PROP_NAME_joinOnConds, PROP_ID_joinOnConds);
+          PROP_ID_TO_NAME[PROP_ID_joinOnCondsJsonText] = PROP_NAME_joinOnCondsJsonText;
+          PROP_NAME_TO_ID.put(PROP_NAME_joinOnCondsJsonText, PROP_ID_joinOnCondsJsonText);
       
     }
 
@@ -132,7 +132,7 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     private java.lang.String _tableName;
     
     /* 关联条件列表: JOIN_ON_CONDS */
-    private java.lang.String _joinOnConds;
+    private java.lang.String _joinOnCondsJsonText;
     
 
     public _DevAppEntityRelation(){
@@ -229,8 +229,8 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
             case PROP_ID_tableName:
                return getTableName();
         
-            case PROP_ID_joinOnConds:
-               return getJoinOnConds();
+            case PROP_ID_joinOnCondsJsonText:
+               return getJoinOnCondsJsonText();
         
            default:
               return super.orm_propValue(propId);
@@ -323,13 +323,13 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_joinOnConds:{
+            case PROP_ID_joinOnCondsJsonText:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_joinOnConds));
+                       err-> newTypeConversionError(PROP_NAME_joinOnCondsJsonText));
                }
-               setJoinOnConds(typedValue);
+               setJoinOnCondsJsonText(typedValue);
                break;
             }
         
@@ -398,9 +398,9 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_joinOnConds:{
+            case PROP_ID_joinOnCondsJsonText:{
                onInitProp(propId);
-               this._joinOnConds = (java.lang.String)value;
+               this._joinOnCondsJsonText = (java.lang.String)value;
                
                break;
             }
@@ -566,18 +566,18 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     /**
      * 关联条件列表: JOIN_ON_CONDS
      */
-    public java.lang.String getJoinOnConds(){
-         onPropGet(PROP_ID_joinOnConds);
-         return _joinOnConds;
+    public java.lang.String getJoinOnCondsJsonText(){
+         onPropGet(PROP_ID_joinOnCondsJsonText);
+         return _joinOnCondsJsonText;
     }
 
     /**
      * 关联条件列表: JOIN_ON_CONDS
      */
-    public void setJoinOnConds(java.lang.String value){
-        if(onPropSet(PROP_ID_joinOnConds,value)){
-            this._joinOnConds = value;
-            internalClearRefs(PROP_ID_joinOnConds);
+    public void setJoinOnCondsJsonText(java.lang.String value){
+        if(onPropSet(PROP_ID_joinOnCondsJsonText,value)){
+            this._joinOnCondsJsonText = value;
+            internalClearRefs(PROP_ID_joinOnCondsJsonText);
             
         }
     }
@@ -628,21 +628,21 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
        
     }
        
-   private io.nop.orm.component.JsonOrmComponent _joinOnCondsComponent;
+   private io.nop.orm.component.JsonOrmComponent _joinOnCondsJsonTextComponent;
 
-   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_joinOnCondsComponent = new HashMap<>();
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_joinOnCondsJsonTextComponent = new HashMap<>();
    static{
       
-         COMPONENT_PROP_ID_MAP_joinOnCondsComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_joinOnConds);
+         COMPONENT_PROP_ID_MAP_joinOnCondsJsonTextComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_joinOnCondsJsonText);
       
    }
 
-   public io.nop.orm.component.JsonOrmComponent getJoinOnCondsComponent(){
-      if(_joinOnCondsComponent == null){
-          _joinOnCondsComponent = new io.nop.orm.component.JsonOrmComponent();
-          _joinOnCondsComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_joinOnCondsComponent);
+   public io.nop.orm.component.JsonOrmComponent getJoinOnCondsJsonTextComponent(){
+      if(_joinOnCondsJsonTextComponent == null){
+          _joinOnCondsJsonTextComponent = new io.nop.orm.component.JsonOrmComponent();
+          _joinOnCondsJsonTextComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_joinOnCondsJsonTextComponent);
       }
-      return _joinOnCondsComponent;
+      return _joinOnCondsJsonTextComponent;
    }
 
 }

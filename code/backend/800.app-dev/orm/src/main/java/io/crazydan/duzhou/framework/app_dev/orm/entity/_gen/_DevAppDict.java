@@ -41,15 +41,15 @@ public class _DevAppDict extends DynamicOrmEntity{
     public static final int PROP_ID_optionType = 5;
     
     /* 字典项列表: OPTIONS VARCHAR */
-    public static final String PROP_NAME_options = "options";
-    public static final int PROP_ID_options = 6;
+    public static final String PROP_NAME_optionsJsonText = "optionsJsonText";
+    public static final int PROP_ID_optionsJsonText = 6;
     
 
     private static int _PROP_ID_BOUND = 7;
 
     
     /* component:  */
-    public static final String PROP_NAME_optionsComponent = "optionsComponent";
+    public static final String PROP_NAME_optionsJsonTextComponent = "optionsJsonTextComponent";
     
 
     protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_id);
@@ -74,8 +74,8 @@ public class _DevAppDict extends DynamicOrmEntity{
           PROP_ID_TO_NAME[PROP_ID_optionType] = PROP_NAME_optionType;
           PROP_NAME_TO_ID.put(PROP_NAME_optionType, PROP_ID_optionType);
       
-          PROP_ID_TO_NAME[PROP_ID_options] = PROP_NAME_options;
-          PROP_NAME_TO_ID.put(PROP_NAME_options, PROP_ID_options);
+          PROP_ID_TO_NAME[PROP_ID_optionsJsonText] = PROP_NAME_optionsJsonText;
+          PROP_NAME_TO_ID.put(PROP_NAME_optionsJsonText, PROP_ID_optionsJsonText);
       
     }
 
@@ -96,7 +96,7 @@ public class _DevAppDict extends DynamicOrmEntity{
     private java.lang.String _optionType;
     
     /* 字典项列表: OPTIONS */
-    private java.lang.String _options;
+    private java.lang.String _optionsJsonText;
     
 
     public _DevAppDict(){
@@ -184,8 +184,8 @@ public class _DevAppDict extends DynamicOrmEntity{
             case PROP_ID_optionType:
                return getOptionType();
         
-            case PROP_ID_options:
-               return getOptions();
+            case PROP_ID_optionsJsonText:
+               return getOptionsJsonText();
         
            default:
               return super.orm_propValue(propId);
@@ -248,13 +248,13 @@ public class _DevAppDict extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_options:{
+            case PROP_ID_optionsJsonText:{
                java.lang.String typedValue = null;
                if(value != null){
                    typedValue = ConvertHelper.toString(value,
-                       err-> newTypeConversionError(PROP_NAME_options));
+                       err-> newTypeConversionError(PROP_NAME_optionsJsonText));
                }
-               setOptions(typedValue);
+               setOptionsJsonText(typedValue);
                break;
             }
         
@@ -302,9 +302,9 @@ public class _DevAppDict extends DynamicOrmEntity{
                break;
             }
         
-            case PROP_ID_options:{
+            case PROP_ID_optionsJsonText:{
                onInitProp(propId);
-               this._options = (java.lang.String)value;
+               this._optionsJsonText = (java.lang.String)value;
                
                break;
             }
@@ -413,37 +413,37 @@ public class _DevAppDict extends DynamicOrmEntity{
     /**
      * 字典项列表: OPTIONS
      */
-    public java.lang.String getOptions(){
-         onPropGet(PROP_ID_options);
-         return _options;
+    public java.lang.String getOptionsJsonText(){
+         onPropGet(PROP_ID_optionsJsonText);
+         return _optionsJsonText;
     }
 
     /**
      * 字典项列表: OPTIONS
      */
-    public void setOptions(java.lang.String value){
-        if(onPropSet(PROP_ID_options,value)){
-            this._options = value;
-            internalClearRefs(PROP_ID_options);
+    public void setOptionsJsonText(java.lang.String value){
+        if(onPropSet(PROP_ID_optionsJsonText,value)){
+            this._optionsJsonText = value;
+            internalClearRefs(PROP_ID_optionsJsonText);
             
         }
     }
     
-   private io.nop.orm.component.JsonOrmComponent _optionsComponent;
+   private io.nop.orm.component.JsonOrmComponent _optionsJsonTextComponent;
 
-   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_optionsComponent = new HashMap<>();
+   private static Map<String,Integer> COMPONENT_PROP_ID_MAP_optionsJsonTextComponent = new HashMap<>();
    static{
       
-         COMPONENT_PROP_ID_MAP_optionsComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_options);
+         COMPONENT_PROP_ID_MAP_optionsJsonTextComponent.put(io.nop.orm.component.JsonOrmComponent.PROP_NAME__jsonText,PROP_ID_optionsJsonText);
       
    }
 
-   public io.nop.orm.component.JsonOrmComponent getOptionsComponent(){
-      if(_optionsComponent == null){
-          _optionsComponent = new io.nop.orm.component.JsonOrmComponent();
-          _optionsComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_optionsComponent);
+   public io.nop.orm.component.JsonOrmComponent getOptionsJsonTextComponent(){
+      if(_optionsJsonTextComponent == null){
+          _optionsJsonTextComponent = new io.nop.orm.component.JsonOrmComponent();
+          _optionsJsonTextComponent.bindToEntity(this, COMPONENT_PROP_ID_MAP_optionsJsonTextComponent);
       }
-      return _optionsComponent;
+      return _optionsJsonTextComponent;
    }
 
 }
