@@ -66,6 +66,9 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
     /* relation:  */
     public static final String PROP_NAME_target = "target";
     
+    /* alias: joinOnCondsJsonTextComponent.data 关联条件列表 */
+    public static final String PROP_NAME_joinOnConds = "joinOnConds";
+    
     /* component:  */
     public static final String PROP_NAME_joinOnCondsJsonTextComponent = "joinOnCondsJsonTextComponent";
     
@@ -628,6 +631,14 @@ public class _DevAppEntityRelation extends DynamicOrmEntity{
        
     }
        
+   public java.lang.Object getJoinOnConds(){
+      return (java.lang.Object)internalGetAliasValue("joinOnCondsJsonTextComponent.data");
+   }
+
+   public void setJoinOnConds(java.lang.Object value){
+      internalSetAliasValue("joinOnCondsJsonTextComponent.data",value);
+   }
+
    private io.nop.orm.component.JsonOrmComponent _joinOnCondsJsonTextComponent;
 
    private static Map<String,Integer> COMPONENT_PROP_ID_MAP_joinOnCondsJsonTextComponent = new HashMap<>();

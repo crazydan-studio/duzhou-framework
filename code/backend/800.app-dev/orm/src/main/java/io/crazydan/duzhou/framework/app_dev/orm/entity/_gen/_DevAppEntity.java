@@ -88,6 +88,12 @@ public class _DevAppEntity extends DynamicOrmEntity{
     /* alias: service.appId 应用 */
     public static final String PROP_NAME_appId = "appId";
     
+    /* alias: uniqueKeysJsonTextComponent.data 唯一键列表 */
+    public static final String PROP_NAME_uniqueKeys = "uniqueKeys";
+    
+    /* alias: aliasesJsonTextComponent.data 别名列表 */
+    public static final String PROP_NAME_aliases = "aliases";
+    
     /* component:  */
     public static final String PROP_NAME_uniqueKeysJsonTextComponent = "uniqueKeysJsonTextComponent";
     
@@ -836,6 +842,22 @@ public class _DevAppEntity extends DynamicOrmEntity{
 
    public void setAppId(java.lang.String value){
       internalSetAliasValue("service.appId",value);
+   }
+
+   public java.lang.Object getUniqueKeys(){
+      return (java.lang.Object)internalGetAliasValue("uniqueKeysJsonTextComponent.data");
+   }
+
+   public void setUniqueKeys(java.lang.Object value){
+      internalSetAliasValue("uniqueKeysJsonTextComponent.data",value);
+   }
+
+   public java.lang.Object getAliases(){
+      return (java.lang.Object)internalGetAliasValue("aliasesJsonTextComponent.data");
+   }
+
+   public void setAliases(java.lang.Object value){
+      internalSetAliasValue("aliasesJsonTextComponent.data",value);
    }
 
    private io.nop.orm.component.JsonOrmComponent _uniqueKeysJsonTextComponent;

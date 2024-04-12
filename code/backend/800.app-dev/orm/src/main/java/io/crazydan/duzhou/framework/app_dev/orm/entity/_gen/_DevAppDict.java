@@ -48,6 +48,9 @@ public class _DevAppDict extends DynamicOrmEntity{
     private static int _PROP_ID_BOUND = 7;
 
     
+    /* alias: optionsJsonTextComponent.data 字典项列表 */
+    public static final String PROP_NAME_options = "options";
+    
     /* component:  */
     public static final String PROP_NAME_optionsJsonTextComponent = "optionsJsonTextComponent";
     
@@ -429,6 +432,14 @@ public class _DevAppDict extends DynamicOrmEntity{
         }
     }
     
+   public java.lang.Object getOptions(){
+      return (java.lang.Object)internalGetAliasValue("optionsJsonTextComponent.data");
+   }
+
+   public void setOptions(java.lang.Object value){
+      internalSetAliasValue("optionsJsonTextComponent.data",value);
+   }
+
    private io.nop.orm.component.JsonOrmComponent _optionsJsonTextComponent;
 
    private static Map<String,Integer> COMPONENT_PROP_ID_MAP_optionsJsonTextComponent = new HashMap<>();

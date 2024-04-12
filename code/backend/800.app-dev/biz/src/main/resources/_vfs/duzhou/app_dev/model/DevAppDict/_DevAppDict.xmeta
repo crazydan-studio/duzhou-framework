@@ -44,14 +44,7 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="50"/>
         </prop>
-        <prop name="optionsJsonText" displayName="字典项列表" propId="6" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true" internal="true" graphql:jsonComponentProp="optionsJsonTextComponent">
-            <schema stdDomain="json" domain="json-4k" type="java.lang.String" precision="4096"/>
-        </prop>
-        <prop name="optionsJsonTextComponent" tagSet="json,pub" ext:kind="component" internal="true" insertable="true"
-              updatable="true" mandatory="true" lazy="true">
-            <schema type="io.nop.orm.component.JsonOrmComponent"/>
-        </prop>
-        <prop name="options" mapToProp="optionsJsonTextComponent.data" graphql:type="[Map]"/>
+        <prop name="options" displayName="字典项列表" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
+              updatable="true" queryable="true" lazy="true" graphql:type="[Map]"/>
     </props>
 </meta>

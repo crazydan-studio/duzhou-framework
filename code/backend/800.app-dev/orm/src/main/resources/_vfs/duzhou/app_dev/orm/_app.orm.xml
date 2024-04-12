@@ -158,6 +158,10 @@
                     <comment>在应用内唯一</comment>
                 </unique-key>
             </unique-keys>
+            <aliases>
+                <alias displayName="字典项列表" name="options" propPath="optionsJsonTextComponent.data" tagSet="pub"
+                       type="Object"/>
+            </aliases>
         </entity>
         <entity className="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppService" createTimeProp="createdAt"
                 createrProp="createdBy" displayName="应用服务"
@@ -215,6 +219,10 @@
                 i18n-en:displayName="Application ORM Entity">
             <aliases>
                 <alias displayName="应用" name="appId" propPath="service.appId" tagSet="pub" type="String"/>
+                <alias displayName="唯一键列表" name="uniqueKeys" propPath="uniqueKeysJsonTextComponent.data" tagSet="pub"
+                       type="Object"/>
+                <alias displayName="别名列表" name="aliases" propPath="aliasesJsonTextComponent.data" tagSet="pub"
+                       type="Object"/>
             </aliases>
             <columns>
                 <column code="ID" displayName="ID" mandatory="true" name="id" precision="32" primary="true" propId="1"
@@ -366,6 +374,10 @@
                     <ref-set/>
                 </to-one>
             </relations>
+            <aliases>
+                <alias displayName="关联条件列表" name="joinOnConds" propPath="joinOnCondsJsonTextComponent.data" tagSet="pub"
+                       type="Object"/>
+            </aliases>
         </entity>
     </entities>
 </orm>
