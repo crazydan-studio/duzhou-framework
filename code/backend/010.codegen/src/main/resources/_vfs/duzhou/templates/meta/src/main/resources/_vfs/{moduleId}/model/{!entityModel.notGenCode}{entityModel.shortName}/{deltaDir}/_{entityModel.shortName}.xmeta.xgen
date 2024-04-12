@@ -64,6 +64,7 @@
             <c:script><![CDATA[
                 // 是否是数据库列对应的增强对象
                 let colComp = entityModel.getComponent(col.name + "Component");
+                // json 字段不暴露给前端，采用 alias 方式屏蔽内部结构
                 let jsonCol = colComp != null && colComp.className.$simpleClassName() == 'JsonOrmComponent'
                 if (jsonCol) continue;
             ]]></c:script>
@@ -131,6 +132,7 @@
                 if(comp.name.endsWith("Component")){
                     compCol = entityModel.getColumn(comp.name.$removeTail("Component"),true);
                 }
+                // JsonOrmComponent 不暴露给前端，采用 alias 方式屏蔽内部结构
                 const jsonComp = comp.className.$simpleClassName() == 'JsonOrmComponent';
                 if (jsonComp) continue;
             ]]></c:script>
@@ -151,6 +153,8 @@
                 const insertable = !alias.tagSet?.contains('view');
                 const updatable = !alias.tagSet?.contains('view');
                 const queryable = alias.tagSet?.contains('pub');
+                // 对 json 字段，需显式设置 graphql:type="[Map]"
+                // 才能在前后端直接交换 JSON 对象，否则，只能交换字符串
                 const jsonAlias = alias.propPath.endsWith('JsonTextComponent.data');
             ]]></c:script>
             <prop name="${alias.name}" displayName="${alias.displayName}"
