@@ -65,14 +65,14 @@
                 // 是否是数据库列对应的增强对象
                 let colComp = entityModel.getComponent(col.name + "Component");
                 let jsonCol = colComp != null && colComp.className.$simpleClassName() == 'JsonOrmComponent'
+                if (jsonCol) continue;
             ]]></c:script>
             <prop name="${col.name}" displayName="${col.displayName}" propId="${col.propId}"
                   i18n-en:displayName="${col['i18n-en:displayName']}" tagSet="${_.join(col.tagSet,',')}"
                   mandatory="${col.mandatory || null}" published="${col.tagSet?.contains('not-pub') ? false:null}"
                   queryable="${col['ext:queryable'] ?? true}" sortable="${col['ext:sortable'] ?? true}"
                   insertable="${xpl('meta-gen:IsColInsertable',col)}" updatable="${xpl('meta-gen:IsColUpdatable',col)}"
-                  internal="${xpl('meta-gen:IsColInternal',col)||jsonCol||null}"
-                  graphql:jsonComponentProp="${jsonCol? col.name + 'Component' : null}"
+                  internal="${xpl('meta-gen:IsColInternal',col)||null}"
                   graphql:type="${col.primary and col.stdDataType.toString() == 'long' ? 'String':null}"
                   ui:show="${col['ui:show']}" ui:control="${col['ui:control'] || buildColControl(col)}"
                   biz:codeRule="${col?.tagSet?.contains('code')?entityModel.shortName+'@'+col.name:null}"
@@ -131,7 +131,8 @@
                 if(comp.name.endsWith("Component")){
                     compCol = entityModel.getColumn(comp.name.$removeTail("Component"),true);
                 }
-                let jsonComp = comp.className.$simpleClassName() == 'JsonOrmComponent'
+                const jsonComp = comp.className.$simpleClassName() == 'JsonOrmComponent';
+                if (jsonComp) continue;
             ]]></c:script>
             <prop name="${comp.name}" displayName="${comp.displayName}"
                   i18n-en:displayName="${comp['i18n-en:displayName']}" tagSet="${_.join(comp.tagSet,',')}"
@@ -141,11 +142,6 @@
                   published="${comp.tagSet?.contains('pub') ? null :false}">
                 <schema type="${comp.javaTypeName}" />
             </prop>
-            <c:if test="${compCol != null and jsonComp}">
-                <prop name="${compCol.name.$removeTail('JsonText')}"
-                      mapToProp="${comp.name}.data"
-                      graphql:type="[Map]" />
-            </c:if>
         </c:for>
 
         <c:for var="alias" items="${entityModel.aliases}">
@@ -155,14 +151,18 @@
                 const insertable = !alias.tagSet?.contains('view');
                 const updatable = !alias.tagSet?.contains('view');
                 const queryable = alias.tagSet?.contains('pub');
+                const jsonAlias = alias.propPath.endsWith('JsonTextComponent.data');
             ]]></c:script>
             <prop name="${alias.name}" displayName="${alias.displayName}"
                   i18n-en:displayName="${alias['i18n-en:displayName']}" tagSet="${_.join(alias.tagSet,',')}"
                   ext:kind="alias" internal="${alias.tagSet?.contains('sys')}" ui:control="${alias['ui:control']}"
                   insertable="${insertable}" updatable="${updatable}" queryable="${queryable}"
                   mandatory="${alias.mandatory || null}" lazy="${alias.tagSet?.contains('eager')?false:true}"
-                  published="${alias.tagSet?.contains('not-pub') ? false : null}">
-                <schema type="${alias.javaTypeName}" />
+                  published="${alias.tagSet?.contains('not-pub') ? false : null}"
+                  graphql:type="${jsonAlias ? '[Map]' : null}">
+                <c:if test="${!jsonAlias}">
+                    <schema type="${alias.javaTypeName}" />
+                </c:if>
             </prop>
         </c:for>
 

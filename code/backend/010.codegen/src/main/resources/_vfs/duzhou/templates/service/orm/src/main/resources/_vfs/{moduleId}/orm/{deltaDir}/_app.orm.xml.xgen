@@ -8,6 +8,9 @@
                          xpl:lib="/nop/codegen/xlib/gen.xlib"
                          xpl:return="ormNode" />
     <c:script><![CDATA[
+        import java.util.ArrayList;
+        import io.nop.core.lang.xml.XNode;
+
         ormNode.removeAttr('ext:extends');
         ormNode.setAttr('xmlns:i18n-en','i18n-en');
         ormNode.setAttr('xmlns:ref-i18n-en','ref-i18n-en');
@@ -20,6 +23,8 @@
         </x:post-extends>`);
 
         ormNode.childByTag('entities')?.children?.forEach(entity=>{
+          const aliases = new ArrayList();
+
           entity.childByTag('columns')?.children?.forEach(col=>{
             let jsonCol = col.attrCsvSet('tagSet')?.contains('json')
                             || col.getAttr('stdDomain') == 'json';
@@ -28,9 +33,22 @@
                 col.setAttr('x:override','remove');
                 col.setAttr('notGenCode',true);
              }else if(jsonCol){
-                col.setAttr('name',col.getAttr('name')+'JsonText');
+                const name = col.getAttr('name');
+                col.setAttr('name',name+'JsonText');
+
+                const alias = XNode.make('alias');
+                alias.setAttr('displayName',col.getAttr('displayName'));
+                alias.setAttr('name',name);
+                alias.setAttr('propPath',name+'JsonTextComponent.data');
+                alias.setAttr('tagSet','pub');
+                alias.setAttr('type','Object');
+                aliases.add(alias);
              }
           });
+
+          if(!aliases.isEmpty()) {
+            entity.makeChild('aliases').appendChildren(aliases);
+          }
         });
     ]]></c:script>
 
