@@ -20,15 +20,15 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevAppService__get?id=${id}",
+      "gql:selection": "id,displayName,code"
+    },
     "api": {
       "url": "@mutation:DevAppService__update?id=${id}",
       "gql:selection": "id"
     },
     "body": [
-      {
-        "type": "hidden",
-        "name": "ver"
-      },
       {
         "type": "input-text",
         "name": "displayName",

@@ -20,6 +20,10 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevAppEntityColumn__get?id=${id}",
+      "gql:selection": "id,displayName,name,primary,mandatory,tagSet,stdSqlType,defaultValue,precision,scale,domainName,dictName"
+    },
     "api": {
       "url": "@mutation:DevAppEntityColumn__update?id=${id}&entityId=${entityId}",
       "gql:selection": "id"

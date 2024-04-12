@@ -18,7 +18,7 @@
       {
         "type": "combo",
         "name": "uniqueKeys",
-        "label": "唯一键列表",
+        "label": false,
         "multiple": true,
         "flat": true,
         "items": [

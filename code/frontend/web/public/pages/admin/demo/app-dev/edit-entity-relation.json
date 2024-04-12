@@ -94,19 +94,19 @@
         "source": "@dict:app_dev/entity-relation-tagset"
       },
       {
-        "type": "combo",
+        "type": "input-table",
         "name": "joinOnConds",
         "label": "关联条件",
         "required": true,
-        "multiple": true,
-        "items": [
+        "needConfirm": false,
+        "addable": true,
+        "removable": true,
+        "columns": [
           {
             "type": "select",
             "name": "leftProp",
-            "label": false,
-            "placeholder": "源实体字段",
+            "label": "源实体字段",
             "required": true,
-            "mode": "horizontal",
             "source": {
               "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
               "data": {
@@ -115,16 +115,9 @@
             }
           },
           {
-            "type": "icon",
-            "icon": "equals",
-            "className": "text-info text-xl entity-relation-op"
-          },
-          {
             "type": "select",
             "name": "rightProp",
-            "label": false,
-            "placeholder": "目标实体字段",
-            "mode": "horizontal",
+            "label": "目标实体字段",
             "required": true,
             "source": {
               "url": "@query:DevAppEntityColumn__findList/label:name,value:name",

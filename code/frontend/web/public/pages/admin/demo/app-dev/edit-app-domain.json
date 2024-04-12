@@ -20,6 +20,10 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevAppDomain__get?id=${id}",
+      "gql:selection": "id,displayName,name,stdDomain,stdSqlType,precision,scale"
+    },
     "api": {
       "url": "@mutation:DevAppDomain__update?id=${id}",
       "gql:selection": "id"

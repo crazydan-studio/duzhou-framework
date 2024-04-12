@@ -33,6 +33,7 @@
         "dialog": {
           "title": "添加新关联",
           "closeOnEsc": true,
+          "size": "lg",
           "data": {
             "sourceId": "${entityId}"
           },
@@ -112,6 +113,7 @@
             "dialog": {
               "title": "编辑关联",
               "closeOnEsc": true,
+              "size": "lg",
               "body": {
                 "type": "service",
                 "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-relation.json"

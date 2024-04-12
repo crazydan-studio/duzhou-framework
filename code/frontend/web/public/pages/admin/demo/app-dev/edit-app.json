@@ -20,15 +20,15 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevApp__get?id=${id}",
+      "gql:selection": "id,logo,displayName,code,version,classPkgName"
+    },
     "api": {
       "url": "@mutation:DevApp__update?id=${id}",
       "gql:selection": "id"
     },
     "body": [
-      {
-        "type": "hidden",
-        "name": "ver"
-      },
       {
         "type": "input-image",
         "name": "logo",

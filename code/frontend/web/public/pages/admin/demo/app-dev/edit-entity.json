@@ -20,15 +20,15 @@
         ]
       }
     },
+    "initApi": {
+      "url": "@query:DevAppEntity__get?id=${id}",
+      "gql:selection": "id,displayName,name,tableName,tagSet"
+    },
     "api": {
       "url": "@mutation:DevAppEntity__update?id=${id}",
       "gql:selection": "id"
     },
     "body": [
-      {
-        "type": "hidden",
-        "name": "ver"
-      },
       {
         "type": "input-text",
         "name": "displayName",
