@@ -43,8 +43,8 @@
               insertable="true" updatable="true">
             <schema type="java.lang.String" precision="20" dict="app_dev/entity-relation-type"/>
         </prop>
-        <prop name="tagSet" displayName="标签" propId="7" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true">
+        <prop name="tagSet" displayName="标签" propId="7" queryable="true" sortable="true" insertable="true"
+              updatable="true">
             <schema type="java.lang.String" precision="200"/>
         </prop>
         <prop name="tableName" displayName="中间表表名" propId="8" queryable="true" sortable="true" insertable="true"

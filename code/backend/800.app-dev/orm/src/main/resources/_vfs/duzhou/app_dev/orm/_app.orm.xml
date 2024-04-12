@@ -121,9 +121,9 @@
                 <column code="NAME" displayName="编码" mandatory="true" name="name" precision="100" propId="4"
                         stdDataType="string" stdSqlType="VARCHAR" tagSet="sort"/>
                 <column code="STD_DOMAIN" displayName="标准域" name="stdDomain" precision="50" propId="5"
-                        stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-domain"/>
+                        stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="STD_SQL_TYPE" displayName="标准 SQL 数据类型" mandatory="true" name="stdSqlType" precision="50"
-                        propId="6" stdDataType="string" stdSqlType="VARCHAR" ext:dict="core/std-sql-type"/>
+                        propId="6" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="PRECISION" displayName="数据长度" name="precision" propId="7" stdDataType="int"
                         stdSqlType="INTEGER"/>
                 <column code="SCALE" displayName="小数位数" name="scale" propId="8" stdDataType="int" stdSqlType="INTEGER"/>
@@ -247,12 +247,10 @@
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TAG_SET" displayName="标签" name="tagSet" precision="100" propId="11" stdDataType="string"
                         stdSqlType="VARCHAR"/>
-                <column code="UNIQUE_KEYS" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="唯一键列表" domain="json-1k"
-                        name="uniqueKeysJsonText" precision="1024" propId="12" stdDataType="string" stdDomain="json"
-                        stdSqlType="VARCHAR"/>
-                <column code="ALIASES" comment="JSON 数组，元素为逗号分隔的属性列表" displayName="别名列表" domain="json-1k"
-                        name="aliasesJsonText" precision="1024" propId="13" stdDataType="string" stdDomain="json"
-                        stdSqlType="VARCHAR"/>
+                <column code="UNIQUE_KEYS" displayName="唯一键列表" domain="json-1k" name="uniqueKeysJsonText"
+                        precision="1024" propId="12" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
+                <column code="ALIASES" displayName="别名列表" domain="json-1k" name="aliasesJsonText" precision="1024"
+                        propId="13" stdDataType="string" stdDomain="json" stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体</comment>
             <relations>
@@ -349,13 +347,13 @@
                         propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="TYPE" displayName="关联类型" mandatory="true" name="type" precision="20" propId="6"
                         stdDataType="string" stdSqlType="VARCHAR" ext:dict="app_dev/entity-relation-type"/>
-                <column code="TAG_SET" displayName="标签" mandatory="true" name="tagSet" precision="200" propId="7"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TAG_SET" displayName="标签" name="tagSet" precision="200" propId="7" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
                 <column code="TABLE_NAME" comment="一对多时需要中间表" displayName="中间表表名" name="tableName" precision="200"
                         propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="JOIN_ON_CONDS" comment="JSON 数组，元素为逗号分隔的左右连接的实体属性名" displayName="关联条件列表" domain="json-1k"
-                        mandatory="true" name="joinOnCondsJsonText" precision="1024" propId="9" stdDataType="string"
-                        stdDomain="json" stdSqlType="VARCHAR"/>
+                <column code="JOIN_ON_CONDS" displayName="关联条件列表" domain="json-1k" mandatory="true"
+                        name="joinOnCondsJsonText" precision="1024" propId="9" stdDataType="string" stdDomain="json"
+                        stdSqlType="VARCHAR"/>
             </columns>
             <comment>应用的持久化实体间的关联</comment>
             <relations>
