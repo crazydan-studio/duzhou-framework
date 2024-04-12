@@ -91,15 +91,16 @@
             "name": "precision",
             "label": "字段长度",
             "min": 0,
-            "requiredOn": "${ARRAYINCLUDES(['CHAR', 'VARCHAR', 'VARBINARY', 'JSON'], stdSqlType)}"
+            "disabledOn": "${domainName}",
+            "requiredOn": "${!domainName && ARRAYINCLUDES(['CHAR', 'VARCHAR', 'VARBINARY', 'JSON'], stdSqlType)}"
           },
           {
             "type": "input-number",
             "name": "scale",
             "label": "小数精度",
             "min": 0,
-            "disabledOn": "${!ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}",
-            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}"
+            "disabledOn": "${domainName || !ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}",
+            "requiredOn": "${!domainName && ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}"
           }
         ]
       },

@@ -55,6 +55,21 @@
             }
           }
         },
+        {
+          "type": "button",
+          "label": "添加预制域定义",
+          "icon": "fa-solid fa-suitcase",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "添加预制域定义",
+            "size": "lg",
+            "closeOnEsc": true,
+            "body": {
+              "type": "service",
+              "schemaApi": "get:/pages/admin/demo/app-dev/batch-add-domains.json"
+            }
+          }
+        },
         "bulkActions",
         {
           "type": "button",
@@ -103,6 +118,7 @@
           "name": "stdDomain",
           "label": "标准域",
           "static": true,
+          "placeholder": "",
           "source": "@dict:core/std-domain"
         },
         {
@@ -110,6 +126,7 @@
           "name": "stdSqlType",
           "label": "数据类型",
           "static": true,
+          "placeholder": "",
           "source": "@dict:core/std-sql-type"
         },
         {

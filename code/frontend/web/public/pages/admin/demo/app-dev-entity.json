@@ -130,6 +130,7 @@
           "label": "标签",
           "static": true,
           "multiple": true,
+          "placeholder": "",
           "source": "@dict:app_dev/entity-tagset"
         },
         {

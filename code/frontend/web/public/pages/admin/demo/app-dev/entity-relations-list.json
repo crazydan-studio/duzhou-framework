@@ -90,6 +90,7 @@
         "name": "type",
         "label": "关联类型",
         "static": true,
+        "placeholder": "",
         "source": "@dict:app_dev/entity-relation-type"
       },
       {
@@ -98,6 +99,7 @@
         "label": "标签",
         "static": true,
         "multiple": true,
+        "placeholder": "",
         "source": "@dict:app_dev/entity-relation-tagset"
       },
       {

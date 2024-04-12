@@ -22,15 +22,6 @@
         "needConfirm": false,
         "addable": true,
         "removable": true,
-        "onEvent": {
-          "change": {
-            "actions": [
-              {
-                "actionType": "submit"
-              }
-            ]
-          }
-        },
         "columns": [
           {
             "type": "input-text",

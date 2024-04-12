@@ -103,6 +103,7 @@
           "name": "optionType",
           "label": "字典项类型",
           "static": true,
+          "placeholder": "",
           "source": "@dict:core/std-data-type"
         },
         {
