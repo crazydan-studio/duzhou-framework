@@ -20,5 +20,33 @@
                 </thisLib:DefineLoop>
             </source>
         </DefineLoopForOrm>
+
+        <DeltaMerge outputMode="none">
+            <attr name="targetNode" type="io.nop.core.lang.xml.XNode" />
+
+            <slot name="default" outputMode="node" />
+
+            <source>
+                <c:script><![CDATA[
+                    import io.nop.xlang.delta.DeltaMerger;
+                    import io.nop.xlang.xmeta.SchemaLoader;
+                    import io.nop.xlang.xdsl.XDslKeys;
+                    import io.crazydan.duzhou.framework.commons.DeltaMergerHelper;
+
+                    let deltaNode = eval_node(slot_default).child(0);
+
+                    let xdefPath = targetNode.getAttr('x:schema');
+                    let xdef = SchemaLoader.loadXDefinition(xdefPath);
+                    let keys = XDslKeys.of(targetNode);
+
+                    let merger = new DeltaMerger(keys);
+                    merger.merge(targetNode, deltaNode, xdef.getRootNode(), false);
+
+                    DeltaMergerHelper.cleanNode(targetNode);
+
+                    return targetNode;
+                ]]></c:script>
+            </source>
+        </DeltaMerge>
     </tags>
 </lib>

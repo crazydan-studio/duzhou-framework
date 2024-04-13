@@ -1,235 +1,63 @@
-<meta xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
-      xmlns:xpl="xpl" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen"
-      xmlns:biz="biz" xmlns:ui="ui" xmlns:orm="orm"
-      x:schema="/nop/schema/xmeta.xdef" ext:model="orm"
-      displayName="${entityModel.displayName}" i18n-en:displayName="${entityModel['i18n-en:displayName']}"
-      tagSet="${_.join(entityModel.tagSet,',')}"
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl"
+        xpl:outputMode="text"
 >
 
-    <entityName>${entityModel.name}</entityName>
-
-    <primaryKey>${_.join(entityModel.pkColumnNames,',')}</primaryKey>
-    <c:script>const dispCol = entityModel.getColumnByTag('disp')</c:script>
-    <displayProp xpl:if="dispCol">${dispCol.name}</displayProp>
-
-    <c:print>
-        <x:gen-extends>
-            <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib" />
-        </x:gen-extends>
-
-        <x:post-extends>
-            <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib" />
-        </x:post-extends>
-    </c:print>
-
-    <keys>
-        <c:for var="uniqueKey" items="${entityModel.uniqueKeys}">
-            <key name="${uniqueKey.name}" props="${_.join(uniqueKey.columns,',')}"
-                 displayName="${uniqueKey.displayName}" />
-        </c:for>
-    </keys>
-
     <c:script><![CDATA[
-        const sortProps = entityModel.columns.filter(col=> col.containsTag('sort') || col.containsTag('sort-desc'));
-        const parentProp = entityModel.getColumnByTag('parent');
+        import io.nop.codegen.XCodeGenerator;
 
-        function buildColControl(col){
-           if(parentProp == col){
-              const childrenProp = parentProp.columnRefs?.[0]?.refPropName;
-              if(childrenProp){
-                 // 如果具有parent和children属性，则使用tree控件来选择
-                 return "tree-parent";
-              }
-           }
-        }
+        let xplPath =
+            '/nop/templates/meta/src/main/resources'
+            + '/_vfs/{moduleId}/model/{!entityModel.notGenCode}{entityModel.shortName}'
+            + '/{deltaDir}/_{entityModel.shortName}.xmeta.xgen';
+        let xpl = XCodeGenerator.loadTpl(xplPath);
+        let targetNode = xpl.generateToNode($scope);
     ]]></c:script>
-    <orderBy xpl:if="sortProps.size() > 0">
-        <c:for var="sortProp" items="${sortProps}">
-            <field name="${sortProp.name}" desc="${sortProp.containsTag('sort-desc')}" />
-        </c:for>
-    </orderBy>
 
-    <c:if test="${parentProp}">
-        <tree isLeafProp="${entityModel.getColumnByTag('is-leaf')?.name}" parentProp="${parentProp.name}"
-              childrenProp="${parentProp.columnRefs?.[0]?.refPropName}"
-              levelProp="${entityModel.getColumnByTag('tree-level')?.name}"
-              rootLevelValue="${entityModel.getColumnByTag('tree-level')?.['ext:rootLevel']}"
-        />
-    </c:if>
+    <gen:DeltaMerge targetNode="${targetNode}" xpl:return="metaNode"
+                    xpl:lib="/nop/codegen/xlib/gen.xlib">
+        <meta>
+            <props>
+                <!-- json 字段不暴露给前端（直接移除），采用 alias 方式屏蔽内部结构 -->
+                <c:for var="col" items="${entityModel.columns}">
+                    <c:script><![CDATA[
+                        let colComp = entityModel.getComponent(col.name + "Component");
+                        let jsonCol = colComp != null && colComp.className.$simpleClassName() == 'JsonOrmComponent'
+                    ]]></c:script>
+                    <c:if test="${jsonCol}">
+                        <prop name="${col.name}" x:override="remove" />
+                    </c:if>
+                </c:for>
+                <!-- JsonOrmComponent 不暴露给前端（直接移除），采用 alias 方式屏蔽内部结构 -->
+                <c:for var="comp" items="${entityModel.components}">
+                    <c:script><![CDATA[
+                        if(comp.tagSet?.contains('not-gen')) continue;
+                        const jsonComp = comp.className.$simpleClassName() == 'JsonOrmComponent';
+                    ]]></c:script>
+                    <c:if test="${jsonComp}">
+                        <prop name="${comp.name}" x:override="remove" />
+                    </c:if>
+                </c:for>
 
-    <c:import from="/nop/codegen/xlib/meta-gen.xlib" />
+                <c:for var="alias" items="${entityModel.aliases}">
+                    <c:script><![CDATA[
+                        if(alias.tagSet?.contains('not-gen')) continue;
 
-    <props>
-        <c:for var="col" items="${entityModel.columns}">
-            <c:script><![CDATA[
-                // 是否是数据库列对应的增强对象
-                let colComp = entityModel.getComponent(col.name + "Component");
-                // json 字段不暴露给前端，采用 alias 方式屏蔽内部结构
-                let jsonCol = colComp != null && colComp.className.$simpleClassName() == 'JsonOrmComponent'
-                if (jsonCol) continue;
-            ]]></c:script>
-            <prop name="${col.name}" displayName="${col.displayName}" propId="${col.propId}"
-                  i18n-en:displayName="${col['i18n-en:displayName']}" tagSet="${_.join(col.tagSet,',')}"
-                  mandatory="${col.mandatory || null}" published="${col.tagSet?.contains('not-pub') ? false:null}"
-                  queryable="${col['ext:queryable'] ?? true}" sortable="${col['ext:sortable'] ?? true}"
-                  insertable="${xpl('meta-gen:IsColInsertable',col)}" updatable="${xpl('meta-gen:IsColUpdatable',col)}"
-                  internal="${xpl('meta-gen:IsColInternal',col)||null}"
-                  graphql:type="${col.primary and col.stdDataType.toString() == 'long' ? 'String':null}"
-                  ui:show="${col['ui:show']}" ui:control="${col['ui:control'] || buildColControl(col)}"
-                  biz:codeRule="${col?.tagSet?.contains('code')?entityModel.shortName+'@'+col.name:null}"
-                  ext:relation="${col.columnRefs?.[0]?.name}" defaultValue="${col.defaultValue}"
-                  x:override="${col.tagSet?.contains('del') ? 'remove':null}"
-            >
-                <schema stdDomain="${col.stdDomain}" domain="${col.domain}" type="${col.javaTypeName}"
-                        precision="${col.precision}" scale="${col.scale}"
-                        dict="${col['ext:dict']}" />
-            </prop>
-        </c:for>
+                        const queryable = alias.tagSet?.contains('pub');
+                        // 对 json 字段，需显式设置 graphql:type="[Map]"
+                        // 才能在前后端直接交换 JSON 对象，否则，只能交换字符串
+                        const jsonAlias = alias.propPath.endsWith('JsonTextComponent.data');
+                    ]]></c:script>
+                    <prop name="${alias.name}" queryable="${queryable}"
+                          graphql:type="${jsonAlias ? '[Map]' : null}">
+                        <c:if test="${jsonAlias}">
+                            <schema x:override="remove" />
+                        </c:if>
+                    </prop>
+                </c:for>
+            </props>
+        </meta>
+    </gen:DeltaMerge>
 
-        <c:for var="rel" items="${entityModel.relations}">
-            <c:script><![CDATA[
-                import io.nop.orm.support.OrmManyToManyHelper;
-
-                if(rel.tagSet?.contains('not-gen')) continue;
-                const useGrid = rel.tagSet?.contains('grid');
-
-                const refMappingInfo = OrmManyToManyHelper.getRefMappingInfo(rel);
-            ]]></c:script>
-            <prop name="${rel.name}" displayName="${rel.displayName}"
-                  i18n-en:displayName="${rel['i18n-en:displayName']}" tagSet="${_.join(rel.tagSet,',')}"
-                  ext:kind="${rel.toOneRelation?'to-one':'to-many'}" internal="true"
-                  queryable="${rel.toOneRelation?true:null}"
-                  ui:control="${rel['ui:control']}" ui:editGrid="${useGrid ? 'sub-grid-edit':null}"
-                  ui:viewGrid="${useGrid ?'sub-grid-view':null}"
-                  defaultValue="${rel.singleColumnJoin?.leftPropModel?.defaultValue}"
-                  ext:joinLeftProp="${rel.singleColumnJoin?.leftProp}"
-                  ext:joinRightProp="${rel.singleColumnJoin?.rightProp}"
-                  ext:joinRightDisplayProp="${rel.singleColumnJoin?.rightDisplayPropModel?.name}"
-                  orm:manyToManyRefProp="${refMappingInfo?.manyToManyRefProp}"
-                  biz:moduleId="${rel.refEntityModel['biz:moduleId']}"
-                  insertable="${rel.tagSet?.contains('insertable')}" updatable="${rel.tagSet?.contains('updatable')}"
-                  mandatory="${(rel.toOneRelation and rel.mandatory) || null}" lazy="true"
-                  published="${rel.tagSet?.contains('pub') ? null :false}">
-                <schema bizObjName="${rel.refEntityName.$lastPart('.')}" xpl:if="rel.toOneRelation" />
-                <schema xpl:if="rel.toManyRelation">
-                    <item bizObjName="${rel.refEntityName.$lastPart('.')}" />
-                </schema>
-            </prop>
-            <c:if test="${rel.tagSet?.contains('pub') and rel.toOneRelation and rel.singleColumnJoin?.rightDisplayPropModel}">
-                <prop name="${rel.name}.${rel.singleColumnJoin.rightDisplayPropModel.name}"
-                      displayName="${rel.displayName}" i18n-en:displayName="${rel['i18n-en:displayName']}"
-                      internal="true" queryable="true" sortable="true" lazy="true">
-                    <schema type="String" />
-                </prop>
-            </c:if>
-        </c:for>
-
-        <c:for var="comp" items="${entityModel.components}">
-            <c:script><![CDATA[
-                if(comp.tagSet?.contains('not-gen')) continue;
-                // 是否是数据库列对应的增强对象
-                let compCol = null;
-                if(comp.name.endsWith("Component")){
-                    compCol = entityModel.getColumn(comp.name.$removeTail("Component"),true);
-                }
-                // JsonOrmComponent 不暴露给前端，采用 alias 方式屏蔽内部结构
-                const jsonComp = comp.className.$simpleClassName() == 'JsonOrmComponent';
-                if (jsonComp) continue;
-            ]]></c:script>
-            <prop name="${comp.name}" displayName="${comp.displayName}"
-                  i18n-en:displayName="${comp['i18n-en:displayName']}" tagSet="${_.join(comp.tagSet,',')}"
-                  ext:kind="component" internal="true" ui:control="${comp['ui:control']}"
-                  insertable="${compCol!=null}" updatable="${compCol != null}"
-                  mandatory="${comp.mandatory || null}" lazy="true"
-                  published="${comp.tagSet?.contains('pub') ? null :false}">
-                <schema type="${comp.javaTypeName}" />
-            </prop>
-        </c:for>
-
-        <c:for var="alias" items="${entityModel.aliases}">
-            <c:script><![CDATA[
-                if(alias.tagSet?.contains('not-gen')) continue;
-
-                const insertable = !alias.tagSet?.contains('view');
-                const updatable = !alias.tagSet?.contains('view');
-                const queryable = alias.tagSet?.contains('pub');
-                // 对 json 字段，需显式设置 graphql:type="[Map]"
-                // 才能在前后端直接交换 JSON 对象，否则，只能交换字符串
-                const jsonAlias = alias.propPath.endsWith('JsonTextComponent.data');
-            ]]></c:script>
-            <prop name="${alias.name}" displayName="${alias.displayName}"
-                  i18n-en:displayName="${alias['i18n-en:displayName']}" tagSet="${_.join(alias.tagSet,',')}"
-                  ext:kind="alias" internal="${alias.tagSet?.contains('sys')}" ui:control="${alias['ui:control']}"
-                  insertable="${insertable}" updatable="${updatable}" queryable="${queryable}"
-                  mandatory="${alias.mandatory || null}" lazy="${alias.tagSet?.contains('eager')?false:true}"
-                  published="${alias.tagSet?.contains('not-pub') ? false : null}"
-                  graphql:type="${jsonAlias ? '[Map]' : null}">
-                <c:if test="${!jsonAlias}">
-                    <schema type="${alias.javaTypeName}" />
-                </c:if>
-            </prop>
-        </c:for>
-
-        <c:for var="rel" items="${entityModel.relations}">
-            <c:script><![CDATA[
-                import io.nop.orm.support.OrmManyToManyHelper;
-
-                if(rel.tagSet?.contains('not-gen')) continue;
-
-                const refOnePropInfo = OrmManyToManyHelper.getRefOnePropInfo(rel);
-                const refManyPropInfo = OrmManyToManyHelper.getRefManyPropInfo(rel);
-                const insertable = rel.tagSet?.contains('insertable');
-                const updatable = rel.tagSet?.contains('updatable');
-                const published = rel.tagSet?.contains('pub') ? null : false;
-            ]]></c:script>
-            <prop name="${refOnePropInfo.relatedObjPropName}" displayName="${refOnePropInfo.relatedDisplayName}"
-                  i18n-en:displayName="${refOnePropInfo.relatedEnDisplayName}" published="${published}"
-                  ext:kind="to-one"
-                  biz:moduleId="${refOnePropInfo.relatedEntityModel['biz:moduleId']}"
-                  xpl:if="refOnePropInfo" internal="true" lazy="true">
-                <schema bizObjName="${refOnePropInfo.bizObjName}" />
-            </prop>
-            <prop name="${refOnePropInfo.relatedColPropName}" displayName="${refOnePropInfo.relatedDisplayName}"
-                  i18n-en:displayName="${refOnePropInfo.relatedEnDisplayName}" published="${published}"
-                  insertable="${insertable}" updatable="${updatable}"
-                  ext:relation="${refOnePropInfo.relatedObjPropName}"
-                  graphql:labelProp="${refOnePropInfo.relatedObjPropName_label}" lazy="true"
-                  xpl:if="refOnePropInfo and refOnePropInfo.relatedColPropName" internal="true">
-                <schema type="${refOnePropInfo.relatedColTypeName}" />
-            </prop>
-            <prop name="${refOnePropInfo.relatedObjPropName_label}" displayName="${refOnePropInfo.relatedDisplayName}"
-                  i18n-en:displayName="${refOnePropInfo.relatedEnDisplayName}" published="${published}"
-                  xpl:if="refOnePropInfo and refOnePropInfo.relatedObjPropName_label" internal="true">
-                <schema type="String" lazy="true" />
-            </prop>
-            <prop name="${refManyPropInfo.relatedObjListPropName}"
-                  displayName="${refManyPropInfo.relatedDisplayName}列表"
-                  i18n-en:displayName="${refManyPropInfo.relatedEnDisplayName} List" published="${published}"
-                  ext:kind="to-many"
-                  biz:moduleId="${refManyPropInfo.relatedEntityModel['biz:moduleId']}"
-                  xpl:if="refManyPropInfo" internal="true" lazy="true">
-                <schema>
-                    <item bizObjName="${refManyPropInfo.bizObjName}" />
-                </schema>
-            </prop>
-            <prop name="${refManyPropInfo.relatedColListPropName}"
-                  displayName="${refManyPropInfo.relatedDisplayName}列表"
-                  i18n-en:displayName="${refManyPropInfo.relatedEnDisplayName} List" published="${published}"
-                  insertable="${insertable}" updatable="${updatable}"
-                  ext:relation="${refManyPropInfo.relatedObjListPropName}"
-                  graphql:labelProp="${refManyPropInfo.relatedObjListPropName_label}" lazy="true"
-                  xpl:if="refManyPropInfo and refManyPropInfo.relatedColListPropName" internal="true">
-                <schema type="List&lt;${refManyPropInfo.relatedColTypeName}>" />
-            </prop>
-            <prop name="${refManyPropInfo.relatedObjListPropName_label}"
-                  displayName="${refManyPropInfo.relatedDisplayName}列表"
-                  i18n-en:displayName="${refManyPropInfo.relatedEnDisplayName} List" published="${published}"
-                  lazy="true"
-                  xpl:if="refManyPropInfo and refManyPropInfo.relatedObjListPropName_label" internal="true">
-                <schema type="String" />
-            </prop>
-        </c:for>
-    </props>
-
-    <meta-gen:GenMetaExt entityModel="${entityModel}" xpl:lib="/nop/codegen/xlib/meta-gen.xlib" />
-</meta>
+    ${metaNode.outerXml(false, false)}
+</c:unit>

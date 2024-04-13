@@ -1,59 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xmlns:gen="gen"
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
         xpl:outputMode="text"
 >
 
-    <gen:DslModelToXNode model="${ormModel}"
-                         defaultXdefPath="/nop/schema/orm/orm.xdef"
-                         xpl:lib="/nop/codegen/xlib/gen.xlib"
-                         xpl:return="ormNode" />
     <c:script><![CDATA[
         import java.util.ArrayList;
         import io.nop.core.lang.xml.XNode;
+        import io.nop.codegen.XCodeGenerator;
 
-        ormNode.removeAttr('ext:extends');
-        ormNode.setAttr('xmlns:i18n-en','i18n-en');
-        ormNode.setAttr('xmlns:ref-i18n-en','ref-i18n-en');
-        ormNode.setAttr('xmlns:ext','ext');
-        ormNode.setAttr('xmlns:orm-gen','orm-gen');
-        ormNode.setAttr('xmlns:xpl','xpl');
-        ormNode.setAttr('xmlns:ui','ui');
-        ormNode.prependBodyXml(`<x:post-extends x:override="replace">
-            <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib" />
-        </x:post-extends>`);
+        let xplPath =
+            '/nop/templates/orm/{appName}-dao/src/main/resources'
+            + '/_vfs/{moduleId}/orm'
+            + '/{deltaDir}/_app.orm.xml.xgen';
+        let xpl = XCodeGenerator.loadTpl(xplPath);
+        let ormNode = xpl.generateToNode($scope);
 
-        ormNode.childByTag('entities')?.children?.forEach(entity=>{
-          const aliases = new ArrayList();
+        ormNode.childByTag('entities')?.children?.forEach(entity => {
+            const aliases = new ArrayList();
 
-          entity.childByTag('columns')?.children?.forEach(col=>{
-            let jsonCol = col.attrCsvSet('tagSet')?.contains('json')
-                            || col.getAttr('stdDomain') == 'json';
+            entity.childByTag('columns')?.children?.forEach(col => {
+                let jsonCol = !col.attrCsvSet('tagSet')?.contains('del')
+                                && (col.attrCsvSet('tagSet')?.contains('json')
+                                    || col.getAttr('stdDomain') == 'json');
+                if (jsonCol) {
+                    // 对 json 字段创建别名映射到其对应的 json 组件上，
+                    // 从而在 biz 层屏蔽 orm 层的实现机制
+                    const name = col.getAttr('name');
+                    col.setAttr('name', name + 'JsonText');
 
-             if(col.attrCsvSet('tagSet')?.contains('del')){
-                col.removeAttr('propId');
-                col.setAttr('x:override','remove');
-                col.setAttr('notGenCode',true);
-             }else if(jsonCol){
-                // 对 json 字段创建别名映射到其对应的 json 组件上，
-                // 从而在 biz 层屏蔽 orm 层的实现机制
-                const name = col.getAttr('name');
-                col.setAttr('name',name+'JsonText');
+                    const alias = XNode.make('alias');
+                    alias.setAttr('displayName', col.getAttr('displayName'));
+                    alias.setAttr('name', name);
+                    alias.setAttr('propPath', name + 'JsonTextComponent.data');
+                    alias.setAttr('tagSet', 'pub');
+                    alias.setAttr('type', 'Object');
 
-                const alias = XNode.make('alias');
-                alias.setAttr('displayName',col.getAttr('displayName'));
-                alias.setAttr('name',name);
-                alias.setAttr('propPath',name+'JsonTextComponent.data');
-                alias.setAttr('tagSet','pub');
-                alias.setAttr('type','Object');
-                aliases.add(alias);
-             }
-          });
+                    aliases.add(alias);
+                }
+            });
 
-          if(!aliases.isEmpty()) {
-            entity.makeChild('aliases').appendChildren(aliases);
-          }
+            if (!aliases.isEmpty()) {
+                entity.makeChild('aliases').appendChildren(aliases);
+            }
         });
     ]]></c:script>
 
-${ormNode.outerXml(false, false)}
+    ${ormNode.outerXml(false, false)}
 </c:unit>
