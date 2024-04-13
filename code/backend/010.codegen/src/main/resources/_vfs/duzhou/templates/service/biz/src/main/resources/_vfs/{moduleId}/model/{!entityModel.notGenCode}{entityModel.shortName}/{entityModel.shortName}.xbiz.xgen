@@ -1,8 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<biz xmlns:x="/nop/schema/xdsl.xdef"
-     x:schema="/nop/schema/biz/xbiz.xdef"
-     x:extends="_${entityModel.shortName}.xbiz"
->
-
-    <actions />
-</biz>
+<c:include xmlns:c="c"
+           src="/nop/templates/orm/{appName}-service/src/main/resources/_vfs/{moduleId}/model/{!entityModel.notGenCode}{entityModel.shortName}/{entityModel.shortName}.xbiz.xgen" />

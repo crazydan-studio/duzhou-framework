@@ -1,9 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<sql-lib xmlns:x="/nop/schema/xdsl.xdef"
-         x:schema="/nop/schema/orm/sql-lib.xdef"
-         x:extends="${deltaDir? 'super':null}"
->
-
-    <sqls>
-    </sqls>
-</sql-lib>
+<c:include xmlns:c="c"
+           src="/nop/templates/orm/{appName}-dao/src/main/resources/_vfs/{moduleId}/sql/{!!entityModel.tagSet.@mapper}{entityModel.shortName}.sql-lib.xml.xgen" />

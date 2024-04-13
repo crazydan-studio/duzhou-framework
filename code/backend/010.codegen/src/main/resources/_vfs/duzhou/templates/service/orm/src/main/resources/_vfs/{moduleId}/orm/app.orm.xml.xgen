@@ -1,9 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<orm xmlns:x="/nop/schema/xdsl.xdef"
-     x:schema="/nop/schema/orm/orm.xdef"
-     x:extends="${deltaDir? 'super,' + deltaDir+'/' : ''}_app.orm.xml"
->
-
-    <entities>
-    </entities>
-</orm>
+<c:include xmlns:c="c"
+           src="/nop/templates/orm/{appName}-dao/src/main/resources/_vfs/{moduleId}/orm/app.orm.xml.xgen" />
