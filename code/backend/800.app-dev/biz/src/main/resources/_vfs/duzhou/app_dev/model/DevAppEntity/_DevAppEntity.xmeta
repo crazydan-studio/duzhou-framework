@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<meta xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext" xmlns:xpl="xpl" xmlns:c="c"
-      xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz" xmlns:ui="ui" xmlns:orm="orm"
-      x:schema="/nop/schema/xmeta.xdef" ext:model="orm" displayName="应用 ORM 实体"
-      i18n-en:displayName="Application ORM Entity">
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="应用 ORM 实体" i18n-en:displayName="Application ORM Entity" xmlns:ui="ui" xmlns:orm="orm">
 
     <entityName>io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity</entityName>
 
@@ -87,12 +86,12 @@
             </schema>
         </prop>
         <prop name="appId" displayName="应用" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
-              updatable="true" queryable="true" lazy="true">
+              updatable="true" lazy="true" queryable="true">
             <schema type="java.lang.String"/>
         </prop>
         <prop name="uniqueKeys" displayName="唯一键列表" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
-              updatable="true" queryable="true" lazy="true" graphql:type="[Map]"/>
+              updatable="true" lazy="true" queryable="true" graphql:type="[Map]"/>
         <prop name="aliases" displayName="别名列表" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
-              updatable="true" queryable="true" lazy="true" graphql:type="[Map]"/>
+              updatable="true" lazy="true" queryable="true" graphql:type="[Map]"/>
     </props>
 </meta>

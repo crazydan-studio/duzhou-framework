@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<meta xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext" xmlns:xpl="xpl" xmlns:c="c"
-      xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz" xmlns:ui="ui" xmlns:orm="orm"
-      x:schema="/nop/schema/xmeta.xdef" ext:model="orm" displayName="应用 ORM 实体关联"
-      i18n-en:displayName="Application ORM Entity Relation">
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="应用 ORM 实体关联" i18n-en:displayName="Application ORM Entity Relation" xmlns:ui="ui" xmlns:orm="orm">
 
     <entityName>io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation</entityName>
 
@@ -62,6 +61,6 @@
             <schema bizObjName="DevAppEntity"/>
         </prop>
         <prop name="joinOnConds" displayName="关联条件列表" tagSet="pub" ext:kind="alias" internal="false" insertable="true"
-              updatable="true" queryable="true" lazy="true" graphql:type="[Map]"/>
+              updatable="true" lazy="true" queryable="true" graphql:type="[Map]"/>
     </props>
 </meta>

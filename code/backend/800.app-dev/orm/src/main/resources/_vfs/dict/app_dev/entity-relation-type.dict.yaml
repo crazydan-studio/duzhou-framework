@@ -4,12 +4,12 @@ locale: zh-CN
 valueType: string
 description: 自动以 code（短横线替换为下划线） 为父目录名称
 options:
-    
+
   - label: 一对一关联
     value: to-one
     description: 
-    
+  
   - label: 一对多关联
     value: to-many
     description: 
-    
+  

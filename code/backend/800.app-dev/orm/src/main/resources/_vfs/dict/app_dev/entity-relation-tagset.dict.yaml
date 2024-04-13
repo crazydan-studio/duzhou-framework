@@ -4,16 +4,16 @@ locale: zh-CN
 valueType: string
 description: 自动以 code（短横线替换为下划线） 为父目录名称
 options:
-    
+
   - label: 该关联可访问
     value: pub
     description: 
-    
+  
   - label: 对端关联可访问
     value: ref-pub
     description: 
-    
+  
   - label: 级联删除
     value: ref-cascade-delete
     description: 
-    
+  
