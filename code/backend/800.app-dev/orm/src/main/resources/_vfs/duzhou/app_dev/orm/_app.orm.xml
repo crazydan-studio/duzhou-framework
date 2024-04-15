@@ -261,6 +261,13 @@
                     </join>
                     <ref-set/>
                 </to-one>
+                <to-many cascadeDelete="true" name="columns"
+                         refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn"
+                         refPropName="entity" tagSet="cascade-delete,connection">
+                    <join>
+                        <on leftProp="id" rightProp="entityId"/>
+                    </join>
+                </to-many>
                 <to-many cascadeDelete="true" name="relations"
                          refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation"
                          refPropName="source" tagSet="pub,cascade-delete">
@@ -310,7 +317,7 @@
             <comment>应用的持久化实体的字段</comment>
             <relations>
                 <to-one name="entity" refEntityName="io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity"
-                        tagSet="pub,ref-pub,ref-cascade-delete">
+                        refPropName="columns" tagSet="pub,ref-cascade-delete,ref-connection">
                     <join>
                         <on leftProp="entityId" rightProp="id"/>
                     </join>

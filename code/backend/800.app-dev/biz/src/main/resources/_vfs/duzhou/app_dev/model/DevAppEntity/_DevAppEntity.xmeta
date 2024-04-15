@@ -73,6 +73,12 @@
               lazy="true">
             <schema bizObjName="DevAppService"/>
         </prop>
+        <prop name="columns" tagSet="cascade-delete,connection" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
+              ext:joinRightProp="entityId" insertable="false" updatable="false" lazy="true" published="false">
+            <schema>
+                <item bizObjName="DevAppEntityColumn"/>
+            </schema>
+        </prop>
         <prop name="relations" tagSet="pub,cascade-delete" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
               ext:joinRightProp="sourceId" insertable="false" updatable="false" lazy="true">
             <schema>

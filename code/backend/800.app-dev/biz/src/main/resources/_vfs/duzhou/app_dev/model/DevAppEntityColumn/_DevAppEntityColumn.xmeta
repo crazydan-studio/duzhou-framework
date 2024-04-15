@@ -76,9 +76,9 @@
               updatable="true">
             <schema type="java.lang.String" precision="500"/>
         </prop>
-        <prop name="entity" tagSet="pub,ref-pub,ref-cascade-delete" ext:kind="to-one" internal="true" queryable="true"
-              ext:joinLeftProp="entityId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
-              lazy="true">
+        <prop name="entity" tagSet="pub,ref-cascade-delete,ref-connection" ext:kind="to-one" internal="true"
+              queryable="true" ext:joinLeftProp="entityId" ext:joinRightProp="id" insertable="false" updatable="false"
+              mandatory="true" lazy="true">
             <schema bizObjName="DevAppEntity"/>
         </prop>
     </props>

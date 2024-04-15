@@ -80,6 +80,9 @@ public class _DevAppEntity extends DynamicOrmEntity{
     public static final String PROP_NAME_service = "service";
     
     /* relation:  */
+    public static final String PROP_NAME_columns = "columns";
+    
+    /* relation:  */
     public static final String PROP_NAME_relations = "relations";
     
     /* alias: service.appId 应用 */
@@ -811,6 +814,16 @@ public class _DevAppEntity extends DynamicOrmEntity{
            });
            }
        
+    }
+       
+    private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn> _columns = new OrmEntitySet<>(this, PROP_NAME_columns,
+        io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn.PROP_NAME_entity, null,io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn.class);
+
+    /**
+     * 。 refPropName: entity, keyProp: {rel.keyProp}
+     */
+    public IOrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityColumn> getColumns(){
+       return _columns;
     }
        
     private final OrmEntitySet<io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntityRelation> _relations = new OrmEntitySet<>(this, PROP_NAME_relations,
