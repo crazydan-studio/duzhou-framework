@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
       xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
-      displayName="应用 ORM 实体" i18n-en:displayName="Application ORM Entity" xmlns:ui="ui" xmlns:orm="orm">
+      displayName="应用 ORM 实体" i18n-en:displayName="Application ORM Entity" tagSet="mapper" xmlns:ui="ui" xmlns:orm="orm">
 
     <entityName>io.crazydan.duzhou.framework.app_dev.orm.entity.DevAppEntity</entityName>
 
@@ -40,7 +40,7 @@
               updatable="false">
             <schema domain="updatedBy" type="java.lang.String" precision="50"/>
         </prop>
-        <prop name="updatedAt" displayName="更新时间" propId="5" tagSet="sort,sort-desc" mandatory="true" queryable="true"
+        <prop name="updatedAt" displayName="更新时间" propId="5" tagSet="sort-desc" mandatory="true" queryable="true"
               sortable="true" insertable="false" updatable="false">
             <schema domain="updateTime" type="java.sql.Timestamp"/>
         </prop>
@@ -72,12 +72,6 @@
               ext:joinLeftProp="serviceId" ext:joinRightProp="id" insertable="false" updatable="false" mandatory="true"
               lazy="true">
             <schema bizObjName="DevAppService"/>
-        </prop>
-        <prop name="props" tagSet="pub,cascade-delete" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
-              ext:joinRightProp="entityId" insertable="false" updatable="false" lazy="true">
-            <schema>
-                <item bizObjName="DevAppEntityColumn"/>
-            </schema>
         </prop>
         <prop name="relations" tagSet="pub,cascade-delete" ext:kind="to-many" internal="true" ext:joinLeftProp="id"
               ext:joinRightProp="sourceId" insertable="false" updatable="false" lazy="true">

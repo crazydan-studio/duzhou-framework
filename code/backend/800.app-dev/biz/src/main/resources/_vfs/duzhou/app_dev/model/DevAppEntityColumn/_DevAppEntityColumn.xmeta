@@ -60,8 +60,8 @@
               updatable="true">
             <schema type="java.lang.String" precision="32"/>
         </prop>
-        <prop name="stdSqlType" displayName="字段类型" propId="11" mandatory="true" queryable="true" sortable="true"
-              insertable="true" updatable="true">
+        <prop name="stdSqlType" displayName="字段类型" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
             <schema type="java.lang.String" precision="50"/>
         </prop>
         <prop name="precision" displayName="字段长度" propId="12" queryable="true" sortable="true" insertable="true"

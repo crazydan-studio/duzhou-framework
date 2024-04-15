@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <meta xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/xmeta.xdef" x:extends="_DevAppEntity.xmeta">
 
-    <props/>
+    <props>
+        <prop name="columnSize">
+            <schema type="java.lang.Integer" />
+        </prop>
+    </props>
 </meta>

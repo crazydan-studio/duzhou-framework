@@ -39,7 +39,7 @@ public class DevAppEntityColumnBizModel extends CrudBizModel<DevAppEntityColumn>
             if (column != null) {
                 propId = column.getPropId();
             }
-            data.put("propId", propId + 1);
+            data.put("propId", propId + Math.max((int) data.getOrDefault("propId", 0), 1));
         }
 
         return super.buildEntityDataForSave(data, inputSelection, context);
