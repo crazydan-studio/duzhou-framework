@@ -7,6 +7,7 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "autoFocus": true,
     "onEvent": {
       "submitSucc": {
         "actions": [
@@ -14,8 +15,7 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload",
-            "componentName": "data-table"
+            "actionType": "reload"
           }
         ]
       }
@@ -67,10 +67,31 @@
         "body": [
           {
             "type": "select",
+            "name": "domainName",
+            "label": "数据域",
+            "clearable": true,
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+          },
+          {
+            "type": "select",
+            "name": "dictName",
+            "label": "字典",
+            "clearable": true,
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "body": [
+          {
+            "type": "select",
             "name": "stdSqlType",
             "label": "字段类型",
             "source": "@dict:core/std-sql-type",
-            "required": true
+            "value": "VARCHAR",
+            "requiredOn": "${!domainName}",
+            "disabledOn": "${domainName}"
           },
           {
             "type": "input-text",
@@ -87,33 +108,17 @@
             "name": "precision",
             "label": "字段长度",
             "min": 0,
-            "requiredOn": "${ARRAYINCLUDES(['CHAR', 'VARCHAR', 'VARBINARY', 'JSON'], stdSqlType)}"
+            "value": 50,
+            "requiredOn": "${!domainName && ARRAYINCLUDES(['CHAR', 'VARCHAR', 'VARBINARY', 'JSON'], stdSqlType)}",
+            "disabledOn": "${domainName}"
           },
           {
             "type": "input-number",
             "name": "scale",
             "label": "小数精度",
             "min": 0,
-            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE'], stdSqlType)}"
-          }
-        ]
-      },
-      {
-        "type": "group",
-        "body": [
-          {
-            "type": "select",
-            "name": "domainName",
-            "label": "数据域",
-            "clearable": true,
-            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
-          },
-          {
-            "type": "select",
-            "name": "dictName",
-            "label": "字典",
-            "clearable": true,
-            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+            "requiredOn": "${ARRAYINCLUDES(['FLOAT', 'DOUBLE'], stdSqlType)}",
+            "disabledOn": "${domainName}"
           }
         ]
       }

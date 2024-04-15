@@ -25,7 +25,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppEntity__findPage",
-        "gql:selection": "total,items{id,ver,serviceId,service{id,displayName,code},displayName,name,tableName,tagSet}",
+        "gql:selection": "total,items{id,ver,serviceId,service{id,displayName,code},columnSize,displayName,name,tableName,tagSet}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -33,8 +33,8 @@
           "filter_serviceId__eq": "${serviceId}",
           "orderBy": [
             {
-              "name": "displayName",
-              "desc": true
+              "name": "name",
+              "desc": false
             }
           ]
         }
@@ -60,8 +60,7 @@
           "type": "button",
           "label": "刷新列表",
           "icon": "fa fa-repeat",
-          "actionType": "reload",
-          "target": "data-table"
+          "actionType": "reload"
         },
         {
           "type": "columns-toggler",
@@ -73,6 +72,10 @@
           "name": "keyword",
           "align": "right",
           "placeholder": "请输入关键字 ..."
+        },
+        {
+          "type": "pagination",
+          "align": "right"
         }
       ],
       "footerToolbar": ["switch-per-page", "statistics", "pagination"],
@@ -134,13 +137,60 @@
           "source": "@dict:app_dev/entity-tagset"
         },
         {
+          "type": "container",
+          "label": "字段总数",
+          "body": [
+            {
+              "type": "button",
+              "label": "${columnSize}",
+              "level": "link",
+              "className": "pl-0",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "${displayName} - ${name} 的字段管理",
+                "closeOnEsc": true,
+                "size": "lg",
+                "actions": [],
+                "body": {
+                  "type": "service",
+                  "data": {
+                    "entityId": "${id}",
+                    "entityName": "${name}"
+                  },
+                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
+                }
+              }
+            }
+          ]
+        },
+        {
           "type": "operation",
           "label": "操作",
           "fixed": "right",
           "buttons": [
             {
-              "label": "编辑",
               "type": "button",
+              "label": "字段管理",
+              "level": "info",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "${displayName} - ${name} 的字段管理",
+                "closeOnEsc": true,
+                "size": "lg",
+                "actions": [],
+                "body": {
+                  "type": "service",
+                  "data": {
+                    "entityId": "${id}",
+                    "entityName": "${name}"
+                  },
+                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "label": "编辑",
               "level": "primary",
               "actionType": "dialog",
               "dialog": {
@@ -160,26 +210,6 @@
               "actionType": "ajax",
               "confirmTitle": "删除确认",
               "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
-            },
-            {
-              "label": "字段管理",
-              "type": "button",
-              "level": "info",
-              "actionType": "dialog",
-              "dialog": {
-                "title": "${displayName} - ${name} 的字段管理",
-                "closeOnEsc": true,
-                "size": "lg",
-                "actions": [],
-                "body": {
-                  "type": "service",
-                  "data": {
-                    "entityId": "${id}",
-                    "entityName": "${name}"
-                  },
-                  "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
-                }
-              }
             }
           ]
         }

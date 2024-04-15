@@ -3,7 +3,6 @@
   "msg": "",
   "data": {
     "type": "crud",
-    "name": "data-table",
     "syncLocation": false,
     "autoFillHeight": true,
     "pageField": "page",
@@ -45,142 +44,26 @@
         }
       },
       {
-        "type": "dropdown-button",
-        "label": "预制字段",
-        "trigger": "hover",
+        "type": "button",
+        "label": "添加预制字段",
         "icon": "fa-solid fa-suitcase",
-        "buttons": [
-          {
-            "type": "button",
-            "label": "添加 ID 字段（UUID）",
-            "actionType": "ajax",
-            "api": {
-              "url": "@mutation:DevAppEntityColumn__batchModify",
-              "data": {
-                "data": [
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "ID",
-                    "name": "ID",
-                    "primary": true,
-                    "mandatory": true,
-                    "stdSqlType": "VARCHAR",
-                    "tagSet": "seq",
-                    "precision": 32
-                  }
-                ]
-              },
-              "messages": {
-                "success": "字段添加成功！",
-                "failed": "字段添加失败！"
-              }
-            }
-          },
-          {
-            "type": "button",
-            "label": "添加数据审计字段",
-            "actionType": "ajax",
-            "api": {
-              "url": "@mutation:DevAppEntityColumn__batchModify",
-              "data": {
-                "data": [
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "创建人",
-                    "name": "CREATED_BY",
-                    "stdSqlType": "VARCHAR",
-                    "domainName": "createdBy"
-                  },
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "更新人",
-                    "name": "UPDATED_BY",
-                    "stdSqlType": "VARCHAR",
-                    "domainName": "updatedBy"
-                  },
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "创建时间",
-                    "name": "CREATED_TIME",
-                    "mandatory": true,
-                    "stdSqlType": "DATETIME",
-                    "domainName": "createTime"
-                  },
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "更新时间",
-                    "name": "UPDATED_TIME",
-                    "mandatory": true,
-                    "stdSqlType": "DATETIME",
-                    "domainName": "updateTime"
-                  }
-                ]
-              },
-              "messages": {
-                "success": "字段添加成功！",
-                "failed": "字段添加失败！"
-              }
-            }
-          },
-          {
-            "type": "button",
-            "label": "添加数据修订字段",
-            "actionType": "ajax",
-            "api": {
-              "url": "@mutation:DevAppEntityColumn__batchModify",
-              "data": {
-                "data": [
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "数据修订版本",
-                    "name": "VER",
-                    "mandatory": true,
-                    "stdSqlType": "INTEGER",
-                    "defaultValue": 0,
-                    "domainName": "version"
-                  }
-                ]
-              },
-              "messages": {
-                "success": "字段添加成功！",
-                "failed": "字段添加失败！"
-              }
-            }
-          },
-          {
-            "type": "button",
-            "label": "添加数据软删除字段",
-            "actionType": "ajax",
-            "api": {
-              "url": "@mutation:DevAppEntityColumn__batchModify",
-              "data": {
-                "data": [
-                  {
-                    "entityId": "${entityId}",
-                    "displayName": "数据软删除标记",
-                    "name": "DEL",
-                    "mandatory": true,
-                    "stdSqlType": "TINYINT",
-                    "defaultValue": 0,
-                    "domainName": "delFlag"
-                  }
-                ]
-              },
-              "messages": {
-                "success": "字段添加成功！",
-                "failed": "字段添加失败！"
-              }
-            }
+        "actionType": "dialog",
+        "dialog": {
+          "title": "添加预制字段",
+          "size": "lg",
+          "closeOnEsc": true,
+          "body": {
+            "type": "service",
+            "schemaApi": "get:/pages/admin/demo/app-dev/batch-add-entity-columns.json"
           }
-        ]
+        }
       },
       "bulkActions",
       {
         "type": "button",
         "label": "刷新列表",
         "icon": "fa fa-repeat",
-        "actionType": "reload",
-        "target": "data-table"
+        "actionType": "reload"
       },
       {
         "type": "columns-toggler",
@@ -206,6 +89,12 @@
       }
     ],
     "columns": [
+      {
+        "type": "text",
+        "name": "propId",
+        "label": "字段编号",
+        "fixed": "left"
+      },
       {
         "type": "text",
         "name": "displayName",
@@ -243,7 +132,7 @@
         "source": "@dict:app_dev/entity-column-tagset"
       },
       {
-        "type": "list-select",
+        "type": "select",
         "name": "stdSqlType",
         "label": "字段类型",
         "static": true,
@@ -266,7 +155,7 @@
         "label": "小数精度"
       },
       {
-        "type": "list-select",
+        "type": "select",
         "name": "domainName",
         "label": "数据域",
         "static": true,
@@ -274,7 +163,7 @@
         "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
       },
       {
-        "type": "list-select",
+        "type": "select",
         "name": "dictName",
         "label": "字典",
         "static": true,

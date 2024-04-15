@@ -7,6 +7,7 @@
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
+    "autoFocus": true,
     "onEvent": {
       "submitSucc": {
         "actions": [
@@ -14,8 +15,7 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload",
-            "componentName": "data-table"
+            "actionType": "reload"
           }
         ]
       }
@@ -71,10 +71,31 @@
         "body": [
           {
             "type": "select",
+            "name": "domainName",
+            "label": "数据域",
+            "clearable": true,
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+          },
+          {
+            "type": "select",
+            "name": "dictName",
+            "label": "字典",
+            "clearable": true,
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "body": [
+          {
+            "type": "select",
             "name": "stdSqlType",
             "label": "字段类型",
             "source": "@dict:core/std-sql-type",
-            "required": true
+            "required": true,
+            "requiredOn": "${!domainName}",
+            "disabledOn": "${domainName}"
           },
           {
             "type": "input-text",
@@ -101,25 +122,6 @@
             "min": 0,
             "disabledOn": "${domainName || !ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}",
             "requiredOn": "${!domainName && ARRAYINCLUDES(['FLOAT', 'DOUBLE', 'NUMERIC'], stdSqlType)}"
-          }
-        ]
-      },
-      {
-        "type": "group",
-        "body": [
-          {
-            "type": "select",
-            "name": "domainName",
-            "label": "数据域",
-            "clearable": true,
-            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
-          },
-          {
-            "type": "select",
-            "name": "dictName",
-            "label": "字典",
-            "clearable": true,
-            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
           }
         ]
       }

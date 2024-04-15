@@ -14,8 +14,7 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload",
-            "componentName": "data-table"
+            "actionType": "reload"
           }
         ]
       }
@@ -25,6 +24,32 @@
     },
     "data": {
       "data": [
+        {
+          "appId": "${appId}",
+          "displayName": "UUID",
+          "name": "uuid",
+          "stdSqlType": "VARCHAR",
+          "precision": 32
+        },
+        {
+          "appId": "${appId}",
+          "displayName": "数据修订版本",
+          "name": "version",
+          "stdSqlType": "INTEGER"
+        },
+        {
+          "appId": "${appId}",
+          "displayName": "数据软删除标记",
+          "name": "delFlag",
+          "stdDomain": "boolFlag",
+          "stdSqlType": "TINYINT"
+        },
+        {
+          "appId": "${appId}",
+          "displayName": "布尔值",
+          "name": "boolFlag",
+          "stdSqlType": "TINYINT"
+        },
         {
           "appId": "${appId}",
           "displayName": "数据创建人",
@@ -50,12 +75,6 @@
           "displayName": "数据更新时间",
           "name": "updateTime",
           "stdSqlType": "TIMESTAMP"
-        },
-        {
-          "appId": "${appId}",
-          "displayName": "数据修订版本",
-          "name": "version",
-          "stdSqlType": "INTEGER"
         },
         {
           "appId": "${appId}",
@@ -110,19 +129,6 @@
           "stdDomain": "json",
           "stdSqlType": "VARCHAR",
           "precision": 16777216
-        },
-        {
-          "appId": "${appId}",
-          "displayName": "数据软删除标记",
-          "name": "delFlag",
-          "stdDomain": "boolFlag",
-          "stdSqlType": "TINYINT"
-        },
-        {
-          "appId": "${appId}",
-          "displayName": "布尔值",
-          "name": "boolFlag",
-          "stdSqlType": "TINYINT"
         }
       ]
     },
@@ -131,8 +137,8 @@
         "type": "input-table",
         "name": "data",
         "label": false,
-        "needConfirm": false,
-        "static": true,
+        "needConfirm": true,
+        "removable": true,
         "perPage": 5,
         "columns": [
           {
@@ -148,14 +154,16 @@
             "name": "stdDomain",
             "label": "标准域",
             "placeholder": "",
-            "source": "@dict:core/std-domain"
+            "source": "@dict:core/std-domain",
+            "static": true
           },
           {
             "type": "select",
             "name": "stdSqlType",
             "label": "数据类型",
             "placeholder": "",
-            "source": "@dict:core/std-sql-type"
+            "source": "@dict:core/std-sql-type",
+            "static": true
           },
           {
             "name": "precision",

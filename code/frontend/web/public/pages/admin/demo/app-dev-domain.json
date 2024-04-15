@@ -32,8 +32,8 @@
           "filter_appId__eq": "${appId}",
           "orderBy": [
             {
-              "name": "displayName",
-              "desc": true
+              "name": "name",
+              "desc": false
             }
           ]
         }
@@ -75,8 +75,7 @@
           "type": "button",
           "label": "刷新列表",
           "icon": "fa fa-repeat",
-          "actionType": "reload",
-          "target": "data-table"
+          "actionType": "reload"
         },
         {
           "type": "columns-toggler",
@@ -88,6 +87,10 @@
           "name": "keyword",
           "align": "right",
           "placeholder": "请输入关键字 ..."
+        },
+        {
+          "type": "pagination",
+          "align": "right"
         }
       ],
       "footerToolbar": ["switch-per-page", "statistics", "pagination"],
