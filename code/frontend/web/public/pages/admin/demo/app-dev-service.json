@@ -32,7 +32,7 @@
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
-          "filter_appId__eq": "${appId}",
+          "filter_appId__eq": "${appId || 'none'}",
           "orderBy": [
             {
               "name": "displayName",
@@ -139,6 +139,15 @@
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-service.json"
                 }
               }
+            },
+            {
+              "label": "发布",
+              "type": "button",
+              "level": "success",
+              "api": "@mutation:DevAppService__release?id=${id}",
+              "actionType": "ajax",
+              "confirmTitle": "发布确认",
+              "confirmText": "确定要发布服务「<b>${displayName} (${code})</b>」？"
             },
             {
               "label": "删除",

@@ -32,6 +32,27 @@
     "body": [
       {
         "type": "input-group",
+        "label": "目标实体",
+        "required": true,
+        "body": [
+          {
+            "type": "select",
+            "name": "targetId",
+            "required": true,
+            "label": false,
+            "source": "@query:DevAppEntity__findList/label:name,value:id"
+          },
+          {
+            "type": "input-text",
+            "name": "targetPropName",
+            "prefix": "#",
+            "label": false,
+            "placeholder": "目标实体侧的关联属性名"
+          }
+        ]
+      },
+      {
+        "type": "input-group",
         "label": "源实体",
         "required": true,
         "body": [
@@ -51,27 +72,6 @@
             "required": true,
             "label": false,
             "placeholder": "源实体侧的关联属性名"
-          }
-        ]
-      },
-      {
-        "type": "input-group",
-        "label": "目标实体",
-        "required": true,
-        "body": [
-          {
-            "type": "select",
-            "name": "targetId",
-            "required": true,
-            "label": false,
-            "source": "@query:DevAppEntity__findList/label:name,value:id"
-          },
-          {
-            "type": "input-text",
-            "name": "targetPropName",
-            "prefix": "#",
-            "label": false,
-            "placeholder": "目标实体侧的关联属性名"
           }
         ]
       },

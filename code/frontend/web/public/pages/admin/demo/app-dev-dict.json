@@ -32,7 +32,7 @@
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
-          "filter_appId__eq": "${appId}",
+          "filter_appId__eq": "${appId || 'none'}",
           "orderBy": [
             {
               "name": "displayName",
