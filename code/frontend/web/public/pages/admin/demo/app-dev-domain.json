@@ -52,6 +52,10 @@
             "title": "添加域定义",
             "size": "lg",
             "closeOnEsc": true,
+            "data": {
+              "appId": "${appId}",
+              "refTableName": "${refTableName}"
+            },
             "body": {
               "type": "service",
               "schemaApi": "get:/pages/admin/demo/app-dev/new-app-domain.json"
@@ -68,6 +72,10 @@
             "size": "lg",
             "closeOnEsc": true,
             "actions": [],
+            "data": {
+              "appId": "${appId}",
+              "refTableName": "${refTableName}"
+            },
             "body": {
               "type": "service",
               "schemaApi": "get:/pages/admin/demo/app-dev/batch-add-domains.json"
@@ -160,6 +168,11 @@
                 "title": "编辑域定义",
                 "size": "lg",
                 "closeOnEsc": true,
+                "data": {
+                  "appId": "${appId}",
+                  "domainId": "${id}",
+                  "refTableName": "${refTableName}"
+                },
                 "body": {
                   "type": "service",
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-app-domain.json"

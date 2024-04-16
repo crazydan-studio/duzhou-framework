@@ -15,17 +15,18 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
     },
     "initApi": {
-      "url": "@query:DevAppDict__get?id=${id}",
+      "url": "@query:DevAppDict__get?id=${dictId}",
       "gql:selection": "id,appId,displayName,name,optionType,options"
     },
     "api": {
-      "url": "@mutation:DevAppDict__update?id=${id}",
+      "url": "@mutation:DevAppDict__update?id=${dictId}",
       "gql:selection": "id"
     },
     "body": [

@@ -15,7 +15,8 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
@@ -70,14 +71,14 @@
             "name": "domainName",
             "label": "数据域",
             "clearable": true,
-            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?filter_appId__eq=${appId}"
           },
           {
             "type": "select",
             "name": "dictName",
             "label": "字典",
             "clearable": true,
-            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?filter_appId__eq=${appId}"
           }
         ]
       },

@@ -3,11 +3,14 @@
   "msg": "",
   "data": {
     "type": "crud",
-    "name": "data-table",
     "syncLocation": false,
     "autoFillHeight": true,
     "pageField": "page",
     "perPageField": "pageSize",
+    "name": "${refTableName}",
+    "data": {
+      "refTableName": "${UUID(32)}"
+    },
     "api": {
       "url": "@query:DevAppEntityRelation__findPage",
       "gql:selection": "total,items{id,sourceId,source{id,displayName,name},targetId,target{id,displayName,name},sourcePropName,targetPropName,type,tagSet,tableName,joinOnConds}",
@@ -34,11 +37,12 @@
           "title": "添加新关联",
           "closeOnEsc": true,
           "size": "lg",
-          "data": {
-            "sourceId": "${entityId}"
-          },
           "body": {
             "type": "service",
+            "data": {
+              "sourceId": "${entityId}",
+              "refTableName": "${refTableName}"
+            },
             "schemaApi": "get:/pages/admin/demo/app-dev/new-entity-relation.json"
           }
         }
@@ -48,8 +52,7 @@
         "type": "button",
         "label": "刷新列表",
         "icon": "fa fa-repeat",
-        "actionType": "reload",
-        "target": "data-table"
+        "actionType": "reload"
       },
       {
         "type": "columns-toggler",
@@ -118,6 +121,11 @@
               "size": "lg",
               "body": {
                 "type": "service",
+                "data": {
+                  "sourceId": "${entityId}",
+                  "relationId": "${id}",
+                  "refTableName": "${refTableName}"
+                },
                 "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-relation.json"
               }
             }

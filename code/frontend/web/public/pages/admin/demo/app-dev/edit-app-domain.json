@@ -15,17 +15,18 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
     },
     "initApi": {
-      "url": "@query:DevAppDomain__get?id=${id}",
-      "gql:selection": "id,displayName,name,stdDomain,stdSqlType,precision,scale"
+      "url": "@query:DevAppDomain__get?id=${domainId}",
+      "gql:selection": "id,appId,displayName,name,stdDomain,stdSqlType,precision,scale"
     },
     "api": {
-      "url": "@mutation:DevAppDomain__update?id=${id}",
+      "url": "@mutation:DevAppDomain__update?id=${domainId}",
       "gql:selection": "id"
     },
     "body": [

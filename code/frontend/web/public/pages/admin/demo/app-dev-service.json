@@ -51,6 +51,10 @@
           "dialog": {
             "title": "添加新服务",
             "closeOnEsc": true,
+            "data": {
+              "appId": "${appId}",
+              "refTableName": "${refTableName}"
+            },
             "body": {
               "type": "service",
               "schemaApi": "get:/pages/admin/demo/app-dev/new-service.json"
@@ -125,6 +129,11 @@
               "dialog": {
                 "title": "编辑服务",
                 "closeOnEsc": true,
+                "data": {
+                  "appId": "${appId}",
+                  "serviceId": "${id}",
+                  "refTableName": "${refTableName}"
+                },
                 "body": {
                   "type": "service",
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-service.json"

@@ -15,17 +15,18 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
     },
     "initApi": {
-      "url": "@query:DevAppEntityColumn__get?id=${id}",
+      "url": "@query:DevAppEntityColumn__get?id=${columnId}",
       "gql:selection": "id,displayName,name,primary,mandatory,tagSet,stdSqlType,defaultValue,precision,scale,domainName,dictName"
     },
     "api": {
-      "url": "@mutation:DevAppEntityColumn__update?id=${id}&entityId=${entityId}",
+      "url": "@mutation:DevAppEntityColumn__update?id=${columnId}&entityId=${entityId}",
       "gql:selection": "id"
     },
     "body": [
@@ -74,14 +75,14 @@
             "name": "domainName",
             "label": "数据域",
             "clearable": true,
-            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+            "source": "@query:DevAppDomain__findList/label:displayName,value:name?filter_appId__eq=${appId}"
           },
           {
             "type": "select",
             "name": "dictName",
             "label": "字典",
             "clearable": true,
-            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+            "source": "@query:DevAppDict__findList/label:displayName,value:name?filter_appId__eq=${appId}"
           }
         ]
       },

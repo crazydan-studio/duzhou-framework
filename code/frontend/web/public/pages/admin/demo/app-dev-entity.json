@@ -54,6 +54,12 @@
             "closeOnEsc": true,
             "body": {
               "type": "service",
+              "data": {
+                "_": "仅传必须参数，以避免自动填充当前层的同名变量",
+                "appId": "${appId}",
+                "serviceId": "${serviceId}",
+                "refTableName": "${refTableName}"
+              },
               "schemaApi": "get:/pages/admin/demo/app-dev/new-entity.json"
             }
           }
@@ -154,11 +160,21 @@
                 "closeOnEsc": true,
                 "size": "lg",
                 "actions": [],
+                "onEvent": {
+                  "cancel": {
+                    "actions": [
+                      {
+                        "actionType": "reload",
+                        "componentName": "${refTableName}"
+                      }
+                    ]
+                  }
+                },
                 "body": {
                   "type": "service",
                   "data": {
-                    "entityId": "${id}",
-                    "entityName": "${name}"
+                    "appId": "${appId}",
+                    "entityId": "${id}"
                   },
                   "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
                 }
@@ -181,11 +197,21 @@
                 "closeOnEsc": true,
                 "size": "lg",
                 "actions": [],
+                "onEvent": {
+                  "cancel": {
+                    "actions": [
+                      {
+                        "actionType": "reload",
+                        "componentName": "${refTableName}"
+                      }
+                    ]
+                  }
+                },
                 "body": {
                   "type": "service",
                   "data": {
-                    "entityId": "${id}",
-                    "entityName": "${name}"
+                    "appId": "${appId}",
+                    "entityId": "${id}"
                   },
                   "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
                 }
@@ -201,6 +227,11 @@
                 "closeOnEsc": true,
                 "body": {
                   "type": "service",
+                  "data": {
+                    "appId": "${appId}",
+                    "entityId": "${id}",
+                    "refTableName": "${refTableName}"
+                  },
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity.json"
                 }
               }

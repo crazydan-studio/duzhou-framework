@@ -8,6 +8,10 @@
       "autoFillHeight": true,
       "pageField": "page",
       "perPageField": "pageSize",
+      "name": "${refTableName}",
+      "data": {
+        "refTableName": "${UUID(32)}"
+      },
       "api": {
         "url": "@query:DevApp__findPage",
         "gql:selection": "total,items{id,ver,displayName,code,version,logo,classPkgName}",
@@ -32,6 +36,9 @@
           "dialog": {
             "title": "添加新应用",
             "closeOnEsc": true,
+            "data": {
+              "refTableName": "${refTableName}"
+            },
             "body": {
               "type": "service",
               "schemaApi": "get:/pages/admin/demo/app-dev/new-app.json"
@@ -118,6 +125,10 @@
               "dialog": {
                 "title": "编辑应用",
                 "closeOnEsc": true,
+                "data": {
+                  "appId": "${id}",
+                  "refTableName": "${refTableName}"
+                },
                 "body": {
                   "type": "service",
                   "schemaApi": "get:/pages/admin/demo/app-dev/edit-app.json"

@@ -27,12 +27,7 @@
             "label": false,
             "multiple": true,
             "mode": "horizontal",
-            "source": {
-              "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
-              "data": {
-                "filter_entityId__eq": "${entityId}"
-              }
-            }
+            "source": "@query:DevAppEntityColumn__findList/label:name,value:name?filter_entityId__eq=${entityId}"
           }
         ]
       }

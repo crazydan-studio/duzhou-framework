@@ -148,7 +148,7 @@
         "label": "数据域",
         "static": true,
         "placeholder": "",
-        "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+        "source": "@query:DevAppDomain__findList/label:displayName,value:name?filter_appId__eq=${appId}"
       },
       {
         "type": "select",
@@ -156,7 +156,7 @@
         "label": "字典",
         "static": true,
         "placeholder": "",
-        "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+        "source": "@query:DevAppDict__findList/label:displayName,value:name?filter_appId__eq=${appId}"
       }
     ],
     "data": {

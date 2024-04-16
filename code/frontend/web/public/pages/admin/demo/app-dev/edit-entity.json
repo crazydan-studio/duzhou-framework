@@ -15,17 +15,18 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
     },
     "initApi": {
-      "url": "@query:DevAppEntity__get?id=${id}",
+      "url": "@query:DevAppEntity__get?id=${entityId}",
       "gql:selection": "id,displayName,name,tableName,tagSet"
     },
     "api": {
-      "url": "@mutation:DevAppEntity__update?id=${id}",
+      "url": "@mutation:DevAppEntity__update?id=${entityId}",
       "gql:selection": "id"
     },
     "body": [

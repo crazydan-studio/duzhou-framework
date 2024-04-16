@@ -15,7 +15,8 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
@@ -37,9 +38,7 @@
             "required": true,
             "label": false,
             "disabled": true,
-            "source": {
-              "url": "@query:DevAppEntity__findList/label:name,value:id"
-            }
+            "source": "@query:DevAppEntity__findList/label:name,value:id"
           },
           {
             "type": "input-text",
@@ -61,9 +60,7 @@
             "name": "targetId",
             "required": true,
             "label": false,
-            "source": {
-              "url": "@query:DevAppEntity__findList/label:name,value:id"
-            }
+            "source": "@query:DevAppEntity__findList/label:name,value:id"
           },
           {
             "type": "input-text",
@@ -104,24 +101,14 @@
             "name": "leftProp",
             "label": "源实体字段",
             "required": true,
-            "source": {
-              "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
-              "data": {
-                "filter_entityId__eq": "${sourceId}"
-              }
-            }
+            "source": "@query:DevAppEntityColumn__findList/label:name,value:name?filter_entityId__eq=${sourceId}"
           },
           {
             "type": "select",
             "name": "rightProp",
             "label": "目标实体字段",
             "required": true,
-            "source": {
-              "url": "@query:DevAppEntityColumn__findList/label:name,value:name",
-              "data": {
-                "filter_entityId__eq": "${targetId}"
-              }
-            }
+            "source": "@query:DevAppEntityColumn__findList/label:name,value:name?filter_entityId__eq=${targetId}"
           }
         ]
       }

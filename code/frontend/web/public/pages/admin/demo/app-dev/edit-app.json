@@ -15,17 +15,18 @@
             "actionType": "closeDialog"
           },
           {
-            "actionType": "reload"
+            "actionType": "reload",
+            "componentName": "${refTableName}"
           }
         ]
       }
     },
     "initApi": {
-      "url": "@query:DevApp__get?id=${id}",
+      "url": "@query:DevApp__get?id=${appId}",
       "gql:selection": "id,logo,displayName,code,version,classPkgName"
     },
     "api": {
-      "url": "@mutation:DevApp__update?id=${id}",
+      "url": "@mutation:DevApp__update?id=${appId}",
       "gql:selection": "id"
     },
     "body": [
@@ -36,7 +37,7 @@
         "required": true,
         "accept": ".jpeg,.jpg,.png,.gif,.svg",
         "uploadBtnText": "点击上传应用图标",
-        "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${id}"
+        "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${appId}"
       },
       {
         "type": "input-text",

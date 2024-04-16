@@ -38,8 +38,9 @@
           "size": "lg",
           "closeOnEsc": true,
           "data": {
+            "appId": "${appId}",
             "entityId": "${entityId}",
-            "appId": "${appId}"
+            "refTableName": "${refTableName}"
           },
           "body": {
             "type": "service",
@@ -57,6 +58,11 @@
           "size": "lg",
           "closeOnEsc": true,
           "actions": [],
+          "data": {
+            "appId": "${appId}",
+            "entityId": "${entityId}",
+            "refTableName": "${refTableName}"
+          },
           "body": {
             "type": "service",
             "schemaApi": "get:/pages/admin/demo/app-dev/batch-add-entity-columns.json"
@@ -165,7 +171,7 @@
         "label": "数据域",
         "static": true,
         "placeholder": "",
-        "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+        "source": "@query:DevAppDomain__findList/label:displayName,value:name?filter_appId__eq=${appId}"
       },
       {
         "type": "select",
@@ -173,7 +179,7 @@
         "label": "字典",
         "static": true,
         "placeholder": "",
-        "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+        "source": "@query:DevAppDict__findList/label:displayName,value:name?filter_appId__eq=${appId}"
       },
       {
         "type": "operation",
@@ -189,6 +195,12 @@
               "title": "编辑字段",
               "size": "lg",
               "closeOnEsc": true,
+              "data": {
+                "appId": "${appId}",
+                "entityId": "${entityId}",
+                "columnId": "${id}",
+                "refTableName": "${refTableName}"
+              },
               "body": {
                 "type": "service",
                 "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity-column.json"
