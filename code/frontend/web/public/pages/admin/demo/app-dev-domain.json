@@ -1,6 +1,9 @@
 {
   "type": "page",
   "title": "域定义列表",
+  "data": {
+    "refTableName": "${UUID(32)}"
+  },
   "asideResizor": true,
   "asideMinWidth": 150,
   "asideMaxWidth": 400,
@@ -9,7 +12,7 @@
     "wrapWithPanel": false,
     "submitOnInit": true,
     "className": "app-dev-nav",
-    "target": "data-table",
+    "target": "${refTableName}",
     "body": {
       "type": "service",
       "schemaApi": "get:/pages/admin/demo/app-dev/aside-app.json"
@@ -18,7 +21,7 @@
   "body": [
     {
       "type": "crud",
-      "name": "data-table",
+      "name": "${refTableName}",
       "syncLocation": true,
       "autoFillHeight": true,
       "pageField": "page",
@@ -46,7 +49,7 @@
           "icon": "fa-solid fa-plus",
           "actionType": "dialog",
           "dialog": {
-            "title": "添加新域定义",
+            "title": "添加域定义",
             "size": "lg",
             "closeOnEsc": true,
             "body": {
@@ -64,6 +67,7 @@
             "title": "添加预制域定义",
             "size": "lg",
             "closeOnEsc": true,
+            "actions": [],
             "body": {
               "type": "service",
               "schemaApi": "get:/pages/admin/demo/app-dev/batch-add-domains.json"

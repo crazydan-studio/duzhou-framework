@@ -21,7 +21,9 @@ import { createRoot } from 'react-dom/client';
 import { theme as registerTheme } from 'amis-core';
 
 import { history } from '@/sdk/nop-core';
+
 import '@/renderer/amis/components';
+import '@/renderer/amis/actions';
 
 import Renderer from './Renderer';
 

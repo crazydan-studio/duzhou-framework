@@ -2,26 +2,124 @@
   "status": 0,
   "msg": "",
   "data": {
-    "type": "form",
-    "title": "",
-    "actions": [],
-    "mode": "horizontal",
-    "wrapWithPanel": false,
-    "onEvent": {
-      "submitSucc": {
-        "actions": [
-          {
-            "actionType": "closeDialog"
-          },
-          {
-            "actionType": "reload"
+    "type": "crud",
+    "syncLocation": false,
+    "source": "${data}",
+    "primaryField": "name",
+    "checkOnItemClick": true,
+    "perPage": 5,
+    "keepItemSelectionOnPageChange": true,
+    "headerToolbar": [
+      {
+        "type": "button",
+        "label": "添加全部域定义",
+        "level": "primary",
+        "disabledOn": "${selectedItems.length > 0}",
+        "onEvent": {
+          "click": {
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "@mutation:DevAppDomain__batchModify",
+                  "method": "post",
+                  "data": { "data": "${data}" },
+                  "messages": {
+                    "success": "域定义添加成功！"
+                  }
+                }
+              },
+              {
+                "actionType": "closeDialog",
+                "expression": "${responseResult.responseStatus == 0}"
+              },
+              {
+                "actionType": "reload",
+                "componentName": "${refTableName}",
+                "expression": "${responseResult.responseStatus == 0}"
+              }
+            ]
           }
-        ]
+        }
+      },
+      "bulkActions",
+      {
+        "type": "columns-toggler",
+        "icon": "fas fa-cog",
+        "align": "right"
+      },
+      {
+        "type": "pagination",
+        "align": "right"
       }
-    },
-    "api": {
-      "url": "@mutation:DevAppDomain__batchModify"
-    },
+    ],
+    "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+    "bulkActions": [
+      {
+        "label": "添加选中域定义",
+        "level": "primary",
+        "onEvent": {
+          "click": {
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "@mutation:DevAppDomain__batchModify",
+                  "method": "post",
+                  "data": { "data": "${selectedItems}" },
+                  "messages": {
+                    "success": "域定义添加成功！"
+                  }
+                }
+              },
+              {
+                "actionType": "closeDialog",
+                "expression": "${responseResult.responseStatus == 0}"
+              },
+              {
+                "actionType": "reload",
+                "componentName": "${refTableName}",
+                "expression": "${responseResult.responseStatus == 0}"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "columns": [
+      {
+        "name": "displayName",
+        "label": "名称"
+      },
+      {
+        "name": "name",
+        "label": "编码"
+      },
+      {
+        "type": "select",
+        "name": "stdDomain",
+        "label": "标准域",
+        "placeholder": "",
+        "source": "@dict:core/std-domain",
+        "static": true
+      },
+      {
+        "type": "select",
+        "name": "stdSqlType",
+        "label": "数据类型",
+        "placeholder": "",
+        "source": "@dict:core/std-sql-type",
+        "static": true
+      },
+      {
+        "name": "precision",
+        "label": "数据长度"
+      },
+      {
+        "name": "scale",
+        "label": "小数位数"
+      }
+    ],
     "data": {
       "data": [
         {
@@ -131,50 +229,6 @@
           "precision": 16777216
         }
       ]
-    },
-    "body": [
-      {
-        "type": "input-table",
-        "name": "data",
-        "label": false,
-        "needConfirm": true,
-        "removable": true,
-        "perPage": 5,
-        "columns": [
-          {
-            "name": "displayName",
-            "label": "名称"
-          },
-          {
-            "name": "name",
-            "label": "编码"
-          },
-          {
-            "type": "select",
-            "name": "stdDomain",
-            "label": "标准域",
-            "placeholder": "",
-            "source": "@dict:core/std-domain",
-            "static": true
-          },
-          {
-            "type": "select",
-            "name": "stdSqlType",
-            "label": "数据类型",
-            "placeholder": "",
-            "source": "@dict:core/std-sql-type",
-            "static": true
-          },
-          {
-            "name": "precision",
-            "label": "数据长度"
-          },
-          {
-            "name": "scale",
-            "label": "小数位数"
-          }
-        ]
-      }
-    ]
+    }
   }
 }

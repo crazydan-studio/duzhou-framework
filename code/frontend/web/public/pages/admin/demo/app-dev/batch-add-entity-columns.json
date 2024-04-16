@@ -2,27 +2,163 @@
   "status": 0,
   "msg": "",
   "data": {
-    "type": "form",
-    "title": "",
-    "actions": [],
-    "mode": "horizontal",
-    "wrapWithPanel": false,
-    "onEvent": {
-      "submitSucc": {
-        "actions": [
-          {
-            "actionType": "closeDialog"
-          },
-          {
-            "actionType": "reload"
+    "type": "crud",
+    "syncLocation": false,
+    "source": "${data}",
+    "primaryField": "name",
+    "checkOnItemClick": true,
+    "perPage": 5,
+    "keepItemSelectionOnPageChange": true,
+    "headerToolbar": [
+      {
+        "type": "button",
+        "label": "添加全部字段",
+        "level": "primary",
+        "disabledOn": "${selectedItems.length > 0}",
+        "onEvent": {
+          "click": {
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "@mutation:DevAppEntityColumn__batchModify",
+                  "method": "post",
+                  "data": { "data": "${data}" },
+                  "requestAdaptor": "return {...api, data: {...api.data, data: [...api.data.data.map((d, i) => { d = {...d, propId: i + 1}; return d; })]}};",
+                  "messages": {
+                    "success": "字段添加成功！"
+                  }
+                }
+              },
+              {
+                "actionType": "closeDialog",
+                "expression": "${responseResult.responseStatus == 0}"
+              },
+              {
+                "actionType": "reload",
+                "componentName": "${refTableName}",
+                "expression": "${responseResult.responseStatus == 0}"
+              }
+            ]
           }
-        ]
+        }
+      },
+      "bulkActions",
+      {
+        "type": "columns-toggler",
+        "icon": "fas fa-cog",
+        "align": "right"
+      },
+      {
+        "type": "pagination",
+        "align": "right"
       }
-    },
-    "api": {
-      "url": "@mutation:DevAppEntityColumn__batchModify",
-      "requestAdaptor": "return {...api, data: {...api.data, data: [...api.data.data.map((d, i) => { d = {...d, propId: i + 1}; return d; })]}};"
-    },
+    ],
+    "footerToolbar": ["switch-per-page", "statistics", "pagination"],
+    "bulkActions": [
+      {
+        "label": "添加选中字段",
+        "level": "primary",
+        "onEvent": {
+          "click": {
+            "actions": [
+              {
+                "actionType": "ajax",
+                "api": {
+                  "url": "@mutation:DevAppEntityColumn__batchModify",
+                  "method": "post",
+                  "data": { "data": "${selectedItems}" },
+                  "requestAdaptor": "return {...api, data: {...api.data, data: [...api.data.data.map((d, i) => { d = {...d, propId: i + 1}; return d; })]}};",
+                  "messages": {
+                    "success": "字段添加成功！"
+                  }
+                }
+              },
+              {
+                "actionType": "closeDialog",
+                "expression": "${responseResult.responseStatus == 0}"
+              },
+              {
+                "actionType": "reload",
+                "componentName": "${refTableName}",
+                "expression": "${responseResult.responseStatus == 0}"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "columns": [
+      {
+        "name": "displayName",
+        "label": "名称"
+      },
+      {
+        "name": "name",
+        "label": "字段名"
+      },
+      {
+        "type": "switch",
+        "name": "primary",
+        "label": "是否主键",
+        "static": true,
+        "onText": "是",
+        "offText": "否"
+      },
+      {
+        "type": "switch",
+        "name": "mandatory",
+        "label": "是否非空",
+        "static": true,
+        "onText": "是",
+        "offText": "否"
+      },
+      {
+        "type": "list-select",
+        "name": "tagSet",
+        "label": "标签",
+        "static": true,
+        "multiple": true,
+        "placeholder": "",
+        "source": "@dict:app_dev/entity-column-tagset"
+      },
+      {
+        "type": "select",
+        "name": "stdSqlType",
+        "label": "字段类型",
+        "static": true,
+        "placeholder": "",
+        "source": "@dict:core/std-sql-type"
+      },
+      {
+        "name": "defaultValue",
+        "label": "默认值"
+      },
+      {
+        "name": "precision",
+        "label": "字段长度"
+      },
+      {
+        "name": "scale",
+        "label": "小数精度"
+      },
+      {
+        "type": "select",
+        "name": "domainName",
+        "label": "数据域",
+        "static": true,
+        "placeholder": "",
+        "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
+      },
+      {
+        "type": "select",
+        "name": "dictName",
+        "label": "字典",
+        "static": true,
+        "placeholder": "",
+        "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
+      }
+    ],
     "data": {
       "data": [
         {
@@ -102,87 +238,6 @@
           "domainName": "updateTime"
         }
       ]
-    },
-    "body": [
-      {
-        "type": "input-table",
-        "name": "data",
-        "label": false,
-        "needConfirm": true,
-        "removable": true,
-        "perPage": 5,
-        "columns": [
-          {
-            "name": "displayName",
-            "label": "名称"
-          },
-          {
-            "name": "name",
-            "label": "字段名"
-          },
-          {
-            "type": "switch",
-            "name": "primary",
-            "label": "是否主键",
-            "static": true,
-            "onText": "是",
-            "offText": "否"
-          },
-          {
-            "type": "switch",
-            "name": "mandatory",
-            "label": "是否非空",
-            "static": true,
-            "onText": "是",
-            "offText": "否"
-          },
-          {
-            "type": "list-select",
-            "name": "tagSet",
-            "label": "标签",
-            "static": true,
-            "multiple": true,
-            "placeholder": "",
-            "source": "@dict:app_dev/entity-column-tagset"
-          },
-          {
-            "type": "select",
-            "name": "stdSqlType",
-            "label": "字段类型",
-            "static": true,
-            "placeholder": "",
-            "source": "@dict:core/std-sql-type"
-          },
-          {
-            "name": "defaultValue",
-            "label": "默认值"
-          },
-          {
-            "name": "precision",
-            "label": "字段长度"
-          },
-          {
-            "name": "scale",
-            "label": "小数精度"
-          },
-          {
-            "type": "select",
-            "name": "domainName",
-            "label": "数据域",
-            "static": true,
-            "placeholder": "",
-            "source": "@query:DevAppDomain__findList/label:displayName,value:name?appId=${appId}"
-          },
-          {
-            "type": "select",
-            "name": "dictName",
-            "label": "字典",
-            "static": true,
-            "placeholder": "",
-            "source": "@query:DevAppDict__findList/label:displayName,value:name?appId=${appId}"
-          }
-        ]
-      }
-    ]
+    }
   }
 }

@@ -1,6 +1,9 @@
 {
   "type": "page",
   "title": "字典定义列表",
+  "data": {
+    "refTableName": "${UUID(32)}"
+  },
   "asideResizor": true,
   "asideMinWidth": 150,
   "asideMaxWidth": 400,
@@ -9,7 +12,7 @@
     "wrapWithPanel": false,
     "submitOnInit": true,
     "className": "app-dev-nav",
-    "target": "data-table",
+    "target": "${refTableName}",
     "body": {
       "type": "service",
       "schemaApi": "get:/pages/admin/demo/app-dev/aside-app.json"
@@ -18,7 +21,7 @@
   "body": [
     {
       "type": "crud",
-      "name": "data-table",
+      "name": "${refTableName}",
       "syncLocation": true,
       "autoFillHeight": true,
       "pageField": "page",
