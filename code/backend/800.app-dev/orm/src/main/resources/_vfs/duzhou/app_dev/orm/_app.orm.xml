@@ -302,9 +302,9 @@
                         stdDataType="boolean" stdSqlType="BOOLEAN"/>
                 <column code="MANDATORY" defaultValue="0" displayName="是否非空" mandatory="true" name="mandatory"
                         propId="8" stdDataType="boolean" stdSqlType="BOOLEAN"/>
-                <column code="DOMAIN_NAME" displayName="数据域" name="domainName" precision="50" propId="9"
+                <column code="DOMAIN_NAME" displayName="数据域" name="domainName" precision="100" propId="9"
                         stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="DICT_NAME" displayName="引用字典" name="dictName" precision="32" propId="10"
+                <column code="DICT_NAME" displayName="引用字典" name="dictName" precision="100" propId="10"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="STD_SQL_TYPE" displayName="字段类型" name="stdSqlType" precision="50" propId="11"
                         stdDataType="string" stdSqlType="VARCHAR"/>
