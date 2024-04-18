@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
+
+    <!-- DefineLoop 等只是在定义全局和 Loop 变量，实际的遍历逻辑在 XCodeGenerator 中 -->
+    <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
+        <c:script><![CDATA[
+            builder.defineGlobalVar('app', app);
+            builder.defineGlobalVar('useCoreModule', false);
+            builder.defineGlobalVar('deltaDir', null);
+
+            builder.defineLoopVar('appModule', 'app', app => app.modules);
+            builder.defineLoopVar(
+                'moduleBeansName', 'appModule',
+                module => module.maven.artifactId
+            );
+
+            builder.defineLoopVar('moduleId', 'appModule', module => module.id);
+            builder.defineLoopVar('moduleName', 'appModule', module => module.code);
+            builder.defineLoopVar('basePackageName', 'appModule', module => module.basePackageName);
+            builder.defineLoopVar('entityPackageName', 'basePackageName', name => name + '.orm.entity');
+            builder.defineLoopVar('basePackagePath', 'basePackageName', name => name.replace('.', '/'));
+            builder.defineLoopVar(
+                'moduleClassShortPrefix', 'appModule',
+                module => module.code2.$camelCase(true)
+            );
+
+            builder.defineLoopVar('dialect', 'appModule', module => module.db?.dialect?.$toCsvSet());
+            builder.defineLoopVar('ormModel', 'appModule', module => module.ormModel);
+
+            builder.defineLoopVar('dict', 'ormModel', model => model.dicts);
+            builder.defineLoopVar('entityModel', 'ormModel', model => model.entityModels);
+            builder.defineLoopVar('toManyRelation', 'entityModel', entityModel => entityModel.toOneRelations);
+            builder.defineLoopVar('toOneRelation', 'entityModel', entityModel => entityModel.toManyRelations);
+        ]]></c:script>
+    </gen:DefineLoop>
+</c:unit>

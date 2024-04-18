@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.biz;
+
+import io.nop.api.core.annotations.biz.BizModel;
+import io.nop.biz.crud.CrudBizModel;
+
+import ${entityModel.className || entityModel.name};
+
+/** {@link ${entityModel.shortName}} 的业务处理模型 */
+@BizModel("${entityModel.shortName}")
+public class ${entityModel.shortName}BizModel extends _${entityModel.shortName}BizModel {
+
+}
+]]></c:unit>

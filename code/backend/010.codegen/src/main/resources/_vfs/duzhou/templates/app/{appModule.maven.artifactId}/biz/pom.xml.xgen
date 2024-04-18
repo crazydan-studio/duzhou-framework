@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="xml">
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+        <modelVersion>4.0.0</modelVersion>
+
+        <c:unit xpl:outputMode="text"><![CDATA[<!-- 当前服务的业务逻辑实现 -->]]></c:unit>
+        <artifactId>${appModule.maven.artifactId}-biz</artifactId>
+
+        <parent>
+            <groupId>${appModule.maven.groupId}</groupId>
+            <artifactId>${appModule.maven.artifactId}</artifactId>
+            <version>${appModule.maven.version}</version>
+            <relativePath>../pom.xml</relativePath>
+        </parent>
+
+        <dependencies>
+            <dependency>
+                <groupId>${appModule.maven.groupId}</groupId>
+                <artifactId>${appModule.maven.artifactId}-orm</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-orm</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-file-dao</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-biz</artifactId>
+            </dependency>
+            <c:unit xpl:outputMode="text">
+                <![CDATA[<!-- 引入 OrmFetcherBuilder 以支持在 xmeta 中定义配置了 mapToProp 和 depends 的属性 -->]]></c:unit>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-graphql-orm</artifactId>
+            </dependency>
+            <c:unit xpl:outputMode="text"><![CDATA[<!-- START：导入/导出支持 -->]]></c:unit>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-report-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-ooxml-docx</artifactId>
+            </dependency>
+            <c:unit xpl:outputMode="text"><![CDATA[<!-- END -->]]></c:unit>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-config</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-ioc</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-sys-dao</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-autotest-junit</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </project>
+</c:unit>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.biz._gen;
+
+import io.nop.api.core.annotations.biz.BizModel;
+import io.nop.biz.crud.CrudBizModel;
+
+import ${entityModel.className || entityModel.name};
+
+public class _${entityModel.shortName}BizModel extends CrudBizModel<${entityModel.shortName}> {
+
+    public _${entityModel.shortName}BizModel() {
+        setEntityName(${entityModel.shortName}.class.getName());
+    }
+}
+]]></c:unit>

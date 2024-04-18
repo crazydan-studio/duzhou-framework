@@ -1,9 +1,0 @@
-<c:unit xmlns:c="c" xmlns:xpl="xpl"
-        xpl:outputMode="text"
-><![CDATA[package ${basePackageName}.biz;
-
-/** 业务常量定义 */
-public interface ${moduleClassShortPrefix}BizConstants {
-
-}
-]]></c:unit>

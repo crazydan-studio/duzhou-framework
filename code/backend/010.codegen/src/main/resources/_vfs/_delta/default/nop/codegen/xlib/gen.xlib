@@ -1,26 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<lib xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:thisLib="thisLib" xmlns:c="c"
+<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
      x:schema="/nop/schema/xlib.xdef"
      x:extends="super"
 >
     <tags>
-        <DefineLoopForOrm x:override="merge">
-            <source x:override="merge">
-                <thisLib:DefineLoop>
-                    <!-- 向原脚本内追加新代码 -->
-                    <c:script x:override="append"><![CDATA[
-                        let mavenArtifactId = ormModel['ext:mavenArtifactId'];
-
-                        builder.defineGlobalVar(
-                            'moduleClassShortPrefix',
-                            mavenArtifactId.replace('-','_').$camelCase(true)
-                        );
-                    ]]></c:script>
-                </thisLib:DefineLoop>
-            </source>
-        </DefineLoopForOrm>
-
         <DeltaMerge outputMode="none">
             <attr name="targetNode" type="io.nop.core.lang.xml.XNode" />
 

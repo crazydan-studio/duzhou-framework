@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<imp xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+     x:schema="/nop/schema/excel/imp.xdef"
+     x:extends="/nop/orm/imp/orm.imp.xml"
+     resultType="io.crazydan.duzhou.framework.codegen.imp.AppModel">
+
+    <sheets>
+        <sheet name="配置">
+            <normalizeFieldsExpr>
+                <c:script><![CDATA[
+                    import io.nop.core.lang.json.JsonTool;
+
+                    const app = record.app;
+                    const appCode = app.code;
+                    const appCode1 = appCode.split('-')[0];
+                    const appCode2 = appCode.split('-')[1];
+                    app.code1 = appCode1;
+                    app.code2 = appCode2;
+                    app.maven.artifactId = 'parent';
+                    app.maven.version = app.version;
+
+                    const module = record.appModule;
+                    const moduleCode = module.code.replaceAll('-', '_');
+                    module.id = appCode1 + '/' + moduleCode;
+                    module.code = appCode1 + '-' + moduleCode;
+                    module.code1 = appCode1;
+                    module.code2 = moduleCode;
+                    module.maven = {
+                        parent: app.maven,
+                        version: app.version,
+                        groupId: app.maven.groupId,
+                        artifactId: moduleCode.replaceAll('_', '-'),
+                    };
+                    module.basePackageName = app.maven.groupId + '.' + moduleCode;
+
+                    logInfo('app-module.xlsx.record={}', JsonTool.serialize(record, true));
+
+                    // Note：在从 app.orm.xml 生成 *.xmeta 时，需要从 app.orm.xml 中再次使用的变量
+                    record['ext:moduleName'] = module.code;
+                    record['ext:basePackageName'] = module.basePackageName;
+                    // Note：后续 OrmEntityModel 需以下数据进行补全，故需提前准备
+                    record['ext:registerShortName'] = true;
+                    record['ext:entityPackageName'] = module.basePackageName + '.orm.entity';
+                ]]></c:script>
+            </normalizeFieldsExpr>
+
+            <fields>
+                <field name="app.code" displayName="app.code" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.name" displayName="app.name" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.version" displayName="app.version" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.description" displayName="app.description">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.license" displayName="app.license">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.copyright" displayName="app.copyright">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.maven.groupId" displayName="app.maven.groupId" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.maven.parent.groupId"
+                       displayName="app.maven.parent.groupId" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.maven.parent.artifactId"
+                       displayName="app.maven.parent.artifactId" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.maven.parent.version"
+                       displayName="app.maven.parent.version" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="appModule.name" displayName="app.module.name" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="appModule.code" displayName="app.module.code" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="appModule.description" displayName="app.module.description">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="appModule.db.dialect" displayName="app.module.db.dialect">
+                    <schema stdDomain="string" />
+                </field>
+            </fields>
+        </sheet>
+
+        <sheet name="字典定义">
+            <fields>
+                <field name="options">
+                    <fields>
+                        <field name="code" displayName="编码" />
+                    </fields>
+                </field>
+            </fields>
+        </sheet>
+
+        <sheet name="entity">
+            <fields>
+                <field name="comments" displayName="填写说明" virtual="true" />
+            </fields>
+        </sheet>
+    </sheets>
+</imp>

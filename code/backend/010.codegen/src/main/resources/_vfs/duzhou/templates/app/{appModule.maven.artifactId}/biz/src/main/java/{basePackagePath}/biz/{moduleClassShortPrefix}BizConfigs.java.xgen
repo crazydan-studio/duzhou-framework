@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl"
+        xpl:outputMode="text"
+><![CDATA[package ${basePackageName}.biz;
+
+/** 业务{@link io.nop.api.core.config.IConfigReference 配置}定义 */
+public interface ${moduleClassShortPrefix}BizConfigs {
+
+}
+]]></c:unit>

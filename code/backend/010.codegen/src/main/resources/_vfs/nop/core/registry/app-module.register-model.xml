@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<model xmlns:x="/nop/schema/xdsl.xdef"
+       x:schema="/nop/schema/register-model.xdef"
+       name="app-module"
+>
+
+    <loaders>
+        <xlsx-loader fileType="app-module.xlsx"
+                     impPath="app-module.imp.xml" />
+    </loaders>
+</model>

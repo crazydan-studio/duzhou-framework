@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="xml">
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+        <modelVersion>4.0.0</modelVersion>
+
+        <c:unit xpl:outputMode="text"><![CDATA[<!-- 用于服务间的 API 调用 -->]]></c:unit>
+        <artifactId>${appModule.maven.artifactId}-api</artifactId>
+
+        <parent>
+            <groupId>${appModule.maven.groupId}</groupId>
+            <artifactId>${appModule.maven.artifactId}</artifactId>
+            <version>${appModule.maven.version}</version>
+            <relativePath>../pom.xml</relativePath>
+        </parent>
+
+        <dependencies>
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-api-core</artifactId>
+            </dependency>
+        </dependencies>
+
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+</c:unit>

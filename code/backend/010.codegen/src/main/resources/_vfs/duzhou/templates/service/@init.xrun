@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
-
-    <gen:DefineLoopForOrm xpl:lib="/nop/codegen/xlib/gen.xlib" />
-</c:unit>

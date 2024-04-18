@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="xml">
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+        <modelVersion>4.0.0</modelVersion>
+
+        <c:unit xpl:outputMode="text"><![CDATA[<!-- Web 页面资源 -->]]></c:unit>
+        <artifactId>${appModule.maven.artifactId}-web</artifactId>
+
+        <parent>
+            <groupId>${appModule.maven.groupId}</groupId>
+            <artifactId>${appModule.maven.artifactId}</artifactId>
+            <version>${appModule.maven.version}</version>
+            <relativePath>../pom.xml</relativePath>
+        </parent>
+
+        <dependencies>
+        </dependencies>
+    </project>
+</c:unit>

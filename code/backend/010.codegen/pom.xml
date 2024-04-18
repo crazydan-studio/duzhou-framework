@@ -34,10 +34,6 @@
     </parent>
 
     <properties>
-        <!-- 仅用于 Nop 代码生成，无需发布至仓库 -->
-        <maven.deploy.skip>true</maven.deploy.skip>
-        <maven.install.skip>true</maven.install.skip>
-        <!-- End -->
     </properties>
 
     <!-- Nop 生成代码过程中所需要的依赖 -->
@@ -46,6 +42,7 @@
             <groupId>io.crazydan.duzhou.framework</groupId>
             <artifactId>schema</artifactId>
         </dependency>
+
         <!-- 根据 *.orm.xlsx 生成代码时，需要该依赖解析 excel 文件 -->
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
@@ -60,14 +57,4 @@
             <artifactId>nop-graphql-core</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <!-- 在 Maven 构建时执行代码生成 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
