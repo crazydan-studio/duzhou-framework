@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl"
-        xpl:outputMode="text"
->
+        xmlns:x="x" xmlns:graphql="graphql">
 
     <c:script><![CDATA[
         import io.nop.codegen.XCodeGenerator;
@@ -14,7 +13,7 @@
         let targetNode = xpl.generateToNode($scope);
     ]]></c:script>
 
-    <gen:DeltaMerge targetNode="${targetNode}" xpl:return="metaNode"
+    <gen:DeltaMerge targetNode="${targetNode}"
                     xpl:lib="/nop/codegen/xlib/gen.xlib">
         <meta>
             <props>
@@ -58,6 +57,4 @@
             </props>
         </meta>
     </gen:DeltaMerge>
-
-    ${metaNode.outerXml(false, false)}
 </c:unit>

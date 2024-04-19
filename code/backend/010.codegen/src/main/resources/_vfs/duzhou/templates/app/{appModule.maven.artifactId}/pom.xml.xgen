@@ -1,48 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
-<gen:MergeXml
-        xmlns:gen="gen" xmlns:xpl="xpl"
+<gen:MavenPomMerge
+        xmlns:gen="gen" xmlns:xpl="xpl" xmlns:c="c"
         xpl:lib="/nop/codegen/xlib/gen.xlib"
         resource="${targetResource}"
 >
-    <update>
-        <!-- 如果pom文件已经存在，则只是追加module定义 -->
-        <project>
-            <modules>
-                <module xml:multiple="true">api</module>
-                <module xml:multiple="true">biz</module>
-                <module xml:multiple="true">orm</module>
-                <module xml:multiple="true">web</module>
-                <module xml:multiple="true">delta</module>
-                <module xml:multiple="true">starter</module>
-            </modules>
-        </project>
-    </update>
-    <create>
-        <project xmlns="http://maven.apache.org/POM/4.0.0"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
 
-            <modelVersion>4.0.0</modelVersion>
+        <artifactId>${appModule.maven.artifactId}</artifactId>
+        <packaging>pom</packaging>
 
-            <artifactId>${appModule.maven.artifactId}</artifactId>
-            <packaging>pom</packaging>
+        <name>${appModule.name} [${appModule.maven.artifactId}]</name>
+        <description>${appModule.description}</description>
 
-            <parent>
-                <groupId>${appModule.maven.parent.groupId}</groupId>
-                <artifactId>${appModule.maven.parent.artifactId}</artifactId>
-                <version>${appModule.maven.parent.version}</version>
-                <relativePath>../pom.xml</relativePath>
-            </parent>
+        <parent>
+            <groupId>${appModule.maven.parent.groupId}</groupId>
+            <artifactId>${appModule.maven.parent.artifactId}</artifactId>
+            <version>${appModule.maven.parent.version}</version>
+            <relativePath>../pom.xml</relativePath>
+        </parent>
 
-            <modules>
-                <module>api</module>
-                <module>biz</module>
-                <module>orm</module>
-                <module>web</module>
-                <module>delta</module>
-                <module>starter</module>
-            </modules>
-        </project>
-    </create>
-</gen:MergeXml>
+        <modules>
+            <c:script><![CDATA[
+                $out.comment('Note: x:id 属性需保留，其为自动合并的基础');
+            ]]></c:script>
+            <c:for var="module" items="${['api','biz','orm','web','delta','starter']}">
+                <module x:id="${module}">${module}</module>
+            </c:for>
+        </modules>
+    </project>
+</gen:MavenPomMerge>

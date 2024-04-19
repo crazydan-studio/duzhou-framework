@@ -8,6 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 针对当前服务模块的差量内容 -->]]></c:unit>
         <artifactId>${appModule.maven.artifactId}-delta</artifactId>
+        <name>${appModule.name} [${appModule.maven.artifactId}] (Delta Layer)</name>
 
         <parent>
             <groupId>${appModule.maven.groupId}</groupId>

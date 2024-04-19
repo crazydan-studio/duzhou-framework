@@ -8,6 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- Web 页面资源 -->]]></c:unit>
         <artifactId>${appModule.maven.artifactId}-web</artifactId>
+        <name>${appModule.name} [${appModule.maven.artifactId}] (Web Layer)</name>
 
         <parent>
             <groupId>${appModule.maven.groupId}</groupId>

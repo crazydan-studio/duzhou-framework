@@ -8,6 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 用于服务间的 API 调用 -->]]></c:unit>
         <artifactId>${appModule.maven.artifactId}-api</artifactId>
+        <name>${appModule.name} [${appModule.maven.artifactId}] (API Layer)</name>
 
         <parent>
             <groupId>${appModule.maven.groupId}</groupId>

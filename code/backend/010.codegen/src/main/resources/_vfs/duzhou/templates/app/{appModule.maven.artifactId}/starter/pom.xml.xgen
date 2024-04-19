@@ -9,6 +9,7 @@
         <c:unit xpl:outputMode="text">
             <![CDATA[<!-- 服务启动器，用于启动单体服务，或者本地开发 -->]]></c:unit>
         <artifactId>${appModule.maven.artifactId}-starter</artifactId>
+        <name>${appModule.name} [${appModule.maven.artifactId}] (Starter)</name>
 
         <parent>
             <groupId>${appModule.maven.groupId}</groupId>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<gen:MavenPomMerge
+        xmlns:gen="gen" xmlns:xpl="xpl" xmlns:c="c" xmlns:x="x"
+        xpl:lib="/nop/codegen/xlib/gen.xlib"
+        resource="${targetResource}"
+>
+    <c:script><![CDATA[
+        $out.comment('注意：该 pom 为自动生成，不能直接修改该文件');
+    ]]></c:script>
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+        <groupId>${app.maven.groupId}</groupId>
+        <artifactId>${app.normalizedCode}</artifactId>
+        <version>${app.maven.version}</version>
+        <packaging>pom</packaging>
+
+        <name>${app.name} [${app.normalizedCode}]</name>
+
+        <c:if test="${app.maven.parent}">
+            <parent>
+                <groupId>${app.maven.parent.groupId}</groupId>
+                <artifactId>${app.maven.parent.artifactId}</artifactId>
+                <version>${app.maven.parent.version}</version>
+                <c:script><![CDATA[
+                    $out.comment('消除 "parent.relativePath of POM xxxx, please verify your project structure" 提示: https://stackoverflow.com/a/6006098');
+                ]]></c:script>
+                <relativePath />
+            </parent>
+        </c:if>
+
+        <properties>
+            <java.version>17</java.version>
+            <maven.compiler.source>${'$'}{java.version}</maven.compiler.source>
+            <maven.compiler.target>${'$'}{java.version}</maven.compiler.target>
+            <maven.compiler.compilerVersion>${'$'}{java.version}</maven.compiler.compilerVersion>
+
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+            <!-- 这是一个动态节点，需通过脚本输出构造结果 -->
+            <c:script><![CDATA[
+                import io.nop.core.lang.xml.XNode;
+
+                const node = XNode.make(app.normalizedCode + '.version');
+                node.content(app.maven.version);
+                node.output($out);
+            ]]></c:script>
+        </properties>
+
+        <modules>
+            <c:for var="module" items="${app.modules}">
+                <module x:id="${module.maven.artifactId}">../${module.maven.artifactId}</module>
+            </c:for>
+        </modules>
+
+        <dependencies>
+            <c:script><![CDATA[
+                $out.comment('Nop Idea 插件在调试 xlang 时需要该依赖');
+            ]]></c:script>
+            <dependency x:id="io.github.entropy-cloud:nop-xlang-debugger">
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-xlang-debugger</artifactId>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+
+        <repositories>
+            <repository x:id="nop-repo">
+                <id>nop-repo</id>
+                <url>https://nop.repo.crazydan.io/</url>
+            </repository>
+            <repository x:id="duzhou-repo">
+                <id>duzhou-repo</id>
+                <url>https://duzhou.repo.crazydan.io/</url>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository x:id="nop-repo">
+                <id>nop-repo</id>
+                <url>https://nop.repo.crazydan.io/</url>
+            </pluginRepository>
+            <pluginRepository x:id="duzhou-repo">
+                <id>duzhou-repo</id>
+                <url>https://duzhou.repo.crazydan.io/</url>
+            </pluginRepository>
+        </pluginRepositories>
+
+        <dependencyManagement>
+            <dependencies>
+                <c:for var="module" items="${app.modules}">
+                    <c:for var="suffix" items="${['','-api','-biz','-orm','-web','-delta']}">
+                        <dependency x:id="${module.maven.groupId}:${module.maven.artifactId}${suffix}">
+                            <groupId>${module.maven.groupId}</groupId>
+                            <artifactId>${module.maven.artifactId}${suffix}</artifactId>
+                            <version>${'$'}{${app.normalizedCode}.version}</version>
+                        </dependency>
+                    </c:for>
+                </c:for>
+            </dependencies>
+        </dependencyManagement>
+
+        <build>
+            <resources>
+                <resource x:id="main-includes">
+                    <directory>src/main/resources</directory>
+                    <filtering>true</filtering>
+                    <includes>
+                        <include>*.yaml</include>
+                        <include>*.yml</include>
+                    </includes>
+                </resource>
+                <resource x:id="main-excludes">
+                    <directory>src/main/resources</directory>
+                    <filtering>false</filtering>
+                    <excludes>
+                        <exclude>*.yaml</exclude>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.txt</exclude>
+                    </excludes>
+                </resource>
+            </resources>
+        </build>
+    </project>
+</gen:MavenPomMerge>

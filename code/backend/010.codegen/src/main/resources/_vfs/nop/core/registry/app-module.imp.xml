@@ -8,14 +8,13 @@
         <sheet name="配置">
             <normalizeFieldsExpr>
                 <c:script><![CDATA[
-                    import io.nop.core.lang.json.JsonTool;
-
                     const app = record.app;
                     const appCode = app.code;
                     const appCode1 = appCode.split('-')[0];
                     const appCode2 = appCode.split('-')[1];
                     app.code1 = appCode1;
                     app.code2 = appCode2;
+                    app.normalizedCode = app.code.replaceAll('_', '-');
                     app.maven.artifactId = 'parent';
                     app.maven.version = app.version;
 
@@ -32,8 +31,6 @@
                         artifactId: moduleCode.replaceAll('_', '-'),
                     };
                     module.basePackageName = app.maven.groupId + '.' + moduleCode;
-
-                    logInfo('app-module.xlsx.record={}', JsonTool.serialize(record, true));
 
                     // Note：在从 app.orm.xml 生成 *.xmeta 时，需要从 app.orm.xml 中再次使用的变量
                     record['ext:moduleName'] = module.code;

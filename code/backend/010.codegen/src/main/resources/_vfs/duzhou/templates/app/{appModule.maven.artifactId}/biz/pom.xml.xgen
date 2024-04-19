@@ -8,6 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 当前服务的业务逻辑实现 -->]]></c:unit>
         <artifactId>${appModule.maven.artifactId}-biz</artifactId>
+        <name>${appModule.name} [${appModule.maven.artifactId}] (Biz Layer)</name>
 
         <parent>
             <groupId>${appModule.maven.groupId}</groupId>
