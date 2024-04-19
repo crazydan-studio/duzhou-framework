@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<project xmlns:x="/nop/schema/xdsl.xdef"
+         xmlns:xdef="xdef"
+         x:schema="/nop/schema/xdef.xdef"
+>
+    <modelVersion xdef:value="!string" />
+
+    <groupId xdef:value="!string" />
+    <artifactId xdef:value="!string" />
+    <version xdef:value="!string" />
+    <packaging xdef:value="!string" />
+    <name xdef:value="!string" />
+    <description xdef:value="!string" />
+
+    <parent xdef:default-override="merge">
+        <groupId xdef:value="!string" />
+        <artifactId xdef:value="!string" />
+        <version xdef:value="!string" />
+        <relativePath xdef:value="!string" />
+    </parent>
+
+    <properties xdef:default-override="merge">
+        <xdef:unknown-tag xdef:value="!string" />
+    </properties>
+
+    <!--
+    Start：不定义子节点，以支持以 x:id 属性作为子节点的唯一性属性，
+    从而规避 Maven 校验 pom 时不支持未定义属性的问题
+    -->
+    <modules xdef:value="xml"
+             xdef:default-override="merge" />
+    <dependencies xdef:value="xml"
+                  xdef:default-override="merge" />
+    <repositories xdef:value="xml"
+                  xdef:default-override="merge" />
+    <pluginRepositories xdef:value="xml"
+                        xdef:default-override="merge" />
+    <dependencyManagement>
+        <dependencies xdef:value="xml"
+                      xdef:default-override="merge" />
+    </dependencyManagement>
+    <build>
+        <resources xdef:value="xml"
+                   xdef:default-override="replace" />
+    </build>
+    <!-- End -->
+
+    <!-- 对未定义节点不做处理 -->
+    <xdef:unknown-tag xdef:value="any"
+                      xdef:allow-multiple="true"
+                      xdef:default-override="replace" />
+</project>
