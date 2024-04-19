@@ -33,7 +33,26 @@
                     module.basePackageName = app.maven.groupId + '.' + moduleCode;
 
                     // Note：在从 app.orm.xml 生成 *.xmeta 时，需要从 app.orm.xml 中再次使用的变量
+                    record['ext:dialect'] = module.db?.dialect;
+                    record['ext:deltaDir'] = null;
+                    record['ext:useCoreModule'] = 'false';
+                    record['ext:mavenGroupId'] = module.maven.groupId;
+                    record['ext:mavenArtifactId'] = module.maven.artifactId;
+                    record['ext:mavenVersion'] = module.maven.version;
+                    record['ext:mavenParentGroupId'] = module.maven.parent.groupId;
+                    record['ext:mavenParentArtifactId'] = module.maven.parent.artifactId;
+                    record['ext:mavenParentVersion'] = module.maven.parent.version;
+                    // 若为独立工程，则设置空字符串
+                    record['ext:mavenParentRelativePath'] = '../pom.xml';
+
+                    record['ext:moduleId'] = module.id;
                     record['ext:moduleName'] = module.code;
+                    record['ext:moduleTitle'] = module.name;
+                    record['ext:moduleDescription'] = module.description;
+                    record['ext:moduleClassPrefix'] = module.id.replace('/','_').$camelCase(true);
+                    record['ext:moduleClassShortPrefix'] = module.code2.$camelCase(true);
+                    record['ext:moduleBeansName'] = module.maven.artifactId;
+
                     record['ext:basePackageName'] = module.basePackageName;
                     // Note：后续 OrmEntityModel 需以下数据进行补全，故需提前准备
                     record['ext:registerShortName'] = true;

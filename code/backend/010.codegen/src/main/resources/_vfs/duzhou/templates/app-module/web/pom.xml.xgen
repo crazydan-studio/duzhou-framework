@@ -6,14 +6,14 @@
 
         <modelVersion>4.0.0</modelVersion>
 
-        <c:unit xpl:outputMode="text"><![CDATA[<!-- 针对当前服务模块的差量内容 -->]]></c:unit>
-        <artifactId>${appModule.maven.artifactId}-delta</artifactId>
-        <name>${appModule.name} [${appModule.maven.artifactId}] (Delta Layer)</name>
+        <c:unit xpl:outputMode="text"><![CDATA[<!-- Web 页面资源 -->]]></c:unit>
+        <artifactId>${ormModel['ext:mavenArtifactId']}-web</artifactId>
+        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Web Layer)</name>
 
         <parent>
-            <groupId>${appModule.maven.groupId}</groupId>
-            <artifactId>${appModule.maven.artifactId}</artifactId>
-            <version>${appModule.maven.version}</version>
+            <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <version>${ormModel['ext:mavenVersion']}</version>
             <relativePath>../pom.xml</relativePath>
         </parent>
 

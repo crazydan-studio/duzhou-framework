@@ -8,13 +8,13 @@
 
         <c:unit xpl:outputMode="text">
             <![CDATA[<!-- 服务启动器，用于启动单体服务，或者本地开发 -->]]></c:unit>
-        <artifactId>${appModule.maven.artifactId}-starter</artifactId>
-        <name>${appModule.name} [${appModule.maven.artifactId}] (Starter)</name>
+        <artifactId>${ormModel['ext:mavenArtifactId']}-starter</artifactId>
+        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Starter)</name>
 
         <parent>
-            <groupId>${appModule.maven.groupId}</groupId>
-            <artifactId>${appModule.maven.artifactId}</artifactId>
-            <version>${appModule.maven.version}</version>
+            <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <version>${ormModel['ext:mavenVersion']}</version>
             <relativePath>../pom.xml</relativePath>
         </parent>
 
@@ -27,12 +27,12 @@
 
         <dependencies>
             <dependency>
-                <groupId>${appModule.maven.groupId}</groupId>
-                <artifactId>${appModule.maven.artifactId}-delta</artifactId>
+                <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+                <artifactId>${ormModel['ext:mavenArtifactId']}-delta</artifactId>
             </dependency>
             <dependency>
-                <groupId>${appModule.maven.groupId}</groupId>
-                <artifactId>${appModule.maven.artifactId}-biz</artifactId>
+                <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+                <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
             </dependency>
 
             <dependency>

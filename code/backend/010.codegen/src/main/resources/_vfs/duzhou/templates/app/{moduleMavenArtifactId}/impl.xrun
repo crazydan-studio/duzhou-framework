@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
+
+    <c:script><![CDATA[
+        $scope.setLocalValue('codeGenModel', ormModel);
+    ]]></c:script>
+    <gen:Render template="/duzhou/templates/app-module"
+                targetDir="${targetResource.path.$filePath()}"
+                xpl:lib="/nop/codegen/xlib/gen.xlib" />
+</c:unit>

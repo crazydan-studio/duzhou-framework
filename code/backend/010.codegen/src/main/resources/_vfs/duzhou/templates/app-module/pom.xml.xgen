@@ -10,17 +10,23 @@
              xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <modelVersion>4.0.0</modelVersion>
 
-        <artifactId>${appModule.maven.artifactId}</artifactId>
+        <c:if test="${ormModel['ext:mavenGroupId'] != ormModel['ext:mavenParentGroupId']}">
+            <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+        </c:if>
+        <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+        <c:if test="${ormModel['ext:mavenGroupId'] != ormModel['ext:mavenParentGroupId'] || ormModel['ext:mavenVersion'] != ormModel['ext:mavenParentVersion']}">
+            <version>${ormModel['ext:mavenVersion']}</version>
+        </c:if>
         <packaging>pom</packaging>
 
-        <name>${appModule.name} [${appModule.maven.artifactId}]</name>
-        <description>${appModule.description}</description>
+        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}]</name>
+        <description>${ormModel['ext:moduleDescription']}</description>
 
         <parent>
-            <groupId>${appModule.maven.parent.groupId}</groupId>
-            <artifactId>${appModule.maven.parent.artifactId}</artifactId>
-            <version>${appModule.maven.parent.version}</version>
-            <relativePath>../pom.xml</relativePath>
+            <groupId>${ormModel['ext:mavenParentGroupId']}</groupId>
+            <artifactId>${ormModel['ext:mavenParentArtifactId']}</artifactId>
+            <version>${ormModel['ext:mavenParentVersion']}</version>
+            <relativePath>${ormModel['ext:mavenParentRelativePath']}</relativePath>
         </parent>
 
         <modules>

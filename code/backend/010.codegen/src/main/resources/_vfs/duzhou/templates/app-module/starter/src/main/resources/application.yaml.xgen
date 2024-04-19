@@ -7,7 +7,7 @@
     init-database-schema: true
   datasource:
     driver-class-name: org.h2.Driver
-    jdbc-url: jdbc:h2:./db/${appModule.code.replace('_', '-')}
+    jdbc-url: jdbc:h2:./db/${ormModel['ext:moduleName'].replace('_', '-')}
     username: sa
     password:
 #    driver-class-name: com.mysql.cj.jdbc.Driver

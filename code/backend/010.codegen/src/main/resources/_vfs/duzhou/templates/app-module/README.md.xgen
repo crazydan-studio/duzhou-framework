@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[${appModule.name}
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[${ormModel['ext:moduleTitle']}
 ===================================
 
-${appModule.description}
+${ormModel['ext:moduleDescription']}
 
 ## 项目组织结构
 
