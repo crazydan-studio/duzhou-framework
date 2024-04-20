@@ -79,7 +79,7 @@
         "type": "select",
         "name": "type",
         "label": "关联类型",
-        "source": "@dict:app_dev/entity-relation-type",
+        "source": "@dict:app_modeler/entity-relation-type",
         "required": true
       },
       {
@@ -88,7 +88,7 @@
         "label": "标签",
         "multiple": true,
         "clearable": true,
-        "source": "@dict:app_dev/entity-relation-tagset"
+        "source": "@dict:app_modeler/entity-relation-tagset"
       },
       {
         "type": "input-table",

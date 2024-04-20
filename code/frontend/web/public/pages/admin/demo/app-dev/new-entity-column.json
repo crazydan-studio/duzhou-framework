@@ -61,7 +61,7 @@
         "label": "标签",
         "multiple": true,
         "clearable": true,
-        "source": "@dict:app_dev/entity-column-tagset"
+        "source": "@dict:app_modeler/entity-column-tagset"
       },
       {
         "type": "group",

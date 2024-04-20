@@ -3,14 +3,14 @@
   "msg": "",
   "data": {
     "type": "picker",
-    "name": "serviceId",
-    "label": "所属服务",
+    "name": "moduleId",
+    "label": "所属模块",
     "required": true,
     "valueField": "id",
     "labelField": "displayName",
     "size": "lg",
     "source": {
-      "url": "@query:DevAppService__findPage",
+      "url": "@query:DevAppModule__findPage",
       "gql:selection": "total,items{id,displayName,code,app{id,displayName,code}}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
@@ -24,7 +24,7 @@
         ]
       }
     },
-    "modalTitle": "请选择实体模型所属的服务",
+    "modalTitle": "请选择实体模型所属的模块",
     "pickerSchema": {
       "type": "crud",
       "pageField": "page",

@@ -1,6 +1,6 @@
 {
   "type": "page",
-  "title": "应用后端服务列表",
+  "title": "应用模块列表",
   "data": {
     "refTableName": "${UUID(32)}"
   },
@@ -27,7 +27,7 @@
       "pageField": "page",
       "perPageField": "pageSize",
       "api": {
-        "url": "@query:DevAppService__findPage",
+        "url": "@query:DevAppModule__findPage",
         "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},displayName,code}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
@@ -49,7 +49,7 @@
           "icon": "fa-solid fa-plus",
           "actionType": "dialog",
           "dialog": {
-            "title": "添加新服务",
+            "title": "添加新模块",
             "closeOnEsc": true,
             "data": {
               "appId": "${appId}",
@@ -57,7 +57,7 @@
             },
             "body": {
               "type": "service",
-              "schemaApi": "get:/pages/admin/demo/app-dev/new-service.json"
+              "schemaApi": "get:/pages/admin/demo/app-dev/new-module.json"
             }
           }
         },
@@ -90,9 +90,9 @@
           "label": "删除选中",
           "icon": "fa-solid fa-trash-can",
           "actionType": "ajax",
-          "api": "@mutation:DevAppService__batchDelete?ids=${ids|raw}",
+          "api": "@mutation:DevAppModule__batchDelete?ids=${ids|raw}",
           "confirmTitle": "删除确认",
-          "confirmText": "确定要删除以下服务？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.code + ')</li>'), '')}</ul>"
+          "confirmText": "确定要删除以下模块？：<ul>${JOIN(ARRAYMAP(items, e => '<li>' + e.displayName + ' (' + e.code + ')</li>'), '')}</ul>"
         }
       ],
       "columns": [
@@ -127,16 +127,16 @@
               "level": "primary",
               "actionType": "dialog",
               "dialog": {
-                "title": "编辑服务",
+                "title": "编辑模块",
                 "closeOnEsc": true,
                 "data": {
                   "appId": "${appId}",
-                  "serviceId": "${id}",
+                  "moduleId": "${id}",
                   "refTableName": "${refTableName}"
                 },
                 "body": {
                   "type": "service",
-                  "schemaApi": "get:/pages/admin/demo/app-dev/edit-service.json"
+                  "schemaApi": "get:/pages/admin/demo/app-dev/edit-module.json"
                 }
               }
             },
@@ -144,19 +144,19 @@
               "label": "发布",
               "type": "button",
               "level": "success",
-              "api": "@mutation:DevAppService__release?id=${id}",
+              "api": "@mutation:DevAppModule__release?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "发布确认",
-              "confirmText": "确定要发布服务「<b>${displayName} (${code})</b>」？"
+              "confirmText": "确定要发布模块「<b>${displayName} (${code})</b>」？"
             },
             {
               "label": "删除",
               "type": "button",
               "level": "danger",
-              "api": "@mutation:DevAppService__delete?id=${id}",
+              "api": "@mutation:DevAppModule__delete?id=${id}",
               "actionType": "ajax",
               "confirmTitle": "删除确认",
-              "confirmText": "确定要删除服务「<b>${displayName} (${code})</b>」？"
+              "confirmText": "确定要删除模块「<b>${displayName} (${code})</b>」？"
             }
           ]
         }

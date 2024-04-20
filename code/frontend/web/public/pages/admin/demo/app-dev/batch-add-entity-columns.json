@@ -120,7 +120,7 @@
         "static": true,
         "multiple": true,
         "placeholder": "",
-        "source": "@dict:app_dev/entity-column-tagset"
+        "source": "@dict:app_modeler/entity-column-tagset"
       },
       {
         "type": "select",

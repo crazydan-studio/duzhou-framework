@@ -22,7 +22,7 @@
       }
     },
     "api": {
-      "url": "@mutation:DevAppService__save",
+      "url": "@mutation:DevAppModule__save",
       "gql:selection": "id",
       "requestAdaptor": "return {...api, data: {...api.data, code: api.data.code1 + '-' + api.data.code2, code1: undefined, code2: undefined}};"
     },

@@ -23,7 +23,7 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
-        label: '应用开发',
+        label: '应用建模',
         children: [
           {
             label: '应用',
@@ -44,13 +44,13 @@ window.__APP_SITE_CONFIG__ = {
             schemaApi: 'get:/pages/admin/demo/app-dev-dict.json'
           },
           {
-            label: '后端服务',
-            url: 'app-dev/service',
+            label: '应用模块',
+            url: 'app-dev/module',
             icon: 'fa-solid fa-globe',
-            schemaApi: 'get:/pages/admin/demo/app-dev-service.json'
+            schemaApi: 'get:/pages/admin/demo/app-dev-module.json'
           },
           {
-            label: '实体模型',
+            label: '应用模型',
             url: 'app-dev/entity',
             icon: 'fa-solid fa-globe',
             schemaApi: 'get:/pages/admin/demo/app-dev-entity.json'

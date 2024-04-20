@@ -22,11 +22,11 @@
       }
     },
     "initApi": {
-      "url": "@query:DevAppService__get?id=${serviceId}",
+      "url": "@query:DevAppModule__get?id=${moduleId}",
       "gql:selection": "id,appId,displayName,code"
     },
     "api": {
-      "url": "@mutation:DevAppService__update?id=${serviceId}",
+      "url": "@mutation:DevAppModule__update?id=${moduleId}",
       "gql:selection": "id"
     },
     "body": [

@@ -3,19 +3,19 @@
   "msg": "",
   "data": {
     "type": "button",
-    "label": "${service.displayName} (${service.code})",
+    "label": "${module.displayName} (${module.code})",
     "level": "link",
     "className": "pl-0",
     "actionType": "dialog",
     "dialog": {
-      "title": "服务信息",
+      "title": "模块信息",
       "size": "lg",
       "closeOnEsc": true,
       "body": {
         "type": "form",
         "static": true,
         "initApi": {
-          "url": "@query:DevAppService__get?id=${service.id}",
+          "url": "@query:DevAppModule__get?id=${module.id}",
           "gql:selection": "id,displayName,code,app{id,displayName,code}"
         },
         "body": [

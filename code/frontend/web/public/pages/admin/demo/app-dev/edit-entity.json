@@ -51,7 +51,7 @@
       {
         "type": "service",
         "className": "amis-Form-item",
-        "schemaApi": "get:/pages/admin/demo/app-dev/pick-service.json"
+        "schemaApi": "get:/pages/admin/demo/app-dev/pick-module.json"
       },
       {
         "type": "select",
@@ -59,7 +59,7 @@
         "label": "标签",
         "multiple": true,
         "clearable": true,
-        "source": "@dict:app_dev/entity-tagset"
+        "source": "@dict:app_modeler/entity-tagset"
       }
     ]
   }
