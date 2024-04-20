@@ -1,0 +1,4 @@
+<c:unit xmlns:c="c"><![CDATA[# 本地开发配置
+nop:
+  debug: true
+]]></c:unit>

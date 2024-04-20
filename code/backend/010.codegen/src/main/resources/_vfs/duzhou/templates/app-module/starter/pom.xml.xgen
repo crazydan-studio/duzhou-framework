@@ -39,39 +39,49 @@
                 <artifactId>${ormModel['ext:mavenArtifactId']}-web</artifactId>
             </dependency>
 
-            <dependency>
-                <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>starter-quarkus</artifactId>
-            </dependency>
-
-            <c:unit xpl:outputMode="text"><![CDATA[<!-- 支持文件上传和 OSS 存储 -->]]></c:unit>
-            <dependency>
-                <groupId>io.github.entropy-cloud</groupId>
-                <artifactId>nop-file-quarkus</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.github.entropy-cloud</groupId>
-                <artifactId>nop-integration-oss</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-jdbc-mysql</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-jdbc-h2</artifactId>
-            </dependency>
+            <c:if test="${useQuarkusWebStarter}">
+                <dependency>
+                    <groupId>io.crazydan.duzhou.framework</groupId>
+                    <artifactId>starter-quarkus</artifactId>
+                </dependency>
+                <c:for var="name" items="${dbDialects}">
+                    <dependency>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-jdbc-${name}</artifactId>
+                    </dependency>
+                </c:for>
+            </c:if>
+            <c:if test="${useSpringWebStarter}">
+                <dependency>
+                    <groupId>io.crazydan.duzhou.framework</groupId>
+                    <artifactId>starter-spring</artifactId>
+                </dependency>
+                <c:for var="name" items="${dbDialects}">
+                    <c:if test="${name == 'h2'}">
+                        <dependency>
+                            <groupId>com.h2database</groupId>
+                            <artifactId>h2</artifactId>
+                        </dependency>
+                    </c:if>
+                    <c:if test="${name == 'mysql'}">
+                        <dependency>
+                            <groupId>com.mysql</groupId>
+                            <artifactId>mysql-connector-j</artifactId>
+                        </dependency>
+                    </c:if>
+                </c:for>
+            </c:if>
         </dependencies>
 
         <profiles>
-            <profile>
-                <id>quarkus</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-                <properties>
-                    <c:unit xpl:outputMode="text"><![CDATA[<!--
+            <c:if test="${useQuarkusWebStarter}">
+                <profile>
+                    <id>quarkus</id>
+                    <activation>
+                        <activeByDefault>true</activeByDefault>
+                    </activation>
+                    <properties>
+                        <c:unit xpl:outputMode="text"><![CDATA[<!--
                 配置 Quarkus 的默认打包类型: https://quarkus.io/guides/building-native-image
                 - native: Docker 镜像打包
                 - uber-jar: 单一可执行的 jar 包
@@ -79,28 +89,37 @@
                   target/quarkus-app/quarkus-run.jar
                 -->
                 <!--<quarkus.package.type>native</quarkus.package.type>-->]]></c:unit>
-                    <quarkus.package.type>uber-jar</quarkus.package.type>
-                </properties>
-            </profile>
+                        <quarkus.package.type>uber-jar</quarkus.package.type>
+                    </properties>
+                </profile>
+            </c:if>
         </profiles>
 
         <build>
             <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+                <c:if test="${useQuarkusWebStarter}">
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </c:if>
+                <c:if test="${useSpringWebStarter}">
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </c:if>
             </plugins>
         </build>
     </project>

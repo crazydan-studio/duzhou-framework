@@ -9,6 +9,7 @@
             builder.defineGlobalVar('appSnakeCasedCode', app.code.replaceAll('-', '_'));
 
             builder.defineLoopVar('appModule', 'app', app => app.modules);
+            builder.defineLoopVar('webStarterType', 'app', app => app.web.starter.type);
 
             builder.defineLoopVar('ormModel', 'appModule', module => module.ormModel);
             builder.defineLoopVar('moduleMavenArtifactId', 'ormModel', model => model['ext:mavenArtifactId']);

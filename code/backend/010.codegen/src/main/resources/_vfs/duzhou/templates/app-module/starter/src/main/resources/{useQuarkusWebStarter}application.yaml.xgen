@@ -34,27 +34,20 @@
     schema-introspection:
       enabled: true
 
-spring:
-  application:
-    name: ${moduleNormalizedName}
-# https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.server
-server:
-  port: 8080
-  address: 127.0.0.1
-  timezone: Asia/Shanghai
-  tomcat:
-    uri-encoding: UTF-8
-    maxThreads: 2000
-    minSpareThreads: 50
-  compression:
-    # 启用压缩支持，提升页面加载速度
-    enabled: true
-    # minResponseSize: 2048
-    mime-types: text/html,text/xml,text/plain,text/javascript,text/css,application/json,application/xml,application/javascript,application/x-shockwave-flash
-logging:
-  path: "${'$'}{project.build.directory}/logs"
-  level:
-    io.nop: info
-    org.hibernate: info
-    org.springframework: info
+# devservices 会启用 testcontainers 来管理测试数据库
+quarkus:
+  http:
+    cors: true
+    port: 8080
+    host: 127.0.0.1
+  devservices:
+    enabled: false
+  datasource:
+    devservices:
+      enabled: false
+  log:
+    level: INFO
+    category:
+      "io.nop":
+        level: INFO
 ]]></c:unit>

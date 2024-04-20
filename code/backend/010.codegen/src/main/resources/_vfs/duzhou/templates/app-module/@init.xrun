@@ -9,6 +9,11 @@
             builder.defineGlobalVar('moduleBeansName', ormModel['ext:moduleBeansName']);
             builder.defineGlobalVar('moduleClassPrefix', ormModel['ext:moduleClassPrefix']);
             builder.defineGlobalVar('moduleClassShortPrefix', ormModel['ext:moduleClassShortPrefix']);
+            builder.defineGlobalVar('moduleNormalizedName', ormModel['ext:moduleName'].replace('_', '-'));
+
+            builder.defineGlobalVar('useQuarkusWebStarter', ormModel['ext:webStarterType'] == 'quarkus');
+            builder.defineGlobalVar('useSpringWebStarter', ormModel['ext:webStarterType'] == 'spring');
+            builder.defineGlobalVar('dbDialects', ormModel["ext:dialect"].$toCsvSet());
 
             builder.defineGlobalVar('basePackageName', ormModel['ext:basePackageName']);
             builder.defineGlobalVar('entityPackageName', ormModel['ext:basePackageName'] + '.orm.entity');

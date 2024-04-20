@@ -14,6 +14,7 @@
                     const appCode2 = appCode.split('-')[1];
                     app.code1 = appCode1;
                     app.code2 = appCode2;
+                    app.web.starter.type = app.web.starter.type || 'spring';
                     app.maven.artifactId = 'parent';
                     app.maven.version = app.version;
 
@@ -35,6 +36,7 @@
                     record['ext:dialect'] = module.db?.dialect;
                     record['ext:deltaDir'] = null;
                     record['ext:useCoreModule'] = 'false';
+                    record['ext:webStarterType'] = app.web.starter.type;
                     record['ext:mavenGroupId'] = module.maven.groupId;
                     record['ext:mavenArtifactId'] = module.maven.artifactId;
                     record['ext:mavenVersion'] = module.maven.version;
@@ -91,6 +93,10 @@
                 </field>
                 <field name="app.maven.parent.version"
                        displayName="app.maven.parent.version" mandatory="true">
+                    <schema stdDomain="string" />
+                </field>
+                <field name="app.web.starter.type"
+                       displayName="app.web.starter.type" mandatory="true">
                     <schema stdDomain="string" />
                 </field>
                 <field name="appModule.name" displayName="app.module.name" mandatory="true">
