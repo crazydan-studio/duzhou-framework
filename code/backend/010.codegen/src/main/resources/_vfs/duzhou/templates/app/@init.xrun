@@ -5,6 +5,8 @@
     <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
         <c:script><![CDATA[
             builder.defineGlobalVar('app', app);
+            builder.defineGlobalVar('appNormalizedCode', app.code.replaceAll('_', '-'));
+            builder.defineGlobalVar('appSnakeCasedCode', app.code.replaceAll('-', '_'));
 
             builder.defineLoopVar('appModule', 'app', app => app.modules);
 

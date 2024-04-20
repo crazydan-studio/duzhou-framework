@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text">
+    <!--
+    需要将 copyright 内容中的换行符转义为 &#10;
+    ，但是 codeGenerator 默认会对输出为 xml 的文本内容进行格式化（TemplateFileGenerator#normalizeText），
+    从而导致转义后的换行符又被还原了。因此，只能针对 idea copyright 的配置，单独定义一个模板，
+    再重新创建 codeGenerator 的子实例并强制其不格式化（#autoFormat(false)）。
+    具体实现见 /duzhou/templates/app/.idea/{!!app.copyright}copyright/impl.xrun
+    -->
+    <c:script xmlns:c="c"><![CDATA[
+        const content = copyright
+                            .$escapeXmlAttr()
+                            .$escapeCRLF('&#10;')
+                            .replaceAll('\\$', '&amp;#36;');
+    ]]></c:script><![CDATA[<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="${content}" />
+    <option name="myName" value="${normalizedCode}" />
+  </copyright>
+</component>
+]]>
+</c:unit>

@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="${appNormalizedCode}">
+    <module2copyright>
+      <element module="All" copyright="${appNormalizedCode}" />
+    </module2copyright>
+  </settings>
+</component>

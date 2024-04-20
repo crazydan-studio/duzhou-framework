@@ -5,7 +5,7 @@
     import io.nop.codegen.CodeGenConstants;
 
     // 设置生成代码放置目录，其位置相对于当前工程根目录
-    const targetDir = codeGenerator.getTargetPath('./target/app');
+    const targetDir = codeGenerator.getTargetPath('../../../../platform/code');
     // 服务模块定义文件，其位置相对于该 xgen 脚本所在的目录
     const modelPath = codeGenerator.getTplPath('../model/duzhou-app-modeler.app-module.xlsx');
     const model = ResourceComponentManager.instance().loadComponentModel(modelPath);

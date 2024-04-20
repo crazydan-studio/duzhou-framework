@@ -14,11 +14,11 @@
         <modelVersion>4.0.0</modelVersion>
 
         <groupId>${app.maven.groupId}</groupId>
-        <artifactId>${app.normalizedCode}</artifactId>
+        <artifactId>base</artifactId>
         <version>${app.maven.version}</version>
         <packaging>pom</packaging>
 
-        <name>${app.name} [${app.normalizedCode}]</name>
+        <name>${app.name} [${appNormalizedCode}] (Base)</name>
 
         <c:if test="${app.maven.parent}">
             <parent>
@@ -45,7 +45,7 @@
             <c:script><![CDATA[
                 import io.nop.core.lang.xml.XNode;
 
-                const node = XNode.make(app.normalizedCode + '.version');
+                const node = XNode.make(appNormalizedCode + '.version');
                 node.content(app.maven.version);
                 node.output($out);
             ]]></c:script>
@@ -96,7 +96,7 @@
                         <dependency x:id="${module.maven.groupId}:${module.maven.artifactId}${suffix}">
                             <groupId>${module.maven.groupId}</groupId>
                             <artifactId>${module.maven.artifactId}${suffix}</artifactId>
-                            <version>${'$'}{${app.normalizedCode}.version}</version>
+                            <version>${'$'}{${appNormalizedCode}.version}</version>
                         </dependency>
                     </c:for>
                 </c:for>

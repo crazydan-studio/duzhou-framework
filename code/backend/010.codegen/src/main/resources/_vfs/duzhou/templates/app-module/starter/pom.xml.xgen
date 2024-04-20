@@ -34,6 +34,10 @@
                 <groupId>${ormModel['ext:mavenGroupId']}</groupId>
                 <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
             </dependency>
+            <dependency>
+                <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+                <artifactId>${ormModel['ext:mavenArtifactId']}-web</artifactId>
+            </dependency>
 
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>

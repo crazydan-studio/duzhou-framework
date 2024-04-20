@@ -14,25 +14,36 @@
         <version>${app.maven.version}</version>
         <packaging>pom</packaging>
 
-        <name>${app.name} [${app.normalizedCode}] (父模块)</name>
+        <name>${app.name} [${appNormalizedCode}] (Parent)</name>
         <description>
             ${app.description}
         </description>
 
         <parent>
             <groupId>${app.maven.groupId}</groupId>
-            <artifactId>${app.normalizedCode}</artifactId>
+            <artifactId>base</artifactId>
             <version>${app.maven.version}</version>
-            <relativePath>./parent/pom.xml</relativePath>
+            <relativePath>./00.base/pom.xml</relativePath>
         </parent>
 
         <modules>
             <c:script><![CDATA[
                 $out.comment('Note：');
-                $out.comment('- 当前 pom 仅引入 parent 模块，其余模块在代码生成时自动引入到 parent 中');
+                $out.comment('- 当前 pom 仅引入 base 模块，其余模块在代码生成时自动引入到 base 中');
                 $out.comment('- x:id 属性需保留，其为自动合并的基础');
             ]]></c:script>
-            <module x:id="parent">parent</module>
+            <module x:id="base">00.base</module>
         </modules>
+
+        <dependencies>
+            <c:script><![CDATA[
+                $out.comment('Note: x:id 属性需保留，其为自动合并的基础');
+            ]]></c:script>
+            <dependency x:id="io.crazydan.duzhou.framework:autotest">
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>autotest</artifactId>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
     </project>
 </gen:MavenPomMerge>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c">
+
+    <c:script><![CDATA[
+        $scope.setLocalValue('copyright', {
+            content: app.copyright,
+            snakeCasedCode: appSnakeCasedCode,
+            normalizedCode: appNormalizedCode,
+        });
+
+        // 通过独立模板并取消文本输出格式化的方式以确保 copyright 中转义后的换行符不会被还原，
+        // 详细说明见 /duzhou/templates/idea-copyright/{snakeCasedCode}.xml.xgen
+        codeGenerator
+            .withTargetDir(targetResource.path.$filePath())
+            .withTplDir('/duzhou/templates/idea-copyright')
+            .autoFormat(false)
+            .execute('/', $scope);
+    ]]></c:script>
+</c:unit>

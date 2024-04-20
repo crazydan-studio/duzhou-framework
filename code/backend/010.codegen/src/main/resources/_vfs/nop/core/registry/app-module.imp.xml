@@ -14,7 +14,6 @@
                     const appCode2 = appCode.split('-')[1];
                     app.code1 = appCode1;
                     app.code2 = appCode2;
-                    app.normalizedCode = app.code.replaceAll('_', '-');
                     app.maven.artifactId = 'parent';
                     app.maven.version = app.version;
 
