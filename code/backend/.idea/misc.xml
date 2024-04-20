@@ -23,6 +23,7 @@
         <option value="$PROJECT_DIR$/800.app-dev/biz/pom.xml" />
         <option value="$PROJECT_DIR$/800.app-dev/starter/pom.xml" />
         <option value="$PROJECT_DIR$/800.app-dev/orm/pom.xml" />
+        <option value="$PROJECT_DIR$/050.starter/spring/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

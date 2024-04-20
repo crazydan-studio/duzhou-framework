@@ -58,6 +58,7 @@
         <duzhou-framework.version>0.1.0-SNAPSHOT</duzhou-framework.version>
         <nop-entropy.version>2.0.0-SNAPSHOT</nop-entropy.version>
         <quarkus.platform.version>3.8.2</quarkus.platform.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
     </properties>
 
     <modules>
@@ -143,6 +144,11 @@
                 <artifactId>starter-quarkus</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>starter-spring</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
@@ -217,13 +223,17 @@
                     <artifactId>quarkus-maven-plugin</artifactId>
                     <version>${quarkus.platform.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>4.0.0-M2</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
