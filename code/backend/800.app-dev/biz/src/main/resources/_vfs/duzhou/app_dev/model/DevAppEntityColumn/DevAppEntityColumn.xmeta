@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<meta xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/xmeta.xdef" x:extends="_DevAppEntityColumn.xmeta">
-
-    <props>
-        <prop name="propId" mandatory="false" />
-    </props>
-</meta>

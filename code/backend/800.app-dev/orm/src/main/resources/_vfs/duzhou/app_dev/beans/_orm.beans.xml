@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<beans xmlns:x="/nop/schema/xdsl.xdef" xmlns:ioc="ioc" xmlns:c="c" x:schema="/nop/schema/beans.xdef">
-
-    <bean id="io.crazydan.duzhou.framework.app_dev.orm.mapper.DevAppEntityMapper"
-          class="io.nop.orm.sql_lib.proxy.SqlLibProxyFactoryBean" ioc:type="@bean:id" ioc:bean-method="build">
-        <property name="mapperClass" value="@bean:type"/>
-    </bean>
-</beans>
