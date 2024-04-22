@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
+
+    <gen:DefineLoopForOrm xpl:lib="/nop/codegen/xlib/gen.xlib" xpl:slotScope="builder">
+        <c:script><![CDATA[
+            builder.defineGlobalVar('appName', ormModel['ext:moduleName']);
+            builder.defineGlobalVar('moduleId', ormModel['ext:moduleId']);
+            builder.defineGlobalVar('moduleName', ormModel['ext:moduleName']);
+            builder.defineGlobalVar('moduleBeansName', ormModel['ext:moduleBeansName']);
+            builder.defineGlobalVar('moduleClassPrefix', ormModel['ext:moduleClassPrefix']);
+            builder.defineGlobalVar('moduleClassShortPrefix', ormModel['ext:moduleClassShortPrefix']);
+            builder.defineGlobalVar('moduleNormalizedName', ormModel['ext:moduleName'].replace('_', '-'));
+
+            builder.defineGlobalVar('useQuarkusWebStarter', ormModel['ext:webStarterType'] == 'quarkus');
+            builder.defineGlobalVar('useSpringWebStarter', ormModel['ext:webStarterType'] == 'spring');
+            builder.defineGlobalVar('dbDialects', ormModel["ext:dialect"].$toCsvSet());
+
+            builder.defineGlobalVar('basePackageName', ormModel['ext:basePackageName']);
+            builder.defineGlobalVar('entityPackageName', ormModel['ext:basePackageName'] + '.orm.entity');
+            builder.defineGlobalVar('basePackagePath', ormModel['ext:basePackageName'].replace('.', '/'));
+        ]]></c:script>
+    </gen:DefineLoopForOrm>
+</c:unit>

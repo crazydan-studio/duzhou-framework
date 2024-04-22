@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
-    <gen:DefineLoopForOrm xpl:lib="/nop/codegen/xlib/gen.xlib" xpl:slotScope="builder">
-        <c:script><![CDATA[
-            builder.defineGlobalVar('appName', ormModel['ext:moduleName']);
-            builder.defineGlobalVar('moduleId', ormModel['ext:moduleId']);
-            builder.defineGlobalVar('moduleName', ormModel['ext:moduleName']);
-            builder.defineGlobalVar('moduleBeansName', ormModel['ext:moduleBeansName']);
-            builder.defineGlobalVar('moduleClassPrefix', ormModel['ext:moduleClassPrefix']);
-            builder.defineGlobalVar('moduleClassShortPrefix', ormModel['ext:moduleClassShortPrefix']);
-            builder.defineGlobalVar('moduleNormalizedName', ormModel['ext:moduleName'].replace('_', '-'));
+    <gen:Render template="/duzhou/templates/@app-module"
+                targetDir="${targetResource.path.$filePath()}"
+                xpl:lib="/nop/codegen/xlib/gen.xlib" />
 
-            builder.defineGlobalVar('useQuarkusWebStarter', ormModel['ext:webStarterType'] == 'quarkus');
-            builder.defineGlobalVar('useSpringWebStarter', ormModel['ext:webStarterType'] == 'spring');
-            builder.defineGlobalVar('dbDialects', ormModel["ext:dialect"].$toCsvSet());
+    <!--
+    在模块代码生成完毕后补充生成 xmeta 和 orm entity 代码。
+    注：不能在 @app-module 模板内处理，因为在同一模板内执行逻辑时，
+    生成的相应文件还未保存
+    -->
+    <c:script><![CDATA[
+        // Note：在 app.orm.xml 中存在 x:post-extends 等后处理，
+        // 故而，不能在生成 app.orm.xml 的时候生成 xmeta 和 orm entity 代码，
+        // 因为，此时并不会执行 x:post-extends 的函数，导致部分 orm 配置还未展开
+        const moduleId = ormModel['ext:moduleId'];
+        const moduleDir = targetResource.path.$filePath();
 
-            builder.defineGlobalVar('basePackageName', ormModel['ext:basePackageName']);
-            builder.defineGlobalVar('entityPackageName', ormModel['ext:basePackageName'] + '.orm.entity');
-            builder.defineGlobalVar('basePackagePath', ormModel['ext:basePackageName'].replace('.', '/'));
-        ]]></c:script>
-    </gen:DefineLoopForOrm>
+        const moduleOrmPath = moduleDir + '/orm/src/main/resources/_vfs/' + moduleId + '/orm/app.orm.xml';
+
+        codeGenerator
+            .withTargetDir(moduleDir + '/biz')
+            .renderModel(
+                moduleOrmPath,
+                '/duzhou/templates/meta',
+                '/', $scope
+            );
+        codeGenerator
+            .withTargetDir(moduleDir + '/orm/src/main/java')
+            .renderModel(
+                moduleOrmPath,
+                '/nop/templates/orm-entity',
+                '/', $scope
+            );
+    ]]></c:script>
 </c:unit>
