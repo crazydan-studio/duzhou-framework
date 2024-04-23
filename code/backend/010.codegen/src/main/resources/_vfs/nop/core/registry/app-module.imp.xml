@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<imp xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+<imp xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl"
      x:schema="/nop/schema/excel/imp.xdef"
      x:extends="/nop/orm/imp/orm.imp.xml"
      resultType="io.crazydan.duzhou.framework.codegen.imp.AppModel">
@@ -9,55 +9,16 @@
             <normalizeFieldsExpr>
                 <c:script><![CDATA[
                     const app = record.app;
-                    const appCode = app.code;
-                    const appCode1 = appCode.split('-')[0];
-                    const appCode2 = appCode.split('-')[1];
-                    app.code1 = appCode1;
-                    app.code2 = appCode2;
                     app.maven.artifactId = 'parent';
                     app.maven.version = app.version;
-
-                    const module = record.appModule;
-                    const moduleCode = module.code.replaceAll('-', '_');
-                    module.id = appCode1 + '/' + moduleCode;
-                    module.code = appCode1 + '-' + moduleCode;
-                    module.code1 = appCode1;
-                    module.code2 = moduleCode;
-                    module.maven = {
-                        parent: app.maven,
-                        version: app.version,
-                        groupId: app.maven.groupId,
-                        artifactId: moduleCode.replaceAll('_', '-'),
-                    };
-                    module.webStarterType = module.webStarterType || 'spring';
-                    module.basePackageName = app.maven.groupId + '.' + moduleCode;
-
-                    // Note：在从 app.orm.xml 生成 *.xmeta 时，需要从 app.orm.xml 中再次使用的变量
-                    record['ext:dialect'] = module.db?.dialect;
-                    record['ext:deltaDir'] = null;
-                    record['ext:useCoreModule'] = 'false';
-                    record['ext:webStarterType'] = module.webStarterType;
-                    record['ext:mavenGroupId'] = module.maven.groupId;
-                    record['ext:mavenArtifactId'] = module.maven.artifactId;
-                    record['ext:mavenVersion'] = module.maven.version;
-                    record['ext:mavenParentGroupId'] = module.maven.parent.groupId;
-                    record['ext:mavenParentArtifactId'] = module.maven.parent.artifactId;
-                    record['ext:mavenParentVersion'] = module.maven.parent.version;
-                    // 若为独立工程，则设置空字符串
-                    record['ext:mavenParentRelativePath'] = '../pom.xml';
-
-                    record['ext:moduleId'] = module.id;
-                    record['ext:moduleName'] = module.code;
-                    record['ext:moduleTitle'] = module.name;
-                    record['ext:moduleDescription'] = module.description;
-                    record['ext:moduleClassPrefix'] = module.id.replace('/','_').$camelCase(true);
-                    record['ext:moduleClassShortPrefix'] = module.code2.$camelCase(true);
-                    record['ext:moduleBeansName'] = module.maven.artifactId;
-
-                    record['ext:basePackageName'] = module.basePackageName;
-                    // Note：后续 OrmEntityModel 需以下数据进行补全，故需提前准备
-                    record['ext:registerShortName'] = true;
-                    record['ext:entityPackageName'] = module.basePackageName + '.orm.entity';
+                ]]></c:script>
+                <gen:GenOrmModelExtAttrs app="${app}" appModule="${record.appModule}"
+                                         xpl:return="extAttrs"
+                                         xpl:lib="/duzhou/codegen/xlib/gen.xlib" />
+                <c:script><![CDATA[
+                    extAttrs.forEach((key, value) => {
+                        record[key] = value;
+                    });
                 ]]></c:script>
             </normalizeFieldsExpr>
 
@@ -65,7 +26,7 @@
                 <field name="app.code" displayName="app.code" mandatory="true">
                     <schema stdDomain="string" />
                 </field>
-                <field name="app.name" displayName="app.name" mandatory="true">
+                <field name="app.displayName" displayName="app.displayName" mandatory="true">
                     <schema stdDomain="string" />
                 </field>
                 <field name="app.version" displayName="app.version" mandatory="true">
@@ -99,7 +60,7 @@
                        displayName="app.module.webStarterType" mandatory="true">
                     <schema stdDomain="string" />
                 </field>
-                <field name="appModule.name" displayName="app.module.name" mandatory="true">
+                <field name="appModule.displayName" displayName="app.module.displayName" mandatory="true">
                     <schema stdDomain="string" />
                 </field>
                 <field name="appModule.code" displayName="app.module.code" mandatory="true">

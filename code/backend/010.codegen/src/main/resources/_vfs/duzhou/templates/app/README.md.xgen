@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[${app.name}
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[${app.displayName}
 ===================================
 
 ${app.description}

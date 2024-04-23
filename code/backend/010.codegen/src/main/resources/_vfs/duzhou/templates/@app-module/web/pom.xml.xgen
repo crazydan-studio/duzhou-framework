@@ -8,7 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- Web 页面资源 -->]]></c:unit>
         <artifactId>${ormModel['ext:mavenArtifactId']}-web</artifactId>
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Web Layer)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Web Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>

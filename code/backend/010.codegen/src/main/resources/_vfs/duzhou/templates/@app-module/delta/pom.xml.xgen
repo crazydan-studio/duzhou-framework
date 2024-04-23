@@ -8,7 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 针对当前服务模块的差量内容 -->]]></c:unit>
         <artifactId>${ormModel['ext:mavenArtifactId']}-delta</artifactId>
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Delta Layer)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Delta Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>

@@ -10,15 +10,9 @@
     const modelPath = codeGenerator.getTplPath('../model/duzhou-app-modeler.app-module.xlsx');
     const model = ResourceComponentManager.instance().loadComponentModel(modelPath);
 
-    const app = model.app;
-    const appModule = model.appModule;
-
     $scope.setLocalValue('app', {
-        ...app,
-        modules: [{
-            ...appModule,
-            ormModel: model
-        }]
+        ...model.app,
+        ormModels: [ model ]
     });
 
     codeGenerator

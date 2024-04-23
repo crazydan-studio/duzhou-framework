@@ -8,7 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 当前服务的 ORM 模型定义 -->]]></c:unit>
         <artifactId>${ormModel['ext:mavenArtifactId']}-orm</artifactId>
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (ORM Layer)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (ORM Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>

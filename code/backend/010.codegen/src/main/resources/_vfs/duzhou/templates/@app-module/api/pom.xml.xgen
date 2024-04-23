@@ -8,7 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 用于服务间的 API 调用 -->]]></c:unit>
         <artifactId>${ormModel['ext:mavenArtifactId']}-api</artifactId>
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (API Layer)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (API Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>

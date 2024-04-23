@@ -29,7 +29,6 @@ import io.nop.orm.model.OrmModel;
  */
 public class AppModel extends OrmModel {
     private Map<String, Object> app;
-    private Map<String, Object> appModule;
 
     public Map<String, Object> getApp() {
         return this.app;
@@ -37,13 +36,5 @@ public class AppModel extends OrmModel {
 
     public void setApp(Map<String, Object> app) {
         this.app = app;
-    }
-
-    public Map<String, Object> getAppModule() {
-        return this.appModule;
-    }
-
-    public void setAppModule(Map<String, Object> appModule) {
-        this.appModule = appModule;
     }
 }

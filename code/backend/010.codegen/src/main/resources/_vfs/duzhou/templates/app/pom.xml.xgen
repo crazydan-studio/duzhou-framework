@@ -2,7 +2,7 @@
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <gen:MavenPomMerge
         xmlns:gen="gen" xmlns:xpl="xpl" xmlns:c="c" xmlns:x="x"
-        xpl:lib="/nop/codegen/xlib/gen.xlib"
+        xpl:lib="/duzhou/codegen/xlib/gen.xlib"
         resource="${targetResource}"
 >
     <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -14,7 +14,7 @@
         <version>${app.maven.version}</version>
         <packaging>pom</packaging>
 
-        <name>${app.name} [${appNormalizedCode}] (Parent)</name>
+        <name>${app.displayName} [${appNormalizedCode}] (Parent)</name>
         <description>
             ${app.description}
         </description>

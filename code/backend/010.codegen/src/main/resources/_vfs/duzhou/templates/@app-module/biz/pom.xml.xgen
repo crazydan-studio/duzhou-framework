@@ -8,7 +8,7 @@
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 当前服务的业务逻辑实现 -->]]></c:unit>
         <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Biz Layer)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Biz Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>

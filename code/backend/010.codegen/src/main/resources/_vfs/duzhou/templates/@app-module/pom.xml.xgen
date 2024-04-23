@@ -2,7 +2,7 @@
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <gen:MavenPomMerge
         xmlns:gen="gen" xmlns:xpl="xpl" xmlns:c="c"
-        xpl:lib="/nop/codegen/xlib/gen.xlib"
+        xpl:lib="/duzhou/codegen/xlib/gen.xlib"
         resource="${targetResource}"
 >
     <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -19,7 +19,7 @@
         </c:if>
         <packaging>pom</packaging>
 
-        <name>${ormModel['ext:moduleTitle']} [${ormModel['ext:mavenArtifactId']}] (Parent)</name>
+        <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Parent)</name>
         <description>${ormModel['ext:moduleDescription']}</description>
 
         <parent>

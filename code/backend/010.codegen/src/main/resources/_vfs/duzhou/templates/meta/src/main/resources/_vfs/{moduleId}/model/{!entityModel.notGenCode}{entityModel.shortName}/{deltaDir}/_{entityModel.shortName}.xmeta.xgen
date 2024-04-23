@@ -14,7 +14,7 @@
     ]]></c:script>
 
     <gen:DeltaMerge targetNode="${targetNode}"
-                    xpl:lib="/nop/codegen/xlib/gen.xlib">
+                    xpl:lib="/duzhou/codegen/xlib/gen.xlib">
         <meta>
             <props>
                 <!-- json 字段不暴露给前端（直接移除），采用 alias 方式屏蔽内部结构 -->

@@ -2,7 +2,7 @@
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <gen:MavenPomMerge
         xmlns:gen="gen" xmlns:xpl="xpl" xmlns:c="c" xmlns:x="x"
-        xpl:lib="/nop/codegen/xlib/gen.xlib"
+        xpl:lib="/duzhou/codegen/xlib/gen.xlib"
         resource="${targetResource}"
 >
     <c:script><![CDATA[
@@ -18,7 +18,7 @@
         <version>${app.maven.version}</version>
         <packaging>pom</packaging>
 
-        <name>${app.name} [${appNormalizedCode}] (Base)</name>
+        <name>${app.displayName} [${appNormalizedCode}] (Base)</name>
 
         <c:if test="${app.maven.parent}">
             <parent>
@@ -52,8 +52,8 @@
         </properties>
 
         <modules>
-            <c:for var="module" items="${app.modules}">
-                <module x:id="${module.maven.artifactId}">../${module.maven.artifactId}</module>
+            <c:for var="ormModel" items="${app.ormModels}">
+                <module x:id="${ormModel['ext:mavenArtifactId']}">../${ormModel['ext:mavenArtifactId']}</module>
             </c:for>
         </modules>
 
@@ -91,11 +91,11 @@
 
         <dependencyManagement>
             <dependencies>
-                <c:for var="module" items="${app.modules}">
+                <c:for var="ormModel" items="${app.ormModel}">
                     <c:for var="suffix" items="${['','-api','-biz','-orm','-web','-delta']}">
-                        <dependency x:id="${module.maven.groupId}:${module.maven.artifactId}${suffix}">
-                            <groupId>${module.maven.groupId}</groupId>
-                            <artifactId>${module.maven.artifactId}${suffix}</artifactId>
+                        <dependency x:id="${ormModel['ext:mavenGroupId']}:${ormModel['ext:mavenArtifactId']}${suffix}">
+                            <groupId>${ormModel['ext:mavenGroupId']}</groupId>
+                            <artifactId>${['ext:mavenArtifactId']}${suffix}</artifactId>
                             <version>${'$'}{${appNormalizedCode}.version}</version>
                         </dependency>
                     </c:for>
