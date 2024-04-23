@@ -69,7 +69,7 @@
                 <field name="appModule.description" displayName="app.module.description">
                     <schema stdDomain="string" />
                 </field>
-                <field name="appModule.db.dialect" displayName="app.module.db.dialect">
+                <field name="appModule.dbDialect" displayName="app.module.db.dialect">
                     <schema stdDomain="string" />
                 </field>
             </fields>
