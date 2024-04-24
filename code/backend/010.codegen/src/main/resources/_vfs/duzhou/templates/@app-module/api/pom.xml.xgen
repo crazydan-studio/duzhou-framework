@@ -7,12 +7,12 @@
         <modelVersion>4.0.0</modelVersion>
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 用于服务间的 API 调用 -->]]></c:unit>
-        <artifactId>${ormModel['ext:mavenArtifactId']}-api</artifactId>
+        <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-api</artifactId>
         <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (API Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}</artifactId>
             <version>${ormModel['ext:mavenVersion']}</version>
             <relativePath>../pom.xml</relativePath>
         </parent>

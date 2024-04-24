@@ -48,6 +48,7 @@
                         'ext:mavenVersion': app.version,
                         'ext:mavenGroupId': app.maven.groupId,
                         'ext:mavenArtifactId': moduleMavenArtifactId,
+                        'ext:mavenArtifactIdPrefix': moduleCode1.replaceAll('_', '-') + '-',
                         'ext:mavenParentVersion': app.maven.version,
                         'ext:mavenParentGroupId': app.maven.groupId,
                         'ext:mavenParentArtifactId': app.maven.artifactId,

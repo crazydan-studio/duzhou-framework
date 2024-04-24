@@ -36,14 +36,6 @@
         </modules>
 
         <dependencies>
-            <c:script><![CDATA[
-                $out.comment('Note: x:id 属性需保留，其为自动合并的基础');
-            ]]></c:script>
-            <dependency x:id="io.crazydan.duzhou.framework:autotest">
-                <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>autotest</artifactId>
-                <scope>test</scope>
-            </dependency>
         </dependencies>
     </project>
 </gen:MavenPomMerge>

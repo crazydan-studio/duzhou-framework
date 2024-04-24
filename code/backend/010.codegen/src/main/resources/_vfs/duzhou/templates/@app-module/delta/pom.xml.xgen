@@ -7,12 +7,12 @@
         <modelVersion>4.0.0</modelVersion>
 
         <c:unit xpl:outputMode="text"><![CDATA[<!-- 针对当前服务模块的差量内容 -->]]></c:unit>
-        <artifactId>${ormModel['ext:mavenArtifactId']}-delta</artifactId>
+        <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-delta</artifactId>
         <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Delta Layer)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}</artifactId>
             <version>${ormModel['ext:mavenVersion']}</version>
             <relativePath>../pom.xml</relativePath>
         </parent>

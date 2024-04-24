@@ -13,7 +13,7 @@
         <c:if test="${ormModel['ext:mavenGroupId'] != ormModel['ext:mavenParentGroupId']}">
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
         </c:if>
-        <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+        <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}</artifactId>
         <c:if test="${ormModel['ext:mavenGroupId'] != ormModel['ext:mavenParentGroupId'] || ormModel['ext:mavenVersion'] != ormModel['ext:mavenParentVersion']}">
             <version>${ormModel['ext:mavenVersion']}</version>
         </c:if>
@@ -43,9 +43,9 @@
                 <c:script><![CDATA[
                     $out.comment('Note: x:id 属性需保留，其为自动合并的基础');
                 ]]></c:script>
-                <dependency x:id="io.crazydan.duzhou.framework:autotest">
+                <dependency x:id="io.crazydan.duzhou.framework:duzhou-autotest">
                     <groupId>io.crazydan.duzhou.framework</groupId>
-                    <artifactId>autotest</artifactId>
+                    <artifactId>duzhou-autotest</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

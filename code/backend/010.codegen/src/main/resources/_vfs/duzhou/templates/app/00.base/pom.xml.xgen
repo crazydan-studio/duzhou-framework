@@ -59,12 +59,34 @@
 
         <dependencies>
             <c:script><![CDATA[
-                $out.comment('Nop Idea 插件在调试 xlang 时需要该依赖');
+                $out.comment('Nop Idea 插件在调试 xlang 时需要该依赖（仅开发期间需要，不会被打包）');
             ]]></c:script>
             <dependency x:id="io.github.entropy-cloud:nop-xlang-debugger">
                 <groupId>io.github.entropy-cloud</groupId>
                 <artifactId>nop-xlang-debugger</artifactId>
-                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
+
+            <c:script><![CDATA[
+                $out.comment('单元测试支持');
+            ]]></c:script>
+            <dependency x:id="io.crazydan.duzhou.framework:duzhou-autotest">
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-autotest</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <c:script><![CDATA[
+                $out.comment('强制设置 junit 的 scope 为 test，否则，duzhou-autotest 会以 runtime 方式引入，并最终被打包');
+            ]]></c:script>
+            <dependency x:id="org.junit.jupiter:junit-jupiter">
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency x:id="org.junit.jupiter:junit-jupiter-params">
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <scope>test</scope>
             </dependency>
         </dependencies>
 
@@ -91,11 +113,15 @@
 
         <dependencyManagement>
             <dependencies>
-                <c:for var="ormModel" items="${app.ormModel}">
+                <c:for var="ormModel" items="${app.ormModels}">
                     <c:for var="suffix" items="${['','-api','-biz','-orm','-web','-delta']}">
-                        <dependency x:id="${ormModel['ext:mavenGroupId']}:${ormModel['ext:mavenArtifactId']}${suffix}">
+                        <c:script>
+                            const artifactId = ormModel['ext:mavenArtifactIdPrefix']
+                            + ormModel['ext:mavenArtifactId'] + suffix;
+                        </c:script>
+                        <dependency x:id="${ormModel['ext:mavenGroupId']}:${artifactId}">
                             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-                            <artifactId>${['ext:mavenArtifactId']}${suffix}</artifactId>
+                            <artifactId>${artifactId}</artifactId>
                             <version>${'$'}{${appNormalizedCode}.version}</version>
                         </dependency>
                     </c:for>

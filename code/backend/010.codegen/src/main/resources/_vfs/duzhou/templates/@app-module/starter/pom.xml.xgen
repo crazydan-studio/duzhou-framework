@@ -8,12 +8,12 @@
 
         <c:unit xpl:outputMode="text">
             <![CDATA[<!-- 服务启动器，用于启动单体服务，或者本地开发 -->]]></c:unit>
-        <artifactId>${ormModel['ext:mavenArtifactId']}-starter</artifactId>
+        <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-starter</artifactId>
         <name>${ormModel['ext:moduleDisplayName']} [${ormModel['ext:mavenArtifactId']}] (Starter)</name>
 
         <parent>
             <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-            <artifactId>${ormModel['ext:mavenArtifactId']}</artifactId>
+            <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}</artifactId>
             <version>${ormModel['ext:mavenVersion']}</version>
             <relativePath>../pom.xml</relativePath>
         </parent>
@@ -28,21 +28,21 @@
         <dependencies>
             <dependency>
                 <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-                <artifactId>${ormModel['ext:mavenArtifactId']}-delta</artifactId>
+                <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-delta</artifactId>
             </dependency>
             <dependency>
                 <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-                <artifactId>${ormModel['ext:mavenArtifactId']}-biz</artifactId>
+                <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-biz</artifactId>
             </dependency>
             <dependency>
                 <groupId>${ormModel['ext:mavenGroupId']}</groupId>
-                <artifactId>${ormModel['ext:mavenArtifactId']}-web</artifactId>
+                <artifactId>${ormModel['ext:mavenArtifactIdPrefix']}${ormModel['ext:mavenArtifactId']}-web</artifactId>
             </dependency>
 
             <c:if test="${useQuarkusWebStarter}">
                 <dependency>
                     <groupId>io.crazydan.duzhou.framework</groupId>
-                    <artifactId>starter-quarkus</artifactId>
+                    <artifactId>duzhou-starter-quarkus</artifactId>
                 </dependency>
                 <c:for var="name" items="${dbDialects}">
                     <dependency>
@@ -54,7 +54,7 @@
             <c:if test="${useSpringWebStarter}">
                 <dependency>
                     <groupId>io.crazydan.duzhou.framework</groupId>
-                    <artifactId>starter-spring</artifactId>
+                    <artifactId>duzhou-starter-spring</artifactId>
                 </dependency>
                 <c:for var="name" items="${dbDialects}">
                     <c:if test="${name == 'h2'}">
