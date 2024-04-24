@@ -23,14 +23,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>starter-quarkus</artifactId>
+    <artifactId>duzhou-starter-quarkus</artifactId>
 
     <!-- 基于 Quarkus 构建的应用服务启动器 -->
     <name>Duzhou Framework Starter - Quarkus</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>starter</artifactId>
+        <artifactId>duzhou-starter</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

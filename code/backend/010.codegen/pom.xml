@@ -23,7 +23,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>codegen</artifactId>
+    <artifactId>duzhou-codegen</artifactId>
     <name>Duzhou Framework Code Generator</name>
 
     <parent>
@@ -40,7 +40,7 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>schema</artifactId>
+            <artifactId>duzhou-schema</artifactId>
         </dependency>
 
         <!-- 根据 *.orm.xlsx 生成代码时，需要该依赖解析 excel 文件 -->
@@ -59,7 +59,7 @@
 
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>autotest</artifactId>
+            <artifactId>duzhou-autotest</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

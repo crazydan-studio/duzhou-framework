@@ -23,14 +23,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-starter</artifactId>
+    <artifactId>duzhou-gateway-starter</artifactId>
 
     <!-- API 和 Web 站点网关的应用服务启动器 -->
     <name>Duzhou Framework Gateway - Starter</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>duzhou-gateway</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -45,21 +45,21 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>starter-quarkus</artifactId>
+            <artifactId>duzhou-starter-quarkus</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>gateway-api</artifactId>
+            <artifactId>duzhou-gateway-api</artifactId>
         </dependency>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>gateway-web</artifactId>
+            <artifactId>duzhou-gateway-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>gateway-web-demo</artifactId>
+            <artifactId>duzhou-gateway-web-demo</artifactId>
             <!-- 仅用于演示功能可用性，不是强依赖模块 -->
             <scope>provided</scope>
         </dependency>
@@ -108,7 +108,6 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.platform.version}</version>
                 <executions>
                     <execution>
                         <goals>

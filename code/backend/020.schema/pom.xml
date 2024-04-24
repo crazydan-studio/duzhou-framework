@@ -23,7 +23,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schema</artifactId>
+    <artifactId>duzhou-schema</artifactId>
     <name>Duzhou Framework Schema</name>
 
     <parent>
@@ -39,7 +39,7 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>duzhou-commons</artifactId>
         </dependency>
 
         <dependency>
@@ -55,7 +55,7 @@
 
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>autotest</artifactId>
+            <artifactId>duzhou-autotest</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

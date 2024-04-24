@@ -71,11 +71,22 @@
     </modules>
 
     <dependencies>
-        <!-- Idea 插件在调试 xlang 时需要该依赖 -->
+        <!-- Nop Idea 插件在调试 xlang 时需要该依赖（仅开发期间需要，不会被打包） -->
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-xlang-debugger</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -120,57 +131,84 @@
             <!-- 本项目子模块，便于其他项目引入 -->
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>commons</artifactId>
+                <artifactId>duzhou-commons</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>autotest</artifactId>
+                <artifactId>duzhou-autotest</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>schema</artifactId>
+                <artifactId>duzhou-schema</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>codegen</artifactId>
+                <artifactId>duzhou-codegen</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>starter-quarkus</artifactId>
+                <artifactId>duzhou-starter-quarkus</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>starter-spring</artifactId>
+                <artifactId>duzhou-starter-spring</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>gateway-core</artifactId>
+                <artifactId>duzhou-gateway-core</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>gateway-web</artifactId>
+                <artifactId>duzhou-gateway-web</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>gateway-web-demo</artifactId>
+                <artifactId>duzhou-gateway-web-demo</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>gateway-api</artifactId>
+                <artifactId>duzhou-gateway-api</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <!-- End -->
 
+            <dependency>
+                <groupId>io.github.entropy-cloud</groupId>
+                <artifactId>nop-orm</artifactId>
+                <version>${nop-entropy.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>mysql</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>postgresql</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>oracle-xe</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>mariadb</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>mssqlserver</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -231,6 +269,13 @@
                         <mainClass>${start-class}</mainClass>
                         <!-- 指定可执行包的分类名称以区分普通jar包 -->
                         <classifier>exec</classifier>
+                        <excludes>
+                            <exclude>
+                                <!-- 仅开发期需要 -->
+                                <groupId>io.github.entropy-cloud</groupId>
+                                <artifactId>nop-xlang-debugger</artifactId>
+                            </exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
             </plugins>

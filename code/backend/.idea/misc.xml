@@ -11,14 +11,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/100.gateway/web/pom.xml" />
         <option value="$PROJECT_DIR$/020.schema/pom.xml" />
-        <option value="$PROJECT_DIR$/200.auth/pom.xml" />
         <option value="$PROJECT_DIR$/010.codegen/pom.xml" />
         <option value="$PROJECT_DIR$/050.starter/spring/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">

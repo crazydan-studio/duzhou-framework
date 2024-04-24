@@ -23,7 +23,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>autotest</artifactId>
+    <artifactId>duzhou-autotest</artifactId>
 
     <!-- 单元测试 -->
     <name>Duzhou Framework Auto Test</name>
@@ -42,13 +42,13 @@
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-autotest-junit</artifactId>
-            <!-- 必须显式设置，否则，不会被引入 -->
+            <!-- 必须设置 scope 为 compile，否则，不会被引入依赖（原因未知） -->
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-autotest-core</artifactId>
-            <!-- 必须显式设置，否则，不会被引入 -->
+            <!-- 必须设置 scope 为 compile，否则，不会被引入依赖（原因未知） -->
             <scope>compile</scope>
         </dependency>
 

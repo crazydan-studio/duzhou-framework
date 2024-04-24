@@ -1,20 +1,9 @@
-/*
- * 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
- * Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.
- * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+/**
+ * Copyright (c) 2017-2024 Nop Platform. All rights reserved.
+ * Author: canonical_entropy@163.com
+ * Blog:   https://www.zhihu.com/people/canonical-entropy
+ * Gitee:  https://gitee.com/canonical-entropy/nop-entropy
+ * Github: https://github.com/entropy-cloud/nop-entropy
  */
 package io.crazydan.duzhou.framework.starter.ioc;
 
@@ -22,18 +11,20 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.crazydan.duzhou.framework.starter.QuarkusConstants;
 import io.nop.api.core.ApiConstants;
 import io.nop.api.core.ApiErrors;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.ioc.IBeanContainer;
 import io.nop.commons.util.StringHelper;
+import io.nop.quarkus.core.QuarkusConstants;
+import io.nop.quarkus.core.ioc.MarkerInterfaceAnnotation;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.ArcContainer;
 import io.quarkus.arc.InjectableBean;
 import io.quarkus.arc.InjectableInstance;
 import io.quarkus.arc.InstanceHandle;
 import io.quarkus.arc.impl.ArcContainerImpl;
+import jakarta.annotation.Nonnull;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
@@ -57,7 +48,7 @@ public class NopQuarkusBeanContainer implements IBeanContainer {
     public void restart() {
     }
 
-    private ArcContainer container() {
+    ArcContainer container() {
         return ArcContainerImpl.instance();
     }
 
@@ -90,6 +81,7 @@ public class NopQuarkusBeanContainer implements IBeanContainer {
         return quarkusBean != null;
     }
 
+    @Nonnull
     @Override
     public Object getBean(String name) {
         InjectableBean<?> quarkusBean = getQuarkusBean(name);
@@ -100,6 +92,7 @@ public class NopQuarkusBeanContainer implements IBeanContainer {
         return bean;
     }
 
+    @Nonnull
     @Override
     public <T> T getBeanByType(Class<T> clazz) {
         T bean = container().instance(clazz).get();
@@ -153,6 +146,15 @@ public class NopQuarkusBeanContainer implements IBeanContainer {
         }
 
         return StringHelper.camelCaseToHyphen(scope.getSimpleName());
+    }
+
+    @Override
+    public Class<?> getBeanClass(String name) {
+        InjectableBean<?> bean = getQuarkusBean(name);
+        if (bean == null) {
+            throw new NopException(ApiErrors.ERR_IOC_UNKNOWN_BEAN_FOR_NAME).param(ApiErrors.ARG_BEAN_NAME, name);
+        }
+        return bean.getBeanClass();
     }
 
     private InjectableBean<?> getQuarkusBean(String name) {

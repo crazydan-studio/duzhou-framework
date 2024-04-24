@@ -23,14 +23,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-web-demo</artifactId>
+    <artifactId>duzhou-gateway-web-demo</artifactId>
 
     <!-- Web 站点网关的演示项目，仅用于打包站点和资源页面的 DSL -->
     <name>Duzhou Framework Gateway - Web Demo</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>duzhou-gateway</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
