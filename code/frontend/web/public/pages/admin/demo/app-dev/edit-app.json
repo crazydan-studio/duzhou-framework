@@ -34,7 +34,7 @@
         "type": "input-image",
         "name": "logo",
         "label": "图标",
-        "required": true,
+        "required": false,
         "accept": ".jpeg,.jpg,.png,.gif,.svg",
         "uploadBtnText": "点击上传应用图标",
         "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${appId}"

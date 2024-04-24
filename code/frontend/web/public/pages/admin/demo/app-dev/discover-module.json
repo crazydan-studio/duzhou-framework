@@ -1,0 +1,59 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "wizard",
+    "wrapWithPanel": false,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "${refTableName}"
+          }
+        ]
+      }
+    },
+    "api": {
+      "url": "@mutation:DevAppModule__importDiscovery",
+      "data": {
+        "appId": "${appId}",
+        "ormPaths": ["/duzhou/app_modeler/orm/app.orm.xml"]
+      }
+    },
+    "steps": [
+      {
+        "title": "导入模块",
+        "body": [
+          {
+            "type": "hidden",
+            "value": "${appId}"
+          },
+          {
+            "type": "checkboxes",
+            "name": "ormPaths",
+            "label": "可选模块",
+            "source": "@query:DevAppModule__discover",
+            "required": true
+          }
+        ],
+        "actions": [
+          {
+            "label": "导入",
+            "type": "button",
+            "level": "primary",
+            "actionType": "next"
+          }
+        ]
+      },
+      {
+        "title": "导入结果",
+        "body": ["这是最后一步了, 没有按钮"],
+        "actions": []
+      }
+    ]
+  }
+}
