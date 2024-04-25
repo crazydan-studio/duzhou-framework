@@ -4,7 +4,6 @@
 ><![CDATA[package ${basePackageName}.biz;
 
 import io.nop.api.core.annotations.biz.BizModel;
-import io.nop.biz.crud.CrudBizModel;
 import ${basePackageName}.biz._gen._${entityModel.shortName}BizModel;
 
 import ${entityModel.className || entityModel.name};
