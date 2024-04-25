@@ -2,58 +2,150 @@
   "status": 0,
   "msg": "",
   "data": {
-    "type": "wizard",
-    "wrapWithPanel": false,
-    "onEvent": {
-      "submitSucc": {
-        "actions": [
+    "type": "service",
+    "id": "${currentComponent}",
+    "data": {
+      "currentComponent": "${UUID(32)}",
+      "waiting": false,
+      "importResult": { "success": false }
+    },
+    "body": {
+      "type": "spinner",
+      "showOn": "${waiting}",
+      "overlay": true,
+      "size": "lg",
+      "tip": "正在处理中，请稍候 ...",
+      "body": {
+        "type": "wizard",
+        "wrapWithPanel": false,
+        "onEvent": {
+          "stepChange": {
+            "actions": [
+              {
+                "actionType": "setValue",
+                "componentId": "${currentComponent}",
+                "args": {
+                  "value": {
+                    "waiting": true,
+                    "importResult": { "success": false }
+                  }
+                }
+              },
+              {
+                "actionType": "ajax",
+                "expression": "${step == 2}",
+                "ignoreError": true,
+                "args": {
+                  "api": {
+                    "url": "@mutation:DevAppModule__importDiscovery",
+                    "data": {
+                      "appId": "${appId}",
+                      "ormPaths": "${ormPaths}"
+                    }
+                  }
+                }
+              },
+              {
+                "actionType": "setValue",
+                "componentId": "${currentComponent}",
+                "args": {
+                  "value": {
+                    "waiting": false,
+                    "importResult": {
+                      "success": "${status == 0}",
+                      "msg": "${status == 0 ? JOIN(ARRAYMAP(data, item => '【' + item.displayName + ' (' + item.code + ')' + '】'), '、') + '导入成功！' : responseResult.responseMsg}"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "steps": [
           {
-            "actionType": "closeDialog"
+            "title": "导入模块",
+            "jumpableOn": "${!importResult.success}",
+            "body": [
+              {
+                "type": "checkboxes",
+                "name": "ormPaths",
+                "label": "已发现如下模块: ",
+                "source": "@query:DevAppModule__discover",
+                "joinValues": false,
+                "extractValue": true
+              }
+            ],
+            "actions": [
+              {
+                "label": "取消",
+                "type": "button",
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "closeDialog"
+                      },
+                      {
+                        "actionType": "reload",
+                        "componentName": "${refTableName}"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "label": "导入",
+                "type": "button",
+                "level": "primary",
+                "actionType": "next",
+                "disabledOn": "${!ormPaths || ormPaths.length == 0}"
+              }
+            ]
           },
           {
-            "actionType": "reload",
-            "componentName": "${refTableName}"
+            "title": "导入结果",
+            "body": {
+              "type": "flex",
+              "justify": "center",
+              "alignItems": "center",
+              "items": [
+                {
+                  "type": "icon",
+                  "icon": "fa-solid ${importResult.success ? 'fa-check' : 'fa-triangle-exclamation'}",
+                  "className": "text-${importResult.success ? 'success' : 'danger'} text-2xl pr-2"
+                },
+                "${importResult.msg}"
+              ]
+            },
+            "actions": [
+              {
+                "label": "上一步",
+                "type": "button",
+                "actionType": "prev",
+                "disabledOn": "${importResult.success}"
+              },
+              {
+                "label": "完成",
+                "type": "button",
+                "level": "primary",
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "closeDialog"
+                      },
+                      {
+                        "actionType": "reload",
+                        "componentName": "${refTableName}"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           }
         ]
       }
-    },
-    "api": {
-      "url": "@mutation:DevAppModule__importDiscovery",
-      "data": {
-        "appId": "${appId}",
-        "ormPaths": ["/duzhou/app_modeler/orm/app.orm.xml"]
-      }
-    },
-    "steps": [
-      {
-        "title": "导入模块",
-        "body": [
-          {
-            "type": "hidden",
-            "value": "${appId}"
-          },
-          {
-            "type": "checkboxes",
-            "name": "ormPaths",
-            "label": "可选模块",
-            "source": "@query:DevAppModule__discover",
-            "required": true
-          }
-        ],
-        "actions": [
-          {
-            "label": "导入",
-            "type": "button",
-            "level": "primary",
-            "actionType": "next"
-          }
-        ]
-      },
-      {
-        "title": "导入结果",
-        "body": ["这是最后一步了, 没有按钮"],
-        "actions": []
-      }
-    ]
+    }
   }
 }

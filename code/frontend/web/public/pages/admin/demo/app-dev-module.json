@@ -65,10 +65,11 @@
           "type": "button",
           "label": "发现",
           "level": "success",
-          "icon": "fa-solid fa-plus",
+          "icon": "fa-solid fa-magnifying-glass-plus",
           "actionType": "dialog",
           "dialog": {
-            "title": "发现内部的应用模块",
+            "title": "发现并导入内部的应用模块",
+            "className": "wizard-dialog",
             "closeOnEsc": true,
             "actions": [],
             "body": {

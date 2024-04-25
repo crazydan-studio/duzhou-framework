@@ -19,6 +19,10 @@
 
 /* 样式参考:  */
 
+.amis-Checkbox {
+  user-select: text;
+}
+
 .amis-Form-item.amis-Form-item--horizontal {
   .amis-Form-label {
     display: flex;
@@ -94,5 +98,19 @@
 
   .entity-relation-op {
     line-height: 1;
+  }
+}
+
+.wizard-dialog {
+  .amis-Modal-body {
+    margin-bottom: 0;
+  }
+
+  [role='wizard-body'] {
+    margin-bottom: 1.5rem;
+  }
+
+  [role='wizard-footer'] {
+    text-align: right;
   }
 }
