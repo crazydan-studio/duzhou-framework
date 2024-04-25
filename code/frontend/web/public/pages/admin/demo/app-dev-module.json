@@ -77,7 +77,7 @@
               "data": {
                 "appId": "${appId}"
               },
-              "schemaApi": "get:/pages/admin/demo/app-dev/discover-module.json"
+              "schemaApi": "get:/pages/admin/demo/app-dev/module-discover.json"
             }
           }
         },
@@ -164,10 +164,19 @@
               "label": "发布",
               "type": "button",
               "level": "success",
-              "api": "@mutation:DevAppModule__release?id=${id}",
-              "actionType": "ajax",
-              "confirmTitle": "发布确认",
-              "confirmText": "确定要发布模块「<b>${displayName} (${code})</b>」？"
+              "actionType": "dialog",
+              "dialog": {
+                "title": "发布模块 ${displayName}",
+                "closeOnEsc": true,
+                "body": {
+                  "type": "service",
+                  "data": {
+                    "moduleId": "${id}",
+                    "refTableName": "${refTableName}"
+                  },
+                  "schemaApi": "get:/pages/admin/demo/app-dev/module-release.json"
+                }
+              }
             },
             {
               "label": "删除",

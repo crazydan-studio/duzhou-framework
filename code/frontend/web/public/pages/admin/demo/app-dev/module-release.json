@@ -1,0 +1,51 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "type": "form",
+    "title": "",
+    "actions": [],
+    "mode": "horizontal",
+    "wrapWithPanel": false,
+    "autoFocus": true,
+    "onEvent": {
+      "submitSucc": {
+        "actions": [
+          {
+            "actionType": "closeDialog"
+          },
+          {
+            "actionType": "reload",
+            "componentName": "${refTableName}"
+          }
+        ]
+      }
+    },
+    "api": {
+      "url": "@mutation:DevAppModule__release",
+      "data": {
+        "id": "${moduleId}",
+        "forceOverride": "${forceOverride}",
+        "releaseDir": "${releaseDir}"
+      },
+      "messages": {
+        "success": "模块发布成功！"
+      }
+    },
+    "body": [
+      {
+        "type": "input-text",
+        "name": "releaseDir",
+        "label": "代码生成目录",
+        "description": "此项为当前服务所在操作系统的目标目录的绝对路径，所生成的代码将放置于该目录",
+        "required": true
+      },
+      {
+        "type": "checkbox",
+        "name": "forceOverride",
+        "label": "",
+        "option": "是否覆盖更新？"
+      }
+    ]
+  }
+}
