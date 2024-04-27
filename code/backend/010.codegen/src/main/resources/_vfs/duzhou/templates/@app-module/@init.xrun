@@ -6,6 +6,7 @@
             builder.defineGlobalVar('appName', ormModel['ext:moduleName']);
             builder.defineGlobalVar('moduleId', ormModel['ext:moduleId']);
             builder.defineGlobalVar('moduleName', ormModel['ext:moduleName']);
+            builder.defineGlobalVar('moduleVersion', ormModel['ext:mavenVersion']);
             builder.defineGlobalVar('moduleBeansName', ormModel['ext:moduleBeansName']);
             builder.defineGlobalVar('moduleClassPrefix', ormModel['ext:moduleClassPrefix']);
             builder.defineGlobalVar('moduleClassShortPrefix', ormModel['ext:moduleClassShortPrefix']);

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[nop:
   debug: true
+  application:
+    # io.nop.api.core.ApiConfigs.CFG_APPLICATION_NAME
+    name: ${moduleNormalizedName}
+    version: ${moduleVersion}
   orm:
     init-database-schema: true
   datasource:
+    # 在数据库所在目录中启动 H2 控制台: java -jar /path/to/h2-x.y.z.jar -webAllowOthers -tcpAllowOthers
     driver-class-name: org.h2.Driver
-    jdbc-url: jdbc:h2:./db/${moduleNormalizedName}
+    # 配置 H2 对表名和字段名的大小写无关支持
+    jdbc-url: jdbc:h2:./db/${moduleNormalizedName};CASE_INSENSITIVE_IDENTIFIERS=TRUE
     username: sa
     password:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
