@@ -191,6 +191,13 @@
         },
         {
           "entityId": "${entityId}",
+          "displayName": "说明",
+          "name": "DESCRIPTION",
+          "stdSqlType": "VARCHAR",
+          "precision": 500
+        },
+        {
+          "entityId": "${entityId}",
           "displayName": "数据修订版本",
           "name": "VER",
           "mandatory": true,
