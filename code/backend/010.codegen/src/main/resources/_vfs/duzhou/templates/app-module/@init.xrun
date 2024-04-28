@@ -17,19 +17,19 @@
         const moduleId = ormModel['ext:moduleId'];
         const moduleDir = targetResource.path.$filePath();
 
-        const moduleOrmPath = moduleDir + '/orm/src/main/resources/_vfs/' + moduleId + '/orm/app.orm.xml';
+        const moduleOrmModelPath = moduleDir + '/orm/src/main/resources/_vfs/' + moduleId + '/orm/app.orm.xml';
 
         codeGenerator
             .withTargetDir(moduleDir + '/biz')
             .renderModel(
-                moduleOrmPath,
+                moduleOrmModelPath,
                 '/duzhou/templates/meta',
                 '/', $scope
             );
         codeGenerator
             .withTargetDir(moduleDir + '/orm/src/main/java')
             .renderModel(
-                moduleOrmPath,
+                moduleOrmModelPath,
                 '/nop/templates/orm-entity',
                 '/', $scope
             );
