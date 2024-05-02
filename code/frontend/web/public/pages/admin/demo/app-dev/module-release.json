@@ -10,7 +10,8 @@
       "ddlListComponent": "${UUID(32)}",
       "waiting": false,
       "ddlList": [],
-      "ddlListChanges": {}
+      "ddlListChanges": {},
+      "dbUpgradeInfo": { "success": true, "msg": "" }
     },
     "body": {
       "type": "spinner",
@@ -102,6 +103,13 @@
             "jumpableOn": "${false}",
             "body": [
               {
+                "type": "alert",
+                "level": "${ !dbUpgradeInfo.success ? 'danger' : 'success'}",
+                "className": "mb-1",
+                "visibleOn": "${ ddlList.length == 0 || !dbUpgradeInfo.success }",
+                "body": "${ ddlList.length == 0 ? '数据库表结构无变更，无需升级数据库！' : dbUpgradeInfo.msg }"
+              },
+              {
                 "type": "input-table",
                 "id": "${ddlListComponent}",
                 "name": "ddlList",
@@ -148,6 +156,7 @@
                 "label": "运行",
                 "type": "button",
                 "level": "primary",
+                "visibleOn": "${ddlList.length > 0}",
                 "onEvent": {
                   "click": {
                     "actions": [
@@ -178,7 +187,11 @@
                         "componentId": "${currentComponent}",
                         "args": {
                           "value": {
-                            "waiting": false
+                            "waiting": false,
+                            "dbUpgradeInfo": {
+                              "success": "${ responseData.status == 0 && !responseData.msg }",
+                              "msg": "${ responseData.status == 0 && responseData.msg }"
+                            }
                           }
                         }
                       },
@@ -202,15 +215,21 @@
                       },
                       {
                         "actionType": "toast",
-                        "expression": "${ responseData.status == 0 && responseData.msg }",
+                        "expression": "${ !(responseData.status == 0 && !responseData.msg) }",
                         "args": {
                           "msgType": "error",
-                          "msg": "${responseData.msg}"
+                          "msg": "${ responseData.msg }"
                         }
                       }
                     ]
                   }
                 }
+              },
+              {
+                "label": "下一步",
+                "type": "button",
+                "actionType": "next",
+                "visibleOn": "${ddlList.length == 0}"
               }
             ]
           },

@@ -234,6 +234,7 @@
           "name": "CREATED_TIME",
           "mandatory": true,
           "stdSqlType": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
           "domainName": "createTime"
         },
         {
@@ -242,6 +243,7 @@
           "name": "UPDATED_TIME",
           "mandatory": true,
           "stdSqlType": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
           "domainName": "updateTime"
         }
       ]
