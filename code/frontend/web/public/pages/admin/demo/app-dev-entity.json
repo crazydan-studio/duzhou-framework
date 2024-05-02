@@ -28,7 +28,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppEntity__findPage",
-        "gql:selection": "total,items{id,ver,moduleId,module{id,displayName,code},columnSize,displayName,name,tableName,tagSet}",
+        "gql:selection": "total,items{id,ver,moduleId,module{id,displayName,code},columnSize,displayName,name,tableName,tagSet,description}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -146,6 +146,11 @@
           "source": "@dict:app_modeler/entity-tagset"
         },
         {
+          "type": "text",
+          "name": "description",
+          "label": "说明"
+        },
+        {
           "type": "container",
           "label": "字段总数",
           "body": [
@@ -189,6 +194,34 @@
           "buttons": [
             {
               "type": "button",
+              "label": "编辑",
+              "level": "primary",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "编辑实体模型",
+                "closeOnEsc": true,
+                "body": {
+                  "type": "service",
+                  "data": {
+                    "appId": "${appId}",
+                    "entityId": "${id}",
+                    "refTableName": "${refTableName}"
+                  },
+                  "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity.json"
+                }
+              }
+            },
+            {
+              "label": "删除",
+              "type": "button",
+              "level": "danger",
+              "api": "@mutation:DevAppEntity__delete?id=${id}",
+              "actionType": "ajax",
+              "confirmTitle": "删除确认",
+              "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
+            },
+            {
+              "type": "button",
               "label": "字段管理",
               "level": "info",
               "actionType": "dialog",
@@ -216,34 +249,6 @@
                   "schemaApi": "get:/pages/admin/demo/app-dev/entity-columns-man.json"
                 }
               }
-            },
-            {
-              "type": "button",
-              "label": "编辑",
-              "level": "primary",
-              "actionType": "dialog",
-              "dialog": {
-                "title": "编辑实体模型",
-                "closeOnEsc": true,
-                "body": {
-                  "type": "service",
-                  "data": {
-                    "appId": "${appId}",
-                    "entityId": "${id}",
-                    "refTableName": "${refTableName}"
-                  },
-                  "schemaApi": "get:/pages/admin/demo/app-dev/edit-entity.json"
-                }
-              }
-            },
-            {
-              "label": "删除",
-              "type": "button",
-              "level": "danger",
-              "api": "@mutation:DevAppEntity__delete?id=${id}",
-              "actionType": "ajax",
-              "confirmTitle": "删除确认",
-              "confirmText": "确定要删除实体模型「<b>${displayName} (${name})</b>」？"
             }
           ]
         }

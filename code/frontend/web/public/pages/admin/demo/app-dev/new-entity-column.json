@@ -28,16 +28,21 @@
     "body": [
       {
         "type": "input-text",
+        "name": "name",
+        "label": "字段名",
+        "required": true,
+        "description": "注意：1. 在使用复合主键时，不要定义名为 ID 的字段；2. 可以短横线、下划线或空格分隔单词，其最终均将被替换为下划线；"
+      },
+      {
+        "type": "input-text",
         "name": "displayName",
         "label": "名称",
         "required": true
       },
       {
         "type": "input-text",
-        "name": "name",
-        "label": "字段名",
-        "required": true,
-        "description": "注意：1. 在使用复合主键时，不要定义名为 ID 的字段；2. 可以短横线、下划线或空格分隔单词，其最终均将被替换为下划线；"
+        "name": "description",
+        "label": "说明"
       },
       {
         "type": "group",

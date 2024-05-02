@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevAppEntityRelation__get?id=${relationId}",
-      "gql:selection": "id,sourceId,targetId,sourcePropName,targetPropName,type,tagSet,joinOnConds"
+      "gql:selection": "id,displayName,sourceId,targetId,sourcePropName,targetPropName,type,tagSet,joinOnConds"
     },
     "api": {
       "url": "@mutation:DevAppEntityRelation__update?id=${relationId}&sourceId=${sourceId}",
@@ -76,11 +76,21 @@
         ]
       },
       {
-        "type": "select",
-        "name": "type",
-        "label": "关联类型",
-        "source": "@dict:app_modeler/entity-relation-type",
-        "required": true
+        "type": "group",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "displayName",
+            "label": "关联名称"
+          },
+          {
+            "type": "select",
+            "name": "type",
+            "label": "关联类型",
+            "source": "@dict:app_modeler/entity-relation-type",
+            "required": true
+          }
+        ]
       },
       {
         "type": "select",

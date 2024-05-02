@@ -36,6 +36,7 @@
           "dialog": {
             "title": "添加新应用",
             "closeOnEsc": true,
+            "size": "lg",
             "data": {
               "refTableName": "${refTableName}"
             },
@@ -125,6 +126,7 @@
               "dialog": {
                 "title": "编辑应用",
                 "closeOnEsc": true,
+                "size": "lg",
                 "data": {
                   "appId": "${id}",
                   "refTableName": "${refTableName}"

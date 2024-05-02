@@ -40,6 +40,11 @@
       },
       {
         "type": "input-text",
+        "name": "baseClassName",
+        "label": "基类"
+      },
+      {
+        "type": "input-text",
         "name": "tableName",
         "label": "数据库表名",
         "required": true
@@ -56,6 +61,11 @@
         "multiple": true,
         "clearable": true,
         "source": "@dict:app_modeler/entity-tagset"
+      },
+      {
+        "type": "input-text",
+        "name": "description",
+        "label": "说明"
       }
     ]
   }

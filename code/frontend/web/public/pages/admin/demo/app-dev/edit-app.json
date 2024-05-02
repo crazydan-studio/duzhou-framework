@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevApp__get?id=${appId}",
-      "gql:selection": "id,logo,displayName,code,version,classPkgName"
+      "gql:selection": "id,logo,displayName,code,version,classPkgName,description,license,copyright"
     },
     "api": {
       "url": "@mutation:DevApp__update?id=${appId}",
@@ -63,6 +63,24 @@
         "name": "classPkgName",
         "label": "代码包名",
         "required": true
+      },
+      {
+        "type": "editor",
+        "name": "description",
+        "label": "说明",
+        "language": "markdown"
+      },
+      {
+        "type": "editor",
+        "name": "license",
+        "label": "许可协议",
+        "language": "markdown"
+      },
+      {
+        "type": "editor",
+        "name": "copyright",
+        "label": "版权声明",
+        "language": "markdown"
       }
     ]
   }

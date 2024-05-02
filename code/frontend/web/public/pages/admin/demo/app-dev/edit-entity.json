@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevAppEntity__get?id=${entityId}",
-      "gql:selection": "id,displayName,name,tableName,tagSet"
+      "gql:selection": "id,displayName,name,tableName,baseClassName,tagSet,description"
     },
     "api": {
       "url": "@mutation:DevAppEntity__update?id=${entityId}",
@@ -44,6 +44,11 @@
       },
       {
         "type": "input-text",
+        "name": "baseClassName",
+        "label": "基类"
+      },
+      {
+        "type": "input-text",
         "name": "tableName",
         "label": "数据库表名",
         "required": true
@@ -60,6 +65,11 @@
         "multiple": true,
         "clearable": true,
         "source": "@dict:app_modeler/entity-tagset"
+      },
+      {
+        "type": "input-text",
+        "name": "description",
+        "label": "说明"
       }
     ]
   }

@@ -13,7 +13,7 @@
     },
     "api": {
       "url": "@query:DevAppEntityRelation__findPage",
-      "gql:selection": "total,items{id,sourceId,source{id,displayName,name},targetId,target{id,displayName,name},sourcePropName,targetPropName,type,tagSet,tableName,joinOnConds}",
+      "gql:selection": "total,items{id,displayName,sourceId,source{id,displayName,name},targetId,target{id,displayName,name},sourcePropName,targetPropName,type,tagSet,tableName,joinOnConds}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -41,7 +41,8 @@
             "type": "service",
             "data": {
               "sourceId": "${entityId}",
-              "refTableName": "${refTableName}"
+              "refTableName": "${refTableName}",
+              "displayName": ""
             },
             "schemaApi": "get:/pages/admin/demo/app-dev/new-entity-relation.json"
           }
@@ -78,6 +79,11 @@
       }
     ],
     "columns": [
+      {
+        "type": "text",
+        "name": "displayName",
+        "label": "关联名称"
+      },
       {
         "type": "text",
         "label": "源实体",

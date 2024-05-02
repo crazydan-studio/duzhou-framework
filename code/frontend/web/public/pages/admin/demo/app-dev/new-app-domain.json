@@ -32,7 +32,7 @@
           {
             "type": "input-text",
             "name": "displayName",
-            "label": "名称",
+            "label": "显示名称",
             "fixed": "left",
             "required": true
           },

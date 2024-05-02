@@ -72,11 +72,21 @@
         ]
       },
       {
-        "type": "select",
-        "name": "type",
-        "label": "关联类型",
-        "source": "@dict:app_modeler/entity-relation-type",
-        "required": true
+        "type": "group",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "displayName",
+            "label": "关联名称"
+          },
+          {
+            "type": "select",
+            "name": "type",
+            "label": "关联类型",
+            "source": "@dict:app_modeler/entity-relation-type",
+            "required": true
+          }
+        ]
       },
       {
         "type": "select",

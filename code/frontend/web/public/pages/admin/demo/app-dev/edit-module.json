@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevAppModule__get?id=${moduleId}",
-      "gql:selection": "id,appId,displayName,code"
+      "gql:selection": "id,appId,displayName,code,webStarterType,dbDialect,description"
     },
     "api": {
       "url": "@mutation:DevAppModule__update?id=${moduleId}",
@@ -47,6 +47,26 @@
         "type": "service",
         "className": "amis-Form-item",
         "schemaApi": "get:/pages/admin/demo/app-dev/pick-app.json"
+      },
+      {
+        "type": "select",
+        "name": "webStarterType",
+        "label": "Web 启动器类型",
+        "source": "@dict:app_modeler/web-starter-type",
+        "required": true
+      },
+      {
+        "type": "select",
+        "name": "dbDialect",
+        "label": "支持的数据库类型",
+        "multiple": true,
+        "clearable": true,
+        "source": "@dict:app_modeler/db-dialect"
+      },
+      {
+        "type": "input-text",
+        "name": "description",
+        "label": "说明"
       }
     ]
   }

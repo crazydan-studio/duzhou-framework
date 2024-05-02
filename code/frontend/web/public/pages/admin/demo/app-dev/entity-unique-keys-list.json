@@ -16,18 +16,25 @@
     },
     "body": [
       {
-        "type": "combo",
+        "type": "input-table",
         "name": "uniqueKeys",
         "label": false,
-        "multiple": true,
-        "flat": true,
-        "items": [
+        "needConfirm": false,
+        "addable": true,
+        "removable": true,
+        "columns": [
           {
             "type": "select",
-            "label": false,
+            "name": "columns",
+            "label": "字段列表",
             "multiple": true,
             "mode": "horizontal",
             "source": "@query:DevAppEntityColumn__findList/label:name,value:name?filter_entityId__eq=${entityId}"
+          },
+          {
+            "type": "input-text",
+            "name": "description",
+            "label": "说明"
           }
         ]
       }

@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevAppDict__get?id=${dictId}",
-      "gql:selection": "id,appId,displayName,name,optionType,options"
+      "gql:selection": "id,appId,displayName,name,description,optionType,options"
     },
     "api": {
       "url": "@mutation:DevAppDict__update?id=${dictId}",
@@ -36,17 +36,22 @@
           {
             "type": "input-text",
             "name": "displayName",
-            "label": "名称",
+            "label": "显示名称",
             "fixed": "left",
             "required": true
           },
           {
             "type": "input-text",
             "name": "name",
-            "label": "编码",
+            "label": "字典名",
             "required": true
           }
         ]
+      },
+      {
+        "type": "input-text",
+        "name": "description",
+        "label": "说明"
       },
       {
         "type": "group",
@@ -94,7 +99,7 @@
           {
             "type": "input-text",
             "name": "description",
-            "label": "描述"
+            "label": "说明"
           }
         ]
       }

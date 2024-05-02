@@ -28,7 +28,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppDict__findPage",
-        "gql:selection": "total,items{id,appId,displayName,name,optionType}",
+        "gql:selection": "total,items{id,appId,displayName,name,optionType,description}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -115,6 +115,11 @@
           "static": true,
           "placeholder": "",
           "source": "@dict:core/std-data-type"
+        },
+        {
+          "type": "text",
+          "name": "description",
+          "label": "说明"
         },
         {
           "type": "operation",
