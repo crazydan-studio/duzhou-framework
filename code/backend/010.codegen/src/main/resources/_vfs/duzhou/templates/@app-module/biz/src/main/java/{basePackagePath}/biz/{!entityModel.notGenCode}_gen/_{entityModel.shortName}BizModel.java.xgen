@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <c:unit xmlns:c="c" xmlns:xpl="xpl"
         xpl:outputMode="text"
 ><![CDATA[package ${basePackageName}.biz._gen;
 
-import io.nop.api.core.annotations.biz.BizModel;
 import io.nop.biz.crud.CrudBizModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ${entityModel.className || entityModel.name};
 
 public class _${entityModel.shortName}BizModel extends CrudBizModel<${entityModel.shortName}> {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public _${entityModel.shortName}BizModel() {
         setEntityName(${entityModel.shortName}.class.getName());
+    }
+
+    public Logger log() {
+        return this.log;
     }
 }
 ]]></c:unit>
