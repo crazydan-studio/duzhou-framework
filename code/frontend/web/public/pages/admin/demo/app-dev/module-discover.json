@@ -40,7 +40,7 @@
                     "url": "@mutation:DevAppModule__importDiscovery",
                     "data": {
                       "appId": "${appId}",
-                      "ormPaths": "${ormPaths}"
+                      "ormModelPaths": "${ormModelPaths}"
                     }
                   }
                 }
@@ -68,7 +68,7 @@
             "body": [
               {
                 "type": "checkboxes",
-                "name": "ormPaths",
+                "name": "ormModelPaths",
                 "label": "已发现如下模块: ",
                 "source": "@query:DevAppModule__discover",
                 "joinValues": false,
@@ -98,7 +98,7 @@
                 "type": "button",
                 "level": "primary",
                 "actionType": "next",
-                "disabledOn": "${!ormPaths || ormPaths.length == 0}"
+                "disabledOn": "${!ormModelPaths || ormModelPaths.length == 0}"
               }
             ]
           },

@@ -167,7 +167,10 @@
               "actionType": "dialog",
               "dialog": {
                 "title": "发布模块 ${displayName}",
+                "className": "wizard-dialog",
                 "closeOnEsc": true,
+                "actions": [],
+                "size": "lg",
                 "body": {
                   "type": "service",
                   "data": {
