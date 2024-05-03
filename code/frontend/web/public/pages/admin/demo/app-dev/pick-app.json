@@ -11,7 +11,7 @@
     "size": "lg",
     "source": {
       "url": "@query:DevApp__findPage",
-      "gql:selection": "total,items{id,displayName,code,version,logo}",
+      "gql:selection": "total,items{id,displayName,code,version,logo,createdTime,updatedTime}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -63,6 +63,16 @@
           "type": "text",
           "name": "version",
           "label": "版本号"
+        },
+        {
+          "type": "text",
+          "name": "createdTime",
+          "label": "创建时间"
+        },
+        {
+          "type": "text",
+          "name": "updatedTime",
+          "label": "更新时间"
         }
       ]
     }

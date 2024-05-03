@@ -165,13 +165,13 @@
         {
           "appId": "${appId}",
           "displayName": "数据创建时间",
-          "name": "createTime",
+          "name": "createdTime",
           "stdSqlType": "TIMESTAMP"
         },
         {
           "appId": "${appId}",
           "displayName": "数据更新时间",
-          "name": "updateTime",
+          "name": "updatedTime",
           "stdSqlType": "TIMESTAMP"
         },
         {

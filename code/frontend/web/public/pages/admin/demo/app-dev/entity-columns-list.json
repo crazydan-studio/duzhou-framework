@@ -13,7 +13,7 @@
     },
     "api": {
       "url": "@query:DevAppEntityColumn__findPage",
-      "gql:selection": "total,items{id,entityId,displayName,name,propId,tagSet,primary,mandatory,stdSqlType,precision,scale,defaultValue,domainName,dictName}",
+      "gql:selection": "total,items{id,entityId,displayName,name,propId,tagSet,primary,mandatory,stdSqlType,precision,scale,defaultValue,domainName,dictName,createdTime,updatedTime}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -180,6 +180,16 @@
         "static": true,
         "placeholder": "",
         "source": "@query:DevAppDict__findList/label:displayName,value:name?filter_appId__eq=${appId}"
+      },
+      {
+        "type": "text",
+        "name": "createdTime",
+        "label": "创建时间"
+      },
+      {
+        "type": "text",
+        "name": "updatedTime",
+        "label": "更新时间"
       },
       {
         "type": "operation",

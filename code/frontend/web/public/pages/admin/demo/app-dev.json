@@ -14,7 +14,7 @@
       },
       "api": {
         "url": "@query:DevApp__findPage",
-        "gql:selection": "total,items{id,ver,displayName,code,version,logo,classPkgName}",
+        "gql:selection": "total,items{id,ver,displayName,code,version,logo,classPkgName,createdTime,updatedTime}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -110,8 +110,13 @@
         },
         {
           "type": "text",
-          "name": "classPkgName",
-          "label": "包名"
+          "name": "createdTime",
+          "label": "创建时间"
+        },
+        {
+          "type": "text",
+          "name": "updatedTime",
+          "label": "更新时间"
         },
         {
           "type": "operation",

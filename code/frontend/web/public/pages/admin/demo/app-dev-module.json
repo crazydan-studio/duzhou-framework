@@ -28,7 +28,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppModule__findPage",
-        "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},displayName,code}",
+        "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},displayName,code,createdTime,updatedTime}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -135,6 +135,16 @@
             "type": "service",
             "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
           }
+        },
+        {
+          "type": "text",
+          "name": "createdTime",
+          "label": "创建时间"
+        },
+        {
+          "type": "text",
+          "name": "updatedTime",
+          "label": "更新时间"
         },
         {
           "type": "operation",
