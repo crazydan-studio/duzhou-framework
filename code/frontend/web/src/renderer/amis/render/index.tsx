@@ -24,6 +24,7 @@ import { history } from '@/sdk/nop-core';
 
 import '@/renderer/amis/components';
 import '@/renderer/amis/actions';
+import '@/renderer/amis/filters';
 
 import Renderer from './Renderer';
 

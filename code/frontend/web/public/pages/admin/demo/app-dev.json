@@ -14,7 +14,7 @@
       },
       "api": {
         "url": "@query:DevApp__findPage",
-        "gql:selection": "total,items{id,ver,displayName,code,version,logo,classPkgName,createdTime,updatedTime}",
+        "gql:selection": "total,items{id,ver,displayName,code1,code2,version,logo,classPkgName,createdTime,updatedTime}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -101,7 +101,8 @@
         {
           "type": "text",
           "name": "code",
-          "label": "编码"
+          "label": "编码",
+          "value": "${code1}-${code2}"
         },
         {
           "type": "text",

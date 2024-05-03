@@ -23,7 +23,7 @@
     },
     "initApi": {
       "url": "@query:DevApp__get?id=${appId}",
-      "gql:selection": "id,logo,displayName,code,version,classPkgName,description,license,copyright"
+      "gql:selection": "id,logo,displayName,code1,code2,version,classPkgName,description,license,copyright"
     },
     "api": {
       "url": "@mutation:DevApp__update?id=${appId}",
@@ -50,7 +50,8 @@
         "name": "code",
         "label": "编码",
         "required": true,
-        "disabled": true
+        "disabled": true,
+        "value": "${code1}-${code2}"
       },
       {
         "type": "input-text",
