@@ -43,7 +43,7 @@ export default defineConfig(({ command, mode }) => {
       // https://cn.vitejs.dev/config/server-options#server-proxy
       proxy: {
         '/graphql': 'http://localhost:8080',
-        '/f/': 'http://localhost:8080',
+        '/f/': 'http://localhost:8080'
       }
     },
     resolve: {
@@ -193,6 +193,17 @@ function getLibChunks(id) {
   ]) {
     if (id.includes('/node_modules/' + lib + '/')) {
       return lib;
+    }
+  }
+
+  const libs = {
+    graphiql: ['graphql', 'graphiql', '@graphiql']
+  };
+  for (var id of Object.keys(libs)) {
+    for (var lib of libs[id]) {
+      if (id.includes('/node_modules/' + lib + '/')) {
+        return id;
+      }
     }
   }
 

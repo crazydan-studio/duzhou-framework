@@ -23,6 +23,17 @@ window.__APP_SITE_CONFIG__ = {
         }
       },
       {
+        label: '开发工具',
+        children: [
+          {
+            label: 'GraphiQL',
+            url: 'ide/graphiql',
+            icon: 'fa-solid fa-globe',
+            schemaApi: 'get:/pages/admin/demo/graphiql.json'
+          }
+        ]
+      },
+      {
         label: '应用建模',
         children: [
           {

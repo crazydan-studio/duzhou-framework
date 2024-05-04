@@ -17,7 +17,38 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-import './App';
-import './GraphiQL';
+import React from 'react';
+import { unRegisterRenderer, Renderer, RendererProps } from 'amis-core';
 
-import './diagram/DslEditor';
+// https://www.npmjs.com/package/graphiql
+import { GraphiQL } from 'graphiql';
+import { createGraphiQLFetcher } from '@graphiql/toolkit';
+
+import 'graphiql/graphiql.css';
+import './GraphiQL.scss';
+
+const TYPE = 'graphiql';
+unRegisterRenderer(TYPE);
+
+export interface GraphiQLIDEProps extends RendererProps {
+  /** GraphQL 端点地址 */
+  endpoint: string;
+}
+
+@Renderer({
+  type: TYPE,
+  autoVar: true
+})
+export default class GraphiQLIDE extends React.Component<GraphiQLIDEProps> {
+  constructor(props: GraphiQLIDEProps) {
+    super(props);
+  }
+
+  render(): React.ReactNode {
+    const fetcher = createGraphiQLFetcher({
+      url: this.props.endpoint
+    });
+
+    return <GraphiQL fetcher={fetcher} />;
+  }
+}
