@@ -30,10 +30,8 @@
 
             <source>
                 <c:script><![CDATA[
-                    const appCode1 = app.code.split('-')[0];
-
                     const registerShortName = true;
-                    const moduleCode1 = appCode1;
+                    const moduleCode1 = app.code1;
                     const moduleCode2 = appModule.code.replaceAll('-', '_');
                     const moduleId = moduleCode1 + '/' + moduleCode2;
                     const moduleName = moduleCode1 + '-' + moduleCode2;

@@ -4,9 +4,11 @@
     <!-- DefineLoop 等只是在定义全局和 Loop 变量，实际的遍历逻辑在 XCodeGenerator 中 -->
     <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
         <c:script><![CDATA[
+            const appCode = app.code1 + '-' + app.code2;
+
             builder.defineGlobalVar('app', app);
-            builder.defineGlobalVar('appNormalizedCode', app.code.replaceAll('_', '-'));
-            builder.defineGlobalVar('appSnakeCasedCode', app.code.replaceAll('-', '_'));
+            builder.defineGlobalVar('appNormalizedCode', appCode.replaceAll('_', '-'));
+            builder.defineGlobalVar('appSnakeCasedCode', appCode.replaceAll('-', '_'));
 
             builder.defineLoopVar('ormModel', 'app', app => app.ormModels);
             builder.defineLoopVar('ormModelMavenArtifactId', 'ormModel', model => model['ext:mavenArtifactId']);

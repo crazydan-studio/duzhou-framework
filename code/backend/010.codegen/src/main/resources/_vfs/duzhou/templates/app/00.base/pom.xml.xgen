@@ -58,6 +58,11 @@
         </modules>
 
         <dependencies>
+            <dependency x:id="io.crazydan.duzhou.framework:duzhou-commons">
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-commons</artifactId>
+            </dependency>
+
             <c:script><![CDATA[
                 $out.comment('Nop Idea 插件在调试 xlang 时需要该依赖（仅开发期间需要，不会被打包）');
             ]]></c:script>

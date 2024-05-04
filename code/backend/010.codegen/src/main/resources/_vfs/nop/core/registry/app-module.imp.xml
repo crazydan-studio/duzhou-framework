@@ -9,6 +9,10 @@
             <normalizeFieldsExpr>
                 <c:script><![CDATA[
                     const app = record.app;
+                    const codeSegs = app.code.split('-');
+
+                    app.code1 = codeSegs[0];
+                    app.code2 = codeSegs[1];
                     app.maven.artifactId = 'parent';
                     app.maven.version = app.version;
                 ]]></c:script>

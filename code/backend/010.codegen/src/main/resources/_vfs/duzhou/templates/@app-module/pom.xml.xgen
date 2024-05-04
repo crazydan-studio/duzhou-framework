@@ -43,6 +43,11 @@
                 <c:script><![CDATA[
                     $out.comment('Note: x:id 属性需保留，其为自动合并的基础');
                 ]]></c:script>
+                <dependency x:id="io.crazydan.duzhou.framework:duzhou-commons">
+                    <groupId>io.crazydan.duzhou.framework</groupId>
+                    <artifactId>duzhou-commons</artifactId>
+                </dependency>
+
                 <dependency x:id="io.crazydan.duzhou.framework:duzhou-autotest">
                     <groupId>io.crazydan.duzhou.framework</groupId>
                     <artifactId>duzhou-autotest</artifactId>
