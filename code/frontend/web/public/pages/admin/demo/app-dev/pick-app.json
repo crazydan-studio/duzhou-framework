@@ -11,7 +11,7 @@
     "size": "lg",
     "source": {
       "url": "@query:DevApp__findPage",
-      "gql:selection": "total,items{id,displayName,code,version,logo,createdTime,updatedTime}",
+      "gql:selection": "total,items{id,displayName,code,version,logo,config{baseClassPackageName},createdTime,updatedTime}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -58,6 +58,11 @@
           "type": "text",
           "name": "code",
           "label": "编码"
+        },
+        {
+          "type": "text",
+          "name": "config.baseClassPackageName",
+          "label": "Java 基础包名"
         },
         {
           "type": "text",

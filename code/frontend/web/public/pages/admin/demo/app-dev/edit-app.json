@@ -23,66 +23,131 @@
     },
     "initApi": {
       "url": "@query:DevApp__get?id=${appId}",
-      "gql:selection": "id,logo,displayName,code1,code2,version,classPkgName,description,license,copyright"
+      "gql:selection": "id,logo,displayName,code,version,config{id,baseClassPackageName,maven},description,license,copyright"
     },
     "api": {
       "url": "@mutation:DevApp__update?id=${appId}",
       "gql:selection": "id"
     },
-    "body": [
-      {
-        "type": "input-image",
-        "name": "logo",
-        "label": "图标",
-        "required": false,
-        "accept": ".jpeg,.jpg,.png,.gif,.svg",
-        "uploadBtnText": "点击上传应用图标",
-        "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${appId}"
-      },
-      {
-        "type": "input-text",
-        "name": "displayName",
-        "label": "名称",
-        "required": true
-      },
-      {
-        "type": "input-text",
-        "name": "code",
-        "label": "编码",
-        "required": true,
-        "disabled": true,
-        "value": "${code1}-${code2}"
-      },
-      {
-        "type": "input-text",
-        "name": "version",
-        "label": "版本号",
-        "required": true
-      },
-      {
-        "type": "input-text",
-        "name": "classPkgName",
-        "label": "代码包名",
-        "required": true
-      },
-      {
-        "type": "editor",
-        "name": "description",
-        "label": "说明",
-        "language": "markdown"
-      },
-      {
-        "type": "editor",
-        "name": "license",
-        "label": "许可协议",
-        "language": "markdown"
-      },
-      {
-        "type": "editor",
-        "name": "copyright",
-        "label": "版权声明",
-        "language": "markdown"
-      }
-    ]
+    "body": {
+      "type": "anchor-nav",
+      "links": [
+        {
+          "title": "基本信息",
+          "body": {
+            "type": "fieldSet",
+            "title": "基本信息",
+            "body": [
+              {
+                "type": "input-image",
+                "name": "logo",
+                "label": "图标",
+                "required": false,
+                "accept": ".jpeg,.jpg,.png,.gif,.svg",
+                "uploadBtnText": "点击上传应用图标",
+                "receiver": "/f/upload?bizObjName=DevApp&fieldName=logo&bizObjId=${appId}"
+              },
+              {
+                "type": "input-text",
+                "name": "displayName",
+                "label": "名称",
+                "required": true
+              },
+              {
+                "type": "input-text",
+                "name": "code",
+                "label": "编码",
+                "required": true,
+                "disabled": true
+              },
+              {
+                "type": "input-text",
+                "name": "version",
+                "label": "版本号",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "title": "配置信息",
+          "body": {
+            "type": "fieldSet",
+            "title": "配置信息",
+            "body": [
+              {
+                "type": "hidden",
+                "name": "config.id"
+              },
+              {
+                "type": "input-text",
+                "name": "config.baseClassPackageName",
+                "label": "Java 基础包名",
+                "required": true,
+                "description": "注意，该包名将作为 Maven 工程的 groupId"
+              },
+              {
+                "type": "select",
+                "name": "config.maven.parent",
+                "label": "Maven 工程父依赖",
+                "required": true,
+                "searchable": true,
+                "selectMode": "table",
+                "columns": [
+                  {
+                    "name": "groupId",
+                    "label": "组 ID"
+                  },
+                  {
+                    "name": "artifactId",
+                    "label": "产物 ID"
+                  },
+                  {
+                    "name": "version",
+                    "label": "版本号"
+                  }
+                ],
+                "options": [
+                  {
+                    "value": "io.crazydan.duzhou.framework:parent:0.1.0-SNAPSHOT",
+                    "label": "io.crazydan.duzhou.framework:parent:0.1.0-SNAPSHOT",
+                    "groupId": "io.crazydan.duzhou.framework",
+                    "artifactId": "parent",
+                    "version": "0.1.0-SNAPSHOT"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "扩展信息",
+          "body": {
+            "type": "fieldSet",
+            "title": "扩展信息",
+            "body": [
+              {
+                "type": "editor",
+                "name": "description",
+                "label": "说明",
+                "language": "markdown"
+              },
+              {
+                "type": "editor",
+                "name": "license",
+                "label": "许可协议",
+                "language": "markdown"
+              },
+              {
+                "type": "editor",
+                "name": "copyright",
+                "label": "版权声明",
+                "language": "markdown"
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 }

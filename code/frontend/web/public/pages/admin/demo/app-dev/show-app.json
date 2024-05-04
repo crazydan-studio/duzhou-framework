@@ -16,7 +16,7 @@
         "static": true,
         "initApi": {
           "url": "@query:DevApp__get?id=${app.id}",
-          "gql:selection": "id,displayName,code,version,logo,classPkgName"
+          "gql:selection": "id,displayName,code,version,logo,config{baseClassPackageName}"
         },
         "body": [
           {
@@ -47,8 +47,8 @@
             "body": [
               {
                 "type": "input-text",
-                "name": "classPkgName",
-                "label": "代码包名"
+                "name": "config.baseClassPackageName",
+                "label": "Java 基础包名"
               },
               {
                 "type": "input-text",
