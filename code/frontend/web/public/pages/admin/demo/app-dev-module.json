@@ -28,7 +28,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppModule__findPage",
-        "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},displayName,code,createdTime,updatedTime}",
+        "gql:selection": "total,items{id,ver,appId,app{id,displayName,code},config{entityTableNamePrefix},displayName,code,createdTime,updatedTime}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -51,6 +51,7 @@
           "dialog": {
             "title": "添加新模块",
             "closeOnEsc": true,
+            "size": "lg",
             "data": {
               "appId": "${appId}",
               "refTableName": "${refTableName}"
@@ -138,6 +139,11 @@
         },
         {
           "type": "text",
+          "name": "config.entityTableNamePrefix",
+          "label": "表名前缀"
+        },
+        {
+          "type": "text",
           "name": "createdTime",
           "label": "创建时间"
         },
@@ -159,6 +165,7 @@
               "dialog": {
                 "title": "编辑模块",
                 "closeOnEsc": true,
+                "size": "lg",
                 "data": {
                   "appId": "${appId}",
                   "moduleId": "${id}",

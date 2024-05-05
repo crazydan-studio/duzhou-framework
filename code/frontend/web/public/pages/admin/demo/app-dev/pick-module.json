@@ -11,7 +11,7 @@
     "size": "lg",
     "source": {
       "url": "@query:DevAppModule__findPage",
-      "gql:selection": "total,items{id,displayName,code,app{id,displayName,code},createdTime,updatedTime}",
+      "gql:selection": "total,items{id,displayName,code,app{id,displayName,code},config{entityTableNamePrefix},createdTime,updatedTime}",
       "data": {
         "offset": "${(page - 1) * pageSize}",
         "limit": "${pageSize}",
@@ -20,6 +20,21 @@
           {
             "name": "displayName",
             "desc": true
+          }
+        ]
+      }
+    },
+    "onEvent": {
+      "change": {
+        "actions": [
+          {
+            "actionType": "setValue",
+            "componentId": "${pickModuleParent}",
+            "args": {
+              "value": {
+                "selectedModule": "${selectedItems}"
+              }
+            }
           }
         ]
       }
@@ -62,6 +77,11 @@
             "type": "service",
             "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
           }
+        },
+        {
+          "type": "text",
+          "name": "config.entityTableNamePrefix",
+          "label": "表名前缀"
         },
         {
           "type": "text",

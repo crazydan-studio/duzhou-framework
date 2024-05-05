@@ -28,7 +28,7 @@
       "perPageField": "pageSize",
       "api": {
         "url": "@query:DevAppEntity__findPage",
-        "gql:selection": "total,items{id,ver,moduleId,module{id,displayName,code},columnSize,displayName,name,tableName,tagSet,description,createdTime,updatedTime}",
+        "gql:selection": "total,items{id,ver,moduleId,module{id,displayName,code,config{entityTableNamePrefix}},columnSize,displayName,name,tableName,tagSet,description,createdTime,updatedTime}",
         "data": {
           "offset": "${(page - 1) * pageSize}",
           "limit": "${pageSize}",
@@ -112,7 +112,7 @@
         {
           "type": "container",
           "name": "moduleId",
-          "label": "所属服务",
+          "label": "所属模块",
           "filterable": {
             "searchable": true,
             "source": {
@@ -132,9 +132,15 @@
           }
         },
         {
-          "type": "text",
+          "type": "container",
           "name": "tableName",
-          "label": "数据库表名"
+          "label": "数据库表名",
+          "body": [
+            {
+              "type": "tpl",
+              "tpl": "${module.config.entityTableNamePrefix}${tableName}"
+            }
+          ]
         },
         {
           "type": "list-select",

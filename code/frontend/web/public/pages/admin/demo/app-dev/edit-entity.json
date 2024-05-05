@@ -3,11 +3,16 @@
   "msg": "",
   "data": {
     "type": "form",
+    "id": "${pickModuleParent}",
     "title": "",
     "actions": [],
     "mode": "horizontal",
     "wrapWithPanel": false,
     "autoFocus": true,
+    "data": {
+      "pickModuleParent": "${UUID(32)}",
+      "selectedModule": null
+    },
     "onEvent": {
       "submitSucc": {
         "actions": [
@@ -23,11 +28,20 @@
     },
     "initApi": {
       "url": "@query:DevAppEntity__get?id=${entityId}",
-      "gql:selection": "id,displayName,name,tableName,baseClassName,tagSet,description"
+      "gql:selection": "id,displayName,name,tableName,baseClassName,tagSet,description,module{config{entityTableNamePrefix}}"
     },
     "api": {
       "url": "@mutation:DevAppEntity__update?id=${entityId}",
-      "gql:selection": "id"
+      "gql:selection": "id",
+      "data": {
+        "displayName": "${displayName}",
+        "name": "${name}",
+        "baseClassName": "${baseClassName}",
+        "tableName": "${tableName}",
+        "tagSet": "${tagSet}",
+        "description": "${description}",
+        "moduleId": "${moduleId}"
+      }
     },
     "body": [
       {
@@ -48,15 +62,27 @@
         "label": "基类"
       },
       {
-        "type": "input-text",
-        "name": "tableName",
-        "label": "数据库表名",
-        "required": true
-      },
-      {
         "type": "service",
         "className": "amis-Form-item",
         "schemaApi": "get:/pages/admin/demo/app-dev/pick-module.json"
+      },
+      {
+        "type": "input-group",
+        "label": "数据库表名",
+        "required": true,
+        "body": [
+          {
+            "type": "input-text",
+            "name": "tableNamePrefix",
+            "value": "${(selectedModule || module).config.entityTableNamePrefix}",
+            "disabled": true
+          },
+          {
+            "type": "input-text",
+            "name": "tableName",
+            "required": true
+          }
+        ]
       },
       {
         "type": "select",

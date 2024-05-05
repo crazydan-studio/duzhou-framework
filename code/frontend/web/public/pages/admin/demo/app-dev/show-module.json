@@ -16,7 +16,7 @@
         "static": true,
         "initApi": {
           "url": "@query:DevAppModule__get?id=${module.id}",
-          "gql:selection": "id,displayName,code,app{id,displayName,code}"
+          "gql:selection": "id,displayName,code,app{id,displayName,code},config{entityTableNamePrefix}"
         },
         "body": [
           {
@@ -35,12 +35,22 @@
             ]
           },
           {
-            "type": "control",
-            "label": "所属应用",
-            "body": {
-              "type": "service",
-              "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
-            }
+            "type": "group",
+            "body": [
+              {
+                "type": "control",
+                "label": "所属应用",
+                "body": {
+                  "type": "service",
+                  "schemaApi": "get:/pages/admin/demo/app-dev/show-app.json"
+                }
+              },
+              {
+                "type": "input-text",
+                "name": "config.entityTableNamePrefix",
+                "label": "表名前缀"
+              }
+            ]
           }
         ]
       }
