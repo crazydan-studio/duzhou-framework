@@ -65,7 +65,7 @@ public class StringHelper {
         }
 
         // a--b -> a_b
-        str = str.replaceAll("([^a-zA-Z0-9_]+)", "_");
+        str = str.trim().replaceAll("([^a-zA-Z0-9_]+)", "_");
         str = hyphen ? str.replaceAll("_", "-") : str;
 
         return upper ? str.toUpperCase() : str.toLowerCase();

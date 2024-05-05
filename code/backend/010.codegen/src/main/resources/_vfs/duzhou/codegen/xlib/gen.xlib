@@ -39,9 +39,10 @@
                     const moduleBasePackageName = app.maven.groupId + '.' + moduleCode2;
 
                     return {
-                        'ext:dialect': appModule.dbDialect,
                         'ext:useCoreModule': false,
                         'ext:webStarterType': appModule.webStarterType || 'spring',
+                        'ext:dialect': appModule.dbDialect,
+                        'ext:entityTableNamePrefix': appModule.entityTableNamePrefix,
 
                         'ext:mavenVersion': app.version,
                         'ext:mavenGroupId': app.maven.groupId,

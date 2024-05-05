@@ -76,6 +76,9 @@
                 <field name="appModule.dbDialect" displayName="app.module.db.dialect">
                     <schema stdDomain="string" />
                 </field>
+                <field name="appModule.entityTableNamePrefix" displayName="app.module.db.tableNamePrefix">
+                    <schema stdDomain="string" />
+                </field>
             </fields>
         </sheet>
 
