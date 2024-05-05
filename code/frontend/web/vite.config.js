@@ -173,29 +173,27 @@ function getDevPlugins() {
 }
 
 function getLibChunks(chunkId) {
-  // 将较大的依赖包拆分构建，以充分利用按需和并行加载，提升加载速度
-  for (let lib of [
-    // Note: amis 及其样式将被构建到入口脚本和 css 中
-    'amis-ui',
-    'amis-editor',
-    //
-    'monaco-editor',
-    'tinymce',
-    'codemirror',
-    'froala-editor',
-    'office-viewer',
-    //
-    'react-json-view'
-  ]) {
-    if (chunkId.includes('/node_modules/' + lib + '/')) {
-      return lib;
-    }
-  }
-
+  // 将较大的依赖包拆分构建，以充分利用按需和并行加载，提升加载速度。
+  // 根据 rollupVisualizer 插件生成的包分析图确定打包组合
   const libs = {
+    // amis: ['amis'],
+    'amis-ui': ['amis-ui'],
+    'amis-editor': ['amis-editor'],
+    // react: ['react', 'react-dom'],
     graphiql: ['graphql', 'graphiql', '@graphiql'],
     echarts: ['echarts', 'echarts-stat', 'echarts-wordcloud'],
-    exceljs: ['exceljs', 'xlsx']
+    // exceljs: ['exceljs', 'xlsx'],
+    reactflow: ['reactflow', '@reactflow'],
+    // video: ['video-react', 'hls.js', 'mpegts.js'],
+    // pdf: ['react-pdf', 'pdfjs-dist'],
+    // lodash: ['lodash', 'lodash-es'],
+    // moment: ['moment', 'moment-timezone'],
+    'office-viewer': ['office-viewer', 'papaparse'],
+    codemirror: ['codemirror'],
+    tinymce: ['tinymce'],
+    'froala-editor': ['froala-editor'],
+    'monaco-editor': ['monaco-editor'],
+    d3: ['d3-drag', 'd3-selection', 'd3-hierarchy', 'd3-flextree']
   };
   for (let id of Object.keys(libs)) {
     for (let lib of libs[id]) {
