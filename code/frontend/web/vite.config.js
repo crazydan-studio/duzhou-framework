@@ -172,7 +172,7 @@ function getDevPlugins() {
   ];
 }
 
-function getLibChunks(id) {
+function getLibChunks(chunkId) {
   // 将较大的依赖包拆分构建，以充分利用按需和并行加载，提升加载速度
   for (let lib of [
     // Note: amis 及其样式将被构建到入口脚本和 css 中
@@ -183,25 +183,23 @@ function getLibChunks(id) {
     'tinymce',
     'codemirror',
     'froala-editor',
-    'exceljs',
-    'xlsx',
     'office-viewer',
-    'echarts',
     //
-    'echarts-stat',
     'react-json-view'
   ]) {
-    if (id.includes('/node_modules/' + lib + '/')) {
+    if (chunkId.includes('/node_modules/' + lib + '/')) {
       return lib;
     }
   }
 
   const libs = {
-    graphiql: ['graphql', 'graphiql', '@graphiql']
+    graphiql: ['graphql', 'graphiql', '@graphiql'],
+    echarts: ['echarts', 'echarts-stat', 'echarts-wordcloud'],
+    exceljs: ['exceljs', 'xlsx']
   };
-  for (var id of Object.keys(libs)) {
-    for (var lib of libs[id]) {
-      if (id.includes('/node_modules/' + lib + '/')) {
+  for (let id of Object.keys(libs)) {
+    for (let lib of libs[id]) {
+      if (chunkId.includes('/node_modules/' + lib + '/')) {
         return id;
       }
     }
@@ -209,8 +207,8 @@ function getLibChunks(id) {
 
   // 引入的 Nop 等其他开源代码需独立打包，以保证其独立性
   if (
-    !id.includes('/.pnpm/') && //
-    id.includes('/src/sdk/nop-core/')
+    !chunkId.includes('/.pnpm/') && //
+    chunkId.includes('/src/sdk/nop-core/')
   ) {
     return 'nop-core';
   }
