@@ -23,10 +23,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>duzhou-starter-ligth4j</artifactId>
+    <artifactId>duzhou-starter-undertow</artifactId>
 
-    <!-- 基于 Light-4J 构建的应用服务启动器 -->
-    <name>Duzhou Framework Starter - Light-4J</name>
+    <!-- 基于 Undertow 构建的应用服务启动器 -->
+    <name>Duzhou Framework Starter - Undertow</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
@@ -40,27 +40,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>handler</artifactId>
+            <groupId>io.github.entropy-cloud.extensions</groupId>
+            <artifactId>nop-undertow-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-api-core</artifactId>
+            <artifactId>nop-file-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-integration-oss</artifactId>
@@ -68,19 +55,5 @@
     </dependencies>
 
     <build>
-        <!-- <plugins>
-             <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-jar-plugin</artifactId>
-                 <version>2.6</version>
-                 <configuration>
-                     <archive>
-                         <manifest>
-                             <mainClass>com.networknt.server.Server</mainClass>
-                         </manifest>
-                     </archive>
-                 </configuration>
-             </plugin>
-         </plugins>-->
     </build>
 </project>

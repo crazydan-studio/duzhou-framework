@@ -14,6 +14,7 @@
 
             builder.defineGlobalVar('useQuarkusWebStarter', ormModel['ext:webStarterType'] == 'quarkus');
             builder.defineGlobalVar('useSpringWebStarter', ormModel['ext:webStarterType'] == 'spring');
+            builder.defineGlobalVar('useUndertowWebStarter', ormModel['ext:webStarterType'] == 'undertow');
             builder.defineGlobalVar('dbDialects', ormModel["ext:dialect"].$toCsvSet());
 
             builder.defineGlobalVar('basePackageName', ormModel['ext:basePackageName']);

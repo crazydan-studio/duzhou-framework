@@ -23,6 +23,12 @@
                 <![CDATA[<!-- 该模块为独立服务包，不会被其他项目所依赖，故，不发布至仓库 -->]]></c:unit>
             <maven.deploy.skip>true</maven.deploy.skip>
             <maven.install.skip>true</maven.install.skip>
+
+            <c:if test="${useUndertowWebStarter}">
+                <c:unit xpl:outputMode="text">
+                    <![CDATA[<!-- 应用启动器 class，用于为插件 maven-shade-plugin 指定 mainClass -->]]></c:unit>
+                <start-class>${basePackageName}.${moduleClassShortPrefix}Starter</start-class>
+            </c:if>
         </properties>
 
         <dependencies>
@@ -56,6 +62,14 @@
                     <groupId>io.crazydan.duzhou.framework</groupId>
                     <artifactId>duzhou-starter-spring</artifactId>
                 </dependency>
+            </c:if>
+            <c:if test="${useUndertowWebStarter}">
+                <dependency>
+                    <groupId>io.crazydan.duzhou.framework</groupId>
+                    <artifactId>duzhou-starter-undertow</artifactId>
+                </dependency>
+            </c:if>
+            <c:if test="${useSpringWebStarter || useUndertowWebStarter}">
                 <c:for var="name" items="${dbDialects}">
                     <c:if test="${name == 'h2'}">
                         <dependency>
@@ -118,6 +132,14 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </c:if>
+                <c:if test="${useUndertowWebStarter}">
+                    <plugin>
+                        <c:unit xpl:outputMode="text">
+                            <![CDATA[<!-- Note：通过变量 start-class 指定 mainClass -->]]></c:unit>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
                     </plugin>
                 </c:if>
             </plugins>

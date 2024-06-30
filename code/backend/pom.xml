@@ -57,9 +57,9 @@
         <!-- 依赖版本号 -->
         <duzhou-framework.version>0.1.0-SNAPSHOT</duzhou-framework.version>
         <nop-entropy.version>2.0.0-SNAPSHOT</nop-entropy.version>
+        <nop-extensions.version>1.0.0-SNAPSHOT</nop-extensions.version>
         <quarkus.platform.version>3.8.2</quarkus.platform.version>
         <spring-boot.version>3.2.3</spring-boot.version>
-        <light4j.version>2.1.33</light4j.version>
     </properties>
 
     <modules>
@@ -152,17 +152,12 @@
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-starter-quarkus</artifactId>
-                <version>${duzhou-framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>duzhou-starter-spring</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-starter-light4j</artifactId>
+                <artifactId>duzhou-starter-undertow</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
 
@@ -228,29 +223,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>server</artifactId>
-                <version>${light4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>service</artifactId>
-                <version>${light4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>client</artifactId>
-                <version>${light4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>handler</artifactId>
-                <version>${light4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>rpc-router</artifactId>
-                <version>${light4j.version}</version>
+                <groupId>io.github.entropy-cloud.extensions</groupId>
+                <artifactId>nop-undertow-starter</artifactId>
+                <version>${nop-extensions.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -320,6 +295,59 @@
                             </exclude>
                         </excludes>
                     </configuration>
+                </plugin>
+
+                <!-- 可执行 jar 打包: https://maven.apache.org/plugins/maven-shade-plugin/examples/executable-jar.html -->
+                <!--
+                注意，该插件会把依赖全部解包并合并放在可执行的 jar 中，
+                即 uberjar 打包模式，其比 Spring boot 的 nested-jars 打包模式的加载速度会更快一点，
+                但是，同名类和资源文件会出现被覆盖的问题，因此，需尽量避免同名文件，
+                或者通过该插件的 transformer 对同名文件做合并（https://juejin.cn/post/7065862239349112863）。
+                在依赖较复杂，且可能存在多版本时，可以尝试采用插件 spring-boot-maven-plugin
+                以 nested-jars 模式打包
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <finalName>${project.build.finalName}-exec</finalName>
+                                <transformers>
+                                    <transformer
+                                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <mainClass>${start-class}</mainClass>
+                                    </transformer>
+                                    <!--
+                                    META-INF/services/ 中会存在同名文件，需将其内容合并，以确保
+                                    Nop IocCoreInitializer 等能够被 ServiceLoader 加载:
+                                    https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html#ServicesResourceTransformer
+                                    -->
+                                    <transformer
+                                            implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                </transformers>
+                                <!--
+                                修复运行 jar 时出现 "java.lang.SecurityException: Invalid signature file digest for Manifest main attributes" 异常的问题:
+                                https://stackoverflow.com/questions/34855649/invalid-signature-file-digest-for-manifest-main-attributes-exception-while-tryin#answer-64263739
+                                -->
+                                <filters>
+                                    <filter>
+                                        <artifact>*:*</artifact>
+                                        <excludes>
+                                            <exclude>META-INF/*.SF</exclude>
+                                            <exclude>META-INF/*.DSA</exclude>
+                                            <exclude>META-INF/*.RSA</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

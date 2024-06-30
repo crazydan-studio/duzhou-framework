@@ -2,6 +2,7 @@ quarkus:
   # https://quarkus.io/blog/path-resolution-in-quarkus/
   # https://quarkus.io/guides/http-reference
   http:
+    port: 8075
     host: 0.0.0.0
     # 禁止跨域访问
     cors: true

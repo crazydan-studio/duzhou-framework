@@ -9,7 +9,7 @@ import io.nop.commons.util.ClassHelper;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from [27:2:0:0]/duzhou/schema/web.xdef <p>
+ * generate from /duzhou/schema/web.xdef <p>
  * ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
  * ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
  * ~

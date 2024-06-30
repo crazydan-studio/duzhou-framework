@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/020.schema/pom.xml" />
         <option value="$PROJECT_DIR$/010.codegen/pom.xml" />
         <option value="$PROJECT_DIR$/050.starter/spring/pom.xml" />
+        <option value="$PROJECT_DIR$/050.starter/quarkus/pom.xml" />
+        <option value="$PROJECT_DIR$/100.gateway/starter/pom.xml" />
       </list>
     </option>
   </component>

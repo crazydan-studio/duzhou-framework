@@ -43,7 +43,7 @@
         <module>web</module>
         <module>web-demo</module>
         <module>api</module>
-        <module>starter</module>
+        <!--<module>starter</module>-->
     </modules>
 
     <dependencies>

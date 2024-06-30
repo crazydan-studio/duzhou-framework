@@ -40,9 +40,8 @@
     </properties>
 
     <modules>
-        <module>quarkus</module>
         <module>spring</module>
-        <module>light4j</module>
+        <module>undertow</module>
     </modules>
 
     <dependencies>

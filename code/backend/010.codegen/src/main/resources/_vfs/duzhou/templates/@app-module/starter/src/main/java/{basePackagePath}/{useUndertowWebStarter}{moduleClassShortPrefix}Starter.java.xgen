@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[package ${basePackageName};
+
+import io.nop.undertow.UndertowServer;
+
+/** 应用 Undertow 启动器 */
+public class ${moduleClassShortPrefix}Starter extends UndertowServer {
+
+    public static void main(String[] args) {
+        start(args);
+    }
+}
+]]></c:unit>
