@@ -5,9 +5,9 @@
 
 ## 项目代码
 
-- 应用前端
-  - [Web 端](./code/frontend/web/)
-- [服务后端](./code//backend/)
+- 应用客户端
+  - [Web 端](./code/client/web/)
+- [服务端](./code//server/)
 
 ## 许可协议
 
