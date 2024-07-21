@@ -58,7 +58,6 @@
         <duzhou-framework.version>0.1.0-SNAPSHOT</duzhou-framework.version>
         <nop-entropy.version>2.0.0-SNAPSHOT</nop-entropy.version>
         <nop-extensions.version>1.0.0-SNAPSHOT</nop-extensions.version>
-        <quarkus.platform.version>3.8.2</quarkus.platform.version>
         <spring-boot.version>3.2.3</spring-boot.version>
     </properties>
 
@@ -263,11 +262,6 @@
                     <version>3.3.0</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-maven-plugin</artifactId>
-                    <version>${quarkus.platform.version}</version>
-                </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>

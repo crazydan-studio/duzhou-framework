@@ -74,18 +74,16 @@ public class WebSiteHttpServerFilter implements IHttpServerFilter {
             }
         }
 
-        // 忽略 Quarkus 内置的开发、监控等服务请求
+        // 忽略内置的开发、监控等服务请求
         // TODO 根据运行环境（从配置读取）确定可以开放的服务
-        if (path.startsWith("/q/")
-            // 忽略后台 API 服务接口
-            || path.startsWith("/f/") || path.startsWith("/r/") //
-            || path.startsWith("/p/") || path.equals("/graphql")) {
+        if ( // 忽略后台 API 服务接口
+                path.startsWith("/f/") || path.startsWith("/r/") //
+                || path.startsWith("/p/") || path.equals("/graphql")) {
             return next.get();
         }
 
         String html = getSiteHtml(path);
-        // 无匹配的站点，继续后续的路由，
-        // 如，静态资源路由（由 QuarkusStaticResources 处理）等
+        // 无匹配的站点，继续后续的路由
         if (html == null) {
             return next.get();
         }

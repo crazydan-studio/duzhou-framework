@@ -40,7 +40,7 @@
 
                     return {
                         'ext:useCoreModule': false,
-                        'ext:webStarterType': appModule.webStarterType || 'spring',
+                        'ext:webStarterType': appModule.webStarterType || 'undertow',
                         'ext:dialect': appModule.dbDialect,
                         'ext:entityTableNamePrefix': appModule.entityTableNamePrefix,
 

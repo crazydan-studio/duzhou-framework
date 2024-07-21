@@ -12,7 +12,6 @@
             builder.defineGlobalVar('moduleClassShortPrefix', ormModel['ext:moduleClassShortPrefix']);
             builder.defineGlobalVar('moduleNormalizedName', ormModel['ext:moduleName'].replace('_', '-'));
 
-            builder.defineGlobalVar('useQuarkusWebStarter', ormModel['ext:webStarterType'] == 'quarkus');
             builder.defineGlobalVar('useSpringWebStarter', ormModel['ext:webStarterType'] == 'spring');
             builder.defineGlobalVar('useUndertowWebStarter', ormModel['ext:webStarterType'] == 'undertow');
             builder.defineGlobalVar('dbDialects', ormModel["ext:dialect"].$toCsvSet());

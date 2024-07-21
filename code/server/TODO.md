@@ -6,15 +6,6 @@
 
 ## gateway
 
-- [x] 支持路由静态资源的 gzip 压缩文件：在请求资源含 `.gz` 压缩文件时，
-  直接返回该压缩文件，避免在服务端重复压缩静态资源
-  - 实现见 `QuarkusStaticResourceRouter.GzipStaticHandler`
-- [x] 将 `QuarkusStaticResources` 迁移到 `gateway-web`
-  模块中，以提升模块的内聚性
-  - 同时更名为 `QuarkusStaticResourceRouter`
-  - 所在模块需启用 Maven 插件 `org.jboss.jandex:jandex-maven-plugin`
-    以生成 class 的索引文件 `META-INF/jandex.idx`，Quarkus
-    依赖该索引来查找和创建 @ApplicationScoped 等标注的 Beans
 - [x] 将 Web 站点入口 HTML 页面的生成功能放到 `XWebSite`
   模型中，以在确保站点入口 HTML 可差量化定制的前提下，支持对其编译结果的缓存
   - 以定义 `xdef:value="xpl-node"` 类型节点的方式，无法支持对

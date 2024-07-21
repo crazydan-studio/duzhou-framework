@@ -1,16 +1,11 @@
-quarkus:
-  # https://quarkus.io/blog/path-resolution-in-quarkus/
-  # https://quarkus.io/guides/http-reference
-  http:
-    port: 8075
-    host: 0.0.0.0
-    # 禁止跨域访问
-    cors: true
-    # 配合 HttpCompressionHandler 启用对静态资源的压缩
-    enable-compression: true
-    compress-media-types: text/html,text/plain,text/xml,text/css,text/javascript,application/javascript,image/svg+xml
-  log:
-    level: INFO
-    category:
-      "io.nop":
-        level: INFO
+nop:
+  extension:
+    undertow:
+      server:
+        port: 8075
+        host: 127.0.0.1
+        compression:
+          # 启用压缩支持，提升页面加载速度
+          enabled: true
+          # minResponseSize: 2048
+          mime-types: text/html,text/xml,text/plain,text/javascript,text/css,image/svg+xml,application/json,application/xml,application/javascript,application/x-shockwave-flash

@@ -17,8 +17,3 @@ nop:
     password:
   file:
     store-dir: "${project.build.directory}/files"
-quarkus:
-  profile: dev
-  http:
-    # 开发阶段支持跨域访问
-    cors: false

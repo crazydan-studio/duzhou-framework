@@ -40,12 +40,15 @@
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
         <!-- End -->
+
+        <!--应用启动器 class，用于为插件 maven-shade-plugin 指定 mainClass-->
+        <start-class>io.crazydan.duzhou.framework.gateway.GatewayStarter</start-class>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-starter-quarkus</artifactId>
+            <artifactId>duzhou-starter-undertow</artifactId>
         </dependency>
 
         <dependency>
@@ -69,52 +72,23 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-integration-oss</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-mysql</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-h2</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>quarkus</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <!--
-                配置 Quarkus 的默认打包类型: https://quarkus.io/guides/building-native-image
-                - native: Docker 镜像打包
-                - uber-jar: 单一可执行的 jar 包
-                - fast-jar: 各依赖包分类放置的组织形式，方便复用公共基础 jar，执行入口为
-                  target/quarkus-app/quarkus-run.jar
-                -->
-                <!--<quarkus.package.type>native</quarkus.package.type>-->
-                <quarkus.package.type>uber-jar</quarkus.package.type>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <!--Note：通过变量 start-class 指定 mainClass-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
