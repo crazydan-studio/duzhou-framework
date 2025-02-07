@@ -68,6 +68,7 @@
         <module>035.autotest</module>
         <module>050.starter</module>
         <module>100.gateway</module>
+        <module>250.ui</module>
     </modules>
 
     <dependencies>
