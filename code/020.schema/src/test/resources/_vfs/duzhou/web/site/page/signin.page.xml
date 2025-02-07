@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!--
+- 通过标签名实现唯一坐标，同名标签通过 name 作为唯一标识
+- 通过 page 的结构，将各个节点自动转换为目标 UI 引擎所支持的组件，并对绑定的业务对象结构转换为相应的 GraphQL 调用
+- 支持主题、本地化
+
+- 不追求拖拽式页面设计，仍然以编码为主，但能够实时渲染、实时交互
+- UI 引擎负责处理：
+  - 组件包含关系
+  - 组件位置关系
+  - 组件联动关系
+  - 对消息的响应：含网络消息、用户操作消息等
+- 在编译时将 变量取值 替换为 getter 函数
+-->
+<page>
+    <ai:gen><![CDATA[
+        根据 XML 结构，使用 Tailwind css 编写 HTML 页面，要求如下：
+    ]]></ai:gen>
+
+    <!-- 根数据定义 -->
+    <data:meta>
+        <!-- 人工编写时，直接使用属性名作为标签名，最终将在解析的 x:gen-extends 阶段将节点替换为以下形式
+            <prop name="loginData" type="string" />
+        -->
+        <posting type="boolean" />
+        <loginData>
+            <account type="string" />
+            <pass type="string" />
+            <rememberMe type="boolean" />
+        </loginData>
+    </data:meta>
+
+    <main>
+        <form>
+            <figure>
+                <image src="/logo.svg" />
+                <caption>用户登录</caption>
+            </figure>
+
+            <main masking="${data.posting}">
+                <!-- 可用 group 分组 -->
+                <fields name="main" data:scope="data.loginData">
+                    <!-- 人工编写时，直接使用组件类型名作为标签名，最终将在解析的 x:gen-extends 阶段将节点替换为以下形式
+                        <field name="pass" type="password" />
+                    -->
+                    <text name="account" label="帐号" />
+                    <password name="pass" label="密码" />
+                    <switcher name="rememberMe" label="记住登录" />
+                </fields>
+
+                <!-- 意味着其子节点默认都为 action，可用 group 分组 -->
+                <actions>
+                    <action name="signin" label="登录">
+                        <on:click>
+                            <data:update name="data.posting" value="true" />
+                            <post data="${data.loginData}">
+                                <complete>
+                                    <data:update name="data.posting" value="false" />
+                                </complete>
+                                <success>
+                                    <redirect path="/console" />
+                                </success>
+                                <failure>
+                                    <alert msg="登录存在错误" />
+                                </failure>
+                            </post>
+                        </on:click>
+                    </action>
+
+                    <group name="extra">
+                        <action name="reset-password"
+                                link="/signin/password/reset/"
+                                label="忘记密码？点此找回" />
+                        <action name="signup"
+                                link="/signup/"
+                                label="还没有帐号？点此注册一个" />
+                    </group>
+                </actions>
+            </main>
+        </form>
+    </main>
+
+    <footer>
+        <copyright>
+            <date>版权所有 © 2014</date>
+            <owner link="https://duzhou.crazydan.io/">渡舟平台</owner>
+        </copyright>
+    </footer>
+</page>

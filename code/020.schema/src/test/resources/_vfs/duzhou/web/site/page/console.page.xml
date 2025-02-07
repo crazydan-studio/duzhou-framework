@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的全功能型应用平台
+  ~ Copyright (C) 2024 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<page>
+    <aside>
+        <header>
+            <logo link="#">
+                <image src="/logo.svg" />
+                <title>后台管理</title>
+            </logo>
+        </header>
+
+        <main>
+            <menu>
+                <group name="devtool" label="开发工具">
+                    <menu name="graphql" label="GraphQL" />
+                </group>
+                <group name="app-model" label="应用建模">
+                    <menu name="app" label="应用" />
+                    <menu name="domain" label="域定义" />
+                    <menu name="dict" label="字典定义" />
+                    <menu name="module" label="应用模块" />
+                    <menu name="model" label="应用模型" />
+                </group>
+            </menu>
+        </main>
+
+        <footer>
+            <user-area>
+                <avatar>
+                    <image src="/user.png" />
+                </avatar>
+                <settings>
+                    <icon name="gear" />
+                </settings>
+            </user-area>
+        </footer>
+    </aside>
+
+    <main>
+        <x:when nav-menu="devtool/graphql">
+            <header>
+                <title>GraphQL IDE</title>
+                <subtitle>GraphQL 开发工具</subtitle>
+            </header>
+            <main>
+                <graphql-editor />
+            </main>
+        </x:when>
+        <x:when nav-menu="app-model/app">
+            <header>
+                <title>应用列表</title>
+            </header>
+
+            <main>
+                <header>
+                    <operations>
+                        <add-new>新增</add-new>
+                        <delete-selected>删除选中</delete-selected>
+                        <refresh-table>刷新列表</refresh-table>
+                    </operations>
+                    <filter>
+                        <placeholder>请输入关键字...</placeholder>
+                    </filter>
+                    <settings />
+                </header>
+
+                <main>
+                    <table>
+                        <headers>
+                            <header name="name" label="名称" />
+                            <header name="logo" label="图标" />
+                            <header name="code" label="编码" />
+                            <header name="version" label="版本号" />
+                        </headers>
+                    </table>
+                </main>
+            </main>
+        </x:when>
+    </main>
+</page>

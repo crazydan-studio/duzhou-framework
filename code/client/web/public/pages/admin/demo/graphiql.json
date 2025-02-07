@@ -1,9 +1,0 @@
-{
-  "type": "page",
-  "title": "GraphQL IDE",
-  "subTitle": "GraphQL 开发工具",
-  "body": {
-    "type": "graphiql",
-    "endpoint": "/graphql"
-  }
-}
