@@ -3,11 +3,9 @@
 
 <img src="https://github.com/crazydan-studio/duzhou.crazydan.io/blob/master/static/img/logo.svg?raw=true" width="172px" />
 
-## 项目代码
+## 目录结构
 
-- 应用客户端
-  - [Web 端](./code/client/web/)
-- [服务端](./code//server/)
+- [code](./code/): 项目源代码
 
 ## 许可协议
 
