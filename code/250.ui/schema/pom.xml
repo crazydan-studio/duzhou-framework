@@ -25,7 +25,7 @@
 
     <artifactId>duzhou-ui-schema</artifactId>
 
-    <name>Duzhou Framework UI - Schema</name>
+    <name>Duzhou Framework UI Schema</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>

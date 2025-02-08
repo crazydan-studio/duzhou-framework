@@ -26,7 +26,7 @@
     <artifactId>duzhou-ui-runtime</artifactId>
     <packaging>pom</packaging>
 
-    <name>Duzhou Framework UI - Runtime</name>
+    <name>Duzhou Framework UI Runtime</name>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
@@ -37,6 +37,11 @@
 
     <properties>
     </properties>
+
+    <modules>
+        <module>web</module>
+        <module>android</module>
+    </modules>
 
     <dependencies>
     </dependencies>
