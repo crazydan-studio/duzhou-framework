@@ -19,19 +19,14 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件展示页面 -->
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:ui="ui"
-      x:schema="/duzhou/ui/schema/page.xdef"
-      url="/component/" title="组件列表"
+<!-- 组件：按钮 - Button -->
+<component xmlns:x="/nop/schema/xdsl.xdef"
+           x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <ui:import name="Block" from="/duzhou/ui/component/block.component.xui" />
-    <ui:import name="Button" from="/duzhou/ui/component/button.component.xui" />
+    <props>
+        <color type="string" />
+    </props>
 
     <template>
-        <Block name="buttons">
-            <Button name="red-btn" color="red" />
-            <Button name="blue-btn" color="blue" />
-            <Button name="green-btn" color="green" />
-        </Block>
     </template>
-</page>
+</component>

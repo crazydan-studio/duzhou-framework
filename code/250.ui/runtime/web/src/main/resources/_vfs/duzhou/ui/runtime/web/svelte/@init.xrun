@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!--
   - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -19,19 +18,10 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件展示页面 -->
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:ui="ui"
-      x:schema="/duzhou/ui/schema/page.xdef"
-      url="/component/" title="组件列表"
->
-    <ui:import name="Block" from="/duzhou/ui/component/block.component.xui" />
-    <ui:import name="Button" from="/duzhou/ui/component/button.component.xui" />
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
-    <template>
-        <Block name="buttons">
-            <Button name="red-btn" color="red" />
-            <Button name="blue-btn" color="blue" />
-            <Button name="green-btn" color="green" />
-        </Block>
-    </template>
-</page>
+    <gen:DefineLoopForOrm xpl:lib="/nop/codegen/xlib/gen.xlib" xpl:slotScope="builder">
+        <c:script><![CDATA[
+        ]]></c:script>
+    </gen:DefineLoopForOrm>
+</c:unit>
