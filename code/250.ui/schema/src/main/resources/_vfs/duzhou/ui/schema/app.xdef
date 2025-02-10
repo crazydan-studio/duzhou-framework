@@ -29,7 +29,6 @@
     <description xdef:value="string" />
     <copyright xdef:value="string" />
 
-    <pages>
-        <page />
-    </pages>
+    <!-- 从 app 传递 title 等属性值 -->
+    <mainPage src="!string" />
 </app>
