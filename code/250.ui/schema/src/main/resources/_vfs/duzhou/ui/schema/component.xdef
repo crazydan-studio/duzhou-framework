@@ -19,11 +19,11 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<component xmlns:x="/nop/schema/xdsl.xdef"
-           xmlns:xdef="/nop/schema/xdef.xdef"
+<!-- 组件定义 -->
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            x:schema="/nop/schema/xdef.xdef"
            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-           xdef:name="XuiComponent"
+           xdef:name="XuiComponent" xdef:check-ns="ui"
 >
     <props>
     </props>

@@ -19,16 +19,9 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 页面定义
-@url 页面 URL 访问地址
-@title 页面标题
--->
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+<!-- 程序控制流定义：描述在 UI 组件中的控制逻辑 -->
+<flow xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
       x:schema="/nop/schema/xdef.xdef"
-      xdef:ref="/duzhou/ui/schema/component.xdef"
-      xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-      xdef:name="XuiPage"
-      url="string" title="string"
+      xdef:check-ns="ui"
 >
-    <!-- Note: 页面本质上也是一个 UI 组件，完全复用组件的结构即可 -->
-</page>
+</flow>

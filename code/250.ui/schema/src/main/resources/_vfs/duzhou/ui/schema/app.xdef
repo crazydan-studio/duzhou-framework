@@ -19,16 +19,17 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 页面定义
-@url 页面 URL 访问地址
-@title 页面标题
--->
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-      x:schema="/nop/schema/xdef.xdef"
-      xdef:ref="/duzhou/ui/schema/component.xdef"
-      xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-      xdef:name="XuiPage"
-      url="string" title="string"
+<!-- 应用定义：用于组织 UI 页面 -->
+<app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+     x:schema="/nop/schema/xdef.xdef"
+     xdef:check-ns="ui"
+     code="!string" title="!string" version="!string"
+     license="string" logo="string"
 >
-    <!-- Note: 页面本质上也是一个 UI 组件，完全复用组件的结构即可 -->
-</page>
+    <description xdef:value="string" />
+    <copyright xdef:value="string" />
+
+    <pages>
+        <page />
+    </pages>
+</app>
