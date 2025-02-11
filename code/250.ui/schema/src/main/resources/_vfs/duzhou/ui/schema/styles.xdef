@@ -19,10 +19,23 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 样式定义 -->
+<!-- 样式定义
+不生成 class 模型，直接对 XNode 节点进行合并处理
+-->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
-        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-        xdef:check-ns="ui"
+        xdef:body-type="map"
 >
+
+    <!--
+        第一级样式的属性，只能定义属性类型，而第二级样式的属性，才能引用或赋予具体的值
+    -->
+    <xdef:unknown-tag
+            xdef:unknown-attr="enum:io.crazydan.duzhou.framework.ui.XuiStyleAttrType"
+            xdef:body-type="map"
+    >
+        <xdef:unknown-tag
+                xdef:unknown-attr="string"
+        />
+    </xdef:unknown-tag>
 </styles>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   ~ Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -18,29 +17,17 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>duzhou-ui-component</artifactId>
-
-    <name>Duzhou Framework UI Component</name>
-
-    <parent>
-        <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>duzhou-ui</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
-    <properties>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-ui-schema</artifactId>
-        </dependency>
-    </dependencies>
-</project>
+<styles>
+    <margin left="Size" right="Size" top="Size" bottom="Size" />
+    <font size="Size" family="String" color="Color" />
+    <border-left color="Color" size="Size" style="BorderStyle" />
+    <border-right color="Color" size="Size" style="BorderStyle" />
+    <border-top color="Color" size="Size" style="BorderStyle" />
+    <border-bottom color="Color" size="Size" style="BorderStyle" />
+    <border color="Color" size="Size" style="BorderStyle">
+        <border-left color="${color}" size="${size}" style="${style}" />
+        <border-right color="${color}" size="${size}" style="${style}" />
+        <border-top color="${color}" size="${size}" style="${style}" />
+        <border-bottom color="${color}" size="${size}" style="${style}" />
+    </border>
+</styles>

@@ -19,6 +19,23 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<c:script xmlns:c="c"><![CDATA[
-    codeGenerator.renderModel('/duzhou/ui/schema/xui.xdef', '/nop/templates/xdsl', '/', $scope);
-]]></c:script>
+<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+     x:schema="/nop/schema/xlib.xdef"
+>
+    <tags>
+        <ValidateSubStyles outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <description>对子节点样式的引用及其属性配置进行校验</description>
+
+            <source>
+                <styles>
+                    <c:script><![CDATA[
+                        import io.crazydan.duzhou.framework.ui.schema.XuiStylesHelper;
+                        XuiStylesHelper.validateSubStyles(_dsl_root);
+                    ]]></c:script>
+                </styles>
+            </source>
+        </ValidateSubStyles>
+    </tags>
+</lib>

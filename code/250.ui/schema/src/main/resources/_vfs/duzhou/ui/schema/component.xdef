@@ -22,18 +22,11 @@
 <!-- 组件定义 -->
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            x:schema="/nop/schema/xdef.xdef"
-           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-           xdef:name="XuiComponent" xdef:check-ns="ui"
+           xdef:check-ns="ui"
 >
-    <props>
-    </props>
-    <state>
-    </state>
 
-    <template>
+    <template xdef:value="xpl-node">
     </template>
-
-    <actions xdef:ref="/duzhou/ui/schema/actions.xdef" />
 
     <styles xdef:ref="/duzhou/ui/schema/styles.xdef" />
 </component>

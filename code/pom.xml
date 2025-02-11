@@ -181,6 +181,27 @@
                 <artifactId>duzhou-gateway-api</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-schema</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-component</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-runtime-web</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-runtime-android</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
             <!-- End -->
 
             <dependency>

@@ -44,5 +44,9 @@
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>io.crazydan.duzhou.framework</groupId>
+            <artifactId>duzhou-ui-component</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -22,7 +22,6 @@
 <!-- 应用定义：用于组织 UI 页面 -->
 <app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"
-     xdef:check-ns="ui"
      code="!string" title="!string" version="!string"
      license="string" logo="string"
 >
@@ -30,5 +29,5 @@
     <copyright xdef:value="string" />
 
     <!-- 从 app 传递 title 等属性值 -->
-    <mainPage src="!string" />
+    <mainPage xdef:mandatory="true" src="!string" />
 </app>
