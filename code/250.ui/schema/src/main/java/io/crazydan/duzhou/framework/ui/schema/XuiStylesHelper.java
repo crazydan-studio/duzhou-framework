@@ -28,11 +28,18 @@ import io.nop.core.lang.xml.XNode;
 public class XuiStylesHelper {
 
     /**
-     * 对子节点样式的引用及其属性配置进行校验
-     * - 子节点必须已在根节点中定义
-     * - 子节点属性值只能引用所在父节点的属性
+     * 对样式节点的结构有效性进行校验
+     * - 其结构节点所引用的样式节点必须在根节点中已定义，且属性列表和属性类型与样式的定义是一致的
+     * - 其结构节点的属性值只能引用该样式节点的属性，且二者的类型必须相同，不能引用未定义的变量
      */
-    public static void validateSubStyles(XNode root) {
+    public static void validate(XNode root) {
+        root.getBody();
+    }
+
+    /**
+     * 展开样式节点，最终使其仅由原子样式组成
+     */
+    public static void expand(XNode root) {
         root.getBody();
     }
 }

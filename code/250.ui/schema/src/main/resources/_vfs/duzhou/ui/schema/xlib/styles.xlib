@@ -23,19 +23,50 @@
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
-        <ValidateSubStyles outputMode="node">
+        <DefaultGenExtends outputMode="node">
             <attr name="_dsl_root" implicit="true" />
 
-            <description>对子节点样式的引用及其属性配置进行校验</description>
+            <source>
+            </source>
+        </DefaultGenExtends>
+
+        <DefaultPostExtends outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <source>
+                <thisLib:_DoValidate />
+                <thisLib:_DoExpand />
+            </source>
+        </DefaultPostExtends>
+
+        <_DoValidate outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <description>对样式节点的结构有效性进行校验</description>
 
             <source>
                 <styles>
                     <c:script><![CDATA[
                         import io.crazydan.duzhou.framework.ui.schema.XuiStylesHelper;
-                        XuiStylesHelper.validateSubStyles(_dsl_root);
+                        XuiStylesHelper.validate(_dsl_root);
                     ]]></c:script>
                 </styles>
             </source>
-        </ValidateSubStyles>
+        </_DoValidate>
+
+        <_DoExpand outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <description>展开样式节点，最终使其仅由原子样式组成</description>
+
+            <source>
+                <styles>
+                    <c:script><![CDATA[
+                        import io.crazydan.duzhou.framework.ui.schema.XuiStylesHelper;
+                        XuiStylesHelper.expand(_dsl_root);
+                    ]]></c:script>
+                </styles>
+            </source>
+        </_DoExpand>
     </tags>
 </lib>

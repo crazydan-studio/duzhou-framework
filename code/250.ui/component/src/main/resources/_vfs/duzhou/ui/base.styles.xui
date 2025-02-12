@@ -24,7 +24,7 @@
         x:schema="/duzhou/ui/schema/styles.xdef"
 >
     <x:post-extends xmlns:styles="styles">
-        <styles:ValidateSubStyles xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
+        <styles:Validate xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
     </x:post-extends>
 
     <margin left="Size" right="Size" top="Size" bottom="Size" />

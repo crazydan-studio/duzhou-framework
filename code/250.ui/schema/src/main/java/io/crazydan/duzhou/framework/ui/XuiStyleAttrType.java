@@ -26,6 +26,8 @@ package io.crazydan.duzhou.framework.ui;
  * @date 2025-02-11
  */
 public enum XuiStyleAttrType {
+    /** null 属性，表示从节点中删除该属性 */
+    Null,
     /** 字符串 */
     String,
     /** 颜色，其值可以为 #00ff00、rgb(255,0,0)、rgba(255,0,0,1)、green、red 等形式 */

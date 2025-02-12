@@ -19,24 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 样式定义
-- 不生成 class 模型，直接对 XNode 节点进行合并处理
-- 指定 `xdef:body-type="map"` 从而确保其子节点可按照标签名对节点做 `x:prototype` 扩展
--->
-<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:body-type="map"
+<!-- 按钮样式 -->
+<styles xmlns:x="/nop/schema/xdsl.xdef"
+        x:schema="/duzhou/ui/schema/styles.xdef"
+        x:extends="/duzhou/ui/button.styles.xui"
 >
 
-    <!-- 样式节点：节点名称可任意，且直接以其节点名作为样式名
-    - 可在样式节点上定义可配置的属性，该属性（比如，`color`）可在结构节点上以 `${color}` 形式被引用
-    -->
-    <xdef:unknown-tag
-            xdef:unknown-attr="enum:io.crazydan.duzhou.framework.ui.XuiStyleAttrType"
-            xdef:body-type="map"
-    >
-        <xdef:unknown-tag
-                xdef:unknown-attr="string"
-        />
-    </xdef:unknown-tag>
+    <!-- 以 x:extends 方式对已有样式做扩展 -->
+    <button-gray>
+        <border x:override="remove" />
+    </button-gray>
+    <button-red>
+        <background color="#ff0000" />
+        <font x:override="remove" />
+    </button-red>
 </styles>
