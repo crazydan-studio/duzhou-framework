@@ -40,6 +40,12 @@ public class XuiStylesHelper {
      * 展开样式节点，最终使其仅由原子样式组成
      */
     public static void expand(XNode root) {
+        // - 若结构节点为复合样式，仍然对其做展开，并将为其指定的合并算子向最终的原子节点传递？
+        // - DSL 是在合并结束后再校验的：DslNodeLoader#loadFromNode
+        // - DSL 合并逻辑实现：XDslExtender#xtend
+        // - x:extends/x:gen-extends 的合并逻辑：XDslExtender#buildSource
+        // - x:post-extends 的合并逻辑：XDslExtender#postProcess
+        // - x:prototype 的合并逻辑：XDslExtender#processPrototypes
         root.getBody();
     }
 }

@@ -47,10 +47,15 @@ public class XuiStylesTest extends NopJunitTestCase {
     @Test
     public void test_parse_button_dsl() {
         XNode node = parseXNode(BUTTON_STYLES_DSL);
-        this.log.info("button.styles.xui: xml={}", node.xml());
-        //Assertions.assertEquals(attachmentXml("button.styles.xui.xml").clearComment().xml(), node.xml());
 
-        node = parseXNode(BUTTON_EXTENDS_STYLES_DSL);
+        this.log.info("button.styles.xui: xml={}", node.xml());
+        Assertions.assertEquals(attachmentXml("button.styles.xui.xml").clearComment().xml(), node.xml());
+    }
+
+    @Test
+    public void test_parse_button_extends_dsl() {
+        XNode node = parseXNode(BUTTON_EXTENDS_STYLES_DSL);
+
         this.log.info("button-extends.styles.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("button-extends.styles.xui.xml").clearComment().xml(), node.xml());
     }

@@ -27,6 +27,11 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
+                <!-- 在 x:gen-extends 阶段对样式节点进行展开处理，
+                使得在样式节点展开后才执行节点的合并算法，从而确保合并算法作用在最终的原子样式上，
+                避免合并结果出现遗漏。
+                -->
+                <thisLib:_DoExpand />
             </source>
         </DefaultGenExtends>
 
@@ -34,25 +39,8 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
-                <thisLib:_DoValidate />
-                <thisLib:_DoExpand />
             </source>
         </DefaultPostExtends>
-
-        <_DoValidate outputMode="node">
-            <attr name="_dsl_root" implicit="true" />
-
-            <description>对样式节点的结构有效性进行校验</description>
-
-            <source>
-                <styles>
-                    <c:script><![CDATA[
-                        import io.crazydan.duzhou.framework.ui.schema.XuiStylesHelper;
-                        XuiStylesHelper.validate(_dsl_root);
-                    ]]></c:script>
-                </styles>
-            </source>
-        </_DoValidate>
 
         <_DoExpand outputMode="node">
             <attr name="_dsl_root" implicit="true" />

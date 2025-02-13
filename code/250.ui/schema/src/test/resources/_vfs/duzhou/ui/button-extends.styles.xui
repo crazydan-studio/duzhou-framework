@@ -33,4 +33,24 @@
         <background color="#ff0000" />
         <font x:override="remove" />
     </button-red>
+
+    <!-- 对多个复合样式的合并 -->
+    <button-1>
+        <button size="3em" color="blue" />
+        <font color="white" />
+    </button-1>
+    <button-2>
+        <button size="2em" color="yellow" />
+        <font color="red" />
+    </button-2>
+    <button-3>
+        <button-1 />
+        <button-2 />
+    </button-3>
+    <button-4>
+        <button-3 />
+        <button-red />
+        <!-- 对复合样式的定制，只能通过原子样式，不能直接定制复合样式中的复合样式 -->
+        <font color="black" />
+    </button-4>
 </styles>
