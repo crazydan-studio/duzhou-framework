@@ -30,10 +30,10 @@
         <styles:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
     </x:post-extends>
 
-    <margin left="Size" right="Size" top="Size" bottom="Size" />
     <font size="Size" family="String" color="Color" />
-    <height value="Size" />
+    <size width="Size" height="Size" />
     <background color="Color" />
+    <margin left="Size" right="Size" top="Size" bottom="Size" />
 
     <border-base x:abstract="true"
                  color="Color" size="Size" style="BorderStyle"

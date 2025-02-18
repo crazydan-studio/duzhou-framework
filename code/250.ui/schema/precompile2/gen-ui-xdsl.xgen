@@ -19,19 +19,6 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 应用定义：用于组织 UI 页面 -->
-<app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-     x:schema="/nop/schema/xdef.xdef"
-     code="!string" title="!string" version="!string"
-     license="string" logo="string"
->
-    <description xdef:value="string" />
-    <copyright xdef:value="string" />
-
-    <themes xdef:body-type="list" xdef:key-attr="name">
-        <theme name="!string" title="!string" src="!string" />
-    </themes>
-
-    <!-- 从 app 传递 title 等属性值 -->
-    <mainPage xdef:mandatory="true" src="!string" />
-</app>
+<c:script xmlns:c="c"><![CDATA[
+    codeGenerator.renderModel('/duzhou/ui/schema/comp.xdef', '/nop/templates/xdsl', '/', $scope);
+]]></c:script>

@@ -1,0 +1,6 @@
+# Note: YAML 也支持差量
+options:
+  - value: "xui:color"
+    label: 颜色
+  - value: "xui:size"
+    label: 尺寸

@@ -21,12 +21,17 @@
 
 <!-- 组件定义 -->
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+           xmlns:xui="xui"
            x:schema="/nop/schema/xdef.xdef"
-           xdef:check-ns="ui"
+           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+           xdef:check-ns="xui"
 >
+    <xui:import name="!string" from="!v-path" />
 
     <template xdef:value="xpl-node">
     </template>
 
-    <styles xdef:ref="/duzhou/ui/schema/styles.xdef" />
+    <styles xdef:ref="/duzhou/ui/schema/styles.xdef"
+            xdef:body-type="map" xdef:bean-child-name="style"
+    />
 </component>

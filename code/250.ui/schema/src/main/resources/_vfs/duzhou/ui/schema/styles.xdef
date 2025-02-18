@@ -20,23 +20,42 @@
   -->
 
 <!-- 样式定义
-- 不生成 class 模型，直接对 XNode 节点进行合并处理
-- 指定 `xdef:body-type="map"` 从而确保其子节点可按照标签名对节点做 `x:prototype` 扩展
+- 不需要细分结构的样式，称为**原子样式**（Atomic Style）。
+  原子样式一般对应原生的样式属性，比如，`border-left`、`margin` 等
+- 由原子样式组合而成的样式，称为**复合样式**（Composite Style），
+  且已定义的复合样式也可用于组成其他复合样式
+- 组成复合样式的原子样式或其他复合样式，统称为该复合样式的**样式属性**（Style Property）
+- 原子样式和复合样式均支持定义**配置参数**（Option Argument），其定义为节点属性，
+  比如，`<margin left="Size" right="Size" top="Size" bottom="Size" />`，
+  其中，`left`、`right`、`top`、`bottom` 则是 `margin` 样式的配置参数，
+  表示外边距的四个方向的间隔，在组件内配置样式时，需为配置参数传值，比如，`<margin left="8px" />`
+  - 样式想象为函数，其配置参数便为函数参数，该函数的返回值即为其样式属性
+- 在样式属性上的配置参数可直接引用其所在复合样式的配置参数，
+  比如，`<border size="Size"> <border-left size="${size}"/> </border>`
+  - 也可以引用作用域内的其他变量，但对于同名变量，则以复合样式的配置参数优先
+- 对于样式属性中的复合样式，可以通过 `xui:override` 对其结构做 delta 处理，
+  比如，`<add-button> <button> <font xui:override="remove" /> </button> </add-button>`
+  - 若是不对内部的复合样式做删除，则应该直接通过同名样式覆盖其他复合样式内的样式属性
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
         xdef:body-type="map"
 >
 
+    <!-- 可在样式中引用的变量 -->
+    <vars xdef:body-type="map" xdef:bean-child-name="prop">
+        <xdef:unknown-tag type="!dict:duzhou/ui/style-type" xdef:value="string=@attr:type" />
+    </vars>
+
     <!-- 样式节点：节点名称可任意，且直接以其节点名作为样式名
-    - 可在样式节点上定义可配置的属性，该属性（比如，`color`）可在结构节点上以 `${color}` 形式被引用
     -->
-    <xdef:unknown-tag
-            xdef:unknown-attr="enum:io.crazydan.duzhou.framework.ui.XuiStyleAttrType"
-            xdef:body-type="map"
-    >
-        <xdef:unknown-tag
-                xdef:unknown-attr="string"
-        />
+    <xdef:unknown-tag xdef:name="XuiStyle">
+        <args xdef:body-type="map" xdef:bean-child-name="arg">
+            <xdef:unknown-tag xdef:name="XuiStyleArg" type="!dict:duzhou/ui/style-type" />
+        </args>
+
+        <props xdef:body-type="map" xdef:bean-child-name="prop">
+        </props>
     </xdef:unknown-tag>
 </styles>

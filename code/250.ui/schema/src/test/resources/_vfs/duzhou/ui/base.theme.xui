@@ -19,19 +19,13 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 应用定义：用于组织 UI 页面 -->
-<app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-     x:schema="/nop/schema/xdef.xdef"
-     code="!string" title="!string" version="!string"
-     license="string" logo="string"
+<!-- 基础主题 -->
+<styles xmlns:x="/nop/schema/xdsl.xdef"
+        x:schema="/duzhou/ui/schema/styles.xdef"
 >
-    <description xdef:value="string" />
-    <copyright xdef:value="string" />
 
-    <themes xdef:body-type="list" xdef:key-attr="name">
-        <theme name="!string" title="!string" src="!string" />
-    </themes>
-
-    <!-- 从 app 传递 title 等属性值 -->
-    <mainPage xdef:mandatory="true" src="!string" />
-</app>
+    <vars>
+        <primary-color type="xui:color">#409eff</primary-color>
+        <success-color type="xui:color">#67c23a</success-color>
+    </vars>
+</styles>
