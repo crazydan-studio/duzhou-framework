@@ -39,23 +39,48 @@
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
-        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-        xdef:body-type="map"
+        xdef:ref="style/themes.xdef"
+        xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
 >
 
-    <!-- 可在样式中引用的变量 -->
-    <vars xdef:body-type="map" xdef:bean-child-name="prop">
-        <xdef:unknown-tag type="!dict:duzhou/ui/style-type" xdef:value="string=@attr:type" />
-    </vars>
-
-    <!-- 样式节点：节点名称可任意，且直接以其节点名作为样式名
+    <!-- 样式定义
+    实际使用时采用如下形式：
+    ```xml
+        <button size="xui:size" color="xui:color">
+            <border color="${color}" />
+            <size height="${size}" />
+        </button>
+    ```
+    其最终由 `xdef:transformer-class` 指定的转换器将其转换为以下形式：
+    ```xml
+        <style name="button">
+            <attr name="size" type="xui:size" />
+            <attr name="color" type="xui:size" />
+            <source>
+                <thisStyle:border color="${color}" />
+                <thisStyle:size height="${size}" />
+            </source>
+        </style>
+    ```
     -->
-    <xdef:unknown-tag xdef:name="XuiStyle">
-        <args xdef:body-type="map" xdef:bean-child-name="arg">
-            <xdef:unknown-tag xdef:name="XuiStyleArg" type="!dict:duzhou/ui/style-type" />
-        </args>
+    <style xdef:name="XuiStyle"
+           xdef:unique-attr="name"
+           name="!prop-name"
+    >
+        <attr xdef:name="XuiStyleAttr"
+              xdef:unique-attr="name"
+              name="!prop-name" type="!dict:duzhou/ui/style-type"
+        />
 
-        <props xdef:body-type="map" xdef:bean-child-name="prop">
-        </props>
-    </xdef:unknown-tag>
+        <!-- 样式的组合
+        - 以函数形式复合其他样式
+        - 在运行构建器中，以 delta 形式设置原子样式的返回结果，再执行复合样式函数，
+          得到最终的原生样式属性及其配置
+        - 通过 `xui:override` 设置复合样式之间的合并算子，在运行时做实际的合并
+        - 普通的 delta 运算，则通过 `x:override` 合并 `x:extends` 中的相同节点，
+          而通过 `x:prototype-override` 合并 `x:prototype` 指定的内部节点
+        - 若在子节点样式的属性中传的值为 `null`，则表示删除该属性的值
+        -->
+        <source xdef:value="xml" xdef:mandatory="true" />
+    </style>
 </styles>

@@ -28,10 +28,6 @@
     <description xdef:value="string" />
     <copyright xdef:value="string" />
 
-    <themes xdef:body-type="list" xdef:key-attr="name">
-        <theme name="!string" title="!string" src="!string" />
-    </themes>
-
     <!-- 从 app 传递 title 等属性值 -->
     <mainPage xdef:mandatory="true" src="!string" />
 </app>

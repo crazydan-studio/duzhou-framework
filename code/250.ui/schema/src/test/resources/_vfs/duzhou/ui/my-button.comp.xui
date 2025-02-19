@@ -51,7 +51,7 @@
         </Block>
     </template>
 
-    <styles x:extends="/duzhou/ui/base.styles.xui,/duzhou/ui/base.theme.xui">
+    <styles x:extends="/duzhou/ui/base.styles.xui,/duzhou/ui/base.themes.xui">
         <button-default>
             <font size="14px" color="#606266" />
             <border size="1px" color="#dcdfe6" style="solid" />
@@ -60,13 +60,13 @@
 
         <button-primary x:prototype="button-default">
             <font color="#ffffff" />
-            <border color="${theme.primary-color}" />
-            <background color="${theme.primary-color}" />
+            <border color="@var:color/primary" />
+            <background color="@var:color/primary" />
         </button-primary>
         <button-success x:prototype="button-default">
             <font color="#ffffff" />
-            <border color="${theme.success-color}" />
-            <background color="${theme.success-color}" />
+            <border color="@var:color/success" />
+            <background color="@var:color/success" />
         </button-success>
     </styles>
 </component>

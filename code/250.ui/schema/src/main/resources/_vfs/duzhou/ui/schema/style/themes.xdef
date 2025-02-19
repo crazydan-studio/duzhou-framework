@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- 主题定义
+- 定义一组样式中可引用的变量，通过同一变量的不同值实现不同的主题
+- 如何管理和切换主题，则由运行时构建器处理
+-->
+<themes xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+        x:schema="/nop/schema/xdef.xdef"
+>
+
+    <theme xdef:name="XuiStyleTheme"
+           xdef:unique-attr="name"
+           name="!string" title="string"
+    >
+        <!-- 主题变量分组
+        - 变量之间可相互引用
+        - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式
+        - 引用变量的类型必须与关联数据的类型一致
+
+        @name 分组名
+        -->
+        <vars xdef:name="XuiStyleVarGroup"
+              xdef:unique-attr="name" xdef:bean-prop="varGroups"
+              name="!prop-name"
+        >
+            <!-- 变量定义，标签文本内容为变量值
+            - 实际使用时，以 `<xxx type="xui:color" />` 形式编写，其最终由
+              `xdef:transformer-class` 指定的转换器将其转换为
+              `<var name="xxx" type="xui:color" />` 形式
+
+            @name 变量名
+            @type 变量类型
+            -->
+            <var xdef:name="XuiStyleVar"
+                 xdef:unique-attr="name" xdef:value="string"
+                 name="!prop-name" type="!dict:duzhou/ui/style-type"
+            />
+        </vars>
+    </theme>
+</themes>

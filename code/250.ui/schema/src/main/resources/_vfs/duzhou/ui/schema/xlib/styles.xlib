@@ -19,7 +19,7 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+<lib xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
@@ -27,11 +27,6 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
-                <!-- 在 x:gen-extends 阶段对样式节点进行展开处理，
-                使得在样式节点展开后才执行节点的合并算法，从而确保合并算法作用在最终的原子样式上，
-                避免合并结果出现遗漏。
-                -->
-                <thisLib:_DoExpand />
             </source>
         </DefaultGenExtends>
 
@@ -41,20 +36,5 @@
             <source>
             </source>
         </DefaultPostExtends>
-
-        <_DoExpand outputMode="node">
-            <attr name="_dsl_root" implicit="true" />
-
-            <description>展开样式节点，最终使其仅由原子样式组成</description>
-
-            <source>
-                <styles>
-                    <c:script><![CDATA[
-                        import io.crazydan.duzhou.framework.ui.schema.XuiStylesHelper;
-                        XuiStylesHelper.expand(_dsl_root);
-                    ]]></c:script>
-                </styles>
-            </source>
-        </_DoExpand>
     </tags>
 </lib>

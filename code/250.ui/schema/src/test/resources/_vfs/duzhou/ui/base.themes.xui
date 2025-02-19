@@ -20,12 +20,14 @@
   -->
 
 <!-- 基础主题 -->
-<styles xmlns:x="/nop/schema/xdsl.xdef"
-        x:schema="/duzhou/ui/schema/styles.xdef"
+<themes xmlns:x="/nop/schema/xdsl.xdef"
+        x:schema="/duzhou/ui/schema/style/themes.xdef"
 >
 
-    <vars>
-        <primary-color type="xui:color">#409eff</primary-color>
-        <success-color type="xui:color">#67c23a</success-color>
-    </vars>
-</styles>
+    <theme name="light" title="亮色模式">
+        <vars name="color">
+            <primary type="xui:color">#409eff</primary>
+            <success type="xui:color">#67c23a</success>
+        </vars>
+    </theme>
+</themes>
