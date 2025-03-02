@@ -27,7 +27,8 @@
         x:schema="/nop/schema/xdef.xdef"
 >
 
-    <theme xdef:unique-attr="name"
+    <theme xdef:name="XuiStyleTheme"
+           xdef:unique-attr="name"
            name="!string" title="string"
     >
         <!-- 主题变量分组
@@ -37,16 +38,21 @@
 
         @name 分组名
         -->
-        <vars xdef:unique-attr="name"
+        <vars xdef:name="XuiStyleVarGroup"
+              xdef:unique-attr="name" xdef:bean-prop="varGroups"
               name="!prop-name"
         >
             <!-- 变量定义，标签文本内容为变量值
+            - 实际使用时，以 `<xxx type="xui:color" />` 形式编写，其最终由
+              `xdef:transformer-class` 指定的转换器将其转换为
+              `<var name="xxx" type="xui:color" />` 形式
 
+            @name 变量名
             @type 变量类型
             -->
-            <xdef:unknown-tag
-                    xdef:value="string"
-                    type="!dict:duzhou/ui/style-type"
+            <var xdef:name="XuiStyleVar"
+                 xdef:unique-attr="name" xdef:value="string"
+                 name="!prop-name" type="!dict:duzhou/ui/style-type"
             />
         </vars>
     </theme>

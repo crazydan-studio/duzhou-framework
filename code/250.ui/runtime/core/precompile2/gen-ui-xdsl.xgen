@@ -20,5 +20,5 @@
   -->
 
 <c:script xmlns:c="c"><![CDATA[
-    codeGenerator.renderModel('/duzhou/ui/schema/comp.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/comp.rt.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

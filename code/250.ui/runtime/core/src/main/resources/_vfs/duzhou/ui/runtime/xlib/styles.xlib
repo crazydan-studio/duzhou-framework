@@ -19,17 +19,22 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 样式定义
--->
-<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:body-type="map"
+<lib xmlns:x="/nop/schema/xdsl.xdef"
+     x:schema="/nop/schema/xlib.xdef"
 >
+    <tags>
+        <DefaultGenExtends outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
 
-    <xdef:unknown-tag
-            xdef:unknown-attr="enum:StyleAttrType"
-            xdef:body-type="map"
-    >
-        <xdef:unknown-tag xdef:unknown-attr="string" />
-    </xdef:unknown-tag>
-</styles>
+            <source>
+            </source>
+        </DefaultGenExtends>
+
+        <DefaultPostExtends outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <source>
+            </source>
+        </DefaultPostExtends>
+    </tags>
+</lib>

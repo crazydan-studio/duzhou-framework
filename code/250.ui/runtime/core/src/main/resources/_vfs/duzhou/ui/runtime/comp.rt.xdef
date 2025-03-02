@@ -19,17 +19,19 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 样式定义
--->
-<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:body-type="map"
+<!-- 组件定义 -->
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+           xmlns:xui="xui"
+           x:schema="/nop/schema/xdef.xdef"
+           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+           xdef:check-ns="xui"
 >
+    <xui:import name="!string" from="!v-path" />
 
-    <xdef:unknown-tag
-            xdef:unknown-attr="enum:StyleAttrType"
-            xdef:body-type="map"
-    >
-        <xdef:unknown-tag xdef:unknown-attr="string" />
-    </xdef:unknown-tag>
-</styles>
+    <template xdef:value="xpl-node">
+    </template>
+
+    <styles xdef:ref="/duzhou/ui/schema/styles.xdef"
+            xdef:body-type="map" xdef:bean-child-name="style"
+    />
+</component>

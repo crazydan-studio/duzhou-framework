@@ -30,7 +30,7 @@
         <styles:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
     </x:post-extends>
 
-    <font size="xui:size" family="string" color="xui:color" />
+    <font size="xui:size" family="xui:string" color="xui:color" />
     <size width="xui:size" height="xui:size" />
     <background color="xui:color" />
     <margin left="xui:size" right="xui:size" top="xui:size" bottom="xui:size" />

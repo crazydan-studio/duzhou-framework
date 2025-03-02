@@ -194,6 +194,11 @@
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-runtime-core</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
                 <artifactId>duzhou-ui-runtime-web</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>

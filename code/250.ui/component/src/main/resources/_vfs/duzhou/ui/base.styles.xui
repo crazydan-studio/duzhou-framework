@@ -23,8 +23,11 @@
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl"
         x:schema="/duzhou/ui/schema/styles.xdef"
 >
+    <x:gen-extends xmlns:styles="styles">
+        <styles:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
+    </x:gen-extends>
     <x:post-extends xmlns:styles="styles">
-        <styles:Validate xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
+        <styles:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/styles.xlib" />
     </x:post-extends>
 
     <margin left="Size" right="Size" top="Size" bottom="Size" />

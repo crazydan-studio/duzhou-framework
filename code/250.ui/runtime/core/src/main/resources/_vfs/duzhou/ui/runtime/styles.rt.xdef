@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- 样式定义
+- 不需要细分结构的样式，称为**原子样式**（Atomic Style）。
+  原子样式一般对应原生的样式属性，比如，`border-left`、`margin` 等
+- 由原子样式组合而成的样式，称为**复合样式**（Composite Style），
+  且已定义的复合样式也可用于组成其他复合样式
+- 组成复合样式的原子样式或其他复合样式，统称为该复合样式的**样式属性**（Style Property）
+- 原子样式和复合样式均支持定义**配置参数**（Option Argument），其定义为节点属性，
+  比如，`<margin left="Size" right="Size" top="Size" bottom="Size" />`，
+  其中，`left`、`right`、`top`、`bottom` 则是 `margin` 样式的配置参数，
+  表示外边距的四个方向的间隔，在组件内配置样式时，需为配置参数传值，比如，`<margin left="8px" />`
+  - 样式想象为函数，其配置参数便为函数参数，该函数的返回值即为其样式属性
+- 在样式属性上的配置参数可直接引用其所在复合样式的配置参数，
+  比如，`<border size="Size"> <border-left size="${size}"/> </border>`
+  - 也可以引用作用域内的其他变量，但对于同名变量，则以复合样式的配置参数优先
+- 对于样式属性中的复合样式，可以通过 `xui:override` 对其结构做 delta 处理，
+  比如，`<add-button> <button> <font xui:override="remove" /> </button> </add-button>`
+  - 若是不对内部的复合样式做删除，则应该直接通过同名样式覆盖其他复合样式内的样式属性
+-->
+<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:ref="style/themes.rt.xdef"
+        xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+>
+
+    <!-- 样式定义
+    实际使用时采用如下形式：
+    ```xml
+        <button size="xui:size" color="xui:color">
+            <border color="${color}" />
+            <size height="${size}" />
+        </button>
+    ```
+    其最终在 x:gen-extends 中将其形式变换为以下形式：
+    ```xml
+        <style name="button">
+            <attr name="size" type="xui:size" />
+            <attr name="color" type="xui:size" />
+            <source>
+                <thisStyle:border color="${color}" />
+                <thisStyle:size height="${size}" />
+            </source>
+        </style>
+    ```
+    -->
+    <style xdef:name="XuiStyle"
+           xdef:unique-attr="name"
+           name="!prop-name"
+    >
+        <attr xdef:name="XuiStyleAttr"
+              xdef:unique-attr="name"
+              name="!prop-name" type="!dict:duzhou/ui/style-type"
+        />
+
+        <!-- 样式的组合
+        - 以函数形式复合其他样式
+        - 在运行构建器中，以 delta 形式设置原子样式的返回结果，再执行复合样式函数，
+          得到最终的原生样式属性及其配置
+        - 通过 `xui:override` 设置复合样式之间的合并算子，在运行时做实际的合并
+        - 普通的 delta 运算，则通过 `x:override` 合并 `x:extends` 中的相同节点，
+          而通过 `x:prototype-override` 合并 `x:prototype` 指定的内部节点
+        - 若在子节点样式的属性中传的值为 `null`，则表示删除该属性的值
+
+        TODO <source/> 内的子节点是否按标签名为唯一标识以做差量运算？
+        -->
+        <source xdef:value="xml" xdef:mandatory="true" />
+    </style>
+</styles>

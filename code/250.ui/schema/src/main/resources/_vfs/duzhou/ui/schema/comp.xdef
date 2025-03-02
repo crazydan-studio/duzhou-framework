@@ -23,8 +23,6 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            xmlns:xui="xui"
            x:schema="/nop/schema/xdef.xdef"
-           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-           xdef:check-ns="xui"
 >
     <xui:import name="!string" from="!v-path" />
 
