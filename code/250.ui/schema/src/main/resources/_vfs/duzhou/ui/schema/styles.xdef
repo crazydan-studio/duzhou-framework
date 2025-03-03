@@ -27,7 +27,7 @@
 >
 
     <xdef:unknown-tag
-            xdef:unknown-attr="enum:StyleAttrType"
+            xdef:unknown-attr="dict:duzhou/ui/style-type"
             xdef:body-type="map"
     >
         <xdef:unknown-tag xdef:unknown-attr="string" />

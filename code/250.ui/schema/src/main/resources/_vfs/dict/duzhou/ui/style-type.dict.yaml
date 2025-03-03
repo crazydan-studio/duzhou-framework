@@ -1,6 +1,17 @@
+# 与样式相关的数据类型
 # Note: YAML 也支持差量
 options:
+  - value: "xui:string"
+    label: 字符串
   - value: "xui:color"
     label: 颜色
+    description: >
+      其值可以为 \#00ff00、rgb(255,0,0)、rgba(255,0,0,1)、green、red 等形式
   - value: "xui:size"
     label: 尺寸
+    description: >
+      其值可以为 1px、1em 等形式
+  - value: "xui:border-style"
+    label: 边框样式
+    description: >
+      其可选值为：solid、dot、dash
