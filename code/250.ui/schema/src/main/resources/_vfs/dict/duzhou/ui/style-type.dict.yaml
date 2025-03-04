@@ -1,6 +1,8 @@
 # 与样式相关的数据类型
 # Note: YAML 也支持差量
 options:
+  - value: "xui:null"
+    label: null 属性，表示该属性需被移除
   - value: "xui:string"
     label: 字符串
   - value: "xui:color"

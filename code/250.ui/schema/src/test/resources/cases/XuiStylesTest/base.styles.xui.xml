@@ -18,13 +18,15 @@
   -->
 
 <styles>
-    <margin left="Size" right="Size" top="Size" bottom="Size" />
-    <font size="Size" family="String" color="Color" />
-    <border-left color="Color" size="Size" style="BorderStyle" />
-    <border-right color="Color" size="Size" style="BorderStyle" />
-    <border-top color="Color" size="Size" style="BorderStyle" />
-    <border-bottom color="Color" size="Size" style="BorderStyle" />
-    <border color="Color" size="Size" style="BorderStyle">
+    <font size="xui:size" family="xui:string" color="xui:color" />
+    <size width="xui:size" height="xui:size" />
+    <background color="xui:color" />
+    <margin left="xui:size" right="xui:size" top="xui:size" bottom="xui:size" />
+    <border-left color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-right color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-top color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-bottom color="xui:color" size="xui:size" style="xui:border-style" />
+    <border color="xui:color" size="xui:size" style="xui:border-style">
         <border-left color="${color}" size="${size}" style="${style}" />
         <border-right color="${color}" size="${size}" style="${style}" />
         <border-top color="${color}" size="${size}" style="${style}" />

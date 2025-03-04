@@ -20,9 +20,11 @@
 package io.crazydan.duzhou.framework.ui.schema.test;
 
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
+import io.crazydan.duzhou.framework.ui.schema.XuiStyles;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.VirtualFileSystem;
+import io.nop.xlang.xdsl.DslModelHelper;
 import io.nop.xlang.xdsl.DslNodeLoader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,30 +39,37 @@ public class XuiStylesTest extends NopJunitTestCase {
     private static final String BUTTON_EXTENDS_STYLES_DSL = "/duzhou/ui/button-extends.styles.xui";
 
     @Test
-    public void test_parse_dsl() {
-        XNode node = parseXNode(BASE_STYLES_DSL);
+    public void test_parse_base_dsl() {
+        XuiStyles styles = parseModel(BASE_STYLES_DSL);
 
+        XNode node = parseXNode(BASE_STYLES_DSL);
         this.log.info("base.styles.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("base.styles.xui.xml").clearComment().xml(), node.xml());
     }
 
     @Test
     public void test_parse_button_dsl() {
-        XNode node = parseXNode(BUTTON_STYLES_DSL);
+        XuiStyles styles = parseModel(BUTTON_STYLES_DSL);
 
+        XNode node = parseXNode(BUTTON_STYLES_DSL);
         this.log.info("button.styles.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("button.styles.xui.xml").clearComment().xml(), node.xml());
     }
 
     @Test
     public void test_parse_button_extends_dsl() {
-        XNode node = parseXNode(BUTTON_EXTENDS_STYLES_DSL);
+        XuiStyles styles = parseModel(BUTTON_EXTENDS_STYLES_DSL);
 
+        XNode node = parseXNode(BUTTON_EXTENDS_STYLES_DSL);
         this.log.info("button-extends.styles.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("button-extends.styles.xui.xml").clearComment().xml(), node.xml());
     }
 
-    public XNode parseXNode(String path) {
+    private XuiStyles parseModel(String path) {
+        return (XuiStyles) DslModelHelper.loadDslModelFromPath(path);
+    }
+
+    private XNode parseXNode(String path) {
         IResource resource = VirtualFileSystem.instance().getResource(path);
         XNode node = DslNodeLoader.INSTANCE.loadFromResource(resource).getNode();
         node.clearComment();
