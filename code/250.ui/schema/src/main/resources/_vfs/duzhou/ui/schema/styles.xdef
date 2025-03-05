@@ -30,7 +30,7 @@
         x:schema="/nop/schema/xdef.xdef"
         xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
         xdef:body-type="map" xdef:bean-body-prop="defs" xdef:bean-child-name="def"
-        themes-ref="v-path"
+        themes-path="v-path"
 >
 
     <!-- 样式定义：定义其组成结构和可配置参数

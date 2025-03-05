@@ -1,5 +1,6 @@
 package io.crazydan.duzhou.framework.ui.schema._gen;
 
+import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
 import io.crazydan.duzhou.framework.ui.schema.XuiStyles;
 import io.nop.commons.util.ClassHelper;
@@ -32,41 +33,40 @@ import io.nop.commons.util.ClassHelper;
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiStyles extends io.nop.core.resource.component.AbstractComponentModel {
-
+    
     /**
-     *
-     * xml name:
-     *
+     *  
+     * xml name: 
+     * 
      */
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.XuiStyleDef> _defs = java.util.Collections.emptyMap();
-
+    
     /**
-     *  可选
-     * xml name: themes-ref
-     * 主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
-     * 形式引用在该主题中定义的变量
+     *  
+     * xml name: themes-path
+     * 
      */
-    private java.lang.String _themesRef ;
-
+    private java.lang.String _themesPath ;
+    
     /**
-     *
-     * xml name:
-     *
+     * 
+     * xml name: 
+     *  
      */
-
+    
     public java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.XuiStyleDef> getDefs(){
       return _defs;
     }
 
-
+    
     public void setDefs(java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.XuiStyleDef> value){
         checkAllowChange();
-
+        
         this._defs = value;
-
+           
     }
 
-
+    
     public io.crazydan.duzhou.framework.ui.schema.XuiStyleDef getDef(String name){
         return this._defs.get(name);
     }
@@ -74,31 +74,30 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
     public boolean hasDef(String name){
         return this._defs.containsKey(name);
     }
-
+    
     public boolean hasDefs(){
         return this._defs != null && !this._defs.isEmpty();
     }
-
+    
     /**
-     * 可选
-     * xml name: themes-ref
-     *  主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
-     * 形式引用在该主题中定义的变量
+     * 
+     * xml name: themes-path
+     *  
      */
-
-    public java.lang.String getThemesRef(){
-      return _themesRef;
+    
+    public java.lang.String getThemesPath(){
+      return _themesPath;
     }
 
-
-    public void setThemesRef(java.lang.String value){
+    
+    public void setThemesPath(java.lang.String value){
         checkAllowChange();
-
-        this._themesRef = value;
-
+        
+        this._themesPath = value;
+           
     }
 
-
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -106,18 +105,18 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         super.freeze(cascade);
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
-
+        
            this._defs = io.nop.api.core.util.FreezeHelper.deepFreeze(this._defs);
-
+            
         }
     }
 
     @Override
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
-
+        
         out.putNotNull("defs",this.getDefs());
-        out.putNotNull("themesRef",this.getThemesRef());
+        out.putNotNull("themesPath",this.getThemesPath());
     }
 
     public XuiStyles cloneInstance(){
@@ -128,9 +127,9 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
 
     protected void copyTo(XuiStyles instance){
         super.copyTo(instance);
-
+        
         instance.setDefs(this.getDefs());
-        instance.setThemesRef(this.getThemesRef());
+        instance.setThemesPath(this.getThemesPath());
     }
 
     protected XuiStyles newInstance(){

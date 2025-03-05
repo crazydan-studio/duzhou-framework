@@ -19,7 +19,9 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件定义 -->
+<!-- 组件定义
+- 公共配置放在基础组件定义中，其余组件通过 x:extends 继承这些公共配置
+-->
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            xmlns:xui="xui"
            x:schema="/nop/schema/xdef.xdef"

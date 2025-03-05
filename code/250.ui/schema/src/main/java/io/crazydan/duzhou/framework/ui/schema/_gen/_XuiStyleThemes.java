@@ -36,15 +36,15 @@ public abstract class _XuiStyleThemes extends io.nop.core.resource.component.Abs
     
     /**
      *  
-     * xml name: theme
-     * 主题定义
+     * xml name: 
+     * 
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme> _themes = KeyedList.emptyList();
     
     /**
      * 
-     * xml name: theme
-     *  主题定义
+     * xml name: 
+     *  
      */
     
     public java.util.List<io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme> getThemes(){
@@ -60,15 +60,15 @@ public abstract class _XuiStyleThemes extends io.nop.core.resource.component.Abs
     }
 
     
-    public io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme getVarGroup(String name){
+    public io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme getTheme(String name){
         return this._themes.getByKey(name);
     }
 
-    public boolean hasVarGroup(String name){
+    public boolean hasTheme(String name){
         return this._themes.containsKey(name);
     }
 
-    public void addVarGroup(io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme item) {
+    public void addTheme(io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme item) {
         checkAllowChange();
         java.util.List<io.crazydan.duzhou.framework.ui.schema.XuiStyleTheme> list = this.getThemes();
         if (list == null || list.isEmpty()) {

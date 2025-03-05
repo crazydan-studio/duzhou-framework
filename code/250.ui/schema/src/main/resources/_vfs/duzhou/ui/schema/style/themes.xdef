@@ -26,6 +26,8 @@
 <themes xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
         xdef:name="XuiStyleThemes" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+        xdef:body-type="list" xdef:key-attr="name"
+        xdef:bean-body-prop="themes" xdef:bean-child-name="theme"
 >
 
     <!-- 主题定义
@@ -33,7 +35,7 @@
     @name [必填] 主题标识
     @title [可选] 主题名称
     -->
-    <theme xdef:name="XuiStyleTheme" xdef:unique-attr="name"
+    <theme xdef:name="XuiStyleTheme"
            xdef:body-type="list" xdef:key-attr="name"
            xdef:bean-body-prop="varGroups" xdef:bean-child-name="varGroup"
            name="!xml-name" title="string"
