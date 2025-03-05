@@ -19,19 +19,25 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 样式库定义
+<!-- 样式定义集
 - 仅用于声明样式的组成结构，并通过属性支持样式的动态设置
 - 通过差量机制，在 UI 设计层面支持样式复用、合并、局部修改等设计需求
+
+@themes-ref [可选] 主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
+        形式引用在该主题中定义的变量
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
-        xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+        xdef:name="XuiStyleDefs" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
         xdef:body-type="map" xdef:bean-body-prop="defs" xdef:bean-child-name="def"
+        themes-ref="v-path"
 >
 
-    <!-- 样式的定义
+    <!-- 样式定义：定义其组成结构和可配置参数
     - 原子样式：其结构不可拆分，因此，不含子节点
     - 复合样式：由至少一个原子样式或其他复合样式组成，其必然包含子节点
+
+    样式的配置参数将赋值给其组成样式或者传递给运行时原生样式，用于样式的动态控制
     -->
     <xdef:unknown-tag
             xdef:name="XuiStyleDef"
@@ -40,9 +46,10 @@
     >
         <!-- 样式的组成结构节点，称其为**结构节点**
         - 只能引用在上下文环境中能够访问到的其他原子或复合样式
+          - 在上下文中无法得到其定义的样式，视为原子样式，其将直接映射到运行时环境中的原生样式
         - 在结构节点上设置的属性以 `${color}` 形式引用其所在复合样式上定义的同名属性 `color`
         - 在结构节点属性上设置的引用值或确定值，必须与其样式定义的属性类型一致
-        - 复合样式的结构节点，在最终将被层层展开直到仅有原子样式组成
+        - 复合样式的结构节点，在最终将被层层展开直到仅由原子样式组成，展开过程称为**结构展开**
         - 按结构节点定义的顺序依次合并各层级的原子样式，最终得到仅为原子样式的结构节点
         -->
         <xdef:unknown-tag

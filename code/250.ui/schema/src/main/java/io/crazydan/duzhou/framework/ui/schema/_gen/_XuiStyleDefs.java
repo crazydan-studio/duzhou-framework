@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.XuiStyles;
+import io.crazydan.duzhou.framework.ui.schema.XuiStyleDefs;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -26,13 +26,13 @@ import io.nop.commons.util.ClassHelper;
  * - You should have received a copy of the GNU Lesser General Public License
  * - along with this program.
  * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
- * 样式库定义
+ * 样式定义集
  * - 仅用于声明样式的组成结构，并通过属性支持样式的动态设置
  * - 通过差量机制，在 UI 设计层面支持样式复用、合并、局部修改等设计需求
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiStyles extends io.nop.core.resource.component.AbstractComponentModel {
+public abstract class _XuiStyleDefs extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
      *  
@@ -40,6 +40,14 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
      * 
      */
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.XuiStyleDef> _defs = java.util.Collections.emptyMap();
+    
+    /**
+     *  可选
+     * xml name: themes-ref
+     * 主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
+     * 形式引用在该主题中定义的变量
+     */
+    private java.lang.String _themesRef ;
     
     /**
      * 
@@ -72,6 +80,26 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         return this._defs != null && !this._defs.isEmpty();
     }
     
+    /**
+     * 可选
+     * xml name: themes-ref
+     *  主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
+     * 形式引用在该主题中定义的变量
+     */
+    
+    public java.lang.String getThemesRef(){
+      return _themesRef;
+    }
+
+    
+    public void setThemesRef(java.lang.String value){
+        checkAllowChange();
+        
+        this._themesRef = value;
+           
+    }
+
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -90,22 +118,24 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         super.outputJson(out);
         
         out.putNotNull("defs",this.getDefs());
+        out.putNotNull("themesRef",this.getThemesRef());
     }
 
-    public XuiStyles cloneInstance(){
-        XuiStyles instance = newInstance();
+    public XuiStyleDefs cloneInstance(){
+        XuiStyleDefs instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiStyles instance){
+    protected void copyTo(XuiStyleDefs instance){
         super.copyTo(instance);
         
         instance.setDefs(this.getDefs());
+        instance.setThemesRef(this.getThemesRef());
     }
 
-    protected XuiStyles newInstance(){
-        return (XuiStyles) ClassHelper.newInstance(getClass());
+    protected XuiStyleDefs newInstance(){
+        return (XuiStyleDefs) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

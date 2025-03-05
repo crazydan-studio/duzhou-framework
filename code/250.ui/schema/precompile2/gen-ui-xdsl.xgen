@@ -21,4 +21,5 @@
 
 <c:script xmlns:c="c"><![CDATA[
     codeGenerator.renderModel('/duzhou/ui/schema/styles.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/style/themes.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

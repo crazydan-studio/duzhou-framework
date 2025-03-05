@@ -23,6 +23,7 @@
 <styles xmlns:x="/nop/schema/xdsl.xdef"
         x:schema="/duzhou/ui/schema/styles.xdef"
         x:extends="/duzhou/ui/base.styles.xui"
+        themes="/duzhou/ui/base.themes.xui"
 >
 
     <!-- 以原子样式作为样式的结构节点 -->

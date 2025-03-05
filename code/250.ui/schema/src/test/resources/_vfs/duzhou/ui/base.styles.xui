@@ -19,7 +19,10 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 基础样式 -->
+<!-- 基础样式：与运行时原生样式向对应的原子样式，可拆分结构的原生样式采用复合样式定义
+
+注：基础样式一般不指定主题，主题需在组件层面定义和使用
+-->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl"
         x:schema="/duzhou/ui/schema/styles.xdef"
 >

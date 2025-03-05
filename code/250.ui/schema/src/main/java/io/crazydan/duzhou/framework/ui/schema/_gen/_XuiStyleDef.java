@@ -10,9 +10,10 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/styles.xdef <p>
- * 样式定义
+ * 样式定义：定义其组成结构和可配置参数
  * - 原子样式：其结构不可拆分，因此，不含子节点
  * - 复合样式：由至少一个原子样式或其他复合样式组成，其必然包含子节点
+ * 样式的配置参数将赋值给其组成样式或者传递给运行时原生样式，用于样式的动态控制
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

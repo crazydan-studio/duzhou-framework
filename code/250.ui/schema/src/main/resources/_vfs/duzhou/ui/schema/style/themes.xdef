@@ -25,31 +25,37 @@
 -->
 <themes xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
+        xdef:name="XuiStyleThemes" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
 >
 
-    <theme xdef:name="XuiStyleTheme"
-           xdef:unique-attr="name"
-           name="!string" title="string"
+    <!-- 主题定义
+
+    @name [必填] 主题标识
+    @title [可选] 主题名称
+    -->
+    <theme xdef:name="XuiStyleTheme" xdef:unique-attr="name"
+           xdef:body-type="list" xdef:key-attr="name"
+           xdef:bean-body-prop="varGroups" xdef:bean-child-name="varGroup"
+           name="!xml-name" title="string"
     >
         <!-- 主题变量分组
-        - 变量之间可相互引用
         - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式
         - 引用变量的类型必须与关联数据的类型一致
 
-        @name 分组名
+        @name [必填] 分组标识
         -->
-        <vars xdef:name="XuiStyleVars"
-              xdef:unique-attr="name" xdef:bean-prop="vars"
+        <vars xdef:name="XuiStyleVarGroup"
+              xdef:body-type="map" xdef:bean-body-prop="vars" xdef:bean-child-name="var"
               name="!prop-name"
         >
             <!-- 变量定义，标签文本内容为变量值
 
-            @name 变量名
-            @type 变量类型
+            @type [必填] 变量类型
             -->
-            <var xdef:name="XuiStyleVar"
-                 xdef:unique-attr="name" xdef:value="string"
-                 name="!prop-name" type="!dict:duzhou/ui/style-type"
+            <xdef:unknown-tag
+                    xdef:name="XuiStyleVar" xdef:value="string"
+                    xdef:bean-body-prop="value"
+                    type="!dict:duzhou/ui/style-type"
             />
         </vars>
     </theme>
