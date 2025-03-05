@@ -1,11 +1,11 @@
 package io.crazydan.duzhou.framework.ui.schema;
 
-import io.crazydan.duzhou.framework.ui.schema._gen._XuiStyleDefs;
+import io.crazydan.duzhou.framework.ui.schema._gen._XuiStyles;
 import io.nop.api.core.util.INeedInit;
 
-public class XuiStyleDefs extends _XuiStyleDefs implements INeedInit {
+public class XuiStyles extends _XuiStyles implements INeedInit {
 
-    public XuiStyleDefs() {
+    public XuiStyles() {
     }
 
     @Override

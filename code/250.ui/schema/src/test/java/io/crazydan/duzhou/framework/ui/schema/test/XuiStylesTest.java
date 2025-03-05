@@ -20,7 +20,7 @@
 package io.crazydan.duzhou.framework.ui.schema.test;
 
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
-import io.crazydan.duzhou.framework.ui.schema.XuiStyleDefs;
+import io.crazydan.duzhou.framework.ui.schema.XuiStyles;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.VirtualFileSystem;
@@ -40,7 +40,7 @@ public class XuiStylesTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_base_dsl() {
-        XuiStyleDefs styles = parseModel(BASE_STYLES_DSL);
+        XuiStyles styles = parseModel(BASE_STYLES_DSL);
 
         XNode node = parseXNode(BASE_STYLES_DSL);
         this.log.info("base.styles.xui: xml={}", node.xml());
@@ -49,7 +49,7 @@ public class XuiStylesTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_button_dsl() {
-        XuiStyleDefs styles = parseModel(BUTTON_STYLES_DSL);
+        XuiStyles styles = parseModel(BUTTON_STYLES_DSL);
 
         XNode node = parseXNode(BUTTON_STYLES_DSL);
         this.log.info("button.styles.xui: xml={}", node.xml());
@@ -58,15 +58,15 @@ public class XuiStylesTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_button_extends_dsl() {
-        XuiStyleDefs styles = parseModel(BUTTON_EXTENDS_STYLES_DSL);
+        XuiStyles styles = parseModel(BUTTON_EXTENDS_STYLES_DSL);
 
         XNode node = parseXNode(BUTTON_EXTENDS_STYLES_DSL);
         this.log.info("button-extends.styles.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("button-extends.styles.xui.xml").clearComment().xml(), node.xml());
     }
 
-    private XuiStyleDefs parseModel(String path) {
-        return (XuiStyleDefs) DslModelHelper.loadDslModelFromPath(path);
+    private XuiStyles parseModel(String path) {
+        return (XuiStyles) DslModelHelper.loadDslModelFromPath(path);
     }
 
     private XNode parseXNode(String path) {

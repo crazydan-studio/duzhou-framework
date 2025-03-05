@@ -28,7 +28,7 @@
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
-        xdef:name="XuiStyleDefs" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+        xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
         xdef:body-type="map" xdef:bean-body-prop="defs" xdef:bean-child-name="def"
         themes-ref="v-path"
 >
