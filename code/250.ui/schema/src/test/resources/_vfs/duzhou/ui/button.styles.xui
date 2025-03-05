@@ -20,10 +20,10 @@
   -->
 
 <!-- 按钮样式 -->
-<styles xmlns:x="/nop/schema/xdsl.xdef"
+<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
         x:schema="/duzhou/ui/schema/styles.xdef"
         x:extends="/duzhou/ui/base.styles.xui"
-        themes-path="/duzhou/ui/base.themes.xui"
+        xui:themes="/duzhou/ui/base.themes.xui"
 >
 
     <!-- 以原子样式作为样式的结构节点 -->

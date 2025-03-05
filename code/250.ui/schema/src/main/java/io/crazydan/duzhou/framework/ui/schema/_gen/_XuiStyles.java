@@ -42,13 +42,6 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.XuiStyleDef> _defs = java.util.Collections.emptyMap();
     
     /**
-     *  
-     * xml name: themes-path
-     * 
-     */
-    private java.lang.String _themesPath ;
-    
-    /**
      * 
      * xml name: 
      *  
@@ -79,25 +72,6 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         return this._defs != null && !this._defs.isEmpty();
     }
     
-    /**
-     * 
-     * xml name: themes-path
-     *  
-     */
-    
-    public java.lang.String getThemesPath(){
-      return _themesPath;
-    }
-
-    
-    public void setThemesPath(java.lang.String value){
-        checkAllowChange();
-        
-        this._themesPath = value;
-           
-    }
-
-    
 
     @Override
     public void freeze(boolean cascade){
@@ -116,7 +90,6 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         super.outputJson(out);
         
         out.putNotNull("defs",this.getDefs());
-        out.putNotNull("themesPath",this.getThemesPath());
     }
 
     public XuiStyles cloneInstance(){
@@ -129,7 +102,6 @@ public abstract class _XuiStyles extends io.nop.core.resource.component.Abstract
         super.copyTo(instance);
         
         instance.setDefs(this.getDefs());
-        instance.setThemesPath(this.getThemesPath());
     }
 
     protected XuiStyles newInstance(){

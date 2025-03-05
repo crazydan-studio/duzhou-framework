@@ -19,7 +19,8 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl" xmlns:c="c"
+<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+     xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
@@ -34,6 +35,7 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
+                <thisLib:_NormalizeStyles />
             </source>
         </DefaultPostExtends>
 
@@ -42,52 +44,15 @@
 
             <source>
                 <c:script><![CDATA[
-                    const styles = _dsl_root.findChildren(
-                        node => !node.getTagName().equals('style')
-                                && node.getTagName().indexOf(':') < 0
-                    );
+                    import io.crazydan.duzhou.framework.ui.domain.XuiStyleTypes;
+
+                    // 删除标注了 xui:null 的属性
+                    _dsl_root.getChildren().forEach(def => {
+                        def.removeAttrsIf((name, attr) =>
+                            XuiStyleTypes.NULL.equals(attr.asString())
+                        );
+                    });
                 ]]></c:script>
-                <styles>
-                    <c:for var="style" items="${styles}">
-                        <c:script><![CDATA[
-                            import java.util.LinkedHashMap;
-
-                            const children = style.detachChildren();
-
-                            const attrs = new LinkedHashMap<>();
-                            for (let entry of style.getAttrs().entrySet()) {
-                                const name = entry.getKey();
-                                const value = entry.getValue();
-
-                                if (name.indexOf(':') < 0) {
-                                    attrs.put(name, value);
-                                }
-                            }
-
-                            style.removeAttrsIf((name, vl) => name.indexOf(':') < 0);
-                            style.remove();
-
-                            //logInfo('style: {}', style.xml());
-                        ]]></c:script>
-                        <style name="${style.getTagName()}">
-                            <c:for var="attr" items="${attrs.entrySet()}">
-                                <c:script><![CDATA[
-                                    import io.nop.commons.util.StringHelper;
-
-                                    const name = attr.getKey();
-                                    const value = StringHelper.emptyAsNull(
-                                        StringHelper.toString(attr.getValue(), null)
-                                    );
-                                ]]></c:script>
-                                <attr xpl:if="!style.hasAttr(name)"
-                                      name="${name}" type="${value}"
-                                />
-                            </c:for>
-                            <source>
-                            </source>
-                        </style>
-                    </c:for>
-                </styles>
             </source>
         </_NormalizeStyles>
     </tags>

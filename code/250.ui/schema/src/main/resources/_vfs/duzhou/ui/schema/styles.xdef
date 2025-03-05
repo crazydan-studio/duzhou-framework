@@ -23,14 +23,15 @@
 - 仅用于声明样式的组成结构，并通过属性支持样式的动态设置
 - 通过差量机制，在 UI 设计层面支持样式复用、合并、局部修改等设计需求
 
-@themes-ref [可选] 主题定义的 vfs 路径。在复合样式的结构节点上可以 `@var:{groupName}/{varName}`
+@xui:themes [可选] 主题定义的 vfs 路径。在复合样式的结构节点上可以以 `@var:{groupName}/{varName}`
         形式引用在该主题中定义的变量
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+        xmlns:xui="xui"
         x:schema="/nop/schema/xdef.xdef"
         xdef:name="XuiStyles" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
         xdef:body-type="map" xdef:bean-body-prop="defs" xdef:bean-child-name="def"
-        themes-path="v-path"
+        xui:themes="v-path"
 >
 
     <!-- 样式定义：定义其组成结构和可配置参数

@@ -17,3 +17,34 @@
   ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
+<styles xui:themes="/duzhou/ui/base.themes.xui">
+    <font size="xui:size" family="xui:string" color="xui:color" />
+    <size width="xui:size" height="xui:size" />
+    <background color="xui:color" />
+    <margin left="xui:size" right="xui:size" top="xui:size" bottom="xui:size" />
+    <border-left color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-right color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-top color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-bottom color="xui:color" size="xui:size" style="xui:border-style" />
+    <border color="xui:color" size="xui:size" style="xui:border-style">
+        <border-left color="${color}" size="${size}" style="${style}" />
+        <border-right color="${color}" size="${size}" style="${style}" />
+        <border-top color="${color}" size="${size}" style="${style}" />
+        <border-bottom color="${color}" size="${size}" style="${style}" />
+    </border>
+    <button size="xui:size" color="xui:color">
+        <size height="${size}" />
+        <font size="1.5em" />
+        <border size="1px" style="solid" color="#aaaaaa" />
+        <background color="${color}" />
+    </button>
+    <button-gray size="xui:size">
+        <button size="${size}" color="gray" />
+        <border style="dot" color="#000000" />
+    </button-gray>
+    <button-red>
+        <size height="4em" />
+        <font size="1.5em" />
+        <background color="red" />
+    </button-red>
+</styles>

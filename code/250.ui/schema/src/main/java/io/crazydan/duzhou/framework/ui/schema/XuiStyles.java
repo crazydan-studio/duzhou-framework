@@ -13,7 +13,8 @@ public class XuiStyles extends _XuiStyles implements INeedInit {
 
     @Override
     public void init() {
-        this.themes = loadThemes(getThemesPath());
+        String themesPath = StringHelper.toString(prop_get("xui:themes"), null);
+        this.themes = loadThemes(themesPath);
 
         // TODO 检查结构节点的样式定义是否存在、引用的属性类型是否一致，不存在样式定义的结构节点视为原子样式，其与运行时原生样式直接对应
         // TODO 将结构节点中的属性的确定值转换为对应的类型对象
