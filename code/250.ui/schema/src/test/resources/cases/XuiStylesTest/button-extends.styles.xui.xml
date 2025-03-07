@@ -1,0 +1,65 @@
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  ~ Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<styles xui:themes="/duzhou/ui/base.themes.xui">
+    <font size="xui:size" family="xui:string" color="xui:color" />
+    <size width="xui:size" height="xui:size" />
+    <background color="xui:color" />
+    <margin left="xui:size" right="xui:size" top="xui:size" bottom="xui:size" />
+    <border-left color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-right color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-top color="xui:color" size="xui:size" style="xui:border-style" />
+    <border-bottom color="xui:color" size="xui:size" style="xui:border-style" />
+    <border color="xui:color" size="xui:size" style="xui:border-style">
+        <border-left color="${color}" size="${size}" style="${style}" />
+        <border-right color="${color}" size="${size}" style="${style}" />
+        <border-top color="${color}" size="${size}" style="${style}" />
+        <border-bottom color="${color}" size="${size}" style="${style}" />
+    </border>
+    <button size="xui:size" color="xui:color">
+        <size height="${size}" />
+        <font size="1.5em" />
+        <border size="1px" style="solid" color="#aaaaaa" />
+        <background color="${color}" />
+    </button>
+    <button-gray size="xui:size">
+        <button size="${size}" color="gray" />
+    </button-gray>
+    <button-red>
+        <size height="4em" />
+        <background color="#ff0000" />
+    </button-red>
+    <button-1>
+        <button size="3em" color="blue" />
+        <font color="white" />
+    </button-1>
+    <button-2>
+        <button size="2em" color="yellow" />
+        <font color="red" />
+    </button-2>
+    <button-3>
+        <button-1 />
+        <button-2 />
+    </button-3>
+    <button-4>
+        <button-3 />
+        <button-red />
+        <font color="black" />
+    </button-4>
+</styles>

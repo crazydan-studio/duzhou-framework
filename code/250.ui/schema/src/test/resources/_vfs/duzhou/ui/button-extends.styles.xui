@@ -31,7 +31,11 @@
     </button-gray>
     <button-red>
         <background color="#ff0000" />
-        <font x:override="remove" />
+        <!--
+        在 x:extends 的目标 A 采用 x:prototype 继承自其他节点 B 时，
+        若要移除 B 中的子节点，则需要通过 x:prototype-override 设置合并规则
+        -->
+        <font x:prototype-override="remove" />
     </button-red>
 
     <!-- 对多个复合样式的合并 -->
@@ -50,7 +54,7 @@
     <button-4>
         <button-3 />
         <button-red />
-        <!-- 对复合样式的定制，只能通过原子样式，不能直接定制复合样式中的复合样式 -->
+        <!-- 只能通过原子样式覆盖复合样式中的原子样式 -->
         <font color="black" />
     </button-4>
 </styles>
