@@ -21,15 +21,15 @@
 
 <!-- 组件 - MyButton -->
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
-           x:schema="/duzhou/ui/schema/comp.xdef"
+           x:schema="/duzhou/ui/schema/component.xdef"
 >
     <x:gen-extends>
     </x:gen-extends>
     <x:post-extends>
     </x:post-extends>
 
-    <xui:import name="Block" from="/duzhou/ui/base/block.comp.xui" />
-    <xui:import name="Button" from="/duzhou/ui/base/button.comp.xui" />
+    <xui:import name="Block" from="/duzhou/ui/base/block.xui" />
+    <xui:import name="Button" from="/duzhou/ui/base/button.xui" />
 
     <template>
         <Block>

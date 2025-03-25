@@ -21,7 +21,7 @@
 
 <!-- 组件：按钮 - Button -->
 <component xmlns:x="/nop/schema/xdsl.xdef"
-           x:schema="/duzhou/ui/schema/comp.xdef"
+           x:schema="/duzhou/ui/schema/component.xdef"
 >
     <props>
         <color type="string" />
