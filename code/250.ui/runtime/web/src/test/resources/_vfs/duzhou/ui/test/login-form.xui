@@ -21,7 +21,7 @@
 
 <component xmlns:x="/nop/schema/xdsl.xdef"
            xmlns:xui="xui" xmlns:on="xui-event" xmlns:http="xui-http"
-           xmlns:bind="xui-bind" xmlns:i18n="xui-i18n"
+           xmlns:bind="xui-bind"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
     <import as="Form" from="/duzhou/ui/test/form/form.xui" />
@@ -31,13 +31,15 @@
     <import as="Text" from="/duzhou/ui/test/form/text.xui" />
     <import as="Checkbox" from="/duzhou/ui/test/form/checkbox.xui" />
     <import as="Label" from="/duzhou/ui/test/form/label.xui" />
+    <import as="Link" from="/duzhou/ui/test/form/link.xui" />
     <import as="Group" from="/duzhou/ui/test/form/group.xui" />
 
     <!-- props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递 -->
     <props>
         <homeUrl type="string" defaultValue="/" />
-        <loginUrl type="string" defaultValue="/login" />
-        <registerUrl type="string" defaultValue="/register" />
+        <loginUrl type="string" defaultValue="/auth/login" />
+        <forgotUrl type="string" defaultValue="/auth/forgot" />
+        <registerUrl type="string" defaultValue="/auth/register" />
     </props>
 
     <!-- state 为组件内部状态数据，仅组件内可读、可修改，响应式更新 -->
@@ -69,6 +71,21 @@
     <template>
         <!-- Form 的 disabled 属性会逐级传导到其内部的 Input、Button 等支持启用/禁用的组件 -->
         <Form name="login-form" disabled="${state.loginWaiting.enabled}">
+            <!-- 默认为左对齐，< 表示左对齐，> 表示右对齐，<[xxx]> 表示横向占满剩余空间，>[xxx]< 表示横向居中对齐 -->
+            <xui:layout type="linear"><![CDATA[
+                [username-label]
+                < [username-input] >
+
+                [password-label]
+                < [password-input] >
+                [remember-me-input]
+
+                > [warning-text] <
+
+                < [login-button] >
+                [forgot-password-button] <> [register-button]
+            ]]></xui:layout>
+
             <!-- Mask 负责在父节点的最上层显示遮罩，其自动覆盖整个父节点的显示空间 -->
             <Mask name="waiting-mask" xui:when="${state.loginWaiting.enabled}">
                 <Text name="waiting-mask-text">${state.loginWaiting.msg}</Text>
@@ -76,9 +93,9 @@
 
             <Group name="inputs">
                 <Label name="username-label">帐号：</Label>
-                <Input name="username" type="text">
+                <Input name="username-input" type="text">
                     <!-- on:change 对状态的修改，等价于 bind:value，用于简化对输入数据变更的监听 -->
-                    <on:change name="change-value" arg="value">
+                    <on:change x:name="change-value" arg="value">
                         <state>
                             <loginInfo.username.value>${value}</loginInfo.username.value>
                         </state>
@@ -86,9 +103,12 @@
                 </Input>
 
                 <Label name="password-label">密码：</Label>
-                <Input name="password" type="secret" bind:value="${state.loginInfo.password.value}" />
+                <Input name="password-input" type="secret"
+                       bind:value="${state.loginInfo.password.value}" />
 
-                <Checkbox name="remember-me" i18n:label="记住密码？" />
+                <Checkbox name="remember-me-input">
+                    <Text>保持登录？</Text>
+                </Checkbox>
             </Group>
 
             <Text name="warning-text" xui:when="${state.loginError.enabled}"
@@ -97,42 +117,46 @@
             </Text>
 
             <Group name="buttons">
-                <Button name="login">
-                    <on:click name="trigger-login">
-                        <reset />
-                        <login />
+                <Button name="login-button">
+                    <Text>登录</Text>
+                    <on:click x:name="trigger-login">
+                        <dispatch type="User_Login_Doing" data="${state.loginInfo}" />
                     </on:click>
                 </Button>
-                <Button name="register" on:click="register" />
+
+                <Link name="forgot-password-button" target="${props.forgotUrl}">
+                    <Text>忘记密码？</Text>
+                </Link>
+                <Link name="register-button" target="${props.registerUrl}">
+                    <Text>注册帐号</Text>
+                </Link>
             </Group>
         </Form>
     </template>
 
-    <actions>
-        <action name="reset">
-            <!-- state 为内置的 action，表示为组件状态设定新值 -->
+    <!-- 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数 -->
+    <messages>
+        <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
+        <message name="User_Login_Doing">
             <state>
                 <!-- reset 表示将状态重置为默认数据 -->
                 <loginError reset="true" />
             </state>
-        </action>
 
-        <action name="login">
-            <http:post
-                    name="send-login-data"
-                    url="${props.loginUrl}"
-                    data="${state.loginInfo}"
+            <!-- 若校验失败，则抛出异常，最终在 <error/> 节点内处理 -->
+            <validate>
+                <validation check="${data.username.value != ''}"
+                            msg="帐号不能为空" />
+                <validation check="${data.password.value != ''}"
+                            msg="密码不能为空" />
+            </validate>
+
+            <http:post x:name="send-login-data" xui:when="${!state.loginError.enabled}"
+                       url="${props.loginUrl}"
+                       data="${{username: data.username.value, password: data.password.value}}"
             >
                 <before>
-                    <!-- 若校验失败，则抛出异常，最终在 <error/> 节点内处理 -->
-                    <validate>
-                        <validation
-                                check="${state.loginInfo.username.value != ''}"
-                                msg="帐号不能为空" />
-                        <validation
-                                check="${state.loginInfo.password.value != ''}"
-                                msg="密码不能为空" />
-                    </validate>
+                    <!-- state 为内置的 action，表示为组件状态设定新值 -->
                     <state>
                         <loginWaiting>
                             <enabled>true</enabled>
@@ -141,8 +165,8 @@
                     </state>
                 </before>
                 <!-- Promise 链式函数的参数均为单一结构化对象，可通过 arg 指定参数名称 -->
-                <then name="handle-login-result" arg="data">
-                    <xui:when cond="${!data.success}">
+                <then x:name="handle-login-result" arg="data">
+                    <xui:when x:name="handle-login-when-failed" cond="${!data.success}">
                         <!-- 在不同条件下，对组件状态做整体迁移。通过对状态的变更，进而影响 template/styles 等的结构 -->
                         <state>
                             <loginError>
@@ -151,8 +175,8 @@
                             </loginError>
                         </state>
                     </xui:when>
-                    <xui:when cond="${data.success}">
-                        <goto name="goto-home" url="${props.homeUrl}" />
+                    <xui:when x:name="handle-login-when-success" cond="${data.success}">
+                        <goto x:name="goto-home" url="${props.homeUrl}" />
                     </xui:when>
                 </then>
                 <error arg="error">
@@ -169,10 +193,6 @@
                     </state>
                 </after>
             </http:post>
-        </action>
-
-        <action name="register">
-            <goto name="goto-register" url="${props.registerUrl}" />
-        </action>
-    </actions>
+        </message>
+    </messages>
 </component>
