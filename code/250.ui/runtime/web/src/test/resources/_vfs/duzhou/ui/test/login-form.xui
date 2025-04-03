@@ -51,6 +51,7 @@
             <username>
                 <!-- 以下为需要启用数据校验的模型结构 -->
                 <value type="string" />
+                <!-- 获取该值时，将调用所在对象的 xui:validation 对值进行校验并返回校验结果 -->
                 <valid type="boolean" />
 
                 <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
@@ -95,6 +96,7 @@
         <Form name="login-form" disabled="${state.loginWaiting.enabled}">
             <!-- 默认为左对齐，< 表示左对齐，> 表示右对齐，<[xxx]> 表示横向占满剩余空间，>[xxx]< 表示横向居中对齐，{xxx} 表示布局嵌套 -->
             <!-- 子节点 <row/> 用于按行分组布局，以支持局部定制 -->
+            <!-- Note: 布局将影响最终的节点嵌套关系，从而保证布局的准确性 -->
             <xui:layout type="linear"><![CDATA[
                 [username-label]
                 < [username-input] >
@@ -115,6 +117,7 @@
             </Mask>
 
             <!-- 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域 -->
+            <!-- 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理 -->
             <Validation target="state.loginInfo.username">
                 <Label name="username-label">帐号：</Label>
                 <Input name="username-input" type="text">
