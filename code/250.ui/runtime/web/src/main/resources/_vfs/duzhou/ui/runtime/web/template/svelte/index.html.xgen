@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${app.displayName}</title>
+</head>
+<body>
+    <div id="app" />
+    <script type="module" src="/src/main.ts" />
+</body>
+</html>
+]]>
+    <c:unit>
