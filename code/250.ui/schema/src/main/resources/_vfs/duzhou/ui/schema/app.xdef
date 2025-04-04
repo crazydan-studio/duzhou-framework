@@ -22,7 +22,7 @@
 <!-- 应用定义：用于组织 UI 页面 -->
 <app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"
-     code="!string" title="!string" version="!string"
+     code="!string" displayName="!string" version="!string"
      license="string" logo="string"
 >
     <description xdef:value="string" />

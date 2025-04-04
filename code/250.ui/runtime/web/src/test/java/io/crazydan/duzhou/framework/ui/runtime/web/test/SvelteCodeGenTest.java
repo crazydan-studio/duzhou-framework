@@ -41,7 +41,7 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
 
     @Test
     public void test_gen_login_form() {
-        File targetDir = getTargetFile("code-gen/" + APP_RUNTIME);
+        File targetDir = getTargetFile("code-gen/login-form");
 
         String pageDslPath = "/duzhou/ui/test/login-form.xui";
         Object pageDslModel = DslModelHelper.loadDslModelFromPath(pageDslPath);
@@ -55,7 +55,28 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
         FileHelper.assureParent(new File(targetDir, "/any"));
 
         IEvalScope scope = XLang.newEvalScope();
+        scope.setLocalValue("runtime", APP_RUNTIME);
         scope.setLocalValue("app", app);
+
+        XCodeGenerator gen = new XCodeGenerator(GEN_TPL_ROOT_PATH, targetDir.getAbsolutePath());
+        gen.forceOverride(true);
+        // Note: 第一个参数用于指定在根模板中所要执行的 *.xrun 文件路径或者其所在的目录，用于生成部分文件
+        gen.execute("/", scope);
+    }
+
+    @Test
+    public void test_gen_ui_designer() {
+        File targetDir = getTargetFile("code-gen/ui-designer");
+
+        String appDslPath = "/duzhou/ui/ui-designer/main.app.xui";
+        Object appDslModel = DslModelHelper.loadDslModelFromPath(appDslPath);
+
+        // 确保目标目录已创建
+        FileHelper.assureParent(new File(targetDir, "/any"));
+
+        IEvalScope scope = XLang.newEvalScope();
+        scope.setLocalValue("runtime", APP_RUNTIME);
+        scope.setLocalValue("app", appDslModel);
 
         XCodeGenerator gen = new XCodeGenerator(GEN_TPL_ROOT_PATH, targetDir.getAbsolutePath());
         gen.forceOverride(true);
@@ -65,7 +86,6 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
 
     private Map<String, Object> createAppData() {
         return new HashMap<>() {{
-            put("runtime", APP_RUNTIME);
             put("version", "0.1.0");
         }};
     }
