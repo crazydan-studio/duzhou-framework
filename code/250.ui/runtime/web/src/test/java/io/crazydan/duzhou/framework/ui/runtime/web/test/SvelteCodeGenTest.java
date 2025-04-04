@@ -20,38 +20,53 @@
 package io.crazydan.duzhou.framework.ui.runtime.web.test;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-import io.nop.api.core.config.AppConfig;
+import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.nop.codegen.XCodeGenerator;
-import io.nop.commons.util.MavenDirHelper;
-import io.nop.core.CoreConfigs;
-import io.nop.core.CoreConstants;
-import io.nop.core.initialize.CoreInitialization;
+import io.nop.commons.util.FileHelper;
+import io.nop.core.lang.eval.IEvalScope;
+import io.nop.xlang.api.XLang;
+import io.nop.xlang.xdsl.DslModelHelper;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-02
  */
-public class SvelteCodeGenTest {
+public class SvelteCodeGenTest extends NopJunitTestCase {
+    private static final String APP_RUNTIME = "svelte";
+    private static final String GEN_TPL_ROOT_PATH = "/duzhou/ui/runtime/web/templates/@app";
 
-    public static void main(String[] args) {
-        AppConfig.getConfigProvider()
-                 .updateConfigValue(CoreConfigs.CFG_CORE_MAX_INITIALIZE_LEVEL,
-                                    CoreConstants.INITIALIZER_PRIORITY_ANALYZE);
+    @Test
+    public void test_gen_login_form() {
+        File targetDir = getTargetFile("code-gen/" + APP_RUNTIME);
 
-        CoreInitialization.initialize();
-        try {
-            run();
-        } finally {
-            CoreInitialization.destroy();
-        }
+        String pageDslPath = "/duzhou/ui/test/login-form.xui";
+        Object pageDslModel = DslModelHelper.loadDslModelFromPath(pageDslPath);
+
+        Map<String, Object> app = createAppData();
+        app.put("code", "user-login-form");
+        app.put("displayName", "User Login Form");
+        app.put("mainPage", pageDslModel);
+
+        // 确保目标目录已创建
+        FileHelper.assureParent(new File(targetDir, "/any"));
+
+        IEvalScope scope = XLang.newEvalScope();
+        scope.setLocalValue("app", app);
+
+        XCodeGenerator gen = new XCodeGenerator(GEN_TPL_ROOT_PATH, targetDir.getAbsolutePath());
+        gen.forceOverride(true);
+        // Note: 第一个参数用于指定在根模板中所要执行的 *.xrun 文件路径或者其所在的目录，用于生成部分文件
+        gen.execute("/", scope);
     }
 
-    public static void run() {
-        File projectDir = MavenDirHelper.projectDir(SvelteCodeGenTest.class);
-
-        XCodeGenerator.runPrecompile(projectDir, "/", false);
-        XCodeGenerator.runPrecompile2(projectDir, "/", false);
-        XCodeGenerator.runPostcompile(projectDir, "/", false);
+    private Map<String, Object> createAppData() {
+        return new HashMap<>() {{
+            put("runtime", APP_RUNTIME);
+            put("version", "0.1.0");
+        }};
     }
 }

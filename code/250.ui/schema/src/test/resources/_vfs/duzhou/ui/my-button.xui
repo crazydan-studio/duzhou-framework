@@ -20,7 +20,7 @@
   -->
 
 <!-- 组件 - MyButton -->
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+<component xmlns:x="/nop/schema/xdsl.xdef"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
     <x:gen-extends>
@@ -28,8 +28,8 @@
     <x:post-extends>
     </x:post-extends>
 
-    <xui:import name="Block" from="/duzhou/ui/base/block.xui" />
-    <xui:import name="Button" from="/duzhou/ui/base/button.xui" />
+    <import as="Block" from="/duzhou/ui/base/block.xui" />
+    <import as="Button" from="/duzhou/ui/base/button.xui" />
 
     <template>
         <Block>
