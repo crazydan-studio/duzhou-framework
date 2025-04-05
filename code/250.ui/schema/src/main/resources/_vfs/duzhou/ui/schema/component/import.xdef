@@ -19,13 +19,13 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件消息处理器定义 -->
-<messages xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-          x:schema="/nop/schema/xdef.xdef"
-          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
->
+<!-- 组件导入指令定义 -->
+<!-- TODO 限定 as 为驼峰形式（首字母大写、可包含下划线） -->
+<import xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef" xmlns:http="xui-http"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:name="XuiComponentImport"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+        as="!string" from="!v-path">
 
-    <message xdef:name="XuiComponentMessage" xdef:unique-attr="name"
-             name="!string">
-    </message>
-</messages>
+    <http:post xdef:value="xpl-node" />
+</import>

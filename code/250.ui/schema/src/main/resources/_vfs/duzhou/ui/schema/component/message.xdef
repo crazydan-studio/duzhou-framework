@@ -19,26 +19,16 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件定义
-- 公共配置放在基础组件定义中，其余组件通过 x:extends 继承这些公共配置
--->
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-           x:schema="/nop/schema/xdef.xdef"
-           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
->
-    <import xdef:ref="/duzhou/ui/schema/component/import.xdef"
-            xdef:unique-attr="as" as="!string" />
+<!-- 组件消息处理器定义 -->
+<!-- TODO 限定 name 为驼峰形式（首字母大写、可包含下划线） -->
+<message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef" xmlns:http="xui-http"
+         x:schema="/nop/schema/xdef.xdef"
+         xdef:name="XuiComponentMessage"
+         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+         name="!string">
 
-    <props xdef:value="xml">
-    </props>
-
-    <state xdef:value="xml">
-    </state>
-
-    <template xdef:ref="/duzhou/ui/schema/component/template.xdef" />
-
-    <messages xdef:body-type="list" xdef:key-attr="name">
-        <message xdef:ref="/duzhou/ui/schema/component/message.xdef"
-                 name="!string" />
-    </messages>
-</component>
+    <http:post xdef:value="xml"
+               name="!string"
+               url="!string" data="any"
+    />
+</message>

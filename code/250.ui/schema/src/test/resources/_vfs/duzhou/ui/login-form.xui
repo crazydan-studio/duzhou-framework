@@ -83,7 +83,7 @@
     </state>
 
     <template>
-        <xui:layout>
+        <xui:layout name="layout">
             <linear><![CDATA[
                 > [login-logo] <
                 < [login-form] >
@@ -94,7 +94,7 @@
         <!-- Form 的 disabled 属性会逐级传导到其内部的 Input、Button 等支持启用/禁用的组件 -->
         <Form name="login-form" disabled="${state.loginWaiting.enabled}">
             <!-- 默认为左对齐，< 表示左对齐，> 表示右对齐，<[xxx]> 表示横向占满剩余空间，>[xxx]< 表示横向居中对齐，{xxx} 表示布局嵌套 -->
-            <xui:layout>
+            <xui:layout name="layout">
                 <linear><![CDATA[
                     [username-label]
                     < [username-input] >
@@ -117,11 +117,11 @@
 
             <!-- 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域 -->
             <!-- 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理 -->
-            <Validation target="state.loginInfo.username">
+            <Validation name="username-validation" target="state.loginInfo.username">
                 <Text name="username-label">帐号：</Text>
                 <Input name="username-input" type="text">
                     <!-- 对状态的修改，等价于 bind:value，用于简化对输入数据变更的监听 -->
-                    <xui:event x:name="change-value" type="change" arg="value">
+                    <xui:event name="on-change" type="change" arg="value">
                         <state>
                             <loginInfo.username.value>${value}</loginInfo.username.value>
                         </state>
@@ -129,18 +129,19 @@
                 </Input>
             </Validation>
 
-            <Validation target="state.loginInfo.password">
+            <Validation name="password-validation" target="state.loginInfo.password">
                 <Text name="password-label">密码：</Text>
                 <Input name="password-input" type="secret"
                        bind:value="${state.loginInfo.password.value}" />
             </Validation>
 
             <Checkbox name="remember-me-input">
-                <Text>保持登录？</Text>
+                <Text name="checkbox-label">保持登录？</Text>
             </Checkbox>
 
             <Text name="warning-text" xui:when="${state.loginError.enabled}"
-                  color="warning">
+                  color="waring"
+            >
                 ${state.loginError.msg}
             </Text>
 
@@ -148,18 +149,18 @@
                     disabled="${!state.loginInfo.username.valid
                     || !state.loginInfo.password.valid}"
             >
-                <Text>登录</Text>
-                <xui:even x:name="trigger-login" type="click">
+                <Text name="button-label">登录</Text>
+                <xui:event name="on-click" type="click">
                     <dispatch type="User_Login_Doing" data="${{
                        username: state.loginInfo.username.value,
                        password: state.loginInfo.password.value}}" />
-                </xui:even>
+                </xui:event>
             </Button>
             <Link name="forgot-password-button" target="${props.forgotUrl}">
-                <Text>忘记密码？</Text>
+                <Text name="button-label">忘记密码？</Text>
             </Link>
             <Link name="register-button" target="${props.registerUrl}">
-                <Text>注册帐号</Text>
+                <Text name="button-label">注册帐号</Text>
             </Link>
         </Form>
     </template>
@@ -168,7 +169,7 @@
     <messages>
         <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
         <message name="User_Login_Doing">
-            <http:post x:name="send-login-data"
+            <http:post name="send-login-data"
                        url="${props.loginUrl}"
                        data="${data}"
             >

@@ -21,70 +21,79 @@
 
 <!-- 组件模板定义 -->
 <template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-          xmlns:xui="xui" xmlns:on="xui-event"
+          xmlns:xui="xui"
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
-          xdef:name="XuiComponentTemplate"
+          xdef:name="XuiComponentTemplate" xdef:ref="XuiComponentChild"
           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-          xdef:ref="XuiComponentNode"
 >
 
-    <!-- TODO 限定节点名为驼峰形式；保证组件节点的声明顺序； -->
-    <xdef:define xdef:name="XuiComponentNode" xdef:unique-attr="name"
-                 name="!string" xui:when="string"
+    <xdef:define xdef:name="XuiComponentNode"
+                 xui:when="string"
+                 name="conf-name" />
+
+    <xdef:define xdef:name="XuiComponentNodeParent" xdef:ref="XuiComponentNode"
+                 xdef:body-type="list" xdef:key-attr="name"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode>"
+                 xdef:bean-sub-type-prop="$type"
+    >
+        <!-- 内置唯一可包含文本内容的组件 -->
+        <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNode"
+              xdef:value="string" xdef:bean-body-prop="value"
+              xdef:unknown-attr="any"
+              name="!conf-name" />
+
+        <xdef:unknown-tag xdef:ref="XuiComponentChild" name="!conf-name" />
+    </xdef:define>
+
+    <xdef:define xdef:name="XuiComponentDirective" xdef:ref="XuiComponentNodeParent" />
+
+    <!-- TODO 限定节点名为驼峰形式（首字母大写、可包含下划线）； -->
+    <xdef:define xdef:name="XuiComponentChild" xdef:ref="XuiComponentNodeParent"
                  xdef:unknown-attr="any"
     >
-        <xui:layout xdef:ref="XuiComponentLayout" />
-        <xui:style xdef:ref="XuiComponentStyle" />
+        <xui:layout xdef:ref="XuiComponentLayout"
+                    name="!conf-name" />
+        <xui:style xdef:ref="XuiComponentStyle"
+                   name="!conf-name" />
 
-        <!-- 内置唯一可包含文本内容的组件 -->
-        <Text xdef:ref="XuiComponentNode" xdef:value="string" />
+        <!-- 组件事件监听：响应来自运行时对应元素的交互事件 -->
+        <xui:event xdef:ref="XuiComponentEvent"
+                   name="!conf-name" />
+
         <!-- 校验组件 -->
-        <Validation xdef:name="XuiComponentValidation"
-                    x:name="!conf-name" target="!string"
-        >
-            <xdef:unknown-tag xdef:ref="XuiComponentNode" />
-        </Validation>
+        <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNodeParent"
+                    name="!conf-name" target="!string" />
 
         <!-- Start: 组件指令 -->
-        <xui:each xdef:name="XuiComponentDirectiveEach"
-                  x:name="!conf-name"
-                  for="!var-name" item="!var-name" index="var-name"
-        >
-            <xdef:unknown-tag xdef:ref="XuiComponentNode" />
-        </xui:each>
-        <xui:when xdef:name="XuiComponentDirectiveWhen"
-                  x:name="!conf-name"
-                  cond="!string"
-        >
-            <xdef:unknown-tag xdef:ref="XuiComponentNode" />
-        </xui:when>
+        <xui:each xdef:name="XuiComponentDirectiveEach" xdef:ref="XuiComponentDirective"
+                  name="!conf-name"
+                  for="!var-name" item="!var-name" index="var-name" />
+        <xui:when xdef:name="XuiComponentDirectiveWhen" xdef:ref="XuiComponentDirective"
+                  xui:when="~string"
+                  name="!conf-name"
+                  cond="!string" />
         <!-- End: 组件指令 -->
-
-        <!-- 未确定子组件 -->
-        <xdef:unknown-tag xdef:ref="XuiComponentNode" />
-
-        <!-- Start: 事件 -->
-        <on:click xdef:ref="XuiComponentEvent" />
-        <on:change xdef:ref="XuiComponentEvent" />
-        <!-- End: 事件 -->
     </xdef:define>
 
     <!-- Note: 布局将影响运行时的节点嵌套关系，从而保证布局的准确性 -->
-    <xdef:define xdef:name="XuiComponentLayout"
-                 x:name="!conf-name"
+    <xdef:define xdef:name="XuiComponentLayout" xdef:ref="XuiComponentNode"
+                 xdef:body-type="union"
+                 xdef:bean-body-prop="type"
+                 xdef:bean-sub-type-prop="$type"
+                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
     >
-        <!-- 以布局类型作为节点名 -->
-        <xdef:unknown-tag xdef:value="any" />
+        <linear xdef:name="XuiComponentLayoutLinear"
+                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
+                xdef:value="!string" xdef:bean-body-prop="value" />
     </xdef:define>
 
-    <xdef:define xdef:name="XuiComponentStyle"
-                 x:name="!conf-name"
-    >
+    <xdef:define xdef:name="XuiComponentStyle" xdef:ref="XuiComponentNode">
     </xdef:define>
 
-    <xdef:define xdef:name="XuiComponentEvent"
-                 x:name="!conf-name"
-                 arg="var-name"
+    <xdef:define xdef:name="XuiComponentEvent" xdef:ref="XuiComponentNode"
+                 xdef:value="xml"
+                 type="!conf-name" arg="var-name"
     >
     </xdef:define>
 </template>
