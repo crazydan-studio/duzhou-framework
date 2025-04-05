@@ -19,25 +19,27 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件定义
-- 公共配置放在基础组件定义中，其余组件通过 x:extends 继承这些公共配置
--->
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-           x:schema="/nop/schema/xdef.xdef"
-           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+<component xmlns:x="/nop/schema/xdsl.xdef"
+           xmlns:xui="xui"
+           x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <!-- TODO 限定 as 为驼峰形式 -->
-    <import xdef:unique-attr="as"
-            as="!string" from="!v-path" />
 
-    <props>
-    </props>
+    <template>
+        <xui:layout>
+            <linear><![CDATA[
+                { > [logo] <
+                  < [menus-pane] >
+                } | < {
+                    [title] < [tool-bar] >
+                    < {
+                        < [design-pane] >
+                        < [status-bar] >
+                    } > | [settings-pane]
+                } >
+            ]]></linear>
+        </xui:layout>
+    </template>
 
-    <state>
-    </state>
-
-    <template xdef:ref="/duzhou/ui/schema/component/template.xdef" />
-
-    <messages xdef:ref="/duzhou/ui/schema/component/messages.xdef"
-              xdef:body-type="list" />
+    <messages>
+    </messages>
 </component>
