@@ -35,7 +35,8 @@ import org.junit.jupiter.api.Test;
  * @date 2025-04-05
  */
 public class XuiComponentTest extends NopJunitTestCase {
-    private static final String LOGIN_FORM_DSL = "/duzhou/ui/login-form.xui";
+    private static final String LOGIN_FORM_DSL = "/duzhou/ui/component/login-form.xui";
+    private static final String EXTENDS_LOGIN_FORM_DSL = "/duzhou/ui/component/login-form-extends.xui";
 
     @Test
     public void test_parse_login_form() {
@@ -46,6 +47,17 @@ public class XuiComponentTest extends NopJunitTestCase {
         XNode node = parseXNode(LOGIN_FORM_DSL);
         this.log.info("login-form.xui: xml={}", node.xml());
         Assertions.assertEquals(attachmentXml("login-form.xui.xml").clearComment().xml(), node.xml());
+    }
+
+    @Test
+    public void test_parse_login_form_extends() {
+        XuiComponent component = parseModel(EXTENDS_LOGIN_FORM_DSL);
+        String json = JsonTool.serialize(component, true);
+        this.log.info("login-form-extends.xui: json={}", json);
+
+        XNode node = parseXNode(EXTENDS_LOGIN_FORM_DSL);
+        this.log.info("login-form-extends.xui: xml={}", node.xml());
+        Assertions.assertEquals(attachmentXml("login-form-extends.xui.xml").clearComment().xml(), node.xml());
     }
 
     private XuiComponent parseModel(String path) {

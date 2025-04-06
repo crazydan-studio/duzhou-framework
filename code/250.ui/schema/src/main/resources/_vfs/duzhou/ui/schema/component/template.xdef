@@ -93,6 +93,18 @@
                  xdef:bean-body-prop="type"
                  xdef:bean-sub-type-prop="$type"
     >
+        <!-- 使用文本标记指示布局
+        - [comp]: 指代 name 为 comp 的组件；
+        - <: 表示左对齐；
+        - >: 表示右对齐；
+        - ^: 表示顶部对齐；
+        - v: 表示底部对齐；
+        - <[comp]>: 表示使组件 comp 水平占满剩余空间，若未指定组件，则以空白占满剩余空间；
+        - >[comp]<: 表示使组件 comp 水平居中对齐；
+        - ^[comp]v: 表示使组件 comp 垂直占满剩余空间；
+        - v[comp]^: 表示使组件 comp 垂直居中对齐；
+        - {xxx}: 表示布局嵌套，可在内部反复应用前面的规则，或者将其视为一个整体应用水平和垂直对齐；
+        -->
         <linear xdef:name="XuiComponentLayoutLinear"
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
                 xdef:value="!string" xdef:bean-body-prop="value"
