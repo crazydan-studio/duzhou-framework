@@ -10,7 +10,21 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 
+ * 使用文本标记指示布局
+ * - [comp]: 指代 name 为 comp 的组件；
+ * - <: 表示左对齐；
+ * - >: 表示右对齐；
+ * - ^: 表示顶部对齐；
+ * - v: 表示底部对齐；
+ * - <[comp]>: 表示使组件 comp 水平占满剩余空间，若未指定组件，则以空白占满剩余空间；
+ * - >[comp]<: 表示使组件 comp 水平居中对齐；
+ * - ^[comp]v: 表示使组件 comp 垂直占满剩余空间；
+ * - v[comp]^: 表示使组件 comp 垂直居中对齐；
+ * - [comp1] [comp2]: 表示左右放置组件 comp1 和 comp2；
+ * - [comp1] | [comp2]: 表示左右放置组件 comp1 和 comp2；
+ * - [comp1]\n[comp2]: 表示上下放置组件 comp1 和 comp2，其中，\n 为换行符，实际不可见，效果为上下两行；
+ * - {xxx}: 表示布局嵌套，可在内部反复应用前面的规则，或者将其视为一个整体，可对其应用水平和垂直布局；
+ * - 组件尺寸（宽高）默认均为自适应内容；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

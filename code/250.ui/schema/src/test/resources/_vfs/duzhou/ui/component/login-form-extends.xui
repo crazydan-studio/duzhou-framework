@@ -40,6 +40,17 @@
 
         <Form name="login-form">
             <Mask name="waiting-mask" x:override="remove" />
+
+            <Validation name="username-validation">
+                <Input name="username-input">
+                    <xui:event type="change" x:override="remove" />
+                </Input>
+            </Validation>
+
+            <xui:when name="when-show-login-error">
+                <Animation name="warning-text-animation"
+                           in="slide-in" out="slide-out" />
+            </xui:when>
         </Form>
     </template>
 

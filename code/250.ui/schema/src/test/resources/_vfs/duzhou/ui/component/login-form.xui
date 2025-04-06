@@ -20,8 +20,7 @@
   -->
 
 <component xmlns:x="/nop/schema/xdsl.xdef"
-           xmlns:xui="xui" xmlns:http="xui-http"
-           xmlns:bind="xui-bind"
+           xmlns:xui="xui" xmlns:bind="xui-bind"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
     <import as="Form" from="/duzhou/ui/test/form/form.xui" />
@@ -32,54 +31,10 @@
     <import as="Link" from="/duzhou/ui/test/form/link.xui" />
     <import as="Image" from="/duzhou/ui/test/form/image.xui" />
 
-    <!-- props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递 -->
     <props>
-        <homeUrl type="string" defaultValue="/" />
-        <loginUrl type="string" defaultValue="/auth/login" />
-        <forgotUrl type="string" defaultValue="/auth/forgot" />
-        <registerUrl type="string" defaultValue="/auth/register" />
     </props>
 
-    <!-- state 为组件内部状态数据，仅组件内可读、可修改，响应式更新 -->
-    <!-- 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
-    字符串类型默认为空，布尔类型默认为 false 等） -->
     <state>
-        <loginInfo>
-            <username>
-                <!-- 以下为需要启用数据校验的模型结构 -->
-                <value type="string" />
-                <!-- 获取该值时，将调用所在对象的 xui:validation 对值进行校验并返回校验结果 -->
-                <valid type="boolean" />
-
-                <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
-                <xui:validation x:name="length-validation" required="true" maxLength="15">
-                    <msg>帐号不能为空，且长度小于 15 个字符</msg>
-                </xui:validation>
-                <xui:validation x:name="form-validation" regex="^[a-z0-9]+$">
-                    <msg>帐号只能为字符、数字的组合</msg>
-                </xui:validation>
-            </username>
-            <password>
-                <value type="string" />
-                <valid type="boolean" />
-
-                <xui:validation x:name="length-validation" minLength="8" maxLength="15">
-                    <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
-                </xui:validation>
-                <xui:validation x:name="form-validation"
-                                regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
-                    <msg>密码必须包含大小写字母、特殊字符和数字</msg>
-                </xui:validation>
-            </password>
-        </loginInfo>
-        <loginError>
-            <enabled type="boolean" />
-            <msg type="string" />
-        </loginError>
-        <loginWaiting>
-            <enabled type="boolean" />
-            <msg type="string" />
-        </loginWaiting>
     </state>
 
     <template>
@@ -134,21 +89,25 @@
                        bind:value="${state.loginInfo.password.value}" />
             </Validation>
 
-            <Checkbox name="remember-me-input">
-                <Text name="checkbox-label">保持登录？</Text>
-            </Checkbox>
+            <Animation name="remember-me-animation">
+                <Checkbox name="remember-me-input">
+                    <Text name="label">保持登录？</Text>
+                </Checkbox>
+            </Animation>
 
-            <Text name="warning-text" xui:when="${state.loginError.enabled}"
-                  color="waring"
-            >
-                ${state.loginError.msg}
-            </Text>
+            <xui:when name="when-show-login-error" cond="${state.loginError.enabled}">
+                <Animation name="warning-text-animation" in="fade-in" out="fade-out">
+                    <Text name="warning-text" color="warning">
+                        ${state.loginError.msg}
+                    </Text>
+                </Animation>
+            </xui:when>
 
             <Button name="login-button"
                     disabled="${!state.loginInfo.username.valid
                     || !state.loginInfo.password.valid}"
             >
-                <Text name="button-label">登录</Text>
+                <Text name="label">登录</Text>
                 <xui:event type="click">
                     <dispatch type="User_Login_Doing" data="${{
                        username: state.loginInfo.username.value,
@@ -156,10 +115,10 @@
                 </xui:event>
             </Button>
             <Link name="forgot-password-button" target="${props.forgotUrl}">
-                <Text name="button-label">忘记密码？</Text>
+                <Text name="label">忘记密码？</Text>
             </Link>
             <Link name="register-button" target="${props.registerUrl}">
-                <Text name="button-label">注册帐号</Text>
+                <Text name="label">注册帐号</Text>
             </Link>
         </Form>
     </template>
@@ -168,50 +127,6 @@
     <messages>
         <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
         <message name="User_Login_Doing">
-            <http:post name="send-login-data"
-                       url="${props.loginUrl}"
-                       data="${data}"
-            >
-                <before>
-                    <!-- state 为内置的 action，表示为组件状态设定新值 -->
-                    <state>
-                        <!-- reset 表示将状态重置为默认数据 -->
-                        <loginError reset="true" />
-                        <loginWaiting>
-                            <enabled>true</enabled>
-                            <msg>正在登录中，请稍等。。。</msg>
-                        </loginWaiting>
-                    </state>
-                </before>
-                <!-- Promise 链式函数的参数均为单一结构化对象，可通过 arg 指定参数名称 -->
-                <then x:name="handle-login-result" arg="data">
-                    <xui:when x:name="handle-login-when-failed" cond="${!data.success}">
-                        <!-- 在不同条件下，对组件状态做整体迁移。通过对状态的变更，进而影响 template/styles 等的结构 -->
-                        <state>
-                            <loginError>
-                                <enabled>true</enabled>
-                                <msg>${data.msg}</msg>
-                            </loginError>
-                        </state>
-                    </xui:when>
-                    <xui:when x:name="handle-login-when-success" cond="${data.success}">
-                        <goto x:name="goto-home" url="${props.homeUrl}" />
-                    </xui:when>
-                </then>
-                <error arg="error">
-                    <state>
-                        <loginError>
-                            <enabled>true</enabled>
-                            <msg>${error.message}</msg>
-                        </loginError>
-                    </state>
-                </error>
-                <after>
-                    <state>
-                        <loginWaiting reset="true" />
-                    </state>
-                </after>
-            </http:post>
         </message>
     </messages>
 </component>

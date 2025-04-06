@@ -39,12 +39,23 @@
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
                  xdef:bean-sub-type-prop="$type"
     >
-        <!-- 内置唯一可包含文本内容的组件 -->
+        <!-- Start: 内置组件 -->
+        <!-- 将内置组件定义在基础节点中，以支持在 xui:each、xui:when 等嵌套节点中定义这些类型的直接节点 -->
+
+        <!-- 文本组件：只包含文本内容的组件 -->
         <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
               xdef:value="string" xdef:bean-body-prop="value"
               xdef:unknown-attr="any"
               xui:style="string"
               name="!conf-name" />
+
+        <!-- 校验组件：可自嵌套，从而支持分层校验 -->
+        <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
+                    name="!conf-name" target="!string" />
+        <!-- 动画组件：可自嵌套，从而支持一组动画 -->
+        <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
+                   name="!conf-name" in="string" out="string" />
+        <!-- End: 内置组件 -->
 
         <xdef:unknown-tag xdef:ref="XuiComponentNode"
                           name="!conf-name" />
@@ -66,14 +77,6 @@
         <!-- 缺省使用 type 属性的值作为 name 属性的值，也就是，一个事件仅定义一个节点 -->
         <xui:event xdef:ref="XuiComponentEvent"
                    name="!conf-name=@attr:type" />
-
-        <!-- 校验组件 -->
-        <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
-                    name="!conf-name"
-                    target="!string" />
-        <!-- 动画组件 -->
-        <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   name="!conf-name" />
 
         <!-- Start: 组件指令 -->
         <xui:each xdef:name="XuiComponentDirectiveEach" xdef:ref="XuiComponentDirective"
@@ -103,7 +106,11 @@
         - >[comp]<: 表示使组件 comp 水平居中对齐；
         - ^[comp]v: 表示使组件 comp 垂直占满剩余空间；
         - v[comp]^: 表示使组件 comp 垂直居中对齐；
-        - {xxx}: 表示布局嵌套，可在内部反复应用前面的规则，或者将其视为一个整体应用水平和垂直对齐；
+        - [comp1] [comp2]: 表示左右放置组件 comp1 和 comp2；
+        - [comp1] | [comp2]: 表示左右放置组件 comp1 和 comp2；
+        - [comp1]\n[comp2]: 表示上下放置组件 comp1 和 comp2，其中，\n 为换行符，实际不可见，效果为上下两行；
+        - {xxx}: 表示布局嵌套，可在内部反复应用前面的规则，或者将其视为一个整体，可对其应用水平和垂直布局；
+        - 组件尺寸（宽高）默认均为自适应内容；
         -->
         <linear xdef:name="XuiComponentLayoutLinear"
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"

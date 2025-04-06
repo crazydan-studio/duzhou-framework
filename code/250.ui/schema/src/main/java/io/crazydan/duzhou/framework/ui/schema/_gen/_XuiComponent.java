@@ -36,22 +36,6 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      *  
      * xml name: import
-     * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
-     * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
-     * -
-     * - This program is free software: you can redistribute it and/or modify
-     * - it under the terms of the GNU Lesser General Public License as published by
-     * - the Free Software Foundation, either version 3 of the License, or
-     * - (at your option) any later version.
-     * -
-     * - This program is distributed in the hope that it will be useful,
-     * - but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     * - GNU Lesser General Public License for more details.
-     * -
-     * - You should have received a copy of the GNU Lesser General Public License
-     * - along with this program.
-     * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
      * 组件导入指令定义
      * TODO 限定 as 为驼峰形式（首字母大写、可包含下划线）
      */
@@ -67,14 +51,16 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      *  
      * xml name: props
-     * 
+     * props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递
      */
     private io.nop.core.lang.xml.XNode _props ;
     
     /**
      *  
      * xml name: state
-     * 
+     * state 为组件内部状态数据，仅组件内可读、可修改，响应式更新
+     * 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
+     * 字符串类型默认为空，布尔类型默认为 false 等）
      */
     private io.nop.core.lang.xml.XNode _state ;
     
@@ -104,23 +90,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 
      * xml name: import
-     *  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
-     * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
-     * -
-     * - This program is free software: you can redistribute it and/or modify
-     * - it under the terms of the GNU Lesser General Public License as published by
-     * - the Free Software Foundation, either version 3 of the License, or
-     * - (at your option) any later version.
-     * -
-     * - This program is distributed in the hope that it will be useful,
-     * - but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     * - GNU Lesser General Public License for more details.
-     * -
-     * - You should have received a copy of the GNU Lesser General Public License
-     * - along with this program.
-     * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
-     * 组件导入指令定义
+     *  组件导入指令定义
      * TODO 限定 as 为驼峰形式（首字母大写、可包含下划线）
      */
     
@@ -211,7 +181,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 
      * xml name: props
-     *  
+     *  props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递
      */
     
     public io.nop.core.lang.xml.XNode getProps(){
@@ -230,7 +200,9 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 
      * xml name: state
-     *  
+     *  state 为组件内部状态数据，仅组件内可读、可修改，响应式更新
+     * 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
+     * 字符串类型默认为空，布尔类型默认为 false 等）
      */
     
     public io.nop.core.lang.xml.XNode getState(){
