@@ -18,36 +18,10 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
     
     /**
      *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$type ;
-    
-    /**
-     *  
      * xml name: cond
      * 
      */
     private java.lang.String _cond ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$type(){
-      return _$type;
-    }
-
-    
-    public void set$type(java.lang.String value){
-        checkAllowChange();
-        
-        this._$type = value;
-           
-    }
-
     
     /**
      * 
@@ -83,7 +57,6 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$type",this.get$type());
         out.putNotNull("cond",this.getCond());
     }
 
@@ -96,7 +69,6 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
     protected void copyTo(XuiComponentDirectiveWhen instance){
         super.copyTo(instance);
         
-        instance.set$type(this.get$type());
         instance.setCond(this.getCond());
     }
 

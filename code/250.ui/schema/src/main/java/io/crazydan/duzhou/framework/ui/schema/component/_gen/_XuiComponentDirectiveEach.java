@@ -18,13 +18,6 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
     
     /**
      *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$type ;
-    
-    /**
-     *  
      * xml name: for
      * 
      */
@@ -43,25 +36,6 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
      * 
      */
     private java.lang.String _item ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$type(){
-      return _$type;
-    }
-
-    
-    public void set$type(java.lang.String value){
-        checkAllowChange();
-        
-        this._$type = value;
-           
-    }
-
     
     /**
      * 
@@ -135,7 +109,6 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$type",this.get$type());
         out.putNotNull("for",this.getFor());
         out.putNotNull("index",this.getIndex());
         out.putNotNull("item",this.getItem());
@@ -150,7 +123,6 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
     protected void copyTo(XuiComponentDirectiveEach instance){
         super.copyTo(instance);
         
-        instance.set$type(this.get$type());
         instance.setFor(this.getFor());
         instance.setIndex(this.getIndex());
         instance.setItem(this.getItem());

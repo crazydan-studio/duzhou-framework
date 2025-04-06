@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -10,18 +10,25 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 内置唯一可包含文本内容的组件
+ * 
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
+public abstract class _XuiComponentNamed extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
      *  
      * xml name: 
      * 
      */
-    private java.lang.String _value ;
+    private java.lang.String _$type ;
+    
+    /**
+     *  
+     * xml name: name
+     * 
+     */
+    private java.lang.String _name ;
     
     /**
      * 
@@ -29,15 +36,34 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
      *  
      */
     
-    public java.lang.String getValue(){
-      return _value;
+    public java.lang.String get$type(){
+      return _$type;
     }
 
     
-    public void setValue(java.lang.String value){
+    public void set$type(java.lang.String value){
         checkAllowChange();
         
-        this._value = value;
+        this._$type = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: name
+     *  
+     */
+    
+    public java.lang.String getName(){
+      return _name;
+    }
+
+    
+    public void setName(java.lang.String value){
+        checkAllowChange();
+        
+        this._name = value;
            
     }
 
@@ -57,23 +83,25 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("value",this.getValue());
+        out.putNotNull("$type",this.get$type());
+        out.putNotNull("name",this.getName());
     }
 
-    public XuiComponentText cloneInstance(){
-        XuiComponentText instance = newInstance();
+    public XuiComponentNamed cloneInstance(){
+        XuiComponentNamed instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentText instance){
+    protected void copyTo(XuiComponentNamed instance){
         super.copyTo(instance);
         
-        instance.setValue(this.getValue());
+        instance.set$type(this.get$type());
+        instance.setName(this.getName());
     }
 
-    protected XuiComponentText newInstance(){
-        return (XuiComponentText) ClassHelper.newInstance(getClass());
+    protected XuiComponentNamed newInstance(){
+        return (XuiComponentNamed) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

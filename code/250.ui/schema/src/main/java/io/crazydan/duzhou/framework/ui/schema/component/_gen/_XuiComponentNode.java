@@ -10,37 +10,11 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 
+ * TODO 限定节点名为驼峰形式（首字母大写、可包含下划线）；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentNode extends io.nop.core.resource.component.AbstractComponentModel {
-    
-    /**
-     *  
-     * xml name: name
-     * 
-     */
-    private java.lang.String _name ;
-    
-    /**
-     * 
-     * xml name: name
-     *  
-     */
-    
-    public java.lang.String getName(){
-      return _name;
-    }
-
-    
-    public void setName(java.lang.String value){
-        checkAllowChange();
-        
-        this._name = value;
-           
-    }
-
+public abstract class _XuiComponentNode extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested {
     
 
     @Override
@@ -57,7 +31,6 @@ public abstract class _XuiComponentNode extends io.nop.core.resource.component.A
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("name",this.getName());
     }
 
     public XuiComponentNode cloneInstance(){
@@ -69,7 +42,6 @@ public abstract class _XuiComponentNode extends io.nop.core.resource.component.A
     protected void copyTo(XuiComponentNode instance){
         super.copyTo(instance);
         
-        instance.setName(this.getName());
     }
 
     protected XuiComponentNode newInstance(){

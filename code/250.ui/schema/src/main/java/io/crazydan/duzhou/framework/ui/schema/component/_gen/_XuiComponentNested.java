@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNodeParent;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,14 +14,14 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentNodeParent extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode {
+public abstract class _XuiComponentNested extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
     
     /**
      *  
      * xml name: 
      * 
      */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode> _children = KeyedList.emptyList();
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed> _children = KeyedList.emptyList();
     
     /**
      * 
@@ -29,20 +29,20 @@ public abstract class _XuiComponentNodeParent extends io.crazydan.duzhou.framewo
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode> getChildren(){
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed> getChildren(){
       return _children;
     }
 
     
-    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode> value){
+    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed> value){
         checkAllowChange();
         
-        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode::getName);
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed::getName);
            
     }
 
     
-    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode getChild(String name){
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed getChild(String name){
         return this._children.getByKey(name);
     }
 
@@ -50,11 +50,11 @@ public abstract class _XuiComponentNodeParent extends io.crazydan.duzhou.framewo
         return this._children.containsKey(name);
     }
 
-    public void addChild(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode item) {
+    public void addChild(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed item) {
         checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode> list = this.getChildren();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed> list = this.getChildren();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode::getName);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed::getName);
             setChildren(list);
         }
         list.add(item);
@@ -88,20 +88,20 @@ public abstract class _XuiComponentNodeParent extends io.crazydan.duzhou.framewo
         out.putNotNull("children",this.getChildren());
     }
 
-    public XuiComponentNodeParent cloneInstance(){
-        XuiComponentNodeParent instance = newInstance();
+    public XuiComponentNested cloneInstance(){
+        XuiComponentNested instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentNodeParent instance){
+    protected void copyTo(XuiComponentNested instance){
         super.copyTo(instance);
         
         instance.setChildren(this.getChildren());
     }
 
-    protected XuiComponentNodeParent newInstance(){
-        return (XuiComponentNodeParent) ClassHelper.newInstance(getClass());
+    protected XuiComponentNested newInstance(){
+        return (XuiComponentNested) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

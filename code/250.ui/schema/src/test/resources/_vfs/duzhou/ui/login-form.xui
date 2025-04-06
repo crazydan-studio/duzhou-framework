@@ -83,7 +83,7 @@
     </state>
 
     <template>
-        <xui:layout name="layout">
+        <xui:layout>
             <linear><![CDATA[
                 > [login-logo] <
                 < [login-form] >
@@ -94,7 +94,7 @@
         <!-- Form 的 disabled 属性会逐级传导到其内部的 Input、Button 等支持启用/禁用的组件 -->
         <Form name="login-form" disabled="${state.loginWaiting.enabled}">
             <!-- 默认为左对齐，< 表示左对齐，> 表示右对齐，<[xxx]> 表示横向占满剩余空间，>[xxx]< 表示横向居中对齐，{xxx} 表示布局嵌套 -->
-            <xui:layout name="layout">
+            <xui:layout>
                 <linear><![CDATA[
                     [username-label]
                     < [username-input] >
@@ -121,7 +121,7 @@
                 <Text name="username-label">帐号：</Text>
                 <Input name="username-input" type="text">
                     <!-- 对状态的修改，等价于 bind:value，用于简化对输入数据变更的监听 -->
-                    <xui:event name="on-change" type="change" arg="value">
+                    <xui:event type="change" arg="value">
                         <state>
                             <loginInfo.username.value>${value}</loginInfo.username.value>
                         </state>
@@ -150,7 +150,7 @@
                     || !state.loginInfo.password.valid}"
             >
                 <Text name="button-label">登录</Text>
-                <xui:event name="on-click" type="click">
+                <xui:event type="click">
                     <dispatch type="User_Login_Doing" data="${{
                        username: state.loginInfo.username.value,
                        password: state.loginInfo.password.value}}" />
