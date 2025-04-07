@@ -19,9 +19,16 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
+    <x:gen-extends xmlns:component="component">
+        <component:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:gen-extends>
+    <x:post-extends xmlns:component="component">
+        <component:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:post-extends>
+
     <import as="Form" from="/duzhou/ui/test/form/form.xui" />
     <import as="Input" from="/duzhou/ui/test/form/input.xui" />
     <import as="Button" from="/duzhou/ui/test/form/button.xui" />

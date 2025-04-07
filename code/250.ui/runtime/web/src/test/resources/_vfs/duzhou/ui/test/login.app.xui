@@ -19,33 +19,14 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl"
-      xmlns:xui="xui"
-      x:schema="/duzhou/ui/schema/page.xdef"
+<app xmlns:x="/nop/schema/xdsl.xdef"
+     x:schema="/duzhou/ui/schema/app.xdef"
+     code="login-page-test" title="Login Page Test" version="0.1.0"
+     logo="/logo.svg"
 >
-    <x:gen-extends xmlns:component="component">
-        <component:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
-    </x:gen-extends>
-    <x:post-extends xmlns:component="component">
-        <component:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
-    </x:post-extends>
 
-    <template>
-        <xui:layout>
-            <linear><![CDATA[
-                { > [logo] <
-                  < [menus-pane] >
-                } | < {
-                    [title] < [tool-bar] >
-                    < {
-                        < [design-pane] >
-                        < [status-bar] >
-                    } > | [settings-pane]
-                } >
-            ]]></linear>
-        </xui:layout>
-    </template>
-
-    <messages>
-    </messages>
-</page>
+    <pages>
+        <page name="main" path="login.page.xui"
+              url="/" />
+    </pages>
+</app>
