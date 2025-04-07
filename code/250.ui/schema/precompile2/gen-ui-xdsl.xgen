@@ -24,7 +24,12 @@
     codeGenerator.renderModel('/duzhou/ui/schema/style/themes.xdef', '/nop/templates/xdsl', '/', $scope);
 
     codeGenerator.renderModel('/duzhou/ui/schema/component.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/component/import.xdef', '/nop/templates/xdsl', '/', $scope);
     codeGenerator.renderModel('/duzhou/ui/schema/component/message.xdef', '/nop/templates/xdsl', '/', $scope);
     codeGenerator.renderModel('/duzhou/ui/schema/component/action.xdef', '/nop/templates/xdsl', '/', $scope);
     codeGenerator.renderModel('/duzhou/ui/schema/component/template.xdef', '/nop/templates/xdsl', '/', $scope);
+
+    codeGenerator.renderModel('/duzhou/ui/schema/app.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/page.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/app/app-page.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

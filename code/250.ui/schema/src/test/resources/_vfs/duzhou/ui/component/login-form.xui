@@ -93,7 +93,7 @@
             </Animation>
 
             <xui:when name="when-show-login-error" cond="${state.loginError.enabled}">
-                <Animation name="warning-text-animation" in="fade-in" out="fade-out">
+                <Animation name="warning-text-animation" enter="fade-in" exit="fade-out">
                     <Text name="warning-text" color="warning">
                         ${state.loginError.msg}
                     </Text>

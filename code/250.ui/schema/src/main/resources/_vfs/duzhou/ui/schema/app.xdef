@@ -19,15 +19,32 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 应用定义：用于组织 UI 页面 -->
+<!-- 应用定义：用于组织应用的页面
+@code 应用唯一标识；
+@title 应用标题；
+@version 应用版本号；
+@license 应用许可协议名称或编码；
+@logo 应用 logo 地址；
+-->
 <app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"
-     code="!string" displayName="!string" version="!string"
+     xdef:name="XuiApp" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+     code="!string" title="!string" version="!string"
      license="string" logo="string"
 >
+    <!-- 应用的描述内容 -->
     <description xdef:value="string" />
+    <!-- 应用的版权声明内容 -->
     <copyright xdef:value="string" />
 
-    <!-- 从 app 传递 title 等属性值 -->
-    <mainPage xdef:mandatory="true" src="!string" />
+    <pages xdef:body-type="list" xdef:key-attr="name">
+        <!-- 应用页面
+        @name 页面唯一标识；
+        @resource 页面资源的 v-path 路径；
+        @title 页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
+        @url 访问页面的 URL 地址；
+        -->
+        <page xdef:ref="app/app-page.xdef"
+              name="!conf-name" />
+    </pages>
 </app>

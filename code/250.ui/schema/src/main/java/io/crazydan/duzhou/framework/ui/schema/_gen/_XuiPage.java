@@ -1,15 +1,15 @@
-package io.crazydan.duzhou.framework.ui.schema.component._gen;
+package io.crazydan.duzhou.framework.ui.schema._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport;
+import io.crazydan.duzhou.framework.ui.schema.XuiPage;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/component/import.xdef <p>
+ * generate from /duzhou/ui/schema/page.xdef <p>
  * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
  * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
  * -
@@ -26,61 +26,34 @@ import io.nop.commons.util.ClassHelper;
  * - You should have received a copy of the GNU Lesser General Public License
  * - along with this program.
  * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
- * 组件导入指令定义：单独定义，以支持在指定包下创建 class
- * TODO 限定 as 为驼峰形式（首字母大写、可包含下划线）
+ * 页面定义
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentImport extends io.nop.core.resource.component.AbstractComponentModel {
+public abstract class _XuiPage extends io.crazydan.duzhou.framework.ui.schema.XuiComponent {
     
     /**
      *  
-     * xml name: as
-     * 
+     * xml name: title
+     * 可引用页面内的状态数据，从而支持动态设定标题；
      */
-    private java.lang.String _as ;
-    
-    /**
-     *  
-     * xml name: from
-     * 
-     */
-    private java.lang.String _from ;
+    private java.lang.String _title ;
     
     /**
      * 
-     * xml name: as
-     *  
+     * xml name: title
+     *  可引用页面内的状态数据，从而支持动态设定标题；
      */
     
-    public java.lang.String getAs(){
-      return _as;
+    public java.lang.String getTitle(){
+      return _title;
     }
 
     
-    public void setAs(java.lang.String value){
+    public void setTitle(java.lang.String value){
         checkAllowChange();
         
-        this._as = value;
-           
-    }
-
-    
-    /**
-     * 
-     * xml name: from
-     *  
-     */
-    
-    public java.lang.String getFrom(){
-      return _from;
-    }
-
-    
-    public void setFrom(java.lang.String value){
-        checkAllowChange();
-        
-        this._from = value;
+        this._title = value;
            
     }
 
@@ -100,25 +73,23 @@ public abstract class _XuiComponentImport extends io.nop.core.resource.component
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("as",this.getAs());
-        out.putNotNull("from",this.getFrom());
+        out.putNotNull("title",this.getTitle());
     }
 
-    public XuiComponentImport cloneInstance(){
-        XuiComponentImport instance = newInstance();
+    public XuiPage cloneInstance(){
+        XuiPage instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentImport instance){
+    protected void copyTo(XuiPage instance){
         super.copyTo(instance);
         
-        instance.setAs(this.getAs());
-        instance.setFrom(this.getFrom());
+        instance.setTitle(this.getTitle());
     }
 
-    protected XuiComponentImport newInstance(){
-        return (XuiComponentImport) ClassHelper.newInstance(getClass());
+    protected XuiPage newInstance(){
+        return (XuiPage) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

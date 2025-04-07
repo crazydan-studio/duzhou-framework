@@ -54,7 +54,7 @@
                     name="!conf-name" target="!string" />
         <!-- 动画组件：可自嵌套，从而支持一组动画 -->
         <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   name="!conf-name" in="string" out="string" />
+                   name="!conf-name" enter="string" exit="string" />
         <!-- End: 内置组件 -->
 
         <xdef:unknown-tag xdef:ref="XuiComponentNode"

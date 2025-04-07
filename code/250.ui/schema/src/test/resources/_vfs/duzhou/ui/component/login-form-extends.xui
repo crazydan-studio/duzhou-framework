@@ -50,7 +50,7 @@
 
             <xui:when name="when-show-login-error">
                 <Animation name="warning-text-animation"
-                           in="slide-in" out="slide-out" />
+                           enter="slide-in" exit="slide-out" />
             </xui:when>
         </Form>
     </template>

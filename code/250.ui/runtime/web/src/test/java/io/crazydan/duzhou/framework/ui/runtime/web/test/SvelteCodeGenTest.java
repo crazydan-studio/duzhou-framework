@@ -48,8 +48,8 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
 
         Map<String, Object> app = createAppData();
         app.put("code", "user-login-form");
-        app.put("displayName", "User Login Form");
-        app.put("mainPage", pageDslModel);
+        app.put("title", "User Login Form");
+        app.put("pages", pageDslModel);
 
         // 确保目标目录已创建
         FileHelper.assureParent(new File(targetDir, "/any"));

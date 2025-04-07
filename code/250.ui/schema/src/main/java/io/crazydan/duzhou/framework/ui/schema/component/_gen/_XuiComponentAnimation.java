@@ -18,52 +18,52 @@ public abstract class _XuiComponentAnimation extends io.crazydan.duzhou.framewor
     
     /**
      *  
-     * xml name: in
+     * xml name: enter
      * 
      */
-    private java.lang.String _in ;
+    private java.lang.String _enter ;
     
     /**
      *  
-     * xml name: out
+     * xml name: exit
      * 
      */
-    private java.lang.String _out ;
+    private java.lang.String _exit ;
     
     /**
      * 
-     * xml name: in
+     * xml name: enter
      *  
      */
     
-    public java.lang.String getIn(){
-      return _in;
+    public java.lang.String getEnter(){
+      return _enter;
     }
 
     
-    public void setIn(java.lang.String value){
+    public void setEnter(java.lang.String value){
         checkAllowChange();
         
-        this._in = value;
+        this._enter = value;
            
     }
 
     
     /**
      * 
-     * xml name: out
+     * xml name: exit
      *  
      */
     
-    public java.lang.String getOut(){
-      return _out;
+    public java.lang.String getExit(){
+      return _exit;
     }
 
     
-    public void setOut(java.lang.String value){
+    public void setExit(java.lang.String value){
         checkAllowChange();
         
-        this._out = value;
+        this._exit = value;
            
     }
 
@@ -83,8 +83,8 @@ public abstract class _XuiComponentAnimation extends io.crazydan.duzhou.framewor
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("in",this.getIn());
-        out.putNotNull("out",this.getOut());
+        out.putNotNull("enter",this.getEnter());
+        out.putNotNull("exit",this.getExit());
     }
 
     public XuiComponentAnimation cloneInstance(){
@@ -96,8 +96,8 @@ public abstract class _XuiComponentAnimation extends io.crazydan.duzhou.framewor
     protected void copyTo(XuiComponentAnimation instance){
         super.copyTo(instance);
         
-        instance.setIn(this.getIn());
-        instance.setOut(this.getOut());
+        instance.setEnter(this.getEnter());
+        instance.setExit(this.getExit());
     }
 
     protected XuiComponentAnimation newInstance(){

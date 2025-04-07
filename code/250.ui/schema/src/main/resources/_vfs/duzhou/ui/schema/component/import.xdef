@@ -19,27 +19,11 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<page xmlns:x="/nop/schema/xdsl.xdef"
-      xmlns:xui="xui"
-      x:schema="/duzhou/ui/schema/page.xdef"
->
-
-    <template>
-        <xui:layout>
-            <linear><![CDATA[
-                { > [logo] <
-                  < [menus-pane] >
-                } | < {
-                    [title] < [tool-bar] >
-                    < {
-                        < [design-pane] >
-                        < [status-bar] >
-                    } > | [settings-pane]
-                } >
-            ]]></linear>
-        </xui:layout>
-    </template>
-
-    <messages>
-    </messages>
-</page>
+<!-- 组件导入指令定义：单独定义，以支持在指定包下创建 class -->
+<!-- TODO 限定 as 为驼峰形式（首字母大写、可包含下划线） -->
+<import xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:name="XuiComponentImport"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+        as="!string" from="!v-path"
+/>

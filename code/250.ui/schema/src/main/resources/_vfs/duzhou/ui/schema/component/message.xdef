@@ -22,21 +22,24 @@
 <!-- 组件消息处理器定义 -->
 <!-- TODO 限定 name 为驼峰形式（首字母大写、可包含下划线） -->
 <message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-         xmlns:xui="xui"
          x:schema="/nop/schema/xdef.xdef"
          xdef:name="XuiComponentMessage"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-         name="!string">
+         name="!string"
+>
+    <!--&lt;!&ndash; 修改组件状态 &ndash;&gt;
+    <state xdef:value="xml" />
+    &lt;!&ndash; 向外部发送事件 &ndash;&gt;
+    <event type="!conf-name" data="any" />
 
-    <!-- 发送 HTTP POST 请求 -->
-    <xui:http-post xdef:value="xml"
-                   name="!string"
-                   url="!string" data="any"
+    &lt;!&ndash; 发送 HTTP POST 请求 &ndash;&gt;
+    <http-post xdef:value="xml"
+               name="!string"
+               url="!string" data="any"
     />
-
-    <!-- 修改组件状态 -->
-    <xui:state xdef:value="xml" />
-
-    <!-- 向父组件发送事件 -->
-    <xui:event type="!conf-name" data="any" />
+    &lt;!&ndash; 发送 HTTP GET 请求 &ndash;&gt;
+    <http-get xdef:value="xml"
+              name="!string"
+              url="!string" data="any"
+    />-->
 </message>

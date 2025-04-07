@@ -21,7 +21,12 @@
 
 <app xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/duzhou/ui/schema/app.xdef"
-     code="duzhou-ui-designer" displayName="渡舟 UI 设计器" version="0.1.0"
+     code="duzhou-ui-designer" title="渡舟 UI 设计器" version="0.1.0"
+     logo="/logo.svg"
 >
 
+    <pages>
+        <page name="main" resource="page/main.page.xui"
+              url="/" />
+    </pages>
 </app>
