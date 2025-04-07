@@ -37,14 +37,11 @@
     <!-- 应用的版权声明内容 -->
     <copyright xdef:value="string" />
 
-    <pages xdef:body-type="list" xdef:key-attr="name">
-        <!-- 应用页面
-        @name 页面唯一标识；
-        @resource 页面资源的 v-path 路径；
-        @title 页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
-        @url 访问页面的 URL 地址；
-        -->
-        <page xdef:ref="app/app-page.xdef"
+    <pages xdef:bean-prop="pageRefs"
+           xdef:body-type="list" xdef:key-attr="name"
+           xdef:bean-child-name="pageRef"
+    >
+        <page xdef:ref="app/page-ref.xdef"
               name="!conf-name" />
     </pages>
 </app>

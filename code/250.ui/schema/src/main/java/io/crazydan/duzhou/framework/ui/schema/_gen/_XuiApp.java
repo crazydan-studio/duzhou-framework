@@ -72,7 +72,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
      * xml name: pages
      * 
      */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage> _pages = KeyedList.emptyList();
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> _pageRefs = KeyedList.emptyList();
     
     /**
      *  
@@ -189,43 +189,43 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage> getPages(){
-      return _pages;
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> getPageRefs(){
+      return _pageRefs;
     }
 
     
-    public void setPages(java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage> value){
+    public void setPageRefs(java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> value){
         checkAllowChange();
         
-        this._pages = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage::getName);
+        this._pageRefs = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef::getName);
            
     }
 
     
-    public io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage getPage(String name){
-        return this._pages.getByKey(name);
+    public io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef getPageRef(String name){
+        return this._pageRefs.getByKey(name);
     }
 
-    public boolean hasPage(String name){
-        return this._pages.containsKey(name);
+    public boolean hasPageRef(String name){
+        return this._pageRefs.containsKey(name);
     }
 
-    public void addPage(io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage item) {
+    public void addPageRef(io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef item) {
         checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage> list = this.getPages();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> list = this.getPageRefs();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage::getName);
-            setPages(list);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef::getName);
+            setPageRefs(list);
         }
         list.add(item);
     }
     
-    public java.util.Set<String> keySet_pages(){
-        return this._pages.keySet();
+    public java.util.Set<String> keySet_pageRefs(){
+        return this._pageRefs.keySet();
     }
 
-    public boolean hasPages(){
-        return !this._pages.isEmpty();
+    public boolean hasPageRefs(){
+        return !this._pageRefs.isEmpty();
     }
     
     /**
@@ -274,7 +274,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._pages = io.nop.api.core.util.FreezeHelper.deepFreeze(this._pages);
+           this._pageRefs = io.nop.api.core.util.FreezeHelper.deepFreeze(this._pageRefs);
             
         }
     }
@@ -288,7 +288,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
         out.putNotNull("description",this.getDescription());
         out.putNotNull("license",this.getLicense());
         out.putNotNull("logo",this.getLogo());
-        out.putNotNull("pages",this.getPages());
+        out.putNotNull("pageRefs",this.getPageRefs());
         out.putNotNull("title",this.getTitle());
         out.putNotNull("version",this.getVersion());
     }
@@ -307,7 +307,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
         instance.setDescription(this.getDescription());
         instance.setLicense(this.getLicense());
         instance.setLogo(this.getLogo());
-        instance.setPages(this.getPages());
+        instance.setPageRefs(this.getPageRefs());
         instance.setTitle(this.getTitle());
         instance.setVersion(this.getVersion());
     }

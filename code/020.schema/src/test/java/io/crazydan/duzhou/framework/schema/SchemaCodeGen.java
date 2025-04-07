@@ -28,7 +28,14 @@ import io.nop.core.CoreConfigs;
 import io.nop.core.CoreConstants;
 import io.nop.core.initialize.CoreInitialization;
 
-/** 用于调试从 *.xgen 生成代码过程中的问题 */
+/**
+ * 用于调试从 *.xgen 生成代码过程中的问题
+ * <p/>
+ * 为了避免生成的 class 存在问题而导致代码无法运行，
+ * 一般需通过 Maven 构建来生成 class：<code>
+ * mvn compile -o
+ * </code>
+ */
 public class SchemaCodeGen {
 
     public static void main(String[] args) {

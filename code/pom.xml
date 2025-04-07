@@ -276,6 +276,14 @@
             </resource>
         </resources>
 
+        <plugins>
+            <!-- 启用插件 exec-maven-plugin 以支持在 Maven 编译阶段执行 precompile2/*.xgen -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>

@@ -31,5 +31,5 @@
 
     codeGenerator.renderModel('/duzhou/ui/schema/app.xdef', '/nop/templates/xdsl', '/', $scope);
     codeGenerator.renderModel('/duzhou/ui/schema/page.xdef', '/nop/templates/xdsl', '/', $scope);
-    codeGenerator.renderModel('/duzhou/ui/schema/app/app-page.xdef', '/nop/templates/xdsl', '/', $scope);
+    codeGenerator.renderModel('/duzhou/ui/schema/app/page-ref.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

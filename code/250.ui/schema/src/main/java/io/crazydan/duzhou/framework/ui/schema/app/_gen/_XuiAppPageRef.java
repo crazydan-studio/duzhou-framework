@@ -2,14 +2,14 @@ package io.crazydan.duzhou.framework.ui.schema.app._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.app.XuiAppPage;
+import io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/app/app-page.xdef <p>
+ * generate from /duzhou/ui/schema/app/page-ref.xdef <p>
  * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
  * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
  * -
@@ -26,11 +26,11 @@ import io.nop.commons.util.ClassHelper;
  * - You should have received a copy of the GNU Lesser General Public License
  * - along with this program.
  * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
- * 应用页面定义：单独定义，以支持在指定包下创建 class
+ * 页面引用：单独定义，以支持在指定包下创建 class
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiAppPage extends io.nop.core.resource.component.AbstractComponentModel {
+public abstract class _XuiAppPageRef extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
      *  
@@ -41,10 +41,10 @@ public abstract class _XuiAppPage extends io.nop.core.resource.component.Abstrac
     
     /**
      *  
-     * xml name: resource
+     * xml name: path
      * 页面资源的 v-path 路径；
      */
-    private java.lang.String _resource ;
+    private java.lang.String _path ;
     
     /**
      *  
@@ -81,19 +81,19 @@ public abstract class _XuiAppPage extends io.nop.core.resource.component.Abstrac
     
     /**
      * 
-     * xml name: resource
+     * xml name: path
      *  页面资源的 v-path 路径；
      */
     
-    public java.lang.String getResource(){
-      return _resource;
+    public java.lang.String getPath(){
+      return _path;
     }
 
     
-    public void setResource(java.lang.String value){
+    public void setPath(java.lang.String value){
         checkAllowChange();
         
-        this._resource = value;
+        this._path = value;
            
     }
 
@@ -152,28 +152,28 @@ public abstract class _XuiAppPage extends io.nop.core.resource.component.Abstrac
         super.outputJson(out);
         
         out.putNotNull("name",this.getName());
-        out.putNotNull("resource",this.getResource());
+        out.putNotNull("path",this.getPath());
         out.putNotNull("title",this.getTitle());
         out.putNotNull("url",this.getUrl());
     }
 
-    public XuiAppPage cloneInstance(){
-        XuiAppPage instance = newInstance();
+    public XuiAppPageRef cloneInstance(){
+        XuiAppPageRef instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiAppPage instance){
+    protected void copyTo(XuiAppPageRef instance){
         super.copyTo(instance);
         
         instance.setName(this.getName());
-        instance.setResource(this.getResource());
+        instance.setPath(this.getPath());
         instance.setTitle(this.getTitle());
         instance.setUrl(this.getUrl());
     }
 
-    protected XuiAppPage newInstance(){
-        return (XuiAppPage) ClassHelper.newInstance(getClass());
+    protected XuiAppPageRef newInstance(){
+        return (XuiAppPageRef) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON
