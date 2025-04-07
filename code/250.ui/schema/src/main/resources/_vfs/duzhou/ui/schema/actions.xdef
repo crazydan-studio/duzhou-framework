@@ -21,7 +21,59 @@
 
 <!-- 逻辑定义 -->
 <actions xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+         xmlns:xui="xui"
          x:schema="/nop/schema/xdef.xdef"
-         xdef:check-ns="ui"
+         xdef:check-ns="xui"
+         xdef:name="XuiActions"
+         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+         xdef:body-type="list" xdef:key-attr="name"
+         xdef:bean-body-prop="actions" xdef:bean-child-name="action"
+         xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.XuiAction>"
+         xdef:bean-sub-type-prop="$type"
+         name="!string"
 >
+
+    <!-- 更新组件状态 -->
+    <state xdef:name="XuiActionState" xdef:ref="XuiAction"
+           xdef:body-type="map" xdef:bean-body-prop="dataList" xdef:bean-child-name="data"
+           name="!conf-name=xui-state"
+    >
+        <!-- 支持按照对象结构或者点分形式（`a.b.c`）为属性赋值 -->
+        <xdef:unknown-tag xdef:name="XuiActionStateData"
+                          reset="boolean" xdef:value="any" />
+    </state>
+    <!-- 向组件外部发送事件 -->
+    <event xdef:name="XuiActionEvent" xdef:ref="XuiAction"
+           name="!conf-name=@attr:type"
+           type="!conf-name" data="any" />
+
+    <!-- 发送 HTTP POST 请求 -->
+    <http-post xdef:ref="XuiActionHttp"
+               name="!conf-name" />
+    <!-- 发送 HTTP GET 请求 -->
+    <http-get xdef:ref="XuiActionHttp"
+              name="!conf-name" />
+
+    <xdef:define xdef:name="XuiAction"
+                 xdef:bean-tag-prop="$type"
+                 name="!conf-name" />
+
+    <xdef:define xdef:name="XuiActionHttp" xdef:ref="XuiActionPromise"
+                 url="!string" data="any" />
+
+    <xdef:define xdef:name="XuiActionPromise" xdef:ref="XuiAction">
+        <before>
+            <state>
+            </state>
+        </before>
+        <!-- Promise 链式函数的参数均为单一结构化对象，可通过 arg 指定参数名称 -->
+        <then name="!conf-name" arg="var-name">
+            <xui:when name="!conf-name" cond="!string">
+            </xui:when>
+        </then>
+        <error arg="var-name">
+        </error>
+        <after>
+        </after>
+    </xdef:define>
 </actions>

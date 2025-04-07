@@ -19,27 +19,12 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件消息处理器定义 -->
+<!-- 组件消息处理器定义：单独定义，以支持在指定包下创建 class -->
 <!-- TODO 限定 name 为驼峰形式（首字母大写、可包含下划线） -->
 <message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
          x:schema="/nop/schema/xdef.xdef"
          xdef:name="XuiComponentMessage"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+         xdef:ref="../actions.xdef"
          name="!string"
->
-    <!--&lt;!&ndash; 修改组件状态 &ndash;&gt;
-    <state xdef:value="xml" />
-    &lt;!&ndash; 向外部发送事件 &ndash;&gt;
-    <event type="!conf-name" data="any" />
-
-    &lt;!&ndash; 发送 HTTP POST 请求 &ndash;&gt;
-    <http-post xdef:value="xml"
-               name="!string"
-               url="!string" data="any"
-    />
-    &lt;!&ndash; 发送 HTTP GET 请求 &ndash;&gt;
-    <http-get xdef:value="xml"
-              name="!string"
-              url="!string" data="any"
-    />-->
-</message>
+/>

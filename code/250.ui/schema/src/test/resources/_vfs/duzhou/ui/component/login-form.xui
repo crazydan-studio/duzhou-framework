@@ -135,9 +135,9 @@
         </message>
 
         <message name="On_Input_for_state_loginInfo_username_value">
-            <xui:state>
+            <state>
                 <loginInfo.username.value>${value}</loginInfo.username.value>
-            </xui:state>
+            </state>
         </message>
     </messages>
 </component>
