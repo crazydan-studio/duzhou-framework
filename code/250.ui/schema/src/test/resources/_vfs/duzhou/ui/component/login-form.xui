@@ -19,8 +19,7 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<component xmlns:x="/nop/schema/xdsl.xdef"
-           xmlns:xui="xui" xmlns:bind="xui-bind"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
     <import as="Form" from="/duzhou/ui/test/form/form.xui" />
@@ -74,19 +73,17 @@
             <Validation name="username-validation" target="state.loginInfo.username">
                 <Text name="username-label">帐号：</Text>
                 <Input name="username-input" type="text">
-                    <!-- 对状态的修改，等价于 bind:value，用于简化对输入数据变更的监听 -->
-                    <xui:event type="change" arg="value">
-                        <state>
-                            <loginInfo.username.value>${value}</loginInfo.username.value>
-                        </state>
-                    </xui:event>
+                    <!-- 等价于 xui:bind-value="loginInfo.username.value"，用于简化对输入数据变更的监听 -->
+                    <xui:dispatch on="input"
+                                  for="On_Input_for_state_loginInfo_username_value"
+                                  data="${$event.value}" />
                 </Input>
             </Validation>
 
             <Validation name="password-validation" target="state.loginInfo.password">
                 <Text name="password-label">密码：</Text>
                 <Input name="password-input" type="secret"
-                       bind:value="${state.loginInfo.password.value}" />
+                       xui:bind-value="loginInfo.password.value" />
             </Validation>
 
             <Animation name="remember-me-animation">
@@ -108,11 +105,12 @@
                     || !state.loginInfo.password.valid}"
             >
                 <Text name="label">登录</Text>
-                <xui:event type="click">
-                    <dispatch type="User_Login_Doing" data="${{
-                       username: state.loginInfo.username.value,
-                       password: state.loginInfo.password.value}}" />
-                </xui:event>
+
+                <xui:dispatch on="click" for="User_Login_Start"
+                              data="${{
+                               username: state.loginInfo.username.value,
+                               password: state.loginInfo.password.value}}"
+                />
             </Button>
             <Link name="forgot-password-button" target="${props.forgotUrl}">
                 <Text name="label">忘记密码？</Text>
@@ -126,7 +124,13 @@
     <!-- 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数 -->
     <messages>
         <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
-        <message name="User_Login_Doing">
+        <message name="User_Login_Start">
+        </message>
+
+        <message name="On_Input_for_state_loginInfo_username_value">
+            <xui:state>
+                <loginInfo.username.value>${value}</loginInfo.username.value>
+            </xui:state>
         </message>
     </messages>
 </component>

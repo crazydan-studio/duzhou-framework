@@ -43,7 +43,8 @@
 
             <Validation name="username-validation">
                 <Input name="username-input">
-                    <xui:event type="change" x:override="remove" />
+                    <xui:dispatch for="On_Input_for_state_loginInfo_username_value"
+                                  x:override="remove" />
                 </Input>
             </Validation>
 
@@ -55,6 +56,6 @@
     </template>
 
     <messages>
-        <message name="User_Login_Doing" x:override="remove" />
+        <message name="User_Login_Start" x:override="remove" />
     </messages>
 </component>

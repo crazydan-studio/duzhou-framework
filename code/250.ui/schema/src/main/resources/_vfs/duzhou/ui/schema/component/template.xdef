@@ -73,10 +73,9 @@
         <xui:style xdef:ref="XuiComponentStyle"
                    name="!conf-name=xui-style" />
 
-        <!-- 组件事件监听：响应来自运行时对应元素的交互事件 -->
-        <!-- 缺省使用 type 属性的值作为 name 属性的值，也就是，一个事件仅定义一个节点 -->
-        <xui:event xdef:ref="XuiComponentEvent"
-                   name="!conf-name=@attr:type" />
+        <!-- 缺省使用 for 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
+        <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
+                      name="!conf-name=@attr:for" />
 
         <!-- Start: 组件指令 -->
         <xui:each xdef:name="XuiComponentDirectiveEach" xdef:ref="XuiComponentDirective"
@@ -121,9 +120,12 @@
     <xdef:define xdef:name="XuiComponentStyle" xdef:ref="XuiComponentNamed">
     </xdef:define>
 
-    <xdef:define xdef:name="XuiComponentEvent" xdef:ref="XuiComponentNamed"
-                 xdef:value="xml"
-                 type="!conf-name" arg="var-name"
-    >
-    </xdef:define>
+    <!-- 消息派发器：监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件
+    @on 事件名称，如 `click`、`input` 等；
+    @for 消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
+    @data 消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
+    -->
+    <xdef:define xdef:name="XuiComponentMessageDispatch" xdef:ref="XuiComponentNamed"
+                 on="!conf-name" for="!conf-name" data="any"
+    />
 </template>
