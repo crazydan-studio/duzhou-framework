@@ -43,6 +43,6 @@
 
     <messages xdef:body-type="list" xdef:key-attr="name">
         <message xdef:ref="component/message.xdef"
-                 name="!string" />
+                 name="!conf-name" />
     </messages>
 </component>

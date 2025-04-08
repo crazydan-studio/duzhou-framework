@@ -56,6 +56,48 @@
     </template>
 
     <messages>
-        <message name="User_Login_Start" x:override="remove" />
+        <message name="User_Login_Start">
+            <state>
+                <loginWaiting>
+                    <enabled>true</enabled>
+                    <msg>正在登录中，请稍等。。。</msg>
+                </loginWaiting>
+            </state>
+
+            <http-post name="send-login-data"
+                       url="/auth/login"
+                       data="${data}"
+                       success="User_Login_Done_Success"
+                       error="User_Login_Done_Error"
+            />
+        </message>
+        <message name="User_Login_Done_Success">
+            <state>
+                <loginWaiting reset="true" />
+            </state>
+
+            <xui:when name="when-login-failed" cond="${!data.success}">
+                <state>
+                    <loginError>
+                        <enabled>true</enabled>
+                        <msg>${data.msg}</msg>
+                    </loginError>
+                </state>
+            </xui:when>
+            <xui:when name="when-login-success" cond="${data.success}">
+            </xui:when>
+        </message>
+        <message name="User_Login_Done_Error">
+            <state>
+                <loginWaiting reset="true" />
+                <loginError>
+                    <enabled>true</enabled>
+                    <msg>${error.message}</msg>
+                </loginError>
+            </state>
+        </message>
+
+        <message name="On_Input_for_state_loginInfo_username_value"
+                 x:override="remove" />
     </messages>
 </component>

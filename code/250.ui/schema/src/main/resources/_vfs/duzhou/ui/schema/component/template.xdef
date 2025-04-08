@@ -89,6 +89,7 @@
     </xdef:define>
 
     <!-- Note: 布局将影响运行时的节点嵌套关系，从而保证布局的准确性 -->
+    <!-- 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件） -->
     <xdef:define xdef:name="XuiComponentLayout" xdef:ref="XuiComponentNamed"
                  xdef:body-type="union"
                  xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.XuiLayout"

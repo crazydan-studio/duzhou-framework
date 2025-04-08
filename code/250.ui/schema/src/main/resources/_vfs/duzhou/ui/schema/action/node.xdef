@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- 逻辑操作节点定义：单独定义，以支持在指定包下创建 class -->
+<action-node xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+             xmlns:xui="xui"
+             x:schema="/nop/schema/xdef.xdef"
+             xdef:check-ns="xui"
+             xdef:name="XuiActionNode" xdef:ref="XuiActionNested"
+             xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.action"
+             xdef:bean-sub-type-prop="$type"
+>
+
+    <xdef:define xdef:name="XuiActionNamed"
+                 xdef:bean-tag-prop="$type"
+                 xui:when="string"
+                 name="conf-name" />
+
+    <xdef:define xdef:name="XuiActionDirective" xdef:ref="XuiActionNested" />
+
+    <xdef:define xdef:name="XuiActionNested" xdef:ref="XuiActionNamed"
+                 xdef:body-type="list" xdef:key-attr="name"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed>"
+                 xdef:bean-sub-type-prop="$type"
+    >
+        <!-- 更新组件状态：默认在同一层级仅出现一次 -->
+        <state xdef:name="XuiActionState" xdef:ref="XuiActionNamed"
+               xdef:body-type="map" xdef:bean-body-prop="dataList" xdef:bean-child-name="data"
+               name="!conf-name=xui-state"
+        >
+            <!-- 支持按照对象结构或者点分形式（`a.b.c`）为属性赋值
+            @reset 是否重置对象，即，将对象的属性均设置为缺省值；
+            -->
+            <xdef:unknown-tag xdef:name="XuiActionStateData"
+                              reset="boolean" xdef:value="xml" />
+        </state>
+
+        <!-- 向组件外部发送事件 -->
+        <event xdef:name="XuiActionEvent" xdef:ref="XuiActionNamed"
+               name="!conf-name=@attr:type"
+               type="!conf-name" data="any" />
+
+        <!-- 发送 HTTP POST 请求 -->
+        <http-post xdef:ref="XuiActionHttp"
+                   name="!conf-name" />
+        <!-- 发送 HTTP GET 请求 -->
+        <http-get xdef:ref="XuiActionHttp"
+                  name="!conf-name" />
+
+        <!-- 发送 GraphQL Mutation -->
+        <graphql-mutation xdef:ref="XuiActionGraphQL"
+                          name="!conf-name" />
+        <!-- 发送 GraphQL Query -->
+        <graphql-query xdef:ref="XuiActionGraphQL"
+                       name="!conf-name" />
+
+        <xui:when xdef:name="XuiActionDirectiveWhen" xdef:ref="XuiActionDirective"
+                  xui:when="~string"
+                  name="!conf-name"
+                  cond="!string" />
+    </xdef:define>
+
+    <!-- 发送 HTTP 请求
+    @url 请求 URL 地址；
+    @data 请求携带的数据；
+    @success 请求成功所触发的消息名称，并自动携带响应数据；
+    @error 请求发生异常所触发的消息名称，并自动携带异常信息；
+    -->
+    <xdef:define xdef:name="XuiActionHttpBase" xdef:ref="XuiActionNamed"
+                 url="!string" data="any"
+                 success="conf-name" error="conf-name"
+    />
+
+    <xdef:define xdef:name="XuiActionHttp" xdef:ref="XuiActionHttpBase" />
+
+    <!-- 发送 GraphQL 请求
+    @url GraphQL 服务地址，如，`/graphql`；
+    @data GraphQL 变量；
+    @field GraphQL 字段；
+    @selection GraphQL 选择字段集；
+    -->
+    <xdef:define xdef:name="XuiActionGraphQL" xdef:ref="XuiActionHttpBase"
+                 field="!string" selection="string"
+    />
+</action-node>

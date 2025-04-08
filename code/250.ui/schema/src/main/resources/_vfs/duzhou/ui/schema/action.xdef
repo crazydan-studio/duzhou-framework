@@ -19,12 +19,11 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件消息处理器定义：单独定义，以支持在指定包下创建 class -->
-<!-- TODO 限定 name 为驼峰形式（首字母大写、可包含下划线） -->
-<message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-         xmlns:xui="xui"
-         x:schema="/nop/schema/xdef.xdef"
-         xdef:name="XuiComponentMessage" xdef:ref="../action/node.xdef"
-         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-         xui:when="~string" name="!conf-name"
+<!-- 逻辑操作定义 -->
+<action xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+        xmlns:xui="xui"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:name="XuiAction" xdef:ref="action/node.xdef"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+        xui:when="~string" name="~conf-name"
 />

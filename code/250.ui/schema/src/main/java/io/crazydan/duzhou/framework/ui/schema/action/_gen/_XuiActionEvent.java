@@ -1,42 +1,66 @@
-package io.crazydan.duzhou.framework.ui.schema.component._gen;
+package io.crazydan.duzhou.framework.ui.schema.action._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayout;
+import io.crazydan.duzhou.framework.ui.schema.action.XuiActionEvent;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/component/template.xdef <p>
- * End: 组件指令
- * Note: 布局将影响运行时的节点嵌套关系，从而保证布局的准确性
- * 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件）
+ * generate from /duzhou/ui/schema/action/node.xdef <p>
+ * 向组件外部发送事件
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentLayout extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
+public abstract class _XuiActionEvent extends io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed {
     
     /**
      *  
-     * xml name: 
+     * xml name: data
      * 
      */
-    private io.crazydan.duzhou.framework.ui.schema.XuiLayout _type ;
+    private java.lang.Object _data ;
+    
+    /**
+     *  
+     * xml name: type
+     * 
+     */
+    private java.lang.String _type ;
     
     /**
      * 
-     * xml name: 
+     * xml name: data
      *  
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.XuiLayout getType(){
+    public java.lang.Object getData(){
+      return _data;
+    }
+
+    
+    public void setData(java.lang.Object value){
+        checkAllowChange();
+        
+        this._data = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: type
+     *  
+     */
+    
+    public java.lang.String getType(){
       return _type;
     }
 
     
-    public void setType(io.crazydan.duzhou.framework.ui.schema.XuiLayout value){
+    public void setType(java.lang.String value){
         checkAllowChange();
         
         this._type = value;
@@ -52,8 +76,6 @@ public abstract class _XuiComponentLayout extends io.crazydan.duzhou.framework.u
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._type = io.nop.api.core.util.FreezeHelper.deepFreeze(this._type);
-            
         }
     }
 
@@ -61,23 +83,25 @@ public abstract class _XuiComponentLayout extends io.crazydan.duzhou.framework.u
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("data",this.getData());
         out.putNotNull("type",this.getType());
     }
 
-    public XuiComponentLayout cloneInstance(){
-        XuiComponentLayout instance = newInstance();
+    public XuiActionEvent cloneInstance(){
+        XuiActionEvent instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentLayout instance){
+    protected void copyTo(XuiActionEvent instance){
         super.copyTo(instance);
         
+        instance.setData(this.getData());
         instance.setType(this.getType());
     }
 
-    protected XuiComponentLayout newInstance(){
-        return (XuiComponentLayout) ClassHelper.newInstance(getClass());
+    protected XuiActionEvent newInstance(){
+        return (XuiActionEvent) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON
