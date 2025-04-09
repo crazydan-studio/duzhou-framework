@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<lib xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:c="c" xmlns:thisLib="thisLib"
+     x:schema="/nop/schema/xlib.xdef"
+>
+    <tags>
+        <GenComponent outputMode="html">
+            <attr name="component" type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+
+            <source>
+                <script lang="ts">
+                </script>
+
+                <main>
+                    <thisLib:_DoGenComponentNode node="${component.template}" />
+                </main>
+
+                <style>
+                </style>
+            </source>
+        </GenComponent>
+
+        <_DoGenComponentNode outputMode="html">
+            <attr name="node" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <c:for var="child" items="${node.children}">
+                    <c:choose>
+                        <!--<when test="${child.$type == 'xui:layout'}">
+                        </when>
+                        <when test="${child.$type == 'xui:style'}">
+                        </when>
+                        <when test="${child.$type == 'xui:dispatch'}">
+                        </when>
+                        <when test="${child.$type == 'xui:each'}">
+                        </when>
+                        <when test="${child.$type == 'xui:when'}">
+                        </when>-->
+
+                        <!-- 内置组件 -->
+                        <when test="${child.$type == 'Text'}">
+                            <span name="${child.name}">${child.value}</span>
+                        </when>
+
+                        <!-- 外部组件 -->
+                        <when test="${child.$type == 'Image'}">
+                            <img name="${child.name}" src="${child.src}" />
+                        </when>
+                        <when test="${child.$type == 'Input'}">
+                            <input name="${child.name}" type="${child.type}" />
+                        </when>
+                        <when test="${child.$type == 'Checkbox'}">
+                            <div name="${child.name}">
+                                <input id="${child.name}-checkbox" type="checkbox" />
+                                <label for="${child.name}-checkbox">
+                                    <thisLib:_DoGenComponentNode node="${child}" />
+                                </label>
+                            </div>
+                        </when>
+                        <when test="${child.$type == 'Button'}">
+                            <button name="${child.name}">
+                                <thisLib:_DoGenComponentNode node="${child}" />
+                            </button>
+                        </when>
+                        <when test="${child.$type == 'Link'}">
+                            <a name="${child.name}" href="#">
+                                <thisLib:_DoGenComponentNode node="${child}" />
+                            </a>
+                        </when>
+                        <when test="${child instanceof io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode}">
+                            <div name="${child.name}">
+                                <thisLib:_DoGenComponentNode node="${child}" />
+                            </div>
+                        </when>
+                    </c:choose>
+                </c:for>
+            </source>
+        </_DoGenComponentNode>
+    </tags>
+</lib>

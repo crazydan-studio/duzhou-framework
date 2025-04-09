@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<script lang="ts">
-</script>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xmlns:svelte-gen="svelte-gen"
+        xpl:outputMode="html">
 
-<main>
-</main>
+    <c:script><![CDATA[
+    ]]></c:script>
 
-<style>
-</style>]]>
+    <svelte-gen:GenComponent
+            xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
+            component="${page}" />
 </c:unit>
