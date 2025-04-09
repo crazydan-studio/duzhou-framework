@@ -38,31 +38,25 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
     private static final String GEN_TPL_ROOT_PATH = "/duzhou/ui/runtime/web/templates/@app";
 
     @Test
-    public void test_gen_login_form() {
+    public void test_gen_login_app() {
         File targetDir = getTargetFile("code-gen/login-page");
-        // 确保目标目录已创建
-        FileHelper.assureParent(new File(targetDir, "/any"));
-
         String appDslPath = "/duzhou/ui/test/login.app.xui";
-        Object appDslModel = DslModelHelper.loadDslModelFromPath(appDslPath);
 
-        IEvalScope scope = XLang.newEvalScope();
-        scope.setLocalValue("runtime", APP_RUNTIME);
-        scope.setLocalValue("app", appDslModel);
-
-        XCodeGenerator gen = new XCodeGenerator(GEN_TPL_ROOT_PATH, targetDir.getAbsolutePath());
-        gen.forceOverride(true);
-        // Note: 第一个参数用于指定在根模板中所要执行的 *.xrun 文件路径或者其所在的目录，用于生成部分文件
-        gen.execute("/", scope);
+        genApp(appDslPath, targetDir);
     }
 
     @Test
-    public void test_gen_ui_designer() {
+    public void test_gen_ui_designer_app() {
         File targetDir = getTargetFile("code-gen/ui-designer");
+        String appDslPath = "/duzhou/ui/ui-designer/main.app.xui";
+
+        genApp(appDslPath, targetDir);
+    }
+
+    private void genApp(String appDslPath, File targetDir) {
         // 确保目标目录已创建
         FileHelper.assureParent(new File(targetDir, "/any"));
 
-        String appDslPath = "/duzhou/ui/ui-designer/main.app.xui";
         Object appDslModel = DslModelHelper.loadDslModelFromPath(appDslPath);
 
         IEvalScope scope = XLang.newEvalScope();
@@ -71,6 +65,9 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
 
         XCodeGenerator gen = new XCodeGenerator(GEN_TPL_ROOT_PATH, targetDir.getAbsolutePath());
         gen.forceOverride(true);
+        // 禁用对 xml 文本输出的格式化，因为，输出的 *.svelte 虽然为 xml 但其没有根节点，格式化时会抛出异常
+        gen.autoFormat(false);
+
         // Note: 第一个参数用于指定在根模板中所要执行的 *.xrun 文件路径或者其所在的目录，用于生成部分文件
         gen.execute("/", scope);
     }

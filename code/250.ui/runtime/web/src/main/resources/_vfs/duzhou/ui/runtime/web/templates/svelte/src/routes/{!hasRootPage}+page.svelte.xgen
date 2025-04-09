@@ -2,21 +2,13 @@
 
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <!-- 默认根页面 -->
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text">
-    <![CDATA[<script lang="ts">
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<script lang="ts">
 </script>
 
-<main>
-]]>
-
-    <c:for var="page" items="${pages}">
-        <![CDATA[<a href="${page.url}">${page.title}</a>]]>
-    </c:for>
-
-    <![CDATA[
-</main>
+<main>]]><c:for var="page" items="${pages}">
+    <![CDATA[<a href="${page.url}">${page.title}</a>]]>
+</c:for><![CDATA[</main>
 
 <style>
-</style>
-]]>
+</style>]]>
 </c:unit>

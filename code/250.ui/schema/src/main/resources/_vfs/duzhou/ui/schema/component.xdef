@@ -41,7 +41,9 @@
 
     <template xdef:ref="component/template.xdef" />
 
+    <!-- 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数 -->
     <messages xdef:body-type="list" xdef:key-attr="name">
+        <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
         <message xdef:ref="component/message.xdef"
                  name="!conf-name" />
     </messages>

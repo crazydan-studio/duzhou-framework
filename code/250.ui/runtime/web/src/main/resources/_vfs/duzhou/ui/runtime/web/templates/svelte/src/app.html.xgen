@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
-<c:unit xmlns:c="c"
-	xmlns:xpl="xpl" xpl:outputMode="text">
-	<![CDATA[<!doctype html>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%${app.logo}"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	%sveltekit.head%
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%${app.logo}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>${app.title}</title>
+    %sveltekit.head%
 </head>
 <body data-sveltekit-preload-data="hover">
-	<div style="display: contents">%sveltekit.body%</div>
+    <div style="display: contents">%sveltekit.body%</div>
 </body>
-</html>
-]]>
+</html>]]>
 </c:unit>

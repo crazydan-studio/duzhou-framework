@@ -3,11 +3,10 @@
 <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[${app.title}
 ===================================
 
-${app.description}
-]]>
-    <c:if test="${app.license}"><![CDATA[
+${app.description}]]>
+
+<c:if test="${app.license}"><![CDATA[
 ## 许可协议
 
-${app.license}
-]]></c:if>
+${app.license}]]></c:if>
 </c:unit>

@@ -22,12 +22,12 @@
 <!-- 页面引用：单独定义，以支持在指定包下创建 class
 @name 页面唯一标识；
 @path 页面资源的 v-path 路径；
-@title 页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
 @url 访问页面的 URL 地址；
+@title 页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
 -->
 <page-ref xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
           x:schema="/nop/schema/xdef.xdef"
           xdef:name="XuiAppPageRef" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.app"
           name="!conf-name" path="!v-path"
-          title="string" url="string"
+          url="!string" title="string"
 />

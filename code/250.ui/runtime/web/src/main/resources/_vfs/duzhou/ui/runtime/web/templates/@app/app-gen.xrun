@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!--
   - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -19,14 +18,15 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<app xmlns:x="/nop/schema/xdsl.xdef"
-     x:schema="/duzhou/ui/schema/app.xdef"
-     code="login-page-test" title="Login Page Test" version="0.1.0"
-     logo="/logo.svg"
->
+<!-- 根据应用模型和指定的运行时，生成应用的运行时构建代码 -->
+<c:unit xmlns:c="c">
 
-    <pages>
-        <page name="main" path="login.page.xui"
-              title="Login Page" url="/login" />
-    </pages>
-</app>
+    <c:script><![CDATA[
+        const template = '/duzhou/ui/runtime/web/templates/' + runtime;
+
+        // Note：使用调用方构造 codeGenerator 时指定的 targetDir 作为具体运行时构建产物的输出目录
+        codeGenerator
+            .withTplDir(template)
+            .execute('/', $scope);
+    ]]></c:script>
+</c:unit>
