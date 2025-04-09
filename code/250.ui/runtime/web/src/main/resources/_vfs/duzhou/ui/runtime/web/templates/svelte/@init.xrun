@@ -20,8 +20,31 @@
 
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
-    <gen:DefineLoopForOrm xpl:lib="/nop/codegen/xlib/gen.xlib" xpl:slotScope="builder">
+    <!-- DefineLoop 等只是在定义全局和 Loop 变量，实际的遍历逻辑在 XCodeGenerator 中 -->
+    <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
         <c:script><![CDATA[
+            const pages = [];
+            const rootPage = null;
+            for (const ref of app.pageRefs) {
+                const page = {
+                    ...ref.page,
+                    title: ref.title || ref.page.title,
+                    url: ref.url || '',
+                    routePath: (ref.url || '').$removeStart('/'),
+                };
+
+                if (!page.routePath) {
+                    rootPage = page;
+                }
+                pages.add(page);
+            }
+
+            builder.defineGlobalVar('app', app);
+            builder.defineGlobalVar('pages', pageRefs);
+            builder.defineGlobalVar('hasRootPage', !!rootPage);
+
+            // 第一个参数为循环变量名，第二个参数为循环变量的数据来源
+            builder.defineLoopVar('page', 'pages');
         ]]></c:script>
-    </gen:DefineLoopForOrm>
+    </gen:DefineLoop>
 </c:unit>

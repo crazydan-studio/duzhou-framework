@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<!-- 渲染根页面 -->
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
+
+    <c:script><![CDATA[
+    ]]></c:script>
+
+    <gen:Render template="/duzhou/ui/runtime/web/templates/svelte/@page"
+                targetDir="${targetResource.path.$filePath()}"
+                xpl:lib="/nop/codegen/xlib/gen.xlib" />
+</c:unit>
