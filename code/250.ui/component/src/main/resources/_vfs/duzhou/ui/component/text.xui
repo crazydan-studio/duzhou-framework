@@ -19,10 +19,14 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- Text 组件 -->
+<!-- Text 组件
+- 显示纯文本内容；
+-->
 <component xmlns:x="/nop/schema/xdsl.xdef"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
+
+    <import as="Text" from="xui-require:text" />
 
     <props>
     </props>
@@ -31,5 +35,6 @@
     </state>
 
     <template>
+        <Text props="${props}" />
     </template>
 </component>

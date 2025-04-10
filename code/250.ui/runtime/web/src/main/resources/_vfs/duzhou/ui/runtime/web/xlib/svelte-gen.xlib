@@ -31,7 +31,7 @@
                 </script>
 
                 <main>
-                    <thisLib:_DoGenComponentNode node="${component.template}" />
+                    <thisLib:GenComponentNode node="${component.template}" />
                 </main>
 
                 <style>
@@ -39,7 +39,7 @@
             </source>
         </GenComponent>
 
-        <_DoGenComponentNode outputMode="html">
+        <GenComponentNode outputMode="html">
             <attr name="node" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
@@ -58,42 +58,42 @@
 
                         <!-- 内置组件 -->
                         <when test="${child.$type == 'Text'}">
-                            <span name="${child.name}">${child.value}</span>
+                            <span xui-name="${child.name}">${child.value}</span>
                         </when>
 
                         <!-- 外部组件 -->
                         <when test="${child.$type == 'Image'}">
-                            <img name="${child.name}" src="${child.src}" />
+                            <img xui-name="${child.name}" src="${child.src}" />
                         </when>
                         <when test="${child.$type == 'Input'}">
-                            <input name="${child.name}" type="${child.type}" />
+                            <input xui-name="${child.name}" type="${child.type}" />
                         </when>
                         <when test="${child.$type == 'Checkbox'}">
-                            <div name="${child.name}">
+                            <div xui-name="${child.name}">
                                 <input id="${child.name}-checkbox" type="checkbox" />
                                 <label for="${child.name}-checkbox">
-                                    <thisLib:_DoGenComponentNode node="${child}" />
+                                    <thisLib:GenComponentNode node="${child}" />
                                 </label>
                             </div>
                         </when>
                         <when test="${child.$type == 'Button'}">
-                            <button name="${child.name}">
-                                <thisLib:_DoGenComponentNode node="${child}" />
+                            <button xui-name="${child.name}">
+                                <thisLib:GenComponentNode node="${child}" />
                             </button>
                         </when>
                         <when test="${child.$type == 'Link'}">
-                            <a name="${child.name}" href="#">
-                                <thisLib:_DoGenComponentNode node="${child}" />
+                            <a xui-name="${child.name}" href="#">
+                                <thisLib:GenComponentNode node="${child}" />
                             </a>
                         </when>
                         <when test="${child instanceof io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode}">
-                            <div name="${child.name}">
-                                <thisLib:_DoGenComponentNode node="${child}" />
+                            <div xui-name="${child.name}">
+                                <thisLib:GenComponentNode node="${child}" />
                             </div>
                         </when>
                     </c:choose>
                 </c:for>
             </source>
-        </_DoGenComponentNode>
+        </GenComponentNode>
     </tags>
 </lib>

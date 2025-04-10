@@ -19,10 +19,14 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- Image 组件 -->
+<!-- Image 组件
+- 支持预览、懒加载、自定义占位内容、自定义加载失败内容；
+-->
 <component xmlns:x="/nop/schema/xdsl.xdef"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
+
+    <import as="Image" from="xui-require:image" />
 
     <props>
     </props>
@@ -31,5 +35,6 @@
     </state>
 
     <template>
+        <Image title="${props.title}" src="${props.src}" />
     </template>
 </component>

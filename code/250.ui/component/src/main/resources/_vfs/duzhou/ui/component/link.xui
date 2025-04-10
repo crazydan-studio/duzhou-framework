@@ -19,14 +19,22 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 页面定义
-@title [可选] 可引用页面内的状态数据，从而支持动态设定标题；
+<!-- Link 组件
+- 资源超链接；
 -->
-<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-      x:schema="/nop/schema/xdef.xdef"
-      xdef:ref="/duzhou/ui/schema/component.xdef"
-      xdef:name="XuiPage" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-      title="string"
+<component xmlns:x="/nop/schema/xdsl.xdef"
+           x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <!-- Note: 页面本质上也是一个 UI 组件，完全复用组件的结构即可 -->
-</page>
+
+    <import as="Link" from="xui-require:link" />
+
+    <props>
+    </props>
+
+    <state>
+    </state>
+
+    <template>
+        <Link props="${props}" />
+    </template>
+</component>

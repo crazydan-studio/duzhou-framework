@@ -80,10 +80,10 @@
     </xdef:define>
 
     <!-- 发送 HTTP 请求
-    @url 请求 URL 地址；
-    @data 请求携带的数据；
-    @success 请求成功所触发的消息名称，并自动携带响应数据；
-    @error 请求发生异常所触发的消息名称，并自动携带异常信息；
+    @url [必填] 请求 URL 地址；
+    @data [可选] 请求携带的数据；
+    @success [可选] 请求成功所触发的消息名称，并自动携带响应数据；
+    @error [可选] 请求发生异常所触发的消息名称，并自动携带异常信息；
     -->
     <xdef:define xdef:name="XuiActionHttpBase" xdef:ref="XuiActionNamed"
                  url="!string" data="any"
@@ -93,10 +93,10 @@
     <xdef:define xdef:name="XuiActionHttp" xdef:ref="XuiActionHttpBase" />
 
     <!-- 发送 GraphQL 请求
-    @url GraphQL 服务地址，如，`/graphql`；
-    @data GraphQL 变量；
-    @field GraphQL 字段；
-    @selection GraphQL 选择字段集；
+    @url [必填] GraphQL 服务地址，如，`/graphql`；
+    @data [可选] GraphQL 变量；
+    @field [必填] GraphQL 字段；
+    @selection [可选] GraphQL 选择字段集；
     -->
     <xdef:define xdef:name="XuiActionGraphQL" xdef:ref="XuiActionHttpBase"
                  field="!string" selection="string"

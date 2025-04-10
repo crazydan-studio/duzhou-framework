@@ -49,7 +49,7 @@
 
         <!-- 文本组件：只包含文本内容的组件 -->
         <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
-              xdef:value="string" xdef:bean-body-prop="value"
+              xdef:value="string" xdef:bean-body-prop="children"
               xdef:unknown-attr="any"
               xui:style="string"
               name="!conf-name" />
@@ -71,9 +71,12 @@
 
     <xdef:define xdef:name="XuiComponentDirective" xdef:ref="XuiComponentNested" />
 
-    <!-- TODO 限定节点名为驼峰形式（首字母大写、可包含下划线）； -->
+    <!-- 组件（树）节点
+    @props [可选] 以对象形式向组件传递属性，其最终将被展开并合并到组件对象的属性列表中；
+    TODO 限定节点名为驼峰形式（首字母大写、可包含下划线）；
+    -->
     <xdef:define xdef:name="XuiComponentNode" xdef:ref="XuiComponentNested"
-                 xdef:unknown-attr="any"
+                 xdef:unknown-attr="any" props="any"
     >
         <!-- 除非应用了 xui:when 条件，否则，最多只有一个 xui:layout 和 xui:style 节点 -->
         <xui:layout xdef:ref="XuiComponentLayout"
@@ -96,8 +99,10 @@
         <!-- End: 组件指令 -->
     </xdef:define>
 
-    <!-- Note: 布局将影响运行时的节点嵌套关系，从而保证布局的准确性 -->
-    <!-- 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件） -->
+    <!-- 组件布局
+    - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
+    - 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件）；
+    -->
     <xdef:define xdef:name="XuiComponentLayout" xdef:ref="XuiComponentNamed"
                  xdef:body-type="union"
                  xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
