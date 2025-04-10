@@ -20,12 +20,15 @@
   -->
 
 <!-- 组件定义
-- 公共配置放在基础组件定义中，其余组件通过 x:extends 继承这些公共配置
+- 组件的缺省配置定义在 `/duzhou/ui/component/default.xui` 中，所有组件均自动扩展自该组件，
+  若需要排除该缺省配置，则需在 `x:extends` 的 v-path 列表中包含 `none` 值，如，`none,/xx/xx.xui`；
 -->
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            x:schema="/nop/schema/xdef.xdef"
+           xdef:default-extends="/duzhou/ui/component/default.xui"
            xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
 >
+
     <import xdef:ref="component/import.xdef"
             xdef:unique-attr="as" as="!string" />
 

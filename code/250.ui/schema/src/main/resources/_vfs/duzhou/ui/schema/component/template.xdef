@@ -28,6 +28,11 @@
           xui:when="~string" name="~conf-name"
 >
 
+    <!-- 组件命名元素
+    @name [必填] 组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
+          一般采用 `{业务数据名}-{组件类型名}` 形式命名；
+    @xui:when [可选] 组件元素有效的条件，以 `${xxx}` 形式表示其值，且在其值为 `true` 时，该组件元素才有效；
+    -->
     <xdef:define xdef:name="XuiComponentNamed"
                  xdef:bean-tag-prop="$type"
                  xui:when="string"
