@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  ~ Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this program.
+  ~ If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<model xmlns:x="/nop/schema/xdsl.xdef"
+       x:schema="/nop/schema/register-model.xdef"
+       name="xui"
+>
+
+    <loaders>
+        <!-- 在 Nop 中，是以文件名的最后两个点作为 fileType 的，
+        也就是每个资源文件默认均按两级后缀进行优先匹配，仅在二级后缀无匹配结果时，
+        才匹配一级后缀，因此，一二级后缀的匹配是与顺序无关的
+        -->
+        <xdsl-loader
+                fileType="xui"
+                schemaPath="/duzhou/ui/schema/component.xdef" />
+        <xdsl-loader
+                fileType="app.xui"
+                schemaPath="/duzhou/ui/schema/app.xdef" />
+        <xdsl-loader
+                fileType="page.xui"
+                schemaPath="/duzhou/ui/schema/page.xdef" />
+    </loaders>
+</model>

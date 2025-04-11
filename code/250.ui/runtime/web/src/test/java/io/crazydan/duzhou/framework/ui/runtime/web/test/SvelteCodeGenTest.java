@@ -25,8 +25,8 @@ import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.nop.codegen.XCodeGenerator;
 import io.nop.commons.util.FileHelper;
 import io.nop.core.lang.eval.IEvalScope;
+import io.nop.core.resource.component.ResourceComponentManager;
 import io.nop.xlang.api.XLang;
-import io.nop.xlang.xdsl.DslModelHelper;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -57,7 +57,7 @@ public class SvelteCodeGenTest extends NopJunitTestCase {
         // 确保目标目录已创建
         FileHelper.assureParent(new File(targetDir, "/any"));
 
-        Object appDslModel = DslModelHelper.loadDslModelFromPath(appDslPath);
+        Object appDslModel = ResourceComponentManager.instance().loadComponentModel(appDslPath);
 
         IEvalScope scope = XLang.newEvalScope();
         scope.setLocalValue("runtime", APP_RUNTIME);

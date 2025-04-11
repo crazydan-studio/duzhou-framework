@@ -25,7 +25,7 @@ import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.VirtualFileSystem;
-import io.nop.xlang.xdsl.DslModelHelper;
+import io.nop.core.resource.component.ResourceComponentManager;
 import io.nop.xlang.xdsl.DslNodeLoader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ public class XuiComponentTest extends NopJunitTestCase {
     }
 
     private XuiComponent parseModel(String path) {
-        return (XuiComponent) DslModelHelper.loadDslModelFromPath(path);
+        return (XuiComponent) ResourceComponentManager.instance().loadComponentModel(path);
     }
 
     private XNode parseXNode(String path) {
