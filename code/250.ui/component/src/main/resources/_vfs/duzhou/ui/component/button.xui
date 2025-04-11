@@ -24,6 +24,8 @@
            x:schema="/duzhou/ui/schema/component.xdef"
 >
 
+    <import as="Button" from="native:button" />
+
     <props>
     </props>
 

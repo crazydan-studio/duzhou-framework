@@ -33,35 +33,35 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiAppPageRef extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  必填
      * xml name: name
      * 页面唯一标识；
      */
     private java.lang.String _name ;
     
     /**
-     *  
+     *  必填
      * xml name: path
      * 页面资源的 v-path 路径；
      */
     private java.lang.String _path ;
     
     /**
-     *  
+     *  可选
      * xml name: title
      * 页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
      */
     private java.lang.String _title ;
     
     /**
-     *  
+     *  必填
      * xml name: url
      * 访问页面的 URL 地址；
      */
     private java.lang.String _url ;
     
     /**
-     * 
+     * 必填
      * xml name: name
      *  页面唯一标识；
      */
@@ -80,7 +80,7 @@ public abstract class _XuiAppPageRef extends io.nop.core.resource.component.Abst
 
     
     /**
-     * 
+     * 必填
      * xml name: path
      *  页面资源的 v-path 路径；
      */
@@ -99,7 +99,7 @@ public abstract class _XuiAppPageRef extends io.nop.core.resource.component.Abst
 
     
     /**
-     * 
+     * 可选
      * xml name: title
      *  页面标题，其可与应用标题一起组合成完整标题。但以页面资源内的 title 优先；
      */
@@ -118,7 +118,7 @@ public abstract class _XuiAppPageRef extends io.nop.core.resource.component.Abst
 
     
     /**
-     * 
+     * 必填
      * xml name: url
      *  访问页面的 URL 地址；
      */

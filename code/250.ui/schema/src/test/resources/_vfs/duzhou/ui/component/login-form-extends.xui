@@ -56,7 +56,7 @@
     </template>
 
     <messages>
-        <message name="User_Login_Start">
+        <message type="User_Login_Start">
             <state>
                 <loginWaiting>
                     <enabled>true</enabled>
@@ -71,7 +71,7 @@
                        error="User_Login_Done_Error"
             />
         </message>
-        <message name="User_Login_Done_Success">
+        <message type="User_Login_Done_Success">
             <state>
                 <loginWaiting reset="true" />
             </state>
@@ -87,7 +87,7 @@
             <xui:when name="when-login-success" cond="${data.success}">
             </xui:when>
         </message>
-        <message name="User_Login_Done_Error">
+        <message type="User_Login_Done_Error">
             <state>
                 <loginWaiting reset="true" />
                 <loginError>
@@ -97,7 +97,7 @@
             </state>
         </message>
 
-        <message name="On_Input_for_state_loginInfo_username_value"
+        <message type="On_Input_for_state_loginInfo_username_value"
                  x:override="remove" />
     </messages>
 </component>

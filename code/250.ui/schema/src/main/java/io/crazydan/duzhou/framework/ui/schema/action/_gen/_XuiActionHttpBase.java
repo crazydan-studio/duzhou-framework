@@ -17,35 +17,35 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiActionHttpBase extends io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed {
     
     /**
-     *  
+     *  可选
      * xml name: data
      * 请求携带的数据；
      */
     private java.lang.Object _data ;
     
     /**
-     *  
+     *  可选
      * xml name: error
      * 请求发生异常所触发的消息名称，并自动携带异常信息；
      */
     private java.lang.String _error ;
     
     /**
-     *  
+     *  可选
      * xml name: success
      * 请求成功所触发的消息名称，并自动携带响应数据；
      */
     private java.lang.String _success ;
     
     /**
-     *  
+     *  必填
      * xml name: url
      * 请求 URL 地址；
      */
     private java.lang.String _url ;
     
     /**
-     * 
+     * 可选
      * xml name: data
      *  请求携带的数据；
      */
@@ -64,7 +64,7 @@ public abstract class _XuiActionHttpBase extends io.crazydan.duzhou.framework.ui
 
     
     /**
-     * 
+     * 可选
      * xml name: error
      *  请求发生异常所触发的消息名称，并自动携带异常信息；
      */
@@ -83,7 +83,7 @@ public abstract class _XuiActionHttpBase extends io.crazydan.duzhou.framework.ui
 
     
     /**
-     * 
+     * 可选
      * xml name: success
      *  请求成功所触发的消息名称，并自动携带响应数据；
      */
@@ -102,7 +102,7 @@ public abstract class _XuiActionHttpBase extends io.crazydan.duzhou.framework.ui
 
     
     /**
-     * 
+     * 必填
      * xml name: url
      *  请求 URL 地址；
      */

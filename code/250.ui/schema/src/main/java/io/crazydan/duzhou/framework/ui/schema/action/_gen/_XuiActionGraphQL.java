@@ -17,21 +17,21 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiActionGraphQL extends io.crazydan.duzhou.framework.ui.schema.action.XuiActionHttpBase {
     
     /**
-     *  
+     *  必填
      * xml name: field
      * GraphQL 字段；
      */
     private java.lang.String _field ;
     
     /**
-     *  
+     *  可选
      * xml name: selection
      * GraphQL 选择字段集；
      */
     private java.lang.String _selection ;
     
     /**
-     * 
+     * 必填
      * xml name: field
      *  GraphQL 字段；
      */
@@ -50,7 +50,7 @@ public abstract class _XuiActionGraphQL extends io.crazydan.duzhou.framework.ui.
 
     
     /**
-     * 
+     * 可选
      * xml name: selection
      *  GraphQL 选择字段集；
      */

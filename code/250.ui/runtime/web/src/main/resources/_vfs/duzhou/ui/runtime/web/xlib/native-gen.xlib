@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- 提供原生组件的代码生成函数
+- 函数名采用 `_GenNative_{code}` 形式，其中，`{code}` 与 `<import from="native:{code}"/>`
+  中的原生组件标识 `{code}` 一致；
+-->
+<lib xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:thisLib="thisLib"
+     x:schema="/nop/schema/xlib.xdef"
+>
+    <tags>
+        <GenNative_text outputMode="html">
+            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
+
+            <source>
+                <span xui-name="${source.name}">${source.value}</span>
+            </source>
+        </GenNative_text>
+
+        <GenNative_image outputMode="html">
+            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <img xui-name="${source.name}" src="${source.src}" />
+            </source>
+        </GenNative_image>
+
+        <GenNative_link outputMode="html">
+            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <a xui-name="${source.name}" href="${source.src}">
+                    <thisLib:GenComponentNode node="${child}" />
+                </a>
+            </source>
+        </GenNative_link>
+    </tags>
+</lib>

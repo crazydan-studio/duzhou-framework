@@ -24,12 +24,11 @@
       x:schema="/duzhou/ui/schema/page.xdef"
 >
 
-    <import as="Form" from="/duzhou/ui/test/form/form.xui" />
-    <import as="Input" from="/duzhou/ui/test/form/input.xui" />
-    <import as="Button" from="/duzhou/ui/test/form/button.xui" />
-    <import as="Mask" from="/duzhou/ui/test/form/mask.xui" />
-    <import as="Checkbox" from="/duzhou/ui/test/form/checkbox.xui" />
-    <import as="Link" from="/duzhou/ui/test/form/link.xui" />
+    <import as="Form" from="/duzhou/ui/component/form.xui" />
+    <import as="Input" from="/duzhou/ui/component/form/input.xui" />
+    <import as="Checkbox" from="/duzhou/ui/component/form/checkbox.xui" />
+    <import as="Button" from="/duzhou/ui/component/button.xui" />
+    <import as="Link" from="/duzhou/ui/component/link.xui" />
     <import as="Image" from="/duzhou/ui/component/image.xui" />
 
     <props>

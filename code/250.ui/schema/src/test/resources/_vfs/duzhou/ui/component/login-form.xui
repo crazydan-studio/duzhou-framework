@@ -159,10 +159,10 @@
     <!-- 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数 -->
     <messages>
         <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
-        <message name="User_Login_Start">
+        <message type="user_Login_Start">
         </message>
 
-        <message name="On_Input_for_state_loginInfo_username_value">
+        <message type="On_Input_for_state_loginInfo_username_value">
             <state>
                 <loginInfo.username.value>${value}</loginInfo.username.value>
             </state>

@@ -33,14 +33,14 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiPage extends io.crazydan.duzhou.framework.ui.schema.XuiComponent {
     
     /**
-     *  
+     *  可选
      * xml name: title
      * 可引用页面内的状态数据，从而支持动态设定标题；
      */
     private java.lang.String _title ;
     
     /**
-     * 
+     * 可选
      * xml name: title
      *  可引用页面内的状态数据，从而支持动态设定标题；
      */

@@ -19,12 +19,16 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件消息处理器定义：单独定义，以支持在指定包下创建 class -->
-<!-- TODO 限定 name 为驼峰形式（首字母大写、可包含下划线） -->
+<!-- 组件消息处理器定义：单独定义，以支持在指定包下创建 class
+- 每个消息均由唯一 `type` 表示，并以 `data` 作为负载数据的引用名字；
+
+@type [必填] 消息类型，其值需为首字母大写的驼峰形式（可包含下划线）；
+-->
 <message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
          xmlns:xui="xui"
          x:schema="/nop/schema/xdef.xdef"
          xdef:name="XuiComponentMessage" xdef:ref="../action/node.xdef"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-         xui:when="~string" name="!conf-name"
+         xui:when="~string" name="~conf-name"
+         type="!component-name"
 />

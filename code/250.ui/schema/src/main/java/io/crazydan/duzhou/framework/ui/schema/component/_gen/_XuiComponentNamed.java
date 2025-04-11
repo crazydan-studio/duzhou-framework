@@ -10,7 +10,7 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 
+ * 组件命名元素
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -24,9 +24,10 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
     private java.lang.String _$type ;
     
     /**
-     *  
+     *  必填
      * xml name: name
-     * 
+     * 组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
+     * 一般采用 `{业务数据名}-{组件类型名}` 形式命名；
      */
     private java.lang.String _name ;
     
@@ -50,9 +51,10 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
 
     
     /**
-     * 
+     * 必填
      * xml name: name
-     *  
+     *  组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
+     * 一般采用 `{业务数据名}-{组件类型名}` 形式命名；
      */
     
     public java.lang.String getName(){

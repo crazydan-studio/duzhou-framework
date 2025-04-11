@@ -11,6 +11,8 @@ import io.nop.commons.util.ClassHelper;
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
  * 校验组件：可自嵌套，从而支持分层校验
+ * 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域
+ * 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

@@ -27,7 +27,8 @@ import io.nop.commons.util.ClassHelper;
  * - along with this program.
  * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  * 组件定义
- * - 公共配置放在基础组件定义中，其余组件通过 x:extends 继承这些公共配置
+ * - 组件的缺省配置定义在 `/duzhou/ui/component/default.xui` 中，所有组件均自动扩展自该组件，
+ * 若需要排除该缺省配置，则需在 `x:extends` 的 v-path 列表中包含 `none` 值，如，`none,/xx/xx.xui`；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -53,21 +54,22 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
      * - along with this program.
      * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
      * 组件导入指令定义：单独定义，以支持在指定包下创建 class
-     * TODO 限定 as 为驼峰形式（首字母大写、可包含下划线）
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport> _imports = KeyedList.emptyList();
     
     /**
      *  
      * xml name: messages
-     * 
+     * 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage> _messages = KeyedList.emptyList();
     
     /**
      *  
      * xml name: props
-     * props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递
+     * 组件属性列表
+     * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
+     * - 内置 `children` 属性，用于获取当前组件的嵌套节点；
      */
     private io.nop.core.lang.xml.XNode _props ;
     
@@ -123,7 +125,6 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
      * - along with this program.
      * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
      * 组件导入指令定义：单独定义，以支持在指定包下创建 class
-     * TODO 限定 as 为驼峰形式（首字母大写、可包含下划线）
      */
     
     public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport> getImports(){
@@ -168,7 +169,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 
      * xml name: messages
-     *  
+     *  逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数
      */
     
     public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage> getMessages(){
@@ -179,7 +180,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     public void setMessages(java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage> value){
         checkAllowChange();
         
-        this._messages = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage::getName);
+        this._messages = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage::getType);
            
     }
 
@@ -196,7 +197,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         checkAllowChange();
         java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage> list = this.getMessages();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage::getName);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage::getType);
             setMessages(list);
         }
         list.add(item);
@@ -213,7 +214,9 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 
      * xml name: props
-     *  props 为外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递
+     *  组件属性列表
+     * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
+     * - 内置 `children` 属性，用于获取当前组件的嵌套节点；
      */
     
     public io.nop.core.lang.xml.XNode getProps(){

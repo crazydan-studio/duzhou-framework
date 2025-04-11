@@ -19,6 +19,10 @@
 
 package io.crazydan.duzhou.framework.ui.initialize;
 
+import java.util.Arrays;
+import java.util.List;
+
+import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.domain.XuiStdDomainHandler;
 import io.nop.commons.lang.impl.Cancellable;
 import io.nop.core.CoreConstants;
@@ -40,11 +44,16 @@ public class XuiCoreInitializer implements ICoreInitializer {
 
     @Override
     public void initialize() {
-        IStdDomainHandler handler = XuiStdDomainHandler.INSTANCE;
-        StdDomainRegistry.instance().registerStdDomainHandler(handler);
+        List<IStdDomainHandler> handlers = //
+                Arrays.asList( //
+                               XuiStdDomainHandler.INSTANCE,
+                               new GenericStdDomainHandlers.ComponentNameType());
+
+        StdDomainRegistry registry = StdDomainRegistry.instance();
+        handlers.forEach(registry::registerStdDomainHandler);
 
         this.cancellable.appendOnCancelTask(() -> {
-            StdDomainRegistry.instance().unregisterStdDomainHandler(handler);
+            handlers.forEach(registry::unregisterStdDomainHandler);
         });
     }
 

@@ -20,6 +20,7 @@
   -->
 
 <!-- 页面定义
+
 @title [可选] 可引用页面内的状态数据，从而支持动态设定标题；
 -->
 <page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"

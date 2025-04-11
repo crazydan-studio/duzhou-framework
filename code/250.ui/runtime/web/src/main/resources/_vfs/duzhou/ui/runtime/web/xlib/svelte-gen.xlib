@@ -21,6 +21,7 @@
 <lib xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:c="c" xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
+     x:extends="native-gen.xlib"
 >
     <tags>
         <GenComponent outputMode="html">
@@ -58,7 +59,7 @@
 
                         <!-- 内置组件 -->
                         <when test="${child.$type == 'Text'}">
-                            <span xui-name="${child.name}">${child.value}</span>
+                            <thisLib:GenNative_text source="${child}" />
                         </when>
 
                         <!-- 外部组件 -->
