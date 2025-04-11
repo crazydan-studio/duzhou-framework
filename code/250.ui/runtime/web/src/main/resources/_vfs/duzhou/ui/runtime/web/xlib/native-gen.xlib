@@ -28,7 +28,10 @@
 >
     <tags>
         <GenNative_text outputMode="html">
-            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
                 <span xui-name="${source.name}">${source.value}</span>
@@ -36,7 +39,10 @@
         </GenNative_text>
 
         <GenNative_image outputMode="html">
-            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
                 <img xui-name="${source.name}" src="${source.src}" />
@@ -44,11 +50,16 @@
         </GenNative_image>
 
         <GenNative_link outputMode="html">
-            <attr name="source" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
                 <a xui-name="${source.name}" href="${source.src}">
-                    <thisLib:GenComponentNode node="${child}" />
+                    <thisLib:GenComponentNode
+                            component="${component}"
+                            node="${source}" />
                 </a>
             </source>
         </GenNative_link>

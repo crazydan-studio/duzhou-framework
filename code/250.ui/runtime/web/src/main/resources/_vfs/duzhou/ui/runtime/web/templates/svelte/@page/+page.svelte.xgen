@@ -9,5 +9,5 @@
 
     <svelte-gen:GenComponent
             xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
-            component="${page}" />
+            component="${page.meta}" />
 </c:unit>

@@ -19,20 +19,23 @@
   -->
 
 <lib xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:c="c" xmlns:thisLib="thisLib"
+     xmlns:c="c" xmlns:xpl="xpl" xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
      x:extends="native-gen.xlib"
 >
     <tags>
         <GenComponent outputMode="html">
-            <attr name="component" type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
 
             <source>
                 <script lang="ts">
                 </script>
 
                 <main>
-                    <thisLib:GenComponentNode node="${component.template}" />
+                    <thisLib:GenComponentNode
+                            component="${component}"
+                            node="${component.template}" />
                 </main>
 
                 <style>
@@ -41,57 +44,71 @@
         </GenComponent>
 
         <GenComponentNode outputMode="html">
-            <attr name="node" type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="node"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
                 <c:for var="child" items="${node.children}">
                     <c:choose>
-                        <!--<when test="${child.$type == 'xui:layout'}">
+                        <!-- 构建组件指令 -->
+                        <when test="${child.$type == 'xui:layout'}">
+                            <div />
                         </when>
                         <when test="${child.$type == 'xui:style'}">
+                            <div />
                         </when>
                         <when test="${child.$type == 'xui:dispatch'}">
+                            <div />
                         </when>
                         <when test="${child.$type == 'xui:each'}">
+                            <div />
                         </when>
                         <when test="${child.$type == 'xui:when'}">
-                        </when>-->
-
+                            <div />
+                        </when>
                         <!-- 内置组件 -->
                         <when test="${child.$type == 'Text'}">
-                            <thisLib:GenNative_text source="${child}" />
+                            <thisLib:GenNative_text
+                                    component="${component}"
+                                    source="${child}" />
                         </when>
+                        <!-- 构建组件节点 -->
+                        <otherwise>
+                            <c:script><![CDATA[
+                                const nativeType = component.getNodeNativeType(child);
+                            ]]></c:script>
 
-                        <!-- 外部组件 -->
-                        <when test="${child.$type == 'Image'}">
-                            <img xui-name="${child.name}" src="${child.src}" />
-                        </when>
-                        <when test="${child.$type == 'Input'}">
-                            <input xui-name="${child.name}" type="${child.type}" />
-                        </when>
-                        <when test="${child.$type == 'Checkbox'}">
-                            <div xui-name="${child.name}">
-                                <input id="${child.name}-checkbox" type="checkbox" />
-                                <label for="${child.name}-checkbox">
-                                    <thisLib:GenComponentNode node="${child}" />
-                                </label>
-                            </div>
-                        </when>
-                        <when test="${child.$type == 'Button'}">
-                            <button xui-name="${child.name}">
-                                <thisLib:GenComponentNode node="${child}" />
-                            </button>
-                        </when>
-                        <when test="${child.$type == 'Link'}">
-                            <a xui-name="${child.name}" href="#">
-                                <thisLib:GenComponentNode node="${child}" />
-                            </a>
-                        </when>
-                        <when test="${child instanceof io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode}">
-                            <div xui-name="${child.name}">
-                                <thisLib:GenComponentNode node="${child}" />
-                            </div>
-                        </when>
+                            <!-- 构建原生组件节点 -->
+                            <c:if test="${nativeType != null}">
+                                <c:script><![CDATA[
+                                    import io.nop.core.resource.component.ResourceComponentManager;
+
+                                    const libPath = location().getPath();
+                                    const lib = ResourceComponentManager.instance().loadComponentModel(libPath);
+                                    const tag = lib.getTag('GenNative_' + nativeType);
+
+                                    const ret = tag.generateNode({
+                                        component,
+                                        source: child
+                                    }).contentText();
+                                    $out.text(null, ret);
+                                ]]></c:script>
+                            </c:if>
+                            <!-- 构建自定义组件节点，并保持组件名不变（注意，Svelte 组件名的首字母必须大写） -->
+                            <!-- TODO 处理 xui:when -->
+                            <!-- TODO 直接展开组件属性 -->
+                            <_ xpl:is="${child.$type}"
+                               xpl:if="nativeType == null"
+                               xpl:attrs="{}"
+                               xui-name="${child.name}"
+                            >
+                                <thisLib:GenComponentNode
+                                        component="${component}"
+                                        node="${child}" />
+                            </_>
+                        </otherwise>
                     </c:choose>
                 </c:for>
             </source>
