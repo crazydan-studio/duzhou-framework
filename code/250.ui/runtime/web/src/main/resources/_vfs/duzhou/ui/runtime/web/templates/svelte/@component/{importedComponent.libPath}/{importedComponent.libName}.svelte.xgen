@@ -19,17 +19,19 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%${app.logo}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${app.title}</title>
-    %sveltekit.head%
-</head>
-<body data-sveltekit-preload-data="hover">
-    <div style="display: contents">%sveltekit.body%</div>
-</body>
-</html>]]>
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xmlns:svelte-gen="svelte-gen"
+        xpl:outputMode="html">
+
+    <c:script><![CDATA[
+        import io.nop.core.resource.component.ResourceComponentManager;
+
+        const resourcePath = importedComponent.resourcePath;
+        const model = ResourceComponentManager.instance().loadComponentModel(resourcePath);
+    ]]></c:script>
+
+    <svelte-gen:GenComponent
+            xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
+            forPage="false"
+            component="${model}"
+    />
 </c:unit>

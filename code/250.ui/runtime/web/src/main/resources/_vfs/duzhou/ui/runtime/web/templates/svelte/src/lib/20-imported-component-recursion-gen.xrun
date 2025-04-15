@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <!--
   - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -19,15 +18,37 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 构建页面 -->
+<!-- 递归构建 import 组件 -->
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
     <c:script><![CDATA[
+        import io.nop.core.resource.component.ResourceComponentManager;
+
+        const newComponents = [];
+        // Note: components 为上层构建器提供的全局变量
+        for (let component of components) {
+            component
+                .getNonNativeImports()
+                .forEach(imp => {
+                    const resourcePath = imp.from;
+                    if (ignoredComponents.contains(resourcePath)) {
+                        return;
+                    }
+
+                    ignoredComponents.add(resourcePath);
+
+                    const model = ResourceComponentManager.instance().loadComponentModel(resourcePath);
+                    newComponents.add(model);
+                });
+        }
+
+        // 向模板传递新的 components 变量
+        assign('components', newComponents);
     ]]></c:script>
 
     <gen:Render
             xpl:lib="/nop/codegen/xlib/gen.xlib"
-            template="/duzhou/ui/runtime/web/templates/svelte/@page"
+            template="/duzhou/ui/runtime/web/templates/svelte/@component"
             targetDir="${targetResource.path.$filePath()}"
     />
 </c:unit>

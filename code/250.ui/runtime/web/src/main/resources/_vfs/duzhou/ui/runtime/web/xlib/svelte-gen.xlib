@@ -25,23 +25,42 @@
 >
     <tags>
         <GenComponent outputMode="html">
+            <attr name="forPage" type="Boolean" />
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
 
             <source>
                 <script lang="ts">
+                    <thisLib:GenComponentImports
+                            component="${component}" />
                 </script>
 
-                <main>
+                <_ xpl:is="${forPage ? 'main' : 'div'}">
                     <thisLib:GenComponentNode
                             component="${component}"
                             node="${component.template}" />
-                </main>
+                </_>
 
                 <style>
                 </style>
             </source>
         </GenComponent>
+
+        <GenComponentImports outputMode="text">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+
+            <source>
+                <c:for var="imp"
+                       items="${component.getNonNativeImports()}">
+                    <c:script><![CDATA[
+                        const name = imp.as;
+                        const path = '$lib' + imp.from.$removeLastPart('/') + '/' + name + '.svelte';
+                    ]]></c:script>
+                    import ${name} from '${path}';
+                </c:for>
+            </source>
+        </GenComponentImports>
 
         <GenComponentNode outputMode="html">
             <attr name="component"

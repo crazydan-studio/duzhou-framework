@@ -1,5 +1,8 @@
 package io.crazydan.duzhou.framework.ui.schema;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import io.crazydan.duzhou.framework.ui.schema._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
@@ -25,6 +28,13 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
                ? imported.getFrom()
                          .substring(NATIVE_IMPORT_PREFIX.length())
                : null;
+    }
+
+    /** 获取非原生导入组件列表 */
+    public List<XuiComponentImport> getNonNativeImports() {
+        return getImports().stream()
+                           .filter(imp -> !imp.getFrom().startsWith(NATIVE_IMPORT_PREFIX))
+                           .collect(Collectors.toList());
     }
 
     private void initTemplate() {

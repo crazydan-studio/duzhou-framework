@@ -45,7 +45,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <img xui-name="${source.name}" src="${source.src}" />
+                <img xui-name="${source.name}" src="${'/logo.svg'}" />
             </source>
         </GenNative_image>
 
@@ -56,7 +56,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <a xui-name="${source.name}" href="${source.src}">
+                <a xui-name="${source.name}" href="${'#'}">
                     <thisLib:GenComponentNode
                             component="${component}"
                             node="${source}" />

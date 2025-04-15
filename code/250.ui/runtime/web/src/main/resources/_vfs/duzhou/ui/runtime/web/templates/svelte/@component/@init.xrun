@@ -23,34 +23,29 @@
     <!-- DefineLoop 等只是在定义全局和 Loop 变量，实际的遍历逻辑在 XCodeGenerator 中 -->
     <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
         <c:script><![CDATA[
-            const pages = [];
-            let rootPage = null;
-            // Note: 循环变量不能为 const，否则会报异常 nop.err.xlang.const-decl-no-initializer
-            for (let ref of app.pageRefs) {
-                const page = {
-                    meta: ref.page,
-                    title: ref.title || ref.page.title,
-                    url: ref.url || '',
-                    routePath: (ref.url || '').$removeStart('/'),
-                };
+            const importedComponents = [];
+            // Note: components 为上层构建器提供的全局变量
+            for (let component of components) {
+                component
+                    .getNonNativeImports()
+                    .forEach(imp => {
+                        const resourcePath = imp.from;
+                        if (ignoredComponents.contains(resourcePath)) {
+                            return;
+                        }
 
-                if (!page.routePath) {
-                    rootPage = page;
-                }
-                pages.add(page);
+                        importedComponents.add({
+                            libName: imp.as,
+                            libPath: resourcePath.$removeStart('/').$removeLastPart('/'),
+                            resourcePath,
+                        });
+                    });
             }
 
-            builder.defineGlobalVar('app', app);
-            builder.defineGlobalVar('pages', pages);
-            builder.defineGlobalVar('hasRootPage', !!rootPage);
-
-            // 组件构建变量
-            builder.defineGlobalVar('components', pages.map(p => p.meta));
-            // 记录已构建的组件，避免出现死循环和重复构建
-            builder.defineGlobalVar('ignoredComponents', []);
+            builder.defineGlobalVar('importedComponents', importedComponents);
 
             // 第一个参数为循环变量名，第二个参数为循环变量的数据来源
-            builder.defineLoopVar('page', 'pages');
+            builder.defineLoopVar('importedComponent', 'importedComponents');
         ]]></c:script>
     </gen:DefineLoop>
 </c:unit>

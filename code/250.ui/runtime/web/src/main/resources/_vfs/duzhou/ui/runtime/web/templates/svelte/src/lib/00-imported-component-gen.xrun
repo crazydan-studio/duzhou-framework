@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <!--
   - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -19,17 +18,17 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%${app.logo}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${app.title}</title>
-    %sveltekit.head%
-</head>
-<body data-sveltekit-preload-data="hover">
-    <div style="display: contents">%sveltekit.body%</div>
-</body>
-</html>]]>
+<!-- 构建 import 组件 -->
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
+
+    <c:script><![CDATA[
+        // 需由上层构建器提供全局变量 components：
+        // - builder.defineGlobalVar('components', components);
+    ]]></c:script>
+
+    <gen:Render
+            xpl:lib="/nop/codegen/xlib/gen.xlib"
+            template="/duzhou/ui/runtime/web/templates/svelte/@component"
+            targetDir="${targetResource.path.$filePath()}"
+    />
 </c:unit>
