@@ -63,5 +63,18 @@
                 </a>
             </source>
         </GenNative_link>
+
+        <GenNative_form outputMode="html">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <form data-xui-name="${source['xui:name']}">
+                    {@render children?.()}
+                </form>
+            </source>
+        </GenNative_form>
     </tags>
 </lib>

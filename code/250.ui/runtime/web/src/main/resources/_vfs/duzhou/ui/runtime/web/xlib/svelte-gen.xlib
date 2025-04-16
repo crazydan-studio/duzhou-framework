@@ -33,9 +33,15 @@
                 <script lang="ts">
                     <thisLib:GenComponentImports
                             component="${component}" />
+
+                    <c:if test="${!forPage}">
+                        let { children } = $props();
+                    </c:if>
                 </script>
 
-                <_ xpl:is="${forPage ? 'main' : 'div'}">
+                <_ xpl:is="${forPage ? 'main' : 'div'}"
+                   style="display: contents"
+                >
                     <thisLib:GenComponentNode
                             component="${component}"
                             node="${component.template}" />
