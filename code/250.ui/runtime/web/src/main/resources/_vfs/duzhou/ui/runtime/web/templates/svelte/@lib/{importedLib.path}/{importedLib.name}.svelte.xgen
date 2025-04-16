@@ -23,15 +23,11 @@
         xpl:outputMode="html">
 
     <c:script><![CDATA[
-        import io.nop.core.resource.component.ResourceComponentManager;
-
-        const resourcePath = importedComponent.resourcePath;
-        const model = ResourceComponentManager.instance().loadComponentModel(resourcePath);
     ]]></c:script>
 
     <svelte-gen:GenComponent
             xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
             forPage="false"
-            component="${model}"
+            component="${importedLib.model}"
     />
 </c:unit>

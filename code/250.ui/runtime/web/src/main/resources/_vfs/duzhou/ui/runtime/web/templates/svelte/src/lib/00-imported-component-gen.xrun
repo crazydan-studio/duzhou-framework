@@ -22,13 +22,19 @@
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
     <c:script><![CDATA[
+        import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
+
         // 需由上层构建器提供全局变量 components：
         // - builder.defineGlobalVar('components', components);
+        const importedLibs = XuiGenHelper
+                                .getImportedLibs(components)
+                                .filter(lib => !ignoredComponents.contains(lib.resourcePath));
+        assign('importedLibs', importedLibs);
     ]]></c:script>
 
     <gen:Render
             xpl:lib="/nop/codegen/xlib/gen.xlib"
-            template="/duzhou/ui/runtime/web/templates/svelte/@component"
+            template="/duzhou/ui/runtime/web/templates/svelte/@lib"
             targetDir="${targetResource.path.$filePath()}"
     />
 </c:unit>

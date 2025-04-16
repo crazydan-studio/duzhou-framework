@@ -21,7 +21,7 @@
 <lib xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:c="c" xmlns:xpl="xpl" xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
-     x:extends="native-gen.xlib"
+     x:extends="svelte-native-gen.xlib"
 >
     <tags>
         <GenComponent outputMode="html">
@@ -57,14 +57,12 @@
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
 
             <source>
-                <c:for var="imp"
-                       items="${component.getNonNativeImports()}">
-                    <c:script><![CDATA[
-                        const name = imp.as;
-                        const path = '$lib' + imp.from.$removeLastPart('/') + '/' + name + '.svelte';
-                    ]]></c:script>
-                    import ${name} from '${path}';
-                </c:for>
+                <c:script><![CDATA[
+                    import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
+
+                    const dirs = XuiGenHelper.genLibImportDirectives(component, '$lib', '.svelte');
+                    $out.text(location(), dirs);
+                ]]></c:script>
             </source>
         </GenComponentImports>
 
@@ -106,21 +104,16 @@
                             ]]></c:script>
 
                             <!-- 构建原生组件节点 -->
-                            <c:if test="${nativeType != null}">
-                                <c:script><![CDATA[
-                                    import io.nop.core.resource.component.ResourceComponentManager;
+                            <c:script xpl:if="nativeType != null"><![CDATA[
+                                import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
 
-                                    const libPath = location().getPath();
-                                    const lib = ResourceComponentManager.instance().loadComponentModel(libPath);
-                                    const tag = lib.getTag('GenNative_' + nativeType);
+                                const ret = XuiGenHelper.callGenNativeTag(
+                                    location(), $scope, nativeType,
+                                    { component, source: child }
+                                );
+                                $out.text(location(), ret);
+                            ]]></c:script>
 
-                                    const ret = tag.generateNode({
-                                        component,
-                                        source: child
-                                    }).contentText();
-                                    $out.text(null, ret);
-                                ]]></c:script>
-                            </c:if>
                             <!-- 构建自定义组件节点，并保持组件名不变（注意，Svelte 组件名的首字母必须大写） -->
                             <!-- TODO 处理 xui:when -->
                             <!-- TODO 直接展开组件属性 -->

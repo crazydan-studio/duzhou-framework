@@ -23,29 +23,11 @@
     <!-- DefineLoop 等只是在定义全局和 Loop 变量，实际的遍历逻辑在 XCodeGenerator 中 -->
     <gen:DefineLoop xpl:lib="/nop/codegen/xlib/gen.xlib">
         <c:script><![CDATA[
-            const importedComponents = [];
-            // Note: components 为上层构建器提供的全局变量
-            for (let component of components) {
-                component
-                    .getNonNativeImports()
-                    .forEach(imp => {
-                        const resourcePath = imp.from;
-                        if (ignoredComponents.contains(resourcePath)) {
-                            return;
-                        }
-
-                        importedComponents.add({
-                            libName: imp.as,
-                            libPath: resourcePath.$removeStart('/').$removeLastPart('/'),
-                            resourcePath,
-                        });
-                    });
-            }
-
-            builder.defineGlobalVar('importedComponents', importedComponents);
+            // Note: 由模板调用方准备 scope 变量 importedLibs
+            builder.defineGlobalVar('importedLibs', importedLibs);
 
             // 第一个参数为循环变量名，第二个参数为循环变量的数据来源
-            builder.defineLoopVar('importedComponent', 'importedComponents');
+            builder.defineLoopVar('importedLib', 'importedLibs');
         ]]></c:script>
     </gen:DefineLoop>
 </c:unit>

@@ -22,25 +22,12 @@
 <c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
     <c:script><![CDATA[
-        import io.nop.core.resource.component.ResourceComponentManager;
+        import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
 
-        const newComponents = [];
-        // Note: components 为上层构建器提供的全局变量
-        for (let component of components) {
-            component
-                .getNonNativeImports()
-                .forEach(imp => {
-                    const resourcePath = imp.from;
-                    if (ignoredComponents.contains(resourcePath)) {
-                        return;
-                    }
+        const newComponents = importedLibs
+                                    .map(lib => lib.model);
 
-                    ignoredComponents.add(resourcePath);
-
-                    const model = ResourceComponentManager.instance().loadComponentModel(resourcePath);
-                    newComponents.add(model);
-                });
-        }
+        ignoredComponents.addAll(importedLibs.map(lib => lib.resourcePath));
 
         // 向模板传递新的 components 变量
         assign('components', newComponents);
@@ -48,7 +35,7 @@
 
     <gen:Render
             xpl:lib="/nop/codegen/xlib/gen.xlib"
-            template="/duzhou/ui/runtime/web/templates/svelte/@component"
+            template="/duzhou/ui/runtime/web/templates/svelte/@lib"
             targetDir="${targetResource.path.$filePath()}"
     />
 </c:unit>
