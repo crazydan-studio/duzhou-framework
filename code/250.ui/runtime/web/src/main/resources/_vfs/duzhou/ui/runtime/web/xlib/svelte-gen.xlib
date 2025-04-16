@@ -121,7 +121,7 @@
                             <_ xpl:is="${child.$type}"
                                xpl:if="nativeType == null"
                                xpl:attrs="{}"
-                               xui-name="${child.name}"
+                               data-xui-name="${child['xui:name']}"
                             >
                                 <thisLib:GenComponentNode
                                         component="${component}"

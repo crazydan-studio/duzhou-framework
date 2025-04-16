@@ -37,7 +37,7 @@ public abstract class _XuiActionNested extends io.crazydan.duzhou.framework.ui.s
     public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed> value){
         checkAllowChange();
         
-        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed::getName);
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed::getXuiName);
            
     }
 
@@ -54,7 +54,7 @@ public abstract class _XuiActionNested extends io.crazydan.duzhou.framework.ui.s
         checkAllowChange();
         java.util.List<io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed> list = this.getChildren();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed::getName);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed::getXuiName);
             setChildren(list);
         }
         list.add(item);

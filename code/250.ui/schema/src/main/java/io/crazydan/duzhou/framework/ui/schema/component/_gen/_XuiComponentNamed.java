@@ -24,14 +24,6 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
     private java.lang.String _$type ;
     
     /**
-     *  必填
-     * xml name: name
-     * 组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
-     * 一般采用 `{业务数据名}-{组件类型名}` 形式命名；
-     */
-    private java.lang.String _name ;
-    
-    /**
      * 
      * xml name: 
      *  
@@ -46,26 +38,6 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
         checkAllowChange();
         
         this._$type = value;
-           
-    }
-
-    
-    /**
-     * 必填
-     * xml name: name
-     *  组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
-     * 一般采用 `{业务数据名}-{组件类型名}` 形式命名；
-     */
-    
-    public java.lang.String getName(){
-      return _name;
-    }
-
-    
-    public void setName(java.lang.String value){
-        checkAllowChange();
-        
-        this._name = value;
            
     }
 
@@ -86,7 +58,6 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
         super.outputJson(out);
         
         out.putNotNull("$type",this.get$type());
-        out.putNotNull("name",this.getName());
     }
 
     public XuiComponentNamed cloneInstance(){
@@ -99,7 +70,6 @@ public abstract class _XuiComponentNamed extends io.nop.core.resource.component.
         super.copyTo(instance);
         
         instance.set$type(this.get$type());
-        instance.setName(this.getName());
     }
 
     protected XuiComponentNamed newInstance(){

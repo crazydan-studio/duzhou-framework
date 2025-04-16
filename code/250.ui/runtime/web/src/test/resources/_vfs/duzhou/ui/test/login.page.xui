@@ -45,9 +45,9 @@
             ]]></linear>
         </xui:layout>
 
-        <Image name="login-logo" src="/logo.svg" />
+        <Image xui:name="login-logo" src="/logo.svg" />
         <!-- Form 的 disabled 属性会逐级传导到其内部的 Input、Button 等支持启用/禁用的组件 -->
-        <Form name="login-form">
+        <Form xui:name="login-form">
             <!-- 默认为左对齐，< 表示左对齐，> 表示右对齐，<[xxx]> 表示横向占满剩余空间，>[xxx]< 表示横向居中对齐，{xxx} 表示布局嵌套 -->
             <xui:layout>
                 <linear><![CDATA[
@@ -66,24 +66,24 @@
             </xui:layout>
 
 
-            <Text name="username-label">帐号：</Text>
-            <Input name="username-input" type="text" />
+            <Text xui:name="username-label">帐号：</Text>
+            <Input xui:name="username-input" type="text" />
 
-            <Text name="password-label">密码：</Text>
-            <Input name="password-input" type="secret" />
+            <Text xui:name="password-label">密码：</Text>
+            <Input xui:name="password-input" type="secret" />
 
-            <Checkbox name="remember-me-input">
-                <Text name="label">保持登录？</Text>
+            <Checkbox xui:name="remember-me-input">
+                <Text xui:name="label">保持登录？</Text>
             </Checkbox>
 
-            <Button name="login-button">
-                <Text name="label">登录</Text>
+            <Button xui:name="login-button">
+                <Text xui:name="label">登录</Text>
             </Button>
-            <Link name="forgot-password-button">
-                <Text name="label">忘记密码？</Text>
+            <Link xui:name="forgot-password-button">
+                <Text xui:name="label">忘记密码？</Text>
             </Link>
-            <Link name="register-button">
-                <Text name="label">注册帐号</Text>
+            <Link xui:name="register-button">
+                <Text xui:name="label">注册帐号</Text>
             </Link>
         </Form>
     </template>

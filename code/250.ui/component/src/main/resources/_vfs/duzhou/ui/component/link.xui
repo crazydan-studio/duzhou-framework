@@ -22,7 +22,7 @@
 <!-- Link 组件
 - 资源超链接；
 -->
-<component xmlns:x="/nop/schema/xdsl.xdef"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
 
@@ -36,6 +36,6 @@
 
     <template>
         <!-- TODO 原生组件的嵌套 -->
-        <Link name="link" props="${props}" />
+        <Link xui:name="link" props="${props}" />
     </template>
 </component>

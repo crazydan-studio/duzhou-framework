@@ -25,22 +25,22 @@
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
           xdef:name="XuiComponentTemplate" xdef:ref="XuiComponentNode"
           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-          xui:when="~string" name="~conf-name"
+          xui:when="~string" xui:name="~conf-name"
 >
 
     <!-- 组件命名元素
 
-    @name [必填] 组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
+    @xui:name [必填] 组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
           一般采用 `{业务数据名}-{组件类型名}` 形式命名；
     @xui:when [可选] 组件元素有效的条件，以 `${xxx}` 形式表示其值，且在其值为 `true` 时，该组件元素才有效；
     -->
     <xdef:define xdef:name="XuiComponentNamed"
                  xdef:bean-tag-prop="$type"
                  xui:when="string"
-                 name="conf-name" />
+                 xui:name="conf-name" />
 
     <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
-                 xdef:body-type="list" xdef:key-attr="name"
+                 xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
                  xdef:bean-sub-type-prop="$type"
@@ -53,21 +53,21 @@
               xdef:value="string" xdef:bean-body-prop="value"
               xdef:unknown-attr="any"
               xui:style="string"
-              name="!conf-name" />
+              xui:name="!conf-name" />
 
         <!-- 校验组件：可自嵌套，从而支持分层校验 -->
         <!-- 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域 -->
         <!-- 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理 -->
         <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
-                    name="!conf-name" target="!string" />
+                    xui:name="!conf-name" target="!string" />
 
         <!-- 动画组件：可自嵌套，从而支持一组动画 -->
         <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   name="!conf-name" enter="string" exit="string" />
+                   xui:name="!conf-name" enter="string" exit="string" />
         <!-- End: 内置组件 -->
 
         <xdef:unknown-tag xdef:ref="XuiComponentNode"
-                          name="!conf-name" />
+                          xui:name="!conf-name" />
     </xdef:define>
 
     <xdef:define xdef:name="XuiComponentDirective" xdef:ref="XuiComponentNested" />
@@ -81,21 +81,21 @@
     >
         <!-- 除非应用了 xui:when 条件，否则，最多只有一个 xui:layout 和 xui:style 节点 -->
         <xui:layout xdef:ref="XuiComponentLayout"
-                    name="!conf-name=xui-layout" />
+                    xui:name="!conf-name=xui-layout" />
         <xui:style xdef:ref="XuiComponentStyle"
-                   name="!conf-name=xui-style" />
+                   xui:name="!conf-name=xui-style" />
 
         <!-- 缺省使用 for 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
-                      name="!conf-name=@attr:for" />
+                      xui:name="!conf-name=@attr:for" />
 
         <!-- Start: 组件指令 -->
         <xui:each xdef:name="XuiComponentDirectiveEach" xdef:ref="XuiComponentDirective"
-                  name="!conf-name"
+                  xui:name="!conf-name"
                   for="!var-name" item="!var-name" index="var-name" />
         <xui:when xdef:name="XuiComponentDirectiveWhen" xdef:ref="XuiComponentDirective"
                   xui:when="~string"
-                  name="!conf-name"
+                  xui:name="!conf-name"
                   cond="!string" />
         <!-- End: 组件指令 -->
     </xdef:define>

@@ -32,12 +32,12 @@
     <xdef:define xdef:name="XuiActionNamed"
                  xdef:bean-tag-prop="$type"
                  xui:when="string"
-                 name="conf-name" />
+                 xui:name="conf-name" />
 
     <xdef:define xdef:name="XuiActionDirective" xdef:ref="XuiActionNested" />
 
     <xdef:define xdef:name="XuiActionNested" xdef:ref="XuiActionNamed"
-                 xdef:body-type="list" xdef:key-attr="name"
+                 xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.action.XuiActionNamed>"
                  xdef:bean-sub-type-prop="$type"
@@ -45,7 +45,7 @@
         <!-- 更新组件状态：默认在同一层级仅出现一次 -->
         <state xdef:name="XuiActionState" xdef:ref="XuiActionNamed"
                xdef:body-type="map" xdef:bean-body-prop="dataList" xdef:bean-child-name="data"
-               name="!conf-name=xui-state"
+               xui:name="!conf-name=xui-state"
         >
             <!-- 支持按照对象结构或者点分形式（`a.b.c`）为属性赋值
             @reset 是否重置对象，即，将对象的属性均设置为缺省值；
@@ -56,26 +56,26 @@
 
         <!-- 向组件外部发送事件 -->
         <event xdef:name="XuiActionEvent" xdef:ref="XuiActionNamed"
-               name="!conf-name=@attr:type"
+               xui:name="!conf-name=@attr:type"
                type="!conf-name" data="any" />
 
         <!-- 发送 HTTP POST 请求 -->
         <http-post xdef:ref="XuiActionHttp"
-                   name="!conf-name" />
+                   xui:name="!conf-name" />
         <!-- 发送 HTTP GET 请求 -->
         <http-get xdef:ref="XuiActionHttp"
-                  name="!conf-name" />
+                  xui:name="!conf-name" />
 
         <!-- 发送 GraphQL Mutation -->
         <graphql-mutation xdef:ref="XuiActionGraphQL"
-                          name="!conf-name" />
+                          xui:name="!conf-name" />
         <!-- 发送 GraphQL Query -->
         <graphql-query xdef:ref="XuiActionGraphQL"
-                       name="!conf-name" />
+                       xui:name="!conf-name" />
 
         <xui:when xdef:name="XuiActionDirectiveWhen" xdef:ref="XuiActionDirective"
                   xui:when="~string"
-                  name="!conf-name"
+                  xui:name="!conf-name"
                   cond="!string" />
     </xdef:define>
 

@@ -79,9 +79,9 @@
             ]]></linear>
         </xui:layout>
 
-        <Image name="login-logo" src="/logo.svg" />
+        <Image xui:name="login-logo" src="/logo.svg" />
         <!-- Form 的 disabled 属性会逐级传导到其内部的 Input、Button 等支持启用/禁用的组件 -->
-        <Form name="login-form" disabled="${state.loginWaiting.enabled}">
+        <Form xui:name="login-form" disabled="${state.loginWaiting.enabled}">
             <xui:layout>
                 <linear><![CDATA[
                     [username-label]
@@ -99,15 +99,15 @@
             </xui:layout>
 
             <!-- Mask 负责在父节点的最上层显示遮罩，其自动覆盖整个父节点的显示空间 -->
-            <Mask name="waiting-mask" xui:when="${state.loginWaiting.enabled}">
-                <Text name="waiting-mask-text">${state.loginWaiting.msg}</Text>
+            <Mask xui:name="waiting-mask" xui:when="${state.loginWaiting.enabled}">
+                <Text xui:name="waiting-mask-text">${state.loginWaiting.msg}</Text>
             </Mask>
 
             <!-- 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域 -->
             <!-- 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理 -->
-            <Validation name="username-validation" target="state.loginInfo.username">
-                <Text name="username-label">帐号：</Text>
-                <Input name="username-input" type="text">
+            <Validation xui:name="username-validation" target="state.loginInfo.username">
+                <Text xui:name="username-label">帐号：</Text>
+                <Input xui:name="username-input" type="text">
                     <!-- 等价于 xui:bind-value="loginInfo.username.value"，用于简化对输入数据变更的监听 -->
                     <xui:dispatch on="input"
                                   for="On_Input_for_state_loginInfo_username_value"
@@ -115,31 +115,31 @@
                 </Input>
             </Validation>
 
-            <Validation name="password-validation" target="state.loginInfo.password">
-                <Text name="password-label">密码：</Text>
-                <Input name="password-input" type="secret"
+            <Validation xui:name="password-validation" target="state.loginInfo.password">
+                <Text xui:name="password-label">密码：</Text>
+                <Input xui:name="password-input" type="secret"
                        xui:bind-value="loginInfo.password.value" />
             </Validation>
 
-            <Animation name="remember-me-animation">
-                <Checkbox name="remember-me-input">
-                    <Text name="label">保持登录？</Text>
+            <Animation xui:name="remember-me-animation">
+                <Checkbox xui:name="remember-me-input">
+                    <Text xui:name="label">保持登录？</Text>
                 </Checkbox>
             </Animation>
 
-            <xui:when name="when-show-login-error" cond="${state.loginError.enabled}">
-                <Animation name="warning-text-animation" enter="fade-in" exit="fade-out">
-                    <Text name="warning-text" color="warning">
+            <xui:when xui:name="when-show-login-error" cond="${state.loginError.enabled}">
+                <Animation xui:name="warning-text-animation" enter="fade-in" exit="fade-out">
+                    <Text xui:name="warning-text" color="warning">
                         ${state.loginError.msg}
                     </Text>
                 </Animation>
             </xui:when>
 
-            <Button name="login-button"
+            <Button xui:name="login-button"
                     disabled="${!state.loginInfo.username.valid
                     || !state.loginInfo.password.valid}"
             >
-                <Text name="label">登录</Text>
+                <Text xui:name="label">登录</Text>
 
                 <xui:dispatch on="click" for="User_Login_Start"
                               data="${{
@@ -147,19 +147,19 @@
                                password: state.loginInfo.password.value}}"
                 />
             </Button>
-            <Link name="forgot-password-button" target="${props.forgotUrl}">
-                <Text name="label">忘记密码？</Text>
+            <Link xui:name="forgot-password-button" target="${props.forgotUrl}">
+                <Text xui:name="label">忘记密码？</Text>
             </Link>
-            <Link name="register-button" target="${props.registerUrl}">
-                <Text name="label">注册帐号</Text>
+            <Link xui:name="register-button" target="${props.registerUrl}">
+                <Text xui:name="label">注册帐号</Text>
             </Link>
         </Form>
     </template>
 
     <!-- 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数 -->
     <messages>
-        <!-- 每个消息均有唯一的名字表示，并以 data 作为负载数据的引用名字 -->
-        <message type="user_Login_Start">
+        <!-- 每个消息均由唯一的 type 表示，并以 data 作为负载数据的引用名字 -->
+        <message type="User_Login_Start">
         </message>
 
         <message type="On_Input_for_state_loginInfo_username_value">

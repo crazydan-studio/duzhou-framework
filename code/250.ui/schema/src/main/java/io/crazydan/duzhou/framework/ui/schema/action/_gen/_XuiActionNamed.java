@@ -24,13 +24,6 @@ public abstract class _XuiActionNamed extends io.nop.core.resource.component.Abs
     private java.lang.String _$type ;
     
     /**
-     *  
-     * xml name: name
-     * 
-     */
-    private java.lang.String _name ;
-    
-    /**
      * 
      * xml name: 
      *  
@@ -45,25 +38,6 @@ public abstract class _XuiActionNamed extends io.nop.core.resource.component.Abs
         checkAllowChange();
         
         this._$type = value;
-           
-    }
-
-    
-    /**
-     * 
-     * xml name: name
-     *  
-     */
-    
-    public java.lang.String getName(){
-      return _name;
-    }
-
-    
-    public void setName(java.lang.String value){
-        checkAllowChange();
-        
-        this._name = value;
            
     }
 
@@ -84,7 +58,6 @@ public abstract class _XuiActionNamed extends io.nop.core.resource.component.Abs
         super.outputJson(out);
         
         out.putNotNull("$type",this.get$type());
-        out.putNotNull("name",this.getName());
     }
 
     public XuiActionNamed cloneInstance(){
@@ -97,7 +70,6 @@ public abstract class _XuiActionNamed extends io.nop.core.resource.component.Abs
         super.copyTo(instance);
         
         instance.set$type(this.get$type());
-        instance.setName(this.getName());
     }
 
     protected XuiActionNamed newInstance(){

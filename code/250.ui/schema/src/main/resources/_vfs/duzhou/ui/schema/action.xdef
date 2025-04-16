@@ -25,5 +25,5 @@
         x:schema="/nop/schema/xdef.xdef"
         xdef:name="XuiAction" xdef:ref="action/node.xdef"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
-        xui:when="~string" name="~conf-name"
+        xui:when="~string" xui:name="~conf-name"
 />

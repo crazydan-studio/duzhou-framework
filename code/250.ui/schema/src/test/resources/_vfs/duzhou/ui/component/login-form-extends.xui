@@ -35,21 +35,21 @@
             ]]></linear>
         </xui:layout>
 
-        <Image name="login-logo" src="/img/logo.svg" />
-        <Text name="login-title">XXX 系统登录</Text>
+        <Image xui:name="login-logo" src="/img/logo.svg" />
+        <Text xui:name="login-title">XXX 系统登录</Text>
 
-        <Form name="login-form">
-            <Mask name="waiting-mask" x:override="remove" />
+        <Form xui:name="login-form">
+            <Mask xui:name="waiting-mask" x:override="remove" />
 
-            <Validation name="username-validation">
-                <Input name="username-input">
+            <Validation xui:name="username-validation">
+                <Input xui:name="username-input">
                     <xui:dispatch for="On_Input_for_state_loginInfo_username_value"
                                   x:override="remove" />
                 </Input>
             </Validation>
 
-            <xui:when name="when-show-login-error">
-                <Animation name="warning-text-animation"
+            <xui:when xui:name="when-show-login-error">
+                <Animation xui:name="warning-text-animation"
                            enter="slide-in" exit="slide-out" />
             </xui:when>
         </Form>
@@ -64,7 +64,7 @@
                 </loginWaiting>
             </state>
 
-            <http-post name="send-login-data"
+            <http-post xui:name="send-login-data"
                        url="/auth/login"
                        data="${data}"
                        success="User_Login_Done_Success"
@@ -76,7 +76,7 @@
                 <loginWaiting reset="true" />
             </state>
 
-            <xui:when name="when-login-failed" cond="${!data.success}">
+            <xui:when xui:name="when-login-failed" cond="${!data.success}">
                 <state>
                     <loginError>
                         <enabled>true</enabled>
@@ -84,7 +84,7 @@
                     </loginError>
                 </state>
             </xui:when>
-            <xui:when name="when-login-success" cond="${data.success}">
+            <xui:when xui:name="when-login-success" cond="${data.success}">
             </xui:when>
         </message>
         <message type="User_Login_Done_Error">
