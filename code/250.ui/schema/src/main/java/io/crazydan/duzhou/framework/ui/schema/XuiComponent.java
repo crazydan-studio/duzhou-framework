@@ -9,7 +9,6 @@ import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
 import io.nop.api.core.util.INeedInit;
 
 public class XuiComponent extends _XuiComponent implements INeedInit {
-    public static final String NATIVE_IMPORT_PREFIX = "native:";
 
     public XuiComponent() {
     }
@@ -24,17 +23,12 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         String nodeType = node.get$type();
         XuiComponentImport imported = getImport(nodeType);
 
-        return imported != null && imported.getFrom().startsWith(NATIVE_IMPORT_PREFIX)
-               ? imported.getFrom()
-                         .substring(NATIVE_IMPORT_PREFIX.length())
-               : null;
+        return imported != null ? imported.getNativeType() : null;
     }
 
     /** 获取非原生导入组件列表 */
     public List<XuiComponentImport> getNonNativeImports() {
-        return getImports().stream()
-                           .filter(imp -> !imp.getFrom().startsWith(NATIVE_IMPORT_PREFIX))
-                           .collect(Collectors.toList());
+        return getImports().stream().filter(imp -> !imp.isNative()).collect(Collectors.toList());
     }
 
     private void initTemplate() {
