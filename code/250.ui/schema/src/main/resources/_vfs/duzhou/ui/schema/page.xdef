@@ -25,7 +25,8 @@
 -->
 <page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
       x:schema="/nop/schema/xdef.xdef"
-      xdef:ref="/duzhou/ui/schema/component.xdef"
+      xdef:ref="component.xdef"
+      xdef:default-extends="/duzhou/ui/component/default.xui"
       xdef:name="XuiPage" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
       title="string"
 >
