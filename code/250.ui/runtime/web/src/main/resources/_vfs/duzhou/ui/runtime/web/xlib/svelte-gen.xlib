@@ -40,7 +40,7 @@
                 </script>
 
                 <_ xpl:is="${forPage ? 'main' : 'div'}"
-                   style="display: contents"
+                   class="xui-block"
                 >
                     <thisLib:GenComponentNode
                             component="${component}"
