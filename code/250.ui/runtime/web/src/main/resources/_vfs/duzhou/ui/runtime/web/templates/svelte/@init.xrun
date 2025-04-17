@@ -28,7 +28,7 @@
             // Note: 循环变量不能为 const，否则会报异常 nop.err.xlang.const-decl-no-initializer
             for (let ref of app.pageRefs) {
                 const page = {
-                    meta: ref.page,
+                    model: ref.page,
                     title: ref.title || ref.page.title,
                     url: ref.url || '',
                     routePath: (ref.url || '').$removeStart('/'),
@@ -45,7 +45,7 @@
             builder.defineGlobalVar('hasRootPage', !!rootPage);
 
             // 组件构建变量
-            builder.defineGlobalVar('components', pages.map(p => p.meta));
+            builder.defineGlobalVar('components', pages.map(p => p.model));
             // 记录已构建的组件，避免出现死循环和重复构建
             builder.defineGlobalVar('ignoredComponents', []);
 

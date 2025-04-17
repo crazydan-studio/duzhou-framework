@@ -28,6 +28,6 @@
     <svelte-gen:GenComponent
             xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
             forPage="true"
-            component="${page.meta}"
+            component="${page.model}"
     />
 </c:unit>
