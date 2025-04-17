@@ -19,7 +19,7 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
+<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c" xmlns:xpl="xpl"
      xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
 >
@@ -39,12 +39,31 @@
             </source>
         </DefaultPostExtends>
 
+        <!-- 对默认设置进行补全和展开 -->
         <_Normalize outputMode="node">
             <attr name="_dsl_root" implicit="true" />
 
             <source>
                 <c:script><![CDATA[
+                    import io.nop.commons.util.StringHelper;
+
+                    const innerComponents = [
+                        'Text', 'Validation', 'Animation',
+                    ];
+                    const toCode = (s) => StringHelper.camelCaseToUnderscore(s, true);
                 ]]></c:script>
+
+                <_ xpl:is="${_dsl_root.tagName}">
+                    <c:for var="cmp" items="${innerComponents}">
+                        <import xpl:if="_dsl_root.findByTag(cmp) != null"
+                                as="${cmp}"
+                                from="native:${toCode(cmp)}"
+                        />
+                    </c:for>
+
+                    <!-- Note: 确保 import 指令插入到 props 标签之前 -->
+                    <props />
+                </_>
             </source>
         </_Normalize>
     </tags>

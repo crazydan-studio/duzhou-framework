@@ -91,12 +91,7 @@
                         <when test="${child.$type == 'xui:when'}">
                             <div />
                         </when>
-                        <!-- 内置组件 -->
-                        <when test="${child.$type == 'Text'}">
-                            <thisLib:GenNative_text
-                                    component="${component}"
-                                    source="${child}" />
-                        </when>
+
                         <!-- 构建组件节点 -->
                         <otherwise>
                             <c:script><![CDATA[
@@ -120,6 +115,7 @@
                             <_ xpl:is="${child.$type}"
                                xpl:if="nativeType == null"
                                xpl:attrs="{}"
+                               data-xui-type="${child['$type']}"
                                data-xui-name="${child['xui:name']}"
                             >
                                 <thisLib:GenComponentNode

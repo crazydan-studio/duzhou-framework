@@ -23,7 +23,6 @@
   中的原生组件标识 `{code}` 一致；
 -->
 <lib xmlns:x="/nop/schema/xdsl.xdef"
-     xmlns:thisLib="thisLib"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
@@ -34,7 +33,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
-                <span data-xui-name="${source['xui:name']}">${source.value}</span>
+                <span>${source.value}</span>
             </source>
         </GenNative_text>
 
@@ -45,7 +44,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <img data-xui-name="${source['xui:name']}" src="${'/logo.svg'}" />
+                <img src="${'/logo.svg'}" />
             </source>
         </GenNative_image>
 
@@ -56,10 +55,8 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <a data-xui-name="${source['xui:name']}" href="${'#'}">
-                    <thisLib:GenComponentNode
-                            component="${component}"
-                            node="${source}" />
+                <a href="${'#'}">
+                    {@render children?.()}
                 </a>
             </source>
         </GenNative_link>
@@ -71,7 +68,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <form data-xui-name="${source['xui:name']}">
+                <form>
                     {@render children?.()}
                 </form>
             </source>
