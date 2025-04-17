@@ -20,7 +20,7 @@
   -->
 
 <!-- Button 组件 -->
-<component xmlns:x="/nop/schema/xdsl.xdef"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
 
@@ -33,5 +33,7 @@
     </state>
 
     <template>
+        <!-- TODO 原生组件的嵌套 -->
+        <Button xui:name="button" props="${props}" />
     </template>
 </component>

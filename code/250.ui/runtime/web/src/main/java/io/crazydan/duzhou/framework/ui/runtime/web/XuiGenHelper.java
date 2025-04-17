@@ -47,6 +47,8 @@ public class XuiGenHelper {
         XplTagLib lib = (XplTagLib) ResourceComponentManager.instance().loadComponentModel(libPath);
         XplTag tag = lib.getTag("GenNative_" + nativeType);
 
+        // TODO 检查 tag 是否存在，并抛出详细的异常信息
+
         return tag.generateNode(scope, args).contentText();
     }
 

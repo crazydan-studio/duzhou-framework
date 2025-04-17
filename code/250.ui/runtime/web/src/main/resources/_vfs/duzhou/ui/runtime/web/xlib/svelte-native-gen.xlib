@@ -73,5 +73,18 @@
                 </form>
             </source>
         </GenNative_form>
+
+        <GenNative_button outputMode="html">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <button>
+                    {@render children?.()}
+                </button>
+            </source>
+        </GenNative_button>
     </tags>
 </lib>
