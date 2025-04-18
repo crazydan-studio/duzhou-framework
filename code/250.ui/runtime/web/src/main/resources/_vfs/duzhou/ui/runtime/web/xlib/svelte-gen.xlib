@@ -35,7 +35,8 @@
                             component="${component}" />
 
                     <c:if test="${!forPage}">
-                        let { children } = $props();
+                        let props = $props();
+                        let { children } = props;
                     </c:if>
                 </script>
 
@@ -96,6 +97,7 @@
                         <otherwise>
                             <c:script><![CDATA[
                                 const nativeType = component.getNodeNativeType(child);
+                                const attrs = component.getNodeAttrs(child);
                             ]]></c:script>
 
                             <!-- 构建原生组件节点 -->
@@ -114,7 +116,7 @@
                             <!-- TODO 直接展开组件属性 -->
                             <_ xpl:is="${child.$type}"
                                xpl:if="nativeType == null"
-                               xpl:attrs="{}"
+                               xpl:attrs="attrs"
                                data-xui-type="${child['$type']}"
                                data-xui-name="${child['xui:name']}"
                             >

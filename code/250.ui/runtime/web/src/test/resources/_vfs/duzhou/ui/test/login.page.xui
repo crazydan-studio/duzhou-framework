@@ -79,10 +79,15 @@
             <Button xui:name="login-button">
                 <Text xui:name="label">登录</Text>
             </Button>
-            <Link xui:name="forgot-password-button">
+            <Link xui:name="forgot-password-button"
+                  to="/auth/forgot-password"
+            >
                 <Text xui:name="label">忘记密码？</Text>
             </Link>
-            <Link xui:name="register-button">
+            <Link xui:name="register-button"
+                  to="/auth/register"
+                  anchor="" params=""
+            >
                 <Text xui:name="label">注册帐号</Text>
             </Link>
         </Form>

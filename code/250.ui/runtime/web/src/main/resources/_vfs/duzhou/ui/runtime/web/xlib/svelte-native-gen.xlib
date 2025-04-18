@@ -44,7 +44,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <img src="${'/logo.svg'}" />
+                <img src="{props.src}" />
             </source>
         </GenNative_image>
 
@@ -55,7 +55,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <a href="${'#'}">
+                <a href="{props.to}">
                     {@render children?.()}
                 </a>
             </source>
@@ -86,5 +86,16 @@
                 </button>
             </source>
         </GenNative_button>
+
+        <GenNative_input outputMode="html">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="source"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+
+            <source>
+                <input type="{props.type == 'secret' ? 'password' : props.type??'text'}" />
+            </source>
+        </GenNative_input>
     </tags>
 </lib>
