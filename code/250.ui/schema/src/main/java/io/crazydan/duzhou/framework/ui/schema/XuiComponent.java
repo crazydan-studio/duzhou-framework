@@ -20,7 +20,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         initTemplate();
     }
 
-    /** 如果节点对应的导入组件为原生组件，则返回其原生组件类型 */
+    /** 如果模板节点对应的导入组件为原生组件，则返回其原生组件类型 */
     public String getNodeNativeType(XuiComponentNamed node) {
         XuiComponentImport imported = getNodeImport(node);
 
@@ -32,10 +32,10 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         return getImports().stream().filter(imp -> !imp.isNative()).collect(Collectors.toList());
     }
 
-    /** 获取节点的属性列表：有效属性与对应组件声明的 `&lt;props/&gt;` 一致 */
+    /** 获取模板节点的属性列表：有效属性与对应组件声明的 `&lt;props/&gt;` 一致 */
     public Map<String, Object> getNodeAttrs(XuiComponentNamed node) {
-        XuiComponentImport imported = getNodeImport(node);
-        if (imported == null || imported.isNative()) {
+        XuiComponent meta = getNodeMeta(node);
+        if (meta == null) {
             return Map.of();
         }
 
@@ -47,6 +47,13 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         });
 
         return attrs;
+    }
+
+    /** 获取模板节点的元模型对象 {@link XuiComponent}，以便于分析组件类型节点的定义结构 */
+    public XuiComponent getNodeMeta(XuiComponentNamed node) {
+        XuiComponentImport imported = getNodeImport(node);
+
+        return imported != null ? imported.getModel() : null;
     }
 
     private void initTemplate() {

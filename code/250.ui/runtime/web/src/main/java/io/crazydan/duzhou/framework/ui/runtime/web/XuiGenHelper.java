@@ -68,7 +68,7 @@ public class XuiGenHelper {
         // Note: 仅转换非原生组件的导入
         return component.getNonNativeImports().stream().map(imp -> {
             String resourcePath = imp.getFrom();
-            Object model = ResourceComponentManager.instance().loadComponentModel(resourcePath);
+            Object model = imp.getModel();
 
             String name = imp.getAs();
             String path = StringHelper.removeStart(resourcePath, "/");

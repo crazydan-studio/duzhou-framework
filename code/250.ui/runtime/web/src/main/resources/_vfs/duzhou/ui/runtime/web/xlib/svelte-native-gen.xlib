@@ -29,21 +29,22 @@
         <GenNative_text outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
-                <span>${source.value}</span>
+                <span>${node.value}</span>
             </source>
         </GenNative_text>
 
         <GenNative_image outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
+                <!-- TODO 将 node 上设置的属性展开到原生元素上，并按需对部分属性做转换或组合 -->
                 <img src="{props.src}" />
             </source>
         </GenNative_image>
@@ -51,7 +52,7 @@
         <GenNative_link outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
@@ -64,7 +65,7 @@
         <GenNative_form outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
@@ -77,7 +78,7 @@
         <GenNative_button outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
@@ -90,7 +91,7 @@
         <GenNative_input outputMode="html">
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
-            <attr name="source"
+            <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
