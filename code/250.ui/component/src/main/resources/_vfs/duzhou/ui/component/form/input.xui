@@ -33,6 +33,6 @@
     </state>
 
     <template>
-        <Input xui:name="input" props="${props}" />
+        <Input xui:name="input" />
     </template>
 </component>

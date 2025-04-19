@@ -56,7 +56,7 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <a href="{props.to}">
+                <a href="{props.to}{props.query ? '?' + props.query : ''}{props.fragment ? '#' + props.fragment : ''}">
                     {@render children?.()}
                 </a>
             </source>

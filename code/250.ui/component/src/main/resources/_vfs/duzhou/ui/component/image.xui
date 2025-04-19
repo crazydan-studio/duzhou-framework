@@ -35,6 +35,6 @@
     </state>
 
     <template>
-        <Image xui:name="image" title="${props.title}" src="${props.src}" />
+        <Image xui:name="image" />
     </template>
 </component>

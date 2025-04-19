@@ -86,7 +86,7 @@
             </Link>
             <Link xui:name="register-button"
                   to="/auth/register"
-                  anchor="" params=""
+                  fragment="form" query="type=customer"
             >
                 <Text xui:name="label">注册帐号</Text>
             </Link>

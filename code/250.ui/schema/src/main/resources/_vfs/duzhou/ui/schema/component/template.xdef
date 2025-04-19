@@ -73,11 +73,9 @@
     <xdef:define xdef:name="XuiComponentDirective" xdef:ref="XuiComponentNested" />
 
     <!-- 组件（树）节点
-
-    @props [可选] 以对象形式向组件传递属性，其最终将被展开并合并到组件对象的属性列表中；
     -->
     <xdef:define xdef:name="XuiComponentNode" xdef:ref="XuiComponentNested"
-                 xdef:unknown-attr="any" props="any"
+                 xdef:unknown-attr="any"
     >
         <!-- 除非应用了 xui:when 条件，否则，最多只有一个 xui:layout 和 xui:style 节点 -->
         <xui:layout xdef:ref="XuiComponentLayout"

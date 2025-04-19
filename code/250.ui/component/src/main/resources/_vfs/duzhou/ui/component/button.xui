@@ -34,6 +34,6 @@
 
     <template>
         <!-- TODO 原生组件的嵌套 -->
-        <Button xui:name="button" props="${props}" />
+        <Button xui:name="button" />
     </template>
 </component>

@@ -36,6 +36,6 @@
 
     <template>
         <!-- TODO 原生组件的嵌套 -->
-        <Link xui:name="link" props="${props}" />
+        <Link xui:name="link" />
     </template>
 </component>
