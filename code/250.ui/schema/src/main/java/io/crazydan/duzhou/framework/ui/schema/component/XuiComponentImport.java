@@ -29,6 +29,7 @@ public class XuiComponentImport extends _XuiComponentImport {
             return null;
         }
 
+        // Note: ResourceComponentManager 自带缓存，不需要将解析结果赋值到成员变量上
         String resourcePath = getFrom();
         return (XuiComponent) ResourceComponentManager.instance().loadComponentModel(resourcePath);
     }

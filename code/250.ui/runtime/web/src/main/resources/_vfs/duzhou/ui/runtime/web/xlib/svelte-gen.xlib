@@ -106,7 +106,7 @@
 
                                 const ret = XuiGenHelper.callGenNativeTag(
                                     location(), $scope, nativeType,
-                                    { component, source: child }
+                                    { component, node: child }
                                 );
                                 $out.text(location(), ret);
                             ]]></c:script>
@@ -117,8 +117,6 @@
                             <_ xpl:is="${child.$type}"
                                xpl:if="nativeType == null"
                                xpl:attrs="attrs"
-                               data-xui-type="${child['$type']}"
-                               data-xui-name="${child['xui:name']}"
                             >
                                 <thisLib:GenComponentNode
                                         component="${component}"

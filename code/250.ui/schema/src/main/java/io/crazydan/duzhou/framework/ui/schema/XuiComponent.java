@@ -40,6 +40,9 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         }
 
         Map<String, Object> attrs = new HashMap<>();
+        attrs.put("data-xui-type", node.get$type());
+        attrs.put("data-xui-name", node.getXuiName());
+
         // TODO 根据组件结构中的 <props/> 确定在节点上配置的哪些属性可以返回
         node.prop_names().forEach(name -> {
             Object value = node.prop_get(name);
