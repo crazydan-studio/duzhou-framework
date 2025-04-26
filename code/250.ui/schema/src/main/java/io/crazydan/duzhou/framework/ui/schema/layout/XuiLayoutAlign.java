@@ -19,6 +19,9 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 布局对齐方式
  *
@@ -26,6 +29,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
  * @date 2025-04-26
  */
 public class XuiLayoutAlign {
+    /** 缓存枚举组合，以避免重复构建相同对象 */
+    private static final Map<String, XuiLayoutAlign> aligns = new HashMap<>(9);
+
     /** 对齐方向 */
     public enum Direction {
         /** 向起始位置对齐 */
@@ -37,20 +43,16 @@ public class XuiLayoutAlign {
     }
 
     /** 水平对齐方向 */
-    private final Direction horizontal;
+    public final Direction horizontal;
     /** 垂直对齐方向 */
-    private final Direction vertical;
+    public final Direction vertical;
 
-    public XuiLayoutAlign(Direction horizontal, Direction vertical) {
+    XuiLayoutAlign(Direction horizontal, Direction vertical) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
 
-    public Direction getHorizontal() {
-        return this.horizontal;
-    }
-
-    public Direction getVertical() {
-        return this.vertical;
+    public static XuiLayoutAlign create(Direction horizontal, Direction vertical) {
+        return aligns.computeIfAbsent(horizontal + "_" + vertical, (key) -> new XuiLayoutAlign(horizontal, vertical));
     }
 }

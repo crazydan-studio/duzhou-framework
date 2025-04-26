@@ -31,26 +31,71 @@ import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
  * @date 2025-04-25
  */
 public class XuiLayoutNode {
-    /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局项 */
+
+    /** {@link XuiLayoutNode} 类型 */
+    public enum Type {
+        /** 布局项，其可以嵌套其他类型的节点 */
+        item,
+        /** 空白占位 */
+        space,
+        /** 表格：{@link XuiLayoutNode#children} 中的元素均需为 {@link #row} 类型 */
+        table,
+        /** 行：{@link XuiLayoutNode#children} 中的元素可以为 {@link #table} 的单元格，也可以为在相同行内的节点 */
+        row,
+    }
+
+    /** 布局节点类型 */
+    private final Type type;
+    /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
     private final String pattern;
 
     /** 对齐方式 */
-    private XuiLayoutAlign align = new XuiLayoutAlign(XuiLayoutAlign.Direction.start, XuiLayoutAlign.Direction.start);
+    private XuiLayoutAlign align = XuiLayoutAlign.create(XuiLayoutAlign.Direction.start,
+                                                         XuiLayoutAlign.Direction.start);
     /** 宽度 */
-    private XuiLayoutSize width = new XuiLayoutSize(XuiLayoutSize.Type.wrap_content);
+    private XuiLayoutSize width = XuiLayoutSize.wrap_content();
     /** 高度 */
-    private XuiLayoutSize height = new XuiLayoutSize(XuiLayoutSize.Type.wrap_content);
+    private XuiLayoutSize height = XuiLayoutSize.wrap_content();
 
     /** 嵌套子树 */
     private final List<XuiLayoutNode> children = new ArrayList<>();
 
-    public XuiLayoutNode(String pattern) {
+    XuiLayoutNode(Type type, String pattern) {
+        this.type = type;
         this.pattern = pattern;
+    }
+
+    XuiLayoutNode(Type type) {
+        this(type, null);
+    }
+
+    public static XuiLayoutNode item(String pattern) {
+        return new XuiLayoutNode(Type.item, pattern);
+    }
+
+    public static XuiLayoutNode space() {
+        return new XuiLayoutNode(Type.space);
+    }
+
+    public static XuiLayoutNode table() {
+        return new XuiLayoutNode(Type.table);
+    }
+
+    public static XuiLayoutNode row() {
+        return new XuiLayoutNode(Type.row);
     }
 
     /** 是否为匹配的组件 */
     public boolean matched(XuiComponentNamed component) {
         return false;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public String getPattern() {
+        return this.pattern;
     }
 
     public XuiLayoutAlign getAlign() {

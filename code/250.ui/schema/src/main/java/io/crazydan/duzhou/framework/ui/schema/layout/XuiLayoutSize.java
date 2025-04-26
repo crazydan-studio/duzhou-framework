@@ -26,8 +26,11 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
  * @date 2025-04-26
  */
 public class XuiLayoutSize {
+    private static final XuiLayoutSize match_parent = new XuiLayoutSize(Type.match_parent);
+    private static final XuiLayoutSize fill_remains = new XuiLayoutSize(Type.fill_remains);
+    private static final XuiLayoutSize wrap_content = new XuiLayoutSize(Type.wrap_content);
 
-    /** 布局尺寸类型 */
+    /** {@link XuiLayoutSize} 类型 */
     public enum Type {
         /** 与父容器相同 */
         match_parent,
@@ -40,26 +43,33 @@ public class XuiLayoutSize {
     }
 
     /** 类型 */
-    private final Type type;
-
+    public final Type type;
     /** {@link Type#user_specified} 对应的值 */
-    private final Object value;
+    public final Object value;
 
-    public XuiLayoutSize(Type type) {
+    XuiLayoutSize(Type type) {
         this.type = type;
         this.value = null;
     }
 
-    public XuiLayoutSize(Object value) {
+    XuiLayoutSize(Object value) {
         this.type = Type.user_specified;
         this.value = value;
     }
 
-    public Type getType() {
-        return this.type;
+    public static XuiLayoutSize match_parent() {
+        return match_parent;
     }
 
-    public Object getValue() {
-        return this.value;
+    public static XuiLayoutSize fill_remains() {
+        return fill_remains;
+    }
+
+    public static XuiLayoutSize wrap_content() {
+        return wrap_content;
+    }
+
+    public static XuiLayoutSize user_specified(Object value) {
+        return new XuiLayoutSize(value);
     }
 }
