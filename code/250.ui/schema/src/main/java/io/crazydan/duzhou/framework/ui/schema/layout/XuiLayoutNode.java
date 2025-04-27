@@ -127,4 +127,16 @@ public class XuiLayoutNode {
     public void setHeight(XuiLayoutSize height) {
         this.height = height;
     }
+
+    public void addChild(XuiLayoutNode node) {
+        if (node != null) {
+            this.children.add(node);
+        }
+    }
+
+    public void addChildren(List<XuiLayoutNode> nodes) {
+        if (nodes != null) {
+            this.children.addAll(nodes);
+        }
+    }
 }

@@ -40,8 +40,8 @@
     <template>
         <xui:layout>
             <linear><![CDATA[
-                > [login-logo] <
-                < [login-form] >
+                >[login-logo]<
+                <[login-form]>
             ]]></linear>
         </xui:layout>
 
@@ -52,15 +52,15 @@
             <xui:layout>
                 <linear><![CDATA[
                     [username-label]
-                    < [username-input] >
+                    <[username-input]>
 
                     [password-label]
-                    < [password-input] >
+                    <[password-input]>
                     [remember-me-input]
 
-                    > [warning-text] <
+                    >[warning-text]<
 
-                    < [login-button] >
+                    <[login-button]>
                     [forgot-password-button] <> [register-button]
                 ]]></linear>
             </xui:layout>

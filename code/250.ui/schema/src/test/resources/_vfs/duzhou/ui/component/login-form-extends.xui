@@ -28,10 +28,10 @@
     <template>
         <xui:layout>
             <linear><![CDATA[
-                v {
-                    > [login-logo] <
-                    > [login-title] <
-                } ^ | < [login-form] >
+                v{
+                    >[login-logo]<
+                    >[login-title]<
+                }^ | <[login-form]>
             ]]></linear>
         </xui:layout>
 

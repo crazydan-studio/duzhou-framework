@@ -33,15 +33,15 @@
     <template>
         <xui:layout>
             <linear><![CDATA[
-                { > [logo] <
-                  < [menus-pane] >
-                } | < {
-                    [title] < [tool-bar] >
-                    < {
-                        < [design-pane] >
-                        < [status-bar] >
-                    } > | [settings-pane]
-                } >
+                { >[logo]<
+                  <[menus-pane]>
+                } | <{
+                    [title] <[tool-bar]>
+                    <{
+                        <[design-pane]>
+                        <[status-bar]>
+                    }> | [settings-pane]
+                }>
             ]]></linear>
         </xui:layout>
     </template>

@@ -1,5 +1,8 @@
 package io.crazydan.duzhou.framework.ui.schema.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
@@ -37,6 +40,15 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
         }
 
+        List<XuiLayoutNode> children = parseNodes(loc, text);
+        root.addChildren(children);
+
+        return root;
+    }
+
+    private static List<XuiLayoutNode> parseNodes(SourceLocation loc, String text) {
+        List<XuiLayoutNode> nodes = new ArrayList<>();
+
         TextScanner sc = TextScanner.fromString(loc, text);
 
         do {
@@ -45,7 +57,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         } while (!sc.isEnd());
 
-        return root;
+        return nodes;
     }
 
     /**
@@ -74,6 +86,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         // 解析起始方向的对齐位置
         XuiLayoutAlign.Direction[] startAlign = parseAlign(sc);
+        sc.skipBlankInLine();
 
         // 解析组件匹配模式
         if (sc.cur == '[') {
@@ -89,8 +102,15 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             String text = StringHelper.emptyAsNull(sc.nextUntil('}', false).trim().toString());
             sc.consumeInline('}');
 
-            node = XuiLayoutNode.column();
-            // TODO 解析嵌套布局的子节点
+            if (text != null) {
+                List<XuiLayoutNode> children = parseNodes(sc.location(), text);
+
+                if (!children.isEmpty()) {
+                    node = XuiLayoutNode.column();
+
+                    node.addChildren(children);
+                }
+            }
         }
 
         // 解析布局配置参数列表
@@ -113,15 +133,41 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         XuiLayoutAlign.Direction[] align = new XuiLayoutAlign.Direction[] { null, null };
 
         if (startAlign[0] == XuiLayoutAlign.Direction.start && endAlign[0] == XuiLayoutAlign.Direction.end) {
-            width = XuiLayoutSize.match_parent();
-        } else if (startAlign[1] == XuiLayoutAlign.Direction.start && endAlign[1] == XuiLayoutAlign.Direction.end) {
-            height = XuiLayoutSize.match_parent();
+            width = XuiLayoutSize.fill_remains();
         } else if (startAlign[0] == XuiLayoutAlign.Direction.end && endAlign[0] == XuiLayoutAlign.Direction.start) {
             align[0] = XuiLayoutAlign.Direction.center;
+        } else if (startAlign[0] == XuiLayoutAlign.Direction.start) {
+            align[0] = XuiLayoutAlign.Direction.start;
+        } else if (endAlign[0] == XuiLayoutAlign.Direction.end) {
+            align[0] = XuiLayoutAlign.Direction.end;
+        }
+
+        if (startAlign[1] == XuiLayoutAlign.Direction.start && endAlign[1] == XuiLayoutAlign.Direction.end) {
+            height = XuiLayoutSize.fill_remains();
         } else if (startAlign[1] == XuiLayoutAlign.Direction.end && endAlign[1] == XuiLayoutAlign.Direction.start) {
             align[1] = XuiLayoutAlign.Direction.center;
-        } else {
+        } else if (startAlign[1] == XuiLayoutAlign.Direction.start) {
+            align[1] = XuiLayoutAlign.Direction.start;
+        } else if (endAlign[1] == XuiLayoutAlign.Direction.end) {
+            align[1] = XuiLayoutAlign.Direction.end;
         }
+
+        // Note: 仅占满剩余空间的空白占位才是有效的
+        if (node == null) {
+            if (width.type == XuiLayoutSize.Type.fill_remains //
+                || height.type == XuiLayoutSize.Type.fill_remains //
+            ) {
+                node = XuiLayoutNode.space();
+            }
+        }
+
+        if (node == null) {
+            return null;
+        }
+
+        node.setWidth(width);
+        node.setHeight(height);
+        node.setAlign(XuiLayoutAlign.create(align[0], align[1]));
 
         return node;
     }
