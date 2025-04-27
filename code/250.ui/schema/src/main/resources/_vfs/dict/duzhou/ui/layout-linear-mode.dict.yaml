@@ -1,0 +1,7 @@
+# Linear 布局模式
+# Note: YAML 也支持差量
+options:
+  - value: column
+    label: 列式布局，其直接节点均为纵向布局
+  - value: row
+    label: 行式布局，其直接节点均为横向布局

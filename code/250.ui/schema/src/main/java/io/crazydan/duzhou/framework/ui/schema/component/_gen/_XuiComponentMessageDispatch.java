@@ -17,28 +17,28 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
     
     /**
-     *  
+     *  可选
      * xml name: data
      * 消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
      */
     private java.lang.Object _data ;
     
     /**
-     *  
+     *  必填
      * xml name: for
      * 消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
      */
     private java.lang.String _for ;
     
     /**
-     *  
+     *  必填
      * xml name: on
      * 事件名称，如 `click`、`input` 等；
      */
     private java.lang.String _on ;
     
     /**
-     * 
+     * 可选
      * xml name: data
      *  消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
      */
@@ -57,7 +57,7 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
 
     
     /**
-     * 
+     * 必填
      * xml name: for
      *  消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
      */
@@ -76,7 +76,7 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
 
     
     /**
-     * 
+     * 必填
      * xml name: on
      *  事件名称，如 `click`、`input` 等；
      */

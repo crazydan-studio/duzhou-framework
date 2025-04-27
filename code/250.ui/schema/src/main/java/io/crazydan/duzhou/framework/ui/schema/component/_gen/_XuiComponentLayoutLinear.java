@@ -41,6 +41,13 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
     private java.lang.String _$type ;
     
     /**
+     *  必填
+     * xml name: mode
+     * 布局模式，缺省为 column；
+     */
+    private java.lang.String _mode  = "column";
+    
+    /**
      *  
      * xml name: 
      * 
@@ -62,6 +69,25 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
         checkAllowChange();
         
         this._$type = value;
+           
+    }
+
+    
+    /**
+     * 必填
+     * xml name: mode
+     *  布局模式，缺省为 column；
+     */
+    
+    public java.lang.String getMode(){
+      return _mode;
+    }
+
+    
+    public void setMode(java.lang.String value){
+        checkAllowChange();
+        
+        this._mode = value;
            
     }
 
@@ -101,6 +127,7 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
         super.outputJson(out);
         
         out.putNotNull("$type",this.get$type());
+        out.putNotNull("mode",this.getMode());
         out.putNotNull("value",this.getValue());
     }
 
@@ -114,6 +141,7 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
         super.copyTo(instance);
         
         instance.set$type(this.get$type());
+        instance.setMode(this.getMode());
         instance.setValue(this.getValue());
     }
 

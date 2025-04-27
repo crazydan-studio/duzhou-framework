@@ -40,8 +40,11 @@ public class XuiLayoutNode {
         space,
         /** 表格：{@link XuiLayoutNode#children} 中的元素均需为 {@link #row} 类型 */
         table,
-        /** 行：{@link XuiLayoutNode#children} 中的元素可以为 {@link #table} 的单元格，也可以为在相同行内的节点 */
+
+        /** 行：{@link XuiLayoutNode#children} 中的元素均在同一行，若其上层节点为 {@link #table}，则行内节点均为表格单元格 */
         row,
+        /** 列：{@link XuiLayoutNode#children} 中的元素均单独占用一行 */
+        column,
     }
 
     /** 布局节点类型 */
@@ -50,8 +53,7 @@ public class XuiLayoutNode {
     private final String pattern;
 
     /** 对齐方式 */
-    private XuiLayoutAlign align = XuiLayoutAlign.create(XuiLayoutAlign.Direction.start,
-                                                         XuiLayoutAlign.Direction.start);
+    private XuiLayoutAlign align;
     /** 宽度 */
     private XuiLayoutSize width = XuiLayoutSize.wrap_content();
     /** 高度 */
@@ -83,6 +85,10 @@ public class XuiLayoutNode {
 
     public static XuiLayoutNode row() {
         return new XuiLayoutNode(Type.row);
+    }
+
+    public static XuiLayoutNode column() {
+        return new XuiLayoutNode(Type.column);
     }
 
     /** 是否为匹配的组件 */
