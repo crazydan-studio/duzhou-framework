@@ -73,9 +73,12 @@
 
     <template>
         <xui:layout>
+            <!-- 整体处于上层容器的中心位置 -->
             <linear><![CDATA[
-                >[login-logo]<
-                <[login-form]>
+                v>{
+                    >[login-logo]<
+                    <[login-form]>
+                }<^
             ]]></linear>
         </xui:layout>
 
@@ -84,12 +87,9 @@
         <Form xui:name="login-form" disabled="${state.loginWaiting.enabled}">
             <xui:layout>
                 <linear><![CDATA[
-                    [username-label]
-                    <[username-input]>
-
-                    [password-label]
-                    <[password-input]>
-                    [remember-me-input]
+                    | [username-label]> | <[username-input]> |
+                    | [password-label]> | <[password-input]> |
+                    |                   | <[remember-me-input] |
 
                     >[warning-text]<
 

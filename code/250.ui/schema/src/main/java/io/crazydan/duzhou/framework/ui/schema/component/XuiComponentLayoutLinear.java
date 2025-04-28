@@ -40,28 +40,72 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
         }
 
-        List<XuiLayoutNode> children = parseNodes(loc, text);
+        // Note: 根节点尺寸始终与上层容器的尺寸相同
+        root.setHeight(XuiLayoutSize.match_parent());
+        root.setWidth(XuiLayoutSize.match_parent());
+
+        List<XuiLayoutNode> children = parseNodeLines(loc, text);
         root.addChildren(children);
 
         return root;
     }
 
-    private static List<XuiLayoutNode> parseNodes(SourceLocation loc, String text) {
+    /** 解析节点行 */
+    private static List<XuiLayoutNode> parseNodeLines(SourceLocation loc, String text) {
         List<XuiLayoutNode> nodes = new ArrayList<>();
 
         TextScanner sc = TextScanner.fromString(loc, text);
 
-        do {
-            sc.skipEmptyLines();
-            sc.skipBlankInLine();
+        while (true) {
+            sc.skipBlank(); // 跳过空白（含换行符）
+            if (sc.isEnd()) {
+                break;
+            }
 
-        } while (!sc.isEnd());
+            if (sc.cur == '|') {
+                // TODO 解析表格布局的单元格节点
+            } else {
+                XuiLayoutNode row = parseRow(sc);
+                if (row != null) {
+                    nodes.add(row);
+                }
+            }
+        }
 
         return nodes;
     }
 
+    /** 解析行：嵌套节点和配置参数列表可为多行文本 */
+    private static XuiLayoutNode parseRow(TextScanner sc) {
+        XuiLayoutNode row = XuiLayoutNode.row();
+
+        int pos = sc.pos;
+        while (true) {
+            sc.skipBlankInLine();
+            if (sc.isEnd() || sc.cur == '\r' || sc.cur == '\n') {
+                break;
+            }
+
+            XuiLayoutNode node = parseNode(sc);
+            if (node != null) {
+                row.addChild(node);
+            }
+
+            // 防止游标不动
+            Guard.checkState(pos != sc.pos, "unknown mark '" + sc.cur + "'");
+            pos = sc.pos;
+        }
+
+        return row.hasChild() ? row : null;
+    }
+
+    /** 解析表格 */
+    private static XuiLayoutNode parseTable(TextScanner sc) {
+
+    }
+
     /**
-     * 解析如下标记文本：
+     * 解析布局节点：
      * <pre>
      * ^[abc]v
      * </pre>
@@ -103,7 +147,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             sc.consumeInline('}');
 
             if (text != null) {
-                List<XuiLayoutNode> children = parseNodes(sc.location(), text);
+                List<XuiLayoutNode> children = parseNodeLines(sc.location(), text);
 
                 if (!children.isEmpty()) {
                     node = XuiLayoutNode.column();
@@ -115,13 +159,11 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         // 解析布局配置参数列表
         if (sc.cur == '(') {
-            sc.consumeInline('(');
-            sc.skipBlankInLine();
-            if (sc.cur != ')') {
-                sc.consumeInline(',');
-                sc.skipBlankInLine();
-            }
+            sc.next();
+            String text = StringHelper.emptyAsNull(sc.nextUntil(')', false).trim().toString());
             sc.consumeInline(')');
+
+            // TODO 解析配置参数列表（类 JSON 形式）
         }
 
         // 解析终止方向的对齐位置

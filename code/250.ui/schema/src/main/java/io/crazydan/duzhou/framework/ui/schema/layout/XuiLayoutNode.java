@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
@@ -126,6 +127,14 @@ public class XuiLayoutNode {
 
     public void setHeight(XuiLayoutSize height) {
         this.height = height;
+    }
+
+    public List<XuiLayoutNode> getChildren() {
+        return Collections.unmodifiableList(this.children);
+    }
+
+    public boolean hasChild() {
+        return !this.children.isEmpty();
     }
 
     public void addChild(XuiLayoutNode node) {
