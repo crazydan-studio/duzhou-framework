@@ -44,32 +44,36 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         root.setHeight(XuiLayoutSize.match_parent());
         root.setWidth(XuiLayoutSize.match_parent());
 
-        List<XuiLayoutNode> children = parseNodeLines(loc, text);
+        List<XuiLayoutNode> children = parseText(loc, text);
         root.addChildren(children);
 
         return root;
     }
 
-    /** 解析节点行 */
-    private static List<XuiLayoutNode> parseNodeLines(SourceLocation loc, String text) {
+    /** 解析文本 */
+    private static List<XuiLayoutNode> parseText(SourceLocation loc, String text) {
         List<XuiLayoutNode> nodes = new ArrayList<>();
 
         TextScanner sc = TextScanner.fromString(loc, text);
 
-        while (true) {
-            sc.skipBlank(); // 跳过空白（含换行符）
-            if (sc.isEnd()) {
-                break;
-            }
+        while (!sc.isEnd()) {
+            sc.skipEmptyLines();
+            sc.skipBlankInLine();
 
             if (sc.cur == '|') {
-                // TODO 解析表格布局的单元格节点
+                XuiLayoutNode table = parseTable(sc);
+                if (table != null) {
+                    nodes.add(table);
+                }
             } else {
                 XuiLayoutNode row = parseRow(sc);
                 if (row != null) {
                     nodes.add(row);
                 }
             }
+
+            // 跳至下一行
+            sc.skipLine();
         }
 
         return nodes;
@@ -101,7 +105,25 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
     /** 解析表格 */
     private static XuiLayoutNode parseTable(TextScanner sc) {
+        XuiLayoutNode table = XuiLayoutNode.table();
 
+        XuiLayoutNode row = XuiLayoutNode.row();
+        while (true) {
+            sc.skipBlankInLine();
+            if (sc.isEnd()) {
+                break;
+            }
+            if (sc.cur == '\r' || sc.cur == '\n') {
+                row = XuiLayoutNode.row();
+                continue;
+            }
+
+            sc.consumeInline('|');
+            // TODO 支持表格嵌套：被嵌套的表格只能在嵌套布局 {} 内定义
+            String text = StringHelper.emptyAsNull(sc.nextUntil('|', false).trim().toString());
+        }
+
+        return table;
     }
 
     /**
@@ -126,12 +148,15 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * </pre>
      */
     private static XuiLayoutNode parseNode(TextScanner sc) {
-        XuiLayoutNode node = null;
+        if (sc.isEnd()) {
+            return null;
+        }
 
         // 解析起始方向的对齐位置
         XuiLayoutAlign.Direction[] startAlign = parseAlign(sc);
         sc.skipBlankInLine();
 
+        XuiLayoutNode node = null;
         // 解析组件匹配模式
         if (sc.cur == '[') {
             sc.next();
@@ -143,11 +168,12 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
         } else if (sc.cur == '{') {
             sc.next();
+            // TODO 支持布局嵌套：递归查找最外层的配对符号
             String text = StringHelper.emptyAsNull(sc.nextUntil('}', false).trim().toString());
             sc.consumeInline('}');
 
             if (text != null) {
-                List<XuiLayoutNode> children = parseNodeLines(sc.location(), text);
+                List<XuiLayoutNode> children = parseText(sc.location(), text);
 
                 if (!children.isEmpty()) {
                     node = XuiLayoutNode.column();
