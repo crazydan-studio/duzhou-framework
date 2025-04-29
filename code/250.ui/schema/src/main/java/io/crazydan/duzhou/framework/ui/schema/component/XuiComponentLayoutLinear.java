@@ -79,7 +79,29 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         return nodes;
     }
 
-    /** 解析行：嵌套节点和配置参数列表可为多行文本 */
+    /**
+     * 解析行：嵌套节点和配置参数列表可为多行文本
+     * <pre>
+     * [a1] [b1] [c1]
+     * </pre>
+     * <pre>
+     * // 在同一行内的嵌套布局
+     * {
+     *     [a1]
+     *     [a2]
+     * } [b1] [c1]
+     * </pre>
+     * <pre>
+     * // 在同一行内的嵌套布局
+     * {
+     *     [a1]
+     *     [a2]
+     * } {
+     *     [b1]
+     *     [b2]
+     * }
+     * </pre>
+     */
     private static XuiLayoutNode parseRow(TextScanner sc) {
         XuiLayoutNode row = XuiLayoutNode.row();
 
@@ -103,7 +125,30 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         return row.hasChild() ? row : null;
     }
 
-    /** 解析表格 */
+    /**
+     * 解析表格：
+     * <pre>
+     * | [a1] [a2] | [b1] |
+     * |           | [c1] |
+     * </pre>
+     * <pre>
+     * | {
+     *     [a1]
+     *     [a2]
+     * } | [b1] |
+     * </pre>
+     * <pre>
+     * | {
+     *     | [a1] | [b1] |
+     *     | [c1] | [d1] |
+     * } | [b1] |
+     * </pre>
+     * <pre>
+     * // 设置单元格尺寸
+     * | (width:100px) | (width:300px) |
+     * | [a1]> | <[b1]> |
+     * </pre>
+     */
     private static XuiLayoutNode parseTable(TextScanner sc) {
         XuiLayoutNode table = XuiLayoutNode.table();
 
@@ -113,14 +158,19 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             if (sc.isEnd()) {
                 break;
             }
+
             if (sc.cur == '\r' || sc.cur == '\n') {
                 row = XuiLayoutNode.row();
                 continue;
             }
 
-            sc.consumeInline('|');
-            // TODO 支持表格嵌套：被嵌套的表格只能在嵌套布局 {} 内定义
-            String text = StringHelper.emptyAsNull(sc.nextUntil('|', false).trim().toString());
+            if (sc.cur == '|') {
+                String text = extractTableCell(sc);
+                // 空白单元格：用于占位
+                if (text == null) {
+                    XuiLayoutNode cell = XuiLayoutNode.space();
+                }
+            }
         }
 
         return table;
@@ -159,18 +209,13 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         XuiLayoutNode node = null;
         // 解析组件匹配模式
         if (sc.cur == '[') {
-            sc.next();
-            String pattern = StringHelper.emptyAsNull(sc.nextUntil(']', false).trim().toString());
-            sc.consumeInline(']');
+            String text = extractBetweenMark(sc, '[', ']');
 
-            if (pattern != null) {
-                node = XuiLayoutNode.item(pattern);
+            if (text != null) {
+                node = XuiLayoutNode.item(text);
             }
         } else if (sc.cur == '{') {
-            sc.next();
-            // TODO 支持布局嵌套：递归查找最外层的配对符号
-            String text = StringHelper.emptyAsNull(sc.nextUntil('}', false).trim().toString());
-            sc.consumeInline('}');
+            String text = extractBetweenMark(sc, '{', '}');
 
             if (text != null) {
                 List<XuiLayoutNode> children = parseText(sc.location(), text);
@@ -185,11 +230,10 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         // 解析布局配置参数列表
         if (sc.cur == '(') {
-            sc.next();
-            String text = StringHelper.emptyAsNull(sc.nextUntil(')', false).trim().toString());
-            sc.consumeInline(')');
+            String text = extractBetweenMark(sc, '(', ')');
 
             // TODO 解析配置参数列表（类 JSON 形式）
+            // TODO 参数列表不为空且 node 为 null，则创建空白节点
         }
 
         // 解析终止方向的对齐位置
@@ -297,5 +341,84 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         } while (!sc.isEnd());
 
         return align;
+    }
+
+    /**
+     * 提取标记符号之间的文本
+     * <p/>
+     * 提取完成后，<code>sc</code> 将跳到右侧标记符号的下一个位置
+     */
+    private static String extractBetweenMark(TextScanner sc, char leftMark, char rightMark) {
+        StringBuilder sb = new StringBuilder();
+
+        int pairs = 0;
+        while (!sc.isEnd()) {
+            if (sc.cur == leftMark) {
+                pairs += 1;
+            } else if (sc.cur == rightMark) {
+                pairs -= 1;
+            }
+
+            // Note: 需要跳过开始和结尾的标记符号
+            sc.next();
+
+            if (pairs > 0 && !sc.isEnd()) {
+                sb.append(sc.cur);
+            } else {
+                break;
+            }
+        }
+
+        Guard.checkEquals(pairs, 0, "No right mark '" + rightMark + "' found for the left mark '" + leftMark + "'");
+
+        return toString(sb);
+    }
+
+    /**
+     * 提取表格单元格标记文本
+     * <p/>
+     * 注意，被嵌套的表格只能在嵌套布局 <code>{}</code> 内定义
+     */
+    private static String extractTableCell(TextScanner sc) {
+        StringBuilder sb = new StringBuilder();
+
+        boolean cellExtracting = false;
+        boolean cellExtracted = false;
+        while (!sc.isEnd()) {
+            if (cellExtracting) {
+                // 到达单元格结束符号，则停止提取，且不跳过结束符号，以便于识别下一个单元格
+                if (sc.cur == '|') {
+                    cellExtracted = true;
+                    break;
+                }
+                // 单独提取嵌套节点，以避免嵌套表格影响外层表格的识别
+                else if (sc.cur == '{') {
+                    String text = extractBetweenMark(sc, '{', '}');
+                    if (text != null) {
+                        sb.append('{').append(text).append('}');
+                    }
+
+                    // Note: 上述提取过程已跳过右侧标记，不能再多跳
+                    continue;
+                } else {
+                    sb.append(sc.cur);
+                }
+            }
+            // 开始提取单元格
+            else if (sc.cur == '|') {
+                cellExtracting = true;
+            }
+
+            // 移动到下一个位置
+            sc.next();
+        }
+
+        Guard.checkState(cellExtracted, "No cell end mark '|' specified");
+
+        return toString(sb);
+    }
+
+    private static String toString(StringBuilder sb) {
+        return sb.length() == 0 ? null : StringHelper.emptyAsNull(sb.toString().trim());
     }
 }
