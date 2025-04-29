@@ -108,7 +108,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         int pos = sc.pos;
         while (true) {
             sc.skipBlankInLine();
-            if (sc.isEnd() || sc.cur == '\r' || sc.cur == '\n') {
+            if (sc.isEnd() || isLineBreak(sc)) {
                 break;
             }
 
@@ -159,7 +159,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 break;
             }
 
-            if (sc.cur == '\r' || sc.cur == '\n') {
+            if (isLineBreak(sc)) {
                 row = XuiLayoutNode.row();
                 continue;
             }
@@ -174,6 +174,27 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         }
 
         return table;
+    }
+
+    private static List<XuiLayoutNode> parseTableRow(TextScanner sc) {
+        List<XuiLayoutNode> row = new ArrayList<>();
+
+        while (!sc.isEnd()) {
+            sc.skipBlankInLine();
+
+            if (isLineBreak(sc)) {
+                sc.skipLine();
+                break;
+            }
+
+            String text = extractTableCell(sc);
+            // 空白单元格：用于占位
+            if (text == null) {
+                XuiLayoutNode cell = XuiLayoutNode.space();
+            }
+        }
+
+        return row;
     }
 
     /**
@@ -375,7 +396,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     }
 
     /**
-     * 提取表格单元格标记文本
+     * 提取表格单元格标记文本：
+     * 从标记符号 <code>|</code> 开始，并以 <code>|</code> 结束，
+     * 返回二者中间的文本，且游标位置保持在结束的 <code>|</code> 处
      * <p/>
      * 注意，被嵌套的表格只能在嵌套布局 <code>{}</code> 内定义
      */
@@ -389,6 +412,10 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 // 到达单元格结束符号，则停止提取，且不跳过结束符号，以便于识别下一个单元格
                 if (sc.cur == '|') {
                     cellExtracted = true;
+                    break;
+                }
+                // 处理 | 到换行符之间的文本：只允许出现空白字符
+                else if (isLineBreak(sc)) {
                     break;
                 }
                 // 单独提取嵌套节点，以避免嵌套表格影响外层表格的识别
@@ -413,12 +440,18 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             sc.next();
         }
 
-        Guard.checkState(cellExtracted, "No cell end mark '|' specified");
+        String text = toString(sb);
 
-        return toString(sb);
+        Guard.checkState(cellExtracted || text == null, "No cell end mark '|' specified");
+
+        return text;
     }
 
     private static String toString(StringBuilder sb) {
         return sb.length() == 0 ? null : StringHelper.emptyAsNull(sb.toString().trim());
+    }
+
+    private static boolean isLineBreak(TextScanner sc) {
+        return sc.cur == '\r' || sc.cur == '\n';
     }
 }
