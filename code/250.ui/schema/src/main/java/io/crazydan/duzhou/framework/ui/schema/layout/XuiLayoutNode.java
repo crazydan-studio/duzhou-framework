@@ -42,9 +42,15 @@ public class XuiLayoutNode {
         /** 表格：{@link XuiLayoutNode#children} 中的元素均需为 {@link #row} 类型 */
         table,
 
-        /** 行：{@link XuiLayoutNode#children} 中的元素均在同一行，若其上层节点为 {@link #table}，则行内节点均为表格单元格 */
+        /**
+         * 行：{@link XuiLayoutNode#children} 中的元素均在同一行，
+         * 即，行内布局，若其上层节点为 {@link #table}，则行内节点均为表格单元格
+         */
         row,
-        /** 列：{@link XuiLayoutNode#children} 中的元素均单独占用一行 */
+        /**
+         * 列内布局：{@link XuiLayoutNode#children} 中的元素均单独占用一行，
+         * 即，列内布局
+         */
         column,
     }
 
@@ -86,6 +92,13 @@ public class XuiLayoutNode {
 
     public static XuiLayoutNode row() {
         return new XuiLayoutNode(Type.row);
+    }
+
+    public static XuiLayoutNode row(List<XuiLayoutNode> nodes) {
+        XuiLayoutNode row = row();
+        row.addChildren(nodes);
+
+        return row;
     }
 
     public static XuiLayoutNode column() {

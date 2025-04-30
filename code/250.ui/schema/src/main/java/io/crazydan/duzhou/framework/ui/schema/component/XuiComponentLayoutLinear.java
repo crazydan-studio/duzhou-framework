@@ -44,20 +44,19 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         root.setHeight(XuiLayoutSize.match_parent());
         root.setWidth(XuiLayoutSize.match_parent());
 
-        List<XuiLayoutNode> children = parseText(loc, text);
+        List<XuiLayoutNode> children = parseNodes(loc, text);
         root.addChildren(children);
 
         return root;
     }
 
-    /** 解析文本 */
-    private static List<XuiLayoutNode> parseText(SourceLocation loc, String text) {
+    /** 解析布局节点 */
+    private static List<XuiLayoutNode> parseNodes(SourceLocation loc, String text) {
         List<XuiLayoutNode> nodes = new ArrayList<>();
 
         TextScanner sc = TextScanner.fromString(loc, text);
 
         while (!sc.isEnd()) {
-            sc.skipEmptyLines();
             sc.skipBlankInLine();
 
             if (sc.cur == '|') {
@@ -152,49 +151,64 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     private static XuiLayoutNode parseTable(TextScanner sc) {
         XuiLayoutNode table = XuiLayoutNode.table();
 
-        XuiLayoutNode row = XuiLayoutNode.row();
         while (true) {
             sc.skipBlankInLine();
-            if (sc.isEnd()) {
+            if (sc.isEnd() || sc.cur != '|') {
                 break;
             }
 
-            if (isLineBreak(sc)) {
-                row = XuiLayoutNode.row();
-                continue;
-            }
-
-            if (sc.cur == '|') {
-                String text = extractTableCell(sc);
-                // 空白单元格：用于占位
-                if (text == null) {
-                    XuiLayoutNode cell = XuiLayoutNode.space();
-                }
+            XuiLayoutNode row = parseTableRow(sc);
+            if (row != null) {
+                table.addChild(row);
             }
         }
 
-        return table;
+        return table.hasChild() ? table : null;
     }
 
-    private static List<XuiLayoutNode> parseTableRow(TextScanner sc) {
-        List<XuiLayoutNode> row = new ArrayList<>();
+    /**
+     * 解析表格行
+     * <p/>
+     * 表格行解析完后，自动跳到下一行
+     */
+    private static XuiLayoutNode parseTableRow(TextScanner sc) {
+        List<XuiLayoutNode> cells = new ArrayList<>();
 
         while (!sc.isEnd()) {
             sc.skipBlankInLine();
 
             if (isLineBreak(sc)) {
+                // Note: 解析单元格时，必然会在尾部添加一个多余的空白单元格
+                if (!cells.isEmpty()) {
+                    cells.remove(cells.size() - 1);
+                }
+
+                // 跳至下一行
                 sc.skipLine();
                 break;
             }
 
+            SourceLocation loc = sc.location();
             String text = extractTableCell(sc);
-            // 空白单元格：用于占位
-            if (text == null) {
-                XuiLayoutNode cell = XuiLayoutNode.space();
+
+            XuiLayoutNode cell = null;
+            if (text != null) {
+                List<XuiLayoutNode> children = parseNodes(loc, text);
+                if (children.size() == 1) {
+                    cell = children.get(0);
+                } else if (children.size() > 1) {
+                    cell = XuiLayoutNode.row(children);
+                }
             }
+
+            if (cell != null) {
+                // 空白单元格：用于占位
+                cell = XuiLayoutNode.space();
+            }
+            cells.add(cell);
         }
 
-        return row;
+        return cells.isEmpty() ? null : XuiLayoutNode.row(cells);
     }
 
     /**
@@ -239,7 +253,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             String text = extractBetweenMark(sc, '{', '}');
 
             if (text != null) {
-                List<XuiLayoutNode> children = parseText(sc.location(), text);
+                List<XuiLayoutNode> children = parseNodes(sc.location(), text);
 
                 if (!children.isEmpty()) {
                     node = XuiLayoutNode.column();
@@ -384,7 +398,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             sc.next();
 
             if (pairs > 0 && !sc.isEnd()) {
-                sb.append(sc.cur);
+                sb.append((char) sc.cur);
             } else {
                 break;
             }
