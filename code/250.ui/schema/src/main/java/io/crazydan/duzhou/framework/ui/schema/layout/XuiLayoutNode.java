@@ -161,4 +161,42 @@ public class XuiLayoutNode {
             this.children.addAll(nodes);
         }
     }
+
+    @Override
+    public String toString() {
+        // TODO 还原为标记文本
+        return "";
+    }
+
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('{').append('\n');
+        sb.append("  \"type\": \"").append(this.type).append("\"\n");
+        if (this.pattern != null) {
+            sb.append("  , \"pattern\": \"").append(this.pattern).append("\"\n");
+        }
+        if (this.align != null) {
+            sb.append("  , \"align\": ").append(this.align.toJSON()).append('\n');
+        }
+        if (this.width != null) {
+            sb.append("  , \"width\": ").append(this.width.toJSON()).append('\n');
+        }
+        if (this.height != null) {
+            sb.append("  , \"height\": ").append(this.height.toJSON()).append('\n');
+        }
+        if (!this.children.isEmpty()) {
+            sb.append("  , \"children\": [");
+            for (int i = 0; i < this.children.size(); i++) {
+                XuiLayoutNode child = this.children.get(i);
+                String json = (i > 0 ? ", " : "") + child.toJSON();
+
+                sb.append(json.replaceAll("(?m)^", "    ").replaceAll("^\\s+", ""));
+            }
+            sb.append(']').append('\n');
+        }
+        sb.append('}');
+
+        return sb.toString();
+    }
 }

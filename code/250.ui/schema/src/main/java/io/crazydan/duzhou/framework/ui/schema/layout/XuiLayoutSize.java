@@ -72,4 +72,8 @@ public class XuiLayoutSize {
     public static XuiLayoutSize user_specified(Object value) {
         return new XuiLayoutSize(value);
     }
+
+    public String toJSON() {
+        return "\"" + this.type + (this.value != null ? "(" + this.value + ")" : "") + '"';
+    }
 }

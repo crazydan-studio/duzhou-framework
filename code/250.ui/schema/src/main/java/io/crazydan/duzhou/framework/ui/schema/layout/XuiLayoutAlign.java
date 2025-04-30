@@ -55,4 +55,9 @@ public class XuiLayoutAlign {
     public static XuiLayoutAlign create(Direction horizontal, Direction vertical) {
         return aligns.computeIfAbsent(horizontal + "_" + vertical, (key) -> new XuiLayoutAlign(horizontal, vertical));
     }
+
+    public String toJSON() {
+        return "[" + (this.horizontal != null ? "\"" + this.horizontal + "\"" : null) //
+               + ", " + (this.vertical != null ? "\"" + this.vertical + "\"" : null) + ']';
+    }
 }

@@ -117,7 +117,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
 
             // 防止游标不动
-            Guard.checkState(pos != sc.pos, "unknown mark '" + sc.cur + "'");
+            Guard.checkState(pos != sc.pos, "unknown mark '" + (char) sc.cur + "'");
             pos = sc.pos;
         }
 
@@ -277,14 +277,14 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         // 确定尺寸设置和对齐方向
         XuiLayoutSize width = XuiLayoutSize.wrap_content();
         XuiLayoutSize height = XuiLayoutSize.wrap_content();
-        XuiLayoutAlign.Direction[] align = new XuiLayoutAlign.Direction[] { null, null };
+        XuiLayoutAlign.Direction[] align = new XuiLayoutAlign.Direction[] {
+                XuiLayoutAlign.Direction.start, XuiLayoutAlign.Direction.start
+        };
 
         if (startAlign[0] == XuiLayoutAlign.Direction.start && endAlign[0] == XuiLayoutAlign.Direction.end) {
             width = XuiLayoutSize.fill_remains();
         } else if (startAlign[0] == XuiLayoutAlign.Direction.end && endAlign[0] == XuiLayoutAlign.Direction.start) {
             align[0] = XuiLayoutAlign.Direction.center;
-        } else if (startAlign[0] == XuiLayoutAlign.Direction.start) {
-            align[0] = XuiLayoutAlign.Direction.start;
         } else if (endAlign[0] == XuiLayoutAlign.Direction.end) {
             align[0] = XuiLayoutAlign.Direction.end;
         }
@@ -293,8 +293,6 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             height = XuiLayoutSize.fill_remains();
         } else if (startAlign[1] == XuiLayoutAlign.Direction.end && endAlign[1] == XuiLayoutAlign.Direction.start) {
             align[1] = XuiLayoutAlign.Direction.center;
-        } else if (startAlign[1] == XuiLayoutAlign.Direction.start) {
-            align[1] = XuiLayoutAlign.Direction.start;
         } else if (endAlign[1] == XuiLayoutAlign.Direction.end) {
             align[1] = XuiLayoutAlign.Direction.end;
         }
@@ -382,20 +380,26 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * 提取标记符号之间的文本
      * <p/>
      * 提取完成后，<code>sc</code> 将跳到右侧标记符号的下一个位置
+     * <p/>
+     * 注：仅在遇到 <code>leftMark</code> 时才能调用本方法
      */
     private static String extractBetweenMark(TextScanner sc, char leftMark, char rightMark) {
         StringBuilder sb = new StringBuilder();
 
-        int pairs = 0;
+        int pairs = 1;
         while (!sc.isEnd()) {
+            sc.next();
+
             if (sc.cur == leftMark) {
                 pairs += 1;
             } else if (sc.cur == rightMark) {
                 pairs -= 1;
-            }
 
-            // Note: 需要跳过开始和结尾的标记符号
-            sc.next();
+                if (pairs == 0) {
+                    // 跳过匹配的最右侧的标记符号
+                    sc.next();
+                }
+            }
 
             if (pairs > 0 && !sc.isEnd()) {
                 sb.append((char) sc.cur);
