@@ -19,13 +19,12 @@
 
 package io.crazydan.duzhou.framework.ui.schema.test.layout;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,16 +35,33 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_from_text() {
-        Map<String, String> samples = new HashMap<>() {{
-            put("layout.empty.json", "   \n   \n\n");
-            put("layout.simple.json", "[a1]\n    [b1] [b2]");
+        Map<String, String> samples = new LinkedHashMap<>() {{
+            put("layout.100.json", "   \n   \n\n");
+            put("layout.101.json", "[a1]\n    [b1] [b2]");
+            put("layout.102.json", "[a1] <> [a2]");
+            put("layout.103.json", ">[a1]<");
+            put("layout.104.json", "<[a1]>");
+            put("layout.105.json", "^<[]>v");
+            put("layout.106.json", "^<>v");
+            put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n} <^");
+            put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
+            put("layout.301.json", "{\n  [a1]\n  [a2]\n}\n| [b1]> | <[b2]> | \n| [c1]> | <[c2]> |\n|       | <[d1] |");
+            put("layout.302.json", "| [a1] | [a2} |\n[b1] [b2]\n| [c1] | [c2] |\n| [d1] | [d2] |");
+            put("layout.303.json", "| [a1] [a2] | [b1] |\n|           | [c1] |");
+            put("layout.304.json", "| {\n    [a1]\n    [a2]\n} | [b1] |");
+            put("layout.305.json", "| {\n    | [a1] | [b1] |\n    | [c1] | [d1] |\n} | [b1] |");
+            put("layout.306.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
+            put("layout.501.json", "v>(width:100px,height:200px)<^");
+            put("layout.502.json", "v>[a1](width:100px,height:200px)<^");
+            put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px)<^");
         }};
 
         samples.forEach((name, text) -> {
+            this.log.info("Raw text for {}=\n{}", name, text);
             XuiLayoutNode root = XuiComponentLayoutLinear.parse(null, "column", text);
             String json = root.toJSON();
 
-            this.log.info("{}={}", name, json);
+            this.log.info("Layout json for {}=\n{}", name, json);
             // Assertions.assertEquals(attachmentJsonText(name), json);
         });
     }
