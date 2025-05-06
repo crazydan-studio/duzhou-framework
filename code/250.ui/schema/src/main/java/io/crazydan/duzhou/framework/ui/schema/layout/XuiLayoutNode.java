@@ -59,7 +59,13 @@ public class XuiLayoutNode {
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
     private final String pattern;
 
-    /** 对齐方式 */
+    /**
+     * 对齐方式
+     * <p/>
+     * 非表格单元格节点的水平和垂直方向均缺省为 {@link XuiLayoutAlign.Direction#start}，
+     * 而表格单元格（{@link #type} 始终为 {@link Type#row}）的水平和垂直方向始终为
+     * {@link XuiLayoutAlign.Direction#center}
+     */
     private XuiLayoutAlign align;
     /** 宽度 */
     private XuiLayoutSize width = XuiLayoutSize.wrap_content();
@@ -95,14 +101,21 @@ public class XuiLayoutNode {
     }
 
     public static XuiLayoutNode row(List<XuiLayoutNode> nodes) {
-        XuiLayoutNode row = row();
-        row.addChildren(nodes);
+        XuiLayoutNode node = row();
+        node.addChildren(nodes);
 
-        return row;
+        return node;
     }
 
     public static XuiLayoutNode column() {
         return new XuiLayoutNode(Type.column);
+    }
+
+    public static XuiLayoutNode column(List<XuiLayoutNode> nodes) {
+        XuiLayoutNode node = column();
+        node.addChildren(nodes);
+
+        return node;
     }
 
     /** 是否为匹配的组件 */

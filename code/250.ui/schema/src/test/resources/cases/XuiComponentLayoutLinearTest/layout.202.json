@@ -1,0 +1,90 @@
+{
+  "type": "column",
+  "width": "match_parent",
+  "height": "match_parent",
+  "children": [
+    {
+      "type": "row",
+      "width": "wrap_content",
+      "height": "wrap_content",
+      "children": [
+        {
+          "type": "column",
+          "align": [
+            "start",
+            "start"
+          ],
+          "width": "wrap_content",
+          "height": "wrap_content",
+          "children": [
+            {
+              "type": "row",
+              "width": "wrap_content",
+              "height": "wrap_content",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "a1",
+                  "align": [
+                    "center",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "wrap_content",
+              "height": "wrap_content",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "a2",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "fill_remains",
+                  "height": "wrap_content"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "align": [
+            "start",
+            "start"
+          ],
+          "width": "fill_remains",
+          "height": "wrap_content",
+          "children": [
+            {
+              "type": "item",
+              "pattern": "b1",
+              "align": [
+                "start",
+                "start"
+              ],
+              "width": "wrap_content",
+              "height": "wrap_content"
+            },
+            {
+              "type": "item",
+              "pattern": "b2",
+              "align": [
+                "start",
+                "start"
+              ],
+              "width": "fill_remains",
+              "height": "wrap_content"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

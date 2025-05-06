@@ -25,6 +25,8 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.nop.core.lang.json.JsonTool;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -43,26 +45,34 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             put("layout.104.json", "<[a1]>");
             put("layout.105.json", "^<[]>v");
             put("layout.106.json", "^<>v");
-            put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n} <^");
+            // - 正则表达式匹配目标组件
+            put("layout.107.json", "[a1] [a2]\n[b1] [b_[\\\\d\\\\w]+]");
+            // - 行注释
+            put("layout.108.json", "/** 块注释 */ [a1]\n// 行注释\n/** 行注释 */\n[b1] [c1] // 结尾注释");
+            // 嵌套
+            put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
-            put("layout.301.json", "{\n  [a1]\n  [a2]\n}\n| [b1]> | <[b2]> | \n| [c1]> | <[c2]> |\n|       | <[d1] |");
-            put("layout.302.json", "| [a1] | [a2} |\n[b1] [b2]\n| [c1] | [c2] |\n| [d1] | [d2] |");
+            // 表格
+            put("layout.301.json", "{\n  [a1]\n  [a2]\n}\n| [b1]> | <[b2]> | \n| [c1]> | <[c2]> |\n|       | <[d1]  |");
+            put("layout.302.json", "| [a1] | [a2] |\n [b1] [b2] \n| [c1] | [c2] |\n| [d1] | [d2] |");
             put("layout.303.json", "| [a1] [a2] | [b1] |\n|           | [c1] |");
             put("layout.304.json", "| {\n    [a1]\n    [a2]\n} | [b1] |");
-            put("layout.305.json", "| {\n    | [a1] | [b1] |\n    | [c1] | [d1] |\n} | [b1] |");
-            put("layout.306.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
-            put("layout.501.json", "v>(width:100px,height:200px)<^");
-            put("layout.502.json", "v>[a1](width:100px,height:200px)<^");
-            put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px)<^");
+            put("layout.305.json", "| {\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n} [c1] | [d1] [d2] |");
+            // - 表头配置参数
+            // put("layout.306.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
+            // 配置参数
+            // put("layout.501.json", "v>(width:100px,height:200px)<^");
+            // put("layout.502.json", "v>[a1](width:100px,height:200px)<^");
+            // put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px)<^");
         }};
 
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
             XuiLayoutNode root = XuiComponentLayoutLinear.parse(null, "column", text);
-            String json = root.toJSON();
+            String json = JsonTool.serialize(JsonTool.parse(root.toJSON()), true);
 
             this.log.info("Layout json for {}=\n{}", name, json);
-            // Assertions.assertEquals(attachmentJsonText(name), json);
+            Assertions.assertEquals(attachmentJsonText(name), json);
         });
     }
 }

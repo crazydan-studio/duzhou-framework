@@ -23,6 +23,10 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         return parse(loc, getMode(), getValue());
     }
 
+    /**
+     * @param mode
+     *         布局模式，枚举值见 <code>_vfs/dict/duzhou/ui/layout-linear-mode.dict.yaml</code>
+     */
     public static XuiLayoutNode parse(SourceLocation loc, String mode, String text) {
         // Note: 若是布局的根节点未指定子节点，则子组件均会被视为独立的布局节点，统一按行/列模式进行布局
         XuiLayoutNode root;
@@ -57,13 +61,19 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         TextScanner sc = TextScanner.fromString(loc, text);
 
         while (!sc.isEnd()) {
-            sc.skipBlankInLine();
+            moveToValidCharInLine(sc);
 
             if (sc.cur == '|') {
                 XuiLayoutNode table = parseTable(sc);
                 if (table != null) {
+                    // 表格宽度自适应父节点宽度
+                    table.setWidth(XuiLayoutSize.match_parent());
+
                     nodes.add(table);
                 }
+
+                // Note: 表格解析后会自动跳转到下一行
+                continue;
             } else {
                 XuiLayoutNode row = parseRow(sc);
                 if (row != null) {
@@ -106,13 +116,21 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         int pos = sc.pos;
         while (true) {
-            sc.skipBlankInLine();
+            moveToValidCharInLine(sc);
             if (sc.isEnd() || isLineBreak(sc)) {
                 break;
             }
 
             XuiLayoutNode node = parseNode(sc);
             if (node != null) {
+                // 行内节点默认左上角对齐
+                if (node.getAlign().horizontal == null) {
+                    node.setAlign(node.getAlign().withHorizontal(XuiLayoutAlign.Direction.start));
+                }
+                if (node.getAlign().vertical == null) {
+                    node.setAlign(node.getAlign().withVertical(XuiLayoutAlign.Direction.start));
+                }
+
                 row.addChild(node);
             }
 
@@ -147,44 +165,40 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * | (width:100px) | (width:300px) |
      * | [a1]> | <[b1]> |
      * </pre>
+     * <p/>
+     * 注意：表格解析完后，将自动跳到下一行
      */
     private static XuiLayoutNode parseTable(TextScanner sc) {
         XuiLayoutNode table = XuiLayoutNode.table();
 
         while (true) {
-            sc.skipBlankInLine();
+            moveToValidCharInLine(sc);
             if (sc.isEnd() || sc.cur != '|') {
                 break;
             }
 
             XuiLayoutNode row = parseTableRow(sc);
             if (row != null) {
+                // 表格行宽度自适应 table 宽度
+                row.setWidth(XuiLayoutSize.match_parent());
+
                 table.addChild(row);
             }
+
+            // 跳至下一行
+            sc.skipLine();
         }
 
         return table.hasChild() ? table : null;
     }
 
-    /**
-     * 解析表格行
-     * <p/>
-     * 表格行解析完后，自动跳到下一行
-     */
+    /** 解析表格行 */
     private static XuiLayoutNode parseTableRow(TextScanner sc) {
         List<XuiLayoutNode> cells = new ArrayList<>();
 
         while (!sc.isEnd()) {
-            sc.skipBlankInLine();
-
+            moveToValidCharInLine(sc);
             if (isLineBreak(sc)) {
-                // Note: 解析单元格时，必然会在尾部添加一个多余的空白单元格
-                if (!cells.isEmpty()) {
-                    cells.remove(cells.size() - 1);
-                }
-
-                // 跳至下一行
-                sc.skipLine();
                 break;
             }
 
@@ -201,11 +215,28 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 }
             }
 
-            if (cell != null) {
+            if (cell == null) {
                 // 空白单元格：用于占位
                 cell = XuiLayoutNode.space();
             }
+
+            // 表格单元格默认居中对齐
+            if (cell.getAlign() == null) {
+                cell.setAlign(XuiLayoutAlign.create(XuiLayoutAlign.Direction.center, XuiLayoutAlign.Direction.center));
+            }
+            if (cell.getAlign().horizontal == null) {
+                cell.setAlign(cell.getAlign().withHorizontal(XuiLayoutAlign.Direction.center));
+            }
+            if (cell.getAlign().vertical == null) {
+                cell.setAlign(cell.getAlign().withVertical(XuiLayoutAlign.Direction.center));
+            }
+
             cells.add(cell);
+        }
+
+        // Note: 解析单元格时，必然会在尾部添加一个多余的空白单元格
+        if (!cells.isEmpty()) {
+            cells.remove(cells.size() - 1);
         }
 
         return cells.isEmpty() ? null : XuiLayoutNode.row(cells);
@@ -233,13 +264,14 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * </pre>
      */
     private static XuiLayoutNode parseNode(TextScanner sc) {
+        moveToValidCharInLine(sc);
         if (sc.isEnd()) {
             return null;
         }
 
         // 解析起始方向的对齐位置
         XuiLayoutAlign.Direction[] startAlign = parseAlign(sc);
-        sc.skipBlankInLine();
+        Guard.checkState(!StringHelper.isSpaceInLine(sc.cur), "No spaces are expected after the align mark");
 
         XuiLayoutNode node = null;
         // 解析组件匹配模式
@@ -255,15 +287,16 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             if (text != null) {
                 List<XuiLayoutNode> children = parseNodes(sc.location(), text);
 
-                if (!children.isEmpty()) {
-                    node = XuiLayoutNode.column();
-
-                    node.addChildren(children);
+                if (children.size() == 1) {
+                    node = children.get(0);
+                } else if (children.size() > 1) {
+                    node = XuiLayoutNode.column(children);
                 }
             }
         }
 
         // 解析布局配置参数列表
+        // TODO 参数列表之前不能有空白 Guard.checkState(!StringHelper.isSpaceInLine(sc.cur), "No spaces are expected before the parameter mark");
         if (sc.cur == '(') {
             String text = extractBetweenMark(sc, '(', ')');
 
@@ -271,14 +304,14 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             // TODO 参数列表不为空且 node 为 null，则创建空白节点
         }
 
-        // 解析终止方向的对齐位置
+        // 解析终止方向的对齐位置：终止方向的对齐符号必须紧挨节点，不能有空白
         XuiLayoutAlign.Direction[] endAlign = parseAlign(sc);
 
         // 确定尺寸设置和对齐方向
         XuiLayoutSize width = XuiLayoutSize.wrap_content();
         XuiLayoutSize height = XuiLayoutSize.wrap_content();
         XuiLayoutAlign.Direction[] align = new XuiLayoutAlign.Direction[] {
-                XuiLayoutAlign.Direction.start, XuiLayoutAlign.Direction.start
+                null, null
         };
 
         if (startAlign[0] == XuiLayoutAlign.Direction.start && endAlign[0] == XuiLayoutAlign.Direction.end) {
@@ -446,7 +479,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     // Note: 上述提取过程已跳过右侧标记，不能再多跳
                     continue;
                 } else {
-                    sb.append(sc.cur);
+                    sb.append((char) sc.cur);
                 }
             }
             // 开始提取单元格
@@ -463,6 +496,13 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         Guard.checkState(cellExtracted || text == null, "No cell end mark '|' specified");
 
         return text;
+    }
+
+    /** 跳到有效的标记字符处：行首空白，注释行等无用字符均将被直接跳过 */
+    private static void moveToValidCharInLine(TextScanner sc) {
+        sc.skipBlankInLine();
+        // Note: 连续注释将被自动跳过，并且自动跳过非注释行开头的空白（含换行符）
+        sc.skipJavaComment(false);
     }
 
     private static String toString(StringBuilder sb) {
