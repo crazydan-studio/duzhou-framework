@@ -19,8 +19,13 @@
 
 package io.crazydan.duzhou.framework.ui.schema;
 
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-05
  */
-public interface XuiLayout {}
+public interface XuiLayout {
+
+    XuiLayoutNode create();
+}

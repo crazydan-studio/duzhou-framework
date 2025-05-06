@@ -17,7 +17,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     public XuiComponentLayoutLinear() {
     }
 
+    @Override
     public XuiLayoutNode create() {
+        // TODO 缓存布局解析结果
         SourceLocation loc = getLocation();
 
         return parse(loc, getMode(), getValue());

@@ -22,6 +22,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
 
@@ -57,7 +58,7 @@ public class XuiLayoutNode {
     /** 布局节点类型 */
     private final Type type;
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
-    private final String pattern;
+    private final Pattern pattern;
 
     /**
      * 对齐方式
@@ -77,7 +78,7 @@ public class XuiLayoutNode {
 
     XuiLayoutNode(Type type, String pattern) {
         this.type = type;
-        this.pattern = pattern;
+        this.pattern = pattern != null ? Pattern.compile("^" + pattern + "$") : null;
     }
 
     XuiLayoutNode(Type type) {
@@ -120,7 +121,7 @@ public class XuiLayoutNode {
 
     /** 是否为匹配的组件 */
     public boolean matched(XuiComponentNamed component) {
-        return false;
+        return this.pattern != null && this.pattern.matcher(component.getXuiName()).matches();
     }
 
     public Type getType() {
@@ -128,7 +129,7 @@ public class XuiLayoutNode {
     }
 
     public String getPattern() {
-        return this.pattern;
+        return this.pattern != null ? this.pattern.pattern() : null;
     }
 
     public XuiLayoutAlign getAlign() {

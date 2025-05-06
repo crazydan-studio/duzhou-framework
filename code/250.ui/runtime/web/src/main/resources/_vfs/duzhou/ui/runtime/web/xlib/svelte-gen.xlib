@@ -74,58 +74,151 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
 
             <source>
-                <c:for var="child" items="${node.children}">
-                    <c:choose>
-                        <!-- 构建组件指令 -->
-                        <when test="${child.$type == 'xui:layout'}">
-                            <div />
-                        </when>
-                        <when test="${child.$type == 'xui:style'}">
-                            <div />
-                        </when>
-                        <when test="${child.$type == 'xui:dispatch'}">
-                            <div />
-                        </when>
-                        <when test="${child.$type == 'xui:each'}">
-                            <div />
-                        </when>
-                        <when test="${child.$type == 'xui:when'}">
-                            <div />
-                        </when>
+                <c:script><![CDATA[
+                    import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested;
 
-                        <!-- 构建组件节点 -->
-                        <otherwise>
+                    const layouts = node instanceof XuiComponentNested
+                        ? node.children.filter(child => child.$type == 'xui:layout')
+                        : [];
+                    const children = node instanceof XuiComponentNested
+                        ? node.children.filter(child => child.$type != 'xui:layout')
+                        : [node];
+                    const conditionalLayouts = layouts.size() > 1;
+                ]]></c:script>
+
+                <c:choose>
+                    <when test="${!layouts.isEmpty()}">
+                        <c:for var="layout" items="${layouts}" index="index">
                             <c:script><![CDATA[
-                                const nativeType = component.getNodeNativeType(child);
-                                const attrs = component.getNodeAttrs(child);
+                                const layoutNode = layout.type.create();
                             ]]></c:script>
 
-                            <!-- 构建原生组件节点 -->
-                            <c:script xpl:if="nativeType != null"><![CDATA[
-                                import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
+                            <c:if test="${conditionalLayouts}">
+                                <c:if test="${index == 0}">
+                                    {#if ${layout['xui:when']}}
+                                </c:if>
+                                <c:if test="${index > 0}">
+                                    {:else if ${layout['xui:when']}}
+                                </c:if>
+                            </c:if>
 
-                                const ret = XuiGenHelper.callGenNativeTag(
-                                    location(), $scope, nativeType,
-                                    { component, node: child }
-                                );
-                                $out.text(location(), ret);
-                            ]]></c:script>
-
-                            <!-- 构建自定义组件节点，并保持组件名不变（注意，Svelte 组件名的首字母必须大写） -->
-                            <!-- TODO 处理 xui:when -->
-                            <!-- TODO 直接展开组件属性 -->
-                            <_ xpl:is="${child.$type}"
-                               xpl:if="nativeType == null"
-                               xpl:attrs="attrs"
-                            >
-                                <thisLib:GenComponentNode
+                            <!-- TODO 定义并使用 Svelte 组件 Layout_xxx，并以其作为标签名 -->
+                            <div type="${layout.type.$type}">
+                                <thisLib:GenComponentNodeLayout
                                         component="${component}"
-                                        node="${child}" />
-                            </_>
-                        </otherwise>
-                    </c:choose>
-                </c:for>
+                                        node="${node}"
+                                        layout="${layoutNode}" />
+                            </div>
+                        </c:for>
+
+                        <c:if test="${conditionalLayouts}">
+                            {/if}
+                        </c:if>
+                    </when>
+                    <otherwise>
+                        <c:for var="child" items="${children}">
+                            <thisLib:GenComponentNamed
+                                    component="${component}"
+                                    named="${child}" />
+                        </c:for>
+                    </otherwise>
+                </c:choose>
             </source>
         </GenComponentNode>
+
+        <GenComponentNamed outputMode="html">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="named"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed" />
+
+            <source>
+                <c:choose>
+                    <!-- 构建 组件指令 -->
+                    <when test="${named.$type == 'xui:style'}">
+                        <div />
+                    </when>
+                    <when test="${named.$type == 'xui:dispatch'}">
+                        <div />
+                    </when>
+                    <when test="${named.$type == 'xui:each'}">
+                        <div />
+                    </when>
+                    <when test="${named.$type == 'xui:when'}">
+                        <div />
+                    </when>
+
+                    <!-- 构建组件节点 -->
+                    <otherwise>
+                        <c:script><![CDATA[
+                            const nativeType = component.getNodeNativeType(named);
+                            const attrs = component.getNodeAttrs(named);
+                        ]]></c:script>
+
+                        <!-- 构建原生组件节点 -->
+                        <c:script xpl:if="nativeType != null"><![CDATA[
+                            import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
+
+                            const ret = XuiGenHelper.callGenNativeTag(
+                                location(), $scope, nativeType,
+                                { component, node: named }
+                            );
+                            $out.text(location(), ret);
+                        ]]></c:script>
+
+                        <!-- 构建自定义组件节点，并保持组件名不变（注意，Svelte 组件名的首字母必须大写） -->
+                        <!-- TODO 处理 xui:when -->
+                        <!-- TODO 直接展开组件属性 -->
+                        <_ xpl:is="${named.$type}"
+                           xpl:if="nativeType == null"
+                           xpl:attrs="attrs"
+                        >
+                            <thisLib:GenComponentNode
+                                    component="${component}"
+                                    node="${named}" />
+                        </_>
+                    </otherwise>
+                </c:choose>
+            </source>
+        </GenComponentNamed>
+
+        <GenComponentNodeLayout outputMode="html">
+            <attr name="component"
+                  type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
+            <attr name="node"
+                  type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
+            <attr name="layout"
+                  type="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode" />
+
+            <source>
+                <c:choose>
+                    <when test="${layout.type.name() == 'item'}">
+                        <c:script><![CDATA[
+                            const children = node.findLayoutChild(layout);
+                        ]]></c:script>
+
+                        <c:for var="child" items="${children}">
+                            <!-- TODO 替换为 Layout 组件的子节点标签 -->
+                            <div type="${layout.type}">
+                                <thisLib:GenComponentNamed
+                                        component="${component}"
+                                        named="${child}" />
+                            </div>
+                        </c:for>
+                    </when>
+                    <otherwise>
+                        <!-- TODO 替换为 Layout 组件的子节点标签 -->
+                        <div type="${layout.type}">
+                            <c:for var="layoutChild" items="${layout.children}">
+                                <thisLib:GenComponentNodeLayout
+                                        component="${component}"
+                                        node="${node}"
+                                        layout="${layoutChild}" />
+                            </c:for>
+                        </div>
+                    </otherwise>
+                </c:choose>
+            </source>
+        </GenComponentNodeLayout>
     </tags>
 </lib>
