@@ -39,8 +39,8 @@
 
     <template>
         <xui:layout>
-            <!-- 整体处于上层容器的中心位置 -->
             <linear><![CDATA[
+                // 整体处于上层容器的中心位置
                 v>{
                     >[login-logo]<
                     <[login-form]>
@@ -53,6 +53,7 @@
         <Form xui:name="login-form">
             <xui:layout>
                 <linear><![CDATA[
+                    // 通过表格对齐输入组件
                     | [username-label]> | <[username-input]> |
                     | [password-label]> | <[password-input]> |
                     |                   | <[remember-me-input] |

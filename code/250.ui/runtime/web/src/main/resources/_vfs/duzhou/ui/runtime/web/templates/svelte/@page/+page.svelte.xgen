@@ -25,6 +25,12 @@
     <c:script><![CDATA[
     ]]></c:script>
 
+    <c:if test="${!!page.title}" xpl:outputMode="text"><![CDATA[
+        <svelte:head>
+            <title>${page.title}</title>
+        </svelte:head>
+    ]]></c:if>
+
     <svelte-gen:GenComponent
             xpl:lib="/duzhou/ui/runtime/web/xlib/svelte-gen.xlib"
             forPage="true"

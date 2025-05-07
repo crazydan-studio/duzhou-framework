@@ -24,7 +24,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "a1",
+                  "pattern": "^a1$",
                   "align": [
                     "center",
                     "start"
@@ -41,7 +41,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "a2",
+                  "pattern": "^a2$",
                   "align": [
                     "start",
                     "start"
@@ -64,7 +64,7 @@
           "children": [
             {
               "type": "item",
-              "pattern": "b1",
+              "pattern": "^b1$",
               "align": [
                 "start",
                 "start"
@@ -74,7 +74,7 @@
             },
             {
               "type": "item",
-              "pattern": "b2",
+              "pattern": "^b2$",
               "align": [
                 "start",
                 "start"

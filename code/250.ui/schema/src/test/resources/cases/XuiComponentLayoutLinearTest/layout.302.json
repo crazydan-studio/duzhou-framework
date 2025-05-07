@@ -24,7 +24,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "a1",
+                  "pattern": "^a1$",
                   "align": [
                     "start",
                     "start"
@@ -45,7 +45,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "a2",
+                  "pattern": "^a2$",
                   "align": [
                     "start",
                     "start"
@@ -66,7 +66,7 @@
       "children": [
         {
           "type": "item",
-          "pattern": "b1",
+          "pattern": "^b1$",
           "align": [
             "start",
             "start"
@@ -76,7 +76,7 @@
         },
         {
           "type": "item",
-          "pattern": "b2",
+          "pattern": "^b2$",
           "align": [
             "start",
             "start"
@@ -107,7 +107,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "c1",
+                  "pattern": "^c1$",
                   "align": [
                     "start",
                     "start"
@@ -128,7 +128,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "c2",
+                  "pattern": "^c2$",
                   "align": [
                     "start",
                     "start"
@@ -156,7 +156,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "d1",
+                  "pattern": "^d1$",
                   "align": [
                     "start",
                     "start"
@@ -177,7 +177,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "d2",
+                  "pattern": "^d2$",
                   "align": [
                     "start",
                     "start"

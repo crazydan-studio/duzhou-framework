@@ -68,7 +68,7 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
 
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
-            XuiLayoutNode root = XuiComponentLayoutLinear.parse(null, "column", text);
+            XuiLayoutNode root = XuiComponentLayoutLinear.parse(null, XuiComponentLayoutLinear.Mode.column, text);
             String json = JsonTool.serialize(JsonTool.parse(root.toJSON()), true);
 
             this.log.info("Layout json for {}=\n{}", name, json);

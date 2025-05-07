@@ -34,10 +34,18 @@
                     <thisLib:GenComponentImports
                             component="${component}" />
 
-                    <c:if test="${!forPage}">
+                    <c:if test="${forPage}" xpl:outputMode="text"><![CDATA[
+                        import '${'$'}lib/css/normalize.css';
+                        import { onPageMount } from '${'$'}lib/common/page.js';
+                        import { onMount } from 'svelte';
+
+                        onMount(onPageMount);
+                    ]]></c:if>
+
+                    <c:if test="${!forPage}" xpl:outputMode="text"><![CDATA[
                         let props = $props();
                         let { children } = props;
-                    </c:if>
+                    ]]></c:if>
                 </script>
 
                 <_ xpl:is="${forPage ? 'main' : 'div'}"
@@ -61,7 +69,10 @@
                 <c:script><![CDATA[
                     import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
 
-                    const dirs = XuiGenHelper.genLibImportDirectives(component, '$lib', '.svelte');
+                    let dirs = XuiGenHelper.genLibImportDirectives(component, '$lib', '.svelte');
+                    $out.text(location(), dirs);
+
+                    dirs = XuiGenHelper.genLayoutImportDirectives(component, '$lib', '.svelte');
                     $out.text(location(), dirs);
                 ]]></c:script>
             </source>
@@ -90,30 +101,40 @@
                     <when test="${!layouts.isEmpty()}">
                         <c:for var="layout" items="${layouts}" index="index">
                             <c:script><![CDATA[
-                                const layoutNode = layout.type.create();
+                                import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
+                                import io.nop.commons.util.StringHelper;
+
+                                const layoutNode = layout.type.root;
+                                const layoutType = layout.type.$type;
+                                const layoutName = XuiGenHelper.LAYOUT_IMPORT_NAME_PREFIX
+                                                    + StringHelper.camelCase(layoutType, '-', true);
+                                const layoutAttrs = {};
                             ]]></c:script>
 
                             <c:if test="${conditionalLayouts}">
-                                <c:if test="${index == 0}">
+                                <c:if test="${index == 0}" xpl:outputMode="text"><![CDATA[
                                     {#if ${layout['xui:when']}}
-                                </c:if>
-                                <c:if test="${index > 0}">
+                                ]]></c:if>
+                                <c:if test="${index > 0}" xpl:outputMode="text"><![CDATA[
                                     {:else if ${layout['xui:when']}}
-                                </c:if>
+                                ]]></c:if>
                             </c:if>
 
-                            <!-- TODO 定义并使用 Svelte 组件 Layout_xxx，并以其作为标签名 -->
-                            <div type="${layout.type.$type}">
+                            <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
+                            <_ xpl:is="${layoutName + ''}"
+                               xpl:attrs="layoutAttrs"
+                            >
                                 <thisLib:GenComponentNodeLayout
                                         component="${component}"
                                         node="${node}"
-                                        layout="${layoutNode}" />
-                            </div>
+                                        layout="${layoutNode}"
+                                        layoutNamePrefix="${layoutName + '_'}" />
+                            </_>
                         </c:for>
 
-                        <c:if test="${conditionalLayouts}">
+                        <c:if test="${conditionalLayouts}" xpl:outputMode="text"><![CDATA[
                             {/if}
-                        </c:if>
+                        ]]></c:if>
                     </when>
                     <otherwise>
                         <c:for var="child" items="${children}">
@@ -189,8 +210,22 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode" />
             <attr name="layout"
                   type="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode" />
+            <attr name="layoutNamePrefix" type="String" />
 
             <source>
+                <c:script><![CDATA[
+                    import io.nop.commons.util.StringHelper;
+
+                    const layoutName = layoutNamePrefix + StringHelper.camelCase(layout.type.name(), true);
+                    const layoutAttrs = {
+                        align: layout.align
+                                ? "{{h: '" + (layout.align.horizontal || '') + "',"
+                                  + " v: '" + (layout.align.vertical || '') + "'}}"
+                                : null,
+                        width: layout.width.type + '',
+                        height: layout.height.type + '',
+                    };
+                ]]></c:script>
                 <c:choose>
                     <when test="${layout.type.name() == 'item'}">
                         <c:script><![CDATA[
@@ -198,24 +233,24 @@
                         ]]></c:script>
 
                         <c:for var="child" items="${children}">
-                            <!-- TODO 替换为 Layout 组件的子节点标签 -->
-                            <div type="${layout.type}">
-                                <thisLib:GenComponentNamed
-                                        component="${component}"
-                                        named="${child}" />
-                            </div>
+                            <!-- TODO 绑定布局配置参数 -->
+                            <thisLib:GenComponentNamed
+                                    component="${component}"
+                                    named="${child}" />
                         </c:for>
                     </when>
                     <otherwise>
-                        <!-- TODO 替换为 Layout 组件的子节点标签 -->
-                        <div type="${layout.type}">
+                        <_ xpl:is="${layoutName + ''}"
+                           xpl:attrs="layoutAttrs"
+                        >
                             <c:for var="layoutChild" items="${layout.children}">
                                 <thisLib:GenComponentNodeLayout
                                         component="${component}"
                                         node="${node}"
-                                        layout="${layoutChild}" />
+                                        layout="${layoutChild}"
+                                        layoutNamePrefix="${layoutNamePrefix}" />
                             </c:for>
-                        </div>
+                        </_>
                     </otherwise>
                 </c:choose>
             </source>

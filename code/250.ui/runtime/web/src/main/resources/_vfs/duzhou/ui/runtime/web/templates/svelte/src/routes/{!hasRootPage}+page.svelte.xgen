@@ -20,7 +20,16 @@
   -->
 
 <!-- 默认根页面 -->
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<script lang="ts">
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<svelte:head>
+    <title>${app.title}</title>
+</svelte:head>
+
+<script lang="ts">
+    import '${'$'}lib/css/normalize.css';
+    import { onPageMount } from '${'$'}lib/common/page.js';
+    import { onMount } from 'svelte';
+
+    onMount(onPageMount);
 </script>
 
 <main>]]><c:for var="page" items="${pages}">

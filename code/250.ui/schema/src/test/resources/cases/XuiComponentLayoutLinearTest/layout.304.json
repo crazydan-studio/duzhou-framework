@@ -38,7 +38,7 @@
                       "children": [
                         {
                           "type": "item",
-                          "pattern": "a1",
+                          "pattern": "^a1$",
                           "align": [
                             "start",
                             "start"
@@ -55,7 +55,7 @@
                       "children": [
                         {
                           "type": "item",
-                          "pattern": "a2",
+                          "pattern": "^a2$",
                           "align": [
                             "start",
                             "start"
@@ -80,7 +80,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "b1",
+                  "pattern": "^b1$",
                   "align": [
                     "start",
                     "start"

@@ -13,31 +13,44 @@ import io.nop.commons.text.tokenizer.TextScanner;
 import io.nop.commons.util.StringHelper;
 
 public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
+    private XuiLayoutNode root;
+
+    public enum Mode {
+        column,
+        row,
+    }
 
     public XuiComponentLayoutLinear() {
     }
 
     @Override
-    public XuiLayoutNode create() {
-        // TODO 缓存布局解析结果
-        SourceLocation loc = getLocation();
+    public String getType() {
+        return get$type();
+    }
 
-        return parse(loc, getMode(), getValue());
+    @Override
+    public XuiLayoutNode getRoot() {
+        if (this.root == null) {
+            SourceLocation loc = getLocation();
+
+            this.root = parse(loc, Mode.valueOf(getMode()), getValue());
+        }
+        return this.root;
     }
 
     /**
      * @param mode
      *         布局模式，枚举值见 <code>_vfs/dict/duzhou/ui/layout-linear-mode.dict.yaml</code>
      */
-    public static XuiLayoutNode parse(SourceLocation loc, String mode, String text) {
+    public static XuiLayoutNode parse(SourceLocation loc, Mode mode, String text) {
         // Note: 若是布局的根节点未指定子节点，则子组件均会被视为独立的布局节点，统一按行/列模式进行布局
         XuiLayoutNode root;
         switch (mode) {
-            case "column": {
+            case column: {
                 root = XuiLayoutNode.column();
                 break;
             }
-            case "row": {
+            case row: {
                 root = XuiLayoutNode.row();
                 break;
             }

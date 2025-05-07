@@ -25,9 +25,12 @@
     <meta charset="utf-8"/>
     <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%${app.logo}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${app.title}</title>
+    <!-- 引用自组件内 <svelte:head/> 标签的内容 -->
     %sveltekit.head%
     <style>
+        /** Fill the viewport's height and width */
+        html, body { width: 100dvw; height: 100dvh; }
+
         /** More accessible markup with `display: contents`:
         * https://hidde.blog/more-accessible-markup-with-display-contents/
         */

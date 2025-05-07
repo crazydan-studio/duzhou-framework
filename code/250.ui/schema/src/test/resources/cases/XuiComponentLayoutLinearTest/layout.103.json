@@ -10,7 +10,7 @@
       "children": [
         {
           "type": "item",
-          "pattern": "a1",
+          "pattern": "^a1$",
           "align": [
             "center",
             "start"

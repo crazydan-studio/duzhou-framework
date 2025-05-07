@@ -24,7 +24,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "a1",
+                  "pattern": "^a1$",
                   "align": [
                     "center",
                     "start"
@@ -41,7 +41,7 @@
               "children": [
                 {
                   "type": "item",
-                  "pattern": "b1",
+                  "pattern": "^b1$",
                   "align": [
                     "start",
                     "start"

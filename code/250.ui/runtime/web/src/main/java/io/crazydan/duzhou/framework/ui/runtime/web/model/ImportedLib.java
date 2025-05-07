@@ -28,6 +28,8 @@ package io.crazydan.duzhou.framework.ui.runtime.web.model;
 public class ImportedLib {
     /** 库的名称 */
     private String name;
+    /** 库的名称前缀 */
+    private String namePrefix;
     /** 库的加载路径，不含库名和类型后缀 */
     private String path;
 
@@ -42,6 +44,14 @@ public class ImportedLib {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNamePrefix() {
+        return this.namePrefix;
+    }
+
+    public void setNamePrefix(String namePrefix) {
+        this.namePrefix = namePrefix;
     }
 
     public String getPath() {

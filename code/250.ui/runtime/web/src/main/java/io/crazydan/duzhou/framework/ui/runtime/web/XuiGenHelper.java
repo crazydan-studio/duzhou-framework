@@ -20,12 +20,17 @@
 package io.crazydan.duzhou.framework.ui.runtime.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.ui.runtime.web.model.ImportedLib;
 import io.crazydan.duzhou.framework.ui.schema.XuiComponent;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayout;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
@@ -38,6 +43,8 @@ import io.nop.xlang.xpl.xlib.XplTagLib;
  * @date 2025-04-16
  */
 public class XuiGenHelper {
+    public static final String GEN_NATIVE_TAG_PREFIX = "GenNative_";
+    public static final String LAYOUT_IMPORT_NAME_PREFIX = "Layout_";
 
     /** 调用 <code>GenNative_xxx</code> 标签 */
     public static String callGenNativeTag(
@@ -45,7 +52,7 @@ public class XuiGenHelper {
     ) {
         String libPath = loc.getPath();
         XplTagLib lib = (XplTagLib) ResourceComponentManager.instance().loadComponentModel(libPath);
-        XplTag tag = lib.getTag("GenNative_" + nativeType);
+        XplTag tag = lib.getTag(GEN_NATIVE_TAG_PREFIX + nativeType);
 
         // TODO 检查 tag 是否存在，并抛出详细的异常信息
 
@@ -88,9 +95,52 @@ public class XuiGenHelper {
     public static String genLibImportDirectives(XuiComponent component, String libRootPath, String libSuffix) {
         List<ImportedLib> libs = getImportedLibs(component);
 
+        return toImportDirectives(libs, "", libRootPath, libSuffix);
+    }
+
+    /** 生成组件布局的导入指令 */
+    public static String genLayoutImportDirectives(XuiComponent component, String libRootPath, String libSuffix) {
+        Map<String, ImportedLib> libs = new LinkedHashMap<>();
+
+        getUsedLayouts(component.getTemplate()).forEach((layout) -> {
+            XuiLayoutNode layoutRoot = layout.getType().getRoot();
+            String layoutType = layout.getType().getType();
+
+            String layoutLibName = StringHelper.camelCase(layoutType, '-', true);
+            if (!libs.containsKey(layoutLibName)) {
+                ImportedLib layoutLib = new ImportedLib();
+                layoutLib.setName(layoutLibName);
+                layoutLib.setPath("layout");
+
+                libs.put(layoutLibName, layoutLib);
+            }
+
+            layoutRoot.getTypes().forEach((layoutNodeType) -> {
+                String layoutNodeLibName = StringHelper.camelCase(layoutNodeType.name(), true);
+                if (layoutNodeType == XuiLayoutNode.Type.item || libs.containsKey(layoutNodeLibName)) {
+                    return;
+                }
+
+                ImportedLib layoutNodeLib = new ImportedLib();
+                layoutNodeLib.setName(layoutNodeLibName);
+                layoutNodeLib.setNamePrefix(layoutLibName + "_");
+                layoutNodeLib.setPath("layout/" + layoutType);
+
+                libs.put(layoutNodeLib.getNamePrefix() + layoutNodeLibName, layoutNodeLib);
+            });
+        });
+
+        return toImportDirectives(libs.values(), LAYOUT_IMPORT_NAME_PREFIX, libRootPath, libSuffix);
+    }
+
+    private static String toImportDirectives(
+            Collection<ImportedLib> libs, String importNamePrefix, String libRootPath, String libSuffix
+    ) {
         return (libs.isEmpty() ? "" : "\n") //
                + libs.stream()
-                     .map(lib -> String.format("import %s from '%s/%s/%s%s'",
+                     .map(lib -> String.format("import %s%s%s from '%s/%s/%s%s'",
+                                               importNamePrefix,
+                                               lib.getNamePrefix() != null ? lib.getNamePrefix() : "",
                                                lib.getName(),
                                                libRootPath,
                                                lib.getPath(),
@@ -98,5 +148,19 @@ public class XuiGenHelper {
                                                libSuffix))
                      .collect(Collectors.joining(";\n")) //
                + (libs.isEmpty() ? "" : ";\n");
+    }
+
+    private static List<XuiComponentLayout> getUsedLayouts(XuiComponentNode node) {
+        List<XuiComponentLayout> layouts = new ArrayList<>();
+
+        node.getChildren().forEach((child) -> {
+            if (child instanceof XuiComponentLayout && ((XuiComponentLayout) child).getType() != null) {
+                layouts.add((XuiComponentLayout) child);
+            } else if (child instanceof XuiComponentNode) {
+                layouts.addAll(getUsedLayouts((XuiComponentNode) child));
+            }
+        });
+
+        return layouts;
     }
 }

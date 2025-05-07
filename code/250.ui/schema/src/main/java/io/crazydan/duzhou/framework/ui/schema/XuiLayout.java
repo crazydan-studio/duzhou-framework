@@ -27,5 +27,7 @@ import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
  */
 public interface XuiLayout {
 
-    XuiLayoutNode create();
+    String getType();
+
+    XuiLayoutNode getRoot();
 }

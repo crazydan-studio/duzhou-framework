@@ -21,7 +21,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
@@ -36,7 +38,7 @@ public class XuiLayoutNode {
 
     /** {@link XuiLayoutNode} 类型 */
     public enum Type {
-        /** 布局项，其可以嵌套其他类型的节点 */
+        /** 布局项，其对应{@link #matched 匹配}的组件 */
         item,
         /** 空白占位 */
         space,
@@ -122,6 +124,18 @@ public class XuiLayoutNode {
     /** 是否为匹配的组件 */
     public boolean matched(XuiComponentNamed component) {
         return this.pattern != null && this.pattern.matcher(component.getXuiName()).matches();
+    }
+
+    /** 递归获取当前节点所包含的{@link Type 布局节点类型} */
+    public Set<Type> getTypes() {
+        Set<Type> types = new HashSet<>();
+
+        types.add(getType());
+        getChildren().forEach((child) -> {
+            types.addAll(child.getTypes());
+        });
+
+        return types;
     }
 
     public Type getType() {
