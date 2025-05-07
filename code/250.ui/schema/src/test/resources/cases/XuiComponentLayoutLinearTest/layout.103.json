@@ -4,21 +4,14 @@
   "height": "match_parent",
   "children": [
     {
-      "type": "row",
+      "type": "item",
+      "pattern": "^a1$",
+      "align": [
+        "center",
+        "start"
+      ],
       "width": "wrap_content",
-      "height": "wrap_content",
-      "children": [
-        {
-          "type": "item",
-          "pattern": "^a1$",
-          "align": [
-            "center",
-            "start"
-          ],
-          "width": "wrap_content",
-          "height": "wrap_content"
-        }
-      ]
+      "height": "wrap_content"
     }
   ]
 }

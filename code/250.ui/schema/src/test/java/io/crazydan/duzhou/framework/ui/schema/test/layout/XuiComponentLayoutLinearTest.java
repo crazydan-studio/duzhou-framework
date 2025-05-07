@@ -48,7 +48,7 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             // - 正则表达式匹配目标组件
             put("layout.107.json", "[a1] [a2]\n[b1] [b_[\\\\d\\\\w]+]");
             // - 行注释
-            put("layout.108.json", "/** 块注释 */ [a1]\n// 行注释\n/** 行注释 */\n[b1] [c1] // 结尾注释");
+            put("layout.108.json", "/** 多行\n注释 */ [a1]\n// 单行注释\n/** 单行注释 */\n[b1] [c1] // 行尾注释");
             // 嵌套
             put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");

@@ -117,7 +117,7 @@ public class XuiGenHelper {
 
             layoutRoot.getTypes().forEach((layoutNodeType) -> {
                 String layoutNodeLibName = StringHelper.camelCase(layoutNodeType.name(), true);
-                if (layoutNodeType == XuiLayoutNode.Type.item || libs.containsKey(layoutNodeLibName)) {
+                if (libs.containsKey(layoutNodeLibName)) {
                     return;
                 }
 

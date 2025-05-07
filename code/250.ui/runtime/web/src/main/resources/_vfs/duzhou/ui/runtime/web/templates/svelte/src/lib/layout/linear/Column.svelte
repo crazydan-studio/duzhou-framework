@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Base from './Base.svelte';
 
-	let props = $props();
+	const props = $props();
 </script>
 
-<Base {...props} />
+<Base {...props} type="column" />
 
 <style>
 </style>

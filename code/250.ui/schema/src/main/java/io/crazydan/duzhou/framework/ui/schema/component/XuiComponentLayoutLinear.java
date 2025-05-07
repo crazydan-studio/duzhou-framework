@@ -64,6 +64,19 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         root.setWidth(XuiLayoutSize.match_parent());
 
         List<XuiLayoutNode> children = parseNodes(loc, text);
+        if (children.size() == 1) {
+            XuiLayoutNode child = children.get(0);
+            // 去掉多余的嵌套
+            if (child.getChildren().size() == 1) {
+                switch (child.getType()) {
+                    case row:
+                    case column:
+                        root.addChildren(child.getChildren());
+                        return root;
+                }
+            }
+        }
+
         root.addChildren(children);
 
         return root;

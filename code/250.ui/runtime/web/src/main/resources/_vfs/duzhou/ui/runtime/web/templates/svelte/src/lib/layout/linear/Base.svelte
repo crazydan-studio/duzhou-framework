@@ -1,12 +1,28 @@
 <script lang="ts">
-  let { type, width, height, align, children } = $props();
+  const { type, width, height, align, children } = $props();
+
+  const sizeToClass = (prefix, size) => size && (prefix + size);
+  const alignToClass = (align) => align && ('align-' + (align.h || 'auto') + '_' + (align.v || 'auto'));
 </script>
 
-<div class={['xui-layout', 'linear', type, width && ('width-' + width), height && ('height-' + height)]}>
+<div class={[
+    'xui-layout', 'linear', type,
+    sizeToClass('width-', width), sizeToClass('height-', height),
+    alignToClass(align)
+  ]}>
   {@render children?.()}
 </div>
 
 <style>
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+
   .width-match_parent {
     width: 100%;
   }
@@ -22,5 +38,13 @@
   .width-fill_remains {
   }
   .height-fill_remains {
+  }
+
+  .align-center_center {
+    margin: auto;  /* 自动填充剩余空间，实现居中 */
+  }
+  .align-center_start {
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>

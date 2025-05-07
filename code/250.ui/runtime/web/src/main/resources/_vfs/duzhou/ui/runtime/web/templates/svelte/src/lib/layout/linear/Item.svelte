@@ -4,7 +4,7 @@
 	const props = $props();
 </script>
 
-<Base {...props} type="table" />
+<Base {...props} type="item" />
 
 <style>
 </style>

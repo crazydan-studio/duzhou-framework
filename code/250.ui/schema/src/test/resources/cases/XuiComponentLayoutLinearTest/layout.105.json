@@ -4,20 +4,13 @@
   "height": "match_parent",
   "children": [
     {
-      "type": "row",
-      "width": "wrap_content",
-      "height": "wrap_content",
-      "children": [
-        {
-          "type": "space",
-          "align": [
-            "start",
-            "start"
-          ],
-          "width": "fill_remains",
-          "height": "fill_remains"
-        }
-      ]
+      "type": "space",
+      "align": [
+        "start",
+        "start"
+      ],
+      "width": "fill_remains",
+      "height": "fill_remains"
     }
   ]
 }

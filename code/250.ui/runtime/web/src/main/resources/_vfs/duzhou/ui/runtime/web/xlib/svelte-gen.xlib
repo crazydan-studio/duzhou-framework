@@ -43,8 +43,8 @@
                     ]]></c:if>
 
                     <c:if test="${!forPage}" xpl:outputMode="text"><![CDATA[
-                        let props = $props();
-                        let { children } = props;
+                        const props = $props();
+                        const { children } = props;
                     ]]></c:if>
                 </script>
 
@@ -233,10 +233,13 @@
                         ]]></c:script>
 
                         <c:for var="child" items="${children}">
-                            <!-- TODO 绑定布局配置参数 -->
-                            <thisLib:GenComponentNamed
-                                    component="${component}"
-                                    named="${child}" />
+                            <_ xpl:is="${layoutName + ''}"
+                               xpl:attrs="layoutAttrs"
+                            >
+                                <thisLib:GenComponentNamed
+                                        component="${component}"
+                                        named="${child}" />
+                            </_>
                         </c:for>
                     </when>
                     <otherwise>
