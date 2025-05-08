@@ -22,11 +22,11 @@
 <app xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/duzhou/ui/schema/app.xdef"
      code="login-page-test" title="Login Page Test" version="0.1.0"
-     logo="/logo.svg"
+     logo="/logo.svg" spinner="/assets/loading.svg"
 >
 
     <pages>
         <page name="main" path="login.page.xui"
-              title="Login Page" url="/login" />
+              title="Login Page" url="/login/" />
     </pages>
 </app>

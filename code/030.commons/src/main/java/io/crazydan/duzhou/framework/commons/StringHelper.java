@@ -23,7 +23,7 @@ package io.crazydan.duzhou.framework.commons;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-05-03
  */
-public class StringHelper {
+public class StringHelper extends io.nop.commons.util.StringHelper {
 
     /**
      * @see #snakeCase(String, boolean, boolean)

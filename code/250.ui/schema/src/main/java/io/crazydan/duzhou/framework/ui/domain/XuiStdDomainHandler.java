@@ -38,36 +38,36 @@ public class XuiStdDomainHandler extends DictStdDomainHandler {
     public String getName() {
         return "xui";
     }
-
-    /**
-     * 解析属性类型定义结构 <code>(!~#)?{stdDomain}(:{options})?(={defaultValue})?</code>
-     * 中的 <code>{options}</code> 部分，如 <code>xui:color</code> 中的 <code>color</code>
-     */
-    @Override
-    public IStdDomainOptions parseOptions(SourceLocation loc, String options) {
-        // TODO 根据 options 名字确定样式的数据类型
-        return null;
-    }
-
-    /**
-     * 根据 options 确定属性类型对应的运行环境中的数据类型（含自定义 class），
-     * 如 String、Date 等，可直接引用定义在 {@link PredefinedGenericTypes}
-     * 上的内置类型，或者通过 {@link ReflectionManager} 构建
-     */
-    @Override
-    public IGenericType getGenericType(boolean mandatory, IStdDomainOptions options) {
-        return PredefinedGenericTypes.STRING_TYPE;
-    }
-
-    /**
-     * 根据 options 解析标签属性（对应参数 propName）的值（对应参数 text）。
-     * 对标签的文本子节点的解析，则也调用该方法
-     */
-    @Override
-    public Object parseProp(
-            IStdDomainOptions options, SourceLocation loc, String propName, Object text, XLangCompileTool cp
-    ) {
-        // TODO 根据 options 对应的数据类型，转换 text，并校验其有效性
-        return text;
-    }
+    //
+    // /**
+    //  * 解析属性类型定义结构 <code>(!~#)?{stdDomain}(:{options})?(={defaultValue})?</code>
+    //  * 中的 <code>{options}</code> 部分，如 <code>xui:color</code> 中的 <code>color</code>
+    //  */
+    // @Override
+    // public IStdDomainOptions parseOptions(SourceLocation loc, String options) {
+    //     // TODO 根据 options 名字确定样式的数据类型
+    //     return null;
+    // }
+    //
+    // /**
+    //  * 根据 options 确定属性类型对应的运行环境中的数据类型（含自定义 class），
+    //  * 如 String、Date 等，可直接引用定义在 {@link PredefinedGenericTypes}
+    //  * 上的内置类型，或者通过 {@link ReflectionManager} 构建
+    //  */
+    // @Override
+    // public IGenericType getGenericType(boolean mandatory, IStdDomainOptions options) {
+    //     return PredefinedGenericTypes.STRING_TYPE;
+    // }
+    //
+    // /**
+    //  * 根据 options 解析标签属性（对应参数 propName）的值（对应参数 text）。
+    //  * 对标签的文本子节点的解析，则也调用该方法
+    //  */
+    // @Override
+    // public Object parseProp(
+    //         IStdDomainOptions options, SourceLocation loc, String propName, Object text, XLangCompileTool cp
+    // ) {
+    //     // TODO 根据 options 对应的数据类型，转换 text，并校验其有效性
+    //     return text;
+    // }
 }

@@ -17,12 +17,7 @@ const config = {
       strict: true,
     }),
     paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
-		},
-    prerender: {
-      // 自动检测可预渲染的路由（默认 true）
-      // 也可手动指定入口：entries: ['*', '/about', '/blog/hello']
-      entries: ['*']
+      base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
     },
   }
 };

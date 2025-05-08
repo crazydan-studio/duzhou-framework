@@ -1,4 +1,4 @@
 export function onPageMount() {
-    // TODO 结束页面加载动画
-    console.log('the component has mounted');
+    // 结束页面加载动画
+    document.body.classList.add('done');
 }

@@ -31,7 +31,7 @@
                     model: ref.page,
                     title: ref.title || ref.page.title,
                     url: ref.url || '',
-                    routePath: (ref.url || '').$removeStart('/'),
+                    routePath: (ref.url || '').$removeStart('/').$removeTail('/'),
                 };
 
                 if (!page.routePath) {

@@ -21,17 +21,18 @@
 
 <!-- 应用定义：用于组织应用的页面
 
-@code 应用唯一标识；
-@title 应用标题；
-@version 应用版本号；
-@license 应用许可协议名称或编码；
-@logo 应用 logo 地址；
+@code [必填] 应用唯一标识；
+@title [必填] 应用标题；
+@version [必填] 应用版本号；
+@license [可选] 应用许可协议名称或编码；
+@logo [可选] 应用 logo 地址；
+@spinner [可选] 应用加载动画资源（svg 或 gif）的 classpath 路径；
 -->
 <app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
      x:schema="/nop/schema/xdef.xdef"
      xdef:name="XuiApp" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
      code="!string" title="!string" version="!string"
-     license="string" logo="string"
+     license="string" logo="string" spinner="string"
 >
     <!-- 应用的描述内容 -->
     <description xdef:value="string" />

@@ -17,74 +17,39 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.core.utils;
+package io.crazydan.duzhou.framework.commons;
 
-import java.io.File;
-
-import io.crazydan.duzhou.framework.gateway.core.GatewayConfigs;
 import io.nop.commons.bytes.ByteString;
-import io.nop.commons.util.StringHelper;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
-import io.nop.core.resource.ResourceHelper;
 import io.nop.core.resource.impl.ClassPathResource;
-import io.nop.core.resource.impl.FileResource;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2024-02-15
+ * @date 2025-05-08
  */
-public class WebStaticResourcesHelper {
-    public static final String GZIP_SUFFIX = ".gz";
-
-    /**
-     * 获取指定路径的资源对象
-     *
-     * @param path
-     *         只能为 Web 资源根路径下的文件路径，其以 `/` 开头，并且不能包含 `.` 或 `..`
-     */
-    public static IResource getResource(String path) {
-        if (!StringHelper.isAbsolutePath(path)) {
-            return null;
-        }
-
-        String rootPath = GatewayConfigs.WEB_STATIC_RESOURCES_PATH.get();
-        String fullPath = StringHelper.appendPath(rootPath, path);
-
-        fullPath = StringHelper.normalizePath(fullPath);
-
-        IResource resource = null;
-        String ns = ResourceHelper.getPathNamespace(fullPath);
-        if (ResourceConstants.RESOURCE_NS_FILE.equals(ns)) {
-            String filePath = ResourceHelper.removeNamespace(fullPath, ns);
-
-            resource = new FileResource(new File(filePath));
-        } else if (ResourceConstants.RESOURCE_NS_CLASSPATH.equals(ns)) {
-            resource = new ClassPathResource(fullPath);
-        }
-
-        return resource;
-    }
+public class ResourceHelper extends io.nop.core.resource.ResourceHelper {
 
     /**
      * 获取指定路径的图片资源的 data url
      *
      * @param path
-     *         只能为 Web 资源根路径下的文件路径，其以 `/` 开头，并且不能包含 `.` 或 `..`
+     *         只能为 classpath 下的资源文件路径
      */
     public static String getImageDataUrl(String path) {
-        IResource resource = getResource(path);
+        IResource resource = new ClassPathResource(ResourceConstants.RESOURCE_NS_CLASSPATH + ":" + path);
         if (!isFile(resource)) {
             return null;
         }
 
-        byte[] bytes = ResourceHelper.readBytes(resource);
+        byte[] bytes = readBytes(resource);
         ByteString bs = ByteString.from(bytes, null);
 
         String mimeType = getImageMimeType(path);
         return bs.toDataUrl(mimeType);
     }
 
+    /** 根据图片文件路径确定其 MIME 类型 */
     public static String getImageMimeType(String path) {
         String type = StringHelper.fileExt(path);
 
@@ -95,13 +60,6 @@ public class WebStaticResourcesHelper {
             type = "jpeg";
         }
         return "image/" + type;
-    }
-
-    /** 判断指定路径的资源是否为文件 */
-    public static boolean isFile(String path) {
-        IResource resource = getResource(path);
-
-        return isFile(resource);
     }
 
     /** 判断指定的资源是否为文件 */

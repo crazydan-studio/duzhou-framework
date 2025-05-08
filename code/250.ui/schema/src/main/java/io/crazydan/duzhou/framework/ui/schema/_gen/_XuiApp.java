@@ -33,7 +33,7 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiApp extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  
+     *  必填
      * xml name: code
      * 应用唯一标识；
      */
@@ -54,14 +54,14 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
     private java.lang.String _description ;
     
     /**
-     *  
+     *  可选
      * xml name: license
      * 应用许可协议名称或编码；
      */
     private java.lang.String _license ;
     
     /**
-     *  
+     *  可选
      * xml name: logo
      * 应用 logo 地址；
      */
@@ -75,21 +75,28 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> _pageRefs = KeyedList.emptyList();
     
     /**
-     *  
+     *  可选
+     * xml name: spinner
+     * 应用加载动画资源（svg 或 gif）的 classpath 路径；
+     */
+    private java.lang.String _spinner ;
+    
+    /**
+     *  必填
      * xml name: title
      * 应用标题；
      */
     private java.lang.String _title ;
     
     /**
-     *  
+     *  必填
      * xml name: version
      * 应用版本号；
      */
     private java.lang.String _version ;
     
     /**
-     * 
+     * 必填
      * xml name: code
      *  应用唯一标识；
      */
@@ -146,7 +153,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 
+     * 可选
      * xml name: license
      *  应用许可协议名称或编码；
      */
@@ -165,7 +172,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 
+     * 可选
      * xml name: logo
      *  应用 logo 地址；
      */
@@ -229,7 +236,26 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
     }
     
     /**
-     * 
+     * 可选
+     * xml name: spinner
+     *  应用加载动画资源（svg 或 gif）的 classpath 路径；
+     */
+    
+    public java.lang.String getSpinner(){
+      return _spinner;
+    }
+
+    
+    public void setSpinner(java.lang.String value){
+        checkAllowChange();
+        
+        this._spinner = value;
+           
+    }
+
+    
+    /**
+     * 必填
      * xml name: title
      *  应用标题；
      */
@@ -248,7 +274,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 
+     * 必填
      * xml name: version
      *  应用版本号；
      */
@@ -289,6 +315,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
         out.putNotNull("license",this.getLicense());
         out.putNotNull("logo",this.getLogo());
         out.putNotNull("pageRefs",this.getPageRefs());
+        out.putNotNull("spinner",this.getSpinner());
         out.putNotNull("title",this.getTitle());
         out.putNotNull("version",this.getVersion());
     }
@@ -308,6 +335,7 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
         instance.setLicense(this.getLicense());
         instance.setLogo(this.getLogo());
         instance.setPageRefs(this.getPageRefs());
+        instance.setSpinner(this.getSpinner());
         instance.setTitle(this.getTitle());
         instance.setVersion(this.getVersion());
     }
