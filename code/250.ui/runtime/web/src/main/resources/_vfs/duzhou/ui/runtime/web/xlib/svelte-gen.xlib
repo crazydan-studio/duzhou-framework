@@ -35,7 +35,6 @@
                             component="${component}" />
 
                     <c:if test="${forPage}" xpl:outputMode="text"><![CDATA[
-                        import '${'$'}lib/css/normalize.css';
                         import { onPageMount } from '${'$'}lib/common/page.js';
                         import { onMount } from 'svelte';
 

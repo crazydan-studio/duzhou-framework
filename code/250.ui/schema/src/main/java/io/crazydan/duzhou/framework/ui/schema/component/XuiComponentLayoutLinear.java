@@ -60,8 +60,8 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         }
 
         // Note: 根节点尺寸始终与上层容器的尺寸相同
-        root.setHeight(XuiLayoutSize.match_parent());
         root.setWidth(XuiLayoutSize.match_parent());
+        root.setHeight(XuiLayoutSize.match_parent());
 
         List<XuiLayoutNode> children = parseNodes(loc, text);
         if (children.size() == 1) {
@@ -71,15 +71,52 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 switch (child.getType()) {
                     case row:
                     case column:
-                        root.addChildren(child.getChildren());
-                        return root;
+                        children = child.getChildren();
+                        break;
                 }
             }
         }
 
         root.addChildren(children);
 
+        adjustChildren(root);
+
         return root;
+    }
+
+    private static void adjustChildren(XuiLayoutNode parent) {
+        // 调整节点自适应尺寸设置
+        parent.getChildren().forEach((child) -> {
+            switch (child.getType()) {
+                case row:
+                case column:
+                case table:
+                    break;
+                default:
+                    return;
+            }
+
+            switch (parent.getType()) {
+                case row: {
+                    if (child.getHeight().type == XuiLayoutSize.Type.wrap_content //
+                        && (child.getAlign() == null //
+                            || child.getAlign().vertical == XuiLayoutAlign.Direction.start) //
+                    ) {
+                        child.setHeight(XuiLayoutSize.match_parent());
+                    }
+                    break;
+                }
+                case column: {
+                    if (child.getWidth().type == XuiLayoutSize.Type.wrap_content //
+                        && (child.getAlign() == null //
+                            || child.getAlign().horizontal == XuiLayoutAlign.Direction.start) //
+                    ) {
+                        child.setWidth(XuiLayoutSize.match_parent());
+                    }
+                    break;
+                }
+            }
+        });
     }
 
     /** 解析布局节点 */
@@ -94,9 +131,6 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             if (sc.cur == '|') {
                 XuiLayoutNode table = parseTable(sc);
                 if (table != null) {
-                    // 表格宽度自适应父节点宽度
-                    table.setWidth(XuiLayoutSize.match_parent());
-
                     nodes.add(table);
                 }
 
@@ -149,7 +183,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 break;
             }
 
-            XuiLayoutNode node = parseNode(sc);
+            XuiLayoutNode node = parseNode(row, sc);
             if (node != null) {
                 // 行内节点默认左上角对齐
                 if (node.getAlign().horizontal == null) {
@@ -205,7 +239,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 break;
             }
 
-            XuiLayoutNode row = parseTableRow(sc);
+            XuiLayoutNode row = parseTableRow(table, sc);
             if (row != null) {
                 // 表格行宽度自适应 table 宽度
                 row.setWidth(XuiLayoutSize.match_parent());
@@ -221,7 +255,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     }
 
     /** 解析表格行 */
-    private static XuiLayoutNode parseTableRow(TextScanner sc) {
+    private static XuiLayoutNode parseTableRow(XuiLayoutNode parent, TextScanner sc) {
         List<XuiLayoutNode> cells = new ArrayList<>();
 
         while (!sc.isEnd()) {
@@ -291,7 +325,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * ^{<[abc] [def]>}
      * </pre>
      */
-    private static XuiLayoutNode parseNode(TextScanner sc) {
+    private static XuiLayoutNode parseNode(XuiLayoutNode parent, TextScanner sc) {
         moveToValidCharInLine(sc);
         if (sc.isEnd()) {
             return null;
@@ -319,6 +353,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     node = children.get(0);
                 } else if (children.size() > 1) {
                     node = XuiLayoutNode.column(children);
+                    adjustChildren(node);
                 }
             }
         }

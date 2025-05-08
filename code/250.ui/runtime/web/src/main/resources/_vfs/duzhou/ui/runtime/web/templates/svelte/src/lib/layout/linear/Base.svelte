@@ -13,7 +13,8 @@
   {@render children?.()}
 </div>
 
-<style>
+<style lang="less">
+  /** https://lesscss.org/ */
   .row {
     display: flex;
     flex-direction: row;
@@ -21,6 +22,18 @@
   .column {
     display: flex;
     flex-direction: column;
+  }
+  .table {
+    display: grid;
+  }
+  .item {
+
+    :global {
+      & > .xui-block:first-child > * {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   .width-match_parent {
@@ -35,9 +48,8 @@
   .height-wrap_content {
     height: fit-content;
   }
-  .width-fill_remains {
-  }
-  .height-fill_remains {
+  .width-fill_remains, .height-fill_remains {
+    flex: 1;
   }
 
   .align-center_center {

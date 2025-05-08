@@ -25,7 +25,6 @@
 </svelte:head>
 
 <script lang="ts">
-    import '${'$'}lib/css/normalize.css';
     import { onPageMount } from '${'$'}lib/common/page.js';
     import { onMount } from 'svelte';
 
