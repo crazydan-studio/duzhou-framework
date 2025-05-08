@@ -79,14 +79,14 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         root.addChildren(children);
 
-        adjustChildren(root);
+        adjustNodeChildren(root);
 
         return root;
     }
 
-    private static void adjustChildren(XuiLayoutNode parent) {
+    private static void adjustNodeChildren(XuiLayoutNode node) {
         // 调整节点自适应尺寸设置
-        parent.getChildren().forEach((child) -> {
+        node.getChildren().forEach((child) -> {
             switch (child.getType()) {
                 case row:
                 case column:
@@ -96,7 +96,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     return;
             }
 
-            switch (parent.getType()) {
+            switch (node.getType()) {
                 case row: {
                     if (child.getHeight().type == XuiLayoutSize.Type.wrap_content //
                         && (child.getAlign() == null //
@@ -116,6 +116,8 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     break;
                 }
             }
+
+            adjustNodeChildren(child);
         });
     }
 
@@ -353,7 +355,6 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     node = children.get(0);
                 } else if (children.size() > 1) {
                     node = XuiLayoutNode.column(children);
-                    adjustChildren(node);
                 }
             }
         }

@@ -82,6 +82,9 @@
                     xui:name="!conf-name=xui-layout" />
         <xui:style xdef:ref="XuiComponentStyle"
                    xui:name="!conf-name=xui-style" />
+<!--
+        &lt;!&ndash; 定义弹出层（布局在 z 轴方向） &ndash;&gt;
+        <xui:popup />-->
 
         <!-- 缺省使用 for 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"

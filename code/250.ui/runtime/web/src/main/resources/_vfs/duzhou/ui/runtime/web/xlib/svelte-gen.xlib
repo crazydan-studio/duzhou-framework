@@ -246,11 +246,29 @@
                            xpl:attrs="layoutAttrs"
                         >
                             <c:for var="layoutChild" items="${layout.children}">
-                                <thisLib:GenComponentNodeLayout
-                                        component="${component}"
-                                        node="${node}"
-                                        layout="${layoutChild}"
-                                        layoutNamePrefix="${layoutNamePrefix}" />
+                                <c:choose>
+                                    <when test="${layout.type.name() == 'table'}">
+                                        <!-- 应用原生的表格元素做表格布局 -->
+                                        <tr>
+                                            <c:for var="columnLayout" items="${layoutChild.children}">
+                                                <td>
+                                                    <thisLib:GenComponentNodeLayout
+                                                            component="${component}"
+                                                            node="${node}"
+                                                            layout="${columnLayout}"
+                                                            layoutNamePrefix="${layoutNamePrefix}" />
+                                                </td>
+                                            </c:for>
+                                        </tr>
+                                    </when>
+                                    <otherwise>
+                                        <thisLib:GenComponentNodeLayout
+                                                component="${component}"
+                                                node="${node}"
+                                                layout="${layoutChild}"
+                                                layoutNamePrefix="${layoutNamePrefix}" />
+                                    </otherwise>
+                                </c:choose>
                             </c:for>
                         </_>
                     </otherwise>

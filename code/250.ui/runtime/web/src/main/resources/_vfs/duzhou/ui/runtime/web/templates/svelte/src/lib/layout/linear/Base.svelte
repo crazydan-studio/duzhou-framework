@@ -23,9 +23,6 @@
     display: flex;
     flex-direction: column;
   }
-  .table {
-    display: grid;
-  }
   .item {
 
     :global {
