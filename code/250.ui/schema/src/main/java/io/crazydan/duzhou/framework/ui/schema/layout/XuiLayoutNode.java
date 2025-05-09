@@ -190,6 +190,23 @@ public class XuiLayoutNode {
         }
     }
 
+    /** 替换指定的节点 */
+    public void replaceChild(XuiLayoutNode oldNode, XuiLayoutNode newNode) {
+        int oldNodeIndex = this.children.indexOf(oldNode);
+        if (oldNodeIndex < 0) {
+            return;
+        }
+
+        this.children.set(oldNodeIndex, newNode);
+    }
+
+    /** 应用当前节点的配置到指定节点 */
+    public void applyConfigTo(XuiLayoutNode node) {
+        node.setAlign(getAlign());
+        node.setWidth(getWidth());
+        node.setHeight(getHeight());
+    }
+
     @Override
     public String toString() {
         // TODO 还原为标记文本

@@ -57,13 +57,15 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             put("layout.302.json", "| [a1] | [a2] |\n [b1] [b2] \n| [c1] | [c2] |\n| [d1] | [d2] |");
             put("layout.303.json", "| [a1] [a2] | [b1] |\n|           | [c1] |");
             put("layout.304.json", "| {\n    [a1]\n    [a2]\n} | [b1] |");
-            put("layout.305.json", "| {\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n} [c1] | [d1] [d2] |");
+            put("layout.305.json", "| {\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}> [c1] | [d1] [d2] |");
+            put("layout.306.json", "{ | [a1] | [a2] | }>");
             // - 表头配置参数
-            // put("layout.306.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
+            // put("layout.307.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
             // 配置参数
             // put("layout.501.json", "v>(width:100px,height:200px)<^");
             // put("layout.502.json", "v>[a1](width:100px,height:200px)<^");
             // put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px,gap:1em)<^");
+            // put("layout.504.json", "<{ | [a1] | [a2] | }(gap:1em)>");
         }};
 
         samples.forEach((name, text) -> {

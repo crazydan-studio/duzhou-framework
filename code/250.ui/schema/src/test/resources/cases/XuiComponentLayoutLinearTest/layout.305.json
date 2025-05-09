@@ -21,7 +21,7 @@
                 {
                   "type": "table",
                   "align": [
-                    "start",
+                    "end",
                     "start"
                   ],
                   "width": "wrap_content",

@@ -66,14 +66,15 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         List<XuiLayoutNode> children = parseNodes(loc, text);
         if (children.size() == 1) {
             XuiLayoutNode child = children.get(0);
-            // 去掉多余的嵌套
-            if (child.getChildren().size() == 1) {
-                switch (child.getType()) {
-                    case row:
-                    case column:
+
+            switch (child.getType()) {
+                case row:
+                case column:
+                    // 去掉多余的嵌套
+                    if (child.getChildren().size() == 1) {
                         children = child.getChildren();
-                        break;
-                }
+                    }
+                    break;
             }
         }
 
@@ -85,6 +86,29 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     }
 
     private static void adjustNodeChildren(XuiLayoutNode node) {
+        node.getChildren().forEach((child) -> {
+            if (child.getChildren().size() != 1) {
+                return;
+            }
+
+            switch (node.getType()) {
+                case row:
+                case column: {
+                    break;
+                }
+                default:
+                    return;
+            }
+
+            XuiLayoutNode newChild = child.getChildren().get(0);
+            // 提升嵌套的唯一表格节点
+            if (newChild.getType() == XuiLayoutNode.Type.table) {
+                // Note: 嵌套节点在只有一个子节点时，在其上配置将作用在该唯一子节点上，
+                // 故而，不需要迁移配置
+                node.replaceChild(child, newChild);
+            }
+        });
+
         // 调整节点自适应尺寸设置
         node.getChildren().forEach((child) -> {
             switch (child.getType()) {
