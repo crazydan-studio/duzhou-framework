@@ -20,11 +20,11 @@
   -->
 
 <!-- Checkbox 组件 -->
-<component xmlns:x="/nop/schema/xdsl.xdef"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
 
-    <import as="Input" from="input.xui" />
+    <import as="Input" from="native:input" />
 
     <props>
     </props>
@@ -33,5 +33,6 @@
     </state>
 
     <template>
+        <Input xui:name="input" type="checkbox" />
     </template>
 </component>

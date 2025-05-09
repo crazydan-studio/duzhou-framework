@@ -1,8 +1,7 @@
 <script lang="ts">
-  const { type, width, height, align, children } = $props();
+  import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
-  const sizeToClass = (prefix, size) => size && (prefix + size);
-  const alignToClass = (align) => align && ('align-' + (align.h || 'auto') + '_' + (align.v || 'auto'));
+  const { type, width, height, align, children } = $props();
 </script>
 
 <div class={[
@@ -49,11 +48,25 @@
     flex: 1;
   }
 
-  .align-center_center {
-    margin: auto;  /* 自动填充剩余空间，实现居中 */
-  }
-  .align-center_start {
-    margin-left: auto;
+  /* 通过 margin auto 自动填充剩余空间，实现居中 */
+  .align-h-start {
     margin-right: auto;
+  }
+  .align-h-end {
+    margin-left: auto;
+  }
+  .align-h-center {
+    .align-h-start();
+    .align-h-end();
+  }
+  .align-v-start {
+    margin-bottom: auto;
+  }
+  .align-v-end {
+    margin-top: auto;
+  }
+  .align-v-center {
+    .align-v-start();
+    .align-v-end();
   }
 </style>

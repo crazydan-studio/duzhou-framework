@@ -87,10 +87,12 @@
         <Form xui:name="login-form" disabled="${state.loginWaiting.enabled}">
             <xui:layout>
                 <linear><![CDATA[
-                    // 通过表格对齐输入组件
-                    | [username-label]> | <[username-input]> |
-                    | [password-label]> | <[password-input]> |
-                    |                   | <[remember-me-input] |
+                    // 通过表格对齐输入组件，并设置行间隔
+                    {
+                        | [username-label]> | <[username-input]> |
+                        | [password-label]> | <[password-input]> |
+                        |                   | <{ [remember-me-input] v[remember-me-label]^ } |
+                    }(gap:1em)
 
                     >[warning-text]<
 
@@ -123,9 +125,8 @@
             </Validation>
 
             <Animation xui:name="remember-me-animation">
-                <Checkbox xui:name="remember-me-input">
-                    <Text xui:name="label">保持登录？</Text>
-                </Checkbox>
+                <Checkbox xui:name="remember-me-input" />
+                <Text xui:name="remember-me-label">保持登录？</Text>
             </Animation>
 
             <xui:when xui:name="when-show-login-error" cond="${state.loginError.enabled}">

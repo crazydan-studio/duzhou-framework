@@ -15,12 +15,8 @@
           "children": [
             {
               "type": "row",
-              "align": [
-                "center",
-                "center"
-              ],
-              "width": "wrap_content",
-              "height": "wrap_content",
+              "width": "match_parent",
+              "height": "match_parent",
               "children": [
                 {
                   "type": "item",
@@ -46,12 +42,8 @@
             },
             {
               "type": "row",
-              "align": [
-                "center",
-                "center"
-              ],
-              "width": "wrap_content",
-              "height": "wrap_content",
+              "width": "match_parent",
+              "height": "match_parent",
               "children": [
                 {
                   "type": "item",
@@ -74,21 +66,13 @@
           "children": [
             {
               "type": "space",
-              "align": [
-                "center",
-                "center"
-              ],
-              "width": "wrap_content",
-              "height": "wrap_content"
+              "width": "match_parent",
+              "height": "match_parent"
             },
             {
               "type": "row",
-              "align": [
-                "center",
-                "center"
-              ],
-              "width": "wrap_content",
-              "height": "wrap_content",
+              "width": "match_parent",
+              "height": "match_parent",
               "children": [
                 {
                   "type": "item",

@@ -249,6 +249,7 @@
                                 <c:choose>
                                     <when test="${layout.type.name() == 'table'}">
                                         <!-- 应用原生的表格元素做表格布局 -->
+                                        <!-- TODO 跨单元格处理 -->
                                         <tr>
                                             <c:for var="columnLayout" items="${layoutChild.children}">
                                                 <td>

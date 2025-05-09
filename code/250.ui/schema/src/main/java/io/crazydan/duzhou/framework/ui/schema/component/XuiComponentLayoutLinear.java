@@ -241,7 +241,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 break;
             }
 
-            XuiLayoutNode row = parseTableRow(table, sc);
+            XuiLayoutNode row = parseTableRow(sc);
             if (row != null) {
                 // 表格行宽度自适应 table 宽度
                 row.setWidth(XuiLayoutSize.match_parent());
@@ -257,7 +257,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     }
 
     /** 解析表格行 */
-    private static XuiLayoutNode parseTableRow(XuiLayoutNode parent, TextScanner sc) {
+    private static XuiLayoutNode parseTableRow(TextScanner sc) {
         List<XuiLayoutNode> cells = new ArrayList<>();
 
         while (!sc.isEnd()) {
@@ -273,6 +273,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             if (text != null) {
                 List<XuiLayoutNode> children = parseNodes(loc, text);
                 if (children.size() == 1) {
+                    // Note: 其依然为 row 或 table 类型节点
                     cell = children.get(0);
                 } else if (children.size() > 1) {
                     cell = XuiLayoutNode.row(children);
@@ -284,16 +285,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 cell = XuiLayoutNode.space();
             }
 
-            // 表格单元格默认居中对齐
-            if (cell.getAlign() == null) {
-                cell.setAlign(XuiLayoutAlign.create(XuiLayoutAlign.Direction.center, XuiLayoutAlign.Direction.center));
-            }
-            if (cell.getAlign().horizontal == null) {
-                cell.setAlign(cell.getAlign().withHorizontal(XuiLayoutAlign.Direction.center));
-            }
-            if (cell.getAlign().vertical == null) {
-                cell.setAlign(cell.getAlign().withVertical(XuiLayoutAlign.Direction.center));
-            }
+            // 表格单元格节点始终占满整个单元格
+            cell.setWidth(XuiLayoutSize.match_parent());
+            cell.setHeight(XuiLayoutSize.match_parent());
 
             cells.add(cell);
         }

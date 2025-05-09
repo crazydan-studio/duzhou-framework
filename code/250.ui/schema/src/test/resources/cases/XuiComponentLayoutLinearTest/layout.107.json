@@ -5,7 +5,7 @@
   "children": [
     {
       "type": "row",
-      "width": "wrap_content",
+      "width": "match_parent",
       "height": "wrap_content",
       "children": [
         {
@@ -32,7 +32,7 @@
     },
     {
       "type": "row",
-      "width": "wrap_content",
+      "width": "match_parent",
       "height": "wrap_content",
       "children": [
         {

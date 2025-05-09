@@ -31,7 +31,7 @@
                 v{
                     >[login-logo]<
                     >[login-title]<
-                }^ | <[login-form]>
+                }^ <[login-form]>
             ]]></linear>
         </xui:layout>
 

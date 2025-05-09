@@ -63,7 +63,7 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             // 配置参数
             // put("layout.501.json", "v>(width:100px,height:200px)<^");
             // put("layout.502.json", "v>[a1](width:100px,height:200px)<^");
-            // put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px)<^");
+            // put("layout.503.json", "v>{[a1] [a2]}(width:100px,height:200px,gap:1em)<^");
         }};
 
         samples.forEach((name, text) -> {

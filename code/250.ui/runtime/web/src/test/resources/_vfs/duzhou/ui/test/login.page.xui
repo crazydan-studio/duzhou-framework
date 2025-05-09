@@ -53,10 +53,12 @@
         <Form xui:name="login-form">
             <xui:layout>
                 <linear><![CDATA[
-                    // 通过表格对齐输入组件
-                    | [username-label]> | <[username-input]> |
-                    | [password-label]> | <[password-input]> |
-                    |                   | <[remember-me-input] |
+                    // 通过表格对齐输入组件，并设置行间隔
+                    {
+                        | [username-label]> | <[username-input]> |
+                        | [password-label]> | <[password-input]> |
+                        |                   | <{ [remember-me-input] v[remember-me-label]^ } |
+                    }(gap:1em)
 
                     >[warning-text]<
 
@@ -69,12 +71,11 @@
             <Text xui:name="username-label">帐号：</Text>
             <Input xui:name="username-input" type="text" />
 
-            <Text xui:name="password-label">密码：</Text>
+            <Text xui:name="password-label">密码（8 位）：</Text>
             <Input xui:name="password-input" type="secret" />
 
-            <Checkbox xui:name="remember-me-input">
-                <Text xui:name="label">保持登录？</Text>
-            </Checkbox>
+            <Checkbox xui:name="remember-me-input" />
+            <Text xui:name="remember-me-label">保持登录？</Text>
 
             <Button xui:name="login-button">
                 <Text xui:name="label">登录</Text>
