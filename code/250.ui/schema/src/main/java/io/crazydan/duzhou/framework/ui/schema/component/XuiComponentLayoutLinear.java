@@ -101,12 +101,20 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
 
             XuiLayoutNode newChild = child.getChildren().get(0);
-            // 提升嵌套的唯一表格节点
-            if (newChild.getType() == XuiLayoutNode.Type.table) {
-                // Note: 嵌套节点在只有一个子节点时，在其上配置将作用在该唯一子节点上，
-                // 故而，不需要迁移配置
-                node.replaceChild(child, newChild);
+            switch (newChild.getType()) {
+                case row:
+                case column:
+                case table: {
+                    break;
+                }
+                default:
+                    return;
             }
+
+            // 提升嵌套的唯一子节点
+            // Note: 嵌套节点在只有一个子节点时，在其上配置将作用在该唯一子节点上，
+            // 故而，不需要迁移配置
+            node.replaceChild(child, newChild);
         });
 
         // 调整节点自适应尺寸设置

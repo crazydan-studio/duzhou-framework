@@ -22,7 +22,7 @@
 - 函数名采用 `_GenNative_{code}` 形式，其中，`{code}` 与 `<import from="native:{code}"/>`
   中的原生组件标识 `{code}` 一致；
 -->
-<lib xmlns:x="/nop/schema/xdsl.xdef"
+<lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c" xmlns:xpl="xpl"
      x:schema="/nop/schema/xlib.xdef"
 >
     <tags>
@@ -33,7 +33,9 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
-                <span>${node.value}</span>
+                <c:unit xpl:outputMode="text"><![CDATA[
+                    <span>${node.value}</span>
+                ]]></c:unit>
             </source>
         </GenNative_text>
 

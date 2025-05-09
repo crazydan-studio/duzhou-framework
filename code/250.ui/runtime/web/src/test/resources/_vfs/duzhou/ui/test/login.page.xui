@@ -45,6 +45,8 @@
                     >[login-logo]<
                     <[login-form]>
                 }<^
+
+                >{ [copyright-text] [copyright-owner] }<v
             ]]></linear>
         </xui:layout>
 
@@ -63,7 +65,7 @@
                     >[warning-text]<
 
                     <[login-button]>
-                    [forgot-password-button] <> [register-button]
+                    { [forgot-password-button] [register-button] }(gap:.5em)>
                 ]]></linear>
             </xui:layout>
 
@@ -92,5 +94,12 @@
                 <Text xui:name="label">注册帐号</Text>
             </Link>
         </Form>
+
+        <Text xui:name="copyright-text">版权所有 © 2024&amp;nbsp;</Text>
+        <Link xui:name="copyright-owner"
+              to="https://studio.crazydan.org/"
+        >
+            <Text xui:name="label">Crazydan Studio</Text>
+        </Link>
     </template>
 </page>
