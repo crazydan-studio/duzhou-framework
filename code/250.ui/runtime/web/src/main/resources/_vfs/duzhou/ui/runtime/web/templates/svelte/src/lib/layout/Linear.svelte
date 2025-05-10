@@ -6,5 +6,7 @@
 
 <Base {...props} width="match_parent" height="match_parent" />
 
-<style>
+<style lang="less">
+  /** https://lesscss.org/ */
+  @import "./linear/css/common.less";
 </style>

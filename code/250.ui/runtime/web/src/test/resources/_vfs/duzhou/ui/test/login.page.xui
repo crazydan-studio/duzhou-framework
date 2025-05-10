@@ -95,7 +95,7 @@
             </Link>
         </Form>
 
-        <Text xui:name="copyright-text">版权所有 © 2024&amp;nbsp;</Text>
+        <Text xui:name="copyright-text">版权所有 © 2025&amp;nbsp;</Text>
         <Link xui:name="copyright-owner"
               to="https://studio.crazydan.org/"
         >

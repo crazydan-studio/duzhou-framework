@@ -1,0 +1,136 @@
+/** https://lesscss.org/ */
+@import "./common.less";
+
+.row :global {
+  .width-fill_remains {
+    flex: 1;
+  }
+  .height-fill_remains {
+    .height-match_parent();
+  }
+
+  /* 通过 margin auto 自动填充剩余空间，实现居中对齐 */
+  & > .align-v-start {
+    margin-bottom: auto;
+  }
+  & > .align-v-end {
+    margin-top: auto;
+  }
+  & > .align-v-center {
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+
+  & > .align-h-start {
+    margin-right: auto;
+
+    /* 在 start 之前，则二者紧邻 */
+    &:has(+ .align-h-start) {
+      margin-right: unset;
+    }
+    /* 在 center 之前，则由 center 控制与其的底部间隔 */
+    &:has(+ .align-h-center) {
+      margin-right: unset;
+    }
+  }
+  & > .align-h-end {
+    margin-left: auto;
+
+    /* 在其后的 end，需与之紧邻 */
+    & + .align-h-end {
+      margin-left: unset;
+    }
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-h-center {
+      margin-left: unset;
+    }
+  }
+  & > .align-h-center {
+    margin-right: auto;
+    margin-left: auto;
+
+    /* 在其后的 end，需由 center 控制与其的顶部间隔 */
+    & + .align-h-end {
+      margin-left: unset;
+    }
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-h-center {
+      margin-left: unset;
+    }
+    /* 在 center 之前，需与之紧邻 */
+    &:has(+ .align-h-center) {
+      margin-right: unset;
+    }
+    /* 在 start 之前，需与之紧邻 */
+    &:has(+ .align-h-start) {
+      margin-right: unset;
+    }
+  }
+}
+
+.column :global {
+  .width-fill_remains {
+    .width-match_parent();
+  }
+  .height-fill_remains {
+    flex: 1;
+  }
+
+  /* 通过 margin auto 自动填充剩余空间，实现居中对齐 */
+  & > .align-h-start {
+    margin-right: auto;
+  }
+  & > .align-h-end {
+    margin-left: auto;
+  }
+  & > .align-h-center {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  & > .align-v-start {
+    margin-bottom: auto;
+
+    /* 在 start 之前，则二者紧邻 */
+    &:has(+ .align-v-start) {
+      margin-bottom: unset;
+    }
+    /* 在 center 之前，则由 center 控制与其的底部间隔 */
+    &:has(+ .align-v-center) {
+      margin-bottom: unset;
+    }
+  }
+  & > .align-v-end {
+    margin-top: auto;
+
+    /* 在其后的 end，需与之紧邻 */
+    & + .align-v-end {
+      margin-top: unset;
+    }
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-v-center {
+      margin-top: unset;
+    }
+  }
+  & > .align-v-center {
+    margin-bottom: auto;
+    margin-top: auto;
+
+    /* 在其后的 end，需由 center 控制与其的顶部间隔 */
+    & + .align-v-end {
+      margin-top: unset;
+    }
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-v-center {
+      margin-top: unset;
+    }
+    /* 在 center 之前，需与之紧邻 */
+    &:has(+ .align-v-center) {
+      margin-bottom: unset;
+    }
+    /* 在 start 之前，需与之紧邻 */
+    &:has(+ .align-v-start) {
+      margin-bottom: unset;
+    }
+  }
+}

@@ -14,7 +14,7 @@
 
 <style lang="less">
   /** https://lesscss.org/ */
-  @import "./layout.less";
+  @import "./css/layout.less";
 
   .row {
     display: flex;
@@ -25,7 +25,6 @@
     flex-direction: column;
   }
   .item {
-
     :global {
       & > .xui-block:first-child > * {
         .width-match_parent();

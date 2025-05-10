@@ -14,7 +14,7 @@
 
 <style lang="less">
   /** https://lesscss.org/ */
-  @import "./layout.less";
+  @import "./css/common.less";
 
   .table-tr {
     border: 0;
