@@ -60,9 +60,9 @@
                 <linear><![CDATA[
                     // 通过表格对齐输入组件，并设置行间隔
                     {
-                        | [username-label]> | <[username-input]> |
-                        | [password-label]> | <[password-input]> |
-                        |                   | <{ [remember-me-input] v[remember-me-label]^ } |
+                        | [username-label]> | <[username-input]> |  |
+                        | [password-label](rowspan:2)> | <[password-input]> |  |
+                        |                   | <{ [remember-me-input] v[remember-me-label]^ }(colspan:2) |
                     }(gap:1em)
 
                     >[warning-text]<

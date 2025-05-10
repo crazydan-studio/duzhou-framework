@@ -20,12 +20,16 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 /**
- * 布局配置属性
+ * 布局项边框尺寸
+ * <p/>
+ * 用于内边距、外边距的配置
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-04-25
+ * @date 2025-05-10
  */
-public class XuiLayoutProp {
-    private String name;
-    private Object value;
+public class XuiLayoutEdgeSize {
+    private String left;
+    private String right;
+    private String top;
+    private String bottom;
 }

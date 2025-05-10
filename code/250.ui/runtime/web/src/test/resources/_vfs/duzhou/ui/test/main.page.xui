@@ -24,6 +24,12 @@
       x:schema="/duzhou/ui/schema/page.xdef"
 >
 
+    <props>
+    </props>
+
+    <state>
+    </state>
+
     <template>
         <xui:layout>
             <linear><![CDATA[
@@ -40,7 +46,4 @@
             ]]></linear>
         </xui:layout>
     </template>
-
-    <messages>
-    </messages>
 </page>
