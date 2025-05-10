@@ -4,75 +4,27 @@
   "height": "match_parent",
   "children": [
     {
-      "type": "table",
+      "type": "row",
       "width": "match_parent",
       "height": "wrap_content",
       "children": [
         {
-          "type": "row",
-          "width": "match_parent",
-          "height": "wrap_content",
+          "type": "column",
+          "align": [
+            "start",
+            "start"
+          ],
+          "width": "wrap_content",
+          "height": "match_parent",
           "children": [
             {
               "type": "row",
               "width": "match_parent",
-              "height": "match_parent",
-              "children": [
-                {
-                  "type": "column",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
-                  "width": "wrap_content",
-                  "height": "match_parent",
-                  "children": [
-                    {
-                      "type": "row",
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "children": [
-                        {
-                          "type": "item",
-                          "pattern": "^a1$",
-                          "align": [
-                            "start",
-                            "start"
-                          ],
-                          "width": "wrap_content",
-                          "height": "wrap_content"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "row",
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "children": [
-                        {
-                          "type": "item",
-                          "pattern": "^a2$",
-                          "align": [
-                            "start",
-                            "start"
-                          ],
-                          "width": "wrap_content",
-                          "height": "wrap_content"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "row",
-              "width": "match_parent",
-              "height": "match_parent",
+              "height": "wrap_content",
               "children": [
                 {
                   "type": "item",
-                  "pattern": "^b1$",
+                  "pattern": "^a1$",
                   "align": [
                     "start",
                     "start"
@@ -81,6 +33,40 @@
                   "height": "wrap_content"
                 }
               ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "wrap_content",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^a2$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "width": "match_parent",
+          "height": "match_parent",
+          "children": [
+            {
+              "type": "item",
+              "pattern": "^b1$",
+              "align": [
+                "start",
+                "start"
+              ],
+              "width": "wrap_content",
+              "height": "wrap_content"
             }
           ]
         }

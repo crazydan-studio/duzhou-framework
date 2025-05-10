@@ -1,6 +1,41 @@
 /** https://lesscss.org/ */
 @import "./common.less";
 
+/* 通过 margin auto 自动填充剩余空间，实现居中对齐 */
+.align-v-start {
+  margin-bottom: auto;
+}
+.align-v-end {
+  margin-top: auto;
+}
+.align-v-center {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+.align-v-start-clear {
+  margin-bottom: unset;
+}
+.align-v-end-clear {
+  margin-top: unset;
+}
+
+.align-h-start {
+  margin-right: auto;
+}
+.align-h-end {
+  margin-left: auto;
+}
+.align-h-center {
+  margin-right: auto;
+  margin-left: auto;
+}
+.align-h-start-clear {
+  margin-right: unset;
+}
+.align-h-end-clear {
+  margin-left: unset;
+}
+
 .row :global {
   .width-fill_remains {
     flex: 1;
@@ -9,61 +44,45 @@
     .height-match_parent();
   }
 
-  /* 通过 margin auto 自动填充剩余空间，实现居中对齐 */
-  & > .align-v-start {
-    margin-bottom: auto;
-  }
-  & > .align-v-end {
-    margin-top: auto;
-  }
-  & > .align-v-center {
-    margin-bottom: auto;
-    margin-top: auto;
-  }
-
   & > .align-h-start {
-    margin-right: auto;
-
     /* 在 start 之前，则二者紧邻 */
     &:has(+ .align-h-start) {
-      margin-right: unset;
+      .align-h-start-clear();
     }
+
     /* 在 center 之前，则由 center 控制与其的底部间隔 */
     &:has(+ .align-h-center) {
-      margin-right: unset;
+      .align-h-start-clear();
     }
   }
   & > .align-h-end {
-    margin-left: auto;
-
     /* 在其后的 end，需与之紧邻 */
     & + .align-h-end {
-      margin-left: unset;
+      .align-h-end-clear();
     }
+
     /* 在其后的 center，需与之紧邻 */
     & + .align-h-center {
-      margin-left: unset;
+      .align-h-end-clear();
     }
   }
   & > .align-h-center {
-    margin-right: auto;
-    margin-left: auto;
-
     /* 在其后的 end，需由 center 控制与其的顶部间隔 */
     & + .align-h-end {
-      margin-left: unset;
-    }
-    /* 在其后的 center，需与之紧邻 */
-    & + .align-h-center {
-      margin-left: unset;
-    }
-    /* 在 center 之前，需与之紧邻 */
-    &:has(+ .align-h-center) {
-      margin-right: unset;
+      .align-h-end-clear();
     }
     /* 在 start 之前，需与之紧邻 */
     &:has(+ .align-h-start) {
-      margin-right: unset;
+      .align-h-start-clear();
+    }
+
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-h-center {
+      .align-h-end-clear();
+    }
+    /* 在 center 之前，需与之紧邻 */
+    &:has(+ .align-h-center) {
+      .align-h-start-clear();
     }
   }
 }
@@ -76,61 +95,45 @@
     flex: 1;
   }
 
-  /* 通过 margin auto 自动填充剩余空间，实现居中对齐 */
-  & > .align-h-start {
-    margin-right: auto;
-  }
-  & > .align-h-end {
-    margin-left: auto;
-  }
-  & > .align-h-center {
-    margin-right: auto;
-    margin-left: auto;
-  }
-
   & > .align-v-start {
-    margin-bottom: auto;
-
     /* 在 start 之前，则二者紧邻 */
     &:has(+ .align-v-start) {
-      margin-bottom: unset;
+      .align-v-start-clear();
     }
+
     /* 在 center 之前，则由 center 控制与其的底部间隔 */
     &:has(+ .align-v-center) {
-      margin-bottom: unset;
+      .align-v-start-clear();
     }
   }
   & > .align-v-end {
-    margin-top: auto;
-
     /* 在其后的 end，需与之紧邻 */
     & + .align-v-end {
-      margin-top: unset;
+      .align-v-end-clear();
     }
+
     /* 在其后的 center，需与之紧邻 */
     & + .align-v-center {
-      margin-top: unset;
+      .align-v-end-clear();
     }
   }
   & > .align-v-center {
-    margin-bottom: auto;
-    margin-top: auto;
-
     /* 在其后的 end，需由 center 控制与其的顶部间隔 */
     & + .align-v-end {
-      margin-top: unset;
-    }
-    /* 在其后的 center，需与之紧邻 */
-    & + .align-v-center {
-      margin-top: unset;
-    }
-    /* 在 center 之前，需与之紧邻 */
-    &:has(+ .align-v-center) {
-      margin-bottom: unset;
+      .align-v-end-clear();
     }
     /* 在 start 之前，需与之紧邻 */
     &:has(+ .align-v-start) {
-      margin-bottom: unset;
+      .align-v-start-clear();
+    }
+
+    /* 在其后的 center，需与之紧邻 */
+    & + .align-v-center {
+      .align-v-end-clear();
+    }
+    /* 在 center 之前，需与之紧邻 */
+    &:has(+ .align-v-center) {
+      .align-v-start-clear();
     }
   }
 }

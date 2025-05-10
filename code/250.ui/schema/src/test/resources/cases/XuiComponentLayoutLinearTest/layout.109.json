@@ -1,0 +1,33 @@
+{
+  "type": "column",
+  "width": "match_parent",
+  "height": "match_parent",
+  "children": [
+    {
+      "type": "row",
+      "width": "match_parent",
+      "height": "wrap_content",
+      "children": [
+        {
+          "type": "space",
+          "align": [
+            "start",
+            "start"
+          ],
+          "width": "fill_remains",
+          "height": "wrap_content"
+        },
+        {
+          "type": "item",
+          "pattern": "^a1$",
+          "align": [
+            "start",
+            "start"
+          ],
+          "width": "wrap_content",
+          "height": "wrap_content"
+        }
+      ]
+    }
+  ]
+}

@@ -7,10 +7,20 @@ import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponentLayout
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
-import io.nop.api.core.util.Guard;
+import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.text.tokenizer.TextScanner;
 import io.nop.commons.util.StringHelper;
+
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ARG_LEFT_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ARG_RIGHT_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
+import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
     private XuiLayoutNode root;
@@ -44,7 +54,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      */
     public static XuiLayoutNode parse(SourceLocation loc, Mode mode, String text) {
         // Note: 若是布局的根节点未指定子节点，则子组件均会被视为独立的布局节点，统一按行/列模式进行布局
-        XuiLayoutNode root;
+        XuiLayoutNode root = null;
         switch (mode) {
             case column: {
                 root = XuiLayoutNode.column();
@@ -54,9 +64,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 root = XuiLayoutNode.row();
                 break;
             }
-            default: {
-                throw new IllegalArgumentException("Unknown linear layout mode '" + mode + "'");
-            }
+        }
+        if (root == null) {
+            throw new NopException(ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE).param(ARG_VALUE, mode);
         }
 
         // Note: 根节点尺寸始终与上层容器的尺寸相同
@@ -217,7 +227,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 break;
             }
 
-            XuiLayoutNode node = parseNode(row, sc);
+            XuiLayoutNode node = parseNode(sc);
             if (node != null) {
                 // 行内节点默认左上角对齐
                 if (node.getAlign().horizontal == null) {
@@ -231,7 +241,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
 
             // 防止游标不动
-            Guard.checkState(pos != sc.pos, "unknown mark '" + (char) sc.cur + "'");
+            if (pos == sc.pos) {
+                throw sc.newError(ERR_LAYOUT_LINEAR_UNKNOWN_MARK).param(ARG_VALUE, (char) sc.cur);
+            }
             pos = sc.pos;
         }
 
@@ -353,7 +365,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
      * ^{<[abc] [def]>}
      * </pre>
      */
-    private static XuiLayoutNode parseNode(XuiLayoutNode parent, TextScanner sc) {
+    private static XuiLayoutNode parseNode(TextScanner sc) {
         moveToValidCharInLine(sc);
         if (sc.isEnd()) {
             return null;
@@ -361,7 +373,10 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         // 解析起始方向的对齐位置
         XuiLayoutAlign.Direction[] startAlign = parseAlign(sc);
-        Guard.checkState(!StringHelper.isSpaceInLine(sc.cur), "No spaces are expected after the align mark");
+
+        if (StringHelper.isSpaceInLine(sc.cur)) {
+            throw sc.newError(ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK);
+        }
 
         XuiLayoutNode node = null;
         // 解析组件匹配模式
@@ -372,10 +387,11 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                 node = XuiLayoutNode.item(text);
             }
         } else if (sc.cur == '{') {
+            SourceLocation loc = sc.location();
             String text = extractBetweenMark(sc, '{', '}');
 
             if (text != null) {
-                List<XuiLayoutNode> children = parseNodes(sc.location(), text);
+                List<XuiLayoutNode> children = parseNodes(loc, text);
 
                 if (children.size() == 1) {
                     node = children.get(0);
@@ -447,8 +463,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         do {
             switch (sc.cur) {
                 case '<': {
-                    Guard.checkState(align[0] != XuiLayoutAlign.Direction.start,
-                                     "Duplicated align direction '" + sc.cur + "'");
+                    if (align[0] == XuiLayoutAlign.Direction.start) {
+                        throw sc.newError(ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK).param(ARG_VALUE, (char) sc.cur);
+                    }
                     if (align[0] != null) {
                         return align;
                     }
@@ -458,8 +475,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     break;
                 }
                 case '>': {
-                    Guard.checkState(align[0] != XuiLayoutAlign.Direction.end,
-                                     "Duplicated align direction '" + sc.cur + "'");
+                    if (align[0] == XuiLayoutAlign.Direction.end) {
+                        throw sc.newError(ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK).param(ARG_VALUE, (char) sc.cur);
+                    }
                     if (align[0] != null) {
                         return align;
                     }
@@ -469,8 +487,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     break;
                 }
                 case '^': {
-                    Guard.checkState(align[1] != XuiLayoutAlign.Direction.start,
-                                     "Duplicated align direction '" + sc.cur + "'");
+                    if (align[1] == XuiLayoutAlign.Direction.start) {
+                        throw sc.newError(ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK).param(ARG_VALUE, (char) sc.cur);
+                    }
                     if (align[1] != null) {
                         return align;
                     }
@@ -480,8 +499,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
                     break;
                 }
                 case 'v': {
-                    Guard.checkState(align[1] != XuiLayoutAlign.Direction.end,
-                                     "Duplicated align direction '" + sc.cur + "'");
+                    if (align[1] == XuiLayoutAlign.Direction.end) {
+                        throw sc.newError(ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK).param(ARG_VALUE, (char) sc.cur);
+                    }
                     if (align[1] != null) {
                         return align;
                     }
@@ -531,7 +551,11 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             }
         }
 
-        Guard.checkEquals(pairs, 0, "No right mark '" + rightMark + "' found for the left mark '" + leftMark + "'");
+        if (pairs != 0) {
+            throw sc.newError(ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK)
+                    .param(ARG_RIGHT_MARK, rightMark)
+                    .param(ARG_LEFT_MARK, leftMark);
+        }
 
         return toString(sb);
     }
@@ -583,7 +607,9 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
 
         String text = toString(sb);
 
-        Guard.checkState(cellExtracted || text == null, "No cell end mark '|' specified");
+        if (!cellExtracted && text != null) {
+            throw sc.newError(ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+        }
 
         return text;
     }

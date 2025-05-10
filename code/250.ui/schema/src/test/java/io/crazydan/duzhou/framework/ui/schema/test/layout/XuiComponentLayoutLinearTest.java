@@ -25,9 +25,17 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.nop.api.core.exceptions.ErrorCode;
+import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.JsonTool;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -49,6 +57,7 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             put("layout.107.json", "[a1] [a2]\n[b1] [b_[\\\\d\\\\w]+]");
             // - 行注释
             put("layout.108.json", "/** 多行\n注释 */ [a1]\n// 单行注释\n/** 单行注释 */\n[b1] [c1] // 行尾注释");
+            put("layout.109.json", "<>[a1]");
             // 嵌套
             put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
@@ -75,6 +84,32 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
 
             this.log.info("Layout json for {}=\n{}", name, json);
             Assertions.assertEquals(attachmentJsonText(name), json);
+        });
+    }
+
+    @Test
+    public void test_parse_from_invalid_text() {
+        Map<String, ErrorCode> samples = new LinkedHashMap<>() {{
+            put("[a1]@", ERR_LAYOUT_LINEAR_UNKNOWN_MARK);
+            put("^ [a1]", ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK);
+            put("^^[a1]", ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK);
+            put("{ [a1] [a2 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
+            put("| [a1] | [a2]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+            // 检查跨行时的行号等信息是否正常
+            put("| [a1] | [a2] |\n  | [b1]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+            put("{ [a1] [a2]\n  [b1 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
+        }};
+
+        samples.forEach((text, code) -> {
+            this.log.info("Raw text:\n{}", text);
+
+            try {
+                XuiComponentLayoutLinear.parse(null, XuiComponentLayoutLinear.Mode.column, text);
+                Assertions.fail("Error should be happened when parsing text '" + text + "'");
+            } catch (NopException e) {
+                this.log.info("Error happened", e);
+                Assertions.assertEquals(code.getErrorCode(), e.getErrorCode());
+            }
         });
     }
 }

@@ -30,10 +30,10 @@
     border-collapse: collapse;
 
     :global {
-      & tr {
+      tr {
         .table-tr();
       }
-      & td {
+      td {
         .table-td();
         overflow: hidden;
         /* 禁止换行 */
