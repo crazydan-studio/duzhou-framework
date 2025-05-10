@@ -43,11 +43,6 @@ public class XuiLayoutProps {
     /** {@link XuiLayoutNode.Type#table} 中的单元格可纵跨的行数量 */
     private int rowspan;
 
-    /** 宽度 */
-    private String width;
-    /** 高度 */
-    private String height;
-
     /**
      * 内边距
      * <p/>
