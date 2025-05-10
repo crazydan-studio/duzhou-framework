@@ -46,7 +46,10 @@
                     <[login-form]>
                 }<^
 
-                >{ [copyright-text] [copyright-owner] }<v
+                >{
+                    [copyright-text] [copyright-owner]
+                    >[hack-script]<
+                }<v
             ]]></linear>
         </xui:layout>
 
@@ -95,11 +98,16 @@
             </Link>
         </Form>
 
-        <Text xui:name="copyright-text">版权所有 © 2025&amp;nbsp;</Text>
+        <Text xui:name="copyright-text"><![CDATA[
+            版权所有 © 2025&nbsp;
+        ]]></Text>
         <Link xui:name="copyright-owner"
               to="https://studio.crazydan.org/"
         >
             <Text xui:name="label">Crazydan Studio</Text>
         </Link>
+        <Text xui:name="hack-script"><![CDATA[
+            <script>alert('Hello!')</script>
+        ]]></Text>
     </template>
 </page>

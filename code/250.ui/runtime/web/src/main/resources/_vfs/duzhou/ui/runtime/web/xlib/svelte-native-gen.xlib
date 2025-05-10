@@ -33,6 +33,8 @@
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
+                <!-- Note: 文本内容已在 XuiComponentText#getValue 中完成 HTML 转义，以避免 XSS 攻击 -->
+                <!-- 整体做文本输出，以避免空格等转义结果丢失 -->
                 <c:unit xpl:outputMode="text"><![CDATA[
                     <span>${node.value}</span>
                 ]]></c:unit>
