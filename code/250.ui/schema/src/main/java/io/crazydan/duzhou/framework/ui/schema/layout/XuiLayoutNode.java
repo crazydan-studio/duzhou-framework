@@ -62,7 +62,7 @@ public class XuiLayoutNode {
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
     private final Pattern pattern;
     /** 配置属性 */
-    private final XuiLayoutProps props = new XuiLayoutProps();
+    private XuiLayoutProps props = new XuiLayoutProps();
 
     /**
      * 对齐方式
@@ -152,8 +152,8 @@ public class XuiLayoutNode {
         return this.props;
     }
 
-    public void updateProps(XuiLayoutProps props) {
-        this.props.merge(props);
+    public void setProps(XuiLayoutProps props) {
+        this.props = props;
     }
 
     public XuiLayoutAlign getAlign() {

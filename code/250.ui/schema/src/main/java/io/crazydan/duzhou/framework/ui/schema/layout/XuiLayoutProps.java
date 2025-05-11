@@ -19,6 +19,7 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.commons.StringHelper;
@@ -40,65 +41,42 @@ public class XuiLayoutProps {
      * <p/>
      * 可通过插入空白项的方式控制项间的间隔？（需避免插入空白项导致布局项的对齐方式等受到影响）
      */
-    private String gap;
+    public final String gap;
 
     /** {@link XuiLayoutNode.Type#table} 中的单元格可横跨的列数量 */
-    private Integer colspan;
+    public final Integer colspan;
     /** {@link XuiLayoutNode.Type#table} 中的单元格可纵跨的行数量 */
-    private Integer rowspan;
+    public final Integer rowspan;
 
     /**
      * 内边距
      * <p/>
      * 可直接作用在配置节点上
      */
-    private XuiLayoutEdgeSize padding;
+    public final XuiLayoutEdgeSize padding;
     /**
      * 外边距
      * <p/>
      * 需在其外部附加一层节点，以确保对齐方式不受影响？
      */
-    private XuiLayoutEdgeSize margin;
+    public final XuiLayoutEdgeSize margin;
 
     public XuiLayoutProps() {
+        this(null);
     }
 
     public XuiLayoutProps(Map<String, Object> props) {
+        if (props == null) {
+            props = new HashMap<>();
+        }
+
         this.gap = StringHelper.trimToNull((String) props.get("gap"));
+
         this.colspan = StringHelper.trimAndParseInt((String) props.get("colspan"), 10);
         this.rowspan = StringHelper.trimAndParseInt((String) props.get("rowspan"), 10);
-    }
 
-    public void merge(XuiLayoutProps props) {
-        this.gap = props.gap;
-        this.colspan = props.colspan;
-        this.rowspan = props.rowspan;
-        this.padding = props.padding;
-        this.margin = props.margin;
-    }
-
-    public String getGap() {
-        return this.gap;
-    }
-
-    public void setGap(String gap) {
-        this.gap = gap;
-    }
-
-    public Integer getColspan() {
-        return this.colspan;
-    }
-
-    public void setColspan(Integer colspan) {
-        this.colspan = colspan;
-    }
-
-    public Integer getRowspan() {
-        return this.rowspan;
-    }
-
-    public void setRowspan(Integer rowspan) {
-        this.rowspan = rowspan;
+        this.padding = new XuiLayoutEdgeSize((Map<String, Object>) props.get("padding"));
+        this.margin = new XuiLayoutEdgeSize((Map<String, Object>) props.get("margin"));
     }
 
     public String toJSON() {
@@ -122,6 +100,28 @@ public class XuiLayoutProps {
                 sb.append("\n  , ");
             }
             sb.append("\"rowspan\": ").append(this.rowspan);
+        }
+        if (this.padding != null) {
+            String json = this.padding.toJSON();
+            if (json.length() > 2) {
+                json = json.replaceAll("(?m)^", "    ").trim();
+
+                if (sb.length() > 1) {
+                    sb.append("\n  , ");
+                }
+                sb.append("\"padding\": ").append(json);
+            }
+        }
+        if (this.margin != null) {
+            String json = this.margin.toJSON();
+            if (json.length() > 2) {
+                json = json.replaceAll("(?m)^", "    ").trim();
+
+                if (sb.length() > 1) {
+                    sb.append("\n  , ");
+                }
+                sb.append("\"margin\": ").append(json);
+            }
         }
         sb.append('}');
 

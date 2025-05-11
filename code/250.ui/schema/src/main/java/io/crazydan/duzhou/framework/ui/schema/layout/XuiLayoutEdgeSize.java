@@ -19,6 +19,9 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 布局项边框尺寸
  * <p/>
@@ -28,8 +31,52 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
  * @date 2025-05-10
  */
 public class XuiLayoutEdgeSize {
-    private String left;
-    private String right;
-    private String top;
-    private String bottom;
+    public final String left;
+    public final String right;
+    public final String top;
+    public final String bottom;
+
+    public XuiLayoutEdgeSize(Map<String, Object> props) {
+        if (props == null) {
+            props = new HashMap<>();
+        }
+
+        this.left = (String) props.get("left");
+        this.right = (String) props.get("right");
+        this.top = (String) props.get("top");
+        this.bottom = (String) props.get("bottom");
+    }
+
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('{');
+        if (this.left != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"left\": \"").append(this.left).append('"');
+        }
+        if (this.right != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"right\": \"").append(this.right).append('"');
+        }
+        if (this.top != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"top\": \"").append(this.top).append('"');
+        }
+        if (this.bottom != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"bottom\": \"").append(this.bottom).append('"');
+        }
+        sb.append('}');
+
+        return sb.toString();
+    }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "column",
+  "width": "match_parent",
+  "height": "match_parent",
+  "children": [
+    {
+      "type": "item",
+      "props": {
+        "padding": {
+          "left": ".5em",
+          "right": ".5em",
+          "top": "1em"
+        }
+      },
+      "pattern": "^a1$",
+      "align": [
+        "center",
+        "center"
+      ],
+      "width": "wrap_content",
+      "height": "wrap_content"
+    }
+  ]
+}

@@ -25,6 +25,7 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.parser.XuiLayoutLinearParser;
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.JsonTool;
@@ -41,7 +42,7 @@ import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-27
  */
-public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
+public class XuiLayoutLinearParserTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_from_text() {
@@ -75,13 +76,16 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             put("layout.502.json", "v>[a1]()<^");
             put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
             put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap:1em)>");
-            put("layout.505.json", "| [a1] | [a2] | [a3] |\n| [b1](rowspan:2) | [b2](colspan:2) |\n| [c1] | [c2] | [c3] |");
-            put("layout.506.json", "v>[a1](padding: {left: .5em, right: .5em, top: 1em, bottom: 1em})<^");
+            put("layout.505.json",
+                "| [a1] | [a2] | [a3] |\n| [b1](rowspan:2) | [b2](colspan:2) |\n| [c1] | [c2] | [c3] |");
+            put("layout.506.json", "v>[a1](padding: {left: .5em, right: .5em, top: 1em,})<^");
+            put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
         }};
 
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
-            XuiLayoutNode root = XuiComponentLayoutLinear.parse(null, XuiComponentLayoutLinear.Mode.column, text);
+            XuiLayoutNode root = parser.parseFromText(null, text);
             String json = JsonTool.serialize(JsonTool.parse(root.toJSON()), true);
 
             this.log.info("Layout json for {}=\n{}", name, json);
@@ -100,13 +104,15 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             // 检查跨行时的行号等信息是否正常
             put("| [a1] | [a2] |\n  | [b1]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
             put("{ [a1] [a2]\n  [b1 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
+            // 配置参数
         }};
 
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
         samples.forEach((text, code) -> {
             this.log.info("Raw text:\n{}", text);
 
             try {
-                XuiComponentLayoutLinear.parse(null, XuiComponentLayoutLinear.Mode.column, text);
+                XuiLayoutNode root = parser.parseFromText(null, text);
                 Assertions.fail("Error should be happened when parsing text '" + text + "'");
             } catch (NopException e) {
                 this.log.info("Error happened", e);
