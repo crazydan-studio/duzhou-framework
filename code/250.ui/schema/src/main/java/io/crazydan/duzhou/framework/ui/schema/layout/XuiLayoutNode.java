@@ -152,6 +152,10 @@ public class XuiLayoutNode {
         return this.props;
     }
 
+    public void updateProps(XuiLayoutProps props) {
+        this.props.merge(props);
+    }
+
     public XuiLayoutAlign getAlign() {
         return this.align;
     }
@@ -224,6 +228,12 @@ public class XuiLayoutNode {
 
         sb.append('{').append('\n');
         sb.append("  \"type\": \"").append(this.type).append("\"\n");
+
+        String propsJson = this.props.toJSON();
+        if (propsJson.length() > 2) {
+            propsJson = propsJson.replaceAll("(?m)^", "    ").trim();
+            sb.append("  , \"props\": ").append(propsJson).append('\n');
+        }
         if (this.pattern != null) {
             sb.append("  , \"pattern\": \"").append(this.pattern).append("\"\n");
         }
@@ -241,8 +251,9 @@ public class XuiLayoutNode {
             for (int i = 0; i < this.children.size(); i++) {
                 XuiLayoutNode child = this.children.get(i);
                 String json = (i > 0 ? ", " : "") + child.toJSON();
+                json = json.replaceAll("(?m)^", "    ").trim();
 
-                sb.append(json.replaceAll("(?m)^", "    ").replaceAll("^\\s+", ""));
+                sb.append(json);
             }
             sb.append(']').append('\n');
         }

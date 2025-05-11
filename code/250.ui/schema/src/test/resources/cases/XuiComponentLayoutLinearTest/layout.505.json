@@ -1,0 +1,177 @@
+{
+  "type": "column",
+  "width": "match_parent",
+  "height": "match_parent",
+  "children": [
+    {
+      "type": "table",
+      "width": "match_parent",
+      "height": "wrap_content",
+      "children": [
+        {
+          "type": "row",
+          "width": "match_parent",
+          "height": "wrap_content",
+          "children": [
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^a1$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^a2$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^a3$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "width": "match_parent",
+          "height": "wrap_content",
+          "children": [
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "props": {
+                    "rowspan": 2
+                  },
+                  "pattern": "^b1$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "props": {
+                    "colspan": 2
+                  },
+                  "pattern": "^b2$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "width": "match_parent",
+          "height": "wrap_content",
+          "children": [
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^c1$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^c2$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "width": "match_parent",
+              "height": "match_parent",
+              "children": [
+                {
+                  "type": "item",
+                  "pattern": "^c3$",
+                  "align": [
+                    "start",
+                    "start"
+                  ],
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

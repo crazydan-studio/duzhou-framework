@@ -71,11 +71,12 @@ public class XuiComponentLayoutLinearTest extends NopJunitTestCase {
             // - 表头配置参数
             // put("layout.307.json", "| (width:100px) | (width:300px) |\n| [a1]> | <[b1]> |");
             // 配置参数
-            // put("layout.501.json", "v>()<^");
-            // put("layout.502.json", "v>[a1]()<^");
-            // put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
-            // put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap:1em)>");
-            // put("layout.505.json", "| [a1] | [a2] | [a3] |\n| [b1](rowspan:2) | [b2](colspan:2) |\n| [c1] | [c2] | [c3] |");
+            put("layout.501.json", "v>()<^");
+            put("layout.502.json", "v>[a1]()<^");
+            put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
+            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap:1em)>");
+            put("layout.505.json", "| [a1] | [a2] | [a3] |\n| [b1](rowspan:2) | [b2](colspan:2) |\n| [c1] | [c2] | [c3] |");
+            put("layout.506.json", "v>[a1](padding: {left: .5em, right: .5em, top: 1em, bottom: 1em})<^");
         }};
 
         samples.forEach((name, text) -> {

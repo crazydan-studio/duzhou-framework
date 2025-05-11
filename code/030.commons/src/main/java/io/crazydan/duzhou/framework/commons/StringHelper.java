@@ -25,6 +25,16 @@ package io.crazydan.duzhou.framework.commons;
  */
 public class StringHelper extends io.nop.commons.util.StringHelper {
 
+    public static String trimToNull(String str) {
+        str = strip(str);
+        return emptyAsNull(str);
+    }
+
+    public static Integer trimAndParseInt(String str, int radix) {
+        str = trimToNull(str);
+        return parseInt(str, radix);
+    }
+
     /**
      * @see #snakeCase(String, boolean, boolean)
      */

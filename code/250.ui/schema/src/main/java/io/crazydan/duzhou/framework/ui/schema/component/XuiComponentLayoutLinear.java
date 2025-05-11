@@ -1,11 +1,14 @@
 package io.crazydan.duzhou.framework.ui.schema.component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutProps;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
@@ -391,6 +394,7 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
             String text = extractBetweenMark(sc, '{', '}');
 
             if (text != null) {
+                // TODO loc 的准确位置应该在源文本基础上后移一位
                 List<XuiLayoutNode> children = parseNodes(loc, text);
 
                 if (children.size() == 1) {
@@ -402,12 +406,20 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         }
 
         // 解析布局配置参数列表
-        // TODO 参数列表之前不能有空白 Guard.checkState(!StringHelper.isSpaceInLine(sc.cur), "No spaces are expected before the parameter mark");
         if (sc.cur == '(') {
+            SourceLocation loc = sc.location();
             String text = extractBetweenMark(sc, '(', ')');
 
-            // TODO 解析配置参数列表（类 JSON 形式）
-            // TODO 参数列表不为空且 node 为 null，则创建空白节点
+            if (text != null) {
+                XuiLayoutProps props = parseProps(loc, text);
+
+                if (props != null) {
+                    if (node == null) {
+                        node = XuiLayoutNode.space();
+                    }
+                    node.updateProps(props);
+                }
+            }
         }
 
         // 解析终止方向的对齐位置：终止方向的对齐符号必须紧挨节点，不能有空白
@@ -517,6 +529,43 @@ public class XuiComponentLayoutLinear extends _XuiComponentLayoutLinear {
         } while (!sc.isEnd());
 
         return align;
+    }
+
+    /** 解析配置参数列表（类 JSON 形式） */
+    private static XuiLayoutProps parseProps(SourceLocation loc, String text) {
+        Map<String, Object> props = new HashMap<>();
+
+        TextScanner sc = TextScanner.fromString(loc, text);
+        while (true) {
+            moveToValidCharInLine(sc);
+            if (sc.isEnd()) {
+                break;
+            }
+
+            String name = sc.nextUntil(':', false).trim().toString();
+            sc.consume(':');
+
+            moveToValidCharInLine(sc);
+            if (sc.isEnd()) {
+                // TODO 未配置参数值
+                break;
+            }
+
+            if (sc.cur == '{') {
+                // TODO 解析结构化的参数值
+            } else if (sc.cur == '$') {
+                // TODO 解析动态表达式
+            }
+
+            String value = sc.nextUntil(',', true).trim().toString();
+            if (!sc.isEnd()) {
+                sc.consume(',');
+            }
+
+            props.put(name, value);
+        }
+
+        return props.isEmpty() ? null : new XuiLayoutProps(props);
     }
 
     /**

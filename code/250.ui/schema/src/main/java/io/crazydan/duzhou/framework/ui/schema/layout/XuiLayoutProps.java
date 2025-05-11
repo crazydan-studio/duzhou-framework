@@ -19,6 +19,10 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.Map;
+
+import io.crazydan.duzhou.framework.commons.StringHelper;
+
 /**
  * 布局配置属性
  *
@@ -39,9 +43,9 @@ public class XuiLayoutProps {
     private String gap;
 
     /** {@link XuiLayoutNode.Type#table} 中的单元格可横跨的列数量 */
-    private int colspan;
+    private Integer colspan;
     /** {@link XuiLayoutNode.Type#table} 中的单元格可纵跨的行数量 */
-    private int rowspan;
+    private Integer rowspan;
 
     /**
      * 内边距
@@ -55,4 +59,72 @@ public class XuiLayoutProps {
      * 需在其外部附加一层节点，以确保对齐方式不受影响？
      */
     private XuiLayoutEdgeSize margin;
+
+    public XuiLayoutProps() {
+    }
+
+    public XuiLayoutProps(Map<String, Object> props) {
+        this.gap = StringHelper.trimToNull((String) props.get("gap"));
+        this.colspan = StringHelper.trimAndParseInt((String) props.get("colspan"), 10);
+        this.rowspan = StringHelper.trimAndParseInt((String) props.get("rowspan"), 10);
+    }
+
+    public void merge(XuiLayoutProps props) {
+        this.gap = props.gap;
+        this.colspan = props.colspan;
+        this.rowspan = props.rowspan;
+        this.padding = props.padding;
+        this.margin = props.margin;
+    }
+
+    public String getGap() {
+        return this.gap;
+    }
+
+    public void setGap(String gap) {
+        this.gap = gap;
+    }
+
+    public Integer getColspan() {
+        return this.colspan;
+    }
+
+    public void setColspan(Integer colspan) {
+        this.colspan = colspan;
+    }
+
+    public Integer getRowspan() {
+        return this.rowspan;
+    }
+
+    public void setRowspan(Integer rowspan) {
+        this.rowspan = rowspan;
+    }
+
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('{');
+        if (this.gap != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"gap\": \"").append(this.gap).append('"');
+        }
+        if (this.colspan != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"colspan\": ").append(this.colspan);
+        }
+        if (this.rowspan != null) {
+            if (sb.length() > 1) {
+                sb.append("\n  , ");
+            }
+            sb.append("\"rowspan\": ").append(this.rowspan);
+        }
+        sb.append('}');
+
+        return sb.toString();
+    }
 }

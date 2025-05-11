@@ -13,7 +13,7 @@ public class XuiComponentText extends _XuiComponentText {
         String value = super.getValue();
 
         if (value != null) {
-            value = value.trim();
+            value = value.trim().replaceAll("(?m)^\\s+", "");
             // 转义 HTML 以避免 XSS 攻击
             value = StringHelper.escapeHtml(value);
             // 恢复空格等转义符号
