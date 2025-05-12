@@ -59,6 +59,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             // - 行注释
             put("layout.108.json", "/** 多行\n注释 */ [a1]\n// 单行注释\n/** 单行注释 */\n[b1] [c1] // 行尾注释");
             put("layout.109.json", "<>[a1]");
+            put("layout.110.json", "\n[a1]");
             // 嵌套
             put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
@@ -99,8 +100,12 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("[a1]@", ERR_LAYOUT_LINEAR_UNKNOWN_MARK);
             put("^ [a1]", ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK);
             put("^^[a1]", ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK);
+            put("{ [a1] @", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
             put("{ [a1] [a2 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
             put("| [a1] | [a2]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+            put("| [a1] | [a2] @", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+            put("  [a1] \n  @  [b1]", ERR_LAYOUT_LINEAR_UNKNOWN_MARK);
+            put("| [a1] | [a2] |\n  @  [b1]", ERR_LAYOUT_LINEAR_UNKNOWN_MARK);
             // 检查跨行时的行号等信息是否正常
             put("| [a1] | [a2] |\n  | [b1]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
             put("{ [a1] [a2]\n  [b1 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
@@ -112,7 +117,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             this.log.info("Raw text:\n{}", text);
 
             try {
-                XuiLayoutNode root = parser.parseFromText(null, text);
+                parser.parseFromText(null, text);
                 Assertions.fail("Error should be happened when parsing text '" + text + "'");
             } catch (NopException e) {
                 this.log.info("Error happened", e);

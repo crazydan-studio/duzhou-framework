@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.commons.StringHelper;
+import io.crazydan.duzhou.framework.commons.TextScannerHelper;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
@@ -35,8 +36,8 @@ import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.text.tokenizer.TextScanner;
 
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.consumeBetweenPairChars;
+import static io.crazydan.duzhou.framework.commons.TextScannerHelper.consumeUntilPosNotChanged;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.extractBetweenPairChars;
-import static io.crazydan.duzhou.framework.commons.TextScannerHelper.isLineBreak;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.moveToValidCharInLine;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.skipBlankAndConsumeInLine;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
@@ -45,6 +46,7 @@ import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
 import static io.nop.commons.util.StringHelper.isSpaceInLine;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
@@ -84,6 +86,10 @@ public class XuiLayoutLinearParser {
 
         TextScanner sc = TextScanner.fromString(loc, text);
         List<XuiLayoutNode> children = parseNodes(sc);
+        if (!sc.isEnd()) {
+            throw sc.newError(ERR_LAYOUT_LINEAR_UNKNOWN_MARK).param(ARG_VALUE, (char) sc.cur);
+        }
+
         if (children.size() == 1) {
             XuiLayoutNode child = children.get(0);
 
@@ -109,26 +115,22 @@ public class XuiLayoutLinearParser {
     private List<XuiLayoutNode> parseNodes(TextScanner sc) {
         List<XuiLayoutNode> nodes = new ArrayList<>();
 
-        while (true) {
-            moveToValidCharInLine(sc);
-            if (sc.isEnd()) {
-                break;
+        sc.skipBlank();
+        consumeUntilPosNotChanged(sc, null, () -> {
+            if (sc.cur == '|') {
+                return parseTable(sc);
+            } else {
+                return parseRow(sc);
+            }
+        }, (node) -> {
+            if (node != null) {
+                nodes.add(node);
             }
 
-            if (sc.cur == '|') {
-                XuiLayoutNode table = parseTable(sc);
-                if (table != null) {
-                    nodes.add(table);
-                }
-            } else {
-                XuiLayoutNode row = parseRow(sc);
-                if (row != null) {
-                    nodes.add(row);
-                } else {
-                    break;
-                }
-            }
-        }
+            // Note: 对行的解析结束可能发生在嵌套结束符上，
+            // 因此，不能直接跳过行
+            sc.skipBlank();
+        });
 
         return nodes;
     }
@@ -159,16 +161,10 @@ public class XuiLayoutLinearParser {
     private XuiLayoutNode parseRow(TextScanner sc) {
         XuiLayoutNode row = XuiLayoutNode.row();
 
-        while (true) {
-            moveToValidCharInLine(sc);
-            if (sc.isEnd() || isLineBreak(sc)) {
-                break;
-            }
-
-            XuiLayoutNode node = parseNode(sc);
+        // Note: 对行内节点的解析，一定在明确的行尾结束（嵌套布局将作为一个整体进行解析）
+        consumeUntilPosNotChanged(sc, TextScannerHelper::isLineBreak, () -> parseNode(sc), (node) -> {
             if (node == null) {
-                // 无有效节点，停止行解析
-                break;
+                return;
             }
 
             // 行内节点默认左上角对齐
@@ -180,13 +176,13 @@ public class XuiLayoutLinearParser {
             }
 
             row.addChild(node);
-        }
+        });
 
         return row.hasChild() ? row : null;
     }
 
     /**
-     * 解析表格（注意，表格解析完后，将自动跳到下一行）：
+     * 解析表格
      * <pre>
      * | [a1] [a2] | [b1] |
      * |           | [c1] |
@@ -213,13 +209,7 @@ public class XuiLayoutLinearParser {
     private XuiLayoutNode parseTable(TextScanner sc) {
         XuiLayoutNode table = XuiLayoutNode.table();
 
-        while (true) {
-            moveToValidCharInLine(sc);
-            if (sc.isEnd() || sc.cur != '|') {
-                break;
-            }
-
-            XuiLayoutNode row = parseTableRow(sc);
+        consumeUntilPosNotChanged(sc, (s) -> s.cur != '|', () -> parseTableRow(sc), (row) -> {
             if (row != null) {
                 // 表格行宽度自适应 table 宽度
                 row.setWidth(XuiLayoutSize.match_parent());
@@ -227,31 +217,23 @@ public class XuiLayoutLinearParser {
                 table.addChild(row);
             }
 
+            // Note: 遇到非 | 字符时，对表格的解析便会结束，因此，不能直接跳过行
             sc.skipBlank();
-        }
+        });
 
         return table.hasChild() ? table : null;
     }
 
-    /** 解析表格行 */
+    /**
+     * 解析表格行
+     * <p/>
+     * 注：需确保 {@link TextScanner} 的当前位置在标记符 <code>|</code> 上
+     */
     private XuiLayoutNode parseTableRow(TextScanner sc) {
         List<XuiLayoutNode> cells = new ArrayList<>();
 
-        int pos = sc.pos;
-        while (!sc.isEnd()) {
-            moveToValidCharInLine(sc);
-            if (isLineBreak(sc)) {
-                break;
-            }
-
+        consumeUntilPosNotChanged(sc, (s) -> s.cur != '|', () -> parseNodesInTableCell(sc), (children) -> {
             XuiLayoutNode cell = null;
-            List<XuiLayoutNode> children = parseNodesInTableCell(sc);
-            if (pos == sc.pos) {
-                // 没有解析到新节点，则停止表格行解析
-                break;
-            }
-            pos = sc.pos;
-
             if (children.size() == 1) {
                 // Note: 其依然为 row 或 table 类型节点
                 cell = children.get(0);
@@ -269,7 +251,7 @@ public class XuiLayoutLinearParser {
             cell.setHeight(XuiLayoutSize.match_parent());
 
             cells.add(cell);
-        }
+        });
 
         // Note: 解析单元格时，必然会在尾部添加一个多余的空白单元格
         if (!cells.isEmpty()) {
@@ -280,7 +262,43 @@ public class XuiLayoutLinearParser {
     }
 
     /**
-     * 解析布局节点：
+     * 解析表格单元格中的节点（两个相邻 | 之间的部分）
+     * <pre>
+     * | [a1] [a2] |
+     * </pre>
+     * <pre>
+     * | {
+     *     | [a1] | [a2] |
+     *     | [b1] | [b2] |
+     * } |
+     * </pre>
+     * <p/>
+     * 注：被嵌套的表格只能在嵌套布局 <code>{}</code> 内定义
+     */
+    private List<XuiLayoutNode> parseNodesInTableCell(TextScanner sc) {
+        List<XuiLayoutNode> nodes = new ArrayList<>();
+
+        sc.consume('|');
+
+        consumeUntilPosNotChanged(sc,
+                                  // 到达单元格结束符号，则停止提取，但不跳过结束符号，以便于识别下一个单元格
+                                  (s) -> s.cur == '|', //
+                                  () -> parseRow(sc), //
+                                  (node) -> {
+                                      if (node != null) {
+                                          nodes.add(node);
+                                      }
+                                  });
+
+        if (sc.cur != '|' && !nodes.isEmpty()) {
+            throw sc.newError(ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
+        }
+
+        return nodes;
+    }
+
+    /**
+     * 解析布局节点（其将推动 TextScanner 游标后移）
      * <pre>
      * ^[abc]v
      * </pre>
@@ -520,56 +538,6 @@ public class XuiLayoutLinearParser {
         });
 
         return props;
-    }
-
-    /**
-     * 解析表格单元格中的节点
-     * <pre>
-     * | [a1] [a2] |
-     * </pre>
-     * <pre>
-     * | {
-     *     | [a1] | [a2] |
-     *     | [b1] | [b2] |
-     * } |
-     * </pre>
-     * <p/>
-     * 注：被嵌套的表格只能在嵌套布局 <code>{}</code> 内定义
-     */
-    private List<XuiLayoutNode> parseNodesInTableCell(TextScanner sc) {
-        List<XuiLayoutNode> nodes = new ArrayList<>();
-
-        boolean cellExtracting = false;
-        boolean cellExtracted = false;
-        while (!sc.isEnd()) {
-            if (cellExtracting) {
-                // Note: 在 parseNode 中会首先跳过行首的空白和注释，
-                // 因此，其始终会将 TextScanner 的游标移到非空白字符上
-                XuiLayoutNode node = parseRow(sc);
-                if (node != null) {
-                    nodes.add(node);
-                }
-
-                // 到达单元格结束符号，则停止提取，且不跳过结束符号，以便于识别下一个单元格
-                if (sc.cur == '|') {
-                    cellExtracted = true;
-                }
-                break;
-            }
-            // 开始提取单元格
-            else if (sc.cur == '|') {
-                cellExtracting = true;
-                sc.next();
-            } else {
-                break;
-            }
-        }
-
-        if (!cellExtracted && !nodes.isEmpty()) {
-            throw sc.newError(ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
-        }
-
-        return nodes;
     }
 
     private void adjustNodeChildren(XuiLayoutNode node) {

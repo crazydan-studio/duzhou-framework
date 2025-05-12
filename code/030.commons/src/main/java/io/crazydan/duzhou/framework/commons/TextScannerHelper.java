@@ -19,6 +19,10 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.commons.text.MutableString;
 import io.nop.commons.text.tokenizer.TextScanner;
@@ -104,6 +108,7 @@ public class TextScannerHelper {
     ) {
         sc.consume(left);
 
+        int pos = sc.pos;
         while (true) {
             moveToValidCharInLine(sc);
 
@@ -118,6 +123,35 @@ public class TextScannerHelper {
             }
 
             consumer.run();
+
+            if (pos == sc.pos) {
+                throw sc.newError(code).param(ARG_LEFT_PAIR, left).param(ARG_RIGHT_PAIR, right);
+            } else {
+                pos = sc.pos;
+            }
+        }
+    }
+
+    /** 持续消费 {@link TextScanner} 直到游标不再变化 */
+    public static <T> void consumeUntilPosNotChanged(
+            TextScanner sc, Predicate<TextScanner> whenBreak, Supplier<T> supplier, Consumer<T> consumer
+    ) {
+        int pos = sc.pos;
+        while (true) {
+            moveToValidCharInLine(sc);
+            if (sc.isEnd() || (whenBreak != null && whenBreak.test(sc))) {
+                break;
+            }
+
+            T t = supplier.get();
+
+            if (pos == sc.pos) {
+                break;
+            } else {
+                pos = sc.pos;
+            }
+
+            consumer.accept(t);
         }
     }
 }
