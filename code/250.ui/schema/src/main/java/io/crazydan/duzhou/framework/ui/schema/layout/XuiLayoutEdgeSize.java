@@ -22,6 +22,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+
 /**
  * 布局项边框尺寸
  * <p/>
@@ -47,34 +50,33 @@ public class XuiLayoutEdgeSize {
         this.bottom = (String) props.get("bottom");
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> props = new HashMap<>();
+
+        ifNotNull(this.left, (v) -> props.put("left", v));
+        ifNotNull(this.right, (v) -> props.put("right", v));
+        ifNotNull(this.top, (v) -> props.put("top", v));
+        ifNotNull(this.bottom, (v) -> props.put("bottom", v));
+
+        return props;
+    }
+
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
 
         sb.append('{');
-        if (this.left != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"left\": \"").append(this.left).append('"');
-        }
-        if (this.right != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"right\": \"").append(this.right).append('"');
-        }
-        if (this.top != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"top\": \"").append(this.top).append('"');
-        }
-        if (this.bottom != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"bottom\": \"").append(this.bottom).append('"');
-        }
+        ifNotNull(this.left, (v) -> {
+            appendJsonProp(sb, "left", v);
+        });
+        ifNotNull(this.right, (v) -> {
+            appendJsonProp(sb, "right", v);
+        });
+        ifNotNull(this.top, (v) -> {
+            appendJsonProp(sb, "top", v);
+        });
+        ifNotNull(this.bottom, (v) -> {
+            appendJsonProp(sb, "bottom", v);
+        });
         sb.append('}');
 
         return sb.toString();

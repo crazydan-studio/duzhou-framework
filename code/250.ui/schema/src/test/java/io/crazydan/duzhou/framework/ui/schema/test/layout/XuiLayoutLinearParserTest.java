@@ -55,7 +55,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.105.json", "^<[]>v");
             put("layout.106.json", "^<>v");
             // - 正则表达式匹配目标组件
-            put("layout.107.json", "[a1] [a2]\n[b1] [b_[\\\\d\\\\w]+]");
+            put("layout.107.json", "[a1] [a2]\n[b1] [b_[\\d\\w]+]");
             // - 行注释
             put("layout.108.json", "/** 多行\n注释 */ [a1]\n// 单行注释\n/** 单行注释 */\n[b1] [c1] // 行尾注释");
             put("layout.109.json", "<>[a1]");
@@ -78,9 +78,10 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
             put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap:1em)>");
             put("layout.505.json",
-                "| [a1] | [a2] | [a3] |\n| [b1](rowspan:2) | [b2](colspan:2) |\n| [c1] | [c2] | [c3] |");
+                "| [a1] | [a2] | [a3] |\n| {[b1]}(rowspan:2, padding: {left: .5em}) | {[b2]}(colspan:2) |\n| [c1] | [c2] | [c3] |");
             put("layout.506.json", "v>[a1](padding: {left: .5em, right: .5em, top: 1em,})<^");
             put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
+            put("layout.508.json", "| {[a1] [a2]}(gap: 1em, rowspan:2) | [b1] |");
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

@@ -24,6 +24,10 @@ import java.util.Map;
 
 import io.crazydan.duzhou.framework.commons.StringHelper;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+
 /**
  * 布局配置属性
  *
@@ -79,50 +83,39 @@ public class XuiLayoutProps {
         this.margin = new XuiLayoutEdgeSize((Map<String, Object>) props.get("margin"));
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> props = new HashMap<>();
+
+        ifNotNull(this.gap, (v) -> props.put("gap", v));
+        ifNotNull(this.colspan, (v) -> props.put("colspan", v));
+        ifNotNull(this.rowspan, (v) -> props.put("rowspan", v));
+        ifNotNull(this.padding, (v) -> props.put("padding", v.toMap()));
+        ifNotNull(this.margin, (v) -> props.put("margin", v.toMap()));
+
+        return props;
+    }
+
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
 
         sb.append('{');
-        if (this.gap != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"gap\": \"").append(this.gap).append('"');
-        }
-        if (this.colspan != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"colspan\": ").append(this.colspan);
-        }
-        if (this.rowspan != null) {
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"rowspan\": ").append(this.rowspan);
-        }
-        if (this.padding != null) {
-            String json = this.padding.toJSON();
-            if (json.length() > 2) {
-                json = json.replaceAll("(?m)^", "    ").trim();
-
-                if (sb.length() > 1) {
-                    sb.append("\n  , ");
-                }
-                sb.append("\"padding\": ").append(json);
-            }
-        }
-        if (this.margin != null) {
-            String json = this.margin.toJSON();
-            if (json.length() > 2) {
-                json = json.replaceAll("(?m)^", "    ").trim();
-
-                if (sb.length() > 1) {
-                    sb.append("\n  , ");
-                }
-                sb.append("\"margin\": ").append(json);
-            }
-        }
+        ifNotNull(this.gap, (v) -> {
+            appendJsonProp(sb, "gap", v);
+        });
+        ifNotNull(this.colspan, (v) -> {
+            appendJsonProp(sb, "colspan", v);
+        });
+        ifNotNull(this.rowspan, (v) -> {
+            appendJsonProp(sb, "rowspan", v);
+        });
+        ifNotNull(this.padding, (v) -> {
+            String json = v.toJSON();
+            appendJsonToJsonProp(sb, "padding", json);
+        });
+        ifNotNull(this.margin, (v) -> {
+            String json = v.toJSON();
+            appendJsonToJsonProp(sb, "margin", json);
+        });
         sb.append('}');
 
         return sb.toString();

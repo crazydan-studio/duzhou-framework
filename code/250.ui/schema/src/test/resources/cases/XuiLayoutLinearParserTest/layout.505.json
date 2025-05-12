@@ -73,14 +73,21 @@
           "children": [
             {
               "type": "row",
-              "width": "match_parent",
+              "props": {
+                "rowspan": 2,
+                "padding": {
+                  "left": ".5em"
+                }
+              },
+              "align": [
+                "start",
+                "start"
+              ],
+              "width": "wrap_content",
               "height": "match_parent",
               "children": [
                 {
                   "type": "item",
-                  "props": {
-                    "rowspan": 2
-                  },
                   "pattern": "^b1$",
                   "align": [
                     "start",
@@ -93,14 +100,18 @@
             },
             {
               "type": "row",
-              "width": "match_parent",
+              "props": {
+                "colspan": 2
+              },
+              "align": [
+                "start",
+                "start"
+              ],
+              "width": "wrap_content",
               "height": "match_parent",
               "children": [
                 {
                   "type": "item",
-                  "props": {
-                    "colspan": 2
-                  },
                   "pattern": "^b2$",
                   "align": [
                     "start",

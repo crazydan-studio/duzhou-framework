@@ -28,6 +28,11 @@ import java.util.regex.Pattern;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendRawToJsonProp;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+
 /**
  * 布局（树）节点
  *
@@ -226,26 +231,26 @@ public class XuiLayoutNode {
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append('{').append('\n');
-        sb.append("  \"type\": \"").append(this.type).append("\"\n");
-
-        String propsJson = this.props.toJSON();
-        if (propsJson.length() > 2) {
-            propsJson = propsJson.replaceAll("(?m)^", "    ").trim();
-            sb.append("  , \"props\": ").append(propsJson).append('\n');
-        }
-        if (this.pattern != null) {
-            sb.append("  , \"pattern\": \"").append(this.pattern).append("\"\n");
-        }
-        if (this.align != null) {
-            sb.append("  , \"align\": ").append(this.align.toJSON()).append('\n');
-        }
-        if (this.width != null) {
-            sb.append("  , \"width\": ").append(this.width.toJSON()).append('\n');
-        }
-        if (this.height != null) {
-            sb.append("  , \"height\": ").append(this.height.toJSON()).append('\n');
-        }
+        sb.append('{');
+        ifNotNull(this.type, (v) -> {
+            appendJsonProp(sb, "type", v);
+        });
+        ifNotNull(this.props, (v) -> {
+            String json = v.toJSON();
+            appendJsonToJsonProp(sb, "props", json);
+        });
+        ifNotNull(this.pattern, (v) -> {
+            appendJsonProp(sb, "pattern", v);
+        });
+        ifNotNull(this.align, (v) -> {
+            appendRawToJsonProp(sb, "align", v.toJSON());
+        });
+        ifNotNull(this.width, (v) -> {
+            appendRawToJsonProp(sb, "width", v.toJSON());
+        });
+        ifNotNull(this.height, (v) -> {
+            appendRawToJsonProp(sb, "height", v.toJSON());
+        });
         if (!this.children.isEmpty()) {
             sb.append("  , \"children\": [");
             for (int i = 0; i < this.children.size(); i++) {

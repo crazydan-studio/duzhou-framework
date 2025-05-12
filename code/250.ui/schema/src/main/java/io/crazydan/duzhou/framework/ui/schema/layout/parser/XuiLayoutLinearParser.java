@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
 import io.crazydan.duzhou.framework.commons.TextScannerHelper;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
@@ -47,6 +46,7 @@ import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
+import static io.nop.api.core.util.ApiStringHelper.isBlank;
 import static io.nop.commons.util.StringHelper.isSpaceInLine;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
@@ -524,13 +524,15 @@ public class XuiLayoutLinearParser {
 
                     value = "${" + value + "}";
                 } else {
-                    value = sc.nextUntil(s -> s.cur == ',' || s.cur == ')', true, ",").trim().toString();
+                    value = sc.nextUntil(s -> s.cur == ',' || s.cur == ')' || s.cur == '}', true, ",")
+                              .trim()
+                              .toString();
                     if (sc.cur == ',') {
                         sc.next();
                     }
                 }
 
-                if (StringHelper.isBlank(value)) {
+                if (isBlank(value)) {
                     throw sc.newError(ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED).param(ARG_VALUE, name);
                 }
                 props.put(name, value);
