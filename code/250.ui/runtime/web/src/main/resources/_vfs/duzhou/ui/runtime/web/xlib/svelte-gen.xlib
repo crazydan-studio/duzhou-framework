@@ -221,8 +221,9 @@
                                 ? "{{h: '" + (layout.align.horizontal || '') + "',"
                                   + " v: '" + (layout.align.vertical || '') + "'}}"
                                 : null,
-                        width: layout.width.type + '',
-                        height: layout.height.type + '',
+                        width: layout.width.type.name(),
+                        height: layout.height.type.name(),
+                        gap: layout.props.gap,
                     };
                 ]]></c:script>
                 <c:choose>
@@ -249,10 +250,15 @@
                                 <c:choose>
                                     <when test="${layout.type.name() == 'table'}">
                                         <!-- 应用原生的表格元素做表格布局 -->
-                                        <!-- TODO 跨单元格处理 -->
                                         <tr>
                                             <c:for var="columnLayout" items="${layoutChild.children}">
-                                                <td>
+                                                <c:script><![CDATA[
+                                                    const tdAttrs = {
+                                                        rowspan: columnLayout.props.rowspan,
+                                                        colspan: columnLayout.props.colspan,
+                                                    };
+                                                ]]></c:script>
+                                                <td xpl:attrs="tdAttrs">
                                                     <thisLib:GenComponentNodeLayout
                                                             component="${component}"
                                                             node="${node}"
