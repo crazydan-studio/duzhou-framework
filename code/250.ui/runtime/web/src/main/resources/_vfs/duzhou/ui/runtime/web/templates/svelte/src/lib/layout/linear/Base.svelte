@@ -1,14 +1,15 @@
 <script lang="ts">
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
-  const { type, width, height, align, children } = $props();
+  const { type, width, height, align, gap, children } = $props();
 </script>
 
 <div class={[
     'xui-layout', 'linear', type,
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
-  ]}>
+    gap && 'has-gap',
+  ]} style:--gap={gap}>
   {@render children?.()}
 </div>
 
@@ -29,6 +30,13 @@
       & > .xui-block:first-child > * {
         .width-match_parent();
         .height-match_parent();
+      }
+    }
+  }
+  .has-gap {
+    :global {
+      .item:not(:last-child) {
+        border-right: var(--gap) solid transparent;
       }
     }
   }

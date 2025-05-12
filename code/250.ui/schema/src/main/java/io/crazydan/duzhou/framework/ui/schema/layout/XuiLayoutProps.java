@@ -43,7 +43,8 @@ public class XuiLayoutProps {
      * 则用于设置垂直方向上的节点间隔，若父节点类型为
      * {@link XuiLayoutNode.Type#row}，则用于设置水平方向上的节点间隔
      * <p/>
-     * 可通过插入空白项的方式控制项间的间隔？（需避免插入空白项导致布局项的对齐方式等受到影响）
+     * 通过在布局节点上设置相应宽度的透明边框实现，
+     * 从而避免影响以 margin 方式实现的对齐机制
      */
     public final String gap;
 

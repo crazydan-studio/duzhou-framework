@@ -1,14 +1,15 @@
 <script lang="ts">
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
-  const { width, height, align, children } = $props();
+  const { width, height, align, gap, children } = $props();
 </script>
 
 <table class={[
     'xui-layout', 'linear', 'table',
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
-  ]}>
+    gap && 'has-gap',
+  ]} style:--gap={gap}>
   {@render children?.()}
 </table>
 
@@ -38,6 +39,14 @@
         overflow: hidden;
         /* 禁止换行 */
         white-space: nowrap;
+      }
+
+      &.has-gap tr {
+        border-top: var(--gap) solid transparent;
+
+        &:first-child {
+          border-top: 0;
+        }
       }
     }
   }

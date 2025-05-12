@@ -44,7 +44,7 @@
                 v>{
                     >[login-logo]<
                     <[login-form]>
-                }<^
+                }(gap:2em)<^
 
                 >{
                     [copyright-text] [copyright-owner]
@@ -63,12 +63,12 @@
                         | [username-label]> | <[username-input]> |
                         | [password-label]> | <[password-input]> |
                         |                   | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:1em)
+                    }(gap:.5em)
 
                     >[warning-text]<
 
                     <[login-button]>
-                    { [forgot-password-button] [register-button] }(gap:.5em)>
+                    { [forgot-password-button] [register-button] }(gap:1em)>
                 ]]></linear>
             </xui:layout>
 
