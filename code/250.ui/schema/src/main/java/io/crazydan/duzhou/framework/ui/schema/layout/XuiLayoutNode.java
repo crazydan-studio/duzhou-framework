@@ -67,7 +67,7 @@ public class XuiLayoutNode {
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
     private final Pattern pattern;
     /** 配置属性 */
-    private XuiLayoutProps props = new XuiLayoutProps();
+    private XuiLayoutProps props;
 
     /**
      * 对齐方式

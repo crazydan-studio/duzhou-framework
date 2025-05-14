@@ -485,7 +485,7 @@ public class XuiLayoutLinearParser {
     private XuiLayoutProps parseProps(TextScanner sc) {
         Map<String, Object> props = parseProps(sc, '(', ')');
 
-        return props.isEmpty() ? null : new XuiLayoutProps(props);
+        return props.isEmpty() ? null : XuiLayoutProps.create(props);
     }
 
     /**

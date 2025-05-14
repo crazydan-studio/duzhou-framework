@@ -19,7 +19,6 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
@@ -44,23 +43,18 @@ public class XuiLayoutProps {
      */
     public final XuiLayoutSpacing padding;
 
-    public XuiLayoutProps() {
-        this(null);
+    XuiLayoutProps(XuiLayoutGap gap, XuiLayoutSpan span, XuiLayoutSpacing padding) {
+        this.gap = gap;
+        this.span = span;
+        this.padding = padding;
     }
 
-    public XuiLayoutProps(Map<String, Object> props) {
-        if (props == null) {
-            props = new HashMap<>();
-        }
+    public static XuiLayoutProps create(Map<String, Object> props) {
+        XuiLayoutGap gap = XuiLayoutGap.create(props.get("gap"));
+        XuiLayoutSpan span = XuiLayoutSpan.create(props.get("span"));
+        XuiLayoutSpacing padding = XuiLayoutSpacing.create(props.get("padding"));
 
-        Object gap = props.get("gap");
-        this.gap = XuiLayoutGap.create(gap);
-
-        Object span = props.get("span");
-        this.span = XuiLayoutSpan.create(span);
-
-        Object padding = props.get("padding");
-        this.padding = XuiLayoutSpacing.create(padding);
+        return new XuiLayoutProps(gap, span, padding);
     }
 
     public String toJSON() {
