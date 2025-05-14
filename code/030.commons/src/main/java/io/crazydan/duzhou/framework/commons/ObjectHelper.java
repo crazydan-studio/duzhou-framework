@@ -29,10 +29,22 @@ import io.nop.commons.util.StringHelper;
  */
 public class ObjectHelper {
 
+    /** 在值不为 <code>null</code> 时，执行指定逻辑 */
     public static <T> void ifNotNull(T obj, Consumer<T> consumer) {
         if (obj != null) {
             consumer.accept(obj);
         }
+    }
+
+    /** 取第一个非 <code>null</code> 值 */
+    @SafeVarargs
+    public static <T> T firstNonNull(T... values) {
+        for (T value : values) {
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 
     public static void appendJsonProp(StringBuilder sb, String name, Object value) {

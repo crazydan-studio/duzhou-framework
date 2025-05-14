@@ -22,9 +22,6 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
-
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
@@ -35,36 +32,17 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @date 2025-04-25
  */
 public class XuiLayoutProps {
+    /** 布局项之间的间隔 */
+    public final XuiLayoutGap gap;
+    /** {@link XuiLayoutNode.Type#table} 中的单元格可跨越的单元格数量 */
+    public final XuiLayoutSpan span;
     /**
-     * 布局项之间的间隔
+     * 边距，即，四周的空白宽度
      * <p/>
-     * 若父节点类型为 {@link XuiLayoutNode.Type#table}
-     * 或 {@link XuiLayoutNode.Type#column}，
-     * 则用于设置垂直方向上的节点间隔，若父节点类型为
-     * {@link XuiLayoutNode.Type#row}，则用于设置水平方向上的节点间隔
-     * <p/>
-     * 通过在布局节点上设置相应宽度的透明边框实现，
-     * 从而避免影响以 margin 方式实现的对齐机制
+     * 注：其仅作用于 {@link XuiLayoutNode.Type#row}、{@link XuiLayoutNode.Type#column}
+     * 和 {@link XuiLayoutNode.Type#table}
      */
-    public final String gap;
-
-    /** {@link XuiLayoutNode.Type#table} 中的单元格可横跨的列数量 */
-    public final Integer colspan;
-    /** {@link XuiLayoutNode.Type#table} 中的单元格可纵跨的行数量 */
-    public final Integer rowspan;
-
-    /**
-     * 内边距
-     * <p/>
-     * 可直接作用在配置节点上
-     */
-    public final XuiLayoutEdgeSize padding;
-    /**
-     * 外边距
-     * <p/>
-     * 需在其外部附加一层节点，以确保对齐方式不受影响？
-     */
-    public final XuiLayoutEdgeSize margin;
+    public final XuiLayoutSpacing padding;
 
     public XuiLayoutProps() {
         this(null);
@@ -75,25 +53,14 @@ public class XuiLayoutProps {
             props = new HashMap<>();
         }
 
-        this.gap = StringHelper.trimToNull((String) props.get("gap"));
+        Object gap = props.get("gap");
+        this.gap = XuiLayoutGap.create(gap);
 
-        this.colspan = StringHelper.trimAndParseInt((String) props.get("colspan"), 10);
-        this.rowspan = StringHelper.trimAndParseInt((String) props.get("rowspan"), 10);
+        Object span = props.get("span");
+        this.span = XuiLayoutSpan.create(span);
 
-        this.padding = new XuiLayoutEdgeSize((Map<String, Object>) props.get("padding"));
-        this.margin = new XuiLayoutEdgeSize((Map<String, Object>) props.get("margin"));
-    }
-
-    public Map<String, Object> toMap() {
-        Map<String, Object> props = new HashMap<>();
-
-        ifNotNull(this.gap, (v) -> props.put("gap", v));
-        ifNotNull(this.colspan, (v) -> props.put("colspan", v));
-        ifNotNull(this.rowspan, (v) -> props.put("rowspan", v));
-        ifNotNull(this.padding, (v) -> props.put("padding", v.toMap()));
-        ifNotNull(this.margin, (v) -> props.put("margin", v.toMap()));
-
-        return props;
+        Object padding = props.get("padding");
+        this.padding = XuiLayoutSpacing.create(padding);
     }
 
     public String toJSON() {
@@ -101,21 +68,16 @@ public class XuiLayoutProps {
 
         sb.append('{');
         ifNotNull(this.gap, (v) -> {
-            appendJsonProp(sb, "gap", v);
+            String json = v.toJSON();
+            appendJsonToJsonProp(sb, "gap", json);
         });
-        ifNotNull(this.colspan, (v) -> {
-            appendJsonProp(sb, "colspan", v);
-        });
-        ifNotNull(this.rowspan, (v) -> {
-            appendJsonProp(sb, "rowspan", v);
+        ifNotNull(this.span, (v) -> {
+            String json = v.toJSON();
+            appendJsonToJsonProp(sb, "span", json);
         });
         ifNotNull(this.padding, (v) -> {
             String json = v.toJSON();
             appendJsonToJsonProp(sb, "padding", json);
-        });
-        ifNotNull(this.margin, (v) -> {
-            String json = v.toJSON();
-            appendJsonToJsonProp(sb, "margin", json);
         });
         sb.append('}');
 

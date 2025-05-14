@@ -19,6 +19,8 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+
 /**
  * 布局尺寸
  *
@@ -38,22 +40,23 @@ public class XuiLayoutSize {
         fill_remains,
         /** 自适应内容 */
         wrap_content,
-        /** 用户设定值 */
-        user_specified,
+
+        /** 设定值 */
+        with_specified,
     }
 
     /** 类型 */
     public final Type type;
-    /** {@link Type#user_specified} 对应的值 */
-    public final Object value;
+    /** {@link Type#with_specified} 对应的值 */
+    public final XuiSize value;
 
     XuiLayoutSize(Type type) {
         this.type = type;
         this.value = null;
     }
 
-    XuiLayoutSize(Object value) {
-        this.type = Type.user_specified;
+    XuiLayoutSize(XuiSize value) {
+        this.type = Type.with_specified;
         this.value = value;
     }
 
@@ -69,11 +72,26 @@ public class XuiLayoutSize {
         return wrap_content;
     }
 
-    public static XuiLayoutSize user_specified(Object value) {
+    public static XuiLayoutSize with_specified(String value) {
+        XuiSize size = XuiSize.parse(value);
+        return with_specified(size);
+    }
+
+    public static XuiLayoutSize with_specified(XuiSize value) {
+        assert value != null;
         return new XuiLayoutSize(value);
     }
 
-    public String toJSON() {
-        return "\"" + this.type + (this.value != null ? "(" + this.value + ")" : "") + '"';
+    @Override
+    public String toString() {
+        switch (this.type) {
+            case with_specified: {
+                assert this.value != null;
+                return this.value.toString();
+            }
+            default: {
+                return this.type.name();
+            }
+        }
     }
 }

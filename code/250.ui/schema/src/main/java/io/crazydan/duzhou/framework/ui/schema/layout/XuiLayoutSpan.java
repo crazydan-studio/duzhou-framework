@@ -19,63 +19,58 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
 
 /**
- * 布局项边框尺寸
- * <p/>
- * 用于内边距、外边距的配置
+ * 布局跨越量
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-05-10
+ * @date 2025-05-14
  */
-public class XuiLayoutEdgeSize {
-    public final String left;
-    public final String right;
-    public final String top;
-    public final String bottom;
+public class XuiLayoutSpan {
+    /** 水平方向可跨越的数量 */
+    public final Integer h;
+    /** 垂直方向可跨越的数量 */
+    public final Integer v;
 
-    public XuiLayoutEdgeSize(Map<String, Object> props) {
-        if (props == null) {
-            props = new HashMap<>();
-        }
-
-        this.left = (String) props.get("left");
-        this.right = (String) props.get("right");
-        this.top = (String) props.get("top");
-        this.bottom = (String) props.get("bottom");
+    XuiLayoutSpan(Integer h, Integer v) {
+        this.h = h;
+        this.v = v;
     }
 
-    public Map<String, Object> toMap() {
-        Map<String, Object> props = new HashMap<>();
+    /**
+     * @param value
+     *         只能为 <code>null</code>、<code>String</code> 或 <code>Map</code>
+     */
+    public static XuiLayoutSpan create(Object value) {
+        if (value instanceof String || value == null) {
+            Integer val = trimAndParseInt((String) value, 10);
 
-        ifNotNull(this.left, (v) -> props.put("left", v));
-        ifNotNull(this.right, (v) -> props.put("right", v));
-        ifNotNull(this.top, (v) -> props.put("top", v));
-        ifNotNull(this.bottom, (v) -> props.put("bottom", v));
+            return new XuiLayoutSpan(val, val);
+        }
 
-        return props;
+        assert value instanceof Map;
+        Map<String, Object> props = (Map<String, Object>) value;
+
+        Integer h = trimAndParseInt((String) props.get("h"), 10);
+        Integer v = trimAndParseInt((String) props.get("v"), 10);
+
+        return new XuiLayoutSpan(h, v);
     }
 
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
 
         sb.append('{');
-        ifNotNull(this.left, (v) -> {
-            appendJsonProp(sb, "left", v);
+        ifNotNull(this.h, (v) -> {
+            appendJsonProp(sb, "h", v);
         });
-        ifNotNull(this.right, (v) -> {
-            appendJsonProp(sb, "right", v);
-        });
-        ifNotNull(this.top, (v) -> {
-            appendJsonProp(sb, "top", v);
-        });
-        ifNotNull(this.bottom, (v) -> {
-            appendJsonProp(sb, "bottom", v);
+        ifNotNull(this.v, (v) -> {
+            appendJsonProp(sb, "v", v);
         });
         sb.append('}');
 

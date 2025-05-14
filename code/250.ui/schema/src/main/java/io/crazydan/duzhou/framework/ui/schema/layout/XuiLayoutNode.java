@@ -243,13 +243,13 @@ public class XuiLayoutNode {
             appendJsonProp(sb, "pattern", v);
         });
         ifNotNull(this.align, (v) -> {
-            appendRawToJsonProp(sb, "align", v.toJSON());
+            appendRawToJsonProp(sb, "align", v.toString());
         });
         ifNotNull(this.width, (v) -> {
-            appendRawToJsonProp(sb, "width", v.toJSON());
+            appendJsonProp(sb, "width", v);
         });
         ifNotNull(this.height, (v) -> {
-            appendRawToJsonProp(sb, "height", v.toJSON());
+            appendJsonProp(sb, "height", v);
         });
         if (!this.children.isEmpty()) {
             sb.append("  , \"children\": [");

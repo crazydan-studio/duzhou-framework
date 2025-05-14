@@ -43,29 +43,30 @@ public class XuiLayoutAlign {
     }
 
     /** 水平对齐方向 */
-    public final Direction horizontal;
+    public final Direction h;
     /** 垂直对齐方向 */
-    public final Direction vertical;
+    public final Direction v;
 
-    XuiLayoutAlign(Direction horizontal, Direction vertical) {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
+    XuiLayoutAlign(Direction h, Direction v) {
+        this.h = h;
+        this.v = v;
     }
 
-    public static XuiLayoutAlign create(Direction horizontal, Direction vertical) {
-        return aligns.computeIfAbsent(horizontal + "_" + vertical, (key) -> new XuiLayoutAlign(horizontal, vertical));
+    public static XuiLayoutAlign create(Direction h, Direction v) {
+        return aligns.computeIfAbsent(h + "_" + v, (key) -> new XuiLayoutAlign(h, v));
     }
 
-    public XuiLayoutAlign withVertical(Direction vertical) {
-        return create(this.horizontal, vertical);
+    public XuiLayoutAlign h(Direction h) {
+        return create(h, this.v);
     }
 
-    public XuiLayoutAlign withHorizontal(Direction horizontal) {
-        return create(horizontal, this.vertical);
+    public XuiLayoutAlign v(Direction v) {
+        return create(this.h, v);
     }
 
-    public String toJSON() {
-        return "[" + (this.horizontal != null ? "\"" + this.horizontal + "\"" : null) //
-               + ", " + (this.vertical != null ? "\"" + this.vertical + "\"" : null) + ']';
+    @Override
+    public String toString() {
+        return "[" + (this.h != null ? "\"" + this.h + "\"" : null) //
+               + ", " + (this.v != null ? "\"" + this.v + "\"" : null) + ']';
     }
 }

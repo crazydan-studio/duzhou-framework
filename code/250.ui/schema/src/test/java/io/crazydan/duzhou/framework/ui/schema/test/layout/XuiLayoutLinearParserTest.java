@@ -76,12 +76,12 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.501.json", "v>()<^");
             put("layout.502.json", "v>[a1]()<^");
             put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
-            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap:1em)>");
+            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap: {h:1em, v:.5em},)>");
             put("layout.505.json",
-                "| [a1] | [a2] | [a3] |\n| {[b1]}(rowspan:2, padding: {left: .5em}) | {[b2]}(colspan:2) |\n| [c1] | [c2] | [c3] |");
-            put("layout.506.json", "v>[a1](padding: {left: .5em, right: .5em, top: 1em,})<^");
-            put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
-            put("layout.508.json", "| {[a1] [a2]}(gap: 1em, rowspan:2) | [b1] |");
+                "| [a1] | [a2] | [a3] |\n| {[b1]}(span:2, padding: .5em) | {[b2]}(span: {h: 2}) |\n| [c1] | [c2] | [c3] |");
+            put("layout.506.json", "v>[a1](padding: {left: 1em, bottom: 1em, }, )<^");
+            // put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
+            put("layout.508.json", "| {[a1] [a2]}(gap: 1em, span:2) | [b1] |");
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

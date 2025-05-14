@@ -19,6 +19,8 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
+
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-05-03
@@ -26,13 +28,25 @@ package io.crazydan.duzhou.framework.commons;
 public class StringHelper extends io.nop.commons.util.StringHelper {
 
     public static String trimToNull(String str) {
+        return trimToNull(str, null);
+    }
+
+    public static String trimToNull(String str, String defaultValue) {
         str = strip(str);
-        return emptyAsNull(str);
+        str = emptyAsNull(str);
+
+        return firstNonNull(str, defaultValue);
     }
 
     public static Integer trimAndParseInt(String str, int radix) {
+        return trimAndParseInt(str, radix, null);
+    }
+
+    public static Integer trimAndParseInt(String str, int radix, Integer defaultValue) {
         str = trimToNull(str);
-        return parseInt(str, radix);
+        Integer n = parseInt(str, radix);
+
+        return firstNonNull(n, defaultValue);
     }
 
     /**
