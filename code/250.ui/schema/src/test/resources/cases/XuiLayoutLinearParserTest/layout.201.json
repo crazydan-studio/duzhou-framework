@@ -5,10 +5,10 @@
   "children": [
     {
       "type": "column",
-      "align": [
-        "center",
-        "center"
-      ],
+      "align": {
+        "row": "center",
+        "col": "center"
+      },
       "width": "wrap_content",
       "height": "wrap_content",
       "children": [
@@ -20,10 +20,10 @@
             {
               "type": "item",
               "pattern": "^a1$",
-              "align": [
-                "center",
-                "start"
-              ],
+              "align": {
+                "row": "center",
+                "col": "start"
+              },
               "width": "wrap_content",
               "height": "wrap_content"
             }
@@ -37,10 +37,10 @@
             {
               "type": "item",
               "pattern": "^b1$",
-              "align": [
-                "start",
-                "start"
-              ],
+              "align": {
+                "row": "start",
+                "col": "start"
+              },
               "width": "fill_remains",
               "height": "wrap_content"
             }

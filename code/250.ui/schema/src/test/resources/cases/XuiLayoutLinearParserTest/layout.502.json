@@ -6,10 +6,10 @@
     {
       "type": "item",
       "pattern": "^a1$",
-      "align": [
-        "center",
-        "center"
-      ],
+      "align": {
+        "row": "center",
+        "col": "center"
+      },
       "width": "wrap_content",
       "height": "wrap_content"
     }

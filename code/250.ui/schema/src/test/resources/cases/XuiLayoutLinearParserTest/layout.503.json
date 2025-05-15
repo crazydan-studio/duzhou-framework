@@ -7,34 +7,36 @@
       "type": "row",
       "props": {
         "gap": {
-          "h": "1.0x",
-          "v": "1.0x"
-        }
+          "row": "1.0x",
+          "col": "1.0x"
+        },
+        "span": {},
+        "padding": {}
       },
-      "align": [
-        "center",
-        "center"
-      ],
+      "align": {
+        "row": "center",
+        "col": "center"
+      },
       "width": "wrap_content",
       "height": "wrap_content",
       "children": [
         {
           "type": "item",
           "pattern": "^a1$",
-          "align": [
-            "start",
-            "start"
-          ],
+          "align": {
+            "row": "start",
+            "col": "start"
+          },
           "width": "wrap_content",
           "height": "wrap_content"
         },
         {
           "type": "item",
           "pattern": "^a2$",
-          "align": [
-            "start",
-            "start"
-          ],
+          "align": {
+            "row": "start",
+            "col": "start"
+          },
           "width": "wrap_content",
           "height": "wrap_content"
         }

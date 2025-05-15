@@ -5,10 +5,10 @@
   "children": [
     {
       "type": "space",
-      "align": [
-        "start",
-        "start"
-      ],
+      "align": {
+        "row": "start",
+        "col": "start"
+      },
       "width": "fill_remains",
       "height": "fill_remains"
     }

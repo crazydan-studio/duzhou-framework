@@ -77,19 +77,23 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.501.json", "v>()<^");
             put("layout.502.json", "v>[a1]()<^");
             put("layout.503.json", "v>{[a1] [a2]}(gap:1x)<^");
-            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap: {h:1x, v:.5x},)>");
+            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap: {row:1x, col:.5x},)>");
             put("layout.505.json",
-                "| [a1] | [a2] | [a3] |\n| {[b1]}(span:2, padding: .5x) | {[b2]}(span: {h: 2}) |\n| [c1] | [c2] | [c3] |");
+                "| [a1] | [a2] | [a3] |\n| {[b1]}(span:2, padding: .5x) | {[b2]}(span: {row: 2}) |\n| [c1] | [c2] | [c3] |");
             put("layout.506.json", "v>[a1](padding: {left: 1x, bottom: 1x, }, gap: .5x )<^");
-            // put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
-            put("layout.508.json", "| {[a1] [a2]}(gap: 1x, span:2) | [b1] |");
+            put("layout.507.json", "| {[a1] [a2]}(gap: 1x, span:2) | [b1] |");
+            put("layout.520.json", "v>[a1](gap: ${ props.gap })<^");
+            put("layout.521.json", "v>[a1](gap: {row: ${prop.gap}})<^");
+            put("layout.522.json", "[a1](${props.layout})");
+            put("layout.523.json",
+                "v>[a1](gap: {row: ${prop.gap}}, padding: {left: ${props.padding}, top: .5x, bottom: ${props.padding}})<^");
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
             XuiLayoutNode root = parser.parseFromText(null, text);
-            String json = JsonTool.serialize(JsonTool.parse(root.toJSON()), true);
+            String json = JsonTool.serialize(root, true);
 
             this.log.info("Layout json for {}=\n{}", name, json);
             Assertions.assertEquals(attachmentJsonText(name), json);
@@ -115,7 +119,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("[a1](padding: 1px)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
             put("[a1](padding: {left: 1em})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
             put("[a1](gap: 1dp)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
-            put("[a1](gap: {h:.5rem})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
+            put("[a1](gap: {row:.5rem})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

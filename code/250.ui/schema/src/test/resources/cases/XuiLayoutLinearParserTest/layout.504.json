@@ -7,14 +7,16 @@
       "type": "table",
       "props": {
         "gap": {
-          "h": "1.0x",
-          "v": "0.5x"
-        }
+          "row": "1.0x",
+          "col": "0.5x"
+        },
+        "span": {},
+        "padding": {}
       },
-      "align": [
-        "start",
-        "start"
-      ],
+      "align": {
+        "row": "start",
+        "col": "start"
+      },
       "width": "fill_remains",
       "height": "wrap_content",
       "children": [
@@ -31,10 +33,10 @@
                 {
                   "type": "item",
                   "pattern": "^a1$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -48,10 +50,10 @@
                 {
                   "type": "item",
                   "pattern": "^a2$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -72,10 +74,10 @@
                 {
                   "type": "item",
                   "pattern": "^b1$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -89,10 +91,10 @@
                 {
                   "type": "item",
                   "pattern": "^b2$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }

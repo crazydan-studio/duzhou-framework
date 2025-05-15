@@ -168,11 +168,11 @@ public class XuiLayoutLinearParser {
             }
 
             // 行内节点默认左上角对齐
-            if (node.getAlign().h == null) {
-                node.setAlign(node.getAlign().h(XuiLayoutAlign.Direction.start));
+            if (node.getAlign().row == null) {
+                node.setAlign(node.getAlign().row(XuiLayoutAlign.Direction.start));
             }
-            if (node.getAlign().v == null) {
-                node.setAlign(node.getAlign().v(XuiLayoutAlign.Direction.start));
+            if (node.getAlign().col == null) {
+                node.setAlign(node.getAlign().col(XuiLayoutAlign.Direction.start));
             }
 
             row.addChild(node);
@@ -594,7 +594,7 @@ public class XuiLayoutLinearParser {
                 case row: {
                     if (child.getHeight().type == XuiLayoutSize.Type.wrap_content //
                         && (child.getAlign() == null //
-                            || child.getAlign().v == XuiLayoutAlign.Direction.start) //
+                            || child.getAlign().col == XuiLayoutAlign.Direction.start) //
                     ) {
                         child.setHeight(XuiLayoutSize.match_parent());
                     }
@@ -603,7 +603,7 @@ public class XuiLayoutLinearParser {
                 case column: {
                     if (child.getWidth().type == XuiLayoutSize.Type.wrap_content //
                         && (child.getAlign() == null //
-                            || child.getAlign().h == XuiLayoutAlign.Direction.start) //
+                            || child.getAlign().row == XuiLayoutAlign.Direction.start) //
                     ) {
                         child.setWidth(XuiLayoutSize.match_parent());
                     }

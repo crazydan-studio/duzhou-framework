@@ -21,8 +21,6 @@ package io.crazydan.duzhou.framework.commons;
 
 import java.util.function.Consumer;
 
-import io.nop.commons.util.StringHelper;
-
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-12
@@ -45,42 +43,5 @@ public class ObjectHelper {
             }
         }
         return null;
-    }
-
-    public static void appendJsonProp(StringBuilder sb, String name, Object value) {
-        if (sb.length() > 1) {
-            sb.append("\n  , ");
-        }
-        sb.append("\"").append(name).append("\": ");
-
-        boolean keepRaw = value instanceof Number || value instanceof Boolean;
-        if (!keepRaw) {
-            sb.append('"');
-            sb.append(StringHelper.escapeJson(value.toString()));
-        } else {
-            sb.append(value);
-        }
-
-        if (!keepRaw) {
-            sb.append('"');
-        }
-    }
-
-    public static void appendRawToJsonProp(StringBuilder sb, String name, String raw) {
-        if (sb.length() > 1) {
-            sb.append("\n  , ");
-        }
-        sb.append("\"").append(name).append("\": ").append(raw);
-    }
-
-    public static void appendJsonToJsonProp(StringBuilder sb, String name, String json) {
-        if (json.length() > 2) {
-            json = json.replaceAll("(?m)^", "    ").trim();
-
-            if (sb.length() > 1) {
-                sb.append("\n  , ");
-            }
-            sb.append("\"").append(name).append("\": ").append(json);
-        }
     }
 }

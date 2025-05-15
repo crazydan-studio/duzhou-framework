@@ -22,9 +22,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
-
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
 /**
  * 布局间隔
@@ -32,15 +32,16 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiLayoutGap {
-    /** 水平方向的间隔 */
-    public final XuiSize h;
-    /** 垂直方向的间隔 */
-    public final XuiSize v;
+@DataBean
+public class XuiLayoutGap implements IJsonSerializable {
+    /** 水平方向上的间隔 */
+    public final XuiSize row;
+    /** 垂直方向上的间隔 */
+    public final XuiSize col;
 
-    XuiLayoutGap(XuiSize h, XuiSize v) {
-        this.h = h;
-        this.v = v;
+    XuiLayoutGap(XuiSize row, XuiSize col) {
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -57,24 +58,20 @@ public class XuiLayoutGap {
         assert value instanceof Map;
         Map<String, Object> props = (Map<String, Object>) value;
 
-        XuiSize h = XuiSize.parse((String) props.get("h"));
-        XuiSize v = XuiSize.parse((String) props.get("v"));
+        XuiSize row = XuiSize.parse((String) props.get("row"));
+        XuiSize col = XuiSize.parse((String) props.get("col"));
 
-        return new XuiLayoutGap(h, v);
+        return new XuiLayoutGap(row, col);
     }
 
-    public String toJSON() {
-        StringBuilder sb = new StringBuilder();
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
 
-        sb.append('{');
-        ifNotNull(this.h, (v) -> {
-            appendJsonProp(sb, "h", v);
-        });
-        ifNotNull(this.v, (v) -> {
-            appendJsonProp(sb, "v", v);
-        });
-        sb.append('}');
+        out.putNotNull("row", this.row);
+        out.putNotNull("col", this.col);
 
-        return sb.toString();
+        out.endObject();
     }
 }

@@ -6,10 +6,10 @@
     {
       "type": "item",
       "pattern": "^a1$",
-      "align": [
-        "start",
-        "start"
-      ],
+      "align": {
+        "row": "start",
+        "col": "start"
+      },
       "width": "fill_remains",
       "height": "wrap_content"
     }

@@ -22,9 +22,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
-
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
 /**
  * 布局空白
@@ -34,7 +34,8 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-10
  */
-public class XuiLayoutSpacing {
+@DataBean
+public class XuiLayoutSpacing implements IJsonSerializable {
     public final XuiSize left;
     public final XuiSize right;
     public final XuiSize top;
@@ -69,24 +70,16 @@ public class XuiLayoutSpacing {
         return new XuiLayoutSpacing(left, right, top, bottom);
     }
 
-    public String toJSON() {
-        StringBuilder sb = new StringBuilder();
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
 
-        sb.append('{');
-        ifNotNull(this.left, (v) -> {
-            appendJsonProp(sb, "left", v);
-        });
-        ifNotNull(this.right, (v) -> {
-            appendJsonProp(sb, "right", v);
-        });
-        ifNotNull(this.top, (v) -> {
-            appendJsonProp(sb, "top", v);
-        });
-        ifNotNull(this.bottom, (v) -> {
-            appendJsonProp(sb, "bottom", v);
-        });
-        sb.append('}');
+        out.putNotNull("left", this.left);
+        out.putNotNull("right", this.right);
+        out.putNotNull("top", this.top);
+        out.putNotNull("bottom", this.bottom);
 
-        return sb.toString();
+        out.endObject();
     }
 }

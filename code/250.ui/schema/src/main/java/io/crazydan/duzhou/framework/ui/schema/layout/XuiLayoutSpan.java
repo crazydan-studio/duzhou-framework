@@ -21,8 +21,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
 
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
+
 import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
 
 /**
@@ -31,15 +32,15 @@ import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiLayoutSpan {
-    /** 水平方向可跨越的数量 */
-    public final Integer h;
-    /** 垂直方向可跨越的数量 */
-    public final Integer v;
+public class XuiLayoutSpan implements IJsonSerializable {
+    /** 水平方向上可跨越的数量 */
+    public final Integer row;
+    /** 垂直方向上可跨越的数量 */
+    public final Integer col;
 
-    XuiLayoutSpan(Integer h, Integer v) {
-        this.h = h;
-        this.v = v;
+    XuiLayoutSpan(Integer row, Integer col) {
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -56,24 +57,20 @@ public class XuiLayoutSpan {
         assert value instanceof Map;
         Map<String, Object> props = (Map<String, Object>) value;
 
-        Integer h = trimAndParseInt((String) props.get("h"), 10);
-        Integer v = trimAndParseInt((String) props.get("v"), 10);
+        Integer row = trimAndParseInt((String) props.get("row"), 10);
+        Integer col = trimAndParseInt((String) props.get("col"), 10);
 
-        return new XuiLayoutSpan(h, v);
+        return new XuiLayoutSpan(row, col);
     }
 
-    public String toJSON() {
-        StringBuilder sb = new StringBuilder();
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
 
-        sb.append('{');
-        ifNotNull(this.h, (v) -> {
-            appendJsonProp(sb, "h", v);
-        });
-        ifNotNull(this.v, (v) -> {
-            appendJsonProp(sb, "v", v);
-        });
-        sb.append('}');
+        out.putNotNull("row", this.row);
+        out.putNotNull("col", this.col);
 
-        return sb.toString();
+        out.endObject();
     }
 }

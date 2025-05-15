@@ -16,10 +16,10 @@
             {
               "type": "item",
               "pattern": "^a1$",
-              "align": [
-                "start",
-                "start"
-              ],
+              "align": {
+                "row": "start",
+                "col": "start"
+              },
               "width": "wrap_content",
               "height": "wrap_content"
             }
@@ -33,10 +33,10 @@
             {
               "type": "item",
               "pattern": "^a2$",
-              "align": [
-                "start",
-                "start"
-              ],
+              "align": {
+                "row": "start",
+                "col": "start"
+              },
               "width": "wrap_content",
               "height": "wrap_content"
             }

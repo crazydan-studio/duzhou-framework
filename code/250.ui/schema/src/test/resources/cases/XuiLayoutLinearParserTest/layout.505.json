@@ -21,10 +21,10 @@
                 {
                   "type": "item",
                   "pattern": "^a1$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -38,10 +38,10 @@
                 {
                   "type": "item",
                   "pattern": "^a2$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -55,10 +55,10 @@
                 {
                   "type": "item",
                   "pattern": "^a3$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -74,9 +74,10 @@
             {
               "type": "row",
               "props": {
+                "gap": {},
                 "span": {
-                  "h": 2,
-                  "v": 2
+                  "row": 2,
+                  "col": 2
                 },
                 "padding": {
                   "left": "0.5x",
@@ -85,20 +86,20 @@
                   "bottom": "0.5x"
                 }
               },
-              "align": [
-                "start",
-                "start"
-              ],
+              "align": {
+                "row": "start",
+                "col": "start"
+              },
               "width": "wrap_content",
               "height": "match_parent",
               "children": [
                 {
                   "type": "item",
                   "pattern": "^b1$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -107,24 +108,26 @@
             {
               "type": "row",
               "props": {
+                "gap": {},
                 "span": {
-                  "h": 2
-                }
+                  "row": 2
+                },
+                "padding": {}
               },
-              "align": [
-                "start",
-                "start"
-              ],
+              "align": {
+                "row": "start",
+                "col": "start"
+              },
               "width": "wrap_content",
               "height": "match_parent",
               "children": [
                 {
                   "type": "item",
                   "pattern": "^b2$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -145,10 +148,10 @@
                 {
                   "type": "item",
                   "pattern": "^c1$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -162,10 +165,10 @@
                 {
                   "type": "item",
                   "pattern": "^c2$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }
@@ -179,10 +182,10 @@
                 {
                   "type": "item",
                   "pattern": "^c3$",
-                  "align": [
-                    "start",
-                    "start"
-                  ],
+                  "align": {
+                    "row": "start",
+                    "col": "start"
+                  },
                   "width": "wrap_content",
                   "height": "wrap_content"
                 }

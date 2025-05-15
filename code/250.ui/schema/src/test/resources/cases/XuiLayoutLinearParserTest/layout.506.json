@@ -5,21 +5,22 @@
   "children": [
     {
       "type": "item",
+      "pattern": "^a1$",
       "props": {
         "gap": {
-          "h": "0.5x",
-          "v": "0.5x"
+          "row": "0.5x",
+          "col": "0.5x"
         },
+        "span": {},
         "padding": {
           "left": "1.0x",
           "bottom": "1.0x"
         }
       },
-      "pattern": "^a1$",
-      "align": [
-        "center",
-        "center"
-      ],
+      "align": {
+        "row": "center",
+        "col": "center"
+      },
       "width": "wrap_content",
       "height": "wrap_content"
     }

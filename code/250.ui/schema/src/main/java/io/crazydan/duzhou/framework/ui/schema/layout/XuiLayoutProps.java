@@ -21,8 +21,9 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
 
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
 /**
  * 布局配置属性
@@ -30,7 +31,8 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-25
  */
-public class XuiLayoutProps {
+@DataBean
+public class XuiLayoutProps implements IJsonSerializable {
     /** 布局项之间的间隔 */
     public final XuiLayoutGap gap;
     /** {@link XuiLayoutNode.Type#table} 中的单元格可跨越的单元格数量 */
@@ -57,24 +59,21 @@ public class XuiLayoutProps {
         return new XuiLayoutProps(gap, span, padding);
     }
 
-    public String toJSON() {
-        StringBuilder sb = new StringBuilder();
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
 
-        sb.append('{');
-        ifNotNull(this.gap, (v) -> {
-            String json = v.toJSON();
-            appendJsonToJsonProp(sb, "gap", json);
-        });
-        ifNotNull(this.span, (v) -> {
-            String json = v.toJSON();
-            appendJsonToJsonProp(sb, "span", json);
-        });
-        ifNotNull(this.padding, (v) -> {
-            String json = v.toJSON();
-            appendJsonToJsonProp(sb, "padding", json);
-        });
-        sb.append('}');
+        out.putNotNull("gap", this.gap);
+        out.putNotNull("span", this.span);
+        out.putNotNull("padding", this.padding);
 
-        return sb.toString();
+        out.endObject();
+    }
+
+    @Override
+    public String toString() {
+        // TODO 还原为标记文本
+        return "()";
     }
 }

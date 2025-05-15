@@ -22,7 +22,10 @@ package io.crazydan.duzhou.framework.ui.domain.type;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
 import static io.crazydan.duzhou.framework.commons.StringHelper.trimToNull;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
@@ -35,7 +38,8 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiSize {
+@DataBean
+public class XuiSize implements IJsonSerializable {
     /** {@link XuiSize} 的单位 */
     public enum Unit {
         /**
@@ -93,6 +97,12 @@ public class XuiSize {
                                                                    Arrays.stream(Unit.values())
                                                                          .map(u -> u.label)
                                                                          .collect(Collectors.joining(", ")));
+    }
+
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.stringValue(null, toString());
     }
 
     @Override

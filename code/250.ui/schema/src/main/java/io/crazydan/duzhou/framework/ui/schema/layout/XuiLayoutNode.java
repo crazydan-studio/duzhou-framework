@@ -27,10 +27,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendJsonToJsonProp;
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.appendRawToJsonProp;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
@@ -39,7 +39,8 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-25
  */
-public class XuiLayoutNode {
+@DataBean
+public class XuiLayoutNode implements IJsonSerializable {
 
     /** {@link XuiLayoutNode} 类型 */
     public enum Type {
@@ -215,55 +216,29 @@ public class XuiLayoutNode {
         this.children.set(oldNodeIndex, newNode);
     }
 
-    /** 应用当前节点的配置到指定节点 */
-    public void applyConfigTo(XuiLayoutNode node) {
-        node.setAlign(getAlign());
-        node.setWidth(getWidth());
-        node.setHeight(getHeight());
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
+
+        out.putNotNull("type", this.type);
+        ifNotNull(this.pattern, (v) -> out.putNotNull("pattern", v.pattern()));
+
+        out.putNotNull("props", this.props);
+        out.putNotNull("align", this.align);
+        out.putNotNull("width", this.width);
+        out.putNotNull("height", this.height);
+
+        if (!this.children.isEmpty()) {
+            out.put("children", this.children);
+        }
+
+        out.endObject();
     }
 
     @Override
     public String toString() {
         // TODO 还原为标记文本
         return "";
-    }
-
-    public String toJSON() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append('{');
-        ifNotNull(this.type, (v) -> {
-            appendJsonProp(sb, "type", v);
-        });
-        ifNotNull(this.props, (v) -> {
-            String json = v.toJSON();
-            appendJsonToJsonProp(sb, "props", json);
-        });
-        ifNotNull(this.pattern, (v) -> {
-            appendJsonProp(sb, "pattern", v);
-        });
-        ifNotNull(this.align, (v) -> {
-            appendRawToJsonProp(sb, "align", v.toString());
-        });
-        ifNotNull(this.width, (v) -> {
-            appendJsonProp(sb, "width", v);
-        });
-        ifNotNull(this.height, (v) -> {
-            appendJsonProp(sb, "height", v);
-        });
-        if (!this.children.isEmpty()) {
-            sb.append("  , \"children\": [");
-            for (int i = 0; i < this.children.size(); i++) {
-                XuiLayoutNode child = this.children.get(i);
-                String json = (i > 0 ? ", " : "") + child.toJSON();
-                json = json.replaceAll("(?m)^", "    ").trim();
-
-                sb.append(json);
-            }
-            sb.append(']').append('\n');
-        }
-        sb.append('}');
-
-        return sb.toString();
     }
 }

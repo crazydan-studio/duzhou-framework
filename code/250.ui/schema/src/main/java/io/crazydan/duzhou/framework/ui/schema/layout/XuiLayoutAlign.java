@@ -22,13 +22,18 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
+
 /**
  * 布局对齐方式
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-26
  */
-public class XuiLayoutAlign {
+@DataBean
+public class XuiLayoutAlign implements IJsonSerializable {
     /** 缓存枚举组合，以避免重复构建相同对象 */
     private static final Map<String, XuiLayoutAlign> aligns = new HashMap<>(9);
 
@@ -42,31 +47,36 @@ public class XuiLayoutAlign {
         end,
     }
 
-    /** 水平对齐方向 */
-    public final Direction h;
-    /** 垂直对齐方向 */
-    public final Direction v;
+    /** 水平方向上的对齐方向 */
+    public final Direction row;
+    /** 垂直方向上的对齐方向 */
+    public final Direction col;
 
-    XuiLayoutAlign(Direction h, Direction v) {
-        this.h = h;
-        this.v = v;
+    XuiLayoutAlign(Direction row, Direction col) {
+        this.row = row;
+        this.col = col;
     }
 
-    public static XuiLayoutAlign create(Direction h, Direction v) {
-        return aligns.computeIfAbsent(h + "_" + v, (key) -> new XuiLayoutAlign(h, v));
+    public static XuiLayoutAlign create(Direction row, Direction col) {
+        return aligns.computeIfAbsent(row + "_" + col, (key) -> new XuiLayoutAlign(row, col));
     }
 
-    public XuiLayoutAlign h(Direction h) {
-        return create(h, this.v);
+    public XuiLayoutAlign row(Direction row) {
+        return create(row, this.col);
     }
 
-    public XuiLayoutAlign v(Direction v) {
-        return create(this.h, v);
+    public XuiLayoutAlign col(Direction col) {
+        return create(this.row, col);
     }
 
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
-    public String toString() {
-        return "[" + (this.h != null ? "\"" + this.h + "\"" : null) //
-               + ", " + (this.v != null ? "\"" + this.v + "\"" : null) + ']';
+    public void serializeToJson(IJsonHandler out) {
+        out.beginObject(null);
+
+        out.putNotNull("row", this.row);
+        out.putNotNull("col", this.col);
+
+        out.endObject();
     }
 }

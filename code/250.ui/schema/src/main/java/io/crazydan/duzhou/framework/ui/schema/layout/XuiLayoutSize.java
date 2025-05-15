@@ -20,6 +20,9 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 
 /**
  * 布局尺寸
@@ -27,7 +30,8 @@ import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-26
  */
-public class XuiLayoutSize {
+@DataBean
+public class XuiLayoutSize implements IJsonSerializable {
     private static final XuiLayoutSize match_parent = new XuiLayoutSize(Type.match_parent);
     private static final XuiLayoutSize fill_remains = new XuiLayoutSize(Type.fill_remains);
     private static final XuiLayoutSize wrap_content = new XuiLayoutSize(Type.wrap_content);
@@ -80,6 +84,12 @@ public class XuiLayoutSize {
     public static XuiLayoutSize with_specified(XuiSize value) {
         assert value != null;
         return new XuiLayoutSize(value);
+    }
+
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.stringValue(null, toString());
     }
 
     @Override
