@@ -32,6 +32,7 @@ import io.nop.core.lang.json.JsonTool;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL;
@@ -75,13 +76,13 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             // 配置参数
             put("layout.501.json", "v>()<^");
             put("layout.502.json", "v>[a1]()<^");
-            put("layout.503.json", "v>{[a1] [a2]}(gap:1em)<^");
-            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap: {h:1em, v:.5em},)>");
+            put("layout.503.json", "v>{[a1] [a2]}(gap:1x)<^");
+            put("layout.504.json", "<{\n    | [a1] | [a2] |\n    | [b1] | [b2] |\n}(gap: {h:1x, v:.5x},)>");
             put("layout.505.json",
-                "| [a1] | [a2] | [a3] |\n| {[b1]}(span:2, padding: .5em) | {[b2]}(span: {h: 2}) |\n| [c1] | [c2] | [c3] |");
-            put("layout.506.json", "v>[a1](padding: {left: 1em, bottom: 1em, }, )<^");
+                "| [a1] | [a2] | [a3] |\n| {[b1]}(span:2, padding: .5x) | {[b2]}(span: {h: 2}) |\n| [c1] | [c2] | [c3] |");
+            put("layout.506.json", "v>[a1](padding: {left: 1x, bottom: 1x, }, gap: .5x )<^");
             // put("layout.507.json", "v>[a1](gap: ${ props.gap })<^");
-            put("layout.508.json", "| {[a1] [a2]}(gap: 1em, span:2) | [b1] |");
+            put("layout.508.json", "| {[a1] [a2]}(gap: 1x, span:2) | [b1] |");
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
@@ -111,6 +112,10 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("| [a1] | [a2] |\n  | [b1]", ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL);
             put("{ [a1] [a2]\n  [b1 }", ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
             // 配置参数
+            put("[a1](padding: 1px)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
+            put("[a1](padding: {left: 1em})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
+            put("[a1](gap: 1dp)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
+            put("[a1](gap: {h:.5rem})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

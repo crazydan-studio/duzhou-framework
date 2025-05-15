@@ -11,8 +11,14 @@
         {
           "type": "row",
           "props": {
-            "gap": "1em",
-            "rowspan": 2
+            "gap": {
+              "h": "1.0x",
+              "v": "1.0x"
+            },
+            "span": {
+              "h": 2,
+              "v": 2
+            }
           },
           "align": [
             "start",

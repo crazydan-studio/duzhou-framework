@@ -6,7 +6,10 @@
     {
       "type": "table",
       "props": {
-        "gap": "1em"
+        "gap": {
+          "h": "1.0x",
+          "v": "0.5x"
+        }
       },
       "align": [
         "start",

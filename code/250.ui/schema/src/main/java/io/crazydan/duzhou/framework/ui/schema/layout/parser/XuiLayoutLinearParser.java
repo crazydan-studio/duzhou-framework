@@ -503,6 +503,11 @@ public class XuiLayoutLinearParser {
         Map<String, Object> props = new HashMap<>();
 
         consumeBetweenPairChars(sc, leftMark, rightMark, ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK, () -> {
+            if (sc.cur == ',') {
+                sc.next();
+                return;
+            }
+
             // 读取参数名
             String name = sc.nextConfigVar();
             skipBlankAndConsumeInLine(sc, ':');

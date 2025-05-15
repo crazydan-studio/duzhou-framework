@@ -24,6 +24,7 @@ import io.nop.api.core.exceptions.ErrorCode;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_LEFT_PAIR;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_RIGHT_PAIR;
 import static io.nop.api.core.exceptions.ErrorCode.define;
+import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 /**
@@ -31,6 +32,15 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @date 2025-05-09
  */
 public interface XuiErrors {
+    ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = define("duzhou.err.xui.domain-type.unknown-size",
+                                                    "未识别的尺寸数据 [{"
+                                                    + ARG_VALUE
+                                                    + "}]，仅 [{"
+                                                    + ARG_NAMES
+                                                    + "}] 才是有效的尺寸单位",
+                                                    ARG_VALUE,
+                                                    ARG_NAMES);
+
     ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE = define("duzhou.err.xui.layout-linear.unknown-linear-mode",
                                                              "未知的线性布局模式 [{" + ARG_VALUE + "}]",
                                                              ARG_VALUE);

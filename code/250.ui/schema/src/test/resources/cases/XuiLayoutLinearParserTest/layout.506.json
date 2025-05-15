@@ -6,10 +6,13 @@
     {
       "type": "item",
       "props": {
+        "gap": {
+          "h": "0.5x",
+          "v": "0.5x"
+        },
         "padding": {
-          "left": ".5em",
-          "right": ".5em",
-          "top": "1em"
+          "left": "1.0x",
+          "bottom": "1.0x"
         }
       },
       "pattern": "^a1$",

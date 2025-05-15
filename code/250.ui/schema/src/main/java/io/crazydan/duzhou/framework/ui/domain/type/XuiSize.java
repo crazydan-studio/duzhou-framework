@@ -19,7 +19,15 @@
 
 package io.crazydan.duzhou.framework.ui.domain.type;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import io.nop.api.core.exceptions.NopException;
+
 import static io.crazydan.duzhou.framework.commons.StringHelper.trimToNull;
+import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
+import static io.nop.xlang.XLangErrors.ARG_NAMES;
+import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 /**
  * 尺寸
@@ -68,17 +76,23 @@ public class XuiSize {
             return null;
         }
 
+        String suffix = s.replaceAll("^.+?([^-\\d.]+)$", "$1");
         for (Unit unit : Unit.values()) {
-            if (!s.endsWith(unit.label)) {
+            if (!unit.label.equals(suffix)) {
                 continue;
             }
 
-            s = s.substring(0, s.length() - unit.label.length());
+            s = s.substring(0, s.length() - suffix.length());
 
             float value = Float.parseFloat(s);
             return create(value, unit);
         }
-        return null;
+
+        throw new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).param(ARG_VALUE, s)
+                                                            .param(ARG_NAMES,
+                                                                   Arrays.stream(Unit.values())
+                                                                         .map(u -> u.label)
+                                                                         .collect(Collectors.joining(", ")));
     }
 
     @Override

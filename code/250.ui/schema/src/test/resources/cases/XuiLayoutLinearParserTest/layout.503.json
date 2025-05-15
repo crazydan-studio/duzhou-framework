@@ -6,7 +6,10 @@
     {
       "type": "row",
       "props": {
-        "gap": "1em"
+        "gap": {
+          "h": "1.0x",
+          "v": "1.0x"
+        }
       },
       "align": [
         "center",
