@@ -22,12 +22,13 @@ package io.crazydan.duzhou.framework.ui.domain.type;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import io.crazydan.duzhou.framework.commons.StringHelper;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
-import static io.crazydan.duzhou.framework.commons.StringHelper.trimToNull;
+import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
@@ -53,6 +54,9 @@ public class XuiSize implements IJsonSerializable {
 
         /** 百分比 */
         percent("%"),
+
+        /** 线条单位：代表最细的线条宽度 */
+        a_line("L"),
         ;
 
         public final String label;
@@ -75,21 +79,16 @@ public class XuiSize implements IJsonSerializable {
     }
 
     public static XuiSize parse(String s) {
-        s = trimToNull(s);
-        if (s == null) {
-            return null;
-        }
+        StringHelper.NumberAndUnit nut = extractNumberAndUnit(s);
+        if (nut != null && nut.number != null && nut.unit != null) {
+            for (Unit unit : Unit.values()) {
+                if (!unit.label.equals(nut.unit)) {
+                    continue;
+                }
 
-        String suffix = s.replaceAll("^.+?([^-\\d.]+)$", "$1");
-        for (Unit unit : Unit.values()) {
-            if (!unit.label.equals(suffix)) {
-                continue;
+                float value = (float) nut.number;
+                return create(value, unit);
             }
-
-            s = s.substring(0, s.length() - suffix.length());
-
-            float value = Float.parseFloat(s);
-            return create(value, unit);
         }
 
         throw new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).param(ARG_VALUE, s)

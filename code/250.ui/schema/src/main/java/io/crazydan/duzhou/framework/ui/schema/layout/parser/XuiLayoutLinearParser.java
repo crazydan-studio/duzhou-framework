@@ -27,9 +27,12 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.commons.TextScannerHelper;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutProps;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.text.tokenizer.TextScanner;
@@ -81,8 +84,9 @@ public class XuiLayoutLinearParser {
         }
 
         // Note: 根节点尺寸始终与上层容器的尺寸相同
-        root.setWidth(XuiLayoutSize.match_parent());
-        root.setHeight(XuiLayoutSize.match_parent());
+        XuiLayoutProps props = root.getProps();
+        props.setWidth(XuiLayoutSize.match_parent());
+        props.setHeight(XuiLayoutSize.match_parent());
 
         TextScanner sc = TextScanner.fromString(loc, text);
         List<XuiLayoutNode> children = parseNodes(sc);
@@ -168,11 +172,12 @@ public class XuiLayoutLinearParser {
             }
 
             // 行内节点默认左上角对齐
-            if (node.getAlign().row == null) {
-                node.setAlign(node.getAlign().row(XuiLayoutAlign.Direction.start));
+            XuiLayoutProps props = node.getProps();
+            if (props.getAlign().row == null) {
+                props.setAlign(props.getAlign().row(XuiLayoutAlign.Direction.start));
             }
-            if (node.getAlign().col == null) {
-                node.setAlign(node.getAlign().col(XuiLayoutAlign.Direction.start));
+            if (props.getAlign().col == null) {
+                props.setAlign(props.getAlign().col(XuiLayoutAlign.Direction.start));
             }
 
             row.addChild(node);
@@ -211,8 +216,9 @@ public class XuiLayoutLinearParser {
 
         consumeUntilPosNotChanged(sc, (s) -> s.cur != '|', () -> parseTableRow(sc), (row) -> {
             if (row != null) {
+                XuiLayoutProps props = row.getProps();
                 // 表格行宽度自适应 table 宽度
-                row.setWidth(XuiLayoutSize.match_parent());
+                props.setWidth(XuiLayoutSize.match_parent());
 
                 table.addChild(row);
             }
@@ -247,8 +253,9 @@ public class XuiLayoutLinearParser {
             }
 
             // 表格单元格节点始终占满整个单元格
-            cell.setWidth(XuiLayoutSize.match_parent());
-            cell.setHeight(XuiLayoutSize.match_parent());
+            XuiLayoutProps props = cell.getProps();
+            props.setWidth(XuiLayoutSize.match_parent());
+            props.setHeight(XuiLayoutSize.match_parent());
 
             cells.add(cell);
         });
@@ -354,14 +361,12 @@ public class XuiLayoutLinearParser {
         }
 
         // 解析布局配置参数列表
+        Map<String, Object> propsData = new HashMap<>();
         if (sc.cur == '(') {
-            XuiLayoutProps props = parseProps(sc);
+            propsData = parseProps(sc);
 
-            if (props != null) {
-                if (node == null) {
-                    node = XuiLayoutNode.space();
-                }
-                node.setProps(props);
+            if (!propsData.isEmpty() && node == null) {
+                node = XuiLayoutNode.space();
             }
         }
 
@@ -404,9 +409,18 @@ public class XuiLayoutLinearParser {
             return null;
         }
 
-        node.setWidth(width);
-        node.setHeight(height);
-        node.setAlign(XuiLayoutAlign.create(align[0], align[1]));
+        // 设置配置参数
+        XuiLayoutProps props = node.getProps();
+        props.setWidth(width);
+        props.setHeight(height);
+        props.setAlign(XuiLayoutAlign.create(align[0], align[1]));
+
+        XuiLayoutGap gap = XuiLayoutGap.create(propsData.get("gap"));
+        XuiLayoutSpan span = XuiLayoutSpan.create(propsData.get("span"));
+        XuiLayoutSpacing padding = XuiLayoutSpacing.create(propsData.get("padding"));
+        props.setGap(gap);
+        props.setSpan(span);
+        props.setPadding(padding);
 
         return node;
     }
@@ -479,13 +493,16 @@ public class XuiLayoutLinearParser {
      * <pre>
      * (gap: 1em, padding: { left: .5em, })
      * </pre>
+     * <pre>
+     * (${props.layout})
+     * </pre>
      * <p/>
      * 注：需确保 {@link TextScanner} 的当前位置在标记符 <code>(</code> 上
      */
-    private XuiLayoutProps parseProps(TextScanner sc) {
+    private Map<String, Object> parseProps(TextScanner sc) {
         Map<String, Object> props = parseProps(sc, '(', ')');
 
-        return props.isEmpty() ? null : XuiLayoutProps.create(props);
+        return props;
     }
 
     /**
@@ -495,6 +512,9 @@ public class XuiLayoutLinearParser {
      * </pre>
      * <pre>
      * { left: 1em, right: 1em }
+     * </pre>
+     * <pre>
+     * (gap: {col: ${props.gap}})
      * </pre>
      * <p/>
      * 注：需确保 {@link TextScanner} 的当前位置在标记符 <code>leftMark</code> 上
@@ -590,22 +610,23 @@ public class XuiLayoutLinearParser {
                     return;
             }
 
+            XuiLayoutProps props = child.getProps();
             switch (node.getType()) {
                 case row: {
-                    if (child.getHeight().type == XuiLayoutSize.Type.wrap_content //
-                        && (child.getAlign() == null //
-                            || child.getAlign().col == XuiLayoutAlign.Direction.start) //
+                    if (props.getHeight().type == XuiLayoutSize.Type.wrap_content //
+                        && (props.getAlign() == null //
+                            || props.getAlign().col == XuiLayoutAlign.Direction.start) //
                     ) {
-                        child.setHeight(XuiLayoutSize.match_parent());
+                        props.setHeight(XuiLayoutSize.match_parent());
                     }
                     break;
                 }
                 case column: {
-                    if (child.getWidth().type == XuiLayoutSize.Type.wrap_content //
-                        && (child.getAlign() == null //
-                            || child.getAlign().row == XuiLayoutAlign.Direction.start) //
+                    if (props.getWidth().type == XuiLayoutSize.Type.wrap_content //
+                        && (props.getAlign() == null //
+                            || props.getAlign().row == XuiLayoutAlign.Direction.start) //
                     ) {
-                        child.setWidth(XuiLayoutSize.match_parent());
+                        props.setWidth(XuiLayoutSize.match_parent());
                     }
                     break;
                 }

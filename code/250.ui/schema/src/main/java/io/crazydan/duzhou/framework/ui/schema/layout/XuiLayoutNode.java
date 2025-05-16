@@ -67,21 +67,9 @@ public class XuiLayoutNode implements IJsonSerializable {
     private final Type type;
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
     private final Pattern pattern;
-    /** 配置属性 */
-    private XuiLayoutProps props;
 
-    /**
-     * 对齐方式
-     * <p/>
-     * 非表格单元格节点的水平和垂直方向均缺省为 {@link XuiLayoutAlign.Direction#start}，
-     * 而表格单元格（{@link #type} 始终为 {@link Type#row}）的水平和垂直方向始终为
-     * {@link XuiLayoutAlign.Direction#center}
-     */
-    private XuiLayoutAlign align;
-    /** 宽度 */
-    private XuiLayoutSize width = XuiLayoutSize.wrap_content();
-    /** 高度 */
-    private XuiLayoutSize height = XuiLayoutSize.wrap_content();
+    /** 布局配置 */
+    private final XuiLayoutProps props = new XuiLayoutProps();
 
     /** 嵌套子树 */
     private final List<XuiLayoutNode> children = new ArrayList<>();
@@ -134,7 +122,7 @@ public class XuiLayoutNode implements IJsonSerializable {
         return this.pattern != null && this.pattern.matcher(component.getXuiName()).matches();
     }
 
-    /** 递归获取当前节点所包含的{@link Type 布局节点类型} */
+    /** 递归获取当前节点所包含的所有{@link Type 布局节点类型} */
     public Set<Type> getTypes() {
         Set<Type> types = new HashSet<>();
 
@@ -156,34 +144,6 @@ public class XuiLayoutNode implements IJsonSerializable {
 
     public XuiLayoutProps getProps() {
         return this.props;
-    }
-
-    public void setProps(XuiLayoutProps props) {
-        this.props = props;
-    }
-
-    public XuiLayoutAlign getAlign() {
-        return this.align;
-    }
-
-    public void setAlign(XuiLayoutAlign align) {
-        this.align = align;
-    }
-
-    public XuiLayoutSize getWidth() {
-        return this.width;
-    }
-
-    public void setWidth(XuiLayoutSize width) {
-        this.width = width;
-    }
-
-    public XuiLayoutSize getHeight() {
-        return this.height;
-    }
-
-    public void setHeight(XuiLayoutSize height) {
-        this.height = height;
     }
 
     public List<XuiLayoutNode> getChildren() {
@@ -221,13 +181,10 @@ public class XuiLayoutNode implements IJsonSerializable {
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
 
-        out.putNotNull("type", this.type);
+        out.put("type", this.type);
         ifNotNull(this.pattern, (v) -> out.putNotNull("pattern", v.pattern()));
 
-        out.putNotNull("props", this.props);
-        out.putNotNull("align", this.align);
-        out.putNotNull("width", this.width);
-        out.putNotNull("height", this.height);
+        out.put("props", this.props);
 
         if (!this.children.isEmpty()) {
             out.put("children", this.children);

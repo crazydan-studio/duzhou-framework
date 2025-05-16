@@ -19,8 +19,6 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import java.util.Map;
-
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
@@ -33,36 +31,89 @@ import io.nop.core.lang.json.IJsonSerializable;
  */
 @DataBean
 public class XuiLayoutProps implements IJsonSerializable {
+    /** 宽度 */
+    private XuiLayoutSize width = XuiLayoutSize.wrap_content();
+    /** 高度 */
+    private XuiLayoutSize height = XuiLayoutSize.wrap_content();
+
+    /**
+     * 对齐方式
+     * <p/>
+     * 非表格单元格节点的水平和垂直方向均缺省为 {@link XuiLayoutAlign.Direction#start}，
+     * 而表格单元格（{@link XuiLayoutNode#getType()} 始终为 {@link XuiLayoutNode.Type#row}）
+     * 的水平和垂直方向始终为 {@link XuiLayoutAlign.Direction#center}
+     */
+    private XuiLayoutAlign align;
+
     /** 布局项之间的间隔 */
-    public final XuiLayoutGap gap;
+    private XuiLayoutGap gap;
     /** {@link XuiLayoutNode.Type#table} 中的单元格可跨越的单元格数量 */
-    public final XuiLayoutSpan span;
+    private XuiLayoutSpan span;
     /**
      * 边距，即，四周的空白宽度
      * <p/>
      * 注：其仅作用于 {@link XuiLayoutNode.Type#row}、{@link XuiLayoutNode.Type#column}
      * 和 {@link XuiLayoutNode.Type#table}
      */
-    public final XuiLayoutSpacing padding;
+    private XuiLayoutSpacing padding;
 
-    XuiLayoutProps(XuiLayoutGap gap, XuiLayoutSpan span, XuiLayoutSpacing padding) {
-        this.gap = gap;
-        this.span = span;
-        this.padding = padding;
+    public XuiLayoutSize getWidth() {
+        return this.width;
     }
 
-    public static XuiLayoutProps create(Map<String, Object> props) {
-        XuiLayoutGap gap = XuiLayoutGap.create(props.get("gap"));
-        XuiLayoutSpan span = XuiLayoutSpan.create(props.get("span"));
-        XuiLayoutSpacing padding = XuiLayoutSpacing.create(props.get("padding"));
+    public void setWidth(XuiLayoutSize width) {
+        this.width = width;
+    }
 
-        return new XuiLayoutProps(gap, span, padding);
+    public XuiLayoutSize getHeight() {
+        return this.height;
+    }
+
+    public void setHeight(XuiLayoutSize height) {
+        this.height = height;
+    }
+
+    public XuiLayoutAlign getAlign() {
+        return this.align;
+    }
+
+    public void setAlign(XuiLayoutAlign align) {
+        this.align = align;
+    }
+
+    public XuiLayoutGap getGap() {
+        return this.gap;
+    }
+
+    public void setGap(XuiLayoutGap gap) {
+        this.gap = gap;
+    }
+
+    public XuiLayoutSpan getSpan() {
+        return this.span;
+    }
+
+    public void setSpan(XuiLayoutSpan span) {
+        this.span = span;
+    }
+
+    public XuiLayoutSpacing getPadding() {
+        return this.padding;
+    }
+
+    public void setPadding(XuiLayoutSpacing padding) {
+        this.padding = padding;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
+
+        out.putNotNull("width", this.width);
+        out.putNotNull("height", this.height);
+
+        out.putNotNull("align", this.align);
 
         out.putNotNull("gap", this.gap);
         out.putNotNull("span", this.span);

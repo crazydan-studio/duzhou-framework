@@ -18,6 +18,8 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     @Override
     public void init() {
         initTemplate();
+
+        // TODO 校验动态表达式的有效性：引用数据及其结构是否存在、数据类型是否匹配
     }
 
     /** 如果模板节点对应的导入组件为原生组件，则返回其原生组件类型 */
