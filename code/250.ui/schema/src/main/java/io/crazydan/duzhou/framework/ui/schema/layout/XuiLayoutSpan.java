@@ -92,6 +92,6 @@ public class XuiLayoutSpan implements ISourceLocationGetter, IJsonSerializable {
     }
 
     private static XuiExpression<Integer> expr(ValueWithLocation vl) {
-        return XuiExpression.create(Integer.class, vl, (v) -> trimAndParseInt(v, 10));
+        return XuiExpression.create(Integer.class, vl, (loc, v) -> trimAndParseInt(v, 10));
     }
 }

@@ -79,7 +79,7 @@
     </style>
 </head>
 <body data-sveltekit-preload-data="hover" class="loading">
-    <div class="xui-block">%sveltekit.body%</div>
+    %sveltekit.body%
 </body>
 </html>]]>
     </c:unit>

@@ -214,17 +214,10 @@
             <source>
                 <c:script><![CDATA[
                     import io.nop.commons.util.StringHelper;
+                    import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
 
                     const layoutName = layoutNamePrefix + StringHelper.camelCase(layout.type.name(), true);
-                    const layoutAttrs = {
-                        align: layout.align
-                                ? "{{h: '" + (layout.align.horizontal || '') + "',"
-                                  + " v: '" + (layout.align.vertical || '') + "'}}"
-                                : null,
-                        width: layout.width.type.name(),
-                        height: layout.height.type.name(),
-                        gap: layout.props.gap,
-                    };
+                    const layoutAttrs = XuiGenHelper.genLayoutNodeAttrs(layout, '{', '}');
                 ]]></c:script>
                 <c:choose>
                     <when test="${layout.type.name() == 'item'}">
@@ -253,10 +246,11 @@
                                         <tr>
                                             <c:for var="columnLayout" items="${layoutChild.children}">
                                                 <c:script><![CDATA[
-                                                    const tdAttrs = {
-                                                        rowspan: columnLayout.props.rowspan,
-                                                        colspan: columnLayout.props.colspan,
-                                                    };
+                                                    const span = columnLayout.props.span;
+                                                    const tdAttrs = span ? {
+                                                        rowspan: span.col && '{' + span.col + '}',
+                                                        colspan: span.row && '{' + span.row + '}',
+                                                    } : {};
                                                 ]]></c:script>
                                                 <td xpl:attrs="tdAttrs">
                                                     <thisLib:GenComponentNodeLayout

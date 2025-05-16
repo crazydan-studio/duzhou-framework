@@ -103,6 +103,25 @@ public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
         return this.loc;
     }
 
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>{ 'match_parent' }</code>、<code>{ '1x' }</code>
+     * 或 <code>{ props.width }</code>
+     */
+    public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
+        Object val = this.type.name();
+
+        if (this.type == Type.with_specified) {
+            assert this.value != null;
+
+            val = this.value.getValue();
+            if (!(val instanceof XuiSize)) {
+                return val != null ? exprPrefix + val + exprSuffix : null;
+            }
+        }
+        return exprPrefix + '\'' + val + '\'' + exprSuffix;
+    }
+
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
     public void serializeToJson(IJsonHandler out) {

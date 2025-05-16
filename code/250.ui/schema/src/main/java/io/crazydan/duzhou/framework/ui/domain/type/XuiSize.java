@@ -26,6 +26,7 @@ import io.crazydan.duzhou.framework.commons.StringHelper;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
+import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
@@ -92,7 +93,7 @@ public class XuiSize implements IJsonSerializable {
         return XuiExpression.create(XuiSize.class, vl, XuiSize::parse);
     }
 
-    public static XuiSize parse(String s) {
+    public static XuiSize parse(SourceLocation loc, String s) {
         StringHelper.NumberAndUnit nut = extractNumberAndUnit(s);
         if (nut != null && nut.number != null && nut.unit != null) {
             for (Unit unit : Unit.values()) {
@@ -105,7 +106,8 @@ public class XuiSize implements IJsonSerializable {
             }
         }
 
-        throw new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).param(ARG_VALUE, s)
+        throw new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).loc(loc)
+                                                            .param(ARG_VALUE, s)
                                                             .param(ARG_NAMES,
                                                                    Arrays.stream(Unit.values())
                                                                          .map(u -> u.label)

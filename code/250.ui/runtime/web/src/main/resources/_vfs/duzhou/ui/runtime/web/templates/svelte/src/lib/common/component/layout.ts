@@ -1,6 +1,6 @@
 export interface Align {
-  h: string;
-  v: string;
+  row: string;
+  col: string;
 }
 
 export function sizeToClass(prefix:string, size:string) {
@@ -8,5 +8,5 @@ export function sizeToClass(prefix:string, size:string) {
 }
 
 export function alignToClass(align:Align) {
-  return align && ('align-h-' + (align.h || 'auto') + ' align-v-' + (align.v || 'auto'));
+  return align && ('align-h-' + (align.row || 'auto') + ' align-v-' + (align.col || 'auto'));
 }

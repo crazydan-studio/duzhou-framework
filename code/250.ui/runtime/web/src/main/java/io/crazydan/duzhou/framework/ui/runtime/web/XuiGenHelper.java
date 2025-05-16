@@ -21,6 +21,7 @@ package io.crazydan.duzhou.framework.ui.runtime.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +32,15 @@ import io.crazydan.duzhou.framework.ui.schema.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayout;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNode;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutProps;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.resource.component.ResourceComponentManager;
 import io.nop.xlang.xpl.xlib.XplTag;
 import io.nop.xlang.xpl.xlib.XplTagLib;
+
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -131,6 +135,33 @@ public class XuiGenHelper {
         });
 
         return toImportDirectives(libs.values(), LAYOUT_IMPORT_NAME_PREFIX, libRootPath, libSuffix);
+    }
+
+    /**
+     * 生成布局节点的属性列表
+     * <p/>
+     * 生成结果如下：
+     * <pre>
+     * { gap: "1x", padding: "{{ left: \"1x\", right: \".5x\" }}" }
+     * </pre>
+     * <pre>
+     * { gap: "{props.gap}", padding: "{{ left: props.padding, right: \"1x\" }}" }
+     * </pre>
+     */
+    public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, String exprPrefix, String exprSuffix) {
+        Map<String, String> attrs = new HashMap<>();
+
+        XuiLayoutProps props = node.getProps();
+
+        String width = props.getWidth().toXmlAttrExpr(exprPrefix, exprSuffix);
+        String height = props.getHeight().toXmlAttrExpr(exprPrefix, exprSuffix);
+        ifNotNull(width, (v) -> attrs.put("width", v));
+        ifNotNull(height, (v) -> attrs.put("height", v));
+
+        String align = props.getAlign() != null ? props.getAlign().toXmlAttrExpr(exprPrefix, exprSuffix) : null;
+        ifNotNull(align, (v) -> attrs.put("align", v));
+
+        return attrs;
     }
 
     private static String toImportDirectives(

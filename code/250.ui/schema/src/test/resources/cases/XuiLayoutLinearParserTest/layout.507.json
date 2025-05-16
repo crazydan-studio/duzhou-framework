@@ -38,8 +38,8 @@
                 },
                 "span": {
                   "loc": "[1:29:0:0]text",
-                  "row": "2",
-                  "col": "2"
+                  "row": 2,
+                  "col": 2
                 }
               },
               "children": [

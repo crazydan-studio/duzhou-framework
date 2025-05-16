@@ -26,6 +26,8 @@ import io.nop.api.core.annotations.data.DataBean;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+
 /**
  * 布局对齐方式
  *
@@ -67,6 +69,19 @@ public class XuiLayoutAlign implements IJsonSerializable {
 
     public XuiLayoutAlign col(Direction col) {
         return create(this.row, col);
+    }
+
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>{ {row: 'start'} }</code>
+     */
+    public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
+        StringBuilder sb = new StringBuilder();
+
+        ifNotNull(this.row, (v) -> sb.append("row:'").append(v).append("',"));
+        ifNotNull(this.col, (v) -> sb.append("col:'").append(v).append("',"));
+
+        return sb.length() > 0 ? exprPrefix + '{' + sb + '}' + exprSuffix : null;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

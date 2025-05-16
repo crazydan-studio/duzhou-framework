@@ -44,7 +44,7 @@
                 v>{
                     >[login-logo]<
                     <[login-form]>
-                }(gap:2em)<^
+                }(gap:2x)<^
 
                 >{
                     [copyright-text] [copyright-owner]
@@ -61,14 +61,14 @@
                     // 通过表格对齐输入组件，并设置行间隔
                     {
                         | [username-label]> | <[username-input]> |
-                        | [password-label]> | <[password-input]> |
-                        |                   | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:.5em)
+                        | { [password-label] }(span:{col:2})> | <[password-input]> |
+                        | <{ [remember-me-input] v[remember-me-label]^ } |
+                    }(gap:.5x)
 
                     >[warning-text]<
 
                     <[login-button]>
-                    { [forgot-password-button] [register-button] }(gap:1em)>
+                    { [forgot-password-button] [register-button] }(gap:1x)>
                 ]]></linear>
             </xui:layout>
 

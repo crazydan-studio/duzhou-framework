@@ -9,7 +9,7 @@
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
-  ]} style:--gap={gap}>
+  ]} style:--linear-table-row-gap={gap}>
   {@render children?.()}
 </table>
 
@@ -41,8 +41,9 @@
         white-space: nowrap;
       }
 
+      /* 通过在布局节点上设置相应宽度的透明边框实现，从而避免影响以 margin 方式实现的对齐机制 */
       &.has-gap tr {
-        border-top: var(--gap) solid transparent;
+        border-top: var(--linear-table-row-gap) solid transparent;
 
         &:first-child {
           border-top: 0;

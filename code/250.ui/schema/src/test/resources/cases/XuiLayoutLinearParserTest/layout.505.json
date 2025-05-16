@@ -112,8 +112,8 @@
                 },
                 "span": {
                   "loc": "[2:15:0:0]text",
-                  "row": "2",
-                  "col": "2"
+                  "row": 2,
+                  "col": 2
                 },
                 "padding": {
                   "loc": "[2:27:0:0]text",
@@ -151,7 +151,7 @@
                 },
                 "span": {
                   "loc": "[2:47:0:0]text",
-                  "row": "2"
+                  "row": 2
                 }
               },
               "children": [

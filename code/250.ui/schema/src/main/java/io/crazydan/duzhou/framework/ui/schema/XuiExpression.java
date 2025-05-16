@@ -19,9 +19,7 @@
 
 package io.crazydan.duzhou.framework.ui.schema;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
@@ -62,7 +60,9 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
      * 如，<code>${a.b.c}</code>，则根据该值构造模板表达式，否则，若 <code>literal</code> 对 <code>vl.asString()</code>
      * 的结果不为 <code>null</code>，则根据该结果构造 {@link Literal} 表达式，否则，直接返回 <code>null</code>
      */
-    public static <T> XuiExpression<T> create(Class<T> type, ValueWithLocation vl, Function<String, T> literal) {
+    public static <T> XuiExpression<T> create(
+            Class<T> type, ValueWithLocation vl, BiFunction<SourceLocation, String, T> literal
+    ) {
         if (vl == null) {
             return null;
         }
@@ -74,27 +74,24 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         if (XplParseHelper.hasExpr(value)) {
             expr = XplParseHelper.parseTemplateExpr(vl, cp, scope);
         } else {
-            T val = literal.apply(value);
+            T val = literal.apply(loc, value);
             expr = val != null ? Literal.valueOf(loc, val) : null;
         }
 
         return expr != null ? new XuiExpression<>(loc, type, expr) : null;
     }
 
-    public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
-
-        // [a1](${props.layout}) 可以拆解为：
-        // - gap: ${props.layout.gap}
-        // - span: ${props.layout.span}
-        // - padding: ${props.layout.padding}
-
-        return map;
-    }
-
     public void validate() {
         // TODO 字面量数据类型检查
         // TODO 表达式引用目标类型检查
+    }
+
+    public Object getValue() {
+        if (this.expr instanceof Literal) {
+            return ((Literal) this.expr).getValue();
+        } else {
+            return this.expr.toString();
+        }
     }
 
     @Override
@@ -105,7 +102,19 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
     public void serializeToJson(IJsonHandler out) {
-        out.stringValue(null, toString());
+        Object value;
+        if (this.expr instanceof Literal) {
+            value = ((Literal) this.expr).getValue();
+        } else {
+            String s = this.expr.toString();
+            value = XplParseHelper.hasExpr(s) ? s : "${" + s + '}';
+        }
+
+        if (value instanceof IJsonSerializable) {
+            ((IJsonSerializable) value).serializeToJson(out);
+        } else {
+            out.rawValue(null, value);
+        }
     }
 
     @Override
@@ -114,7 +123,6 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
             return ((Literal) this.expr).getStringValue();
         }
 
-        String s = this.expr.toString();
-        return XplParseHelper.hasExpr(s) ? s : "${" + s + '}';
+        return this.expr.toString();
     }
 }

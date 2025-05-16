@@ -78,6 +78,11 @@ public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
     /** 嵌套子树 */
     private final List<XuiLayoutNode> children = new ArrayList<>();
 
+    /** Note: 在 CodeGen 时需要无参构造函数 */
+    public XuiLayoutNode() {
+        this(null, null);
+    }
+
     XuiLayoutNode(SourceLocation loc, Type type, String pattern) {
         this.loc = loc;
         this.type = type;
