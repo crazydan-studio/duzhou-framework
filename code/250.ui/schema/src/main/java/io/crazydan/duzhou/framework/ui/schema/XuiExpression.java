@@ -21,9 +21,14 @@ package io.crazydan.duzhou.framework.ui.schema;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.ast.Expression;
@@ -35,32 +40,45 @@ import io.nop.xlang.xpl.utils.XplParseHelper;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-15
  */
-public class XuiExpression<T> {
+@DataBean
+public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializable {
+    private static final IXplCompiler cp = XLang.newXplCompiler();
+    private static final IXLangCompileScope scope = cp.newCompileScope();
+
     private final SourceLocation loc;
+
     private final Class<T> type;
     private final Expression expr;
 
     XuiExpression(SourceLocation loc, Class<T> type, Expression expr) {
         this.loc = loc;
+
         this.type = type;
         this.expr = expr;
     }
 
-    public static <T> XuiExpression<T> create(Class<T> type, SourceLocation loc, Object value) {
-        Expression expr;
-
-        if (XplParseHelper.hasExpr(value.toString())) {
-            ValueWithLocation vl = ValueWithLocation.of(loc, value);
-
-            IXplCompiler cp = XLang.newXplCompiler();
-            IXLangCompileScope scope = cp.newCompileScope();
-
-            expr = XplParseHelper.parseTemplateExpr(vl, cp, scope);
-        } else {
-            expr = Literal.valueOf(loc, value);
+    /**
+     * @return 在 {@link ValueWithLocation#asString() vl.asString()} 满足 {@link XplParseHelper#hasExpr} 时，
+     * 如，<code>${a.b.c}</code>，则根据该值构造模板表达式，否则，若 <code>literal</code> 对 <code>vl.asString()</code>
+     * 的结果不为 <code>null</code>，则根据该结果构造 {@link Literal} 表达式，否则，直接返回 <code>null</code>
+     */
+    public static <T> XuiExpression<T> create(Class<T> type, ValueWithLocation vl, Function<String, T> literal) {
+        if (vl == null) {
+            return null;
         }
 
-        return new XuiExpression<>(loc, type, expr);
+        SourceLocation loc = vl.getLocation();
+        String value = vl.asString();
+
+        Expression expr;
+        if (XplParseHelper.hasExpr(value)) {
+            expr = XplParseHelper.parseTemplateExpr(vl, cp, scope);
+        } else {
+            T val = literal.apply(value);
+            expr = val != null ? Literal.valueOf(loc, val) : null;
+        }
+
+        return expr != null ? new XuiExpression<>(loc, type, expr) : null;
     }
 
     public Map<String, Object> toMap() {
@@ -77,5 +95,26 @@ public class XuiExpression<T> {
     public void validate() {
         // TODO 字面量数据类型检查
         // TODO 表达式引用目标类型检查
+    }
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
+    }
+
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        out.stringValue(null, toString());
+    }
+
+    @Override
+    public String toString() {
+        if (this.expr instanceof Literal) {
+            return ((Literal) this.expr).getStringValue();
+        }
+
+        String s = this.expr.toString();
+        return XplParseHelper.hasExpr(s) ? s : "${" + s + '}';
     }
 }

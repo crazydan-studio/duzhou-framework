@@ -27,15 +27,13 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.commons.TextScannerHelper;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutProps;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.text.tokenizer.TextScanner;
+import io.nop.commons.util.objects.ValueWithLocation;
 
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.consumeBetweenPairChars;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.consumeUntilPosNotChanged;
@@ -71,11 +69,11 @@ public class XuiLayoutLinearParser {
         XuiLayoutNode root = null;
         switch (this.mode) {
             case column: {
-                root = XuiLayoutNode.column();
+                root = XuiLayoutNode.column(loc);
                 break;
             }
             case row: {
-                root = XuiLayoutNode.row();
+                root = XuiLayoutNode.row(loc);
                 break;
             }
         }
@@ -163,7 +161,8 @@ public class XuiLayoutLinearParser {
      * </pre>
      */
     private XuiLayoutNode parseRow(TextScanner sc) {
-        XuiLayoutNode row = XuiLayoutNode.row();
+        SourceLocation loc = sc.location();
+        XuiLayoutNode row = XuiLayoutNode.row(loc);
 
         // Note: 对行内节点的解析，一定在明确的行尾结束（嵌套布局将作为一个整体进行解析）
         consumeUntilPosNotChanged(sc, TextScannerHelper::isLineBreak, () -> parseNode(sc), (node) -> {
@@ -212,7 +211,8 @@ public class XuiLayoutLinearParser {
      * <p/>
      */
     private XuiLayoutNode parseTable(TextScanner sc) {
-        XuiLayoutNode table = XuiLayoutNode.table();
+        SourceLocation loc = sc.location();
+        XuiLayoutNode table = XuiLayoutNode.table(loc);
 
         consumeUntilPosNotChanged(sc, (s) -> s.cur != '|', () -> parseTableRow(sc), (row) -> {
             if (row != null) {
@@ -238,18 +238,19 @@ public class XuiLayoutLinearParser {
     private XuiLayoutNode parseTableRow(TextScanner sc) {
         List<XuiLayoutNode> cells = new ArrayList<>();
 
+        SourceLocation loc = sc.location();
         consumeUntilPosNotChanged(sc, (s) -> s.cur != '|', () -> parseNodesInTableCell(sc), (children) -> {
             XuiLayoutNode cell = null;
             if (children.size() == 1) {
                 // Note: 其依然为 row 或 table 类型节点
                 cell = children.get(0);
             } else if (children.size() > 1) {
-                cell = XuiLayoutNode.row(children);
+                cell = XuiLayoutNode.row(loc, children);
             }
 
             if (cell == null) {
                 // 空白单元格：用于占位
-                cell = XuiLayoutNode.space();
+                cell = XuiLayoutNode.space(loc);
             }
 
             // 表格单元格节点始终占满整个单元格
@@ -265,7 +266,7 @@ public class XuiLayoutLinearParser {
             cells.remove(cells.size() - 1);
         }
 
-        return cells.isEmpty() ? null : XuiLayoutNode.row(cells);
+        return cells.isEmpty() ? null : XuiLayoutNode.row(loc, cells);
     }
 
     /**
@@ -339,12 +340,13 @@ public class XuiLayoutLinearParser {
         }
 
         XuiLayoutNode node = null;
+        SourceLocation loc = sc.location();
         // 解析组件匹配模式
         if (sc.cur == '[') {
             String text = extractBetweenPairChars(sc, '[', ']', ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK);
 
             if (text != null) {
-                node = XuiLayoutNode.item(text);
+                node = XuiLayoutNode.item(loc, text);
             }
         } else if (sc.cur == '{') {
             List<XuiLayoutNode> children = new ArrayList<>();
@@ -356,17 +358,17 @@ public class XuiLayoutLinearParser {
             if (children.size() == 1) {
                 node = children.get(0);
             } else if (children.size() > 1) {
-                node = XuiLayoutNode.column(children);
+                node = XuiLayoutNode.column(loc, children);
             }
         }
 
         // 解析布局配置参数列表
-        Map<String, Object> propsData = new HashMap<>();
+        Map<String, ValueWithLocation> propsData = new HashMap<>();
         if (sc.cur == '(') {
-            propsData = parseProps(sc);
+            propsData = parseProps(sc, '(', ')');
 
             if (!propsData.isEmpty() && node == null) {
-                node = XuiLayoutNode.space();
+                node = XuiLayoutNode.space(loc);
             }
         }
 
@@ -401,7 +403,7 @@ public class XuiLayoutLinearParser {
             if (width.type == XuiLayoutSize.Type.fill_remains //
                 || height.type == XuiLayoutSize.Type.fill_remains //
             ) {
-                node = XuiLayoutNode.space();
+                node = XuiLayoutNode.space(loc);
             }
         }
 
@@ -415,12 +417,9 @@ public class XuiLayoutLinearParser {
         props.setHeight(height);
         props.setAlign(XuiLayoutAlign.create(align[0], align[1]));
 
-        XuiLayoutGap gap = XuiLayoutGap.create(propsData.get("gap"));
-        XuiLayoutSpan span = XuiLayoutSpan.create(propsData.get("span"));
-        XuiLayoutSpacing padding = XuiLayoutSpacing.create(propsData.get("padding"));
-        props.setGap(gap);
-        props.setSpan(span);
-        props.setPadding(padding);
+        props.setGap(propsData.get("gap"));
+        props.setSpan(propsData.get("span"));
+        props.setPadding(propsData.get("padding"));
 
         return node;
     }
@@ -491,36 +490,22 @@ public class XuiLayoutLinearParser {
     /**
      * 解析配置参数列表（类 JSON 形式）
      * <pre>
-     * (gap: 1em, padding: { left: .5em, })
-     * </pre>
-     * <pre>
-     * (${props.layout})
-     * </pre>
-     * <p/>
-     * 注：需确保 {@link TextScanner} 的当前位置在标记符 <code>(</code> 上
-     */
-    private Map<String, Object> parseProps(TextScanner sc) {
-        Map<String, Object> props = parseProps(sc, '(', ')');
-
-        return props;
-    }
-
-    /**
-     * 解析配置参数列表（类 JSON 形式）
-     * <pre>
      * (gap: 1em)
+     * </pre>
+     * <pre>
+     * (gap: {col: ${props.gap}})
      * </pre>
      * <pre>
      * { left: 1em, right: 1em }
      * </pre>
      * <pre>
-     * (gap: {col: ${props.gap}})
+     * { left: ${props.lp}, right: ${props.rp} }
      * </pre>
      * <p/>
      * 注：需确保 {@link TextScanner} 的当前位置在标记符 <code>leftMark</code> 上
      */
-    private Map<String, Object> parseProps(TextScanner sc, char leftMark, char rightMark) {
-        Map<String, Object> props = new HashMap<>();
+    private Map<String, ValueWithLocation> parseProps(TextScanner sc, char leftMark, char rightMark) {
+        Map<String, ValueWithLocation> props = new HashMap<>();
 
         consumeBetweenPairChars(sc, leftMark, rightMark, ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK, () -> {
             if (sc.cur == ',') {
@@ -533,12 +518,13 @@ public class XuiLayoutLinearParser {
             skipBlankAndConsumeInLine(sc, ':');
 
             moveToValidCharInLine(sc);
+
+            Object value;
+            SourceLocation loc = sc.location();
             if (sc.cur == '{') {
                 // 解析嵌套结构的配置参数
-                Map<String, Object> value = parseProps(sc, '{', '}');
-                props.put(name, value);
+                value = parseProps(sc, '{', '}');
             } else {
-                String value;
                 if (sc.startsWith("${")) {
                     // 解析 ${xxx} 表达式
                     sc.next(2);
@@ -557,11 +543,11 @@ public class XuiLayoutLinearParser {
                     }
                 }
 
-                if (isBlank(value)) {
+                if (isBlank((String) value)) {
                     throw sc.newError(ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED).param(ARG_VALUE, name);
                 }
-                props.put(name, value);
             }
+            props.put(name, ValueWithLocation.of(loc, value));
         });
 
         return props;
@@ -571,6 +557,15 @@ public class XuiLayoutLinearParser {
         node.getChildren().forEach((child) -> {
             if (child.getChildren().size() != 1) {
                 return;
+            }
+            // Note: 仅提升只有唯一子节点的行列类型的 child
+            switch (child.getType()) {
+                case row:
+                case column: {
+                    break;
+                }
+                default:
+                    return;
             }
 
             switch (node.getType()) {

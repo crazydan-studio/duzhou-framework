@@ -1,59 +1,79 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:1:0:0]text",
       "type": "row",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[1:1:0:0]text",
           "type": "item",
           "pattern": "^a1$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         },
         {
+          "loc": "[1:6:0:0]text",
           "type": "item",
           "pattern": "^a2$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         }
       ]
     },
     {
+      "loc": "[2:1:0:0]text",
       "type": "row",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[2:1:0:0]text",
           "type": "item",
           "pattern": "^b1$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         },
         {
+          "loc": "[2:6:0:0]text",
           "type": "item",
           "pattern": "^b_[\\d\\w]+$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         }
       ]
     }

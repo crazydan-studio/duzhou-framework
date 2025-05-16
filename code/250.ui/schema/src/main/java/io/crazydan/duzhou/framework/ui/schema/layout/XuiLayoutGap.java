@@ -22,7 +22,11 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.ISourceLocationGetter;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -33,35 +37,47 @@ import io.nop.core.lang.json.IJsonSerializable;
  * @date 2025-05-14
  */
 @DataBean
-public class XuiLayoutGap implements IJsonSerializable {
-    /** 水平方向上的间隔 */
-    public final XuiSize row;
-    /** 垂直方向上的间隔 */
-    public final XuiSize col;
+public class XuiLayoutGap implements ISourceLocationGetter, IJsonSerializable {
+    private final SourceLocation loc;
 
-    XuiLayoutGap(XuiSize row, XuiSize col) {
+    /** 水平方向上的间隔 */
+    public final XuiExpression<XuiSize> row;
+    /** 垂直方向上的间隔 */
+    public final XuiExpression<XuiSize> col;
+
+    XuiLayoutGap(SourceLocation loc, XuiExpression<XuiSize> row, XuiExpression<XuiSize> col) {
+        this.loc = loc;
         this.row = row;
         this.col = col;
     }
 
-    /**
-     * @param value
-     *         只能为 <code>null</code>、<code>String</code> 或 <code>Map</code>
-     */
-    public static XuiLayoutGap create(Object value) {
-        if (value instanceof String || value == null) {
-            XuiSize size = XuiSize.parse((String) value);
+    /**  */
+    public static XuiLayoutGap create(ValueWithLocation vl) {
+        if (vl == null) {
+            return null;
+        }
 
-            return new XuiLayoutGap(size, size);
+        SourceLocation loc = vl.getLocation();
+        Object value = vl.getValue();
+        if (value instanceof String || value == null) {
+            XuiExpression<XuiSize> size = XuiSize.expr(vl);
+
+            return new XuiLayoutGap(loc, size, size);
         }
 
         assert value instanceof Map;
-        Map<String, Object> props = (Map<String, Object>) value;
+        // Note: ValueWithLocation 中的位置为值的开始位置
+        Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        XuiSize row = XuiSize.parse((String) props.get("row"));
-        XuiSize col = XuiSize.parse((String) props.get("col"));
+        XuiExpression<XuiSize> row = XuiSize.expr(props.get("row"));
+        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
 
-        return new XuiLayoutGap(row, col);
+        return new XuiLayoutGap(loc, row, col);
+    }
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
@@ -69,6 +85,7 @@ public class XuiLayoutGap implements IJsonSerializable {
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
 
+        out.putNotNull("loc", this.loc);
         out.putNotNull("row", this.row);
         out.putNotNull("col", this.col);
 

@@ -23,8 +23,10 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.commons.StringHelper;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -78,6 +80,18 @@ public class XuiSize implements IJsonSerializable {
         return new XuiSize(value, unit);
     }
 
+    /**
+     * @param vl
+     *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
+     *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
+     *         <code>1x</code>、<code>50%</code> 等形式的尺寸常量
+     * @return 在 {@link #parse} 对 {@link ValueWithLocation#getValue()}
+     * 的解析结果为 <code>null</code> 时，返回 <code>null</code>
+     */
+    public static XuiExpression<XuiSize> expr(ValueWithLocation vl) {
+        return XuiExpression.create(XuiSize.class, vl, XuiSize::parse);
+    }
+
     public static XuiSize parse(String s) {
         StringHelper.NumberAndUnit nut = extractNumberAndUnit(s);
         if (nut != null && nut.number != null && nut.unit != null) {
@@ -86,7 +100,7 @@ public class XuiSize implements IJsonSerializable {
                     continue;
                 }
 
-                float value = (float) nut.number;
+                float value = nut.number.floatValue();
                 return create(value, unit);
             }
         }

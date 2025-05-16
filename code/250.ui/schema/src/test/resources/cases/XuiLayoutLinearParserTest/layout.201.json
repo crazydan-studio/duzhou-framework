@@ -1,48 +1,65 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:3:0:0]text",
       "type": "column",
-      "align": {
-        "row": "center",
-        "col": "center"
+      "props": {
+        "width": "wrap_content",
+        "height": "wrap_content",
+        "align": {
+          "row": "center",
+          "col": "center"
+        }
       },
-      "width": "wrap_content",
-      "height": "wrap_content",
       "children": [
         {
+          "loc": "[2:3:0:0]text",
           "type": "row",
-          "width": "match_parent",
-          "height": "wrap_content",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
           "children": [
             {
+              "loc": "[2:4:0:0]text",
               "type": "item",
               "pattern": "^a1$",
-              "align": {
-                "row": "center",
-                "col": "start"
-              },
-              "width": "wrap_content",
-              "height": "wrap_content"
+              "props": {
+                "width": "wrap_content",
+                "height": "wrap_content",
+                "align": {
+                  "row": "center",
+                  "col": "start"
+                }
+              }
             }
           ]
         },
         {
+          "loc": "[3:3:0:0]text",
           "type": "row",
-          "width": "match_parent",
-          "height": "wrap_content",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
           "children": [
             {
+              "loc": "[3:4:0:0]text",
               "type": "item",
               "pattern": "^b1$",
-              "align": {
-                "row": "start",
-                "col": "start"
-              },
-              "width": "fill_remains",
-              "height": "wrap_content"
+              "props": {
+                "width": "fill_remains",
+                "height": "wrap_content",
+                "align": {
+                  "row": "start",
+                  "col": "start"
+                }
+              }
             }
           ]
         }

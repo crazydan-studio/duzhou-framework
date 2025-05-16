@@ -21,6 +21,10 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
 
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.nop.api.core.util.ISourceLocationGetter;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -32,35 +36,47 @@ import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiLayoutSpan implements IJsonSerializable {
-    /** 水平方向上可跨越的数量 */
-    public final Integer row;
-    /** 垂直方向上可跨越的数量 */
-    public final Integer col;
+public class XuiLayoutSpan implements ISourceLocationGetter, IJsonSerializable {
+    private final SourceLocation loc;
 
-    XuiLayoutSpan(Integer row, Integer col) {
+    /** 水平方向上可跨越的数量 */
+    public final XuiExpression<Integer> row;
+    /** 垂直方向上可跨越的数量 */
+    public final XuiExpression<Integer> col;
+
+    XuiLayoutSpan(SourceLocation loc, XuiExpression<Integer> row, XuiExpression<Integer> col) {
+        this.loc = loc;
         this.row = row;
         this.col = col;
     }
 
-    /**
-     * @param value
-     *         只能为 <code>null</code>、<code>String</code> 或 <code>Map</code>
-     */
-    public static XuiLayoutSpan create(Object value) {
-        if (value instanceof String || value == null) {
-            Integer val = trimAndParseInt((String) value, 10);
+    /**  */
+    public static XuiLayoutSpan create(ValueWithLocation vl) {
+        if (vl == null) {
+            return null;
+        }
 
-            return new XuiLayoutSpan(val, val);
+        SourceLocation loc = vl.getLocation();
+        Object value = vl.getValue();
+        if (value instanceof String || value == null) {
+            XuiExpression<Integer> val = expr(vl);
+
+            return new XuiLayoutSpan(loc, val, val);
         }
 
         assert value instanceof Map;
-        Map<String, Object> props = (Map<String, Object>) value;
+        // Note: ValueWithLocation 中的位置为值的开始位置
+        Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        Integer row = trimAndParseInt((String) props.get("row"), 10);
-        Integer col = trimAndParseInt((String) props.get("col"), 10);
+        XuiExpression<Integer> row = expr(props.get("row"));
+        XuiExpression<Integer> col = expr(props.get("col"));
 
-        return new XuiLayoutSpan(row, col);
+        return new XuiLayoutSpan(loc, row, col);
+    }
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
@@ -68,9 +84,14 @@ public class XuiLayoutSpan implements IJsonSerializable {
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
 
+        out.putNotNull("loc", this.loc);
         out.putNotNull("row", this.row);
         out.putNotNull("col", this.col);
 
         out.endObject();
+    }
+
+    private static XuiExpression<Integer> expr(ValueWithLocation vl) {
+        return XuiExpression.create(Integer.class, vl, (v) -> trimAndParseInt(v, 10));
     }
 }

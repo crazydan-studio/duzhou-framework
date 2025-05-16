@@ -28,6 +28,8 @@ import java.util.regex.Pattern;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.ISourceLocationGetter;
+import io.nop.api.core.util.SourceLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -40,7 +42,7 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @date 2025-04-25
  */
 @DataBean
-public class XuiLayoutNode implements IJsonSerializable {
+public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
 
     /** {@link XuiLayoutNode} 类型 */
     public enum Type {
@@ -63,6 +65,8 @@ public class XuiLayoutNode implements IJsonSerializable {
         column,
     }
 
+    private final SourceLocation loc;
+
     /** 布局节点类型 */
     private final Type type;
     /** 组件的匹配模式，能够按此模式匹配的组件为对应的布局节点 */
@@ -74,44 +78,45 @@ public class XuiLayoutNode implements IJsonSerializable {
     /** 嵌套子树 */
     private final List<XuiLayoutNode> children = new ArrayList<>();
 
-    XuiLayoutNode(Type type, String pattern) {
+    XuiLayoutNode(SourceLocation loc, Type type, String pattern) {
+        this.loc = loc;
         this.type = type;
         this.pattern = pattern != null ? Pattern.compile("^" + pattern + "$") : null;
     }
 
-    XuiLayoutNode(Type type) {
-        this(type, null);
+    XuiLayoutNode(SourceLocation loc, Type type) {
+        this(loc, type, null);
     }
 
-    public static XuiLayoutNode item(String pattern) {
-        return new XuiLayoutNode(Type.item, pattern);
+    public static XuiLayoutNode item(SourceLocation loc, String pattern) {
+        return new XuiLayoutNode(loc, Type.item, pattern);
     }
 
-    public static XuiLayoutNode space() {
-        return new XuiLayoutNode(Type.space);
+    public static XuiLayoutNode space(SourceLocation loc) {
+        return new XuiLayoutNode(loc, Type.space);
     }
 
-    public static XuiLayoutNode table() {
-        return new XuiLayoutNode(Type.table);
+    public static XuiLayoutNode table(SourceLocation loc) {
+        return new XuiLayoutNode(loc, Type.table);
     }
 
-    public static XuiLayoutNode row() {
-        return new XuiLayoutNode(Type.row);
+    public static XuiLayoutNode row(SourceLocation loc) {
+        return new XuiLayoutNode(loc, Type.row);
     }
 
-    public static XuiLayoutNode row(List<XuiLayoutNode> nodes) {
-        XuiLayoutNode node = row();
+    public static XuiLayoutNode row(SourceLocation loc, List<XuiLayoutNode> nodes) {
+        XuiLayoutNode node = row(loc);
         node.addChildren(nodes);
 
         return node;
     }
 
-    public static XuiLayoutNode column() {
-        return new XuiLayoutNode(Type.column);
+    public static XuiLayoutNode column(SourceLocation loc) {
+        return new XuiLayoutNode(loc, Type.column);
     }
 
-    public static XuiLayoutNode column(List<XuiLayoutNode> nodes) {
-        XuiLayoutNode node = column();
+    public static XuiLayoutNode column(SourceLocation loc, List<XuiLayoutNode> nodes) {
+        XuiLayoutNode node = column(loc);
         node.addChildren(nodes);
 
         return node;
@@ -176,11 +181,17 @@ public class XuiLayoutNode implements IJsonSerializable {
         this.children.set(oldNodeIndex, newNode);
     }
 
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
+    }
+
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
 
+        out.putNotNull("loc", this.loc);
         out.put("type", this.type);
         ifNotNull(this.pattern, (v) -> out.putNotNull("pattern", v.pattern()));
 

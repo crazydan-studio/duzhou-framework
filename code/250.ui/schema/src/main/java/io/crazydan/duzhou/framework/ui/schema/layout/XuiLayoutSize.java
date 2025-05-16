@@ -20,7 +20,11 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.ISourceLocationGetter;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -31,7 +35,7 @@ import io.nop.core.lang.json.IJsonSerializable;
  * @date 2025-04-26
  */
 @DataBean
-public class XuiLayoutSize implements IJsonSerializable {
+public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
     private static final XuiLayoutSize match_parent = new XuiLayoutSize(Type.match_parent);
     private static final XuiLayoutSize fill_remains = new XuiLayoutSize(Type.fill_remains);
     private static final XuiLayoutSize wrap_content = new XuiLayoutSize(Type.wrap_content);
@@ -49,17 +53,21 @@ public class XuiLayoutSize implements IJsonSerializable {
         with_specified,
     }
 
+    private final SourceLocation loc;
+
     /** 类型 */
     public final Type type;
     /** {@link Type#with_specified} 对应的值 */
-    public final XuiSize value;
+    public final XuiExpression<XuiSize> value;
 
     XuiLayoutSize(Type type) {
+        this.loc = null;
         this.type = type;
         this.value = null;
     }
 
-    XuiLayoutSize(XuiSize value) {
+    XuiLayoutSize(SourceLocation loc, XuiExpression<XuiSize> value) {
+        this.loc = loc;
         this.type = Type.with_specified;
         this.value = value;
     }
@@ -76,14 +84,23 @@ public class XuiLayoutSize implements IJsonSerializable {
         return wrap_content;
     }
 
-    public static XuiLayoutSize with_specified(String value) {
-        XuiSize size = XuiSize.parse(value);
-        return with_specified(size);
+    /**
+     * @param vl
+     *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
+     *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
+     *         <code>1x</code>、<code>50%</code> 等形式的尺寸常量，
+     *         但 {@link XuiSize#parse} 对其常量的解析结果不能为 <code>null</code>
+     */
+    public static XuiLayoutSize with_specified(ValueWithLocation vl) {
+        XuiExpression<XuiSize> value = XuiSize.expr(vl);
+        assert value != null;
+
+        return new XuiLayoutSize(vl.getLocation(), value);
     }
 
-    public static XuiLayoutSize with_specified(XuiSize value) {
-        assert value != null;
-        return new XuiLayoutSize(value);
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
@@ -94,14 +111,10 @@ public class XuiLayoutSize implements IJsonSerializable {
 
     @Override
     public String toString() {
-        switch (this.type) {
-            case with_specified: {
-                assert this.value != null;
-                return this.value.toString();
-            }
-            default: {
-                return this.type.name();
-            }
+        if (this.type == Type.with_specified) {
+            assert this.value != null;
+            return this.value.toString();
         }
+        return this.type.name();
     }
 }

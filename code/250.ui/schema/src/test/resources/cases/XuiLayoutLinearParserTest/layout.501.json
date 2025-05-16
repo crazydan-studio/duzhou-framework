@@ -1,5 +1,7 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent"
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  }
 }

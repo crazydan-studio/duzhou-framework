@@ -1,31 +1,42 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:1:0:0]text",
       "type": "row",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[1:2:0:0]text",
           "type": "space",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "fill_remains",
-          "height": "wrap_content"
+          "props": {
+            "width": "fill_remains",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         },
         {
+          "loc": "[1:3:0:0]text",
           "type": "item",
           "pattern": "^a1$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         }
       ]
     }

@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -89,6 +90,10 @@ public class XuiLayoutProps implements IJsonSerializable {
         this.gap = gap;
     }
 
+    public void setGap(ValueWithLocation vl) {
+        setGap(XuiLayoutGap.create(vl));
+    }
+
     public XuiLayoutSpan getSpan() {
         return this.span;
     }
@@ -97,12 +102,20 @@ public class XuiLayoutProps implements IJsonSerializable {
         this.span = span;
     }
 
+    public void setSpan(ValueWithLocation vl) {
+        setSpan(XuiLayoutSpan.create(vl));
+    }
+
     public XuiLayoutSpacing getPadding() {
         return this.padding;
     }
 
     public void setPadding(XuiLayoutSpacing padding) {
         this.padding = padding;
+    }
+
+    public void setPadding(ValueWithLocation vl) {
+        setPadding(XuiLayoutSpacing.create(vl));
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

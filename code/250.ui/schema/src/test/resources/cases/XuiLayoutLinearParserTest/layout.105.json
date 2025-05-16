@@ -1,16 +1,21 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:3:0:0]text",
       "type": "space",
-      "align": {
-        "row": "start",
-        "col": "start"
-      },
-      "width": "fill_remains",
-      "height": "fill_remains"
+      "props": {
+        "width": "fill_remains",
+        "height": "fill_remains",
+        "align": {
+          "row": "start",
+          "col": "start"
+        }
+      }
     }
   ]
 }

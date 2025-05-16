@@ -65,6 +65,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
             // 表格
+            put("layout.300.json", "| [a1] | [a2] |");
             put("layout.301.json", "{\n  [a1]\n  [a2]\n}\n| [b1]> | <[b2]> | \n| [c1]> | <[c2]> |\n|       | <[d1]  |");
             put("layout.302.json", "| [a1] | [a2] |\n [b1] [b2] \n| [c1] | [c2] |\n| [d1] | [d2] |");
             put("layout.303.json", "| [a1] [a2] | [b1] |\n|           | [c1] |");
@@ -84,7 +85,8 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.507.json", "| {[a1] [a2]}(gap: 1x, span:2) | [b1] |");
             put("layout.520.json", "v>[a1](gap: ${ props.gap })<^");
             put("layout.521.json", "v>[a1](gap: {row: ${prop.gap}})<^");
-            put("layout.522.json", "[a1](${props.layout})");
+            // 不支持对配置参数整体采用动态表达式，必须明确具体的配置项
+            // put("layout.522.json", "[a1](${props.layout})");
             put("layout.523.json",
                 "v>[a1](gap: {row: ${prop.gap}}, padding: {left: ${props.padding}, top: .5x, bottom: ${props.padding}})<^");
         }};
@@ -96,7 +98,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             String json = JsonTool.serialize(root, true);
 
             this.log.info("Layout json for {}=\n{}", name, json);
-            //Assertions.assertEquals(attachmentJsonText(name), json);
+            Assertions.assertEquals(attachmentJsonText(name), json);
         });
     }
 
@@ -120,6 +122,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("[a1](padding: {left: 1em})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
             put("[a1](gap: 1dp)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
             put("[a1](gap: {row:.5rem})", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
+            put("[a1](gap: gap)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

@@ -22,7 +22,11 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.ISourceLocationGetter;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
@@ -35,39 +39,55 @@ import io.nop.core.lang.json.IJsonSerializable;
  * @date 2025-05-10
  */
 @DataBean
-public class XuiLayoutSpacing implements IJsonSerializable {
-    public final XuiSize left;
-    public final XuiSize right;
-    public final XuiSize top;
-    public final XuiSize bottom;
+public class XuiLayoutSpacing implements ISourceLocationGetter, IJsonSerializable {
+    private final SourceLocation loc;
 
-    XuiLayoutSpacing(XuiSize left, XuiSize right, XuiSize top, XuiSize bottom) {
+    public final XuiExpression<XuiSize> left;
+    public final XuiExpression<XuiSize> right;
+    public final XuiExpression<XuiSize> top;
+    public final XuiExpression<XuiSize> bottom;
+
+    XuiLayoutSpacing(
+            SourceLocation loc, //
+            XuiExpression<XuiSize> left, XuiExpression<XuiSize> right, //
+            XuiExpression<XuiSize> top, XuiExpression<XuiSize> bottom
+    ) {
+        this.loc = loc;
         this.left = left;
         this.right = right;
         this.top = top;
         this.bottom = bottom;
     }
 
-    /**
-     * @param value
-     *         只能为 <code>null</code>、<code>String</code> 或 <code>Map</code>
-     */
-    public static XuiLayoutSpacing create(Object value) {
-        if (value instanceof String || value == null) {
-            XuiSize size = XuiSize.parse((String) value);
+    /**  */
+    public static XuiLayoutSpacing create(ValueWithLocation vl) {
+        if (vl == null) {
+            return null;
+        }
 
-            return new XuiLayoutSpacing(size, size, size, size);
+        SourceLocation loc = vl.getLocation();
+        Object value = vl.getValue();
+        if (value instanceof String || value == null) {
+            XuiExpression<XuiSize> size = XuiSize.expr(vl);
+
+            return new XuiLayoutSpacing(loc, size, size, size, size);
         }
 
         assert value instanceof Map;
-        Map<String, Object> props = (Map<String, Object>) value;
+        // Note: ValueWithLocation 中的位置为值的开始位置
+        Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        XuiSize left = XuiSize.parse((String) props.get("left"));
-        XuiSize right = XuiSize.parse((String) props.get("right"));
-        XuiSize top = XuiSize.parse((String) props.get("top"));
-        XuiSize bottom = XuiSize.parse((String) props.get("bottom"));
+        XuiExpression<XuiSize> left = XuiSize.expr(props.get("left"));
+        XuiExpression<XuiSize> right = XuiSize.expr(props.get("right"));
+        XuiExpression<XuiSize> top = XuiSize.expr(props.get("top"));
+        XuiExpression<XuiSize> bottom = XuiSize.expr(props.get("bottom"));
 
-        return new XuiLayoutSpacing(left, right, top, bottom);
+        return new XuiLayoutSpacing(loc, left, right, top, bottom);
+    }
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
@@ -75,6 +95,7 @@ public class XuiLayoutSpacing implements IJsonSerializable {
     public void serializeToJson(IJsonHandler out) {
         out.beginObject(null);
 
+        out.putNotNull("loc", this.loc);
         out.putNotNull("left", this.left);
         out.putNotNull("right", this.right);
         out.putNotNull("top", this.top);

@@ -17,14 +17,14 @@
           "col": "center"
         },
         "gap": {
-          "loc": "[1:48:0:0]text",
-          "row": "0.5x",
-          "col": "0.5x"
+          "loc": "[1:13:0:0]text",
+          "row": "${prop.gap}"
         },
         "padding": {
-          "loc": "[1:17:0:0]text",
-          "left": "1.0x",
-          "bottom": "1.0x"
+          "loc": "[1:42:0:0]text",
+          "left": "${props.padding}",
+          "top": "0.5x",
+          "bottom": "${props.padding}"
         }
       }
     }

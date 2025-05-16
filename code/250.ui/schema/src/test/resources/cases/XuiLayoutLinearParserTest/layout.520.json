@@ -1,20 +1,27 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:3:0:0]text",
       "type": "item",
-      "props": {
-        "gap": "${props.gap}"
-      },
       "pattern": "^a1$",
-      "align": [
-        "center",
-        "center"
-      ],
-      "width": "wrap_content",
-      "height": "wrap_content"
+      "props": {
+        "width": "wrap_content",
+        "height": "wrap_content",
+        "align": {
+          "row": "center",
+          "col": "center"
+        },
+        "gap": {
+          "loc": "[1:13:0:0]text",
+          "row": "${props.gap}",
+          "col": "${props.gap}"
+        }
+      }
     }
   ]
 }

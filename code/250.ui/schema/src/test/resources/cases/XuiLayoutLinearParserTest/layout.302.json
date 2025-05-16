@@ -1,158 +1,227 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
-      "type": "row",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "loc": "[1:1:0:0]text",
+      "type": "table",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[1:1:0:0]text",
           "type": "row",
-          "width": "match_parent",
-          "height": "match_parent",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
           "children": [
             {
-              "type": "item",
-              "pattern": "^a1$",
-              "align": {
-                "row": "start",
-                "col": "start"
+              "loc": "[1:3:0:0]text",
+              "type": "row",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
               },
-              "width": "wrap_content",
-              "height": "wrap_content"
-            }
-          ]
-        },
-        {
-          "type": "row",
-          "width": "match_parent",
-          "height": "match_parent",
-          "children": [
+              "children": [
+                {
+                  "loc": "[1:3:0:0]text",
+                  "type": "item",
+                  "pattern": "^a1$",
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
+                }
+              ]
+            },
             {
-              "type": "item",
-              "pattern": "^a2$",
-              "align": {
-                "row": "start",
-                "col": "start"
+              "loc": "[1:10:0:0]text",
+              "type": "row",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
               },
-              "width": "wrap_content",
-              "height": "wrap_content"
+              "children": [
+                {
+                  "loc": "[1:10:0:0]text",
+                  "type": "item",
+                  "pattern": "^a2$",
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
+                }
+              ]
             }
           ]
         }
       ]
     },
     {
+      "loc": "[2:2:0:0]text",
       "type": "row",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[2:2:0:0]text",
           "type": "item",
           "pattern": "^b1$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         },
         {
+          "loc": "[2:7:0:0]text",
           "type": "item",
           "pattern": "^b2$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         }
       ]
     },
     {
+      "loc": "[3:1:0:0]text",
       "type": "table",
-      "width": "match_parent",
-      "height": "wrap_content",
+      "props": {
+        "width": "match_parent",
+        "height": "wrap_content"
+      },
       "children": [
         {
+          "loc": "[3:1:0:0]text",
           "type": "row",
-          "width": "match_parent",
-          "height": "wrap_content",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
           "children": [
             {
+              "loc": "[3:3:0:0]text",
               "type": "row",
-              "width": "match_parent",
-              "height": "match_parent",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
+              },
               "children": [
                 {
+                  "loc": "[3:3:0:0]text",
                   "type": "item",
                   "pattern": "^c1$",
-                  "align": {
-                    "row": "start",
-                    "col": "start"
-                  },
-                  "width": "wrap_content",
-                  "height": "wrap_content"
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
                 }
               ]
             },
             {
+              "loc": "[3:10:0:0]text",
               "type": "row",
-              "width": "match_parent",
-              "height": "match_parent",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
+              },
               "children": [
                 {
+                  "loc": "[3:10:0:0]text",
                   "type": "item",
                   "pattern": "^c2$",
-                  "align": {
-                    "row": "start",
-                    "col": "start"
-                  },
-                  "width": "wrap_content",
-                  "height": "wrap_content"
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
                 }
               ]
             }
           ]
         },
         {
+          "loc": "[4:1:0:0]text",
           "type": "row",
-          "width": "match_parent",
-          "height": "wrap_content",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
           "children": [
             {
+              "loc": "[4:3:0:0]text",
               "type": "row",
-              "width": "match_parent",
-              "height": "match_parent",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
+              },
               "children": [
                 {
+                  "loc": "[4:3:0:0]text",
                   "type": "item",
                   "pattern": "^d1$",
-                  "align": {
-                    "row": "start",
-                    "col": "start"
-                  },
-                  "width": "wrap_content",
-                  "height": "wrap_content"
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
                 }
               ]
             },
             {
+              "loc": "[4:10:0:0]text",
               "type": "row",
-              "width": "match_parent",
-              "height": "match_parent",
+              "props": {
+                "width": "match_parent",
+                "height": "match_parent"
+              },
               "children": [
                 {
+                  "loc": "[4:10:0:0]text",
                   "type": "item",
                   "pattern": "^d2$",
-                  "align": {
-                    "row": "start",
-                    "col": "start"
-                  },
-                  "width": "wrap_content",
-                  "height": "wrap_content"
+                  "props": {
+                    "width": "wrap_content",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
                 }
               ]
             }

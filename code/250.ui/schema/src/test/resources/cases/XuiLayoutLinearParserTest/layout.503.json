@@ -1,44 +1,52 @@
 {
   "type": "column",
-  "width": "match_parent",
-  "height": "match_parent",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
   "children": [
     {
+      "loc": "[1:4:0:0]text",
       "type": "row",
       "props": {
+        "width": "wrap_content",
+        "height": "wrap_content",
+        "align": {
+          "row": "center",
+          "col": "center"
+        },
         "gap": {
+          "loc": "[1:19:0:0]text",
           "row": "1.0x",
           "col": "1.0x"
-        },
-        "span": {},
-        "padding": {}
+        }
       },
-      "align": {
-        "row": "center",
-        "col": "center"
-      },
-      "width": "wrap_content",
-      "height": "wrap_content",
       "children": [
         {
+          "loc": "[1:4:0:0]text",
           "type": "item",
           "pattern": "^a1$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         },
         {
+          "loc": "[1:9:0:0]text",
           "type": "item",
           "pattern": "^a2$",
-          "align": {
-            "row": "start",
-            "col": "start"
-          },
-          "width": "wrap_content",
-          "height": "wrap_content"
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
         }
       ]
     }
