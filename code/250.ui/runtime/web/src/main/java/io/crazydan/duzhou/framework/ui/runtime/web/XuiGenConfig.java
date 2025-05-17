@@ -22,6 +22,11 @@ package io.crazydan.duzhou.framework.ui.runtime.web;
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
 
 import static io.nop.commons.util.StringHelper.isValidPropPath;
 
@@ -43,7 +48,7 @@ public class XuiGenConfig {
     private UnitNumber lineSize;
 
     /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' }</code> 或 <code>{ props.size }</code> */
-    public String createXmlAttrExpr(XuiExpression<?> expr) {
+    public String toXmlAttrExpr(XuiExpression<?> expr) {
         Object var = expr != null ? expr.getVariable() : null;
         if (var == null) {
             return null;
@@ -62,8 +67,28 @@ public class XuiGenConfig {
         return this.exprPrefix + var + this.exprSuffix;
     }
 
+    public String toXmlAttrExpr(XuiLayoutSize value) {
+        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
+    }
+
+    public String toXmlAttrExpr(XuiLayoutGap value) {
+        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
+    }
+
+    public String toXmlAttrExpr(XuiLayoutSpacing value) {
+        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
+    }
+
+    public String toXmlAttrExpr(XuiLayoutAlign value) {
+        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix) : null;
+    }
+
+    public String toXmlAttrExpr(XuiLayoutSpan value) {
+        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix) : null;
+    }
+
     /** 将 {@link XuiSize} 转换为运行时尺寸 */
-    public UnitNumber fromXuiSize(XuiSize size) {
+    private UnitNumber fromXuiSize(XuiSize size) {
         if (size.unit == XuiSize.Unit.percent) {
             return UnitNumber.create(size.value, "%");
         }

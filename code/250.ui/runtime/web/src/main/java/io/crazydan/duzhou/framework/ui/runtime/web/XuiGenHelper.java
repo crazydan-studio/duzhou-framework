@@ -151,28 +151,15 @@ public class XuiGenHelper {
     public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, XuiGenConfig genConfig) {
         Map<String, String> attrs = new HashMap<>();
 
-        String exprPrefix = genConfig.getExprPrefix();
-        String exprSuffix = genConfig.getExprSuffix();
         XuiLayoutProps props = node.getProps();
 
-        String width = props.getWidth().toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize);
-        String height = props.getHeight().toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize);
-        ifNotNull(width, (v) -> attrs.put("width", v));
-        ifNotNull(height, (v) -> attrs.put("height", v));
+        ifNotNull(genConfig.toXmlAttrExpr(props.getWidth()), (v) -> attrs.put("width", v));
+        ifNotNull(genConfig.toXmlAttrExpr(props.getHeight()), (v) -> attrs.put("height", v));
 
-        ifNotNull(props.getAlign(), (v) -> {
-            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix), (vv) -> attrs.put("align", vv));
-        });
-        ifNotNull(props.getSpan(), (v) -> {
-            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix), (vv) -> attrs.put("span", vv));
-        });
-        ifNotNull(props.getGap(), (v) -> {
-            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize), (vv) -> attrs.put("gap", vv));
-        });
-        ifNotNull(props.getPadding(), (v) -> {
-            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize),
-                      (vv) -> attrs.put("padding", vv));
-        });
+        ifNotNull(genConfig.toXmlAttrExpr(props.getAlign()), (v) -> attrs.put("align", v));
+        ifNotNull(genConfig.toXmlAttrExpr(props.getSpan()), (v) -> attrs.put("span", v));
+        ifNotNull(genConfig.toXmlAttrExpr(props.getGap()), (v) -> attrs.put("gap", v));
+        ifNotNull(genConfig.toXmlAttrExpr(props.getPadding()), (v) -> attrs.put("padding", v));
 
         return attrs;
     }
