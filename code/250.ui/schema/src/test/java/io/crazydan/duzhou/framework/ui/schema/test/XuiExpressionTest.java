@@ -35,6 +35,7 @@ import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Literal;
+import io.nop.xlang.ast.UnaryExpression;
 import io.nop.xlang.xpl.IXplCompiler;
 import io.nop.xlang.xpl.utils.XplParseHelper;
 import org.junit.jupiter.api.Assertions;
@@ -51,11 +52,24 @@ public class XuiExpressionTest extends NopJunitTestCase {
         Map<String, String> samples = new HashMap<>() {{
             put("1u", "\"1u\"");
             put("${props.size}", "props.size");
+            put("${props.size + props.gap}", "props.size + props.gap");
+            put("${props.name.substring(0, 10)}", "props.name.substring(0,10)");
+            put("${props.size > 10}", "props.size > 10");
+            put("${props.name != null}", "props.name != null");
+            put("${!props.disabled}", "!props.disabled");
             put("Size is ${props.size}", "Size is ${props.size}");
+            // TODO 表达式符号丢失
+            put("Disabled ${!props.disabled}", "Disabled ${props.disabled}");
+            put("Result is ${props.size > 10}", "Result is ${props.size > 10}");
         }};
         samples.forEach((sample, expected) -> {
             Expression expr = create(sample);
             String actual = expr.toExprString();
+
+            if (expr instanceof UnaryExpression) {
+                UnaryExpression e = (UnaryExpression) expr;
+                actual = e.getOperator() + e.getArgument().toExprString();
+            }
 
             Assertions.assertEquals(expected, actual);
         });
