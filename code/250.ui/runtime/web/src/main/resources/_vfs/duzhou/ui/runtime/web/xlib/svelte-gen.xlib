@@ -25,6 +25,11 @@
 >
     <tags>
         <GenComponent outputMode="html">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="forPage" type="Boolean" />
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
@@ -61,6 +66,11 @@
         </GenComponent>
 
         <GenComponentImports outputMode="text">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
 
@@ -78,6 +88,11 @@
         </GenComponentImports>
 
         <GenComponentNode outputMode="html">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
             <attr name="node"
@@ -147,6 +162,11 @@
         </GenComponentNode>
 
         <GenComponentNamed outputMode="html">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
             <attr name="named"
@@ -203,6 +223,11 @@
         </GenComponentNamed>
 
         <GenComponentNodeLayout outputMode="html">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
             <attr name="node"
@@ -217,7 +242,7 @@
                     import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
 
                     const layoutName = layoutNamePrefix + StringHelper.camelCase(layout.type.name(), true);
-                    const layoutAttrs = XuiGenHelper.genLayoutNodeAttrs(layout, '{', '}');
+                    const layoutAttrs = XuiGenHelper.genLayoutNodeAttrs(layout, genConfig);
                 ]]></c:script>
                 <c:choose>
                     <when test="${layout.type.name() == 'item'}">

@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
@@ -29,6 +30,8 @@ import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
+
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
  * 布局间隔
@@ -78,6 +81,21 @@ public class XuiLayoutGap implements ISourceLocationGetter, IJsonSerializable {
     @Override
     public SourceLocation getLocation() {
         return this.loc;
+    }
+
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>{ {row: 'start'} }</code>
+     */
+    public String toXmlAttrExpr(String exprPrefix, String exprSuffix, Function<XuiSize, Object> sizeConverter) {
+        StringBuilder sb = new StringBuilder();
+
+        String row = XuiSize.toXmlAttrExpr(this.row, sizeConverter);
+        String col = XuiSize.toXmlAttrExpr(this.col, sizeConverter);
+        ifNotNull(row, (v) -> sb.append("row:").append(v).append(","));
+        ifNotNull(col, (v) -> sb.append("col:").append(v).append(","));
+
+        return sb.length() > 0 ? exprPrefix + '{' + sb + '}' + exprSuffix : null;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

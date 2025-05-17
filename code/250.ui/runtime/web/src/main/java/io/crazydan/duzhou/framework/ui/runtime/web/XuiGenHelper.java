@@ -142,24 +142,30 @@ public class XuiGenHelper {
      * <p/>
      * 生成结果如下：
      * <pre>
-     * { gap: "1x", padding: "{{ left: \"1x\", right: \".5x\" }}" }
+     * { gap: "1x", padding: "{ {left: \"1x\", right: \".5x\"} }" }
      * </pre>
      * <pre>
-     * { gap: "{props.gap}", padding: "{{ left: props.padding, right: \"1x\" }}" }
+     * { gap: "{ props.gap }", padding: "{ {left: props.padding, right: \"1x\"} }" }
      * </pre>
      */
-    public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, String exprPrefix, String exprSuffix) {
+    public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, XuiGenConfig genConfig) {
         Map<String, String> attrs = new HashMap<>();
 
+        String exprPrefix = genConfig.getExprPrefix();
+        String exprSuffix = genConfig.getExprSuffix();
         XuiLayoutProps props = node.getProps();
 
-        String width = props.getWidth().toXmlAttrExpr(exprPrefix, exprSuffix);
-        String height = props.getHeight().toXmlAttrExpr(exprPrefix, exprSuffix);
+        String width = props.getWidth().toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize);
+        String height = props.getHeight().toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize);
         ifNotNull(width, (v) -> attrs.put("width", v));
         ifNotNull(height, (v) -> attrs.put("height", v));
 
-        String align = props.getAlign() != null ? props.getAlign().toXmlAttrExpr(exprPrefix, exprSuffix) : null;
-        ifNotNull(align, (v) -> attrs.put("align", v));
+        ifNotNull(props.getAlign(), (v) -> {
+            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix), (vv) -> attrs.put("align", vv));
+        });
+        ifNotNull(props.getGap(), (v) -> {
+            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize), (vv) -> attrs.put("gap", vv));
+        });
 
         return attrs;
     }

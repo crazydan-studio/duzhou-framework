@@ -20,9 +20,10 @@
 package io.crazydan.duzhou.framework.ui.domain.type;
 
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
+import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
@@ -94,7 +95,7 @@ public class XuiSize implements IJsonSerializable {
     }
 
     public static XuiSize parse(SourceLocation loc, String s) {
-        StringHelper.NumberAndUnit nut = extractNumberAndUnit(s);
+        UnitNumber nut = extractNumberAndUnit(s);
         if (nut != null && nut.number != null && nut.unit != null) {
             for (Unit unit : Unit.values()) {
                 if (!unit.label.equals(nut.unit)) {
@@ -112,6 +113,36 @@ public class XuiSize implements IJsonSerializable {
                                                                    Arrays.stream(Unit.values())
                                                                          .map(u -> u.label)
                                                                          .collect(Collectors.joining(", ")));
+    }
+
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>'10rem'</code> 或 <code>props.width</code>
+     */
+    public static String toXmlAttrExpr(XuiExpression<XuiSize> expr, Function<XuiSize, Object> converter) {
+        return toXmlAttrExpr(expr, null, null, converter);
+    }
+
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>{ '1rem' }</code> 或 <code>{ props.width }</code>
+     */
+    public static String toXmlAttrExpr(
+            XuiExpression<XuiSize> expr, String exprPrefix, String exprSuffix, Function<XuiSize, Object> converter
+    ) {
+        if (expr == null) {
+            return null;
+        }
+
+        Object val = expr.getValue();
+
+        if (val instanceof XuiSize) {
+            val = converter.apply((XuiSize) val);
+            val = "'" + val + '\'';
+        }
+        return val != null
+               ? (exprPrefix != null ? exprPrefix : "") + val + (exprSuffix != null ? exprSuffix : "")
+               : null;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

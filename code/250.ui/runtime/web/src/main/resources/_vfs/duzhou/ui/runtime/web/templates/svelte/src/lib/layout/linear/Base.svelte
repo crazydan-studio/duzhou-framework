@@ -9,7 +9,7 @@
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
-  ]} style:--gap={gap}>
+  ]} style:--gap={gap && gap.col}>
   {@render children?.()}
 </div>
 

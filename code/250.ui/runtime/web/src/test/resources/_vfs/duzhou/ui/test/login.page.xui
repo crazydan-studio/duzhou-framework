@@ -63,7 +63,7 @@
                         | [username-label]> | <[username-input]> |
                         | { [password-label] }(span:{col:2})> | <[password-input]> |
                         | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:.5x)
+                    }(gap:1x)
 
                     >[warning-text]<
 

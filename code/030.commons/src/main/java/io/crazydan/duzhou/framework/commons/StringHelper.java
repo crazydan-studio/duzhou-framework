@@ -49,7 +49,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         return firstNonNull(n, defaultValue);
     }
 
-    public static NumberAndUnit extractNumberAndUnit(String str) {
+    public static UnitNumber extractNumberAndUnit(String str) {
         str = trimToNull(str);
         if (str == null) {
             return null;
@@ -66,7 +66,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         String number = pos > 0 ? str.substring(0, pos) : null;
         String unit = pos < str.length() ? str.substring(pos) : null;
 
-        return new NumberAndUnit(tryParseNumber(number), unit);
+        return new UnitNumber(tryParseNumber(number), unit);
     }
 
     /**
@@ -113,15 +113,5 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         str = hyphen ? str.replaceAll("_", "-") : str;
 
         return upper ? str.toUpperCase() : str.toLowerCase();
-    }
-
-    public static class NumberAndUnit {
-        public final Number number;
-        public final String unit;
-
-        NumberAndUnit(Number number, String unit) {
-            this.number = number;
-            this.unit = unit;
-        }
     }
 }

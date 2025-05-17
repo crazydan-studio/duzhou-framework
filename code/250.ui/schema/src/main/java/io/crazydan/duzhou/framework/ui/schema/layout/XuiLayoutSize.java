@@ -19,6 +19,8 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.function.Function;
+
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
@@ -105,19 +107,16 @@ public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
 
     /**
      * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ 'match_parent' }</code>、<code>{ '1x' }</code>
+     * 如，<code>{ 'match_parent' }</code>、<code>{ '1rem' }</code>
      * 或 <code>{ props.width }</code>
      */
-    public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
+    public String toXmlAttrExpr(String exprPrefix, String exprSuffix, Function<XuiSize, Object> sizeConverter) {
         Object val = this.type.name();
 
         if (this.type == Type.with_specified) {
             assert this.value != null;
 
-            val = this.value.getValue();
-            if (!(val instanceof XuiSize)) {
-                return val != null ? exprPrefix + val + exprSuffix : null;
-            }
+            return XuiSize.toXmlAttrExpr(this.value, exprPrefix, exprSuffix, sizeConverter);
         }
         return exprPrefix + '\'' + val + '\'' + exprSuffix;
     }

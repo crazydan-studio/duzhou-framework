@@ -52,5 +52,19 @@
             // 第一个参数为循环变量名，第二个参数为循环变量的数据来源
             builder.defineLoopVar('page', 'pages');
         ]]></c:script>
+
+        <c:script><![CDATA[
+            import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig;
+            import io.crazydan.duzhou.framework.commons.UnitNumber;
+
+            const genConfig = new XuiGenConfig();
+            genConfig.exprPrefix = '{';
+            genConfig.exprSuffix = '}';
+            genConfig.fontSize = UnitNumber.create(16, 'px');
+            genConfig.baseSize = UnitNumber.create(0.5, 'rem');
+            genConfig.lineSize = UnitNumber.create(1, 'px');
+
+            builder.defineGlobalVar('genConfig', genConfig);
+        ]]></c:script>
     </gen:DefineLoop>
 </c:unit>

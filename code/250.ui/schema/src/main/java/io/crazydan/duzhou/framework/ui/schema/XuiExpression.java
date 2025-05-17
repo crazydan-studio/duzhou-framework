@@ -90,7 +90,7 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         if (this.expr instanceof Literal) {
             return ((Literal) this.expr).getValue();
         } else {
-            return this.expr.toString();
+            return this.expr.toExprString();
         }
     }
 
@@ -106,7 +106,7 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         if (this.expr instanceof Literal) {
             value = ((Literal) this.expr).getValue();
         } else {
-            String s = this.expr.toString();
+            String s = this.expr.toExprString();
             value = XplParseHelper.hasExpr(s) ? s : "${" + s + '}';
         }
 
@@ -123,6 +123,6 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
             return ((Literal) this.expr).getStringValue();
         }
 
-        return this.expr.toString();
+        return this.expr.toExprString();
     }
 }

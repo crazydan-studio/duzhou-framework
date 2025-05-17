@@ -9,7 +9,7 @@
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
-  ]} style:--linear-table-row-gap={gap}>
+  ]} style:--linear-table-row-gap={gap && gap.col}>
   {@render children?.()}
 </table>
 
