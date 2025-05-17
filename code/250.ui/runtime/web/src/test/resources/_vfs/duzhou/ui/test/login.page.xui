@@ -44,7 +44,7 @@
                 v>{
                     >[login-logo]<
                     <[login-form]>
-                }(gap:{col:2u})<^
+                }(gap:4u)<^
 
                 >{
                     [copyright-text] [copyright-owner]
@@ -58,20 +58,21 @@
         <Form xui:name="login-form">
             <xui:layout>
                 <linear><![CDATA[
-                    // 通过表格对齐输入组件，并设置行间隔
-                    {
-                        | [username-label]> | <[username-input]> |
-                        | { [password-label] }(span:{col:2})> | <[password-input]> |
-                        | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:{col:1u})
+                    <{
+                        // 通过表格对齐输入组件，并设置行间隔
+                        {
+                            | [username-label]> | <[username-input]> |
+                            | { [password-label] }(span:{col:2})> | <[password-input]> |
+                            | <{ [remember-me-input] v[remember-me-label]^ } |
+                        }(gap:1u)
 
-                    >[warning-text]<
+                        >[warning-text]<
 
-                    <[login-button]>
-                    { [forgot-password-button] [register-button] }(gap:{row:1u})>
+                        <[login-button]>
+                        { [forgot-password-button] [register-button] }(gap:2u)>
+                    }(gap:1u)>
                 ]]></linear>
             </xui:layout>
-
 
             <Text xui:name="username-label">帐号：</Text>
             <Input xui:name="username-input" type="text" />

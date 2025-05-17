@@ -9,7 +9,7 @@
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
-  ]} style:--linear-table-row-gap={gap && gap.col}>
+  ]} style:--linear-table-col-gap={gap && gap.col}>
   {@render children?.()}
 </table>
 
@@ -42,12 +42,8 @@
       }
 
       /* 通过在布局节点上设置相应宽度的透明边框实现，从而避免影响以 margin 方式实现的对齐机制 */
-      &.has-gap tr {
-        border-top: var(--linear-table-row-gap) solid transparent;
-
-        &:first-child {
-          border-top: 0;
-        }
+      &.has-gap > tr:not(:last-child) {
+        border-bottom: var(--linear-table-col-gap) solid transparent;
       }
     }
   }
