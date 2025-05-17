@@ -117,10 +117,10 @@
                 },
                 "padding": {
                   "loc": "[2:27:0:0]text",
-                  "left": "0.5x",
-                  "right": "0.5x",
-                  "top": "0.5x",
-                  "bottom": "0.5x"
+                  "left": "0.5u",
+                  "right": "0.5u",
+                  "top": "0.5u",
+                  "bottom": "0.5u"
                 }
               },
               "children": [

@@ -85,13 +85,14 @@ public class XuiLayoutGap implements ISourceLocationGetter, IJsonSerializable {
 
     /**
      * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ {row: 'start'} }</code>
+     * 如，<code>{ {row: '1u'} }</code> 或 <code>{ {row: props.gap} }</code>
      */
     public String toXmlAttrExpr(String exprPrefix, String exprSuffix, Function<XuiSize, Object> sizeConverter) {
         StringBuilder sb = new StringBuilder();
 
         String row = XuiSize.toXmlAttrExpr(this.row, sizeConverter);
         String col = XuiSize.toXmlAttrExpr(this.col, sizeConverter);
+
         ifNotNull(row, (v) -> sb.append("row:").append(v).append(","));
         ifNotNull(col, (v) -> sb.append("col:").append(v).append(","));
 

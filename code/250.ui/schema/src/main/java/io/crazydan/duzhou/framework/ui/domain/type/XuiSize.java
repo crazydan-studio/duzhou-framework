@@ -51,16 +51,16 @@ public class XuiSize implements IJsonSerializable {
          * 统一的基准尺寸单位
          * <p/>
          * 在不同平台，可根据其最佳规范将该单位的尺寸进行转换，如：
-         * - 移动端（Native）：1x = 8dp（Android）/ 8pt（iOS）；
-         * - Web端（HTML/CSS）：1x = 0.5rem（默认 1rem = 16px，即 1x = 8px）；
+         * - 移动端（Native）：1u = 8dp（Android）/ 8pt（iOS）；
+         * - Web端（HTML/CSS）：1u = 0.5rem（默认 1rem = 16px，即 1u = 8px）；
          */
-        base("x"),
+        base("u"),
 
         /** 百分比 */
         percent("%"),
 
         /** 线条单位：代表最细的线条宽度 */
-        a_line("L"),
+        a_line("i"),
         ;
 
         public final String label;
@@ -86,7 +86,7 @@ public class XuiSize implements IJsonSerializable {
      * @param vl
      *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
      *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
-     *         <code>1x</code>、<code>50%</code> 等形式的尺寸常量
+     *         <code>1u</code>、<code>50%</code> 等形式的尺寸常量
      * @return 在 {@link #parse} 对 {@link ValueWithLocation#getValue()}
      * 的解析结果为 <code>null</code> 时，返回 <code>null</code>
      */
@@ -96,7 +96,11 @@ public class XuiSize implements IJsonSerializable {
 
     public static XuiSize parse(SourceLocation loc, String s) {
         UnitNumber nut = extractNumberAndUnit(s);
-        if (nut != null && nut.number != null && nut.unit != null) {
+        if (nut == null) {
+            return null;
+        }
+
+        if (nut.number != null && nut.unit != null) {
             for (Unit unit : Unit.values()) {
                 if (!unit.label.equals(nut.unit)) {
                     continue;
@@ -134,7 +138,7 @@ public class XuiSize implements IJsonSerializable {
             return null;
         }
 
-        Object val = expr.getValue();
+        Object val = expr.getVariable();
 
         if (val instanceof XuiSize) {
             val = converter.apply((XuiSize) val);

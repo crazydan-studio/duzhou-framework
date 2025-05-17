@@ -142,10 +142,10 @@ public class XuiGenHelper {
      * <p/>
      * 生成结果如下：
      * <pre>
-     * { gap: "1x", padding: "{ {left: \"1x\", right: \".5x\"} }" }
+     * { gap: "{ '16px' }", padding: "{ {left: '16px', right: '8px'} }" }
      * </pre>
      * <pre>
-     * { gap: "{ props.gap }", padding: "{ {left: props.padding, right: \"1x\"} }" }
+     * { gap: "{ props.gap }", padding: "{ {left: props.padding, right: '16px'} }" }
      * </pre>
      */
     public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, XuiGenConfig genConfig) {
@@ -163,8 +163,15 @@ public class XuiGenHelper {
         ifNotNull(props.getAlign(), (v) -> {
             ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix), (vv) -> attrs.put("align", vv));
         });
+        ifNotNull(props.getSpan(), (v) -> {
+            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix), (vv) -> attrs.put("span", vv));
+        });
         ifNotNull(props.getGap(), (v) -> {
             ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize), (vv) -> attrs.put("gap", vv));
+        });
+        ifNotNull(props.getPadding(), (v) -> {
+            ifNotNull(v.toXmlAttrExpr(exprPrefix, exprSuffix, genConfig::fromXuiSize),
+                      (vv) -> attrs.put("padding", vv));
         });
 
         return attrs;

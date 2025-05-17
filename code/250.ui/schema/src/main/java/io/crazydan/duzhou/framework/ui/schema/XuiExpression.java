@@ -86,7 +86,8 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         // TODO 表达式引用目标类型检查
     }
 
-    public Object getValue() {
+    /** @return 获取常量值，或者表达式 */
+    public Object getVariable() {
         if (this.expr instanceof Literal) {
             return ((Literal) this.expr).getValue();
         } else {

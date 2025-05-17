@@ -77,7 +77,7 @@
                 // 整体处于上层容器的中心位置
                 v>{
                     >[login-logo]<
-                    <[login-form]>
+                    <[login-form]>s
                 }<^
             ]]></linear>
         </xui:layout>
@@ -92,12 +92,12 @@
                         | [username-label]> | <[username-input]> |
                         | [password-label]> | <[password-input]> |
                         |                   | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:1x)
+                    }(gap:1u)
 
                     >[warning-text]<
 
                     <[login-button]>
-                    { [forgot-password-button] <> [register-button] }(gap: {row: 1x})
+                    { [forgot-password-button] <> [register-button] }(gap: {row: 1u})
                 ]]></linear>
             </xui:layout>
 

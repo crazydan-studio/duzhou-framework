@@ -90,7 +90,7 @@ public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
      * @param vl
      *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
      *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
-     *         <code>1x</code>、<code>50%</code> 等形式的尺寸常量，
+     *         <code>1u</code>、<code>50%</code> 等形式的尺寸常量，
      *         但 {@link XuiSize#parse} 对其常量的解析结果不能为 <code>null</code>
      */
     public static XuiLayoutSize with_specified(ValueWithLocation vl) {

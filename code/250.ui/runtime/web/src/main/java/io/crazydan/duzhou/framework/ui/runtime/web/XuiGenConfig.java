@@ -21,18 +21,65 @@ package io.crazydan.duzhou.framework.ui.runtime.web;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+
+import static io.nop.commons.util.StringHelper.isValidPropPath;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-17
  */
 public class XuiGenConfig {
+    /** 表达式模板前缀 */
     private String exprPrefix;
+    /** 表达式模板后缀 */
     private String exprSuffix;
 
+    /** 字体尺寸 */
     private UnitNumber fontSize;
+    /** 一个 {@link XuiSize.Unit#base} 单位对应的尺寸 */
     private UnitNumber baseSize;
+    /** 一个 {@link XuiSize.Unit#a_line} 单位对应的尺寸 */
     private UnitNumber lineSize;
+
+    /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' }</code> 或 <code>{ props.size }</code> */
+    public String createXmlAttrExpr(XuiExpression<?> expr) {
+        Object var = expr != null ? expr.getVariable() : null;
+        if (var == null) {
+            return null;
+        }
+
+        if (var instanceof String) {
+            if (!isValidPropPath((String) var)) {
+                var = "'" + var + '\'';
+            }
+        }
+
+        if (!(var instanceof Number) && !(var instanceof Boolean) && !(var instanceof String)) {
+            throw new IllegalStateException("Unsupported variable [" + var + "]");
+        }
+
+        return this.exprPrefix + var + this.exprSuffix;
+    }
+
+    /** 将 {@link XuiSize} 转换为运行时尺寸 */
+    public UnitNumber fromXuiSize(XuiSize size) {
+        if (size.unit == XuiSize.Unit.percent) {
+            return UnitNumber.create(size.value, "%");
+        }
+
+        UnitNumber base = getBaseSize();
+        switch (size.unit) {
+            case a_line: {
+                base = getLineSize();
+                break;
+            }
+        }
+
+        float value = size.value * base.number.floatValue();
+
+        return UnitNumber.create(value, base.unit);
+    }
 
     public String getExprPrefix() {
         return this.exprPrefix;
@@ -56,25 +103,6 @@ public class XuiGenConfig {
 
     public void setFontSize(UnitNumber fontSize) {
         this.fontSize = fontSize;
-    }
-
-    /** 将 {@link XuiSize} 转换为运行时尺寸 */
-    public UnitNumber fromXuiSize(XuiSize size) {
-        if (size.unit == XuiSize.Unit.percent) {
-            return UnitNumber.create(size.value, "%");
-        }
-
-        UnitNumber base = getBaseSize();
-        switch (size.unit) {
-            case a_line: {
-                base = getLineSize();
-                break;
-            }
-        }
-
-        float value = size.value * base.number.floatValue();
-
-        return UnitNumber.create(value, base.unit);
     }
 
     public UnitNumber getBaseSize() {

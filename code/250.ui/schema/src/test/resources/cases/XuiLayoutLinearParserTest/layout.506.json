@@ -18,13 +18,13 @@
         },
         "gap": {
           "loc": "[1:48:0:0]text",
-          "row": "0.5x",
-          "col": "0.5x"
+          "row": "0.5u",
+          "col": "0.5u"
         },
         "padding": {
           "loc": "[1:17:0:0]text",
-          "left": "1.0x",
-          "bottom": "1.0x"
+          "left": "1.0u",
+          "bottom": "1.0u"
         }
       }
     }

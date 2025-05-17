@@ -19,7 +19,17 @@
 
 package io.crazydan.duzhou.framework.ui.schema.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
@@ -27,6 +37,7 @@ import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Literal;
 import io.nop.xlang.xpl.IXplCompiler;
 import io.nop.xlang.xpl.utils.XplParseHelper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,14 +48,105 @@ public class XuiExpressionTest extends NopJunitTestCase {
 
     @Test
     public void test_parse_nop_xpl_expression() {
-        String[] samples = new String[] {
-                "1x", "${props.size}", "Size is ${props.size}",
-                };
-
-        for (String sample : samples) {
+        Map<String, String> samples = new HashMap<>() {{
+            put("1u", "\"1u\"");
+            put("${props.size}", "props.size");
+            put("Size is ${props.size}", "Size is ${props.size}");
+        }};
+        samples.forEach((sample, expected) -> {
             Expression expr = create(sample);
-            this.log.info("Expression: {}", expr);
-        }
+            String actual = expr.toExprString();
+
+            Assertions.assertEquals(expected, actual);
+        });
+    }
+
+    @Test
+    public void test_convert_to_xml_attr_expr() {
+        Map<Object, String> samples = new HashMap<>() {{
+            put("5u", "'5.0u'");
+            put("${props.size}", "props.size");
+        }};
+        samples.forEach((sample, expected) -> {
+            XuiExpression<XuiSize> expr = XuiSize.expr(ValueWithLocation.of(null, sample));
+            String actual = XuiSize.toXmlAttrExpr(expr, XuiSize::toString);
+
+            Assertions.assertEquals(expected, actual);
+        });
+
+        samples = new HashMap<>() {{
+            put(XuiLayoutSize.fill_remains(), "{'fill_remains'}");
+            put(XuiLayoutSize.match_parent(), "{'match_parent'}");
+            put(XuiLayoutSize.wrap_content(), "{'wrap_content'}");
+            put(XuiLayoutSize.with_specified(ValueWithLocation.of(null, "1u")), "{'1.0u'}");
+            put(XuiLayoutSize.with_specified(ValueWithLocation.of(null, "${props.size}")), "{props.size}");
+        }};
+        samples.forEach((sample, expected) -> {
+            String actual = ((XuiLayoutSize) sample).toXmlAttrExpr("{", "}", XuiSize::toString);
+
+            Assertions.assertEquals(expected, actual);
+        });
+
+        samples = new HashMap<>() {{
+            put(XuiLayoutAlign.create(null, null), null);
+            put(XuiLayoutAlign.create(XuiLayoutAlign.Direction.start, null), "{{row:'start',}}");
+            put(XuiLayoutAlign.create(null, XuiLayoutAlign.Direction.center), "{{col:'center',}}");
+            put(XuiLayoutAlign.create(XuiLayoutAlign.Direction.center, XuiLayoutAlign.Direction.center),
+                "{{row:'center',col:'center',}}");
+        }};
+        samples.forEach((sample, expected) -> {
+            String actual = ((XuiLayoutAlign) sample).toXmlAttrExpr("{", "}");
+
+            Assertions.assertEquals(expected, actual);
+        });
+
+        samples = new HashMap<>() {{
+            put(XuiLayoutSpan.create(ValueWithLocation.of(null, null)), null);
+            put(XuiLayoutSpan.create(ValueWithLocation.of(null, "2")), "{{row:2,col:2,}}");
+            put(XuiLayoutSpan.create(ValueWithLocation.of(null, "${props.span}")),
+                "{{row:props.span,col:props.span,}}");
+            put(XuiLayoutSpan.create(ValueWithLocation.of(null, new HashMap<>() {{
+                put("row", ValueWithLocation.of(null, "2"));
+                put("col", ValueWithLocation.of(null, "${props.span}"));
+            }})), "{{row:2,col:props.span,}}");
+        }};
+        samples.forEach((sample, expected) -> {
+            String actual = ((XuiLayoutSpan) sample).toXmlAttrExpr("{", "}");
+
+            Assertions.assertEquals(expected, actual);
+        });
+
+        samples = new HashMap<>() {{
+            put(XuiLayoutGap.create(ValueWithLocation.of(null, null)), null);
+            put(XuiLayoutGap.create(ValueWithLocation.of(null, "2u")), "{{row:'2.0u',col:'2.0u',}}");
+            put(XuiLayoutGap.create(ValueWithLocation.of(null, "${props.gap}")), "{{row:props.gap,col:props.gap,}}");
+            put(XuiLayoutGap.create(ValueWithLocation.of(null, new HashMap<>() {{
+                put("row", ValueWithLocation.of(null, "2.0u"));
+                put("col", ValueWithLocation.of(null, "${props.gap}"));
+            }})), "{{row:'2.0u',col:props.gap,}}");
+        }};
+        samples.forEach((sample, expected) -> {
+            String actual = ((XuiLayoutGap) sample).toXmlAttrExpr("{", "}", XuiSize::toString);
+
+            Assertions.assertEquals(expected, actual);
+        });
+
+        samples = new HashMap<>() {{
+            put(XuiLayoutSpacing.create(ValueWithLocation.of(null, null)), null);
+            put(XuiLayoutSpacing.create(ValueWithLocation.of(null, "2u")),
+                "{{left:'2.0u',right:'2.0u',top:'2.0u',bottom:'2.0u',}}");
+            put(XuiLayoutSpacing.create(ValueWithLocation.of(null, "${props.space}")),
+                "{{left:props.space,right:props.space,top:props.space,bottom:props.space,}}");
+            put(XuiLayoutSpacing.create(ValueWithLocation.of(null, new HashMap<>() {{
+                put("left", ValueWithLocation.of(null, "2.0u"));
+                put("top", ValueWithLocation.of(null, "${props.space}"));
+            }})), "{{left:'2.0u',top:props.space,}}");
+        }};
+        samples.forEach((sample, expected) -> {
+            String actual = ((XuiLayoutSpacing) sample).toXmlAttrExpr("{", "}", XuiSize::toString);
+
+            Assertions.assertEquals(expected, actual);
+        });
     }
 
     private Expression create(String s) {

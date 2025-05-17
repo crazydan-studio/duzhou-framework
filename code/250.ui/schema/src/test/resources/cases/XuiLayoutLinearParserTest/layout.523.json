@@ -23,7 +23,7 @@
         "padding": {
           "loc": "[1:42:0:0]text",
           "left": "${props.padding}",
-          "top": "0.5x",
+          "top": "0.5u",
           "bottom": "${props.padding}"
         }
       }

@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
@@ -29,6 +30,8 @@ import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
+
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
  * 布局空白
@@ -88,6 +91,26 @@ public class XuiLayoutSpacing implements ISourceLocationGetter, IJsonSerializabl
     @Override
     public SourceLocation getLocation() {
         return this.loc;
+    }
+
+    /**
+     * 转换为 xml 属性的对象表达式，
+     * 如，<code>{ {left: '1u'} }</code> 或 <code>{ {right: props.gap} }</code>
+     */
+    public String toXmlAttrExpr(String exprPrefix, String exprSuffix, Function<XuiSize, Object> sizeConverter) {
+        StringBuilder sb = new StringBuilder();
+
+        String left = XuiSize.toXmlAttrExpr(this.left, sizeConverter);
+        String right = XuiSize.toXmlAttrExpr(this.right, sizeConverter);
+        String top = XuiSize.toXmlAttrExpr(this.top, sizeConverter);
+        String bottom = XuiSize.toXmlAttrExpr(this.bottom, sizeConverter);
+
+        ifNotNull(left, (v) -> sb.append("left:").append(v).append(","));
+        ifNotNull(right, (v) -> sb.append("right:").append(v).append(","));
+        ifNotNull(top, (v) -> sb.append("top:").append(v).append(","));
+        ifNotNull(bottom, (v) -> sb.append("bottom:").append(v).append(","));
+
+        return sb.length() > 0 ? exprPrefix + '{' + sb + '}' + exprSuffix : null;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
