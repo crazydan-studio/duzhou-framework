@@ -1,7 +1,7 @@
 <script lang="ts">
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
-  const { type, width, height, align, gap, children } = $props();
+  const { type, width, height, align, gap, padding, children } = $props();
 </script>
 
 <div class={[
@@ -9,9 +9,14 @@
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
+    padding && 'has-padding',
   ]}
   style:--linear-col-gap={gap && gap.col}
   style:--linear-row-gap={gap && gap.row}
+  style:padding-left={padding && padding.left}
+  style:padding-right={padding && padding.right}
+  style:padding-top={padding && padding.top}
+  style:padding-bottom={padding && padding.bottom}
 >
   {@render children?.()}
 </div>
@@ -20,15 +25,20 @@
   /** https://lesscss.org/ */
   @import "./css/layout.less";
 
-  .row {
+  .linear {
     display: flex;
-    flex-direction: row;
+    /* 在多行时，无法控制最后一行的底部间隔，
+    故而，只允许始终为单行，通过滚动条显隐配置处理溢出 */
     flex-wrap: nowrap;
   }
+
+  .row {
+    .linear();
+    flex-direction: row;
+  }
   .column {
-    display: flex;
+    .linear();
     flex-direction: column;
-    flex-wrap: nowrap;
   }
 
   .item {

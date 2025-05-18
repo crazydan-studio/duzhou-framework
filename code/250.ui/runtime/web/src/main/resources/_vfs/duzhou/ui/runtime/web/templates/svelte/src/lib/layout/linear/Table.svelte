@@ -1,15 +1,26 @@
 <script lang="ts">
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
-  const { width, height, align, gap, children } = $props();
+  const { width, height, align, gap, padding, children } = $props();
 </script>
 
+<!--
+在 `border-collapse: collapse` 模式下：
+- padding 只能采用透明 border 方式实现，直接设置 padding 是无效的；
+-->
 <table class={[
     'xui-layout', 'linear', 'table',
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
     gap && 'has-gap',
-  ]} style:--linear-table-col-gap={gap && gap.col}>
+    padding && 'has-padding',
+  ]}
+  style:--linear-table-col-gap={gap && gap.col}
+  style:border-left={padding && padding.left && (padding.left + ' solid transparent')}
+  style:border-right={padding && padding.right && (padding.right + ' solid transparent')}
+  style:border-top={padding && padding.top && (padding.top + ' solid transparent')}
+  style:border-bottom={padding && padding.bottom && (padding.bottom + ' solid transparent')}
+>
   {@render children?.()}
 </table>
 

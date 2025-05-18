@@ -31,6 +31,7 @@ import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
@@ -80,10 +81,13 @@ public class XuiLayoutSpacing implements ISourceLocationGetter, IJsonSerializabl
         // Note: ValueWithLocation 中的位置为值的开始位置
         Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        XuiExpression<XuiSize> left = XuiSize.expr(props.get("left"));
-        XuiExpression<XuiSize> right = XuiSize.expr(props.get("right"));
-        XuiExpression<XuiSize> top = XuiSize.expr(props.get("top"));
-        XuiExpression<XuiSize> bottom = XuiSize.expr(props.get("bottom"));
+        XuiExpression<XuiSize> row = XuiSize.expr(props.get("row"));
+        XuiExpression<XuiSize> left = firstNonNull(XuiSize.expr(props.get("left")), row);
+        XuiExpression<XuiSize> right = firstNonNull(XuiSize.expr(props.get("right")), row);
+
+        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
+        XuiExpression<XuiSize> top = firstNonNull(XuiSize.expr(props.get("top")), col);
+        XuiExpression<XuiSize> bottom = firstNonNull(XuiSize.expr(props.get("bottom")), col);
 
         return new XuiLayoutSpacing(loc, left, right, top, bottom);
     }

@@ -89,6 +89,8 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             // put("layout.522.json", "[a1](${props.layout})");
             put("layout.523.json",
                 "v>[a1](gap: {row: ${prop.gap}}, padding: {left: ${props.padding}, top: .5u, bottom: ${props.padding}})<^");
+            put("layout.524.json",
+                "v>[a1](padding: {row: ${props.padding}, left:.5u, col: .5u, bottom: ${props.padding}})<^");
         }};
 
         XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);

@@ -1,0 +1,29 @@
+{
+  "type": "column",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
+  "children": [
+    {
+      "loc": "[1:3:0:0]text",
+      "type": "item",
+      "pattern": "^a1$",
+      "props": {
+        "width": "wrap_content",
+        "height": "wrap_content",
+        "align": {
+          "row": "center",
+          "col": "center"
+        },
+        "padding": {
+          "loc": "[1:17:0:0]text",
+          "left": "0.5u",
+          "right": "${props.padding}",
+          "top": "0.5u",
+          "bottom": "${props.padding}"
+        }
+      }
+    }
+  ]
+}
