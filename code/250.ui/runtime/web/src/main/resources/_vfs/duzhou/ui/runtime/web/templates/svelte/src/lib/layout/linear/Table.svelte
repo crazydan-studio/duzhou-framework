@@ -15,7 +15,8 @@
     gap && 'has-gap',
     padding && 'has-padding',
   ]}
-  style:--linear-table-col-gap={gap && gap.col}
+  style:--linear-table-row-gap={gap && gap.row || 0}
+  style:--linear-table-col-gap={gap && gap.col || 0}
   style:padding-left={padding && padding.left}
   style:padding-right={padding && padding.right}
   style:padding-top={padding && padding.top}
@@ -42,8 +43,8 @@
     .table-td();
     width: 100%;
     height: 100%;
-    /* 合并边框，消除 border-spacing */
-    border-collapse: collapse;
+    /* 默认行间无间隔 */
+    border-spacing: 0;
 
     :global {
       tr {
@@ -59,11 +60,7 @@
   }
 
   .table.has-gap > table {
-    :global {
-      /* 通过在布局节点上设置相应宽度的透明边框实现，从而避免影响以 margin 方式实现的对齐机制 */
-      & > tr:not(:last-child) {
-        border-bottom: var(--linear-table-col-gap) solid transparent;
-      }
-    }
+    /* Note: 与 row/colum 布局保持一致，仅设置列方向上的间隔，水平方向的间隔为 0 */
+    border-spacing: 0 var(--linear-table-col-gap);
   }
 </style>
