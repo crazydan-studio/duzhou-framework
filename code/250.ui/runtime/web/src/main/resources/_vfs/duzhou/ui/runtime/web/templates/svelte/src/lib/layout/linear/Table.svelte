@@ -8,7 +8,7 @@
 在 `border-collapse: collapse` 模式下：
 - padding 只能采用透明 border 方式实现，直接设置 padding 是无效的；
 -->
-<table class={[
+<div class={[
     'xui-layout', 'linear', 'table',
     sizeToClass('width-', width), sizeToClass('height-', height),
     alignToClass(align),
@@ -16,13 +16,15 @@
     padding && 'has-padding',
   ]}
   style:--linear-table-col-gap={gap && gap.col}
-  style:border-left={padding && padding.left && (padding.left + ' solid transparent')}
-  style:border-right={padding && padding.right && (padding.right + ' solid transparent')}
-  style:border-top={padding && padding.top && (padding.top + ' solid transparent')}
-  style:border-bottom={padding && padding.bottom && (padding.bottom + ' solid transparent')}
+  style:padding-left={padding && padding.left}
+  style:padding-right={padding && padding.right}
+  style:padding-top={padding && padding.top}
+  style:padding-bottom={padding && padding.bottom}
 >
-  {@render children?.()}
-</table>
+  <table>
+    {@render children?.()}
+  </table>
+</div>
 
 <style lang="less">
   /** https://lesscss.org/ */
@@ -36,8 +38,10 @@
     padding: 0;
   }
 
-  .table {
+  .table > table {
     .table-td();
+    width: 100%;
+    height: 100%;
     /* 合并边框，消除 border-spacing */
     border-collapse: collapse;
 
@@ -51,9 +55,13 @@
         /* 禁止换行 */
         white-space: nowrap;
       }
+    }
+  }
 
+  .table.has-gap > table {
+    :global {
       /* 通过在布局节点上设置相应宽度的透明边框实现，从而避免影响以 margin 方式实现的对齐机制 */
-      &.has-gap > tr:not(:last-child) {
+      & > tr:not(:last-child) {
         border-bottom: var(--linear-table-col-gap) solid transparent;
       }
     }

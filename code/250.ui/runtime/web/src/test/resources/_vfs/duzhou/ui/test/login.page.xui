@@ -44,7 +44,7 @@
                 v>{
                     >[login-logo]<
                     <[login-form]>
-                }(gap:4u)<^
+                }(gap:4u,padding:4u)<^
 
                 >{
                     [copyright-text] [copyright-owner]

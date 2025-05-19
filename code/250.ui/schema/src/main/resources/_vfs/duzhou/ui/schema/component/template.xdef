@@ -82,9 +82,9 @@
                     xui:name="!conf-name=xui-layout" />
         <xui:style xdef:ref="XuiComponentStyle"
                    xui:name="!conf-name=xui-style" />
-<!--
-        &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），且可嵌套定义多层 &ndash;&gt;
-        <xui:overlay />-->
+        <!--
+                &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），且可嵌套定义多层 &ndash;&gt;
+                <xui:overlay />-->
 
         <!-- 缺省使用 for 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
@@ -111,7 +111,9 @@
                  xdef:bean-body-prop="type"
                  xdef:bean-sub-type-prop="$type"
     >
-        <!-- 使用文本标记指示布局
+        <!-- 线性布局：在水平和垂直方向上布局组件，且溢出内容不做换行处理
+
+        线性布局使用文本标记语言：
         - [comp]: 指代 xui:name 为 comp 的组件；
         - <: 表示左对齐；
         - >: 表示右对齐；
