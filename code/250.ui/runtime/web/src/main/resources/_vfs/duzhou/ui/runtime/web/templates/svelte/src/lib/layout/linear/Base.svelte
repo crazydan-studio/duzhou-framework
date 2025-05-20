@@ -2,17 +2,20 @@
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
   const { type, width, height, align, gap, padding, children } = $props();
+  const [widthClass, widthSpecified] = sizeToClass('width-', width);
+  const [heightClass, heightSpecified] = sizeToClass('height-', height);
 </script>
 
 <!--
 - 对 wrapper 应用布局节点的 align、width、height 和 gap 配置
   - align 采用 `margin: auto` 进行控制
-  - gap 则采用 `border: Npx solid transparent` 进行控制
-- 对 wrapper 的直接子节点应用布局节点的 border 和 padding 配置；
+  - gap 则采用 `padding: Npx` 进行控制
+- 对 wrapper 的直接子节点应用布局节点的 border、padding、shadow 等配置
+  - 在子节点上应用有确定值的 width/height
 -->
 <div class={[
     'xui-layout', 'linear', type, 'wrapper',
-    sizeToClass('width-', width), sizeToClass('height-', height),
+    widthClass, heightClass,
     alignToClass(align),
   ]}
 >
@@ -23,6 +26,8 @@
     ]}
     style:--linear-col-gap={gap && gap.col}
     style:--linear-row-gap={gap && gap.row}
+    style:width={widthSpecified}
+    style:height={heightSpecified}
     style:padding-left={padding && padding.left}
     style:padding-right={padding && padding.right}
     style:padding-top={padding && padding.top}
@@ -58,7 +63,7 @@
 
     :global {
       &.has-gap > .wrapper:not(:last-child) {
-        border-right: var(--linear-row-gap) solid transparent;
+        padding-right: var(--linear-row-gap);
       }
     }
   }
@@ -68,7 +73,7 @@
 
     :global {
       &.has-gap > .wrapper:not(:last-child) {
-        border-bottom: var(--linear-col-gap) solid transparent;
+        padding-bottom: var(--linear-col-gap);
       }
     }
   }

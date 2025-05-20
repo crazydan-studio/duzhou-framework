@@ -4,7 +4,16 @@ export interface Align {
 }
 
 export function sizeToClass(prefix:string, size:string) {
-  return size && (prefix + size);
+  switch(size) {
+    case 'match_parent':
+    case 'fill_remains':
+    case 'wrap_content': {
+      return [prefix + size, null];
+    }
+    default: {
+      return [null, size];
+    }
+  }
 }
 
 export function alignToClass(align:Align) {

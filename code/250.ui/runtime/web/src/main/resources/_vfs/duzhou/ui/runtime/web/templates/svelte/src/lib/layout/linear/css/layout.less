@@ -37,10 +37,10 @@
 }
 
 .row :global {
-  .width-fill_remains {
+  & > .width-fill_remains {
     flex: 1;
   }
-  .height-fill_remains {
+  & > .height-fill_remains {
     .height-match_parent();
   }
 
@@ -88,10 +88,10 @@
 }
 
 .column :global {
-  .width-fill_remains {
+  & > .width-fill_remains {
     .width-match_parent();
   }
-  .height-fill_remains {
+  & > .height-fill_remains {
     flex: 1;
   }
 

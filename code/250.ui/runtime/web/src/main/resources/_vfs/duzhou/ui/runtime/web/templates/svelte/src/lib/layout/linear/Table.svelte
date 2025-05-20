@@ -2,6 +2,8 @@
   import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
 
   const { width, height, align, gap, padding, children } = $props();
+  const [widthClass, widthSpecified] = sizeToClass('width-', width);
+  const [heightClass, heightSpecified] = sizeToClass('height-', height);
 </script>
 
 <!--
@@ -10,13 +12,15 @@
 -->
 <div class={[
     'xui-layout', 'linear', 'table',
-    sizeToClass('width-', width), sizeToClass('height-', height),
+    widthClass, heightClass,
     alignToClass(align),
     gap && 'has-gap',
     padding && 'has-padding',
   ]}
   style:--linear-table-row-gap={gap && gap.row || 0}
   style:--linear-table-col-gap={gap && gap.col || 0}
+  style:width={widthSpecified}
+  style:height={heightSpecified}
   style:padding-left={padding && padding.left}
   style:padding-right={padding && padding.right}
   style:padding-top={padding && padding.top}
