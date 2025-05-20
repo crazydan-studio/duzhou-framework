@@ -77,7 +77,7 @@
                 // 整体处于上层容器的中心位置
                 v>{
                     >[login-logo]<
-                    <[login-form]>s
+                    <[login-form]>
                 }<^
             ]]></linear>
         </xui:layout>

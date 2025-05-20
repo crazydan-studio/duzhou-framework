@@ -62,6 +62,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("layout.109.json", "<>[a1]");
             put("layout.110.json", "\n[a1]");
             // 嵌套
+            put("layout.200.json", "v>{ [a1] }<^");
             put("layout.201.json", "v>{ \n  >[a1]< \n  <[b1]> \n}<^");
             put("layout.202.json", "{\n  >[a1]<\n  <[a2]>\n} <{\n  [b1] <[b2]>\n}>");
             // 表格

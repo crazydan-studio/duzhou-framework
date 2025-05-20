@@ -1,0 +1,36 @@
+{
+  "type": "column",
+  "props": {
+    "width": "match_parent",
+    "height": "match_parent"
+  },
+  "children": [
+    {
+      "loc": "[1:5:0:0]text",
+      "type": "row",
+      "props": {
+        "width": "wrap_content",
+        "height": "wrap_content",
+        "align": {
+          "row": "center",
+          "col": "center"
+        }
+      },
+      "children": [
+        {
+          "loc": "[1:5:0:0]text",
+          "type": "item",
+          "pattern": "^a1$",
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "start",
+              "col": "start"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
