@@ -19,7 +19,7 @@
   -->
 
 <!-- 提供原生组件的代码生成函数
-- 函数名采用 `_GenNative_{code}` 形式，其中，`{code}` 与 `<import from="native:{code}"/>`
+- 函数名采用 `GenNative_{code}` 形式，其中，`{code}` 与 `<import from="native:{code}"/>`
   中的原生组件标识 `{code}` 一致；
 -->
 <lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c" xmlns:xpl="xpl"

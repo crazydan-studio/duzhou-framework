@@ -24,6 +24,7 @@ import java.util.function.BiFunction;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
+import io.nop.commons.type.StdDataType;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
@@ -79,6 +80,11 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         }
 
         return expr != null ? new XuiExpression<>(loc, type, expr) : null;
+    }
+
+    /** @see #create(Class, ValueWithLocation, BiFunction) */
+    public static XuiExpression<?> create(StdDataType type, ValueWithLocation vl) {
+        return create((Class<Object>) type.getJavaClass(), vl, (l, v) -> type.convert(vl.getValue()));
     }
 
     public void validate() {

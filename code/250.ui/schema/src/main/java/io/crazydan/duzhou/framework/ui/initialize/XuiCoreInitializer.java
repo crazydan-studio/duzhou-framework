@@ -23,7 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
-import io.crazydan.duzhou.framework.ui.domain.XuiStdDomainHandler;
+import io.crazydan.duzhou.framework.ui.domain.XuiExprDomainHandler;
+import io.crazydan.duzhou.framework.ui.domain.XuiStyleDomainHandler;
 import io.nop.commons.lang.impl.Cancellable;
 import io.nop.core.CoreConstants;
 import io.nop.core.initialize.ICoreInitializer;
@@ -46,7 +47,8 @@ public class XuiCoreInitializer implements ICoreInitializer {
     public void initialize() {
         List<IStdDomainHandler> handlers = //
                 Arrays.asList( //
-                               XuiStdDomainHandler.INSTANCE,
+                               XuiExprDomainHandler.INSTANCE,
+                               XuiStyleDomainHandler.INSTANCE,
                                new GenericStdDomainHandlers.ComponentNameType());
 
         StdDomainRegistry registry = StdDomainRegistry.instance();

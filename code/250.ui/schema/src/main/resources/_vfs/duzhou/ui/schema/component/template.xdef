@@ -25,7 +25,7 @@
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
           xdef:name="XuiComponentTemplate" xdef:ref="XuiComponentNode"
           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-          xui:when="~string" xui:name="~conf-name"
+          xui:when="~xui-expr:boolean" xui:name="~conf-name"
 >
 
     <!-- 组件命名元素
@@ -36,7 +36,7 @@
     -->
     <xdef:define xdef:name="XuiComponentNamed"
                  xdef:bean-tag-prop="$type"
-                 xui:when="string"
+                 xui:when="xui-expr:boolean"
                  xui:name="conf-name" />
 
     <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
@@ -93,11 +93,11 @@
         <!-- Start: 组件指令 -->
         <xui:each xdef:name="XuiComponentDirectiveEach" xdef:ref="XuiComponentDirective"
                   xui:name="!conf-name"
-                  for="!var-name" item="!var-name" index="var-name" />
+                  for="!xui-expr:list" item="!var-name" index="var-name" />
         <xui:when xdef:name="XuiComponentDirectiveWhen" xdef:ref="XuiComponentDirective"
-                  xui:when="~string"
+                  xui:when="~xui-expr:boolean"
                   xui:name="!conf-name"
-                  cond="!string" />
+                  cond="!xui-expr:boolean" />
         <!-- End: 组件指令 -->
     </xdef:define>
 
@@ -153,6 +153,6 @@
     @data [可选] 消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
     -->
     <xdef:define xdef:name="XuiComponentMessageDispatch" xdef:ref="XuiComponentNamed"
-                 on="!conf-name" for="!conf-name" data="any"
+                 on="!conf-name" for="!conf-name" data="xui-expr:any"
     />
 </template>

@@ -19,25 +19,28 @@
 
 package io.crazydan.duzhou.framework.ui.domain;
 
-import io.nop.api.core.util.SourceLocation;
-import io.nop.core.reflect.ReflectionManager;
-import io.nop.core.type.IGenericType;
-import io.nop.core.type.PredefinedGenericTypes;
-import io.nop.xlang.api.XLangCompileTool;
-import io.nop.xlang.xdef.IStdDomainOptions;
+import io.crazydan.duzhou.framework.ui.schema.XuiConstants;
 import io.nop.xlang.xdef.domain.DictStdDomainHandler;
 
+import static io.crazydan.duzhou.framework.ui.schema.XuiConstants.STD_DOMAIN_XUI_STYLE;
+
 /**
+ * 数据域 {@link XuiConstants#STD_DOMAIN_XUI_STYLE xui-style}，
+ * 用于限定属性值只能为确定的样式类型
+ *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-03-03
  */
-public class XuiStdDomainHandler extends DictStdDomainHandler {
-    public static final XuiStdDomainHandler INSTANCE = new XuiStdDomainHandler();
+public class XuiStyleDomainHandler extends DictStdDomainHandler {
+    public static final XuiStyleDomainHandler INSTANCE = new XuiStyleDomainHandler();
 
     @Override
     public String getName() {
-        return "xui";
+        return STD_DOMAIN_XUI_STYLE;
     }
+
+    // TODO 参考 io.nop.xlang.xdef.domain.SimpleStdDomainHandlers.DefTypeType 实现，用于定义类型的类型
+
     //
     // /**
     //  * 解析属性类型定义结构 <code>(!~#)?{stdDomain}(:{options})?(={defaultValue})?</code>

@@ -24,7 +24,10 @@ import io.nop.api.core.exceptions.ErrorCode;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_LEFT_PAIR;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_RIGHT_PAIR;
 import static io.nop.api.core.exceptions.ErrorCode.define;
+import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
+import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
+import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 /**
@@ -32,6 +35,26 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @date 2025-05-09
  */
 public interface XuiErrors {
+    ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = define("duzhou.err.xui.domain-type.invalid-format",
+                                                      "无效的格式 [{"
+                                                      + ARG_VALUE
+                                                      + "}]，其格式必须为 [{"
+                                                      + ARG_ALLOWED_VALUES
+                                                      + "}] 形式",
+                                                      ARG_VALUE,
+                                                      ARG_ALLOWED_VALUES);
+    ErrorCode ERR_DOMAIN_TYPE_INVALID_OPTIONS = define("duzhou.err.xui.domain-type.invalid-options",
+                                                       "类型 [{"
+                                                       + ARG_NAME
+                                                       + "}] 的扩展选项 [{"
+                                                       + ARG_VALUE
+                                                       + "}] 不在选项列表 [{"
+                                                       + ARG_OPTIONS
+                                                       + "}] 中",
+                                                       ARG_NAME,
+                                                       ARG_VALUE,
+                                                       ARG_OPTIONS);
+
     ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = define("duzhou.err.xui.domain-type.unknown-size",
                                                     "未识别的尺寸数据 [{"
                                                     + ARG_VALUE

@@ -42,7 +42,7 @@
     -->
     <xdef:unknown-tag
             xdef:name="XuiStyleDef"
-            xdef:unknown-attr="dict:duzhou/ui/style-type"
+            xdef:unknown-attr="xui-style"
             xdef:body-type="map" xdef:bean-body-prop="styles" xdef:bean-child-name="style"
     >
         <!-- 样式的组成结构节点，称其为**结构节点**
