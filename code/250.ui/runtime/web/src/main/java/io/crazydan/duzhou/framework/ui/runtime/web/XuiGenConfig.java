@@ -27,7 +27,12 @@ import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
 import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
+import io.nop.api.core.annotations.core.Description;
+import io.nop.api.core.config.IConfigReference;
+import io.nop.api.core.util.SourceLocation;
 
+import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
+import static io.nop.api.core.config.AppConfig.varRef;
 import static io.nop.commons.util.StringHelper.isValidPropPath;
 
 /**
@@ -35,6 +40,24 @@ import static io.nop.commons.util.StringHelper.isValidPropPath;
  * @date 2025-05-17
  */
 public class XuiGenConfig {
+    private static final SourceLocation s_loc = SourceLocation.fromClass(XuiGenConfig.class);
+
+    @Description("字体大小，即 1rem 对应的尺寸")
+    public static final IConfigReference<String> CFG_FONT_SIZE = varRef(s_loc,
+                                                                        "duzhou.ui.runtime.web.font-size",
+                                                                        String.class,
+                                                                        "16px");
+    @Description("1u 对应的实际尺寸")
+    public static final IConfigReference<String> CFG_BASE_SIZE = varRef(s_loc,
+                                                                        "duzhou.ui.runtime.web.base-size",
+                                                                        String.class,
+                                                                        "0.5rem");
+    @Description("1i 对应的实际尺寸")
+    public static final IConfigReference<String> CFG_LINE_SIZE = varRef(s_loc,
+                                                                        "duzhou.ui.runtime.web.line-size",
+                                                                        String.class,
+                                                                        "1px");
+
     /** 表达式模板前缀 */
     private String exprPrefix;
     /** 表达式模板后缀 */
@@ -46,6 +69,19 @@ public class XuiGenConfig {
     private UnitNumber baseSize;
     /** 一个 {@link XuiSize.Unit#a_line} 单位对应的尺寸 */
     private UnitNumber lineSize;
+
+    XuiGenConfig() {
+    }
+
+    public static XuiGenConfig create() {
+        XuiGenConfig config = new XuiGenConfig();
+
+        config.fontSize = extractNumberAndUnit(CFG_FONT_SIZE.get());
+        config.baseSize = extractNumberAndUnit(CFG_BASE_SIZE.get());
+        config.lineSize = extractNumberAndUnit(CFG_LINE_SIZE.get());
+
+        return config;
+    }
 
     /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' }</code> 或 <code>{ props.size }</code> */
     public String toXmlAttrExpr(XuiExpression<?> expr) {

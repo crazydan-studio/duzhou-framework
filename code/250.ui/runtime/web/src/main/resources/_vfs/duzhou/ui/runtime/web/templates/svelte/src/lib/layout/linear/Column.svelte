@@ -5,6 +5,3 @@
 </script>
 
 <Base {...props} type="column" />
-
-<style>
-</style>

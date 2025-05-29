@@ -83,6 +83,10 @@
 
             <Button xui:name="login-button">
                 <Text xui:name="label">登录</Text>
+
+                <xui:dispatch on="click" for="User_Login_Start"
+                              data="${ {username: 'abc', password: 'abc'} }"
+                />
             </Button>
             <Link xui:name="forgot-password-button"
                   to="/auth/forgot-password"
@@ -109,4 +113,15 @@
             <script>alert('Hello!')</script>
         ]]></Text>
     </template>
+
+    <messages>
+        <message type="User_Login_Start">
+            <http-post xui:name="send-login-data"
+                       url="/auth/login"
+                       data="${data}"
+                       success="User_Login_Done_Success"
+                       error="User_Login_Done_Error"
+            />
+        </message>
+    </messages>
 </page>

@@ -5,6 +5,3 @@
 </script>
 
 <Base {...props} type="item" />
-
-<style>
-</style>

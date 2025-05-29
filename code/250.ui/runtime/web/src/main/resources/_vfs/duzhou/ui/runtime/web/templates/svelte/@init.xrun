@@ -55,14 +55,10 @@
 
         <c:script><![CDATA[
             import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig;
-            import io.crazydan.duzhou.framework.commons.UnitNumber;
 
-            const genConfig = new XuiGenConfig();
+            const genConfig = XuiGenConfig.create();
             genConfig.exprPrefix = '{';
             genConfig.exprSuffix = '}';
-            genConfig.fontSize = UnitNumber.create(16, 'px');
-            genConfig.baseSize = UnitNumber.create(0.5, 'rem');
-            genConfig.lineSize = UnitNumber.create(1, 'px');
 
             builder.defineGlobalVar('genConfig', genConfig);
         ]]></c:script>

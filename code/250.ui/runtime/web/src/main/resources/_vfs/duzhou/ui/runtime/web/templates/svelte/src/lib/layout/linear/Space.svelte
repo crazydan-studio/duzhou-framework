@@ -5,6 +5,3 @@
 </script>
 
 <Base {...props} type="space" />
-
-<style>
-</style>
