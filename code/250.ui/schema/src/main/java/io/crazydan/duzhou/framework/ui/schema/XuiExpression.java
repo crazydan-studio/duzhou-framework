@@ -32,8 +32,11 @@ import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Literal;
+import io.nop.xlang.ast.TemplateExpression;
 import io.nop.xlang.xpl.IXplCompiler;
 import io.nop.xlang.xpl.utils.XplParseHelper;
+
+import static io.nop.api.core.util.ApiStringHelper.escape;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -101,6 +104,42 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         }
     }
 
+    /**
+     * 转换为表达式，其中，字符串字面量使用单引号包裹
+     * <pre>
+     * Hello, ${username} ==> 'Hello, ' + (username)
+     * </pre>
+     * <pre>
+     * a + b = ${a + b} ==> 'a + b = ' + (a + b)
+     * </pre>
+     */
+    public String toExprString() {
+        if (this.expr instanceof Literal) {
+            return literalToExprString((Literal) this.expr);
+        }
+
+        if (!(this.expr instanceof TemplateExpression)) {
+            return this.expr.toExprString();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        ((TemplateExpression) this.expr).getExpressions().forEach((expr) -> {
+            if (sb.length() > 0) {
+                sb.append(" + ");
+            }
+
+            String val;
+            if (expr instanceof Literal) {
+                val = literalToExprString((Literal) expr);
+            } else {
+                val = "(" + expr.toExprString() + ')';
+            }
+            sb.append(val);
+        });
+
+        return sb.toString();
+    }
+
     @Override
     public SourceLocation getLocation() {
         return this.loc;
@@ -131,5 +170,18 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         }
 
         return this.expr.toExprString();
+    }
+
+    private static String literalToExprString(Literal expr) {
+        Object val = expr.getValue();
+
+        if (val instanceof Number || val instanceof Boolean) {
+            return val.toString();
+        } else if (val instanceof String) {
+            return "'" + escape(val.toString(), new char[] { '\'' }, new String[] { "\\'" }) + '\'';
+        } else if (val != null) {
+            throw new IllegalStateException("Unsupported variable [" + val + "]");
+        }
+        return null;
     }
 }

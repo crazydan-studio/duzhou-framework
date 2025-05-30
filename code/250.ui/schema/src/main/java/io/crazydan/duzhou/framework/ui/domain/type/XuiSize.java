@@ -142,6 +142,7 @@ public class XuiSize implements IJsonSerializable {
 
         if (val instanceof XuiSize) {
             val = converter.apply((XuiSize) val);
+            // Note: XML 属性值中的双引号会被 Nop 转义
             val = "'" + val + '\'';
         }
         return val != null

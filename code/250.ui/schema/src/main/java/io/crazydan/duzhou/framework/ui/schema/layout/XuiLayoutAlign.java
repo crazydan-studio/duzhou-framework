@@ -78,6 +78,7 @@ public class XuiLayoutAlign implements IJsonSerializable {
     public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
         StringBuilder sb = new StringBuilder();
 
+        // Note: XML 属性值中的双引号会被 Nop 转义
         ifNotNull(this.row, (v) -> sb.append("row:'").append(v).append("',"));
         ifNotNull(this.col, (v) -> sb.append("col:'").append(v).append("',"));
 

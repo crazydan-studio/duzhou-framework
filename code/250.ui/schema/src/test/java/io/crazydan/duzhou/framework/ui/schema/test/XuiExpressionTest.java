@@ -76,6 +76,37 @@ public class XuiExpressionTest extends NopJunitTestCase {
     }
 
     @Test
+    public void test_toExprString() {
+        Map<Object, String> samples = new HashMap<>() {{
+            put(true, "true");
+            put(100, "100");
+            put("1u", "'1u'");
+            put("${props.size}", "props.size");
+            put("${props.size + props.gap}", "props.size + props.gap");
+            put("${props.name.substring(0, 10)}", "props.name.substring(0,10)");
+            put("${props.size > 10}", "props.size > 10");
+            put("${props.name != null}", "props.name != null");
+            // put("${!props.disabled}", "!props.disabled");
+            put("Size is ${props.size}", "'Size is ' + (props.size)");
+            put("a = 3", "'a = 3'");
+            put("a = ${null}", "'a = ' + null");
+            put("a = ${'a'}", "'a = ' + 'a'");
+            put("a = ${3}", "'a = ' + 3");
+            put("a = ${true}", "'a = ' + true");
+            put("a = ${3 + 2}", "'a = ' + (3 + 2)");
+            put("a + b = ${a + b}", "'a + b = ' + (a + b)");
+            put("a + b = ${a + b}, a = ${a} and b = ${b}", "'a + b = ' + (a + b) + ', a = ' + (a) + ' and b = ' + (b)");
+        }};
+        samples.forEach((sample, expected) -> {
+            ValueWithLocation vl = ValueWithLocation.of(null, sample);
+            XuiExpression<Object> expr = XuiExpression.create(Object.class, vl, (l, v) -> vl.getValue());
+            String actual = expr.toExprString();
+
+            Assertions.assertEquals(expected, actual);
+        });
+    }
+
+    @Test
     public void test_convert_to_xml_attr_expr() {
         Map<Object, String> samples = new HashMap<>() {{
             put("5u", "'5.0u'");

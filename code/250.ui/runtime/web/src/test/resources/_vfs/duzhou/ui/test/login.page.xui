@@ -110,7 +110,7 @@
             <Text xui:name="label">Crazydan Studio</Text>
         </Link>
         <Text xui:name="hack-script"><![CDATA[
-            <script>alert('Hello!')</script>
+            <script>alert('Hello, ${'abc'}-${1+1}!')</script>
         ]]></Text>
     </template>
 

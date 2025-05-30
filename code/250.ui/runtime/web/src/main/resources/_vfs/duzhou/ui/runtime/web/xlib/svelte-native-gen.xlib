@@ -27,16 +27,25 @@
 >
     <tags>
         <GenNative_text outputMode="html">
+            <!-- 隐式传递上下文中的全局变量，在需要引用的地方均需显式声明 -->
+            <attr name="genConfig"
+                  type="io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig"
+                  implicit="true" />
+
             <attr name="component"
                   type="io.crazydan.duzhou.framework.ui.schema.XuiComponent" />
             <attr name="node"
                   type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentText" />
 
             <source>
-                <!-- Note: 文本内容已在 XuiComponentText#getValue 中完成 HTML 转义，以避免 XSS 攻击 -->
+                <c:script><![CDATA[
+                    const text = genConfig.toXmlAttrExpr(node.value);
+                ]]></c:script>
+
+                <!-- Note: XSS 攻击的预防由 Svelte 自动处理：https://svelte.dev/docs/svelte/@html -->
                 <!-- 整体做文本输出，以避免空格等转义结果丢失 -->
                 <c:unit xpl:outputMode="text"><![CDATA[
-                    <span>${node.value}</span>
+                    <span>${text}</span>
                 ]]></c:unit>
             </source>
         </GenNative_text>

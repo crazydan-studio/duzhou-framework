@@ -33,7 +33,6 @@ import io.nop.api.core.util.SourceLocation;
 
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.nop.api.core.config.AppConfig.varRef;
-import static io.nop.commons.util.StringHelper.isValidPropPath;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -83,24 +82,11 @@ public class XuiGenConfig {
         return config;
     }
 
-    /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' }</code> 或 <code>{ props.size }</code> */
+    /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' + props.size }</code> 或 <code>{ props.size }</code> */
     public String toXmlAttrExpr(XuiExpression<?> expr) {
-        Object var = expr != null ? expr.getVariable() : null;
-        if (var == null) {
-            return null;
-        }
+        Object var = expr != null ? expr.toExprString() : null;
 
-        if (var instanceof String) {
-            if (!isValidPropPath((String) var)) {
-                var = "'" + var + '\'';
-            }
-        }
-
-        if (!(var instanceof Number) && !(var instanceof Boolean) && !(var instanceof String)) {
-            throw new IllegalStateException("Unsupported variable [" + var + "]");
-        }
-
-        return this.exprPrefix + var + this.exprSuffix;
+        return var != null ? this.exprPrefix + var + this.exprSuffix : null;
     }
 
     public String toXmlAttrExpr(XuiLayoutSize value) {
