@@ -21,7 +21,7 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
      * xml name: data
      * 消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
      */
-    private java.lang.Object _data ;
+    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> _data ;
     
     /**
      *  必填
@@ -43,12 +43,12 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
      *  消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
      */
     
-    public java.lang.Object getData(){
+    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> getData(){
       return _data;
     }
 
     
-    public void setData(java.lang.Object value){
+    public void setData(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> value){
         checkAllowChange();
         
         this._data = value;

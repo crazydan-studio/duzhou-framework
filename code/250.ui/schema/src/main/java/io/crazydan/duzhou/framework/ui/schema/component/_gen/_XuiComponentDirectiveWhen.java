@@ -21,7 +21,7 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
      * xml name: cond
      * 
      */
-    private java.lang.String _cond ;
+    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> _cond ;
     
     /**
      * 
@@ -29,12 +29,12 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
      *  
      */
     
-    public java.lang.String getCond(){
+    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> getCond(){
       return _cond;
     }
 
     
-    public void setCond(java.lang.String value){
+    public void setCond(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> value){
         checkAllowChange();
         
         this._cond = value;

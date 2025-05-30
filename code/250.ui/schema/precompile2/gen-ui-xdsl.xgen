@@ -32,6 +32,6 @@
     codeGenerator.renderModel('/duzhou/ui/schema/component/message.xdef', '/nop/templates/xdsl', '/', $scope);
     codeGenerator.renderModel('/duzhou/ui/schema/component/template.xdef', '/nop/templates/xdsl', '/', $scope);
 
-    codeGenerator.renderModel('/duzhou/ui/schema/styles.xdef', '/nop/templates/xdsl', '/', $scope);
-    codeGenerator.renderModel('/duzhou/ui/schema/style/themes.xdef', '/nop/templates/xdsl', '/', $scope);
+    //codeGenerator.renderModel('/duzhou/ui/schema/styles.xdef', '/nop/templates/xdsl', '/', $scope);
+    //codeGenerator.renderModel('/duzhou/ui/schema/style/themes.xdef', '/nop/templates/xdsl', '/', $scope);
 ]]></c:script>

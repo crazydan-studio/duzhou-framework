@@ -11,6 +11,7 @@ import io.nop.commons.util.ClassHelper;
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
  * 组件（树）节点
+ * TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

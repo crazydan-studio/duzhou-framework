@@ -10,7 +10,8 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 使用文本标记指示布局
+ * 线性布局：在水平和垂直方向上布局组件，且溢出内容不做换行处理
+ * 线性布局使用文本标记语言：
  * - [comp]: 指代 xui:name 为 comp 的组件；
  * - <: 表示左对齐；
  * - >: 表示右对齐；

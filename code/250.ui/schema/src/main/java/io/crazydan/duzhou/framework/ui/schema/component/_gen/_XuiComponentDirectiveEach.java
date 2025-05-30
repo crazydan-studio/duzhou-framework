@@ -21,7 +21,7 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
      * xml name: for
      * 
      */
-    private java.lang.String _for ;
+    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.util.List> _for ;
     
     /**
      *  
@@ -43,12 +43,12 @@ public abstract class _XuiComponentDirectiveEach extends io.crazydan.duzhou.fram
      *  
      */
     
-    public java.lang.String getFor(){
+    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.util.List> getFor(){
       return _for;
     }
 
     
-    public void setFor(java.lang.String value){
+    public void setFor(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.util.List> value){
         checkAllowChange();
         
         this._for = value;

@@ -23,7 +23,7 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
      * xml name: 
      * 
      */
-    private java.lang.String _value ;
+    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.String> _value ;
     
     /**
      * 
@@ -31,12 +31,12 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
      *  
      */
     
-    public java.lang.String getValue(){
+    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.String> getValue(){
       return _value;
     }
 
     
-    public void setValue(java.lang.String value){
+    public void setValue(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.String> value){
         checkAllowChange();
         
         this._value = value;

@@ -83,6 +83,10 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
                                                                          + StdDataType.STRING.getName());
         }
 
+        if ("html-text".equals(options)) {
+            options = "string";
+        }
+
         StdDataType type = StdDataType.fromStdName(options);
         if (type == null) {
             throw new NopException(ERR_DOMAIN_TYPE_INVALID_OPTIONS).param(ARG_NAME, STD_DOMAIN_XUI_EXPR)
@@ -98,14 +102,23 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
 
     @Override
     public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
+        if ("html-text".equals(options)) {
+            options = "string";
+            // 将 HTML 多行文本转为单行
+            text = text != null ? text.toString().trim().replaceAll("(?m)^\\s+", "") : null;
+        }
+
         StdDataType type = StdDataType.fromStdName(options);
         ValueWithLocation value = ValueWithLocation.of(loc, text);
+
+        // Note: 对表达式所引用变量类型的检查只能在组件模型中进行，这里无法得到引用变量的信息
+        // TODO 向 cp 的 scope 注入当前组件对象？
 
         return XuiExpression.create(type, value);
     }
 
     @Override
     public void validate(SourceLocation loc, String propName, Object value, IValidationErrorCollector collector) {
-        // TODO 检查表达式引用的实际类型与指定类型是否相同
+        // Note: 该校验仅在 SimpleSchemaValidator 中被调用，解析 XDSL 模型时不会被调用
     }
 }
