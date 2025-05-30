@@ -48,6 +48,8 @@
 
         /** [More accessible markup with `display: contents`](https://hidde.blog/more-accessible-markup-with-display-contents/) */
         .xui-block { display: contents; }
+        /** 保留文本中的空格和换行 */
+        .xui-text { white-space: pre-wrap; }
 
         .loading::after {
             z-index: 10000; opacity: 1;

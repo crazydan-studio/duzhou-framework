@@ -104,8 +104,13 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
     public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
         if ("html-text".equals(options)) {
             options = "string";
-            // 将 HTML 多行文本转为单行
-            text = text != null ? text.toString().trim().replaceAll("(?m)^\\s+", "") : null;
+            if (text != null) {
+                text = text.toString().trim()
+                           // 将 HTML 多行文本转为单行
+                           .replaceAll("(?m)^\\s+", "")
+                           // 还原空格
+                           .replaceAll("&nbsp;", " ");
+            }
         }
 
         StdDataType type = StdDataType.fromStdName(options);
