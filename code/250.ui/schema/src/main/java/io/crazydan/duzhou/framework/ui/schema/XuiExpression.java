@@ -105,7 +105,7 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
     }
 
     /**
-     * 转换为表达式，其中，字符串字面量使用单引号包裹
+     * 转换为表达式，其中，字符串字面量使用 <code>strQuote</code> 包裹
      * <pre>
      * Hello, ${username} ==> 'Hello, ' + (username)
      * </pre>
@@ -113,9 +113,9 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
      * a + b = ${a + b} ==> 'a + b = ' + (a + b)
      * </pre>
      */
-    public String toExprString() {
+    public String toExprString(char strQuote) {
         if (this.expr instanceof Literal) {
-            return literalToExprString((Literal) this.expr);
+            return literalToExprString((Literal) this.expr, strQuote);
         }
 
         if (!(this.expr instanceof TemplateExpression)) {
@@ -130,7 +130,7 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
 
             String val;
             if (expr instanceof Literal) {
-                val = literalToExprString((Literal) expr);
+                val = literalToExprString((Literal) expr, strQuote);
             } else {
                 val = "(" + expr.toExprString() + ')';
             }
@@ -172,15 +172,17 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         return this.expr.toExprString();
     }
 
-    private static String literalToExprString(Literal expr) {
+    private static String literalToExprString(Literal expr, char strQuote) {
         Object val = expr.getValue();
 
         if (val instanceof Number || val instanceof Boolean) {
             return val.toString();
         } else if (val instanceof String) {
-            return "'" + escape(val.toString(), new char[] { '\'' }, new String[] { "\\'" }) + '\'';
+            return strQuote
+                   + escape(val.toString(), new char[] { strQuote }, new String[] { "\\" + strQuote })
+                   + strQuote;
         } else if (val != null) {
-            throw new IllegalStateException("Unsupported variable [" + val + "]");
+            throw new IllegalStateException("Unsupported literal " + val.getClass().getName() + "[" + val + "]");
         }
         return null;
     }

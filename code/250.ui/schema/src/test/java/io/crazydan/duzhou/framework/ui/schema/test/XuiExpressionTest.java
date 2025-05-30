@@ -87,7 +87,7 @@ public class XuiExpressionTest extends NopJunitTestCase {
             put("${props.size > 10}", "props.size > 10");
             put("${props.name != null}", "props.name != null");
             // put("${!props.disabled}", "!props.disabled");
-            put("Size is ${props.size}", "'Size is ' + (props.size)");
+            put("Size's ${props.size}", "'Size\\'s ' + (props.size)");
             put("a = 3", "'a = 3'");
             put("a = ${null}", "'a = ' + null");
             put("a = ${'a'}", "'a = ' + 'a'");
@@ -100,7 +100,7 @@ public class XuiExpressionTest extends NopJunitTestCase {
         samples.forEach((sample, expected) -> {
             ValueWithLocation vl = ValueWithLocation.of(null, sample);
             XuiExpression<Object> expr = XuiExpression.create(Object.class, vl, (l, v) -> vl.getValue());
-            String actual = expr.toExprString();
+            String actual = expr.toExprString('\'');
 
             Assertions.assertEquals(expected, actual);
         });

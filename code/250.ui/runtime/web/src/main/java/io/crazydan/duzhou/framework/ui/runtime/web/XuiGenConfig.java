@@ -84,7 +84,7 @@ public class XuiGenConfig {
 
     /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' + props.size }</code> 或 <code>{ props.size }</code> */
     public String toXmlAttrExpr(XuiExpression<?> expr) {
-        Object var = expr != null ? expr.toExprString() : null;
+        Object var = expr != null ? expr.toExprString('\'') : null;
 
         return var != null ? this.exprPrefix + var + this.exprSuffix : null;
     }
