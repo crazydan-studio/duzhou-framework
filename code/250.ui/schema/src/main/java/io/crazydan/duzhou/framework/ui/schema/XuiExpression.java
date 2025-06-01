@@ -89,22 +89,13 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         return create((Class<Object>) type.getJavaClass(), vl, (l, v) -> type.convert(vl.getValue()));
     }
 
-    public static XuiExpression<?> create(Class<?> type, Expression expr) {
+    public static <T> XuiExpression<T> create(Class<T> type, Expression expr) {
         return new XuiExpression<>(expr.getLocation(), type, expr);
     }
 
     public void validate() {
         // TODO 字面量数据类型检查
         // TODO 表达式引用目标类型检查
-    }
-
-    /** @return 获取常量值，或者表达式 */
-    public Object getVariable() {
-        if (this.expr instanceof Literal) {
-            return ((Literal) this.expr).getValue();
-        } else {
-            return this.expr.toExprString();
-        }
     }
 
     @Override

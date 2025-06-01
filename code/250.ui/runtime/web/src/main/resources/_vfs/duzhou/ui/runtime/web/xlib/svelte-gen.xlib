@@ -40,7 +40,7 @@
                             component="${component}" />
 
                     <c:if test="${forPage}" xpl:outputMode="text"><![CDATA[
-                        import { onPageMount } from '${'$'}lib/common/page.js';
+                        import { onPageMount } from '${'$'}lib/common/page.ts';
                         import { onMount } from 'svelte';
 
                         onMount(onPageMount);
@@ -113,6 +113,7 @@
 
                 <c:choose>
                     <when test="${!layouts.isEmpty()}">
+                        <!-- TODO 采用 svelte snippet 机制在条件布局内复用组件定义 -->
                         <c:for var="layout" items="${layouts}" index="index">
                             <c:script><![CDATA[
                                 import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenHelper;
@@ -123,14 +124,15 @@
                                 const layoutName = XuiGenHelper.LAYOUT_IMPORT_NAME_PREFIX
                                                     + StringHelper.camelCase(layoutType, '-', true);
                                 const layoutAttrs = {};
+                                const layoutCond = genConfig.toCodeSnippet(layout['xui:when']);
                             ]]></c:script>
 
                             <c:if test="${conditionalLayouts}">
                                 <c:if test="${index == 0}" xpl:outputMode="text"><![CDATA[
-                                    {#if ${layout['xui:when']}}
+                                    {#if ${layoutCond}}
                                 ]]></c:if>
                                 <c:if test="${index > 0}" xpl:outputMode="text"><![CDATA[
-                                    {:else if ${layout['xui:when']}}
+                                    {:else if ${layoutCond}}
                                 ]]></c:if>
                             </c:if>
 

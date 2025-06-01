@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
 <!--
   - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
   - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
@@ -19,22 +18,12 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 默认根页面 -->
-<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text"><![CDATA[<svelte:head>
-    <title>${app.title}</title>
-</svelte:head>
+<!-- 构建公共的 js 库 -->
+<c:unit xmlns:c="c" xmlns:gen="gen" xmlns:xpl="xpl">
 
-<script lang="ts">
-    import { onPageMount } from '${'$'}lib/common/page.ts';
-    import { onMount } from 'svelte';
-
-    onMount(onPageMount);
-</script>
-
-<main>]]><c:for var="page" items="${pages}">
-    <![CDATA[<a href="${page.url}">${page.title}</a>]]>
-</c:for><![CDATA[</main>
-
-<style>
-</style>]]>
+    <gen:Render
+            xpl:lib="/nop/codegen/xlib/gen.xlib"
+            template="/duzhou/ui/runtime/web/templates/@jslib"
+            targetDir="${targetResource.path.$filePath()}"
+    />
 </c:unit>

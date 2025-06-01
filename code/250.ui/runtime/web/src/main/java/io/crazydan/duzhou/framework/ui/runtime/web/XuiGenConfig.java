@@ -22,8 +22,8 @@ package io.crazydan.duzhou.framework.ui.runtime.web;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
-import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.core.Description;
 import io.nop.api.core.config.IConfigReference;
@@ -156,7 +156,7 @@ public abstract class XuiGenConfig {
         return sb.toString();
     }
 
-    protected String toCodeSnippet(CodeSnippet snippet) {
+    public String toCodeSnippet(CodeSnippet snippet) {
         return snippet != null ? snippet.toCodeSnippet('\'') : null;
     }
 

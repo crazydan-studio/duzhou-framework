@@ -113,6 +113,8 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
             }
         }
 
+        // TODO 对于 boolean、int、float 等原始类型，待解析的值必须为具体值或者纯表达式，而不能为模板表达式
+
         StdDataType type = StdDataType.fromStdName(options);
         ValueWithLocation value = ValueWithLocation.of(loc, text);
 

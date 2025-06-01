@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
+  import { sizeToNative } from '$lib/common/utils.ts';
+  import { layoutSizeToClass, layoutAlignToClass } from '$lib/common/component/layout.ts';
 
   const { type, width, height, align, gap, padding, children } = $props();
-  const [widthClass, widthSpecified] = sizeToClass('width-', width);
-  const [heightClass, heightSpecified] = sizeToClass('height-', height);
+  const [widthClass, widthSpecified] = layoutSizeToClass('width-', width);
+  const [heightClass, heightSpecified] = layoutSizeToClass('height-', height);
 </script>
 
 <!--
@@ -16,7 +17,7 @@
 <div class={[
     'xui-layout', 'linear', type, 'wrapper',
     widthClass, heightClass,
-    alignToClass(align),
+    layoutAlignToClass(align),
   ]}
 >
   <div class={[
@@ -24,14 +25,14 @@
       padding && 'has-padding',
       gap && 'has-gap',
     ]}
-    style:--linear-col-gap={gap && gap.col}
-    style:--linear-row-gap={gap && gap.row}
+    style:--linear-col-gap={gap && sizeToNative(gap.col)}
+    style:--linear-row-gap={gap && sizeToNative(gap.row)}
     style:width={widthSpecified}
     style:height={heightSpecified}
-    style:padding-left={padding && padding.left}
-    style:padding-right={padding && padding.right}
-    style:padding-top={padding && padding.top}
-    style:padding-bottom={padding && padding.bottom}
+    style:padding-left={padding && sizeToNative(padding.left)}
+    style:padding-right={padding && sizeToNative(padding.right)}
+    style:padding-top={padding && sizeToNative(padding.top)}
+    style:padding-bottom={padding && sizeToNative(padding.bottom)}
   >
     {@render children?.()}
   </div>

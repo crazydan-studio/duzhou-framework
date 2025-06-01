@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- __XGEN_TPL_FORCE_OVERRIDE__ 如果文件已存在，则强制合并更新 -->
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text">
+    <c:script><![CDATA[
+        import io.crazydan.duzhou.framework.ui.domain.type.XuiSize.Unit;
+    ]]></c:script>
+
+    <c:unit><![CDATA[
+/** 将带单位的字符串拆分为数字和单位两部分 */
+export function extractNumberAndUnit(str:string) {
+  if (str == null || typeof str == 'undefined') {
+    return [];
+  }
+
+  let pos = str.length;
+  for (; pos > 0; pos -= 1) {
+    let ch = str.charAt(pos - 1);
+    if (ch == '.' || (ch >= '0' && ch <= '9')) {
+      break;
+    }
+  }
+
+  const number = pos > 0 ? str.substring(0, pos) : null;
+  const unit = pos < str.length ? str.substring(pos) : null;
+  return [parseFloat(number), unit];
+}
+
+/** 转换尺寸数据为原生形式，涉及单位的变换 */
+export function sizeToNative(size:string|number) {
+  let pair = [];
+  if (typeof size == 'number') {
+    pair = [size, '${Unit.base.label}'];
+  } else {
+    pair = extractNumberAndUnit(size + '');
+  }
+
+  if (pair[0] == null || pair[1] == null) {
+    return size;
+  }
+
+  switch(pair[1]) {
+    case '${Unit.percent.label}':
+      // Note: 百分比无需转换
+      break;
+    case '${Unit.base.label}':
+      pair[0] *= ${genConfig.baseSize.number};
+      pair[1] = '${genConfig.baseSize.unit}';
+      break;
+    case '${Unit.a_line.label}':
+      pair[0] *= ${genConfig.lineSize.number};
+      pair[1] = '${genConfig.lineSize.unit}';
+      break;
+  }
+  return pair[0] + pair[1];
+}
+]]></c:unit>
+
+</c:unit>

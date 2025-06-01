@@ -22,13 +22,17 @@ package io.crazydan.duzhou.framework.lang;
 import java.util.Collection;
 import java.util.Map;
 
+import io.nop.api.core.exceptions.NopException;
 import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Literal;
 import io.nop.xlang.ast.TemplateExpression;
 import io.nop.xlang.ast.XLangASTNode;
 import io.nop.xlang.ast.print.XLangExpressionPrinter;
 
+import static io.crazydan.duzhou.framework.CommonErrors.ERR_CODE_SNIPPET_UNSUPPORTED_DATA_TYPE;
 import static io.nop.api.core.util.ApiStringHelper.escapeJava;
+import static io.nop.xlang.XLangErrors.ARG_ACTUAL_TYPE;
+import static io.nop.xlang.XLangErrors.ARG_ALLOWED_NAMES;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -148,12 +152,10 @@ public class CodeSnippetPrinter {
                 }
                 //
                 else {
-                    // TODO 不支持转换为代码片段的数据类型，需实现 CodeSnippet 接口
-                    throw new IllegalStateException("Unsupported literal "
-                                                    + val.getClass().getName()
-                                                    + "["
-                                                    + val
-                                                    + "]");
+                    throw new NopException(ERR_CODE_SNIPPET_UNSUPPORTED_DATA_TYPE).param(ARG_ACTUAL_TYPE,
+                                                                                         val.getClass().getName())
+                                                                                  .param(ARG_ALLOWED_NAMES,
+                                                                                         "Number,Boolean,String,Map,Collection,Array,CodeSnippet,Mappable");
                 }
             }
         }

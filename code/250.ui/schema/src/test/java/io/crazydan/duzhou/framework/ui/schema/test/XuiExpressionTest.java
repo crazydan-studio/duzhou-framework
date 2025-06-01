@@ -54,14 +54,14 @@ public class XuiExpressionTest extends NopJunitTestCase {
             put("Result is ${props.size > 10}", "Result is ${props.size > 10}");
         }};
         samples.forEach((sample, expected) -> {
-            Expression expr = create(sample);
+            Expression expr = expr(sample);
             String actual = expr.toExprString();
 
             Assertions.assertEquals(expected, actual);
         });
     }
 
-    private Expression create(String value) {
+    private Expression expr(String value) {
         IXplCompiler cp = XLang.newXplCompiler();
         IXLangCompileScope scope = cp.newCompileScope();
 

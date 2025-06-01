@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { sizeToClass, alignToClass } from '$lib/common/component/layout.ts';
+  import { sizeToNative } from '$lib/common/utils.ts';
+  import { layoutSizeToClass, layoutAlignToClass } from '$lib/common/component/layout.ts';
 
   const { width, height, align, gap, padding, children } = $props();
-  const [widthClass, widthSpecified] = sizeToClass('width-', width);
-  const [heightClass, heightSpecified] = sizeToClass('height-', height);
+  const [widthClass, widthSpecified] = layoutSizeToClass('width-', width);
+  const [heightClass, heightSpecified] = layoutSizeToClass('height-', height);
 </script>
 
 <!--
@@ -13,18 +14,18 @@
 <div class={[
     'xui-layout', 'linear', 'table',
     widthClass, heightClass,
-    alignToClass(align),
+    layoutAlignToClass(align),
     gap && 'has-gap',
     padding && 'has-padding',
   ]}
-  style:--linear-table-row-gap={gap && gap.row || 0}
-  style:--linear-table-col-gap={gap && gap.col || 0}
+  style:--linear-table-row-gap={gap && sizeToNative(gap.row || 0)}
+  style:--linear-table-col-gap={gap && sizeToNative(gap.col || 0)}
   style:width={widthSpecified}
   style:height={heightSpecified}
-  style:padding-left={padding && padding.left}
-  style:padding-right={padding && padding.right}
-  style:padding-top={padding && padding.top}
-  style:padding-bottom={padding && padding.bottom}
+  style:padding-left={padding && sizeToNative(padding.left)}
+  style:padding-right={padding && sizeToNative(padding.right)}
+  style:padding-top={padding && sizeToNative(padding.top)}
+  style:padding-bottom={padding && sizeToNative(padding.bottom)}
 >
   <table>
     {@render children?.()}
