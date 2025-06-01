@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.commons.test;
+package io.crazydan.duzhou.framework.test.commons;
 
 import io.crazydan.duzhou.framework.commons.StringHelper;
 import org.junit.jupiter.api.Test;

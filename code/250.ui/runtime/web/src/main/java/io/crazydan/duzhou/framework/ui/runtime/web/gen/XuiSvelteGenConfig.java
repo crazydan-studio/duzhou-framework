@@ -17,29 +17,28 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.commons.test;
+package io.crazydan.duzhou.framework.ui.runtime.web.gen;
 
-import io.crazydan.duzhou.framework.commons.XDslHelper;
-import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
-import io.nop.core.lang.json.JsonTool;
-import io.nop.core.lang.xml.XNode;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig;
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2024-03-01
+ * @date 2025-05-31
  */
-public class XDslHelperTest extends NopJunitTestCase {
+public class XuiSvelteGenConfig extends XuiGenConfig {
 
-    @Test
-    public void test_Json_to_XNode() {
-        Object page = JsonTool.loadJson("/commons/test/signin.page.json");
-        Assertions.assertNotNull(page);
+    public XuiSvelteGenConfig() {
+        super();
 
-        XNode node = XDslHelper.jsonToXNode(page);
-        this.log.info("json to xml: \n{}", node.xml());
+        setExprPrefix("{");
+        setExprSuffix("}");
+    }
 
-        Assertions.assertEquals(attachmentXml("signin.page.xml").xml(), node.xml());
+    @Override
+    public String toHtmlAttr(String name, CodeSnippet snippet) {
+        String code = toCodeSnippet(snippet);
+
+        return code != null ? name + '=' + getExprPrefix() + code + getExprSuffix() : "";
     }
 }

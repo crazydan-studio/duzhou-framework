@@ -21,12 +21,10 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.Map;
 
+import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
-import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
-import io.nop.core.lang.json.IJsonHandler;
-import io.nop.core.lang.json.IJsonSerializable;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
@@ -37,7 +35,7 @@ import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiLayoutSpan implements ISourceLocationGetter, IJsonSerializable {
+public class XuiLayoutSpan implements MappableCodeSnippet {
     private final SourceLocation loc;
 
     /** 水平方向上可跨越的数量 */
@@ -80,32 +78,10 @@ public class XuiLayoutSpan implements ISourceLocationGetter, IJsonSerializable {
         return this.loc;
     }
 
-    /**
-     * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ {row: 2} }</code> 或 <code>{ {row: props.span} }</code>
-     */
-    public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
-        StringBuilder sb = new StringBuilder();
-
-        Object row = this.row != null ? this.row.getVariable() : null;
-        Object col = this.col != null ? this.col.getVariable() : null;
-
-        ifNotNull(row, (v) -> sb.append("row:").append(v).append(","));
-        ifNotNull(col, (v) -> sb.append("col:").append(v).append(","));
-
-        return sb.length() > 0 ? exprPrefix + '{' + sb + '}' + exprSuffix : null;
-    }
-
-    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
-    public void serializeToJson(IJsonHandler out) {
-        out.beginObject(null);
-
-        out.putNotNull("loc", this.loc);
-        out.putNotNull("row", this.row);
-        out.putNotNull("col", this.col);
-
-        out.endObject();
+    public void toMap(Map<String, Object> map) {
+        ifNotNull(this.row, (v) -> map.put("row", v));
+        ifNotNull(this.col, (v) -> map.put("col", v));
     }
 
     private static XuiExpression<Integer> expr(ValueWithLocation vl) {

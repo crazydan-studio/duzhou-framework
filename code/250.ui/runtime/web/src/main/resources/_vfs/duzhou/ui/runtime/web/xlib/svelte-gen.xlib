@@ -251,54 +251,69 @@
                         ]]></c:script>
 
                         <c:for var="child" items="${children}">
-                            <_ xpl:is="${layoutName + ''}"
-                               xpl:attrs="layoutAttrs"
-                            >
-                                <thisLib:GenComponentNamed
-                                        component="${component}"
-                                        named="${child}" />
-                            </_>
+                            <c:unit xpl:outputMode="text"><![CDATA[
+                                <${layoutName} ${layoutAttrs}>
+                            ]]></c:unit>
+
+                            <thisLib:GenComponentNamed
+                                    component="${component}"
+                                    named="${child}" />
+
+                            <c:unit xpl:outputMode="text"><![CDATA[
+                                </${layoutName}>
+                            ]]></c:unit>
                         </c:for>
                     </when>
                     <otherwise>
-                        <_ xpl:is="${layoutName + ''}"
-                           xpl:attrs="layoutAttrs"
-                        >
-                            <c:for var="layoutChild" items="${layout.children}">
-                                <c:choose>
-                                    <when test="${layout.type.name() == 'table'}">
-                                        <!-- 应用原生的表格元素做表格布局 -->
-                                        <tr>
-                                            <c:for var="columnLayout" items="${layoutChild.children}">
-                                                <c:script><![CDATA[
+                        <c:unit xpl:outputMode="text"><![CDATA[
+                            <${layoutName} ${layoutAttrs}>
+                        ]]></c:unit>
+
+                        <c:for var="layoutChild" items="${layout.children}">
+                            <c:choose>
+                                <when test="${layout.type.name() == 'table'}">
+                                    <!-- 应用原生的表格元素做表格布局 -->
+                                    <tr>
+                                        <c:for var="columnLayout" items="${layoutChild.children}">
+                                            <c:script><![CDATA[
                                                     const span = columnLayout.props.span;
                                                     columnLayout.props.span = null; // 置空，避免向下传递
 
-                                                    const tdAttrs = span ? {
-                                                        rowspan: genConfig.toXmlAttrExpr(span.col),
-                                                        colspan: genConfig.toXmlAttrExpr(span.row),
-                                                    } : {};
+                                                    const tdAttrs = span
+                                                        ? genConfig.toHtmlAttr('rowspan', span.col)
+                                                            + ' ' + genConfig.toHtmlAttr('colspan', span.row)
+                                                        : '';
                                                 ]]></c:script>
-                                                <td xpl:attrs="tdAttrs">
-                                                    <thisLib:GenComponentNodeLayout
-                                                            component="${component}"
-                                                            node="${node}"
-                                                            layout="${columnLayout}"
-                                                            layoutNamePrefix="${layoutNamePrefix}" />
+
+                                            <c:unit xpl:outputMode="text"><![CDATA[
+                                                <td ${tdAttrs}>
+                                            ]]></c:unit>
+
+                                            <thisLib:GenComponentNodeLayout
+                                                    component="${component}"
+                                                    node="${node}"
+                                                    layout="${columnLayout}"
+                                                    layoutNamePrefix="${layoutNamePrefix}" />
+
+                                            <c:unit xpl:outputMode="text"><![CDATA[
                                                 </td>
-                                            </c:for>
-                                        </tr>
-                                    </when>
-                                    <otherwise>
-                                        <thisLib:GenComponentNodeLayout
-                                                component="${component}"
-                                                node="${node}"
-                                                layout="${layoutChild}"
-                                                layoutNamePrefix="${layoutNamePrefix}" />
-                                    </otherwise>
-                                </c:choose>
-                            </c:for>
-                        </_>
+                                            ]]></c:unit>
+                                        </c:for>
+                                    </tr>
+                                </when>
+                                <otherwise>
+                                    <thisLib:GenComponentNodeLayout
+                                            component="${component}"
+                                            node="${node}"
+                                            layout="${layoutChild}"
+                                            layoutNamePrefix="${layoutNamePrefix}" />
+                                </otherwise>
+                            </c:choose>
+                        </c:for>
+
+                        <c:unit xpl:outputMode="text"><![CDATA[
+                            </${layoutName}>
+                        ]]></c:unit>
                     </otherwise>
                 </c:choose>
             </source>

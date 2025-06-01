@@ -19,18 +19,18 @@
 
 package io.crazydan.duzhou.framework.ui.runtime.web;
 
+import java.util.Map;
+
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
 import io.nop.api.core.annotations.core.Description;
 import io.nop.api.core.config.IConfigReference;
 import io.nop.api.core.util.SourceLocation;
+import io.nop.xlang.ast.Literal;
 
+import static com.google.common.base.MoreObjects.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.nop.api.core.config.AppConfig.varRef;
 
@@ -38,7 +38,7 @@ import static io.nop.api.core.config.AppConfig.varRef;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-17
  */
-public class XuiGenConfig {
+public abstract class XuiGenConfig {
     private static final SourceLocation s_loc = SourceLocation.fromClass(XuiGenConfig.class);
 
     @Description("字体大小，即 1rem 对应的尺寸")
@@ -69,54 +69,104 @@ public class XuiGenConfig {
     /** 一个 {@link XuiSize.Unit#a_line} 单位对应的尺寸 */
     private UnitNumber lineSize;
 
-    XuiGenConfig() {
+    public XuiGenConfig() {
+        this.fontSize = extractNumberAndUnit(CFG_FONT_SIZE.get());
+        this.baseSize = extractNumberAndUnit(CFG_BASE_SIZE.get());
+        this.lineSize = extractNumberAndUnit(CFG_LINE_SIZE.get());
     }
 
-    public static XuiGenConfig create() {
-        XuiGenConfig config = new XuiGenConfig();
+    /**
+     * 将 {@link CodeSnippet} 转换为运行时 HTML 组件的属性
+     * <p/>
+     *
+     * Svelte:
+     * <pre>
+     * name={props.username}
+     * </pre>
+     * Vue:
+     * <pre>
+     * :name="props.username"
+     * </pre>
+     *
+     * @return 若 {@link #toCodeSnippet toCodeSnippet(snippet)}
+     * 的结果为 <code>null</code>，则返回空字符串
+     */
+    public abstract String toHtmlAttr(String name, CodeSnippet snippet);
 
-        config.fontSize = extractNumberAndUnit(CFG_FONT_SIZE.get());
-        config.baseSize = extractNumberAndUnit(CFG_BASE_SIZE.get());
-        config.lineSize = extractNumberAndUnit(CFG_LINE_SIZE.get());
+    /**
+     * 将 {@link CodeSnippet} 转换为运行时 HTML 文本
+     * <p/>
+     * 注意，对 XSS 攻击的预防由运行时自动处理
+     * <p/><br/><br/>
+     *
+     * Svelte:
+     * <pre>
+     * {'Your name is ' + props.username}
+     * </pre>
+     * Vue:
+     * <pre>
+     * {{'Your name is ' + props.username}}
+     * </pre>
+     *
+     * @return 若 {@link #toCodeSnippet toCodeSnippet(snippet)}
+     * 的结果为 <code>null</code>，则返回空模板，如 <code>{}</code> 或 <code>{{}}</code>
+     */
+    public String toHtmlText(CodeSnippet snippet) {
+        String code = toCodeSnippet(snippet);
 
-        return config;
+        return getExprPrefix() + firstNonNull(code, "") + getExprSuffix();
     }
 
-    /** @return 返回结果如：<code>{ 2 }</code>、<code>{ 'abc' + props.size }</code> 或 <code>{ props.size }</code> */
-    public String toXmlAttrExpr(XuiExpression<?> expr) {
-        Object var = expr != null ? expr.toExprString('\'') : null;
+    /**
+     * 将 <code>props</code> 转换为运行时 HTML 组件属性
+     * <p/>
+     *
+     * Svelte:
+     * <pre>
+     * name={props.name} address={props.address}
+     * </pre>
+     * Vue:
+     * <pre>
+     * :name="props.name" :address="props.address"
+     * </pre>
+     */
+    public String toHtmlAttrs(Map<String, Object> props) {
+        StringBuilder sb = new StringBuilder();
 
-        return var != null ? this.exprPrefix + var + this.exprSuffix : null;
+        props.forEach((prop, value) -> {
+            if (value == null) {
+                return;
+            }
+
+            if (!(value instanceof CodeSnippet)) {
+                value = XuiExpression.create(value.getClass(), Literal.valueOf(null, value));
+            }
+
+            String s = toHtmlAttr(prop, (CodeSnippet) value);
+            if (s.isEmpty()) {
+                return;
+            }
+
+            if (sb.length() > 0) {
+                sb.append(' ');
+            }
+            sb.append(s);
+        });
+
+        return sb.toString();
     }
 
-    public String toXmlAttrExpr(XuiLayoutSize value) {
-        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
-    }
-
-    public String toXmlAttrExpr(XuiLayoutGap value) {
-        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
-    }
-
-    public String toXmlAttrExpr(XuiLayoutSpacing value) {
-        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix, this::fromXuiSize) : null;
-    }
-
-    public String toXmlAttrExpr(XuiLayoutAlign value) {
-        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix) : null;
-    }
-
-    public String toXmlAttrExpr(XuiLayoutSpan value) {
-        return value != null ? value.toXmlAttrExpr(this.exprPrefix, this.exprSuffix) : null;
+    protected String toCodeSnippet(CodeSnippet snippet) {
+        return snippet != null ? snippet.toCodeSnippet('\'') : null;
     }
 
     /** 将 {@link XuiSize} 转换为运行时尺寸 */
     private UnitNumber fromXuiSize(XuiSize size) {
-        if (size.unit == XuiSize.Unit.percent) {
-            return UnitNumber.create(size.value, "%");
-        }
-
         UnitNumber base = getBaseSize();
         switch (size.unit) {
+            case percent: {
+                return UnitNumber.create(size.value, "%");
+            }
             case a_line: {
                 base = getLineSize();
                 break;

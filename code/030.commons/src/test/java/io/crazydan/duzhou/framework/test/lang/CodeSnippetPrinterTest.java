@@ -17,12 +17,14 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema.test;
+package io.crazydan.duzhou.framework.test.lang;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
+import io.crazydan.duzhou.framework.lang.CodeSnippetPrinter;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
@@ -35,13 +37,16 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-05-15
+ * @date 2025-06-01
  */
-public class XuiExpressionTest extends NopJunitTestCase {
+public class CodeSnippetPrinterTest {
 
     @Test
-    public void test_parse_nop_xpl_expression() {
-        Map<String, String> samples = new HashMap<>() {{
+    public void test_print_Expression() {
+        Map<Object, String> samples = new HashMap<>() {{
+            put(true, "true");
+            put(100, "100");
+            put(100.5f, "100.5");
             put("1u", "\"1u\"");
             put("${props.size}", "props.size");
             put("${props.size + props.gap}", "props.size + props.gap");
@@ -49,25 +54,52 @@ public class XuiExpressionTest extends NopJunitTestCase {
             put("${props.size > 10}", "props.size > 10");
             put("${props.name != null}", "props.name != null");
             put("${!props.disabled}", "!props.disabled");
-            put("Size is ${props.size}", "Size is ${props.size}");
-            put("Disabled ${!props.disabled && !state.started}", "Disabled ${!props.disabled && !state.started}");
-            put("Result is ${props.size > 10}", "Result is ${props.size > 10}");
+            put("${!props.disabled && !state.started}", "!props.disabled && !state.started");
+            put("Size's ${props.size}", "\"Size\\'s \" + (props.size)");
+            put("a = 3", "\"a = 3\"");
+            put("a = ${null}", "\"a = \" + null");
+            put("a = ${'a'}", "\"a = \" + \"a\"");
+            put("a = ${'a' + 'b'}", "\"a = \" + (\"a\" + \"b\")");
+            put("a = ${a + 'b'}", "\"a = \" + (a + \"b\")");
+            put("a = ${3}", "\"a = \" + 3");
+            put("a = ${true}", "\"a = \" + true");
+            put("a = ${3 + 2}", "\"a = \" + (3 + 2)");
+            put("a + b = ${a + b}", "\"a + b = \" + (a + b)");
+            put("a + b = ${a + b}, a = ${a} and b = ${b}",
+                "\"a + b = \" + (a + b) + \", a = \" + (a) + \" and b = \" + (b)");
+            //
+            put(new LinkedHashMap<>() {{
+                put("a", 5);
+                put("b", 5.5f);
+                put("c", "abc");
+                put("d", expr("a = ${5}"));
+                put("e", expr("${a+5}"));
+            }}, "{a:5,b:5.5,c:\"abc\",d:\"a = \" + 5,e:a + 5}");
+            put(new ArrayList<>() {{
+                add(12);
+                add(12.5f);
+                add("abc");
+                add(expr("a = ${5}"));
+                add(expr("${a+5}"));
+            }}, "[12,12.5,\"abc\",\"a = \" + 5,a + 5]");
         }};
+
+        CodeSnippetPrinter printer = CodeSnippetPrinter.create('"');
         samples.forEach((sample, expected) -> {
-            Expression expr = create(sample);
-            String actual = expr.toExprString();
+            Expression expr = expr(sample);
+            String actual = printer.print(expr);
 
             Assertions.assertEquals(expected, actual);
         });
     }
 
-    private Expression create(String value) {
+    private Expression expr(Object value) {
         IXplCompiler cp = XLang.newXplCompiler();
         IXLangCompileScope scope = cp.newCompileScope();
 
         Expression expr;
         ValueWithLocation vl = ValueWithLocation.of(null, value);
-        if (XplParseHelper.hasExpr(value)) {
+        if (value instanceof String && XplParseHelper.hasExpr(value.toString())) {
             expr = XplParseHelper.parseTemplateExpr(vl, cp, scope);
         } else {
             expr = Literal.valueOf(vl.getLocation(), vl.getValue());

@@ -54,11 +54,9 @@
         ]]></c:script>
 
         <c:script><![CDATA[
-            import io.crazydan.duzhou.framework.ui.runtime.web.XuiGenConfig;
+            import io.crazydan.duzhou.framework.ui.runtime.web.gen.XuiSvelteGenConfig;
 
-            const genConfig = XuiGenConfig.create();
-            genConfig.exprPrefix = '{';
-            genConfig.exprSuffix = '}';
+            const genConfig = new XuiSvelteGenConfig();
 
             builder.defineGlobalVar('genConfig', genConfig);
         ]]></c:script>

@@ -39,7 +39,7 @@
 
             <source>
                 <c:script><![CDATA[
-                    const text = genConfig.toXmlAttrExpr(node.value);
+                    const text = genConfig.toHtmlText(node.value);
                 ]]></c:script>
 
                 <!-- Note: XSS 攻击的预防由 Svelte 自动处理：https://svelte.dev/docs/svelte/@html -->

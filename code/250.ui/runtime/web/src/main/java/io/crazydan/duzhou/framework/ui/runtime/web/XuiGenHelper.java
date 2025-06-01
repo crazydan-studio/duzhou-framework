@@ -21,7 +21,6 @@ package io.crazydan.duzhou.framework.ui.runtime.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +38,6 @@ import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.resource.component.ResourceComponentManager;
 import io.nop.xlang.xpl.xlib.XplTag;
 import io.nop.xlang.xpl.xlib.XplTagLib;
-
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -141,27 +138,21 @@ public class XuiGenHelper {
      * 生成布局节点的属性列表
      * <p/>
      * 生成结果如下：
+     * <p/><br/><br/>
+     *
+     * Svelte:
      * <pre>
-     * { gap: "{ '16px' }", padding: "{ {left: '16px', right: '8px'} }" }
+     * gap={'2u'} padding={{left:'2u',right:'1u'}}
      * </pre>
+     * Vue:
      * <pre>
-     * { gap: "{ props.gap }", padding: "{ {left: props.padding, right: '16px'} }" }
+     * :gap="'2u'" :padding="{left:'2u',right:'1u'}"
      * </pre>
      */
-    public static Map<String, String> genLayoutNodeAttrs(XuiLayoutNode node, XuiGenConfig genConfig) {
-        Map<String, String> attrs = new HashMap<>();
-
+    public static String genLayoutNodeAttrs(XuiLayoutNode node, XuiGenConfig genConfig) {
         XuiLayoutProps props = node.getProps();
 
-        ifNotNull(genConfig.toXmlAttrExpr(props.getWidth()), (v) -> attrs.put("width", v));
-        ifNotNull(genConfig.toXmlAttrExpr(props.getHeight()), (v) -> attrs.put("height", v));
-
-        ifNotNull(genConfig.toXmlAttrExpr(props.getAlign()), (v) -> attrs.put("align", v));
-        ifNotNull(genConfig.toXmlAttrExpr(props.getSpan()), (v) -> attrs.put("span", v));
-        ifNotNull(genConfig.toXmlAttrExpr(props.getGap()), (v) -> attrs.put("gap", v));
-        ifNotNull(genConfig.toXmlAttrExpr(props.getPadding()), (v) -> attrs.put("padding", v));
-
-        return attrs;
+        return genConfig.toHtmlAttrs(props.toMap());
     }
 
     private static String toImportDirectives(

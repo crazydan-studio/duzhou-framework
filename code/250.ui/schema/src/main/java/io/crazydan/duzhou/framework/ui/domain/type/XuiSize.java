@@ -20,10 +20,10 @@
 package io.crazydan.duzhou.framework.ui.domain.type;
 
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
@@ -44,7 +44,7 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @date 2025-05-14
  */
 @DataBean
-public class XuiSize implements IJsonSerializable {
+public class XuiSize implements IJsonSerializable, CodeSnippet {
     /** {@link XuiSize} 的单位 */
     public enum Unit {
         /**
@@ -119,35 +119,9 @@ public class XuiSize implements IJsonSerializable {
                                                                          .collect(Collectors.joining(", ")));
     }
 
-    /**
-     * 转换为 xml 属性的对象表达式，
-     * 如，<code>'10rem'</code> 或 <code>props.width</code>
-     */
-    public static String toXmlAttrExpr(XuiExpression<XuiSize> expr, Function<XuiSize, Object> converter) {
-        return toXmlAttrExpr(expr, null, null, converter);
-    }
-
-    /**
-     * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ '1rem' }</code> 或 <code>{ props.width }</code>
-     */
-    public static String toXmlAttrExpr(
-            XuiExpression<XuiSize> expr, String exprPrefix, String exprSuffix, Function<XuiSize, Object> converter
-    ) {
-        if (expr == null) {
-            return null;
-        }
-
-        Object val = expr.getVariable();
-
-        if (val instanceof XuiSize) {
-            val = converter.apply((XuiSize) val);
-            // Note: XML 属性值中的双引号会被 Nop 转义
-            val = "'" + val + '\'';
-        }
-        return val != null
-               ? (exprPrefix != null ? exprPrefix : "") + val + (exprSuffix != null ? exprSuffix : "")
-               : null;
+    @Override
+    public String toCodeSnippet(char strQuote) {
+        return strQuote + toString() + strQuote;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

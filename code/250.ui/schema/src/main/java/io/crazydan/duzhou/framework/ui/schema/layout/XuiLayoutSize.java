@@ -19,9 +19,8 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import java.util.function.Function;
-
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
@@ -37,7 +36,7 @@ import io.nop.core.lang.json.IJsonSerializable;
  * @date 2025-04-26
  */
 @DataBean
-public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
+public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable, CodeSnippet {
     private static final XuiLayoutSize match_parent = new XuiLayoutSize(Type.match_parent);
     private static final XuiLayoutSize fill_remains = new XuiLayoutSize(Type.fill_remains);
     private static final XuiLayoutSize wrap_content = new XuiLayoutSize(Type.wrap_content);
@@ -105,20 +104,15 @@ public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable {
         return this.loc;
     }
 
-    /**
-     * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ 'match_parent' }</code>、<code>{ '1rem' }</code>
-     * 或 <code>{ props.width }</code>
-     */
-    public String toXmlAttrExpr(String exprPrefix, String exprSuffix, Function<XuiSize, Object> sizeConverter) {
-        Object val = this.type.name();
-
+    @Override
+    public String toCodeSnippet(char strQuote) {
         if (this.type == Type.with_specified) {
             assert this.value != null;
 
-            return XuiSize.toXmlAttrExpr(this.value, exprPrefix, exprSuffix, sizeConverter);
+            return this.value.toCodeSnippet(strQuote);
+        } else {
+            return strQuote + this.type.name() + strQuote;
         }
-        return exprPrefix + '\'' + val + '\'' + exprSuffix;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

@@ -22,9 +22,10 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
+import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
 import io.nop.api.core.annotations.data.DataBean;
-import io.nop.core.lang.json.IJsonHandler;
-import io.nop.core.lang.json.IJsonSerializable;
+import io.nop.api.core.util.SourceLocation;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
@@ -35,18 +36,24 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
  * @date 2025-04-26
  */
 @DataBean
-public class XuiLayoutAlign implements IJsonSerializable {
+public class XuiLayoutAlign implements MappableCodeSnippet {
     /** 缓存枚举组合，以避免重复构建相同对象 */
     private static final Map<String, XuiLayoutAlign> aligns = new HashMap<>(9);
 
     /** 对齐方向 */
-    public enum Direction {
+    public enum Direction implements CodeSnippet {
         /** 向起始位置对齐 */
         start,
         /** 向中心位置对齐 */
         center,
         /** 向终止位置对齐 */
         end,
+        ;
+
+        @Override
+        public String toCodeSnippet(char strQuote) {
+            return strQuote + name() + strQuote;
+        }
     }
 
     /** 水平方向上的对齐方向 */
@@ -71,28 +78,14 @@ public class XuiLayoutAlign implements IJsonSerializable {
         return create(this.row, col);
     }
 
-    /**
-     * 转换为 xml 属性的对象表达式，
-     * 如，<code>{ {row: 'start'} }</code>
-     */
-    public String toXmlAttrExpr(String exprPrefix, String exprSuffix) {
-        StringBuilder sb = new StringBuilder();
-
-        // Note: XML 属性值中的双引号会被 Nop 转义
-        ifNotNull(this.row, (v) -> sb.append("row:'").append(v).append("',"));
-        ifNotNull(this.col, (v) -> sb.append("col:'").append(v).append("',"));
-
-        return sb.length() > 0 ? exprPrefix + '{' + sb + '}' + exprSuffix : null;
+    @Override
+    public SourceLocation getLocation() {
+        return null;
     }
 
-    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
-    public void serializeToJson(IJsonHandler out) {
-        out.beginObject(null);
-
-        out.putNotNull("row", this.row);
-        out.putNotNull("col", this.col);
-
-        out.endObject();
+    public void toMap(Map<String, Object> map) {
+        ifNotNull(this.row, (v) -> map.put("row", v));
+        ifNotNull(this.col, (v) -> map.put("col", v));
     }
 }

@@ -21,6 +21,8 @@ package io.crazydan.duzhou.framework.ui.schema;
 
 import java.util.function.BiFunction;
 
+import io.crazydan.duzhou.framework.lang.CodeSnippet;
+import io.crazydan.duzhou.framework.lang.CodeSnippetPrinter;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
@@ -32,25 +34,22 @@ import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Literal;
-import io.nop.xlang.ast.TemplateExpression;
 import io.nop.xlang.xpl.IXplCompiler;
 import io.nop.xlang.xpl.utils.XplParseHelper;
-
-import static io.nop.api.core.util.ApiStringHelper.escape;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-15
  */
 @DataBean
-public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializable {
+public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializable, CodeSnippet {
     private static final IXplCompiler cp = XLang.newXplCompiler();
     private static final IXLangCompileScope scope = cp.newCompileScope();
 
-    private final SourceLocation loc;
+    public final SourceLocation loc;
 
-    private final Class<T> type;
-    private final Expression expr;
+    public final Class<T> type;
+    public final Expression expr;
 
     XuiExpression(SourceLocation loc, Class<T> type, Expression expr) {
         this.loc = loc;
@@ -90,6 +89,10 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         return create((Class<Object>) type.getJavaClass(), vl, (l, v) -> type.convert(vl.getValue()));
     }
 
+    public static XuiExpression<?> create(Class<?> type, Expression expr) {
+        return new XuiExpression<>(expr.getLocation(), type, expr);
+    }
+
     public void validate() {
         // TODO 字面量数据类型检查
         // TODO 表达式引用目标类型检查
@@ -104,45 +107,14 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         }
     }
 
-    /**
-     * 转换为表达式，其中，字符串字面量使用 <code>strQuote</code> 包裹
-     * <pre>
-     * Hello, ${username} ==> 'Hello, ' + (username)
-     * </pre>
-     * <pre>
-     * a + b = ${a + b} ==> 'a + b = ' + (a + b)
-     * </pre>
-     */
-    public String toExprString(char strQuote) {
-        if (this.expr instanceof Literal) {
-            return literalToExprString((Literal) this.expr, strQuote);
-        }
-
-        if (!(this.expr instanceof TemplateExpression)) {
-            return this.expr.toExprString();
-        }
-
-        StringBuilder sb = new StringBuilder();
-        ((TemplateExpression) this.expr).getExpressions().forEach((expr) -> {
-            if (sb.length() > 0) {
-                sb.append(" + ");
-            }
-
-            String val;
-            if (expr instanceof Literal) {
-                val = literalToExprString((Literal) expr, strQuote);
-            } else {
-                val = "(" + expr.toExprString() + ')';
-            }
-            sb.append(val);
-        });
-
-        return sb.toString();
-    }
-
     @Override
     public SourceLocation getLocation() {
         return this.loc;
+    }
+
+    @Override
+    public String toCodeSnippet(char strQuote) {
+        return CodeSnippetPrinter.create(strQuote).print(this.expr);
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
@@ -170,20 +142,5 @@ public class XuiExpression<T> implements ISourceLocationGetter, IJsonSerializabl
         }
 
         return this.expr.toExprString();
-    }
-
-    private static String literalToExprString(Literal expr, char strQuote) {
-        Object val = expr.getValue();
-
-        if (val instanceof Number || val instanceof Boolean) {
-            return val.toString();
-        } else if (val instanceof String) {
-            return strQuote
-                   + escape(val.toString(), new char[] { strQuote }, new String[] { "\\" + strQuote })
-                   + strQuote;
-        } else if (val != null) {
-            throw new IllegalStateException("Unsupported literal " + val.getClass().getName() + "[" + val + "]");
-        }
-        return null;
     }
 }

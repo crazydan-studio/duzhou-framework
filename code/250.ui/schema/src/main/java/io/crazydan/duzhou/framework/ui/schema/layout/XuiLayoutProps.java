@@ -19,10 +19,14 @@
 
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.Map;
+
+import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
-import io.nop.core.lang.json.IJsonHandler;
-import io.nop.core.lang.json.IJsonSerializable;
+
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
  * 布局配置属性
@@ -31,7 +35,7 @@ import io.nop.core.lang.json.IJsonSerializable;
  * @date 2025-04-25
  */
 @DataBean
-public class XuiLayoutProps implements IJsonSerializable {
+public class XuiLayoutProps implements MappableCodeSnippet {
     /** 宽度 */
     private XuiLayoutSize width = XuiLayoutSize.wrap_content();
     /** 高度 */
@@ -118,21 +122,20 @@ public class XuiLayoutProps implements IJsonSerializable {
         setPadding(XuiLayoutSpacing.create(vl));
     }
 
-    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
     @Override
-    public void serializeToJson(IJsonHandler out) {
-        out.beginObject(null);
+    public SourceLocation getLocation() {
+        return null;
+    }
 
-        out.putNotNull("width", this.width);
-        out.putNotNull("height", this.height);
+    @Override
+    public void toMap(Map<String, Object> map) {
+        ifNotNull(this.width, (v) -> map.put("width", v));
+        ifNotNull(this.height, (v) -> map.put("height", v));
 
-        out.putNotNull("align", this.align);
-
-        out.putNotNull("gap", this.gap);
-        out.putNotNull("span", this.span);
-        out.putNotNull("padding", this.padding);
-
-        out.endObject();
+        ifNotNull(this.align, (v) -> map.put("align", v));
+        ifNotNull(this.span, (v) -> map.put("span", v));
+        ifNotNull(this.gap, (v) -> map.put("gap", v));
+        ifNotNull(this.padding, (v) -> map.put("padding", v));
     }
 
     @Override
