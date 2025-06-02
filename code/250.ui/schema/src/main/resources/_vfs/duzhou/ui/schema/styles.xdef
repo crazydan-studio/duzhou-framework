@@ -57,5 +57,13 @@
                 xdef:name="XuiStyle"
                 xdef:unknown-attr="string"
         />
+
+        <!-- TODO 在何种事件发生时应用样式，等同于 css 的伪类 -->
+        <!--<when xdef:name="XuiStyleConditional"
+              xdef:body-type="map" xdef:bean-body-prop="styles" xdef:bean-child-name="style"
+              on="string"
+        >
+            <xdef:unknown-tag xdef:ref="XuiStyle" />
+        </when>-->
     </xdef:unknown-tag>
 </styles>

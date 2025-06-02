@@ -10,8 +10,6 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * Start: 内置组件
- * 将内置组件定义在基础节点中，以支持在 xui:each、xui:when 等嵌套节点中定义这些类型的直接节点
  * 文本组件：只包含文本内容的组件
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",

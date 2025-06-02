@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentDirectiveWhen;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -10,34 +10,34 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 组件命名元素
+ * 条件选择的指定条件
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentDirective {
+public abstract class _XuiComponentCondWhen extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested {
     
     /**
-     *  
-     * xml name: cond
-     * 
+     *  必填
+     * xml name: test
+     * 条件表达式；
      */
-    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> _cond ;
+    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> _test ;
     
     /**
-     * 
-     * xml name: cond
-     *  
+     * 必填
+     * xml name: test
+     *  条件表达式；
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> getCond(){
-      return _cond;
+    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> getTest(){
+      return _test;
     }
 
     
-    public void setCond(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> value){
+    public void setTest(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> value){
         checkAllowChange();
         
-        this._cond = value;
+        this._test = value;
            
     }
 
@@ -57,23 +57,23 @@ public abstract class _XuiComponentDirectiveWhen extends io.crazydan.duzhou.fram
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("cond",this.getCond());
+        out.putNotNull("test",this.getTest());
     }
 
-    public XuiComponentDirectiveWhen cloneInstance(){
-        XuiComponentDirectiveWhen instance = newInstance();
+    public XuiComponentCondWhen cloneInstance(){
+        XuiComponentCondWhen instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentDirectiveWhen instance){
+    protected void copyTo(XuiComponentCondWhen instance){
         super.copyTo(instance);
         
-        instance.setCond(this.getCond());
+        instance.setTest(this.getTest());
     }
 
-    protected XuiComponentDirectiveWhen newInstance(){
-        return (XuiComponentDirectiveWhen) ClassHelper.newInstance(getClass());
+    protected XuiComponentCondWhen newInstance(){
+        return (XuiComponentCondWhen) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

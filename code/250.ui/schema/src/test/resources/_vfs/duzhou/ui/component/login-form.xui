@@ -143,7 +143,7 @@
             >
                 <Text xui:name="label">登录</Text>
 
-                <xui:dispatch on="click" for="User_Login_Start"
+                <xui:dispatch when="click" msg="User_Login_Start"
                               data="${{
                                username: state.loginInfo.username.value,
                                password: state.loginInfo.password.value}}"

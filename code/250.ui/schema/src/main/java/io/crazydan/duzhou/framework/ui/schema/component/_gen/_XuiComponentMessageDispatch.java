@@ -25,17 +25,17 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
     
     /**
      *  必填
-     * xml name: for
+     * xml name: msg
      * 消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
      */
-    private java.lang.String _for ;
+    private java.lang.String _msg ;
     
     /**
      *  必填
-     * xml name: on
+     * xml name: when
      * 事件名称，如 `click`、`input` 等；
      */
-    private java.lang.String _on ;
+    private java.lang.String _when ;
     
     /**
      * 可选
@@ -58,38 +58,38 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
     
     /**
      * 必填
-     * xml name: for
+     * xml name: msg
      *  消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
      */
     
-    public java.lang.String getFor(){
-      return _for;
+    public java.lang.String getMsg(){
+      return _msg;
     }
 
     
-    public void setFor(java.lang.String value){
+    public void setMsg(java.lang.String value){
         checkAllowChange();
         
-        this._for = value;
+        this._msg = value;
            
     }
 
     
     /**
      * 必填
-     * xml name: on
+     * xml name: when
      *  事件名称，如 `click`、`input` 等；
      */
     
-    public java.lang.String getOn(){
-      return _on;
+    public java.lang.String getWhen(){
+      return _when;
     }
 
     
-    public void setOn(java.lang.String value){
+    public void setWhen(java.lang.String value){
         checkAllowChange();
         
-        this._on = value;
+        this._when = value;
            
     }
 
@@ -110,8 +110,8 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
         super.outputJson(out);
         
         out.putNotNull("data",this.getData());
-        out.putNotNull("for",this.getFor());
-        out.putNotNull("on",this.getOn());
+        out.putNotNull("msg",this.getMsg());
+        out.putNotNull("when",this.getWhen());
     }
 
     public XuiComponentMessageDispatch cloneInstance(){
@@ -124,8 +124,8 @@ public abstract class _XuiComponentMessageDispatch extends io.crazydan.duzhou.fr
         super.copyTo(instance);
         
         instance.setData(this.getData());
-        instance.setFor(this.getFor());
-        instance.setOn(this.getOn());
+        instance.setMsg(this.getMsg());
+        instance.setWhen(this.getWhen());
     }
 
     protected XuiComponentMessageDispatch newInstance(){
