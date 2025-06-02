@@ -39,9 +39,8 @@
     <!-- 应用的版权声明内容 -->
     <copyright xdef:value="string" />
 
-    <pages xdef:bean-prop="pageRefs"
+    <pages xdef:bean-prop="pageRefs" xdef:bean-child-name="pageRef"
            xdef:body-type="list" xdef:key-attr="name"
-           xdef:bean-child-name="pageRef"
     >
         <page xdef:ref="app/page-ref.xdef"
               name="!conf-name" />

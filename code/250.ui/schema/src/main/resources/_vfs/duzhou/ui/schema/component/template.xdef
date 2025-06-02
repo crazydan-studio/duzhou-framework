@@ -195,6 +195,7 @@
         @test [必填]条件表达式；
         -->
         <when xdef:name="XuiComponentCondWhen" xdef:ref="XuiComponentNested"
+              xdef:bean-prop="whens" xdef:bean-child-name="when"
               xdef:unique-attr="xui:name" xui:name="!conf-name"
               test="!xui-expr:boolean"
         />

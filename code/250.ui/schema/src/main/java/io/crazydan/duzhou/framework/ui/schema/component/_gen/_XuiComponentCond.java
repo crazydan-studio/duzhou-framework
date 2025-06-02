@@ -68,15 +68,15 @@ public abstract class _XuiComponentCond extends io.crazydan.duzhou.framework.ui.
     }
 
     
-    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen getChild(String name){
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen getWhen(String name){
         return this._whens.getByKey(name);
     }
 
-    public boolean hasChild(String name){
+    public boolean hasWhen(String name){
         return this._whens.containsKey(name);
     }
 
-    public void addChild(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen item) {
+    public void addWhen(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen item) {
         checkAllowChange();
         java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen> list = this.getWhens();
         if (list == null || list.isEmpty()) {
