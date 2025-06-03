@@ -42,32 +42,30 @@
 
     <state>
         <loginInfo>
-            <username>
-                <!-- 以下为需要启用数据校验的模型结构 -->
-                <value type="string" />
-                <!-- 获取该值时，将调用所在对象的 xui:validation 对值进行校验并返回校验结果 -->
-                <valid type="boolean" />
-
-                <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
-                <xui:validation x:name="length-validation" required="true" maxLength="15">
-                    <msg>帐号不能为空，且长度小于 15 个字符</msg>
-                </xui:validation>
-                <xui:validation x:name="form-validation" regex="^[a-z0-9]+$">
-                    <msg>帐号只能为字符、数字的组合</msg>
-                </xui:validation>
-            </username>
-            <password>
-                <value type="string" />
-                <valid type="boolean" />
-
-                <xui:validation x:name="length-validation" minLength="8" maxLength="15">
-                    <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
-                </xui:validation>
-                <xui:validation x:name="form-validation"
-                                regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
-                    <msg>密码必须包含大小写字母、特殊字符和数字</msg>
-                </xui:validation>
-            </password>
+            <xui:schema>
+                <username>
+                    <xui:value type="string">
+                        <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
+                        <validation name="length-validation" required="true" maxLength="15">
+                            <msg>帐号不能为空，且长度小于 15 个字符</msg>
+                        </validation>
+                        <validation name="form-validation" regex="^[a-z0-9]+$">
+                            <msg>帐号只能为字符、数字的组合</msg>
+                        </validation>
+                    </xui:value>
+                </username>
+                <password>
+                    <xui:value type="string">
+                        <validation name="length-validation" minLength="8" maxLength="15">
+                            <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
+                        </validation>
+                        <validation name="form-validation"
+                                    regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
+                            <msg>密码必须包含大小写字母、特殊字符和数字</msg>
+                        </validation>
+                    </xui:value>
+                </password>
+            </xui:schema>
         </loginInfo>
     </state>
 

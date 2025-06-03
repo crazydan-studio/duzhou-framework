@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- 组件属性定义 -->
+<props xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
+       xmlns:xui="xui"
+       x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
+       xdef:name="XuiComponentProps" xdef:ref="XuiComponentPropSchema"
+       xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+>
+
+    <!-- 属性
+    -->
+    <xdef:define xdef:name="XuiComponentProp"
+                 xdef:body-type="union"
+                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropDef"
+                 xdef:bean-body-prop="def"
+                 xdef:bean-sub-type-prop="$type"
+    >
+        <!-- 属性值 -->
+        <xui:value xdef:ref="XuiComponentPropValue"
+                   xdef:bean-tag-prop="$type"
+        />
+        <!-- 属性结构 -->
+        <xui:schema xdef:ref="XuiComponentPropSchema"
+                    xdef:bean-tag-prop="$type"
+        />
+    </xdef:define>
+
+    <xdef:define xdef:name="XuiComponentPropDef" />
+
+    <!-- 属性值：定义属性类型，以及缺省值
+
+    @type [必填]属性值的类型；
+    @default [可选]属性的缺省值；
+    -->
+    <xdef:define xdef:name="XuiComponentPropValue" xdef:ref="XuiComponentPropDef"
+                 type="!generic-type" default="xui-expr:any"
+    >
+        <!-- 属性校验列表 -->
+        <validation xdef:ref="XuiComponentPropValidation"
+                    xdef:unique-attr="name" name="!var-name"
+        />
+    </xdef:define>
+
+    <xdef:define xdef:name="XuiComponentPropSchema" xdef:ref="XuiComponentPropDef"
+                 xdef:body-type="map"
+                 xdef:bean-body-prop="props" xdef:bean-child-name="prop"
+    >
+        <xdef:unknown-tag xdef:ref="XuiComponentProp" />
+    </xdef:define>
+
+    <!-- 属性校验：配置属性值的校验规则 -->
+    <xdef:define xdef:name="XuiComponentPropValidation"
+                 name="!var-name"
+    >
+        <!-- 校验提示信息 -->
+        <msg xdef:value="!xui-expr:string" />
+    </xdef:define>
+</props>

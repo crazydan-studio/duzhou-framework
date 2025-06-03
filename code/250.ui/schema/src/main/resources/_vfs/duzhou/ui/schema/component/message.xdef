@@ -25,10 +25,8 @@
 @type [必填] 消息类型，其值需为首字母大写的驼峰形式（可包含下划线）；
 -->
 <message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-         xmlns:xui="xui"
          x:schema="/nop/schema/xdef.xdef"
          xdef:name="XuiComponentMessage" xdef:ref="../action/node.xdef"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
-         xui:when="~string" xui:name="~conf-name"
          type="!component-name"
 />

@@ -36,49 +36,6 @@
     <xdef:define xdef:name="XuiComponentNamed"
                  xdef:bean-tag-prop="$type" />
 
-    <!-- 组件嵌套元素：限定可被嵌套的节点
-    - 内置组件 Text 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
-    - 内置组件 Validation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
-    - 内置组件 Animation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
-    - 自定义组件可被嵌套，且可嵌套其他组件；
-    -->
-    <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
-                 xdef:body-type="list" xdef:key-attr="xui:name"
-                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
-                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
-                 xdef:bean-sub-type-prop="$type"
-    >
-        <!-- 文本组件：只包含文本内容的组件 -->
-        <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
-              xdef:value="xui-expr:html-text" xdef:bean-body-prop="value"
-              xdef:unknown-attr="xui-expr:any"
-              xui:when="xui-expr:boolean" xui:name="!conf-name"
-        />
-
-        <!-- 校验组件
-        - 可自嵌套，从而支持分层校验；
-        - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
-        - 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
-        -->
-        <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
-                    xui:when="xui-expr:boolean" xui:name="!conf-name"
-                    target="!string"
-        />
-
-        <!-- 动画组件
-        - 可自嵌套，从而支持一组动画；
-        -->
-        <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   xui:when="xui-expr:boolean" xui:name="!conf-name"
-                   enter="string" exit="string"
-        />
-
-        <!-- 自定义组件 -->
-        <xdef:unknown-tag xdef:ref="XuiComponentNode"
-                          xui:when="xui-expr:boolean" xui:name="!conf-name"
-        />
-    </xdef:define>
-
     <!-- 组件元素：定义组件结构
     - `xui:layout`: 控制直接节点的布局结构；
     - `xui:style`: 设置组件的展示风格；
@@ -96,11 +53,11 @@
         -->
         <xui:layout xdef:ref="XuiComponentLayout"
                     xui:when="xui-expr:boolean"
-                    xui:name="!conf-name=xui-layout"
+                    xui:name="!var-name=xui-layout"
         />
         <xui:style xdef:ref="XuiComponentStyle"
                    xui:when="xui-expr:boolean"
-                   xui:name="!conf-name=xui-style"
+                   xui:name="!var-name=xui-style"
         />
         <!--
                 &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），并通过 layer 控制层的先后顺序 &ndash;&gt;
@@ -109,15 +66,62 @@
         <!-- 缺省使用 msg 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
                       xui:when="xui-expr:boolean"
-                      xui:name="!conf-name=@attr:msg"
+                      xui:name="!var-name=@attr:msg"
         />
 
         <xui:each xdef:ref="XuiComponentEach"
                   xui:when="xui-expr:boolean"
-                  xui:name="!conf-name"
+                  xui:name="!var-name"
         />
         <xui:cond xdef:ref="XuiComponentCond"
-                  xui:name="!conf-name"
+                  xui:name="!var-name"
+        />
+    </xdef:define>
+
+    <!-- 组件嵌套元素：限定可被嵌套的节点
+    - 内置组件 Text 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+    - 内置组件 Validation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+    - 内置组件 Animation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+    - 自定义组件可被嵌套，且可嵌套其他组件；
+    -->
+    <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
+                 xdef:body-type="list" xdef:key-attr="xui:name"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
+                 xdef:bean-sub-type-prop="$type"
+    >
+        <!-- 文本组件：只包含文本内容的组件
+
+        @as-html [可选]是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+        -->
+        <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
+              xdef:value="xui-expr:html-text" xdef:bean-body-prop="value"
+              xdef:unknown-attr="xui-expr:any"
+              xui:when="xui-expr:boolean" xui:name="!var-name"
+              as-html="boolean"
+        />
+
+        <!-- 校验组件
+        - 可自嵌套，从而支持分层校验；
+        - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
+        - 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
+        -->
+        <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
+                    xui:when="xui-expr:boolean" xui:name="!var-name"
+                    target="!string"
+        />
+
+        <!-- 动画组件
+        - 可自嵌套，从而支持一组动画；
+        -->
+        <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
+                   xui:when="xui-expr:boolean" xui:name="!var-name"
+                   enter="string" exit="string"
+        />
+
+        <!-- 自定义组件 -->
+        <xdef:unknown-tag xdef:ref="XuiComponentNode"
+                          xui:when="xui-expr:boolean" xui:name="!var-name"
         />
     </xdef:define>
 
@@ -174,7 +178,7 @@
     @data [可选]消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
     -->
     <xdef:define xdef:name="XuiComponentMessageDispatch" xdef:ref="XuiComponentNamed"
-                 when="!conf-name" msg="!conf-name" data="xui-expr:any"
+                 when="!conf-name" msg="!component-name" data="xui-expr:any"
     />
 
     <!-- 遍历器 - each
@@ -196,12 +200,12 @@
         -->
         <when xdef:name="XuiComponentCondWhen" xdef:ref="XuiComponentNested"
               xdef:bean-prop="whens" xdef:bean-child-name="when"
-              xdef:unique-attr="xui:name" xui:name="!conf-name"
+              xdef:unique-attr="xui:name" xui:name="!var-name"
               test="!xui-expr:boolean"
         />
         <!-- 条件选择的缺省条件 -->
         <else xdef:name="XuiComponentCondElse" xdef:ref="XuiComponentNested"
-              xui:name="!conf-name"
+              xui:name="!var-name"
         />
     </xdef:define>
 </template>

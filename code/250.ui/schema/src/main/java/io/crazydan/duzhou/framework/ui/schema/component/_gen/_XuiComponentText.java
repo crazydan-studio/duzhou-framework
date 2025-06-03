@@ -17,11 +17,37 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
     
     /**
+     *  可选
+     * xml name: as-html
+     * 是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+     */
+    private java.lang.Boolean _asHtml ;
+    
+    /**
      *  
      * xml name: 
      * 
      */
     private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.String> _value ;
+    
+    /**
+     * 可选
+     * xml name: as-html
+     *  是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+     */
+    
+    public java.lang.Boolean getAsHtml(){
+      return _asHtml;
+    }
+
+    
+    public void setAsHtml(java.lang.Boolean value){
+        checkAllowChange();
+        
+        this._asHtml = value;
+           
+    }
+
     
     /**
      * 
@@ -57,6 +83,7 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("asHtml",this.getAsHtml());
         out.putNotNull("value",this.getValue());
     }
 
@@ -69,6 +96,7 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
     protected void copyTo(XuiComponentText instance){
         super.copyTo(instance);
         
+        instance.setAsHtml(this.getAsHtml());
         instance.setValue(this.getValue());
     }
 
