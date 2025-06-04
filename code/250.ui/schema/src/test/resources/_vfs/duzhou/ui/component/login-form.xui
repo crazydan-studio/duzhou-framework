@@ -46,23 +46,27 @@
                 <username>
                     <xui:value type="string">
                         <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
-                        <validation name="length-validation" required="true" maxLength="15">
-                            <msg>帐号不能为空，且长度小于 15 个字符</msg>
-                        </validation>
-                        <validation name="form-validation" regex="^[a-z0-9]+$">
-                            <msg>帐号只能为字符、数字的组合</msg>
-                        </validation>
+                        <validator>
+                            <rule name="length-validation" required="true" maxLength="15">
+                                <msg>帐号不能为空，且长度小于 15 个字符</msg>
+                            </rule>
+                            <rule name="form-validation" regex="^[a-z0-9]+$">
+                                <msg>帐号只能为字母、数字的组合</msg>
+                            </rule>
+                        </validator>
                     </xui:value>
                 </username>
                 <password>
                     <xui:value type="string">
-                        <validation name="length-validation" minLength="8" maxLength="15">
-                            <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
-                        </validation>
-                        <validation name="form-validation"
-                                    regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
-                            <msg>密码必须包含大小写字母、特殊字符和数字</msg>
-                        </validation>
+                        <validator>
+                            <rule name="length-validation" minLength="8" maxLength="15">
+                                <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
+                            </rule>
+                            <rule name="form-validation"
+                                  regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
+                                <msg>密码必须包含大小写字母、特殊字符和数字</msg>
+                            </rule>
+                        </validator>
                     </xui:value>
                 </password>
             </xui:schema>

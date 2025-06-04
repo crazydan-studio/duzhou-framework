@@ -31,48 +31,45 @@
     -->
     <xdef:define xdef:name="XuiComponentProp"
                  xdef:body-type="union"
-                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropDef"
+                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
                  xdef:bean-body-prop="def"
                  xdef:bean-sub-type-prop="$type"
     >
-        <!-- 属性值 -->
-        <xui:value xdef:ref="XuiComponentPropValue"
-                   xdef:bean-tag-prop="$type"
-        />
-        <!-- 属性结构 -->
-        <xui:schema xdef:ref="XuiComponentPropSchema"
-                    xdef:bean-tag-prop="$type"
-        />
+        <!-- 对属性的值的定义 -->
+        <xui:value xdef:ref="XuiComponentPropMetaValue" />
+        <!-- 对结构化属性的结构定义 -->
+        <xui:schema xdef:ref="XuiComponentPropMetaSchema" />
     </xdef:define>
-
-    <xdef:define xdef:name="XuiComponentPropDef" />
 
     <!-- 属性值：定义属性类型，以及缺省值
 
     @type [必填]属性值的类型；
     @default [可选]属性的缺省值；
     -->
-    <xdef:define xdef:name="XuiComponentPropValue" xdef:ref="XuiComponentPropDef"
-                 type="!generic-type" default="xui-expr:any"
+    <xdef:define xdef:name="XuiComponentPropMetaValue"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
+                 xdef:bean-tag-prop="$type"
+                 type="!std-data-type" default="xui-expr:any"
     >
         <!-- 属性校验列表 -->
-        <validation xdef:ref="XuiComponentPropValidation"
-                    xdef:unique-attr="name" name="!var-name"
-        />
+        <validator xdef:ref="XuiComponentPropValidator" />
     </xdef:define>
 
-    <xdef:define xdef:name="XuiComponentPropSchema" xdef:ref="XuiComponentPropDef"
+    <!-- 属性结构 -->
+    <xdef:define xdef:name="XuiComponentPropMetaSchema"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
+                 xdef:bean-tag-prop="$type"
                  xdef:body-type="map"
-                 xdef:bean-body-prop="props" xdef:bean-child-name="prop"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
     >
         <xdef:unknown-tag xdef:ref="XuiComponentProp" />
     </xdef:define>
 
     <!-- 属性校验：配置属性值的校验规则 -->
-    <xdef:define xdef:name="XuiComponentPropValidation"
-                 name="!var-name"
-    >
-        <!-- 校验提示信息 -->
-        <msg xdef:value="!xui-expr:string" />
+    <xdef:define xdef:name="XuiComponentPropValidator">
+        <rule xdef:unique-attr="name" name="!var-name">
+            <!-- 校验提示信息 -->
+            <msg xdef:value="!xui-expr:string" />
+        </rule>
     </xdef:define>
 </props>
