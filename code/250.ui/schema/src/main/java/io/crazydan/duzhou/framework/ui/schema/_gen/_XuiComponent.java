@@ -66,19 +66,43 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     
     /**
      *  
-     * xml name: template
+     * xml name: props
      * 组件属性
      * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
      * - 内置 `children` 属性，用于获取当前组件的嵌套节点；
-     * <props xdef:ref="component/props.xdef" />
-     * state 为组件内部状态数据，仅组件内可读、可修改，响应式更新
+     */
+    private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp _props ;
+    
+    /**
+     *  
+     * xml name: state
+     * 组件状态
+     * - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新
      * - 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
      * - 字符串类型默认为空，布尔类型默认为 false 等
-     * <state xdef:body-type="map"
-     * xdef:bean-prop="states" xdef:bean-child-name="state"
-     * >
-     * <xdef:unknown-tag xdef:ref="component/prop.xdef" />
-     * </state>
+     */
+    private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp _state ;
+    
+    /**
+     *  
+     * xml name: template
+     * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+     * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+     * -
+     * - This program is free software: you can redistribute it and/or modify
+     * - it under the terms of the GNU Lesser General Public License as published by
+     * - the Free Software Foundation, either version 3 of the License, or
+     * - (at your option) any later version.
+     * -
+     * - This program is distributed in the hope that it will be useful,
+     * - but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * - GNU Lesser General Public License for more details.
+     * -
+     * - You should have received a copy of the GNU Lesser General Public License
+     * - along with this program.
+     * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+     * 组件模板定义
      */
     private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentTemplate _template ;
     
@@ -190,19 +214,67 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     
     /**
      * 
-     * xml name: template
+     * xml name: props
      *  组件属性
      * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
      * - 内置 `children` 属性，用于获取当前组件的嵌套节点；
-     * <props xdef:ref="component/props.xdef" />
-     * state 为组件内部状态数据，仅组件内可读、可修改，响应式更新
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: state
+     *  组件状态
+     * - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新
      * - 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
      * - 字符串类型默认为空，布尔类型默认为 false 等
-     * <state xdef:body-type="map"
-     * xdef:bean-prop="states" xdef:bean-child-name="state"
-     * >
-     * <xdef:unknown-tag xdef:ref="component/prop.xdef" />
-     * </state>
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp getState(){
+      return _state;
+    }
+
+    
+    public void setState(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp value){
+        checkAllowChange();
+        
+        this._state = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: template
+     *  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+     * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+     * -
+     * - This program is free software: you can redistribute it and/or modify
+     * - it under the terms of the GNU Lesser General Public License as published by
+     * - the Free Software Foundation, either version 3 of the License, or
+     * - (at your option) any later version.
+     * -
+     * - This program is distributed in the hope that it will be useful,
+     * - but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * - GNU Lesser General Public License for more details.
+     * -
+     * - You should have received a copy of the GNU Lesser General Public License
+     * - along with this program.
+     * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+     * 组件模板定义
      */
     
     public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentTemplate getTemplate(){
@@ -230,6 +302,10 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
             
            this._messages = io.nop.api.core.util.FreezeHelper.deepFreeze(this._messages);
             
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
+            
+           this._state = io.nop.api.core.util.FreezeHelper.deepFreeze(this._state);
+            
            this._template = io.nop.api.core.util.FreezeHelper.deepFreeze(this._template);
             
         }
@@ -241,6 +317,8 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         
         out.putNotNull("imports",this.getImports());
         out.putNotNull("messages",this.getMessages());
+        out.putNotNull("props",this.getProps());
+        out.putNotNull("state",this.getState());
         out.putNotNull("template",this.getTemplate());
     }
 
@@ -255,6 +333,8 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         
         instance.setImports(this.getImports());
         instance.setMessages(this.getMessages());
+        instance.setProps(this.getProps());
+        instance.setState(this.getState());
         instance.setTemplate(this.getTemplate());
     }
 

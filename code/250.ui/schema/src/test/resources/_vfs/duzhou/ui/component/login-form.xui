@@ -42,34 +42,8 @@
 
     <state>
         <loginInfo>
-            <xui:schema>
-                <username>
-                    <xui:value type="string">
-                        <!-- 配置校验规则和提示信息，支持变更时实时检查并设置校验结果 -->
-                        <validator>
-                            <rule name="length-validation" required="true" maxLength="15">
-                                <msg>帐号不能为空，且长度小于 15 个字符</msg>
-                            </rule>
-                            <rule name="form-validation" regex="^[a-z0-9]+$">
-                                <msg>帐号只能为字母、数字的组合</msg>
-                            </rule>
-                        </validator>
-                    </xui:value>
-                </username>
-                <password>
-                    <xui:value type="string">
-                        <validator>
-                            <rule name="length-validation" minLength="8" maxLength="15">
-                                <msg>密码不能为空，且长度不低于 8 位，不高于 15 位</msg>
-                            </rule>
-                            <rule name="form-validation"
-                                  regex="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^*,\._])[0-9a-zA-Z!@#$%^*,\\._]{8,15}$">
-                                <msg>密码必须包含大小写字母、特殊字符和数字</msg>
-                            </rule>
-                        </validator>
-                    </xui:value>
-                </password>
-            </xui:schema>
+            <username type="string" />
+            <password type="string" />
         </loginInfo>
     </state>
 
@@ -108,23 +82,17 @@
                 <Text xui:name="waiting-mask-text">${state.loginWaiting.msg}</Text>
             </Mask>
 
-            <!-- 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域 -->
-            <!-- 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理 -->
-            <Validation xui:name="username-validation" target="state.loginInfo.username">
-                <Text xui:name="username-label">帐号：</Text>
-                <Input xui:name="username-input" type="text">
-                    <!-- 等价于 xui:bind-value="loginInfo.username.value"，用于简化对输入数据变更的监听 -->
-                    <xui:dispatch on="input"
-                                  for="On_Input_for_state_loginInfo_username_value"
-                                  data="${$event.value}" />
-                </Input>
-            </Validation>
+            <Text xui:name="username-label">帐号：</Text>
+            <Input xui:name="username-input" type="text">
+                <!-- 等价于 xui:bind-value="loginInfo.username.value"，用于简化对输入数据变更的监听 -->
+                <xui:dispatch when="input"
+                              msg="On_Input_for_state_loginInfo_username_value"
+                              data="${$event.value}" />
+            </Input>
 
-            <Validation xui:name="password-validation" target="state.loginInfo.password">
-                <Text xui:name="password-label">密码：</Text>
-                <Input xui:name="password-input" type="secret"
-                       xui:bind-value="loginInfo.password.value" />
-            </Validation>
+            <Text xui:name="password-label">密码：</Text>
+            <Input xui:name="password-input" type="secret"
+                   xui:bind-value="loginInfo.password.value" />
 
             <Animation xui:name="remember-me-animation">
                 <Checkbox xui:name="remember-me-input" />

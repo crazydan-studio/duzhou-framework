@@ -19,57 +19,29 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件属性定义 -->
+<!-- 组件属性列表 -->
 <props xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
-       xmlns:xui="xui"
        x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
-       xdef:name="XuiComponentProps" xdef:ref="XuiComponentPropSchema"
+       xdef:ref="XuiComponentProp"
        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
 >
 
-    <!-- 属性
+    <!-- 属性定义
+    - 对于 string、bool、int 等基础类型的属性，其不包含结构，故而，仅需配置 `type` 即可；
+    - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `meta-path` 指定对应的
+      xmeta 文件位置，并从中获取其完整的模型结构；
+
+    @type [可选]属性类型，仅针对 string、bool 等基础数据类型的属性；
+    @meta-path [可选]属性结构的 xmeta 定义文件的 vpath 路径，仅针对可复用的、结构化的属性；
+    @defaultValue [可选]属性的缺省值，一般以 `${props.xxx}` 形式引用组件的
+                  `props` 变量，或者以 `${false}` 形式指定常量；
     -->
     <xdef:define xdef:name="XuiComponentProp"
-                 xdef:body-type="union"
-                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
-                 xdef:bean-body-prop="def"
-                 xdef:bean-sub-type-prop="$type"
-    >
-        <!-- 对属性的值的定义 -->
-        <xui:value xdef:ref="XuiComponentPropMetaValue" />
-        <!-- 对结构化属性的结构定义 -->
-        <xui:schema xdef:ref="XuiComponentPropMetaSchema" />
-    </xdef:define>
-
-    <!-- 属性值：定义属性类型，以及缺省值
-
-    @type [必填]属性值的类型；
-    @default [可选]属性的缺省值；
-    -->
-    <xdef:define xdef:name="XuiComponentPropMetaValue"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
-                 xdef:bean-tag-prop="$type"
-                 type="!std-data-type" default="xui-expr:any"
-    >
-        <!-- 属性校验列表 -->
-        <validator xdef:ref="XuiComponentPropValidator" />
-    </xdef:define>
-
-    <!-- 属性结构 -->
-    <xdef:define xdef:name="XuiComponentPropMetaSchema"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.XuiComponentPropMeta"
-                 xdef:bean-tag-prop="$type"
                  xdef:body-type="map"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 type="std-data-type" meta-path="v-path"
+                 defaultValue="xui-expr:any"
     >
         <xdef:unknown-tag xdef:ref="XuiComponentProp" />
-    </xdef:define>
-
-    <!-- 属性校验：配置属性值的校验规则 -->
-    <xdef:define xdef:name="XuiComponentPropValidator">
-        <rule xdef:unique-attr="name" name="!var-name">
-            <!-- 校验提示信息 -->
-            <msg xdef:value="!xui-expr:string" />
-        </rule>
     </xdef:define>
 </props>

@@ -41,12 +41,10 @@
         <Form xui:name="login-form">
             <Mask xui:name="waiting-mask" x:override="remove" />
 
-            <Validation xui:name="username-validation">
-                <Input xui:name="username-input">
-                    <xui:dispatch for="On_Input_for_state_loginInfo_username_value"
-                                  x:override="remove" />
-                </Input>
-            </Validation>
+            <Input xui:name="username-input">
+                <xui:dispatch msg="On_Input_for_state_loginInfo_username_value"
+                              x:override="remove" />
+            </Input>
 
             <xui:when xui:name="when-show-login-error">
                 <Animation xui:name="warning-text-animation"

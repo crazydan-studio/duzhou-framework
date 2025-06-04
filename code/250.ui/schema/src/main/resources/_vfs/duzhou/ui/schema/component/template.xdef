@@ -53,11 +53,11 @@
         -->
         <xui:layout xdef:ref="XuiComponentLayout"
                     xui:when="xui-expr:boolean"
-                    xui:name="!var-name=xui-layout"
+                    xui:name="!ns-name=xui-layout"
         />
         <xui:style xdef:ref="XuiComponentStyle"
                    xui:when="xui-expr:boolean"
-                   xui:name="!var-name=xui-style"
+                   xui:name="!ns-name=xui-style"
         />
         <!--
                 &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），并通过 layer 控制层的先后顺序 &ndash;&gt;
@@ -66,15 +66,15 @@
         <!-- 缺省使用 msg 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
                       xui:when="xui-expr:boolean"
-                      xui:name="!var-name=@attr:msg"
+                      xui:name="!ns-name=@attr:msg"
         />
 
         <xui:each xdef:ref="XuiComponentEach"
                   xui:when="xui-expr:boolean"
-                  xui:name="!var-name"
+                  xui:name="!ns-name"
         />
         <xui:cond xdef:ref="XuiComponentCond"
-                  xui:name="!var-name"
+                  xui:name="!ns-name"
         />
     </xdef:define>
 
@@ -97,7 +97,7 @@
         <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
               xdef:value="xui-expr:html-text" xdef:bean-body-prop="value"
               xdef:unknown-attr="xui-expr:any"
-              xui:when="xui-expr:boolean" xui:name="!var-name"
+              xui:when="xui-expr:boolean" xui:name="!ns-name"
               as-html="boolean"
         />
 
@@ -107,7 +107,7 @@
         - 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
         -->
         <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
-                    xui:when="xui-expr:boolean" xui:name="!var-name"
+                    xui:when="xui-expr:boolean" xui:name="!ns-name"
                     target="!string"
         />
 
@@ -115,13 +115,13 @@
         - 可自嵌套，从而支持一组动画；
         -->
         <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   xui:when="xui-expr:boolean" xui:name="!var-name"
+                   xui:when="xui-expr:boolean" xui:name="!ns-name"
                    enter="string" exit="string"
         />
 
-        <!-- 自定义组件 -->
+        <!-- 自定义组件 TODO 限定标签名必须符合组件的命名规范（component-name） -->
         <xdef:unknown-tag xdef:ref="XuiComponentNode"
-                          xui:when="xui-expr:boolean" xui:name="!var-name"
+                          xui:when="xui-expr:boolean" xui:name="!ns-name"
         />
     </xdef:define>
 
@@ -200,12 +200,12 @@
         -->
         <when xdef:name="XuiComponentCondWhen" xdef:ref="XuiComponentNested"
               xdef:bean-prop="whens" xdef:bean-child-name="when"
-              xdef:unique-attr="xui:name" xui:name="!var-name"
+              xdef:unique-attr="xui:name" xui:name="!ns-name"
               test="!xui-expr:boolean"
         />
         <!-- 条件选择的缺省条件 -->
         <else xdef:name="XuiComponentCondElse" xdef:ref="XuiComponentNested"
-              xui:name="!var-name"
+              xui:name="!ns-name"
         />
     </xdef:define>
 </template>

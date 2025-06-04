@@ -36,17 +36,13 @@
     - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
     - 内置 `children` 属性，用于获取当前组件的嵌套节点；
     -->
-    <!--<props xdef:ref="component/props.xdef" />-->
-
-    <!-- state 为组件内部状态数据，仅组件内可读、可修改，响应式更新
+    <props xdef:ref="component/props.xdef" />
+    <!-- 组件状态
+    - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新
     - 对象结构的数据始终不为 null，自动按照其结构为各个属性初始化为指定的默认值：
       - 字符串类型默认为空，布尔类型默认为 false 等
     -->
-    <!--    <state xdef:body-type="map"
-               xdef:bean-prop="states" xdef:bean-child-name="state"
-        >
-            <xdef:unknown-tag xdef:ref="component/prop.xdef" />
-        </state>-->
+    <state xdef:ref="component/props.xdef" />
 
     <template xdef:ref="component/template.xdef" />
 
