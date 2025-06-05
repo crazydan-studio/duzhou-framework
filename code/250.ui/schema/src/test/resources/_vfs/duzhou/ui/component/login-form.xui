@@ -99,13 +99,14 @@
                 <Text xui:name="remember-me-label">保持登录？</Text>
             </Animation>
 
-            <xui:when xui:name="when-show-login-error" cond="${state.loginError.enabled}">
-                <Animation xui:name="warning-text-animation" enter="fade-in" exit="fade-out">
-                    <Text xui:name="warning-text" color="warning">
-                        ${state.loginError.msg}
-                    </Text>
-                </Animation>
-            </xui:when>
+            <Animation xui:name="warning-text-animation"
+                       xui:when="${state.loginError.enabled}"
+                       enter="fade-in" exit="fade-out"
+            >
+                <Text xui:name="warning-text" color="warning">
+                    ${state.loginError.msg}
+                </Text>
+            </Animation>
 
             <Button xui:name="login-button"
                     disabled="${!state.loginInfo.username.valid
