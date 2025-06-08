@@ -28,6 +28,7 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
+                <thisLib:_NormalizeProps />
             </source>
         </DefaultGenExtends>
 
@@ -35,12 +36,12 @@
             <attr name="_dsl_root" implicit="true" />
 
             <source>
-                <thisLib:_Normalize />
+                <thisLib:_NormalizeNativeComponents />
             </source>
         </DefaultPostExtends>
 
-        <!-- 对默认设置进行补全和展开 -->
-        <_Normalize outputMode="node">
+        <!-- 处理 Native 组件 -->
+        <_NormalizeNativeComponents outputMode="node">
             <attr name="_dsl_root" implicit="true" />
 
             <source>
@@ -53,6 +54,7 @@
                     const toCode = (s) => StringHelper.camelCaseToUnderscore(s, true);
                 ]]></c:script>
 
+                <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
                 <_ xpl:is="${_dsl_root.tagName}">
                     <c:for var="cmp" items="${innerComponents}">
                         <import xpl:if="_dsl_root.findByTag(cmp) != null"
@@ -65,6 +67,92 @@
                     <props />
                 </_>
             </source>
-        </_Normalize>
+        </_NormalizeNativeComponents>
+
+        <!-- 处理 props/state -->
+        <_NormalizeProps outputMode="node">
+            <attr name="_dsl_root" implicit="true" />
+
+            <source>
+                <c:script><![CDATA[
+                    const props = _dsl_root.childByTag('props');
+                    const state = _dsl_root.childByTag('state');
+                ]]></c:script>
+
+                <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
+                <_ xpl:is="${_dsl_root.tagName}">
+                    <props xpl:if="props != null">
+                        <thisLib:_ExpandObjMetaForProps props="${props.getChildren()}" />
+                    </props>
+                    <state xpl:if="state != null">
+                        <thisLib:_ExpandObjMetaForProps props="${state.getChildren()}" />
+                    </state>
+                </_>
+            </source>
+        </_NormalizeProps>
+
+        <!-- 展开 props 中的 obj-meta -->
+        <_ExpandObjMetaForProps outputMode="node">
+            <attr name="props" type="List&lt;io.nop.core.lang.xml.XNode>" />
+
+            <source>
+                <c:for var="prop" items="${props}">
+                    <c:script><![CDATA[
+                        const objMetaPath = prop.getAttr('obj-meta');
+                        const canBeExpanded =
+                                    objMetaPath != null
+                                    && prop.getAttr('type') == null
+                                    && !prop.hasChild();
+                        if (canBeExpanded) {
+                            prop.removeAttr('obj-meta');
+                        }
+                    ]]></c:script>
+
+                    <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
+                    <_ xpl:is="${prop.tagName}" xpl:if="canBeExpanded">
+                        <thisLib:_ExpandObjMetaToProp
+                                objMetaPath="${objMetaPath}"
+                        />
+                    </_>
+                </c:for>
+            </source>
+        </_ExpandObjMetaForProps>
+
+        <!-- 将 obj-meta 展开到 prop 中 -->
+        <_ExpandObjMetaToProp outputMode="node">
+            <attr name="objMetaPath" type="String" />
+
+            <source>
+                <c:script><![CDATA[
+                    import io.nop.core.resource.VirtualFileSystem;
+                    import io.nop.xlang.xdsl.DslNodeLoader;
+
+                    const resource = VirtualFileSystem.instance().getResource(objMetaPath);
+                    const node = DslNodeLoader.INSTANCE.loadFromResource(resource).getNode();
+                    const propsNode = node.childByTag('props');
+                    const propNodes = propsNode?.childrenByTag('prop');
+                ]]></c:script>
+
+                <c:for xpl:if="propNodes != null"
+                       var="prop" items="${propNodes}"
+                >
+                    <c:script><![CDATA[
+                        const schemaNode = prop.childByTag('schema');
+                        const type = schemaNode?.getAttr('type') || prop.getAttr('type');
+                        const propAttrs = {
+                            type,
+                            defaultValue: null,
+                        };
+                    ]]></c:script>
+
+                    <_ xpl:is="${prop.getAttr('name')}"
+                       xpl:if="type != null"
+                       xpl:attrs="propAttrs"
+                    >
+                        <!-- TODO 处理递归展开 objMeta -->
+                    </_>
+                </c:for>
+            </source>
+        </_ExpandObjMetaToProp>
     </tags>
 </lib>

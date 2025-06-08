@@ -39,6 +39,14 @@ public class XuiComponentTest extends NopJunitTestCase {
     private static final String EXTENDS_LOGIN_FORM_DSL = "/duzhou/ui/component/login-form-extends.xui";
 
     @Test
+    public void test_parse_props() {
+        String dslName = "props-parse.xui";
+        XNode node = parseXNode("/duzhou/ui/component/" + dslName);
+        this.log.info("{}: xml={}", dslName, node.xml());
+        // Assertions.assertEquals(attachmentXml(dslName + ".xml").clearComment().xml(), node.xml());
+    }
+
+    @Test
     public void test_parse_login_form() {
         XuiComponent component = parseModel(LOGIN_FORM_DSL);
         String json = JsonTool.serialize(component, true);
@@ -60,11 +68,11 @@ public class XuiComponentTest extends NopJunitTestCase {
         Assertions.assertEquals(attachmentXml("login-form-extends.xui.xml").clearComment().xml(), node.xml());
     }
 
-    private XuiComponent parseModel(String path) {
+    private static XuiComponent parseModel(String path) {
         return (XuiComponent) ResourceComponentManager.instance().loadComponentModel(path);
     }
 
-    private XNode parseXNode(String path) {
+    private static XNode parseXNode(String path) {
         IResource resource = VirtualFileSystem.instance().getResource(path);
         XNode node = DslNodeLoader.INSTANCE.loadFromResource(resource).getNode();
         node.clearComment();
