@@ -31,15 +31,16 @@
 
     <props>
         <system>
-            <environment type="String" />
-            <currentUser obj-meta="xmeta/User.xmeta" />
+            <environment type="java.lang.String" />
+            <currentUser obj-meta="/duzhou/ui/component/xmeta/User.xmeta" />
         </system>
+        <me obj-meta="/duzhou/ui/component/xmeta/User.xmeta" />
     </props>
 
     <state>
         <loginInfo>
-            <username type="String" />
-            <password type="String" />
+            <username type="java.lang.String" />
+            <password type="java.lang.String" />
         </loginInfo>
     </state>
 </component>

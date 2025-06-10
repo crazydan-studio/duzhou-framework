@@ -65,7 +65,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentMessage> _messages = KeyedList.emptyList();
     
     /**
-     *  
+     *  属性定义
      * xml name: props
      * 组件属性
      * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
@@ -74,7 +74,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp _props ;
     
     /**
-     *  
+     *  属性定义
      * xml name: state
      * 组件状态
      * - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新
@@ -213,7 +213,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     }
     
     /**
-     * 
+     * 属性定义
      * xml name: props
      *  组件属性
      * - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
@@ -234,7 +234,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
 
     
     /**
-     * 
+     * 属性定义
      * xml name: state
      *  组件状态
      * - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新

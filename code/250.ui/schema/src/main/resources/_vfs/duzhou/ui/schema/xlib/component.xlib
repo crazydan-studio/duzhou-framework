@@ -75,17 +75,17 @@
 
             <source>
                 <c:script><![CDATA[
-                    const props = _dsl_root.childByTag('props');
-                    const state = _dsl_root.childByTag('state');
+                    const propsNode = _dsl_root.childByTag('props');
+                    const stateNode = _dsl_root.childByTag('state');
                 ]]></c:script>
 
                 <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
                 <_ xpl:is="${_dsl_root.tagName}">
-                    <props xpl:if="props != null">
-                        <thisLib:_ExpandObjMetaForProps props="${props.getChildren()}" />
+                    <props xpl:if="propsNode != null">
+                        <thisLib:_ExpandObjMetaForProps props="${propsNode.getChildren()}" />
                     </props>
-                    <state xpl:if="state != null">
-                        <thisLib:_ExpandObjMetaForProps props="${state.getChildren()}" />
+                    <state xpl:if="stateNode != null">
+                        <thisLib:_ExpandObjMetaForProps props="${stateNode.getChildren()}" />
                     </state>
                 </_>
             </source>
@@ -109,10 +109,19 @@
                     ]]></c:script>
 
                     <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
-                    <_ xpl:is="${prop.tagName}" xpl:if="canBeExpanded">
-                        <thisLib:_ExpandObjMetaToProp
-                                objMetaPath="${objMetaPath}"
-                        />
+                    <_ xpl:is="${prop.tagName}">
+                        <c:choose>
+                            <when test="${canBeExpanded}">
+                                <thisLib:_ExpandObjMetaToProp
+                                        objMetaPath="${objMetaPath}"
+                                />
+                            </when>
+                            <when test="${prop.hasChild()}">
+                                <thisLib:_ExpandObjMetaForProps
+                                        props="${prop.getChildren()}"
+                                />
+                            </when>
+                        </c:choose>
                     </_>
                 </c:for>
             </source>

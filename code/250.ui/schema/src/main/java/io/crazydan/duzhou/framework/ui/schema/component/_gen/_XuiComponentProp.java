@@ -10,17 +10,17 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/props.xdef <p>
- * 属性定义
- * - 对于 string、bool、int 等基础类型的属性，其不包含结构，故而，仅需配置 `type` 即可；
- * - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `obj-meta` 指定对应的
- * xmeta 文件位置，并从中获取其完整的模型结构；
- * - 解析规则
- * - 有子结构的，不可配置 `type` 和 `obj-meta`；
- * - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
- * - `defaultValue` 可以为对象，如 `${{a: 1, b: 2}}`，用于为结构属性赋缺省值，
- * 并且，在其子结构属性上设置的缺省值将与该缺省值做覆盖合并；
- * - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
- * 并根据其结构构造当前属性的子结构；
+ * > - 对于 `String`、`Bool`、`Integer` 等基础类型的属性，其不包含结构，
+ * >   故而，仅需配置 `type` 即可；
+ * > - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `obj-meta` 指定对应的
+ * >   xmeta 文件位置，并从中获取其完整的模型结构；
+ * > - 解析规则
+ * >   - 有子结构的，不可配置 `type` 和 `obj-meta`；
+ * >   - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
+ * >   - `defaultValue` 可以为对象，如 `${{a: 1, b: 2}}`，用于为结构属性赋缺省值，
+ * >     并且，在其子结构属性上设置的缺省值将与该缺省值做覆盖合并；
+ * >   - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
+ * >     并根据其结构构造当前属性的子结构；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -34,26 +34,26 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp> _children = java.util.Collections.emptyMap();
     
     /**
-     *  可选
+     *  属性的缺省值
      * xml name: defaultValue
-     * 属性的缺省值，一般以 `${props.xxx}` 形式引用组件的
-     * `props` 变量，或者以 `${false}` 形式指定常量；
+     * > (可选) 一般以 `${props.xxx}` 形式引用组件的
+     * > `props` 变量，或者以 `${false}` 形式指定常量；
      */
     private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> _defaultValue ;
     
     /**
-     *  可选
+     *  对象 XMeta 定义路径
      * xml name: obj-meta
-     * 属性结构的 xmeta 定义文件的 vpath 路径，仅针对可复用的、结构化的属性；
+     * > (可选) 仅针对可复用的、结构化的属性；
      */
     private java.lang.String _objMeta ;
     
     /**
-     *  可选
+     *  属性类型
      * xml name: type
-     * 属性类型，仅针对 string、bool 等基础数据类型的属性；
+     * > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性；
      */
-    private io.nop.commons.type.StdDataType _type ;
+    private io.nop.core.type.IGenericType _type ;
     
     /**
      * 
@@ -87,10 +87,10 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
     }
     
     /**
-     * 可选
+     * 属性的缺省值
      * xml name: defaultValue
-     *  属性的缺省值，一般以 `${props.xxx}` 形式引用组件的
-     * `props` 变量，或者以 `${false}` 形式指定常量；
+     *  > (可选) 一般以 `${props.xxx}` 形式引用组件的
+     * > `props` 变量，或者以 `${false}` 形式指定常量；
      */
     
     public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> getDefaultValue(){
@@ -107,9 +107,9 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
 
     
     /**
-     * 可选
+     * 对象 XMeta 定义路径
      * xml name: obj-meta
-     *  属性结构的 xmeta 定义文件的 vpath 路径，仅针对可复用的、结构化的属性；
+     *  > (可选) 仅针对可复用的、结构化的属性；
      */
     
     public java.lang.String getObjMeta(){
@@ -126,17 +126,17 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
 
     
     /**
-     * 可选
+     * 属性类型
      * xml name: type
-     *  属性类型，仅针对 string、bool 等基础数据类型的属性；
+     *  > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性；
      */
     
-    public io.nop.commons.type.StdDataType getType(){
+    public io.nop.core.type.IGenericType getType(){
       return _type;
     }
 
     
-    public void setType(io.nop.commons.type.StdDataType value){
+    public void setType(io.nop.core.type.IGenericType value){
         checkAllowChange();
         
         this._type = value;

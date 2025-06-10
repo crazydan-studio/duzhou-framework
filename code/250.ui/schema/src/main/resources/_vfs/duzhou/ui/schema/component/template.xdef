@@ -19,7 +19,8 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件模板定义 -->
+<!-- [组件模板定义]
+-->
 <template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
           xmlns:xui="xui"
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
@@ -27,29 +28,35 @@
           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
 >
 
-    <!-- 组件命名元素：嵌套节点的基础模型
+    <!-- [组件命名元素]
+    > 其为嵌套节点的基础模型
 
-    @xui:name [必填]组件组成元素的名字，其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
-          一般采用 `{业务数据名}-{组件类型名}` 形式命名；
-    @xui:when [可选]组件元素有效的条件，以 `${xxx}` 形式表示其值，且在其值为 `true` 时，该组件元素才有效；
+    @xui:name [组件组成元素的名字]
+        > (必填) 其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
+        > 一般采用 `{业务数据名}-{组件类型名}` 形式命名
+    @xui:when [组件元素有效的条件]
+        > (可选) 以 `${xxx}` 形式表示其值，且在其值为 `true` 时，该组件元素才有效
     -->
     <xdef:define xdef:name="XuiComponentNamed"
                  xdef:bean-tag-prop="$type" />
 
-    <!-- 组件元素：定义组件结构
-    - `xui:layout`: 控制直接节点的布局结构；
-    - `xui:style`: 设置组件的展示风格；
-    - `xui:dispatch`: 将事件转换为消息后再发送；
-    - `xui:each`: 循环渲染，遍历循环量，构造组件的内部节点；
-    - `xui:cond`: 条件渲染，满足条件时才构造相应的内部节点；
+    <!-- [组件元素]
+    > 定义组件结构，其中：
+    > - `xui:layout`: 控制直接节点的布局结构；
+    > - `xui:style`: 设置组件的展示风格；
+    > - `xui:dispatch`: 将事件转换为消息后再发送；
+    > - `xui:each`: 循环渲染，遍历循环量，构造组件的内部节点；
+    > - `xui:cond`: 条件渲染，满足条件时才构造相应的内部节点；
 
-    TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
+    > TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
     -->
     <xdef:define xdef:name="XuiComponentNode" xdef:ref="XuiComponentNested"
                  xdef:unknown-attr="xui-expr:any"
     >
-        <!-- 除非应用了 xui:when 条件，否则，最多只能有一个 xui:layout 和 xui:style 节点。
-        在有多个 xui:when 时，可以有一个无 xui:when 的节点，其代表其余 xui:when 均不匹配时的缺省节点。
+        <!-- [组件布局]
+        > 除非应用了 `xui:when` 条件，否则，最多只能有一个 `xui:layout` 节点。
+        > 在有多个 `xui:when` 时，可以有一个无 `xui:when` 的节点，其代表其余
+        > `xui:when` 均不匹配时的缺省节点
         -->
         <xui:layout xdef:ref="XuiComponentLayout"
                     xui:when="xui-expr:boolean"
@@ -63,7 +70,9 @@
                 &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），并通过 layer 控制层的先后顺序 &ndash;&gt;
                 <xui:overlay layer="int" />-->
 
-        <!-- 缺省使用 msg 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点 -->
+        <!-- [消息派发]
+        > 缺省使用 `msg` 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点
+        -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
                       xui:when="xui-expr:boolean"
                       xui:name="!ns-name=@attr:msg"
@@ -78,11 +87,12 @@
         />
     </xdef:define>
 
-    <!-- 组件嵌套元素：限定可被嵌套的节点
-    - 内置组件 Text 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
-    - 内置组件 Validation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
-    - 内置组件 Animation 可被嵌套，且其可自嵌套，也可嵌套其他组件；
-    - 自定义组件可被嵌套，且可嵌套其他组件；
+    <!-- [组件嵌套元素]
+    > 限定可被嵌套的节点，其中：
+    > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+    > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+    > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+    > - 自定义组件可被嵌套，且可嵌套其他组件；
     -->
     <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
                  xdef:body-type="list" xdef:key-attr="xui:name"
@@ -90,9 +100,11 @@
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
                  xdef:bean-sub-type-prop="$type"
     >
-        <!-- 文本组件：只包含文本内容的组件
+        <!-- [文本组件]
+        > 只包含文本内容的组件
 
-        @as-html [可选]是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+        @as-html [是否为 HTML 片段]
+            > (可选) 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
         -->
         <Text xdef:name="XuiComponentText" xdef:ref="XuiComponentNamed"
               xdef:value="xui-expr:html-text" xdef:bean-body-prop="value"
@@ -101,33 +113,35 @@
               as-html="boolean"
         />
 
-        <!-- 校验组件
-        - 可自嵌套，从而支持分层校验；
-        - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
-        - 仅在目标的值 value 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
+        <!-- [校验组件]
+        > - 可自嵌套，从而支持分层校验；
+        > - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
+        > - 仅在目标的值 `value` 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
         -->
         <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
                     xui:when="xui-expr:boolean" xui:name="!ns-name"
                     target="!string"
         />
 
-        <!-- 动画组件
-        - 可自嵌套，从而支持一组动画；
+        <!-- [动画组件]
+        > - 可自嵌套，从而支持一组动画；
         -->
         <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
                    xui:when="xui-expr:boolean" xui:name="!ns-name"
                    enter="string" exit="string"
         />
 
-        <!-- 自定义组件 TODO 限定标签名必须符合组件的命名规范（component-name） -->
+        <!-- [自定义组件]
+        > TODO 限定标签名必须符合组件的命名规范（component-name）
+        -->
         <xdef:unknown-tag xdef:ref="XuiComponentNode"
                           xui:when="xui-expr:boolean" xui:name="!ns-name"
         />
     </xdef:define>
 
-    <!-- 组件布局
-    - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
-    - 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件）；
+    <!-- [组件布局]
+    > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
+    > - 仅用于控制所在组件中的直接视图组件。注意，`Validation`、`Animation` 为逻辑组件；
     -->
     <xdef:define xdef:name="XuiComponentLayout" xdef:ref="XuiComponentNamed"
                  xdef:body-type="union"
@@ -135,30 +149,34 @@
                  xdef:bean-body-prop="type"
                  xdef:bean-sub-type-prop="$type"
     >
-        <!-- 线性布局：在水平和垂直方向上布局组件，且溢出内容不做换行处理
+        <!-- [线性布局]
+        > 在水平和垂直方向上布局组件，且溢出内容不做换行处理。
+        >
+        > 线性布局使用文本标记语言：
+        > - `[comp]`: 指代 `xui:name` `=` `comp` 的组件；
+        > - `<`: 表示左对齐；
+        > - `>`: 表示右对齐；
+        > - `^`: 表示顶部对齐；
+        > - `v`: 表示底部对齐；
+        > - `<[comp]>`: 表示使组件 `comp` 水平占满剩余空间，若未指定组件，则以空白占满剩余空间；
+        > - `>[comp]<`: 表示使组件 `comp` 水平居中对齐；
+        > - `^[comp]v`: 表示使组件 `comp` 垂直占满剩余空间，若未指定组件，则以空白占满剩余空间；
+        > - `v[comp]^`: 表示使组件 `comp` 垂直居中对齐；
+        > - `[comp1] [comp2]`: 表示左右放置组件 `comp1` 和 `comp2`；
+        > - `| [comp1] | [comp2] |`: 表示以表格形式放置组件 `comp1` 和 `comp2`，
+        >   也即，`comp1` 与 `comp2` 分别在同一行的两个单元格内。
+        >   上下相邻的以 `|` 为分隔符的多行属于同一个表格；
+        > - `[comp1]\n[comp2]`: 表示上下放置组件 `comp1` 和 `comp2`，其中，`\n` 为换行符，实际不可见，效果为上下两行；
+        > - `{xxx}`: 表示布局嵌套，可在内部反复应用前面的规则，其自身也是一个整体，可像组件一样对其应用水平和垂直布局；
+        > - `()`: 表示设置组件布局配置参数列表，在括号内以 `prop:value` 形式指定参数名和参数值，且参数间以逗号分隔，
+        >   如：`(width:10u,height:20u)` 表示设置宽为 `10u`，长为 `20u`。
+        >   参数列表只能紧跟在 `[comp]` 和 `{xxx}` 之后放置；
+        > - `//`: 表示行注释，其后均为注释内容；
+        > - 组件尺寸（宽高）默认均为自适应内容；
+        > - 根布局的尺寸始终与上层容器的尺寸相同；
 
-        线性布局使用文本标记语言：
-        - [comp]: 指代 xui:name 为 comp 的组件；
-        - <: 表示左对齐；
-        - >: 表示右对齐；
-        - ^: 表示顶部对齐；
-        - v: 表示底部对齐；
-        - <[comp]>: 表示使组件 comp 水平占满剩余空间，若未指定组件，则以空白占满剩余空间；
-        - >[comp]<: 表示使组件 comp 水平居中对齐；
-        - ^[comp]v: 表示使组件 comp 垂直占满剩余空间，若未指定组件，则以空白占满剩余空间；
-        - v[comp]^: 表示使组件 comp 垂直居中对齐；
-        - [comp1] [comp2]: 表示左右放置组件 comp1 和 comp2；
-        - | [comp1] | [comp2] |: 表示以表格形式放置组件 comp1 和 comp2，也即，comp1 与 comp2 分别在同一行的两个单元格内。
-          上下相邻的以 | 为分隔符的多行属于同一个表格；
-        - [comp1]\n[comp2]: 表示上下放置组件 comp1 和 comp2，其中，\n 为换行符，实际不可见，效果为上下两行；
-        - {xxx}: 表示布局嵌套，可在内部反复应用前面的规则，其自身也是一个整体，可像组件一样对其应用水平和垂直布局；
-        - (): 表示设置组件布局配置参数列表，在括号内以 prop:value 形式指定参数名和参数值，且参数间以逗号分隔，
-          如：(width:10em,height:20em) 表示设置宽为 10em，长为 20em。参数列表只能紧跟在 [comp] 和 {xxx} 之后放置；
-        - //: 表示行注释，其后均为注释内容；
-        - 组件尺寸（宽高）默认均为自适应内容；
-        - 根布局的尺寸始终与上层容器的尺寸相同；
-
-        @mode [必填]布局模式，缺省为 column；
+        @mode [布局模式]
+            > (必填) 缺省为 `column`
         -->
         <linear xdef:name="XuiComponentLayoutLinear"
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
@@ -171,39 +189,50 @@
     <xdef:define xdef:name="XuiComponentStyle" xdef:ref="XuiComponentNamed">
     </xdef:define>
 
-    <!-- 消息派发器：监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件
+    <!-- [消息派发器]
+    > 监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件
 
-    @when [必填]事件名称，如 `click`、`input` 等；
-    @msg [必填]消息类型，如 `User_Login_Start`、`User_Login_Finish` 等；
-    @data [可选]消息所携带的数据，以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据；
+    @when [事件名称]
+        > (必填) 如 `click`、`input` 等
+    @msg [消息类型]
+        > (必填) 如 `User_Login_Start`、`User_Login_Finish` 等
+    @data [消息所携带的数据]
+        > (可选) 以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据
     -->
     <xdef:define xdef:name="XuiComponentMessageDispatch" xdef:ref="XuiComponentNamed"
                  when="!conf-name" msg="!component-name" data="xui-expr:any"
     />
 
-    <!-- 遍历器 - each
+    <!-- [遍历器 - each]
 
-    @list [必填]待循环变量，如 `props.users`；
-    @item [必填]循环元素的变量名，如 `user`；
-    @index [可选]循环元素序号的变量名，如 `i`；
-    @key [可选]代表循环变量唯一性的取值表达式，如 `user.id`，即，`user` 元素的 `id` 属性值；
+    @list [待循环变量]
+        > (必填) 如 `props.users`
+    @item [循环元素的变量名]
+        > (必填) 如 `user`
+    @index [循环元素序号的变量名]
+        > (可选) 如 `i`
+    @key [代表循环变量唯一性的取值表达式]
+        > (可选) 如 `user.id`，即，`user` 元素的 `id` 属性值
     -->
     <xdef:define xdef:name="XuiComponentEach" xdef:ref="XuiComponentNested"
                  list="!xui-expr:list"
                  item="!var-name" index="var-name" key="prop-path"
     />
-    <!-- 条件选择 - cond -->
+    <!-- [条件选择 - cond]
+    -->
     <xdef:define xdef:name="XuiComponentCond" xdef:ref="XuiComponentNamed">
-        <!-- 条件选择的指定条件
+        <!-- [条件选择的指定条件]
 
-        @test [必填]条件表达式；
+        @test [条件表达式]
+            > (必填) 如 `${name != null}`
         -->
         <when xdef:name="XuiComponentCondWhen" xdef:ref="XuiComponentNested"
               xdef:bean-prop="whens" xdef:bean-child-name="when"
               xdef:unique-attr="xui:name" xui:name="!ns-name"
               test="!xui-expr:boolean"
         />
-        <!-- 条件选择的缺省条件 -->
+        <!-- [条件选择的缺省条件]
+        -->
         <else xdef:name="XuiComponentCondElse" xdef:ref="XuiComponentNested"
               xui:name="!ns-name"
         />

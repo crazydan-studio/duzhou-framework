@@ -19,34 +19,39 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 组件属性列表 -->
+<!-- [组件属性列表]
+-->
 <props xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
        x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
        xdef:ref="XuiComponentProp"
        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
 >
 
-    <!-- 属性定义
-    - 对于 string、bool、int 等基础类型的属性，其不包含结构，故而，仅需配置 `type` 即可；
-    - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `obj-meta` 指定对应的
-      xmeta 文件位置，并从中获取其完整的模型结构；
-    - 解析规则
-      - 有子结构的，不可配置 `type` 和 `obj-meta`；
-      - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
-      - `defaultValue` 可以为对象，如 `${{a: 1, b: 2}}`，用于为结构属性赋缺省值，
-        并且，在其子结构属性上设置的缺省值将与该缺省值做覆盖合并；
-      - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
-        并根据其结构构造当前属性的子结构；
+    <!-- [属性定义]
+    > - 对于 `String`、`Bool`、`Integer` 等基础类型的属性，其不包含结构，
+    >   故而，仅需配置 `type` 即可；
+    > - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `obj-meta` 指定对应的
+    >   xmeta 文件位置，并从中获取其完整的模型结构；
+    > - 解析规则
+    >   - 有子结构的，不可配置 `type` 和 `obj-meta`；
+    >   - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
+    >   - `defaultValue` 可以为对象，如 `${{a: 1, b: 2}}`，用于为结构属性赋缺省值，
+    >     并且，在其子结构属性上设置的缺省值将与该缺省值做覆盖合并；
+    >   - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
+    >     并根据其结构构造当前属性的子结构；
 
-    @type [可选]属性类型，仅针对 string、bool 等基础数据类型的属性；
-    @obj-meta [可选]属性结构的 xmeta 定义文件的 vpath 路径，仅针对可复用的、结构化的属性；
-    @defaultValue [可选]属性的缺省值，一般以 `${props.xxx}` 形式引用组件的
-                  `props` 变量，或者以 `${false}` 形式指定常量；
+    @type [属性类型]
+        > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性
+    @obj-meta [对象 XMeta 定义路径]
+        > (可选) 仅针对可复用的、结构化的属性
+    @defaultValue [属性的缺省值]
+        > (可选) 一般以 `${props.xxx}` 形式引用组件的
+        > `props` 变量，或者以 `${false}` 形式指定常量
     -->
     <xdef:define xdef:name="XuiComponentProp"
                  xdef:body-type="map"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
-                 type="std-data-type" obj-meta="v-path"
+                 type="generic-type" obj-meta="v-path"
                  defaultValue="xui-expr:any"
     >
         <xdef:unknown-tag xdef:ref="XuiComponentProp" />
