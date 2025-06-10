@@ -10,30 +10,42 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 条件选择 - cond
+ * > 其为嵌套节点的基础模型
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentCond extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
     
     /**
-     *  
+     *  条件选择的缺省条件
      * xml name: else
-     * 条件选择的缺省条件
+     * > 限定可被嵌套的节点，其中：
+     * > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+     * > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 自定义组件可被嵌套，且可嵌套其他组件；
      */
     private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondElse _else ;
     
     /**
-     *  
+     *  条件选择的指定条件
      * xml name: when
-     * 条件选择的指定条件
+     * > 限定可被嵌套的节点，其中：
+     * > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+     * > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 自定义组件可被嵌套，且可嵌套其他组件；
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen> _whens = KeyedList.emptyList();
     
     /**
-     * 
+     * 条件选择的缺省条件
      * xml name: else
-     *  条件选择的缺省条件
+     *  > 限定可被嵌套的节点，其中：
+     * > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+     * > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 自定义组件可被嵌套，且可嵌套其他组件；
      */
     
     public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondElse getElse(){
@@ -50,9 +62,13 @@ public abstract class _XuiComponentCond extends io.crazydan.duzhou.framework.ui.
 
     
     /**
-     * 
+     * 条件选择的指定条件
      * xml name: when
-     *  条件选择的指定条件
+     *  > 限定可被嵌套的节点，其中：
+     * > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+     * > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+     * > - 自定义组件可被嵌套，且可嵌套其他组件；
      */
     
     public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen> getWhens(){

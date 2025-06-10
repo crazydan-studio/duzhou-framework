@@ -37,21 +37,21 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
      *  属性的缺省值
      * xml name: defaultValue
      * > (可选) 一般以 `${props.xxx}` 形式引用组件的
-     * > `props` 变量，或者以 `${false}` 形式指定常量；
+     * > `props` 变量，或者以 `${false}` 形式指定常量
      */
     private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> _defaultValue ;
     
     /**
      *  对象 XMeta 定义路径
      * xml name: obj-meta
-     * > (可选) 仅针对可复用的、结构化的属性；
+     * > (可选) 仅针对可复用的、结构化的属性
      */
     private java.lang.String _objMeta ;
     
     /**
      *  属性类型
      * xml name: type
-     * > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性；
+     * > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性
      */
     private io.nop.core.type.IGenericType _type ;
     
@@ -90,7 +90,7 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
      * 属性的缺省值
      * xml name: defaultValue
      *  > (可选) 一般以 `${props.xxx}` 形式引用组件的
-     * > `props` 变量，或者以 `${false}` 形式指定常量；
+     * > `props` 变量，或者以 `${false}` 形式指定常量
      */
     
     public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> getDefaultValue(){
@@ -109,7 +109,7 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
     /**
      * 对象 XMeta 定义路径
      * xml name: obj-meta
-     *  > (可选) 仅针对可复用的、结构化的属性；
+     *  > (可选) 仅针对可复用的、结构化的属性
      */
     
     public java.lang.String getObjMeta(){
@@ -128,7 +128,7 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
     /**
      * 属性类型
      * xml name: type
-     *  > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性；
+     *  > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性
      */
     
     public io.nop.core.type.IGenericType getType(){

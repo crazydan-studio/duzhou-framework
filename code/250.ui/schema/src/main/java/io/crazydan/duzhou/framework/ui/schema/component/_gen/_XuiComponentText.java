@@ -10,16 +10,16 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 文本组件：只包含文本内容的组件
+ * > 只包含文本内容的组件
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed {
     
     /**
-     *  可选
+     *  是否为 HTML 片段
      * xml name: as-html
-     * 是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+     * > (可选) 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
      */
     private java.lang.Boolean _asHtml ;
     
@@ -31,9 +31,9 @@ public abstract class _XuiComponentText extends io.crazydan.duzhou.framework.ui.
     private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.String> _value ;
     
     /**
-     * 可选
+     * 是否为 HTML 片段
      * xml name: as-html
-     *  是否为 HTML 片段。若为 true，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击；
+     *  > (可选) 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
      */
     
     public java.lang.Boolean getAsHtml(){

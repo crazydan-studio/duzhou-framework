@@ -10,23 +10,13 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
- * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
- * -
- * - This program is free software: you can redistribute it and/or modify
- * - it under the terms of the GNU Lesser General Public License as published by
- * - the Free Software Foundation, either version 3 of the License, or
- * - (at your option) any later version.
- * -
- * - This program is distributed in the hope that it will be useful,
- * - but WITHOUT ANY WARRANTY; without even the implied warranty of
- * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * - GNU Lesser General Public License for more details.
- * -
- * - You should have received a copy of the GNU Lesser General Public License
- * - along with this program.
- * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
- * 组件模板定义
+ * > 定义组件结构，其中：
+ * > - `xui:layout`: 控制直接节点的布局结构；
+ * > - `xui:style`: 设置组件的展示风格；
+ * > - `xui:dispatch`: 将事件转换为消息后再发送；
+ * > - `xui:each`: 循环渲染，遍历循环量，构造组件的内部节点；
+ * > - `xui:cond`: 条件渲染，满足条件时才构造相应的内部节点；
+ * > TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

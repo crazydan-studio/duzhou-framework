@@ -10,44 +10,48 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 遍历器 - each
+ * > 限定可被嵌套的节点，其中：
+ * > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
+ * > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+ * > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
+ * > - 自定义组件可被嵌套，且可嵌套其他组件；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentEach extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested {
     
     /**
-     *  可选
+     *  循环元素序号的变量名
      * xml name: index
-     * 循环元素序号的变量名，如 `i`；
+     * > (可选) 如 `i`
      */
     private java.lang.String _index ;
     
     /**
-     *  必填
+     *  循环元素的变量名
      * xml name: item
-     * 循环元素的变量名，如 `user`；
+     * > (必填) 如 `user`
      */
     private java.lang.String _item ;
     
     /**
-     *  可选
+     *  代表循环变量唯一性的取值表达式
      * xml name: key
-     * 代表循环变量唯一性的取值表达式，如 `user.id`，即，`user` 元素的 `id` 属性值；
+     * > (可选) 如 `user.id`，即，`user` 元素的 `id` 属性值
      */
     private java.lang.String _key ;
     
     /**
-     *  必填
+     *  待循环变量
      * xml name: list
-     * 待循环变量，如 `props.users`；
+     * > (必填) 如 `props.users`
      */
     private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.util.List> _list ;
     
     /**
-     * 可选
+     * 循环元素序号的变量名
      * xml name: index
-     *  循环元素序号的变量名，如 `i`；
+     *  > (可选) 如 `i`
      */
     
     public java.lang.String getIndex(){
@@ -64,9 +68,9 @@ public abstract class _XuiComponentEach extends io.crazydan.duzhou.framework.ui.
 
     
     /**
-     * 必填
+     * 循环元素的变量名
      * xml name: item
-     *  循环元素的变量名，如 `user`；
+     *  > (必填) 如 `user`
      */
     
     public java.lang.String getItem(){
@@ -83,9 +87,9 @@ public abstract class _XuiComponentEach extends io.crazydan.duzhou.framework.ui.
 
     
     /**
-     * 可选
+     * 代表循环变量唯一性的取值表达式
      * xml name: key
-     *  代表循环变量唯一性的取值表达式，如 `user.id`，即，`user` 元素的 `id` 属性值；
+     *  > (可选) 如 `user.id`，即，`user` 元素的 `id` 属性值
      */
     
     public java.lang.String getKey(){
@@ -102,9 +106,9 @@ public abstract class _XuiComponentEach extends io.crazydan.duzhou.framework.ui.
 
     
     /**
-     * 必填
+     * 待循环变量
      * xml name: list
-     *  待循环变量，如 `props.users`；
+     *  > (必填) 如 `props.users`
      */
     
     public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.util.List> getList(){

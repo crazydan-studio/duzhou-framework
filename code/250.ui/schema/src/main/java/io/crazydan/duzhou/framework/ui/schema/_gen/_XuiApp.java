@@ -10,60 +10,44 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/app.xdef <p>
- * - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
- * - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
- * -
- * - This program is free software: you can redistribute it and/or modify
- * - it under the terms of the GNU Lesser General Public License as published by
- * - the Free Software Foundation, either version 3 of the License, or
- * - (at your option) any later version.
- * -
- * - This program is distributed in the hope that it will be useful,
- * - but WITHOUT ANY WARRANTY; without even the implied warranty of
- * - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * - GNU Lesser General Public License for more details.
- * -
- * - You should have received a copy of the GNU Lesser General Public License
- * - along with this program.
- * - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
- * 应用定义：用于组织应用的页面
+ * > 用于组织应用的页面
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiApp extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  必填
+     *  应用唯一标识
      * xml name: code
-     * 应用唯一标识；
+     * > (必填)
      */
     private java.lang.String _code ;
     
     /**
-     *  
+     *  应用的版权声明内容
      * xml name: copyright
-     * 应用的版权声明内容
+     * 
      */
     private java.lang.String _copyright ;
     
     /**
-     *  
+     *  应用的描述内容
      * xml name: description
-     * 应用的描述内容
+     * 
      */
     private java.lang.String _description ;
     
     /**
-     *  可选
+     *  应用许可协议
      * xml name: license
-     * 应用许可协议名称或编码；
+     * > (可选) 可填写协议名称或编码
      */
     private java.lang.String _license ;
     
     /**
-     *  可选
+     *  应用 logo 地址
      * xml name: logo
-     * 应用 logo 地址；
+     * > (可选)
      */
     private java.lang.String _logo ;
     
@@ -75,30 +59,30 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.app.XuiAppPageRef> _pageRefs = KeyedList.emptyList();
     
     /**
-     *  可选
+     *  应用加载动画资源路径
      * xml name: spinner
-     * 应用加载动画资源（svg 或 gif）的 classpath 路径；
+     * > (可选) svg 或 gif 类型的资源 classpath 路径
      */
     private java.lang.String _spinner ;
     
     /**
-     *  必填
+     *  应用标题
      * xml name: title
-     * 应用标题；
+     * > (必填)
      */
     private java.lang.String _title ;
     
     /**
-     *  必填
+     *  应用版本号
      * xml name: version
-     * 应用版本号；
+     * > (必填)
      */
     private java.lang.String _version ;
     
     /**
-     * 必填
+     * 应用唯一标识
      * xml name: code
-     *  应用唯一标识；
+     *  > (必填)
      */
     
     public java.lang.String getCode(){
@@ -115,9 +99,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 
+     * 应用的版权声明内容
      * xml name: copyright
-     *  应用的版权声明内容
+     *  
      */
     
     public java.lang.String getCopyright(){
@@ -134,9 +118,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 
+     * 应用的描述内容
      * xml name: description
-     *  应用的描述内容
+     *  
      */
     
     public java.lang.String getDescription(){
@@ -153,9 +137,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 可选
+     * 应用许可协议
      * xml name: license
-     *  应用许可协议名称或编码；
+     *  > (可选) 可填写协议名称或编码
      */
     
     public java.lang.String getLicense(){
@@ -172,9 +156,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 可选
+     * 应用 logo 地址
      * xml name: logo
-     *  应用 logo 地址；
+     *  > (可选)
      */
     
     public java.lang.String getLogo(){
@@ -236,9 +220,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
     }
     
     /**
-     * 可选
+     * 应用加载动画资源路径
      * xml name: spinner
-     *  应用加载动画资源（svg 或 gif）的 classpath 路径；
+     *  > (可选) svg 或 gif 类型的资源 classpath 路径
      */
     
     public java.lang.String getSpinner(){
@@ -255,9 +239,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 必填
+     * 应用标题
      * xml name: title
-     *  应用标题；
+     *  > (必填)
      */
     
     public java.lang.String getTitle(){
@@ -274,9 +258,9 @@ public abstract class _XuiApp extends io.nop.core.resource.component.AbstractCom
 
     
     /**
-     * 必填
+     * 应用版本号
      * xml name: version
-     *  应用版本号；
+     *  > (必填)
      */
     
     public java.lang.String getVersion(){

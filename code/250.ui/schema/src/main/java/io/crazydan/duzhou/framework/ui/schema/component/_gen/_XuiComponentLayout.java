@@ -10,9 +10,8 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 组件布局
- * - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
- * - 仅用于控制所在组件中的直接视图组件（Validation、Animation 为逻辑组件）；
+ * > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
+ * > - 仅用于控制所在组件中的直接视图组件。注意，`Validation`、`Animation` 为逻辑组件；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

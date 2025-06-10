@@ -10,13 +10,13 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 组件元素：定义组件结构
- * - `xui:layout`: 控制直接节点的布局结构；
- * - `xui:style`: 设置组件的展示风格；
- * - `xui:dispatch`: 将事件转换为消息后再发送；
- * - `xui:each`: 循环渲染，遍历循环量，构造组件的内部节点；
- * - `xui:cond`: 条件渲染，满足条件时才构造相应的内部节点；
- * TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
+ * > 定义组件结构，其中：
+ * > - `xui:layout`: 控制直接节点的布局结构；
+ * > - `xui:style`: 设置组件的展示风格；
+ * > - `xui:dispatch`: 将事件转换为消息后再发送；
+ * > - `xui:each`: 循环渲染，遍历循环量，构造组件的内部节点；
+ * > - `xui:cond`: 条件渲染，满足条件时才构造相应的内部节点；
+ * > TODO 在组件上设置的属性类型需与组件定义中 `props` 对应属性的类型一致
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
