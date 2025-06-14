@@ -10,7 +10,5 @@ public class XuiComponentProp extends _XuiComponentProp implements INeedInit {
 
     @Override
     public void init() {
-        // TODO 有子结构的，不可配置 `type` 和 `obj-meta`
-        // TODO 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个
     }
 }

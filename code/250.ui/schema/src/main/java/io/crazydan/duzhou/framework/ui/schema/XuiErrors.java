@@ -35,6 +35,7 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @date 2025-05-09
  */
 public interface XuiErrors {
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
     ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = define("duzhou.err.xui.domain-type.invalid-format",
                                                       "无效的格式 [{"
                                                       + ARG_VALUE
@@ -63,7 +64,9 @@ public interface XuiErrors {
                                                     + "}] 才是有效的尺寸单位",
                                                     ARG_VALUE,
                                                     ARG_NAMES);
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
+    // <<<<<<<<<<<<<<<<<<<<<<<<<< 布局
     ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE = define("duzhou.err.xui.layout-linear.unknown-linear-mode",
                                                              "未知的线性布局模式 [{" + ARG_VALUE + "}]",
                                                              ARG_VALUE);
@@ -78,10 +81,30 @@ public interface XuiErrors {
                                                                ARG_VALUE);
     ErrorCode ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK = define(
             "duzhou.err.xui.layout-linear.no-right-mark-for-left-mark",
-            "没有为配对的左标记符 '{" + ARG_LEFT_PAIR + "}' 指定对应的右标记符 '{" + ARG_RIGHT_PAIR + "}'");
+            "没有为配对的左标记符 '{" + ARG_LEFT_PAIR + "}' 指定对应的右标记符 '{" + ARG_RIGHT_PAIR + "}'",
+            ARG_LEFT_PAIR,
+            ARG_RIGHT_PAIR);
     ErrorCode ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL = define(
             "duzhou.err.xui.layout-linear.no-end-mark-for-table-cell",
             "没有为表格单元格指定相应的结束标记符 '|'");
     ErrorCode ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED = define("duzhou.err.xui.layout-linear.no-prop-value-specified",
-                                                                 "没有为配置参数 '{" + ARG_VALUE + "}' 指定值");
+                                                                 "没有为配置参数 '{" + ARG_VALUE + "}' 指定值",
+                                                                 ARG_VALUE);
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 组件
+    ErrorCode ERR_COMPONENT_PROP_HAS_NOT_ALLOWED_ATTRS = define("duzhou.err.xui.component.has-not-allowed-attrs",
+                                                                "节点已定义结构，不可配置属性 [{" + ARG_NAMES + "}]",
+                                                                ARG_NAMES);
+    ErrorCode ERR_COMPONENT_PROP_HAS_MUTEX_ATTRS = define("duzhou.err.xui.component.has-mutex-attrs",
+                                                          "在节点上不能同时配置属性 [{"
+                                                          + ARG_NAMES
+                                                          + "}]，只能配置其中的某一个",
+                                                          ARG_NAMES);
+    ErrorCode ERR_COMPONENT_PROP_HAS_MISSING_ATTRS = define("duzhou.err.xui.component.has-missing-attrs",
+                                                            "节点未定义结构，因此，必须为其配置 [{"
+                                                            + ARG_NAMES
+                                                            + "}] 中的某一个属性",
+                                                            ARG_NAMES);
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

@@ -82,14 +82,66 @@
                 <!-- Note: xpl:is 中必须是动态表达式才会在运行时输出，否则，变量名会被作为标签直接输出 -->
                 <_ xpl:is="${_dsl_root.tagName}">
                     <props xpl:if="propsNode != null">
+                        <thisLib:_ValidateProps props="${propsNode.getChildren()}" />
                         <thisLib:_ExpandObjMetaForProps props="${propsNode.getChildren()}" />
                     </props>
                     <state xpl:if="stateNode != null">
+                        <thisLib:_ValidateProps props="${stateNode.getChildren()}" />
                         <thisLib:_ExpandObjMetaForProps props="${stateNode.getChildren()}" />
                     </state>
                 </_>
             </source>
         </_NormalizeProps>
+
+        <!-- 校验 props 的有效性 -->
+        <_ValidateProps outputMode="none">
+            <attr name="props" type="List&lt;io.nop.core.lang.xml.XNode>" />
+
+            <!--
+            - 有子结构的，不可配置 `type` 和 `obj-meta`；
+            - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
+            -->
+            <source>
+                <c:script><![CDATA[
+                    import io.crazydan.duzhou.framework.ui.schema.XuiErrors;
+                    import io.nop.api.core.exceptions.NopException;
+                ]]></c:script>
+
+                <c:for var="prop" items="${props}">
+                    <c:choose>
+                        <when test="${prop.hasChild()}">
+                            <c:if test="${prop.hasAttr('type') || prop.hasAttr('obj-meta')}">
+                                <c:script><![CDATA[
+                                    throw new NopException(XuiErrors.ERR_COMPONENT_PROP_HAS_NOT_ALLOWED_ATTRS)
+                                                .source(prop)
+                                                .param('names', 'type, obj-meta');
+                                ]]></c:script>
+                            </c:if>
+
+                            <thisLib:_ValidateProps
+                                    props="${prop.getChildren()}"
+                            />
+                        </when>
+                        <otherwise>
+                            <c:if test="${prop.hasAttr('type') &amp;&amp; prop.hasAttr('obj-meta')}">
+                                <c:script><![CDATA[
+                                    throw new NopException(XuiErrors.ERR_COMPONENT_PROP_HAS_MUTEX_ATTRS)
+                                                .source(prop)
+                                                .param('names', 'type, obj-meta');
+                                ]]></c:script>
+                            </c:if>
+                            <c:if test="${!prop.hasAttr('type') &amp;&amp; !prop.hasAttr('obj-meta')}">
+                                <c:script><![CDATA[
+                                    throw new NopException(XuiErrors.ERR_COMPONENT_PROP_HAS_MISSING_ATTRS)
+                                                .source(prop)
+                                                .param('names', 'type, obj-meta');
+                                ]]></c:script>
+                            </c:if>
+                        </otherwise>
+                    </c:choose>
+                </c:for>
+            </source>
+        </_ValidateProps>
 
         <!-- 展开 props 中的 obj-meta -->
         <_ExpandObjMetaForProps outputMode="node">
