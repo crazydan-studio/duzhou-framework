@@ -77,10 +77,15 @@
                 ]]></linear>
             </xui:layout>
 
-            <!-- Mask 负责在父节点的最上层显示遮罩，其自动覆盖整个父节点的显示空间 -->
-            <Mask xui:name="waiting-mask" xui:when="${state.loginWaiting.enabled}">
+            <xui:overlay xui:name="waiting-mask" xui:when="${state.loginWaiting.enabled}">
+                <xui:layout>
+                    <linear><![CDATA[
+                        v>[waiting-mask-text]<^
+                    ]]></linear>
+                </xui:layout>
+
                 <Text xui:name="waiting-mask-text">${state.loginWaiting.msg}</Text>
-            </Mask>
+            </xui:overlay>
 
             <Text xui:name="username-label">帐号：</Text>
             <Input xui:name="username-input" type="text">
@@ -114,6 +119,12 @@
             >
                 <Text xui:name="label">登录</Text>
 
+                <xui:style>
+                    <!-- 修改组件内部样式，对其做覆盖合并 -->
+                    <root>
+                        <login-button text-size="2u" />
+                    </root>
+                </xui:style>
                 <xui:dispatch when="click" msg="User_Login_Start"
                               data="${{
                                username: state.loginInfo.username.value,
@@ -141,4 +152,10 @@
             </state>
         </message>
     </messages>
+
+    <styles>
+        <login-button text-size="xui:size">
+            <font size="${text-size}" weight="800" />
+        </login-button>
+    </styles>
 </component>

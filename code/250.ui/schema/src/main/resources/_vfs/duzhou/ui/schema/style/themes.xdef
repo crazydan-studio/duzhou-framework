@@ -48,7 +48,7 @@
         -->
         <vars xdef:name="XuiStyleVarGroup"
               xdef:body-type="map" xdef:bean-body-prop="vars" xdef:bean-child-name="var"
-              name="!prop-name"
+              name="!var-name" title="string"
         >
             <!-- 变量定义，标签文本内容为变量值
 
@@ -57,7 +57,7 @@
             <xdef:unknown-tag
                     xdef:name="XuiStyleVar" xdef:value="string"
                     xdef:bean-body-prop="value"
-                    type="!dict:duzhou/ui/style-type"
+                    type="!dict:duzhou/ui/style-type" title="string"
             />
         </vars>
     </theme>

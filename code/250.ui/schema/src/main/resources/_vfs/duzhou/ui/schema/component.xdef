@@ -38,16 +38,18 @@
     -->
     <props xdef:ref="component/props.xdef" />
     <!-- [组件状态]
-    > - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新
+    > - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新；
     > - 对象结构的数据始终不为 `null`，自动按照其结构为各个属性初始化为指定的默认值：
-    >   - 字符串类型默认为空，布尔类型默认为 `false` 等
+    >   - 字符串类型默认为空，布尔类型默认为 `false` 等；
     -->
     <state xdef:ref="component/props.xdef" />
 
+    <!-- [组件结构]
+    -->
     <template xdef:ref="component/template.xdef" />
 
     <!-- [组件消息]
-    > 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数
+    > 逻辑层只用处理消息，而无需关注消息如何触发和发送；视图层只用发送消息，而无需调用函数；
     -->
     <messages xdef:bean-prop="messages"
               xdef:body-type="list" xdef:key-attr="type"
@@ -56,4 +58,11 @@
         <message xdef:ref="component/message.xdef"
                  type="!component-name" />
     </messages>
+
+    <!-- [组件样式]
+    > - 定义组件内部样式，用于在 `<template/>` 内的子组件上引用相应的样式；
+    > - 样式的名字需能够指明其作用于组件内部的哪一个部分；
+    -->
+    <styles>
+    </styles>
 </component>

@@ -27,13 +27,40 @@
     <import as="Button" from="native:button" />
 
     <props>
+        <!--
+        - 若控件的某组特性是二元对立的，如「禁用」与「启用」，则选择默认不生效的那个作为属性，且属性值是布尔型，默认值为 `false`。
+          即，如果默认是「禁用」，那就设计一个代表「启用」的 `enabled` 属性，其默认值是 `false`，
+          只要控件在被使用时传入了 `enabled`，就变成了「启用」状态；反之亦然。
+        -->
+        <disabled type="Boolean" defaultValue="${false}" />
+        <!--
+        - 「主要」、「次要」和「危险」作用到按钮控件上的表现主要是颜色发生了变化，
+          所以，应该去用表示按钮的自然特性「颜色」的 `color` 属性来满足同样的需求
+        -->
+        <color type="String" defaultValue="default" />
     </props>
 
     <state>
     </state>
 
     <template>
-        <!-- TODO 原生组件的嵌套 -->
-        <Button xui:name="button" />
+        <Button xui:name="button">
+            <xui:style>
+                <xui:root>
+                    <root color="${props.color}" />
+                </xui:root>
+            </xui:style>
+
+            <!-- 嵌入组件内部结构 -->
+            <xui:slot />
+        </Button>
     </template>
+
+    <styles>
+        <!-- TODO 实际展开包含 `background`、`font` 等样式节点的颜色 -->
+        <root color="xui:string">
+            <xui:named-style name="button-color/${color}" />
+            <font size="1u" />
+        </root>
+    </styles>
 </component>

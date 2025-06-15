@@ -25,9 +25,34 @@
 >
 
     <theme name="light" title="亮色模式">
-        <vars name="color">
-            <primary type="xui:color">#409eff</primary>
-            <success type="xui:color">#67c23a</success>
+        <vars name="color" title="颜色">
+            <primary type="xui:color" title="主要">#409eff</primary>
+            <success type="xui:color" title="成功">#67c23a</success>
         </vars>
     </theme>
+
+    <!-- 预置命名样式 -->
+    <named-style name="button-color" title="按钮配色">
+        <default title="默认">
+            <font color="rgb(255, 255, 255)" />
+            <background color="rgb(64, 158, 255)" />
+        </default>
+        <primary title="主要">
+            <font color="rgb(255, 255, 255)" />
+            <background color="rgb(64, 158, 255)" />
+        </primary>
+        <danger title="危险">
+            <font color="rgb(255, 255, 255)" />
+            <background color="rgb(64, 158, 255)" />
+        </danger>
+
+        <yellow title="黄色">
+            <font color="rgb(255, 255, 255)" />
+            <background color="rgb(64, 158, 255)" />
+        </yellow>
+        <blue title="蓝色">
+            <font color="rgb(255, 255, 255)" />
+            <background color="rgb(64, 158, 255)" />
+        </blue>
+    </named-style>
 </themes>

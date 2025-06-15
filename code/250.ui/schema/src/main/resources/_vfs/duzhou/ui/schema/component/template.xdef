@@ -66,9 +66,11 @@
                    xui:when="xui-expr:boolean"
                    xui:name="!ns-name=xui-style"
         />
-        <!--
-                &lt;!&ndash; 定义覆盖层（布局在 z 轴方向），并通过 layer 控制层的先后顺序 &ndash;&gt;
-                <xui:overlay layer="int" />-->
+        <!-- [覆盖层]
+        > - 其布局在 `z` 轴方向，并通过属性 `layer` 控制层的叠加顺序；
+        > - 浮动于其所在的组件之上，并自动占满其所在组件的空间；
+        -->
+        <xui:overlay layer="int" />
 
         <!-- [消息派发]
         > 缺省使用 `msg` 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点
@@ -85,6 +87,10 @@
         <xui:cond xdef:ref="XuiComponentCond"
                   xui:name="!ns-name"
         />
+
+        <xui:slot xdef:ref="XuiComponentSlot"
+                  xui:name="!ns-name=xui-default-slot"
+        />
     </xdef:define>
 
     <!-- [组件嵌套元素]
@@ -99,6 +105,7 @@
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNamed>"
                  xdef:bean-sub-type-prop="$type"
+                 xui:slot-name="ns-name" xui:slot-attrs="var-name"
     >
         <!-- [文本组件]
         > 只包含文本内容的组件
@@ -113,15 +120,15 @@
               as-html="boolean"
         />
 
-        <!-- [校验组件]
+        <!--&lt;!&ndash; [校验组件]
         > - 可自嵌套，从而支持分层校验；
         > - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
         > - 仅在目标的值 `value` 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
-        -->
+        &ndash;&gt;
         <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
                     xui:when="xui-expr:boolean" xui:name="!ns-name"
                     target="!string"
-        />
+        />-->
 
         <!-- [动画组件]
         > - 可自嵌套，从而支持一组动画；
@@ -186,7 +193,14 @@
         />
     </xdef:define>
 
+    <!-- [组件样式]
+    > - 用于修改组件内部样式；
+    -->
     <xdef:define xdef:name="XuiComponentStyle" xdef:ref="XuiComponentNamed">
+        <!-- [组件根样式]
+        > - 其作用于组件的根节点，一般仅用于原生组件；
+        -->
+        <xui:root />
     </xdef:define>
 
     <!-- [消息派发器]
@@ -236,5 +250,13 @@
         <else xdef:name="XuiComponentCondElse" xdef:ref="XuiComponentNested"
               xui:name="!ns-name"
         />
+    </xdef:define>
+
+    <!-- [组件插槽]
+    > - ；
+    -->
+    <xdef:define xdef:name="XuiComponentSlot" xdef:ref="XuiComponentNamed"
+                 name="ns-name" attrs="xui-expr:map"
+    >
     </xdef:define>
 </template>
