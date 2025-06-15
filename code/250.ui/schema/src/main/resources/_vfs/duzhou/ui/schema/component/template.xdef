@@ -69,8 +69,10 @@
         <!-- [覆盖层]
         > - 其布局在 `z` 轴方向，并通过属性 `layer` 控制层的叠加顺序；
         > - 浮动于其所在的组件之上，并自动占满其所在组件的空间；
+
+        TODO 采用布局机制处理层叠问题
         -->
-        <xui:overlay layer="int" />
+        <!--<xui:overlay layer="int" />-->
 
         <!-- [消息派发]
         > 缺省使用 `msg` 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点
@@ -182,6 +184,8 @@
         > - 组件尺寸（宽高）默认均为自适应内容；
         > - 根布局的尺寸始终与上层容器的尺寸相同；
 
+        @xui:style [布局样式]
+            > (可选) 用于指定布局节点的样式，方便设置布局空间的背景、边框等
         @mode [布局模式]
             > (必填) 缺省为 `column`
         -->
@@ -189,8 +193,18 @@
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
                 xdef:value="!string" xdef:bean-body-prop="value"
                 xdef:bean-tag-prop="$type"
+                xui:style="xml-name"
                 mode="!dict:duzhou/ui/layout-linear-mode=column"
         />
+
+        <!-- [堆叠布局]
+        > - 以一个以上的其他布局（含 `stacked` 类型）作为其子节点；
+        > - 其布局空间为当前组件的可视空间，且其各个子节点的布局空间均自动占满其全部空间；
+        > - 子节点为一层叠加一层的堆叠效果，并通过属性 `layer` 来控制相对间的层级关系；
+        -->
+        <stacked>
+            <!-- TODO 嵌套其他类型布局 -->
+        </stacked>
     </xdef:define>
 
     <!-- [组件样式]
@@ -206,7 +220,7 @@
     <!-- [消息派发器]
     > 监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件
 
-    @when [事件名称]
+    @on [事件名称]
         > (必填) 如 `click`、`input` 等
     @msg [消息类型]
         > (必填) 如 `User_Login_Start`、`User_Login_Finish` 等
@@ -214,7 +228,7 @@
         > (可选) 以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据
     -->
     <xdef:define xdef:name="XuiComponentMessageDispatch" xdef:ref="XuiComponentNamed"
-                 when="!conf-name" msg="!component-name" data="xui-expr:any"
+                 on="!conf-name" msg="!component-name" data="xui-expr:any"
     />
 
     <!-- [遍历器 - each]

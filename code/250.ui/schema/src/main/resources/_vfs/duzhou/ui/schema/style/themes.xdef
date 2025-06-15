@@ -30,7 +30,7 @@
         xdef:bean-body-prop="themes" xdef:bean-child-name="theme"
 >
 
-    <!-- 主题定义
+    <!-- [主题定义]
 
     @name [必填] 主题标识
     @title [可选] 主题名称
@@ -40,15 +40,15 @@
            xdef:bean-body-prop="varGroups" xdef:bean-child-name="varGroup"
            name="!xml-name" title="string"
     >
-        <!-- 主题变量分组
-        - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式
-        - 引用变量的类型必须与关联数据的类型一致
+        <!-- [主题变量分组]
+        > - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式
+        > - 引用变量的类型必须与关联数据的类型一致
 
         @name [必填] 分组标识
         -->
         <vars xdef:name="XuiStyleVarGroup"
               xdef:body-type="map" xdef:bean-body-prop="vars" xdef:bean-child-name="var"
-              name="!var-name" title="string"
+              name="!ns-name" title="!string"
         >
             <!-- 变量定义，标签文本内容为变量值
 
@@ -57,8 +57,18 @@
             <xdef:unknown-tag
                     xdef:name="XuiStyleVar" xdef:value="string"
                     xdef:bean-body-prop="value"
-                    type="!dict:duzhou/ui/style-type" title="string"
+                    type="!dict:duzhou/ui/style-type" title="!string"
             />
         </vars>
+
+        <!-- [预置命名样式]
+        > - 不同主题可通过 `x:prototype` 实现预置样式的继承，并可对部分样式进行差量微调；
+        -->
+        <styles xdef:name="XuiStylePresets"
+                xdef:body-type="map" xdef:bean-body-prop="styles" xdef:bean-child-name="style"
+                name="!ns-name" title="!string"
+        >
+
+        </styles>
     </theme>
 </themes>
