@@ -44,7 +44,7 @@
                 v>{
                     >[login-logo]<
                     <[login-form]>
-                }(gap:4u,padding:4u)<^
+                }(gap:2u,padding:2u)<^
 
                 >{
                     [copyright-text] [copyright-owner]
@@ -63,12 +63,12 @@
                         | [username-label]> | <[username-input]> |
                         | { [password-label] }(span:{col:2})> | <[password-input]> |
                         | <{ [remember-me-input] v[remember-me-label]^ } |
-                    }(gap:1u,padding:{col:1u})
+                    }(gap:0.5u,padding:{col:0.5u})
 
-                    >[warning-text](padding:{col:2u})<
+                    >[warning-text](padding:{col:1u})<
 
-                    <[login-button](padding:{col:2u})>
-                    { [forgot-password-button] [register-button] }(gap:2u)>
+                    <[login-button](padding:{col:1u})>
+                    { [forgot-password-button] [register-button] }(gap:1u)>
                 ]]></linear>
             </xui:layout>
 

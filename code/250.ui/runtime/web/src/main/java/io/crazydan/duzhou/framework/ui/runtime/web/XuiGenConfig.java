@@ -50,7 +50,7 @@ public abstract class XuiGenConfig {
     public static final IConfigReference<String> CFG_BASE_SIZE = varRef(s_loc,
                                                                         "duzhou.ui.runtime.web.base-size",
                                                                         String.class,
-                                                                        "0.5rem");
+                                                                        "1rem");
     @Description("1i 对应的实际尺寸")
     public static final IConfigReference<String> CFG_LINE_SIZE = varRef(s_loc,
                                                                         "duzhou.ui.runtime.web.line-size",
