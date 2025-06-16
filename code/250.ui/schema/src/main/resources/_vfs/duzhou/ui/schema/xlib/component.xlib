@@ -100,6 +100,7 @@
             <!--
             - 有子结构的，不可配置 `type` 和 `obj-meta`；
             - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
+            - TODO 节点名称必须为数据域 `prop-name` 所要求的形式；
             -->
             <source>
                 <c:script><![CDATA[

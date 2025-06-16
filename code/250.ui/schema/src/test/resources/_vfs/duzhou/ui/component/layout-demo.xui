@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl" xmlns:xui="xui"
+           x:schema="/duzhou/ui/schema/component.xdef"
+>
+    <x:gen-extends xmlns:component="component">
+        <component:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:gen-extends>
+    <x:post-extends xmlns:component="component">
+        <component:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:post-extends>
+
+    <import as="Image" from="./lib/image.xui" />
+    <import as="Form" from="./lib/form.xui" />
+
+    <props>
+    </props>
+
+    <state>
+        <loading type="Boolean" />
+    </state>
+
+    <template>
+        <xui:layout>
+            <stacked>
+                <!-- 主视图层 -->
+                <linear layer="1"><![CDATA[
+                    v>{
+                        >[login-logo-image]<
+                        <[login-form]>
+                    }<^
+                ]]></linear>
+                <!-- 加载遮罩层 -->
+                <linear layer="2" xui:when="${loading}"><![CDATA[
+                    v>[loading-mask-text]<^
+                ]]></linear>
+            </stacked>
+        </xui:layout>
+
+        <Text xui:name="loading-mask-text">页面加载中。。。</Text>
+
+        <Image xui:name="login-logo-image" src="/logo.svg" />
+        <Form xui:name="login-form">
+            <xui:layout>
+                <linear><![CDATA[
+                    <[username-input]>
+                    <[password-input]>
+                ]]></linear>
+            </xui:layout>
+
+            <Input xui:name="username-input" />
+            <Input xui:name="password-input" />
+        </Form>
+    </template>
+</component>

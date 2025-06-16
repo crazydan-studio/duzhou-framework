@@ -46,9 +46,7 @@
     <template>
         <Button xui:name="button">
             <xui:style>
-                <xui:root>
-                    <root color="${props.color}" />
-                </xui:root>
+                <main color="${props.color}" />
             </xui:style>
 
             <!-- 嵌入组件内部结构 -->
@@ -56,11 +54,11 @@
         </Button>
     </template>
 
-    <styles>
+    <style>
         <!-- TODO 实际展开包含 `background`、`font` 等样式节点的颜色 -->
-        <root color="xui:string">
+        <main color="xui:string">
             <xui:named-style name="button-color/${color}" />
             <font size="1u" />
-        </root>
-    </styles>
+        </main>
+    </style>
 </component>
