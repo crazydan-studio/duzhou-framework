@@ -29,7 +29,7 @@
 >
 
     <!-- [组件命名元素]
-    > 其为嵌套节点的基础模型
+    > 其为嵌套节点的基础模型。
 
     @xui:name [组件组成元素的名字]
         > (必填) 其将作为差量运算的定位坐标，在相同父节点范围内具备唯一性。
@@ -54,21 +54,22 @@
                  xdef:unknown-attr="xui-expr:any"
     >
         <!-- [组件布局]
-        > 除非应用了 `xui:when` 条件，否则，最多只能有一个 `xui:layout` 节点。
-        > 在有多个 `xui:when` 时，可以有一个无 `xui:when` 的节点，其代表其余
-        > `xui:when` 均不匹配时的缺省节点
+        > 未配置 `xui:when` 的布局节点，始终代表缺省布局，且只能定义一个。
+        > 在有多个配置了 `xui:when` 的布局节点时，将按照定义顺序依次检查并选择第一个符合条件的布局节点作为组件布局。
         -->
         <xui:layout xdef:ref="XuiComponentLayout"
                     xui:when="xui-expr:boolean"
                     xui:name="!ns-name=xui-layout"
         />
+        <!-- [组件样式]
+        > 通过在样式节点上配置 `xui:when` 的方式支持条件选择。
+        -->
         <xui:style xdef:ref="XuiComponentStyle"
-                   xui:when="xui-expr:boolean"
                    xui:name="!ns-name=xui-style"
         />
 
         <!-- [消息派发]
-        > 缺省使用 `msg` 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点
+        > 缺省使用 `msg` 属性的值作为节点唯一键值（定位坐标），也就是，一个消息仅定义一个节点。
         -->
         <xui:dispatch xdef:ref="XuiComponentMessageDispatch"
                       xui:when="xui-expr:boolean"
@@ -103,7 +104,7 @@
                  xui:slot-name="ns-name" xui:slot-attrs="var-name"
     >
         <!-- [文本组件]
-        > 只包含文本内容的组件
+        > 只包含文本内容的组件。
 
         @as-html [是否为 HTML 片段]
             > (可选) 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
@@ -197,23 +198,20 @@
         > - 子节点之间为一层一层的堆叠效果，并通过属性 `layer` 来控制相对间的层级关系；
         > - 弹出层、遮罩等，均通过该布局进行控制；
         -->
-        <stacked>
+        <stacked
+        >
             <!-- TODO 嵌套其他类型布局 -->
         </stacked>
     </xdef:define>
 
-    <!-- [组件样式]
-    > - 用于修改组件内部样式；
+    <!-- [组件样式应用]
     -->
     <xdef:define xdef:name="XuiComponentStyle" xdef:ref="XuiComponentNamed">
-        <!-- [组件根样式]
-        > - 其作用于组件的根节点，一般仅用于原生组件；
-        -->
-        <xui:root />
+        <!-- TODO 引用样式定义 -->
     </xdef:define>
 
     <!-- [消息派发器]
-    > 监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件
+    > 监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件。
 
     @on [事件名称]
         > (必填) 如 `click`、`input` 等
@@ -226,7 +224,7 @@
                  on="!conf-name" msg="!component-name" data="xui-expr:any"
     />
 
-    <!-- [遍历器 - each]
+    <!-- [循环遍历]
 
     @list [待循环变量]
         > (必填) 如 `props.users`
@@ -241,10 +239,10 @@
                  list="!xui-expr:list"
                  item="!var-name" index="var-name" key="prop-path"
     />
-    <!-- [条件选择 - cond]
+    <!-- [条件选择]
     -->
     <xdef:define xdef:name="XuiComponentCond" xdef:ref="XuiComponentNamed">
-        <!-- [条件选择的指定条件]
+        <!-- [指定条件]
 
         @test [条件表达式]
             > (必填) 如 `${name != null}`
@@ -254,7 +252,7 @@
               xdef:unique-attr="xui:name" xui:name="!ns-name"
               test="!xui-expr:boolean"
         />
-        <!-- [条件选择的缺省条件]
+        <!-- [缺省条件]
         -->
         <else xdef:name="XuiComponentCondElse" xdef:ref="XuiComponentNested"
               xui:name="!ns-name"

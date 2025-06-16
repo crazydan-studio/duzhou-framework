@@ -35,13 +35,18 @@
     </props>
 
     <state>
+        <useBigHeader type="Boolean" />
     </state>
 
     <template>
         <LoginForm xui:name="login-form-1">
             <xui:style>
                 <header>
+                    <!-- 条件选择：采用样式嵌套机制，确保样式名唯一 -->
                     <form-header height="2u" />
+                    <form-header-big xui:when="${state.useBigHeader}">
+                        <form-header height="4u" />
+                    </form-header-big>
                 </header>
                 <body>
                     <background color="gray" />

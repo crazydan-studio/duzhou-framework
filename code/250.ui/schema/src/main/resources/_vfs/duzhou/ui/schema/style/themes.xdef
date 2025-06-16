@@ -20,8 +20,8 @@
   -->
 
 <!-- 主题定义
-- 定义一组样式中可引用的变量，通过同一变量的不同值实现不同的主题
-- 如何管理和切换主题，则由运行时构建器处理
+> - 定义一组样式中可引用的变量，通过同一变量的不同值实现不同的主题；
+> - 如何管理和切换主题，则由运行时构建器处理；
 -->
 <themes xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
@@ -41,8 +41,8 @@
            name="!xml-name" title="string"
     >
         <!-- [主题变量分组]
-        > - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式
-        > - 引用变量的类型必须与关联数据的类型一致
+        > - 引用变量时，均采用 `@var:{groupName}/{varName}` 形式；
+        > - 引用变量的类型必须与关联数据的类型一致；
 
         @name [必填] 分组标识
         -->
@@ -50,7 +50,8 @@
               xdef:body-type="map" xdef:bean-body-prop="vars" xdef:bean-child-name="var"
               name="!ns-name" title="!string"
         >
-            <!-- 变量定义，标签文本内容为变量值
+            <!-- [变量定义]
+            > - 标签文本内容为变量值；
 
             @type [必填] 变量类型
             -->

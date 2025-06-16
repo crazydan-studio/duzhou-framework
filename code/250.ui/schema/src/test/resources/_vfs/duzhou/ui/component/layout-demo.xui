@@ -37,6 +37,7 @@
 
     <state>
         <loading type="Boolean" />
+        <horizontalForm type="Boolean" />
     </state>
 
     <template>
@@ -50,7 +51,9 @@
                     }<^
                 ]]></linear>
                 <!-- 加载遮罩层 -->
-                <linear layer="2" xui:when="${loading}"><![CDATA[
+                <linear layer="2"
+                        xui:when="${state.loading}"
+                ><![CDATA[
                     v>[loading-mask-text]<^
                 ]]></linear>
             </stacked>
@@ -60,6 +63,11 @@
 
         <Image xui:name="login-logo-image" src="/logo.svg" />
         <Form xui:name="login-form">
+            <xui:layout xui:when="${state.horizontalForm}">
+                <linear><![CDATA[
+                    | <[username-input]> | <[password-input]> |
+                ]]></linear>
+            </xui:layout>
             <xui:layout>
                 <linear><![CDATA[
                     <[username-input]>

@@ -52,7 +52,9 @@
             ]]></linear>
         </xui:layout>
 
-        <Text xui:name="header-text">登录表单</Text>
+        <Text xui:name="header-text"><![CDATA[
+            登录表单
+        ]]></Text>
 
         <Form xui:name="body-form">
             <xui:style>
