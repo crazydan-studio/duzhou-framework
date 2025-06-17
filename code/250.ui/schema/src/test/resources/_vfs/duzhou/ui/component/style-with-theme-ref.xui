@@ -43,13 +43,9 @@
             </xui:style>
         </Button>
 
-        <LoginForm xui:name="login-form-1">
+        <LoginForm xui:name="login-form">
             <xui:style>
-            </xui:style>
-        </LoginForm>
-
-        <LoginForm xui:name="login-form-2">
-            <xui:style>
+                <login-form />
             </xui:style>
         </LoginForm>
     </template>
@@ -59,5 +55,11 @@
             <xui:ref>@theme-style:button-color/${color}</xui:ref>
             <font size="1u" />
         </button>
+
+        <login-form>
+            <login-button>
+                <xui:ref>@theme-style:button-color/primary</xui:ref>
+            </login-button>
+        </login-form>
     </style>
 </component>

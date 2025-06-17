@@ -27,6 +27,7 @@
 >
 
     <import as="Form" from="/duzhou/ui/test/form/form.xui" />
+    <import as="Button" from="native:button" />
 
     <props>
     </props>
@@ -57,6 +58,14 @@
             <xui:style>
                 <body />
             </xui:style>
+
+            <Button xui:name="login-button">
+                <xui:style>
+                    <login-button />
+                </xui:style>
+
+                <Text xui:name="label">登录</Text>
+            </Button>
         </Form>
 
         <Text xui:name="footer-text"><![CDATA[
@@ -78,5 +87,9 @@
             <font size="0.5u" color="gray" />
             <size height="2u" />
         </footer>
+
+        <login-button>
+            <font size="1u" color="black" />
+        </login-button>
     </style>
 </component>
