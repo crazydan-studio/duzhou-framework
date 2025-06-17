@@ -54,18 +54,26 @@
                  xdef:unknown-attr="xui-expr:any"
     >
         <!-- [组件布局]
-        > 未配置 `xui:when` 的布局节点，始终代表缺省布局，且只能定义一个。
-        > 在有多个配置了 `xui:when` 的布局节点时，将按照定义顺序依次检查并选择第一个符合条件的布局节点作为组件布局。
+        > - 未配置 `xui:when` 的布局节点，始终代表缺省布局，且只能定义一个；
+        > - 在有多个配置了 `xui:when` 的布局节点时，将按照定义顺序依次检查并选择第一个符合条件的布局节点作为组件布局；
         -->
         <xui:layout xdef:ref="XuiComponentLayout"
                     xui:when="xui-expr:boolean"
                     xui:name="!ns-name=xui-layout"
         />
         <!-- [组件样式]
-        > 通过在样式节点上配置 `xui:when` 的方式支持条件选择。
+        > - 只能最多定义一个该节点；
+        > - 通过在样式节点上配置 `xui:when` 的方式支持条件选择；
         -->
         <xui:style xdef:ref="XuiComponentStyle"
                    xui:name="!ns-name=xui-style"
+        />
+        <!-- [动画组件]
+        > - 可定义多个该节点，并通过配置 `xui:when` 支持按条件选择相关动画；
+        -->
+        <xui:animation xdef:ref="XuiComponentAnimation"
+                       xui:when="xui-expr:boolean"
+                       xui:name="!ns-name=xui-animation"
         />
 
         <!-- [消息派发]
@@ -92,8 +100,6 @@
     <!-- [组件嵌套元素]
     > 限定可被嵌套的节点，其中：
     > - 内置组件 `Text` 可被嵌套，但其子节点只能为 HTML 文本，不可嵌套其他组件；
-    > - 内置组件 `Validation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
-    > - 内置组件 `Animation` 可被嵌套，且其可自嵌套，也可嵌套其他组件；
     > - 自定义组件可被嵌套，且可嵌套其他组件；
     -->
     <xdef:define xdef:name="XuiComponentNested" xdef:ref="XuiComponentNamed"
@@ -105,6 +111,7 @@
     >
         <!-- [文本组件]
         > 只包含文本内容的组件。
+        > TODO 需支持除 `xui:layout`、`xui:slot` 以外的配置
 
         @as-html [是否为 HTML 片段]
             > (可选) 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
@@ -120,19 +127,12 @@
         > - 可自嵌套，从而支持分层校验；
         > - 根据校验模型的校验结果，以红色边框和浮动提示方式标记校验失败的输入区域；
         > - 仅在目标的值 `value` 发生变化时才根据校验结果显示提示信息，其余状态则不做处理；
+        > TODO 考虑通过属性 `xui:validator="validator-name"` 来指定输入校验器
         &ndash;&gt;
         <Validation xdef:name="XuiComponentValidation" xdef:ref="XuiComponentNested"
                     xui:when="xui-expr:boolean" xui:name="!ns-name"
                     target="!string"
         />-->
-
-        <!-- [动画组件]
-        > - 可自嵌套，从而支持一组动画；
-        -->
-        <Animation xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNested"
-                   xui:when="xui-expr:boolean" xui:name="!ns-name"
-                   enter="string" exit="string"
-        />
 
         <!-- [自定义组件]
         > TODO 限定标签名必须符合组件的命名规范（component-name）
@@ -210,13 +210,25 @@
         <!-- TODO 引用样式定义 -->
     </xdef:define>
 
+    <!-- [组件动画]
+
+    @on [事件名称]
+        > (可选) 指定触发动画的事件，如 `click`、`input` 等
+    -->
+    <xdef:define xdef:name="XuiComponentAnimation" xdef:ref="XuiComponentNamed"
+                 on="conf-name"
+                 enter="string" exit="string"
+    >
+        <!-- TODO 在子节点上配置触发动画的事件，以及相应的动画效果：可配置选择条件、可有多个子节点、相同事件可有多个不同动画 -->
+    </xdef:define>
+
     <!-- [消息派发器]
     > 监听组件内的交互事件（原生视图元素的事件或组件自定义事件）并派发业务消息给当前组件。
 
     @on [事件名称]
-        > (必填) 如 `click`、`input` 等
+        > (必填) 指定触发消息的事件，如 `click`、`input` 等
     @msg [消息类型]
-        > (必填) 如 `User_Login_Start`、`User_Login_Finish` 等
+        > (必填) 指定待触发的消息，如 `User_Login_Start`、`User_Login_Finish` 等
     @data [消息所携带的数据]
         > (可选) 以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据
     -->

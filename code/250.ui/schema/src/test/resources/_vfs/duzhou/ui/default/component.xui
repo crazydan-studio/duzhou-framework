@@ -19,33 +19,19 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [测试样式的基础用法]
+<!-- [组件的缺省扩展模型]
 -->
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl"
            x:schema="/duzhou/ui/schema/component.xdef"
-           x:extends="none,/duzhou/ui/default/component.xui"
 >
 
-    <import as="Button" from="native:button" />
+    <x:gen-extends xmlns:component="component">
+        <component:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:gen-extends>
+    <x:post-extends xmlns:component="component">
+        <component:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
+    </x:post-extends>
 
     <props>
     </props>
-
-    <state>
-    </state>
-
-    <template>
-        <Button>
-            <xui:style>
-                <button color="green" />
-            </xui:style>
-        </Button>
-    </template>
-
-    <style>
-        <button color="xui:string">
-            <font size="1u" color="white" />
-            <background color="${color}" />
-        </button>
-    </style>
 </component>

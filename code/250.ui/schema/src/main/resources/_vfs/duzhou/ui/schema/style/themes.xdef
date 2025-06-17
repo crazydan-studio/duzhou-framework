@@ -19,9 +19,10 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- 主题定义
+<!-- [主题定义]
 > - 定义一组样式中可引用的变量，通过同一变量的不同值实现不同的主题；
 > - 如何管理和切换主题，则由运行时构建器处理；
+> - 支持通过设计器以可视化形式编辑和增删主题变量、预定义样式；
 -->
 <themes xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"

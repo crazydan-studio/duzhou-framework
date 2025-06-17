@@ -19,25 +19,30 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="xpl" xmlns:xui="xui"
+<!-- [测试样式的主题预定义样式引用]
+-->
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
+           x:extends="none,/duzhou/ui/default/component.xui"
 >
-    <x:gen-extends xmlns:component="component">
-        <component:DefaultGenExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
-    </x:gen-extends>
-    <x:post-extends xmlns:component="component">
-        <component:DefaultPostExtends xpl:lib="/duzhou/ui/schema/xlib/component.xlib" />
-    </x:post-extends>
 
     <import as="LoginForm" from="./lib/login-form.xui" />
+    <import as="Button" from="native:button" />
 
     <props>
     </props>
 
     <state>
+        <buttonColor type="String" defaultValue="default" />
     </state>
 
     <template>
+        <Button>
+            <xui:style>
+                <button color="${state.buttonColor}" />
+            </xui:style>
+        </Button>
+
         <LoginForm xui:name="login-form-1">
             <xui:style>
             </xui:style>
@@ -50,5 +55,9 @@
     </template>
 
     <style>
+        <button color="xui:string">
+            <xui:ref>@theme/styles/button-color/${color}</xui:ref>
+            <font size="1u" />
+        </button>
     </style>
 </component>

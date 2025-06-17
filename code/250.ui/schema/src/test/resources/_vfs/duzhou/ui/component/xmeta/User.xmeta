@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+-->
 <meta xmlns:x="/nop/schema/xdsl.xdef"
       xmlns:xpl="xpl" xmlns:meta-gen="meta-gen"
       x:schema="/nop/schema/xmeta.xdef"
