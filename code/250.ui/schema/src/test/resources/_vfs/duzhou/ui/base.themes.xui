@@ -38,12 +38,12 @@
             </default>
             <primary title="主要">
                 <font color="rgb(255, 255, 255)" />
-                <background color="rgb(64, 158, 255)" />
+                <background color="@theme-var:color/primary" />
             </primary>
-            <danger title="危险">
+            <success title="危险">
                 <font color="rgb(255, 255, 255)" />
-                <background color="rgb(64, 158, 255)" />
-            </danger>
+                <background color="@theme-var:color/success" />
+            </success>
 
             <yellow title="黄色">
                 <font color="rgb(255, 255, 255)" />

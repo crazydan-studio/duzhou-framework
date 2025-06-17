@@ -56,7 +56,7 @@
 
     <style>
         <button color="xui:string">
-            <xui:ref>@theme/styles/button-color/${color}</xui:ref>
+            <xui:ref>@theme-style:button-color/${color}</xui:ref>
             <font size="1u" />
         </button>
     </style>

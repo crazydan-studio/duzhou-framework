@@ -91,6 +91,7 @@
     >   - 对于含中间样式的样式，其在运行时生成的样式名将包含中间样式，
     >     比如，`<form><header><background color="gray" /></header></form>`
     >     将对应生成 css 类 `.form-header { background: gray; }`；
+    > - 通过对样式属性设置 `xui:null` 可将继承的该属性值被移除；
     >
     > 样式展开针对的是在组件模板 `<template/>` 中的子组件的 `<xui:style/>` 节点中所引用的样式，
     > 其展开规则如下：
