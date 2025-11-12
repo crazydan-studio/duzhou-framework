@@ -64,7 +64,7 @@ public class TextScannerHelper {
         sc.consume(left);
 
         int pairs = 1;
-        MutableString buf = sc.useBuf();
+        MutableString buf = sc.getReusableBuffer();
         while (!sc.isEnd()) {
             if (sc.cur == left) {
                 pairs += 1;
@@ -104,8 +104,7 @@ public class TextScannerHelper {
      * 注：需确保 {@link TextScanner} 的当前位置在左侧符号 <code>left</code> 上
      */
     public static void consumeBetweenPairChars(
-            TextScanner sc, char left, char right, ErrorCode code, Runnable consumer
-    ) {
+            TextScanner sc, char left, char right, ErrorCode code, Runnable consumer) {
         sc.consume(left);
 
         int pos = sc.pos;
@@ -134,8 +133,7 @@ public class TextScannerHelper {
 
     /** 持续消费 {@link TextScanner} 直到游标不再变化 */
     public static <T> void consumeUntilPosNotChanged(
-            TextScanner sc, Predicate<TextScanner> whenBreak, Supplier<T> supplier, Consumer<T> consumer
-    ) {
+            TextScanner sc, Predicate<TextScanner> whenBreak, Supplier<T> supplier, Consumer<T> consumer) {
         int pos = sc.pos;
         while (true) {
             moveToValidCharInLine(sc);
