@@ -148,7 +148,7 @@
     -->
     <xdef:define xdef:name="XuiComponentLayout" xdef:ref="XuiComponentNamed"
                  xdef:body-type="union"
-                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
+                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.XuiLayout"
                  xdef:bean-body-prop="type"
                  xdef:bean-sub-type-prop="$type"
     >
@@ -185,7 +185,7 @@
             > (必填) 缺省为 `column`
         -->
         <linear xdef:name="XuiComponentLayoutLinear"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.XuiLayout"
+                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiLayout"
                 xdef:value="!string" xdef:bean-body-prop="value"
                 xdef:bean-tag-prop="$type"
                 xui:style="xml-name"

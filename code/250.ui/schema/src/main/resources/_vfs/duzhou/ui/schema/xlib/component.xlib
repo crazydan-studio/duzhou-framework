@@ -104,7 +104,7 @@
             -->
             <source>
                 <c:script><![CDATA[
-                    import io.crazydan.duzhou.framework.ui.schema.XuiErrors;
+                    import io.crazydan.duzhou.framework.ui.XuiErrors;
                     import io.nop.api.core.exceptions.NopException;
                 ]]></c:script>
 

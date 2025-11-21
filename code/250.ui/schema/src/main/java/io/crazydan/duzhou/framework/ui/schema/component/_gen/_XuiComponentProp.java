@@ -1,6 +1,6 @@
 package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
-import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.core.lang.json.IJsonHandler;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp;
 import io.nop.commons.util.ClassHelper;
@@ -25,55 +25,55 @@ import io.nop.commons.util.ClassHelper;
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentProp extends io.nop.core.resource.component.AbstractComponentModel {
-    
+
     /**
-     *  
-     * xml name: 
-     * 
+     *
+     * xml name:
+     *
      */
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp> _children = java.util.Collections.emptyMap();
-    
+
     /**
      *  属性的缺省值
      * xml name: defaultValue
      * > (可选) 一般以 `${props.xxx}` 形式引用组件的
      * > `props` 变量，或者以 `${false}` 形式指定常量
      */
-    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> _defaultValue ;
-    
+    private XuiExpression<Object> _defaultValue ;
+
     /**
      *  对象 XMeta 定义路径
      * xml name: obj-meta
      * > (可选) 仅针对可复用的、结构化的属性
      */
     private java.lang.String _objMeta ;
-    
+
     /**
      *  属性类型
      * xml name: type
      * > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性
      */
     private io.nop.core.type.IGenericType _type ;
-    
+
     /**
-     * 
-     * xml name: 
-     *  
+     *
+     * xml name:
+     *
      */
-    
+
     public java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp> getChildren(){
       return _children;
     }
 
-    
+
     public void setChildren(java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp> value){
         checkAllowChange();
-        
+
         this._children = value;
-           
+
     }
 
-    
+
     public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProp getChild(String name){
         return this._children.get(name);
     }
@@ -81,69 +81,69 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
     public boolean hasChild(String name){
         return this._children.containsKey(name);
     }
-    
+
     public boolean hasChildren(){
         return this._children != null && !this._children.isEmpty();
     }
-    
+
     /**
      * 属性的缺省值
      * xml name: defaultValue
      *  > (可选) 一般以 `${props.xxx}` 形式引用组件的
      * > `props` 变量，或者以 `${false}` 形式指定常量
      */
-    
-    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> getDefaultValue(){
+
+    public XuiExpression<Object> getDefaultValue(){
       return _defaultValue;
     }
 
-    
-    public void setDefaultValue(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Object> value){
+
+    public void setDefaultValue(XuiExpression<Object> value){
         checkAllowChange();
-        
+
         this._defaultValue = value;
-           
+
     }
 
-    
+
     /**
      * 对象 XMeta 定义路径
      * xml name: obj-meta
      *  > (可选) 仅针对可复用的、结构化的属性
      */
-    
+
     public java.lang.String getObjMeta(){
       return _objMeta;
     }
 
-    
+
     public void setObjMeta(java.lang.String value){
         checkAllowChange();
-        
+
         this._objMeta = value;
-           
+
     }
 
-    
+
     /**
      * 属性类型
      * xml name: type
      *  > (可选) 仅针对 `String`、`Boolean` 等基础数据类型的属性
      */
-    
+
     public io.nop.core.type.IGenericType getType(){
       return _type;
     }
 
-    
+
     public void setType(io.nop.core.type.IGenericType value){
         checkAllowChange();
-        
+
         this._type = value;
-           
+
     }
 
-    
+
 
     @Override
     public void freeze(boolean cascade){
@@ -151,16 +151,16 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
         super.freeze(cascade);
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
-        
+
            this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
-            
+
         }
     }
 
     @Override
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
-        
+
         out.putNotNull("children",this.getChildren());
         out.putNotNull("defaultValue",this.getDefaultValue());
         out.putNotNull("objMeta",this.getObjMeta());
@@ -175,7 +175,7 @@ public abstract class _XuiComponentProp extends io.nop.core.resource.component.A
 
     protected void copyTo(XuiComponentProp instance){
         super.copyTo(instance);
-        
+
         instance.setChildren(this.getChildren());
         instance.setDefaultValue(this.getDefaultValue());
         instance.setObjMeta(this.getObjMeta());

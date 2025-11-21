@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
@@ -33,7 +33,7 @@ import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 

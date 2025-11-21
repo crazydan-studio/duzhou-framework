@@ -17,12 +17,12 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema.layout;
+package io.crazydan.duzhou.framework.ui.layout;
 
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 

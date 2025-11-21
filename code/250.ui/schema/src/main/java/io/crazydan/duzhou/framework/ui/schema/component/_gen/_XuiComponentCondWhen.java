@@ -1,6 +1,6 @@
 package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
-import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.core.lang.json.IJsonHandler;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentCondWhen;
 import io.nop.commons.util.ClassHelper;
@@ -19,33 +19,33 @@ import io.nop.commons.util.ClassHelper;
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentCondWhen extends io.crazydan.duzhou.framework.ui.schema.component.XuiComponentNested {
-    
+
     /**
      *  条件表达式
      * xml name: test
      * > (必填) 如 `${name != null}`
      */
-    private io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> _test ;
-    
+    private XuiExpression<Boolean> _test ;
+
     /**
      * 条件表达式
      * xml name: test
      *  > (必填) 如 `${name != null}`
      */
-    
-    public io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> getTest(){
+
+    public XuiExpression<Boolean> getTest(){
       return _test;
     }
 
-    
-    public void setTest(io.crazydan.duzhou.framework.ui.schema.XuiExpression<java.lang.Boolean> value){
+
+    public void setTest(XuiExpression<Boolean> value){
         checkAllowChange();
-        
+
         this._test = value;
-           
+
     }
 
-    
+
 
     @Override
     public void freeze(boolean cascade){
@@ -53,14 +53,14 @@ public abstract class _XuiComponentCondWhen extends io.crazydan.duzhou.framework
         super.freeze(cascade);
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
-        
+
         }
     }
 
     @Override
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
-        
+
         out.putNotNull("test",this.getTest());
     }
 
@@ -72,7 +72,7 @@ public abstract class _XuiComponentCondWhen extends io.crazydan.duzhou.framework
 
     protected void copyTo(XuiComponentCondWhen instance){
         super.copyTo(instance);
-        
+
         instance.setTest(this.getTest());
     }
 

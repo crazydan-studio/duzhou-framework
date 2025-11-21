@@ -17,13 +17,22 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema;
+package io.crazydan.duzhou.framework.ui;
+
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-05-29
+ * @date 2025-04-05
  */
-public interface XuiConstants {
-    String STD_DOMAIN_XUI_STYLE = "xui-style";
-    String STD_DOMAIN_XUI_EXPR = "xui-expr";
+public interface XuiLayout {
+
+    String getType();
+
+    XuiLayoutNode getRoot();
+
+    enum LinearMode {
+        column,
+        row,
+    }
 }

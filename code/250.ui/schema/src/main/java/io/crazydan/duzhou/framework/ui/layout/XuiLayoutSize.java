@@ -17,11 +17,11 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema.layout;
+package io.crazydan.duzhou.framework.ui.layout;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;

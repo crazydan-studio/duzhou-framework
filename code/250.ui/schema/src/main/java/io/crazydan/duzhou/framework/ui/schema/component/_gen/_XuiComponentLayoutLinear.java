@@ -1,6 +1,6 @@
 package io.crazydan.duzhou.framework.ui.schema.component._gen;
 
-import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
+import io.crazydan.duzhou.framework.ui.XuiLayout;
 import io.nop.core.lang.json.IJsonHandler;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
 import io.nop.commons.util.ClassHelper;
@@ -37,86 +37,87 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.component.AbstractComponentModel implements io.crazydan.duzhou.framework.ui.schema.XuiLayout{
-    
+public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.component.AbstractComponentModel implements
+                                                                                                              XuiLayout {
+
     /**
-     *  
-     * xml name: 
-     * 
+     *
+     * xml name:
+     *
      */
     private java.lang.String _$type ;
-    
+
     /**
      *  布局模式
      * xml name: mode
      * > (必填) 缺省为 `column`
      */
     private java.lang.String _mode  = "column";
-    
+
     /**
-     *  
-     * xml name: 
-     * 
+     *
+     * xml name:
+     *
      */
     private java.lang.String _value ;
-    
+
     /**
-     * 
-     * xml name: 
-     *  
+     *
+     * xml name:
+     *
      */
-    
+
     public java.lang.String get$type(){
       return _$type;
     }
 
-    
+
     public void set$type(java.lang.String value){
         checkAllowChange();
-        
+
         this._$type = value;
-           
+
     }
 
-    
+
     /**
      * 布局模式
      * xml name: mode
      *  > (必填) 缺省为 `column`
      */
-    
+
     public java.lang.String getMode(){
       return _mode;
     }
 
-    
+
     public void setMode(java.lang.String value){
         checkAllowChange();
-        
+
         this._mode = value;
-           
+
     }
 
-    
+
     /**
-     * 
-     * xml name: 
-     *  
+     *
+     * xml name:
+     *
      */
-    
+
     public java.lang.String getValue(){
       return _value;
     }
 
-    
+
     public void setValue(java.lang.String value){
         checkAllowChange();
-        
+
         this._value = value;
-           
+
     }
 
-    
+
 
     @Override
     public void freeze(boolean cascade){
@@ -124,14 +125,14 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
         super.freeze(cascade);
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
-        
+
         }
     }
 
     @Override
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
-        
+
         out.putNotNull("$type",this.get$type());
         out.putNotNull("mode",this.getMode());
         out.putNotNull("value",this.getValue());
@@ -145,7 +146,7 @@ public abstract class _XuiComponentLayoutLinear extends io.nop.core.resource.com
 
     protected void copyTo(XuiComponentLayoutLinear instance){
         super.copyTo(instance);
-        
+
         instance.set$type(this.get$type());
         instance.setMode(this.getMode());
         instance.setValue(this.getValue());

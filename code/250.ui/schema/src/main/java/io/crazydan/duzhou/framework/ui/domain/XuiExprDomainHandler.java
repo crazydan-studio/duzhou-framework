@@ -22,8 +22,8 @@ package io.crazydan.duzhou.framework.ui.domain;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import io.crazydan.duzhou.framework.ui.schema.XuiConstants;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.XuiConstants;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.api.core.validate.IValidationErrorCollector;
@@ -34,9 +34,9 @@ import io.nop.core.type.utils.JavaGenericTypeBuilder;
 import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.xdef.IStdDomainHandler;
 
-import static io.crazydan.duzhou.framework.ui.schema.XuiConstants.STD_DOMAIN_XUI_EXPR;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_INVALID_FORMAT;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_INVALID_OPTIONS;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_EXPR;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_FORMAT;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_OPTIONS;
 import static io.nop.api.core.util.ApiStringHelper.isBlank;
 import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
 import static io.nop.xlang.XLangErrors.ARG_NAME;

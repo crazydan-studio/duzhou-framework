@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema.layout;
+package io.crazydan.duzhou.framework.ui.layout;
 
 import java.util.ArrayList;
 import java.util.Collections;

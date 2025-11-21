@@ -19,10 +19,10 @@
 
 package io.crazydan.duzhou.framework.ui.domain;
 
-import io.crazydan.duzhou.framework.ui.schema.XuiConstants;
+import io.crazydan.duzhou.framework.ui.XuiConstants;
 import io.nop.xlang.xdef.domain.DictStdDomainHandler;
 
-import static io.crazydan.duzhou.framework.ui.schema.XuiConstants.STD_DOMAIN_XUI_STYLE;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_STYLE;
 
 /**
  * 数据域 {@link XuiConstants#STD_DOMAIN_XUI_STYLE xui-style}，

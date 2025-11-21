@@ -23,21 +23,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
-import io.crazydan.duzhou.framework.ui.schema.component.XuiComponentLayoutLinear;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
-import io.crazydan.duzhou.framework.ui.schema.layout.parser.XuiLayoutLinearParser;
+import io.crazydan.duzhou.framework.ui.XuiLayout;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout.parser.XuiLayoutLinearParser;
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.JsonTool;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
-import static io.crazydan.duzhou.framework.ui.schema.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_LAYOUT_LINEAR_UNKNOWN_MARK;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -94,7 +94,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
                 "v>[a1](padding: {row: ${props.padding}, left:.5u, col: .5u, bottom: ${props.padding}})<^");
         }};
 
-        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayout.LinearMode.column);
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
             XuiLayoutNode root = parser.parseFromText(null, text);
@@ -128,7 +128,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("[a1](gap: gap)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
         }};
 
-        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiComponentLayoutLinear.Mode.column);
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayout.LinearMode.column);
         samples.forEach((text, code) -> {
             this.log.info("Raw text:\n{}", text);
 

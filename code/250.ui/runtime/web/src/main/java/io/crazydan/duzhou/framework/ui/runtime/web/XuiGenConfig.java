@@ -24,7 +24,7 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.annotations.core.Description;
 import io.nop.api.core.config.IConfigReference;
 import io.nop.api.core.util.SourceLocation;

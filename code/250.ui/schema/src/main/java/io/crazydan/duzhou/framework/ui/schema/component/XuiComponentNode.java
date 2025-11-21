@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponentNode;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
 
 public class XuiComponentNode extends _XuiComponentNode {
 

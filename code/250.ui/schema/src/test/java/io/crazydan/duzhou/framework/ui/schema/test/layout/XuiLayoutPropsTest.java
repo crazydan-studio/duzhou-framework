@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
-import io.crazydan.duzhou.framework.ui.schema.XuiExpression;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutAlign;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutGap;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSize;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpacing;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutSpan;
+import io.crazydan.duzhou.framework.ui.XuiExpression;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutGap;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSpacing;
+import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSpan;
 import io.nop.commons.util.objects.ValueWithLocation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
