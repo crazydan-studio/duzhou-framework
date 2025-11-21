@@ -117,13 +117,13 @@
     <repositories>
         <repository>
             <id>nop-repo</id>
-            <url>https://nop.repo.crazydan.io/</url>
+            <url>https://repo.nop.crazydan.io/</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>nop-repo</id>
-            <url>https://nop.repo.crazydan.io/</url>
+            <url>https://repo.nop.crazydan.io/</url>
         </pluginRepository>
     </pluginRepositories>
 
