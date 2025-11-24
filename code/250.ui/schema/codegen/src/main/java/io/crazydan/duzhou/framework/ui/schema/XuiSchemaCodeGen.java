@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.codegen;
+package io.crazydan.duzhou.framework.ui.schema;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ import io.nop.core.initialize.CoreInitialization;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-04-05
  */
-public class NopCodeGen {
+public class XuiSchemaCodeGen {
 
     public static void main(String[] args) {
         AppConfig.getConfigProvider()
@@ -51,7 +51,7 @@ public class NopCodeGen {
     }
 
     public static void run() {
-        File projectDir = MavenDirHelper.projectDir(NopCodeGen.class);
+        File projectDir = MavenDirHelper.projectDir(XuiSchemaCodeGen.class);
 
         XCodeGenerator.runPrecompile(projectDir, "/", false);
         XCodeGenerator.runPrecompile2(projectDir, "/", false);

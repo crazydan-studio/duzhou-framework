@@ -23,15 +23,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>duzhou-ui-component</artifactId>
-
     <name>Duzhou Framework UI Component</name>
+    <artifactId>duzhou-ui-component</artifactId>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
         <artifactId>duzhou-ui</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -40,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-ui-schema</artifactId>
+            <artifactId>duzhou-ui-schema-model</artifactId>
         </dependency>
     </dependencies>
 </project>

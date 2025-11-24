@@ -184,7 +184,12 @@
 
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-ui-schema</artifactId>
+                <artifactId>duzhou-ui-schema-xdefs</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-schema-model</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>

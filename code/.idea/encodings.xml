@@ -47,8 +47,14 @@
     <file url="file://$PROJECT_DIR$/250.ui/runtime/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/runtime/web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/runtime/web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/codegen/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/codegen/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/model/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/schema/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/schema/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/xdefs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/250.ui/schema/xdefs/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/250.ui/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

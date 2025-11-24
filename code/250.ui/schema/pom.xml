@@ -23,29 +23,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>duzhou-ui-schema</artifactId>
-
     <name>Duzhou Framework UI Schema</name>
+    <artifactId>duzhou-ui-schema</artifactId>
+    <packaging>pom</packaging>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
         <artifactId>duzhou-ui</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <modules>
+        <!-- Note: codegen 需在 model 之前构建，从而确保最新生成的代码能够被构建到 model 中 -->
+        <module>codegen</module>
+
+        <module>xdefs</module>
+        <module>model</module>
+    </modules>
 
     <properties>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-commons</artifactId>
-        </dependency>
     </dependencies>
 </project>
