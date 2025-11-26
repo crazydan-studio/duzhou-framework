@@ -184,7 +184,7 @@
 
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-ui-schema-xdefs</artifactId>
+                <artifactId>duzhou-ui-schema-core</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>

@@ -37,7 +37,7 @@
         <!-- Note: codegen 需在 model 之前构建，从而确保最新生成的代码能够被构建到 model 中 -->
         <module>codegen</module>
 
-        <module>xdefs</module>
+        <module>core</module>
         <module>model</module>
     </modules>
 

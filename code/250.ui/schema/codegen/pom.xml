@@ -40,7 +40,7 @@
     <dependencies>
         <dependency>
             <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-ui-schema-xdefs</artifactId>
+            <artifactId>duzhou-ui-schema-core</artifactId>
         </dependency>
 
         <!-- 支持开发期在 IDE 中运行 XCodeGenerator 以生成代码 -->
