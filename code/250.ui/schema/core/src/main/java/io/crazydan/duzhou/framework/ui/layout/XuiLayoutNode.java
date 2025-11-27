@@ -126,9 +126,9 @@ public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
         return node;
     }
 
-    /** 是否为匹配的组件 */
-    public boolean matched(String xuiName) {
-        return this.pattern != null && this.pattern.matcher(xuiName).matches();
+    /** 是否匹配该布局节点 */
+    public boolean matched(String key) {
+        return this.pattern != null && this.pattern.matcher(key).matches();
     }
 
     /** 递归获取当前节点所包含的所有{@link Type 布局节点类型} */

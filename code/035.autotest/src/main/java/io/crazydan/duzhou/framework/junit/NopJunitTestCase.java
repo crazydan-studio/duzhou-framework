@@ -23,6 +23,10 @@ import java.io.File;
 
 import io.nop.autotest.junit.JunitBaseTestCase;
 import io.nop.commons.util.FileHelper;
+import io.nop.core.lang.json.JsonTool;
+import io.nop.core.lang.xml.XNode;
+import io.nop.core.lang.xml.parse.XNodeParser;
+import io.nop.xlang.xdsl.DslModelHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,5 +44,17 @@ public abstract class NopJunitTestCase extends JunitBaseTestCase {
             setAttachmentDir(dir);
         } catch (Exception ignore) {
         }
+    }
+
+    protected XNode loadNode(String dslPath) {
+        return XNodeParser.instance().parseFromVirtualPath(dslPath);
+    }
+
+    protected String toJson(Object obj) {
+        return JsonTool.serialize(obj, true);
+    }
+
+    protected XNode toXNode(String xdefPath, Object model) {
+        return DslModelHelper.dslModelToXNode(xdefPath, model);
     }
 }
