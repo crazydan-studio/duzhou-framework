@@ -19,6 +19,9 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import io.nop.commons.text.MutableString;
+import io.nop.commons.text.tokenizer.TextScanner;
+
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 
 /**
@@ -113,5 +116,44 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         str = hyphen ? str.replaceAll("_", "-") : str;
 
         return upper ? str.toUpperCase() : str.toLowerCase();
+    }
+
+    /** 对于多行字符串，按照首个非空白行的空白数，将剩余行开头的同等数量的空白移除 */
+    public static String trimAllLinesByFirstNonBlankLine(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        TextScanner sc = TextScanner.fromString(null, str);
+        sc.skipEmptyLines();
+
+        int blankStart = sc.pos;
+        sc.skipBlankInLine();
+        int blankEnd = sc.pos;
+
+        int blankCount = blankEnd - blankStart;
+        MutableString buf = new MutableString(str.length());
+
+        while (!sc.isEnd()) {
+            MutableString ms = sc.nextUntilEndOfLine();
+            sc.skipLine(); // 跳过当前行的换行符
+
+            ms.trimTrailing();
+
+            int trimStop = Math.min(blankCount, ms.length());
+            int trimIndex = 0;
+            for (; trimIndex < trimStop; trimIndex++) {
+                char c = ms.charAt(trimIndex);
+                if (!Character.isWhitespace(c)) {
+                    break;
+                }
+            }
+            ms.skipLeading(trimIndex);
+
+            buf.append(ms);
+            buf.append('\n');
+        }
+
+        return buf.trimTrailing().toString();
     }
 }

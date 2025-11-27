@@ -19,9 +19,13 @@
 
 package io.crazydan.duzhou.framework.test.commons;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
+import static io.crazydan.duzhou.framework.commons.StringHelper.snakeCase;
+import static io.crazydan.duzhou.framework.commons.StringHelper.trimAllLinesByFirstNonBlankLine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -32,14 +36,33 @@ public class StringHelperTest {
 
     @Test
     public void test_snakeCase() {
-        assertEquals("abcd", StringHelper.snakeCase("abCd", false, false));
-        assertEquals("abcd", StringHelper.snakeCase("abCD", false, false));
-        assertEquals("ab_cd", StringHelper.snakeCase("ab-Cd", false, false));
-        assertEquals("ab_cd", StringHelper.snakeCase("ab_Cd", false, false));
-        assertEquals("ab_cd", StringHelper.snakeCase("ab cd", false, false));
-        assertEquals("ab_cd", StringHelper.snakeCase("ab%-cd", false, false));
-        assertEquals("ab_cd", StringHelper.snakeCase("ab_cd", false, false));
-        assertEquals("ab__cd", StringHelper.snakeCase("ab__cd", false, false));
-        assertEquals("ab__cd", StringHelper.snakeCase("ab _cd", false, false));
+        assertEquals("abcd", snakeCase("abCd", false, false));
+        assertEquals("abcd", snakeCase("abCD", false, false));
+        assertEquals("ab_cd", snakeCase("ab-Cd", false, false));
+        assertEquals("ab_cd", snakeCase("ab_Cd", false, false));
+        assertEquals("ab_cd", snakeCase("ab cd", false, false));
+        assertEquals("ab_cd", snakeCase("ab%-cd", false, false));
+        assertEquals("ab_cd", snakeCase("ab_cd", false, false));
+        assertEquals("ab__cd", snakeCase("ab__cd", false, false));
+        assertEquals("ab__cd", snakeCase("ab _cd", false, false));
+    }
+
+    @Test
+    public void test_trimAllLinesByFirstNonBlankLine() {
+        Map<String, String> samples = new LinkedHashMap<>() {{
+            put("  \n\n", "");
+            put("  \n\n  ", "");
+            put("  \n  \n", "");
+            put("  \n  \n  ", "");
+            put("    A\n    B\n", "A\nB");
+            put("    A\n    B\n  ", "A\nB");
+            put("\n    A\n    B\n", "A\nB");
+            put("\n    A  \n    \n  B\n      C  \n  \n", "A\n\nB\n  C");
+            put("\n    A  \r\n    \n  B\r\n      C  \n  \n", "A\n\nB\n  C");
+        }};
+
+        samples.forEach((sample, expected) -> {
+            assertEquals(expected, trimAllLinesByFirstNonBlankLine(sample));
+        });
     }
 }
