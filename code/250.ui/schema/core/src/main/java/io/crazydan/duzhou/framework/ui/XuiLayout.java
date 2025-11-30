@@ -31,6 +31,13 @@ public interface XuiLayout {
 
     XuiLayoutNode getRoot();
 
+    enum Type {
+        /** 线性布局 */
+        linear,
+        /** 堆叠布局 */
+        stacked,
+    }
+
     enum LinearMode {
         column,
         row,
