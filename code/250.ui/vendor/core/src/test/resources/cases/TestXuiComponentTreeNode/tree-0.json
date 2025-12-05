@@ -1,0 +1,131 @@
+{
+  "layout": {
+    "location": "[31:22:0:0]/duzhou/ui/test-tree-node.page.xui",
+    "$tag": "linear",
+    "mode": "column",
+    "value": "\n                        ^>[text-welcome]<\n                        v>[btn-add-personal-information]<^\n                    ",
+    "root": {
+      "loc": "[31:22:0:0]/duzhou/ui/test-tree-node.page.xui",
+      "type": "column",
+      "props": {
+        "width": "match_parent",
+        "height": "match_parent"
+      },
+      "children": [
+        {
+          "loc": "[32:25:0:0]/duzhou/ui/test-tree-node.page.xui",
+          "type": "row",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
+          "children": [
+            {
+              "loc": "[32:27:0:0]/duzhou/ui/test-tree-node.page.xui",
+              "type": "item",
+              "pattern": "^text-welcome$",
+              "props": {
+                "width": "wrap_content",
+                "height": "wrap_content",
+                "align": {
+                  "row": "center",
+                  "col": "start"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "loc": "[33:25:0:0]/duzhou/ui/test-tree-node.page.xui",
+          "type": "row",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
+          "children": [
+            {
+              "loc": "[33:27:0:0]/duzhou/ui/test-tree-node.page.xui",
+              "type": "item",
+              "pattern": "^btn-add-personal-information$",
+              "props": {
+                "width": "wrap_content",
+                "height": "wrap_content",
+                "align": {
+                  "row": "center",
+                  "col": "center"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "children": [
+    {
+      "key": "text-welcome",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "Welcome!"
+          }
+        }
+      ]
+    },
+    {
+      "key": "btn-add-personal-information",
+      "children": [
+        {
+          "key": "body",
+          "native": "button",
+          "props": {
+            "border": "1u",
+            "label": "Add Personal Information"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #0"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #1"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #2"
+          }
+        }
+      ]
+    }
+  ]
+}

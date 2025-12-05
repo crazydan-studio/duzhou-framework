@@ -23,32 +23,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>duzhou-ui</artifactId>
-    <packaging>pom</packaging>
-
-    <name>Duzhou Framework UI</name>
+    <name>Duzhou Framework UI Vendor - Web</name>
+    <artifactId>duzhou-ui-vendor-web</artifactId>
 
     <parent>
         <groupId>io.crazydan.duzhou.framework</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>duzhou-ui-vendor</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
     </properties>
 
-    <modules>
-        <module>schema</module>
-        <module>component</module>
-        <module>vendor</module>
-    </modules>
-
     <dependencies>
-        <dependency>
-            <groupId>io.crazydan.duzhou.framework</groupId>
-            <artifactId>duzhou-autotest</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 </project>

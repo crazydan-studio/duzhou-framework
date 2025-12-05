@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+      x:schema="/duzhou/ui/schema/page.xdef"
+>
+    <import as="Button" from="/duzhou/ui/component/button.xui"/>
+    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+
+    <template>
+        <choose xui:name="choose-person-init-or-not">
+            <when xui:name="choose-person-init" test="${!data.me || data.me.notExist}">
+                <layout>
+                    <linear><![CDATA[
+                        ^>[text-welcome]<
+                        v>{
+                            >[btn-add-personal-information]<
+                        }<^
+                    ]]></linear>
+                </layout>
+
+                <Text xui:name="text-welcome">Welcome!</Text>
+
+                <Button xui:name="btn-add-personal-information">
+                    <dispatch msg="Route_to_Person_Edit_Page"
+                              events="click" data="${data.me}"
+                    />
+
+                    <Text xui:name="label"><![CDATA[
+                        Add Personal Information
+                    ]]></Text>
+                </Button>
+            </when>
+            <otherwise>
+                <layout>
+                    <linear><![CDATA[
+                        ^>[text-welcome]<
+                        v>{
+                            >[btn-personal-management]<
+                            >[btn-app-settings]<
+                        }<^
+                    ]]></linear>
+                </layout>
+
+                <Text xui:name="text-welcome">Good Morning!</Text>
+
+                <Button xui:name="btn-personal-management">
+                    <dispatch msg="Route_to_Person_Management_Page"
+                              events="click" data="${data.me}"
+                    />
+
+                    <Text xui:name="label"><![CDATA[
+                        Personal Management
+                    ]]></Text>
+                </Button>
+                <Button xui:name="btn-app-settings">
+                    <dispatch msg="Route_to_App_Settings_Page"
+                              events="click" data="${data.settings}"
+                    />
+
+                    <Text xui:name="label"><![CDATA[
+                        App Settings
+                    ]]></Text>
+                </Button>
+            </otherwise>
+        </choose>
+    </template>
+
+    <!--<messages>
+        <message name="Route_to_Person_Edit_Page">
+            <route to="/person/edit" data="${data}"/>
+        </message>
+        <message name="Route_to_Person_Management_Page">
+            <route to="/person/management" data="${data}"/>
+        </message>
+
+        <message name="Route_to_App_Settings_Page">
+            <route to="/app/settings" data="${data}"/>
+        </message>
+    </messages>-->
+</page>

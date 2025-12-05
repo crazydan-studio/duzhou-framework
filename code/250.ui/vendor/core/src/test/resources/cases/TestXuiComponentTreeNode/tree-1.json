@@ -1,0 +1,181 @@
+{
+  "layout": {
+    "location": "[46:22:0:0]/duzhou/ui/test-tree-node.page.xui",
+    "$tag": "linear",
+    "mode": "column",
+    "value": "\n                        ^>[text-welcome]<\n                        v>{\n                            <[btn-personal-management]>\n                            <[btn-app-settings]>\n                        }<^\n                    ",
+    "root": {
+      "loc": "[46:22:0:0]/duzhou/ui/test-tree-node.page.xui",
+      "type": "column",
+      "props": {
+        "width": "match_parent",
+        "height": "match_parent"
+      },
+      "children": [
+        {
+          "loc": "[47:25:0:0]/duzhou/ui/test-tree-node.page.xui",
+          "type": "row",
+          "props": {
+            "width": "match_parent",
+            "height": "wrap_content"
+          },
+          "children": [
+            {
+              "loc": "[47:27:0:0]/duzhou/ui/test-tree-node.page.xui",
+              "type": "item",
+              "pattern": "^text-welcome$",
+              "props": {
+                "width": "wrap_content",
+                "height": "wrap_content",
+                "align": {
+                  "row": "center",
+                  "col": "start"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "loc": "[48:27:0:0]/duzhou/ui/test-tree-node.page.xui",
+          "type": "column",
+          "props": {
+            "width": "wrap_content",
+            "height": "wrap_content",
+            "align": {
+              "row": "center",
+              "col": "center"
+            }
+          },
+          "children": [
+            {
+              "loc": "[49:29:0:0]/duzhou/ui/test-tree-node.page.xui",
+              "type": "row",
+              "props": {
+                "width": "match_parent",
+                "height": "wrap_content"
+              },
+              "children": [
+                {
+                  "loc": "[49:30:0:0]/duzhou/ui/test-tree-node.page.xui",
+                  "type": "item",
+                  "pattern": "^btn-personal-management$",
+                  "props": {
+                    "width": "fill_remains",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "loc": "[50:29:0:0]/duzhou/ui/test-tree-node.page.xui",
+              "type": "row",
+              "props": {
+                "width": "match_parent",
+                "height": "wrap_content"
+              },
+              "children": [
+                {
+                  "loc": "[50:30:0:0]/duzhou/ui/test-tree-node.page.xui",
+                  "type": "item",
+                  "pattern": "^btn-app-settings$",
+                  "props": {
+                    "width": "fill_remains",
+                    "height": "wrap_content",
+                    "align": {
+                      "row": "start",
+                      "col": "start"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "children": [
+    {
+      "key": "text-welcome",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "Good Morning!"
+          }
+        }
+      ]
+    },
+    {
+      "key": "btn-personal-management",
+      "children": [
+        {
+          "key": "body",
+          "native": "button",
+          "props": {
+            "border": "1u",
+            "label": "Personal Management"
+          }
+        }
+      ]
+    },
+    {
+      "key": "btn-app-settings",
+      "children": [
+        {
+          "key": "body",
+          "native": "button",
+          "props": {
+            "border": "1u",
+            "label": "App Settings"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #0"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #1"
+          }
+        }
+      ]
+    },
+    {
+      "key": "for-1-text",
+      "children": [
+        {
+          "key": "body",
+          "native": "text",
+          "props": {
+            "color": "blue",
+            "value": "For Text #2"
+          }
+        }
+      ]
+    }
+  ]
+}

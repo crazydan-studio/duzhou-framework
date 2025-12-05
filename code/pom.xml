@@ -59,6 +59,8 @@
         <nop-entropy.version>2.0.0-SNAPSHOT</nop-entropy.version>
         <nop-extensions.version>1.0.0-SNAPSHOT</nop-extensions.version>
         <spring-boot.version>3.2.3</spring-boot.version>
+        <imgui.version>1.90.0</imgui.version>
+        <jexer.version>1.7.0</jexer.version>
     </properties>
 
     <modules>
@@ -97,11 +99,24 @@
             <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <name>flytreeleft</name>
+            <email>flytreeleft@crazydan.org</email>
+            <organization>Crazydan Studio</organization>
+            <organizationUrl>https://studio.crazydan.org</organizationUrl>
+        </developer>
+    </developers>
 
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/crazydan-studio/duzhou-framework/issues</url>
     </issueManagement>
+    <scm>
+        <connection>scm:git:git://github.com/crazydan-studio/duzhou-framework.git</connection>
+        <developerConnection>scm:git:ssh://github.com:crazydan-studio/duzhou-framework.git</developerConnection>
+        <url>http://github.com/crazydan-studio/duzhou-framework/tree/master</url>
+    </scm>
 
     <distributionManagement>
         <repository>
@@ -199,17 +214,27 @@
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-ui-runtime-core</artifactId>
+                <artifactId>duzhou-ui-vendor-core</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-ui-runtime-web</artifactId>
+                <artifactId>duzhou-ui-vendor-web</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.crazydan.duzhou.framework</groupId>
-                <artifactId>duzhou-ui-runtime-android</artifactId>
+                <artifactId>duzhou-ui-vendor-android</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-vendor-jexer</artifactId>
+                <version>${duzhou-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.crazydan.duzhou.framework</groupId>
+                <artifactId>duzhou-ui-vendor-imgui</artifactId>
                 <version>${duzhou-framework.version}</version>
             </dependency>
             <!-- End -->
@@ -257,6 +282,17 @@
                 <groupId>io.github.entropy-cloud.extensions</groupId>
                 <artifactId>nop-undertow-starter</artifactId>
                 <version>${nop-extensions.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.spair</groupId>
+                <artifactId>imgui-java-app</artifactId>
+                <version>${imgui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.gitlab.autumnmeowmeow</groupId>
+                <artifactId>jexer</artifactId>
+                <version>${jexer.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
