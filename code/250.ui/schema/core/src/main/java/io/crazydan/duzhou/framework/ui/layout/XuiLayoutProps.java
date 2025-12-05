@@ -122,6 +122,15 @@ public class XuiLayoutProps implements MappableCodeSnippet {
         setPadding(XuiLayoutSpacing.create(vl));
     }
 
+    public void copyTo(XuiLayoutProps props) {
+        props.width = this.width;
+        props.height = this.height;
+        props.align = this.align;
+        props.gap = this.gap;
+        props.span = this.span;
+        props.padding = this.padding;
+    }
+
     @Override
     public SourceLocation getLocation() {
         return null;

@@ -53,14 +53,11 @@ public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
         table,
 
         /**
-         * 行：{@link XuiLayoutNode#children} 中的元素均在同一行，
-         * 即，行内布局，若其上层节点为 {@link #table}，则行内节点均为表格单元格
+         * 横向布局，即 {@link XuiLayoutNode#children} 中的元素均在同一行中，
+         * 若其上层节点为 {@link #table}，则行内节点均为表格单元格
          */
         row,
-        /**
-         * 列内布局：{@link XuiLayoutNode#children} 中的元素均单独占用一行，
-         * 即，列内布局
-         */
+        /** 纵向布局，即 {@link XuiLayoutNode#children} 中的元素均在同一列中 */
         column,
     }
 
@@ -83,13 +80,17 @@ public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
     }
 
     XuiLayoutNode(SourceLocation loc, Type type, String pattern) {
+        this(loc, type, pattern != null ? Pattern.compile("^" + pattern + "$") : null);
+    }
+
+    XuiLayoutNode(SourceLocation loc, Type type, Pattern pattern) {
         this.loc = loc;
         this.type = type;
-        this.pattern = pattern != null ? Pattern.compile("^" + pattern + "$") : null;
+        this.pattern = pattern;
     }
 
     XuiLayoutNode(SourceLocation loc, Type type) {
-        this(loc, type, null);
+        this(loc, type, (Pattern) null);
     }
 
     public static XuiLayoutNode item(SourceLocation loc, String pattern) {
@@ -183,6 +184,17 @@ public class XuiLayoutNode implements ISourceLocationGetter, IJsonSerializable {
         }
 
         this.children.set(oldNodeIndex, newNode);
+    }
+
+    public XuiLayoutNode cloneInstance() {
+        XuiLayoutNode node = new XuiLayoutNode(this.loc, this.type, this.pattern);
+
+        this.props.copyTo(node.props);
+        for (XuiLayoutNode child : this.children) {
+            node.addChild(child.cloneInstance());
+        }
+
+        return node;
     }
 
     @Override
