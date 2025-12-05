@@ -1,0 +1,306 @@
+{
+  "location": "[22:2:0:0]/duzhou/ui/test-valid-component-tree.xui",
+  "xmlns:xui": "xui",
+  "x:schema": "/duzhou/ui/schema/component.xdef",
+  "xmlns:x": "/nop/schema/xdsl.xdef",
+  "xmlns:xpl": "xpl",
+  "x:validated": true,
+  "imports": [
+    {
+      "location": "[25:6:0:0]/duzhou/ui/test-valid-component-tree.xui",
+      "as": "Text",
+      "from": "/duzhou/ui/component/text.xui"
+    },
+    {
+      "location": "[26:6:0:0]/duzhou/ui/test-valid-component-tree.xui",
+      "as": "Button",
+      "from": "/duzhou/ui/component/button.xui"
+    }
+  ],
+  "template": {
+    "location": "[28:6:0:0]/duzhou/ui/test-valid-component-tree.xui",
+    "xui:name": "xui-template-root-node",
+    "$tag": "template",
+    "children": [
+      {
+        "location": "[29:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "xui-layout",
+        "$tag": "layout",
+        "type": {
+          "location": "[30:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+          "$tag": "linear",
+          "mode": "column",
+          "value": "\n                v>{}<^\n            ",
+          "root": {
+            "loc": "[30:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "type": "column",
+            "props": {
+              "width": "match_parent",
+              "height": "match_parent"
+            }
+          }
+        }
+      },
+      {
+        "location": "[35:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "text-1",
+        "$tag": "Text",
+        "attrs": {
+          "style": "color: green;"
+        },
+        "value": "\n            Text 1\n        "
+      },
+      {
+        "location": "[39:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "native-1",
+        "$tag": "native",
+        "children": [
+          {
+            "location": "[40:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-1",
+            "$tag": "Text",
+            "value": "Native Text"
+          }
+        ],
+        "attrs": {
+          "style": "border: 1u;"
+        },
+        "name": "box"
+      },
+      {
+        "location": "[43:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "slot-1",
+        "$tag": "slot",
+        "children": [
+          {
+            "location": "[44:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "xui-layout",
+            "$tag": "layout",
+            "type": {
+              "location": "[45:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+              "$tag": "linear",
+              "mode": "column",
+              "value": "\n                    v>{}<^\n                ",
+              "root": {
+                "loc": "[45:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "type": "column",
+                "props": {
+                  "width": "match_parent",
+                  "height": "match_parent"
+                }
+              }
+            }
+          },
+          {
+            "location": "[50:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "if-1",
+            "$tag": "if",
+            "children": [
+              {
+                "location": "[51:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "text-1",
+                "$tag": "Text",
+                "value": "If 1 Text 1"
+              }
+            ],
+            "test": "${a == 1}"
+          },
+          {
+            "location": "[53:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-1",
+            "$tag": "Text",
+            "value": "Text 1"
+          }
+        ],
+        "name": "default"
+      },
+      {
+        "location": "[56:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "for-1",
+        "$tag": "for",
+        "children": [
+          {
+            "location": "[57:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-1",
+            "$tag": "Text",
+            "attrs": {
+              "style": "color: blue;"
+            },
+            "value": "For 1 Text 1"
+          },
+          {
+            "location": "[58:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "native-1",
+            "$tag": "native",
+            "children": [
+              {
+                "location": "[59:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "text-1",
+                "$tag": "Text",
+                "value": "Text 1"
+              },
+              {
+                "location": "[60:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "native-1",
+                "$tag": "native",
+                "children": [],
+                "name": "text"
+              },
+              {
+                "location": "[61:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "text-2",
+                "$tag": "Text",
+                "value": "Text 2"
+              }
+            ],
+            "name": "box"
+          },
+          {
+            "location": "[63:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-2",
+            "$tag": "Text",
+            "value": "For 1 Text 2"
+          }
+        ],
+        "begin": 0,
+        "end": 2,
+        "var": "i"
+      },
+      {
+        "location": "[66:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "button-1",
+        "$tag": "Button",
+        "children": [
+          {
+            "location": "[67:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "xui-layout",
+            "$tag": "layout",
+            "type": {
+              "location": "[68:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+              "$tag": "linear",
+              "mode": "column",
+              "value": "\n                    v>{}<^\n                ",
+              "root": {
+                "loc": "[68:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "type": "column",
+                "props": {
+                  "width": "match_parent",
+                  "height": "match_parent"
+                }
+              }
+            }
+          },
+          {
+            "location": "[73:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "User_Update",
+            "$tag": "dispatch",
+            "events": [
+              "click"
+            ],
+            "msg": "User_Update"
+          },
+          {
+            "location": "[75:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-1",
+            "$tag": "Text",
+            "attrs": {
+              "style": "color: red;"
+            },
+            "value": "Text 1"
+          },
+          {
+            "location": "[76:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "native-1",
+            "$tag": "native",
+            "children": [],
+            "name": "text"
+          },
+          {
+            "location": "[77:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-2",
+            "$tag": "Text",
+            "value": "Text 2"
+          }
+        ],
+        "attrs": {
+          "style": "background-color: white;"
+        }
+      },
+      {
+        "location": "[80:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "if-1",
+        "$tag": "if",
+        "children": [
+          {
+            "location": "[81:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "text-1",
+            "$tag": "Text",
+            "value": "\n                Hello!\n            "
+          }
+        ],
+        "test": "${b == 1}"
+      },
+      {
+        "location": "[85:10:0:0]/duzhou/ui/test-valid-component-tree.xui",
+        "xui:name": "choose-1",
+        "$tag": "choose",
+        "otherwise": {
+          "location": "[93:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+          "xui:name": "otherwise",
+          "$tag": "otherwise",
+          "children": [
+            {
+              "location": "[94:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+              "xui:name": "button-1",
+              "$tag": "Button",
+              "children": [
+                {
+                  "location": "[95:22:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                  "xui:name": "text-1",
+                  "$tag": "Text",
+                  "value": "Otherwise"
+                }
+              ]
+            }
+          ]
+        },
+        "whens": [
+          {
+            "location": "[86:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "when-1",
+            "$tag": "when",
+            "children": [
+              {
+                "location": "[87:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "text-1",
+                "$tag": "Text",
+                "value": "When #1"
+              }
+            ],
+            "test": "${when == 1}"
+          },
+          {
+            "location": "[89:14:0:0]/duzhou/ui/test-valid-component-tree.xui",
+            "xui:name": "when-2",
+            "$tag": "when",
+            "children": [
+              {
+                "location": "[90:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "text-1",
+                "$tag": "Text",
+                "value": "When #2"
+              },
+              {
+                "location": "[91:18:0:0]/duzhou/ui/test-valid-component-tree.xui",
+                "xui:name": "button-1",
+                "$tag": "Button",
+                "children": []
+              }
+            ],
+            "test": "${when == 2}"
+          }
+        ]
+      }
+    ]
+  }
+}

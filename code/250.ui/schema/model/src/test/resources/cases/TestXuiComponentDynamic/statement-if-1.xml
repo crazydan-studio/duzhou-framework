@@ -1,0 +1,6 @@
+<template>
+    <Text xui:name="text-1">Text: Hello IF#2</Text>
+    <Button xui:name="button-1">
+        <Text xui:name="text-1">Text: Hello IF#2</Text>
+    </Button>
+</template>

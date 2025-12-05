@@ -28,6 +28,8 @@ import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
+import static io.nop.xlang.XLangErrors.ARG_PATH;
+import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 /**
@@ -36,75 +38,81 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  */
 public interface XuiErrors {
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
-    ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = define("duzhou.err.xui.domain-type.invalid-format",
-                                                      "无效的格式 [{"
-                                                      + ARG_VALUE
-                                                      + "}]，其格式必须为 [{"
-                                                      + ARG_ALLOWED_VALUES
-                                                      + "}] 形式",
-                                                      ARG_VALUE,
-                                                      ARG_ALLOWED_VALUES);
-    ErrorCode ERR_DOMAIN_TYPE_INVALID_OPTIONS = define("duzhou.err.xui.domain-type.invalid-options",
-                                                       "类型 [{"
-                                                       + ARG_NAME
-                                                       + "}] 的扩展选项 [{"
-                                                       + ARG_VALUE
-                                                       + "}] 不在选项列表 [{"
-                                                       + ARG_OPTIONS
-                                                       + "}] 中",
-                                                       ARG_NAME,
-                                                       ARG_VALUE,
-                                                       ARG_OPTIONS);
+    ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = //
+            define("duzhou.err.xui.domain-type.invalid-format",
+                   "无效的格式 [{" + ARG_VALUE + "}]，其格式必须为 [{" + ARG_ALLOWED_VALUES + "}] 形式",
+                   ARG_VALUE,
+                   ARG_ALLOWED_VALUES);
+    ErrorCode ERR_DOMAIN_TYPE_INVALID_OPTIONS = //
+            define("duzhou.err.xui.domain-type.invalid-options",
+                   "类型 [{" + ARG_NAME + "}] 的扩展选项 [{" + ARG_VALUE + "}] 不在选项列表 [{" + ARG_OPTIONS + "}] 中",
+                   ARG_NAME,
+                   ARG_VALUE,
+                   ARG_OPTIONS);
 
-    ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = define("duzhou.err.xui.domain-type.unknown-size",
-                                                    "未识别的尺寸数据 [{"
-                                                    + ARG_VALUE
-                                                    + "}]，仅 [{"
-                                                    + ARG_NAMES
-                                                    + "}] 才是有效的尺寸单位",
-                                                    ARG_VALUE,
-                                                    ARG_NAMES);
+    ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = //
+            define("duzhou.err.xui.domain-type.unknown-size",
+                   "未识别的尺寸数据 [{" + ARG_VALUE + "}]，仅 [{" + ARG_NAMES + "}] 才是有效的尺寸单位",
+                   ARG_VALUE,
+                   ARG_NAMES);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<< 布局
-    ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE = define("duzhou.err.xui.layout-linear.unknown-linear-mode",
-                                                             "未知的线性布局模式 [{" + ARG_VALUE + "}]",
-                                                             ARG_VALUE);
-    ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_MARK = define("duzhou.err.xui.layout-linear.unknown-mark",
-                                                      "未知的标记符 '{" + ARG_VALUE + "}'",
-                                                      ARG_VALUE);
-    ErrorCode ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK = define(
-            "duzhou.err.xui.layout-linear.not-allow-spaces-after-align-mark",
-            "在对齐方向标记符（<>^v）之后不能有空白字符");
-    ErrorCode ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK = define("duzhou.err.xui.layout-linear.duplicated-align-mark",
-                                                               "存在重复的对齐标记符 '{" + ARG_VALUE + "}'",
-                                                               ARG_VALUE);
-    ErrorCode ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK = define(
-            "duzhou.err.xui.layout-linear.no-right-mark-for-left-mark",
-            "没有为配对的左标记符 '{" + ARG_LEFT_PAIR + "}' 指定对应的右标记符 '{" + ARG_RIGHT_PAIR + "}'",
-            ARG_LEFT_PAIR,
-            ARG_RIGHT_PAIR);
-    ErrorCode ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL = define(
-            "duzhou.err.xui.layout-linear.no-end-mark-for-table-cell",
-            "没有为表格单元格指定相应的结束标记符 '|'");
-    ErrorCode ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED = define("duzhou.err.xui.layout-linear.no-prop-value-specified",
-                                                                 "没有为配置参数 '{" + ARG_VALUE + "}' 指定值",
-                                                                 ARG_VALUE);
+    ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE = //
+            define("duzhou.err.xui.layout-linear.unknown-linear-mode",
+                   "未知的线性布局模式 [{" + ARG_VALUE + "}]",
+                   ARG_VALUE);
+    ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_MARK = //
+            define("duzhou.err.xui.layout-linear.unknown-mark", //
+                   "未知的标记符 '{" + ARG_VALUE + "}'", ARG_VALUE);
+    ErrorCode ERR_LAYOUT_LINEAR_NOT_ALLOW_SPACES_AFTER_ALIGN_MARK = //
+            define("duzhou.err.xui.layout-linear.not-allow-spaces-after-align-mark",
+                   "在对齐方向标记符（<>^v）之后不能有空白字符");
+    ErrorCode ERR_LAYOUT_LINEAR_DUPLICATED_ALIGN_MARK = //
+            define("duzhou.err.xui.layout-linear.duplicated-align-mark",
+                   "存在重复的对齐标记符 '{" + ARG_VALUE + "}'",
+                   ARG_VALUE);
+    ErrorCode ERR_LAYOUT_LINEAR_NO_RIGHT_MARK_FOR_LEFT_MARK = //
+            define("duzhou.err.xui.layout-linear.no-right-mark-for-left-mark",
+                   "没有为配对的左标记符 '{" + ARG_LEFT_PAIR + "}' 指定对应的右标记符 '{" + ARG_RIGHT_PAIR + "}'",
+                   ARG_LEFT_PAIR,
+                   ARG_RIGHT_PAIR);
+    ErrorCode ERR_LAYOUT_LINEAR_NO_END_MARK_FOR_TABLE_CELL = //
+            define("duzhou.err.xui.layout-linear.no-end-mark-for-table-cell",
+                   "没有为表格单元格指定相应的结束标记符 '|'");
+    ErrorCode ERR_LAYOUT_LINEAR_NO_PROP_VALUE_SPECIFIED = //
+            define("duzhou.err.xui.layout-linear.no-prop-value-specified",
+                   "没有为配置参数 '{" + ARG_VALUE + "}' 指定值",
+                   ARG_VALUE);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 组件
-    ErrorCode ERR_COMPONENT_PROP_HAS_NOT_ALLOWED_ATTRS = define("duzhou.err.xui.component.has-not-allowed-attrs",
-                                                                "节点已定义结构，不可配置属性 [{" + ARG_NAMES + "}]",
-                                                                ARG_NAMES);
-    ErrorCode ERR_COMPONENT_PROP_HAS_MUTEX_ATTRS = define("duzhou.err.xui.component.has-mutex-attrs",
-                                                          "在节点上不能同时配置属性 [{"
-                                                          + ARG_NAMES
-                                                          + "}]，只能配置其中的某一个",
-                                                          ARG_NAMES);
-    ErrorCode ERR_COMPONENT_PROP_HAS_MISSING_ATTRS = define("duzhou.err.xui.component.has-missing-attrs",
-                                                            "节点未定义结构，因此，必须为其配置 [{"
-                                                            + ARG_NAMES
-                                                            + "}] 中的某一个属性",
-                                                            ARG_NAMES);
+    ErrorCode ERR_COMPONENT_INVALID_TAG_NAME = //
+            define("duzhou.err.ui.component.invalid-tag-name",
+                   ("组件标签名 [{" + ARG_TAG_NAME + "}] 不符合规范。")
+                   + "其需为字母、数字、下划线组成的驼峰形式，且首字母必须大写，"
+                   + "如 Button、Button_Ext",
+                   ARG_TAG_NAME);
+    ErrorCode ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED = //
+            define("duzhou.err.ui.component.multiple-layouts-not-allowed",
+                   "不允许在 <{" + ARG_TAG_NAME + "}/> 标签中定义多个 <layout/>",
+                   ARG_TAG_NAME);
+    ErrorCode ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED = //
+            define("duzhou.err.ui.component.multiple-dispatches-not-allowed",
+                   "不允许在 <{" + ARG_TAG_NAME + "}/> 标签中定义消息名（{" + ARG_NAME + "}）重复的 <dispatch/>",
+                   ARG_TAG_NAME,
+                   ARG_NAME);
+    ErrorCode ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED = //
+            define("duzhou.err.ui.component.slot-in-depth-not-allowed", //
+                   "不允许在 <slot/> 标签内嵌套使用 slot");
+    ErrorCode ERR_COMPONENT_DSL_NODE_NOT_BOUND = //
+            define("duzhou.err.ui.component.dsl-node-not-bound", //
+                   "组件未与其 XNode 节点绑定，建议在 xdef 元模型中的 <xdef:post-parse/> 脚本中做全局自动绑定，如：_dsl_model.setDslNode(_dsl_root)");
+    ErrorCode ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED = //
+            define("duzhou.err.ui.component.tag-component-not-imported", //
+                   "标签 <{" + ARG_TAG_NAME + "}/> 对应的组件未通过 <import/> 显式导入", ARG_TAG_NAME);
+    ErrorCode ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED = //
+            define("duzhou.err.ui.component.tag-component-loading-failed", //
+                   "标签 <{" + ARG_TAG_NAME + "}/> 对应的组件 [{" + ARG_PATH + "}] 加载失败", ARG_TAG_NAME, ARG_PATH);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

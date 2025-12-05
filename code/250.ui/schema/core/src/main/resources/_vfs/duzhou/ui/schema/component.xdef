@@ -19,100 +19,41 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件定义]
-> - 组件的缺省配置定义在 `/duzhou/ui/component/default.xui` 中，所有组件均自动扩展自该组件，
->   若需要排除该缺省配置，则需在 `x:extends` 的 v-path 列表中包含 `none` 值，如，`none,/xx/xx.xui`；
-> - TODO 在组件上定义 `base-styles` 和 `base-themes` 属性，用于指定基础样式和主题库的路径。通过在缺省扩展模型上配置这些属性，实现对组件库的统一样式管理；
+<!-- [UI 组件]
+> 一个视觉交互控件
 >
-> 组件设计原则：
-> - 组件的**属性只应与其本身的特性有关**，与业务意义无关 —— 自身特性是自然特性，业务意义是附加特性；
->   - 例如，「主要」、「次要」和「危险」作用到按钮组件上的表现主要是颜色发生了变化，
->     应该用表示按钮的自然特性「颜色」的 `color` 属性来满足同样的需求，
->     所以，应该采用 `<Button color="danger">危险按钮</Button>` 形式，
->     而不是 `<Button type="danger">危险按钮</Button>`；
-
-@base-styles [基础样式库]
-        > (必填) 基础样式库的 v-path 路径，缺省为 `/duzhou/ui/component/base.styles.xui`，
-        > 其定义了基本的原子样式，自定义的样式只能由这些基础样式组成
+> - 引用的变量名不能以 `$` 或 `_` 开头，否则，在动态生成组件树时，其会被视为全局变量，
+>   而全局变量需要通过 `EvalGlobalRegistry#registerVariable` 注册；
 -->
-<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:c="c"
            x:schema="/nop/schema/xdef.xdef"
            xdef:default-extends="/duzhou/ui/component/default.xui"
-           xdef:name="XuiComponent" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+           xdef:name="XuiComponent"
 >
+    <xdef:post-parse>
+        <c:script><![CDATA[
+            _dsl_model.setDslNode(_dsl_root);
+        ]]></c:script>
+    </xdef:post-parse>
 
+    <!-- [组件导入] -->
     <import xdef:ref="component/import.xdef"
-            xdef:unique-attr="as" as="!component-name" />
+            xdef:unique-attr="as"
+            as="!component-name"
+    />
 
-    <!-- [组件属性]
-    > - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
-    > - 内置 `children` 属性，用于获取当前组件的嵌套节点；
-    -->
-    <props xdef:ref="component/props.xdef" />
-    <!-- [组件状态]
-    > - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新；
-    > - 对象结构的数据始终不为 `null`，自动按照其结构为各个属性初始化为指定的默认值：
-    >   - 字符串类型默认为空，布尔类型默认为 `false` 等；
-    -->
-    <state xdef:ref="component/props.xdef" />
-
-    <!-- [组件结构]
-    -->
+    <!-- [组件树] -->
     <template xdef:ref="component/template.xdef" />
 
-    <!-- [组件消息]
-    > - 逻辑层只用处理消息，而无需关注消息如何触发和发送；
-    > - 视图层只用发送消息，而无需调用函数；
-    -->
-    <messages xdef:bean-prop="messages"
-              xdef:body-type="list" xdef:key-attr="type"
+    <!-- [组件消息列表] -->
+    <!--<messages xdef:bean-prop="messages"
+              xdef:body-type="list" xdef:key-attr="name"
               xdef:bean-child-name="message"
     >
+        &lt;!&ndash; [组件消息] &ndash;&gt;
         <message xdef:ref="component/message.xdef"
-                 type="!component-name" />
-    </messages>
-
-    <!-- [组件样式定义]
-    > 用于定义此类组件所包含的样式，在其模板内，按需将定义的样式应用到各个子组件上，
-    > 从而实现对组件各个组成部分的风格设置。
-    >
-    > **样式定义**包含以下特征：
-    > - 相当于定义样式函数，节点名为函数名，节点属性为函数参数，子节点为函数返回值，返回的是该样式的组成成份；
-    > - 所有的样式均由其他样式组成，且可多层级嵌套（不能出现循环引用），并在应用时展开各层级样式，
-    >   直到遇到**原子样式**时停止；
-    > - 样式的名字需能够指明其作用于组件的哪一个部分，比如，`<header/>` 表示其应用在当前组件的
-    >   `Header` 部分；
-    > - 在子节点的属性中可以 `${xxx}` 形式引用在样式上定义的属性，如
-    >   `<header height="xui:size"><size height="${height}"/></header>`，
-    >   但不可引用组件的 `props` 和 `state` 变量；
-    > - 仅在应用到子组件上后才做样式展开，在定义时仅对其所引用的**终点样式**（即，叶子节点样式）是否存在进行检查
-    >   - 在**中间样式**上不能设置节点属性，只有终点样式才可设置属性。中间样式仅用于对终点样式的分层组织；
-    >   - 在中间样式上可设置 `xui:when` 以支持条件选择；
-    >   - 对于含中间样式的样式，其在运行时生成的样式名将包含中间样式，
-    >     比如，`<form><header><background color="gray" /></header></form>`
-    >     将对应生成 css 类 `.form-header { background: gray; }`；
-    > - 通过对样式属性设置 `xui:null` 可将继承的该属性值被移除；
-    >
-    > 样式展开针对的是在组件模板 `<template/>` 中的子组件的 `<xui:style/>` 节点中所引用的样式，
-    > 其展开规则如下：
-    > - 假设子组件的组件定义中的样式定义为 `S1`，子组件 `<xui:style/>` 中引用的样式为 `S2`；
-    > - 若 `S2` 中的样式 `s2` 在 `S1` 中未定义，则将 `s2` 递归展开，直到遇到 `S1` 中已定义的同名样式，
-    >   或者遇到**终点样式**为止。其余未在 `S1` 中定义的样式均按此策略展开；
-    > - 将展开后的**终点样式**，全部作为子组件的**根样式**，最终做用到该组件的视图根节点上；
-    > - 继续展开在 `S1` 中已定义的 `S2` 中的同名样式
-    >   - 定义 `S1` 中的该样式为 `S1-1`，定义 `S2` 中的该样式为 `S2-2`；
-    >   - 若 `S2-2` 中的样式 `s2-2` 在 `S1-1` 中未定义，则将 `s2-2` 递归展开，直到遇到
-    >     `S1-1` 中已定义的同名样式，或者遇到**终点样式**为止。其余未在 `S1-1` 中定义的样式均按此策略展开；
-    >   - 将展开后的**终点样式**，全部作为 `S1-1` 的组成成份；
-    >   - 继续**递归**展开在 `S1-1` 中已定义的 `S2-2` 中的同名样式；
-    > - 在终点样式上引用的样式属性变量需替换为在子组件上所引用的 `props` 或 `state` 变量；
-    >
-    > 在子组件上展开的样式将按如下规则应用到运行时视图节点上（以 Web 运行时为例）：
-    > - 为子组件的视图节点生成 css 作用域标识；
-    > - 展开子组件的全部根样式直到原子样式，再为全部原子样式生成一个 css 类，并应用到根 DOM 节点上；
-    > - 按中间样式层级生成 css 类（由终点样式展开后的原子样式组成），并限定作用域，其与组件自身的层级 css 类同名，
-    >   只是因为有唯一的作用域标识，故而，其仅对当前子组件的内部结构有效；
-    -->
-    <style>
-    </style>
+                 name="!component-name"
+        />
+    </messages>-->
 </component>

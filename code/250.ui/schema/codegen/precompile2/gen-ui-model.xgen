@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<c:script xmlns:c="c"><![CDATA[
+    import io.crazydan.duzhou.framework.ui.XuiConstants;
+
+    const xdefs = [
+        XuiConstants.XDSL_SCHEMA_APP,
+        XuiConstants.XDSL_SCHEMA_PAGE,
+        //
+        XuiConstants.XDSL_SCHEMA_COMPONENT,
+        XuiConstants.XDSL_SCHEMA_COMPONENT_TEMPLATE,
+        XuiConstants.XDSL_SCHEMA_COMPONENT_IMPORT,
+        //XuiConstants.XDSL_SCHEMA_COMPONENT_MESSAGE,
+    ];
+
+    for (let i = 0; i < xdefs.length; i++) {
+        const xdef = xdefs[i];
+        codeGenerator
+            // 设置生成代码的存放位置，其相对于当前 Maven 工程的根目录
+            .withTargetDir('../model')
+            .renderModel(xdef, '/nop/templates/xdsl', '/', $scope);
+    }
+]]></c:script>

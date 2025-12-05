@@ -1,0 +1,54 @@
+{
+  "location": "[27:6:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+  "xui:name": "xui-template-root-node",
+  "$tag": "template",
+  "children": [
+    {
+      "location": "[28:10:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+      "xui:name": "xui-layout",
+      "$tag": "layout",
+      "type": {
+        "location": "[29:14:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+        "$tag": "linear",
+        "mode": "column",
+        "value": "\n                v>[text-1](padding: 1u)<^\n            ",
+        "root": {
+          "loc": "[29:14:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+          "type": "column",
+          "props": {
+            "width": "match_parent",
+            "height": "match_parent"
+          },
+          "children": [
+            {
+              "loc": "[30:19:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+              "type": "item",
+              "pattern": "^text-1$",
+              "props": {
+                "width": "wrap_content",
+                "height": "wrap_content",
+                "align": {
+                  "row": "center",
+                  "col": "center"
+                },
+                "padding": {
+                  "loc": "[30:37:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+                  "left": "1.0u",
+                  "right": "1.0u",
+                  "top": "1.0u",
+                  "bottom": "1.0u"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "location": "[34:10:0:0]/duzhou/ui/test-dynamic-component-tree-vars.xui",
+      "xui:name": "text-1",
+      "$tag": "Text",
+      "value": "\n            Text: Welcome!\n        "
+    }
+  ]
+}

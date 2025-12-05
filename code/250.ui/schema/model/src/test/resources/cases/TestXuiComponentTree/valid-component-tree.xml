@@ -1,0 +1,57 @@
+<component>
+    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Button" from="/duzhou/ui/component/button.xui"/>
+    <template>
+        <layout>
+            <linear>v&gt;{}&lt;^</linear>
+        </layout>
+        <Text style="color: green;" xui:name="text-1">Text 1</Text>
+        <native style="border: 1u;" name="box" xui:name="native-1">
+            <Text xui:name="text-1">Native Text</Text>
+        </native>
+        <slot xui:name="slot-1">
+            <layout>
+                <linear>v&gt;{}&lt;^</linear>
+            </layout>
+            <if test="${a == 1}" xui:name="if-1">
+                <Text xui:name="text-1">If 1 Text 1</Text>
+            </if>
+            <Text xui:name="text-1">Text 1</Text>
+        </slot>
+        <for begin="0" end="2" var="i" xui:name="for-1">
+            <Text style="color: blue;" xui:name="text-1">For 1 Text 1</Text>
+            <native name="box" xui:name="native-1">
+                <Text xui:name="text-1">Text 1</Text>
+                <native name="text" xui:name="native-1"/>
+                <Text xui:name="text-2">Text 2</Text>
+            </native>
+            <Text xui:name="text-2">For 1 Text 2</Text>
+        </for>
+        <Button style="background-color: white;" xui:name="button-1">
+            <layout>
+                <linear>v&gt;{}&lt;^</linear>
+            </layout>
+            <dispatch events="click" msg="User_Update" xui:name="User_Update"/>
+            <Text style="color: red;" xui:name="text-1">Text 1</Text>
+            <native name="text" xui:name="native-1"/>
+            <Text xui:name="text-2">Text 2</Text>
+        </Button>
+        <if test="${b == 1}" xui:name="if-1">
+            <Text xui:name="text-1">Hello!</Text>
+        </if>
+        <choose xui:name="choose-1">
+            <otherwise>
+                <Button xui:name="button-1">
+                    <Text xui:name="text-1">Otherwise</Text>
+                </Button>
+            </otherwise>
+            <when test="${when == 1}" xui:name="when-1">
+                <Text xui:name="text-1">When #1</Text>
+            </when>
+            <when test="${when == 2}" xui:name="when-2">
+                <Text xui:name="text-1">When #2</Text>
+                <Button xui:name="button-1"/>
+            </when>
+        </choose>
+    </template>
+</component>

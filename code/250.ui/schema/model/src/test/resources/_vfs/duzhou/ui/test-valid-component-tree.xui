@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+           x:schema="/duzhou/ui/schema/component.xdef"
+>
+    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Button" from="/duzhou/ui/component/button.xui"/>
+
+    <template>
+        <layout>
+            <linear><![CDATA[
+                v>{}<^
+            ]]></linear>
+        </layout>
+
+        <Text xui:name="text-1" style="color: green;"><![CDATA[
+            Text 1
+        ]]></Text>
+
+        <native xui:name="native-1" name="box" style="border: 1u;">
+            <Text xui:name="text-1">Native Text</Text>
+        </native>
+
+        <slot xui:name="slot-1">
+            <layout>
+                <linear><![CDATA[
+                    v>{}<^
+                ]]></linear>
+            </layout>
+
+            <if xui:name="if-1" test="${a == 1}">
+                <Text xui:name="text-1">If 1 Text 1</Text>
+            </if>
+            <Text xui:name="text-1">Text 1</Text>
+        </slot>
+
+        <for xui:name="for-1" begin="0" end="2" var="i">
+            <Text xui:name="text-1" style="color: blue;">For 1 Text 1</Text>
+            <native xui:name="native-1" name="box">
+                <Text xui:name="text-1">Text 1</Text>
+                <native xui:name="native-1" name="text"/>
+                <Text xui:name="text-2">Text 2</Text>
+            </native>
+            <Text xui:name="text-2">For 1 Text 2</Text>
+        </for>
+
+        <Button xui:name="button-1" style="background-color: white;">
+            <layout>
+                <linear><![CDATA[
+                    v>{}<^
+                ]]></linear>
+            </layout>
+
+            <dispatch msg="User_Update" events="click"/>
+
+            <Text xui:name="text-1" style="color: red;">Text 1</Text>
+            <native xui:name="native-1" name="text"/>
+            <Text xui:name="text-2">Text 2</Text>
+        </Button>
+
+        <if xui:name="if-1" test="${b == 1}">
+            <Text xui:name="text-1"><![CDATA[
+                Hello!
+            ]]></Text>
+        </if>
+        <choose xui:name="choose-1">
+            <when xui:name="when-1" test="${when == 1}">
+                <Text xui:name="text-1">When #1</Text>
+            </when>
+            <when xui:name="when-2" test="${when == 2}">
+                <Text xui:name="text-1">When #2</Text>
+                <Button xui:name="button-1"/>
+            </when>
+            <otherwise>
+                <Button xui:name="button-1">
+                    <Text xui:name="text-1">Otherwise</Text>
+                </Button>
+            </otherwise>
+        </choose>
+    </template>
+</component>

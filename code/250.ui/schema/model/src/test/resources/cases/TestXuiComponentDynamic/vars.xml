@@ -1,0 +1,6 @@
+<template>
+    <layout>
+        <linear>v&gt;[text-1](padding: 1u)&lt;^</linear>
+    </layout>
+    <Text xui:name="text-1">Text: Welcome!</Text>
+</template>

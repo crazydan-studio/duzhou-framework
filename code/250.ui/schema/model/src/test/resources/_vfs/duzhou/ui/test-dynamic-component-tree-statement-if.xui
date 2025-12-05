@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+           x:schema="/duzhou/ui/schema/component.xdef"
+>
+    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Button" from="/duzhou/ui/component/button.xui"/>
+
+    <template>
+        <if xui:name="if-1" test="${props.var == 1}">
+            <Text xui:name="text-1"><![CDATA[
+                Text: ${props.msg1}
+            ]]></Text>
+        </if>
+        <if xui:name="if-2" test="${props.var == 2}">
+            <Text xui:name="text-1"><![CDATA[
+                Text: ${props.msg2}
+            ]]></Text>
+        </if>
+
+        <Button xui:name="button-1">
+            <if xui:name="if-1" test="${props.var == 1}">
+                <Text xui:name="text-1"><![CDATA[
+                    Text: ${props.msg1}
+                ]]></Text>
+            </if>
+            <if xui:name="if-2" test="${props.var == 2}">
+                <Text xui:name="text-1"><![CDATA[
+                    Text: ${props.msg2}
+                ]]></Text>
+            </if>
+        </Button>
+    </template>
+</component>

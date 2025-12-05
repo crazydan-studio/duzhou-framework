@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [应用定义]
+> 用于组织应用的页面。
+
+@code [应用唯一标识]
+    > (必填)
+@title [应用标题]
+    > (必填)
+@version [应用版本号]
+    > (必填)
+@license [应用许可协议]
+    > (可选) 可填写协议名称或编码
+@logo [应用 logo 地址]
+    > (可选)
+@spinner [应用加载动画资源路径]
+    > (可选) svg 或 gif 类型的资源 classpath 路径
+-->
+<app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+     x:schema="/nop/schema/xdef.xdef"
+     xdef:name="XuiApp" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema"
+     code="!string" title="!string" version="!string"
+     license="string" logo="string" spinner="string"
+>
+    <!-- [应用的描述内容]
+    -->
+    <description xdef:value="string" />
+    <!-- [应用的版权声明内容]
+    -->
+    <copyright xdef:value="string" />
+
+    <pages xdef:bean-prop="pageRefs" xdef:bean-child-name="pageRef"
+           xdef:body-type="list" xdef:key-attr="name"
+    >
+        <page xdef:ref="app/page-ref.xdef"
+              name="!conf-name" />
+    </pages>
+</app>

@@ -26,4 +26,23 @@ package io.crazydan.duzhou.framework.ui;
 public interface XuiConstants {
     String STD_DOMAIN_XUI_STYLE = "xui-style";
     String STD_DOMAIN_XUI_EXPR = "xui-expr";
+
+    String XDSL_SCHEMA_APP = "/duzhou/ui/schema/app.xdef";
+    String XDSL_SCHEMA_PAGE = "/duzhou/ui/schema/page.xdef";
+    String XDSL_SCHEMA_COMPONENT = "/duzhou/ui/schema/component.xdef";
+    String XDSL_SCHEMA_COMPONENT_TEMPLATE = "/duzhou/ui/schema/component/template.xdef";
+    String XDSL_SCHEMA_COMPONENT_IMPORT = "/duzhou/ui/schema/component/import.xdef";
+    String XDSL_SCHEMA_COMPONENT_MESSAGE = "/duzhou/ui/schema/component/message.xdef";
+
+    String TAG_NAME_TEMPLATE = "template";
+    String TAG_NAME_IF = "if";
+    String TAG_NAME_FOR = "for";
+    String TAG_NAME_CHOOSE = "choose";
+    String TAG_NAME_WHEN = "when";
+    String TAG_NAME_OTHERWISE = "otherwise";
+
+    String ATTR_NAME_XUI_SLOT = "xui:slot";
+    String ATTR_NAME_XUI_NAME = "xui:name";
+    /** 用于记录在 Xpl &lt;for/> 标签中组件的原始 {@link #ATTR_NAME_XUI_NAME 唯一标识} */
+    String ATTR_NAME_XUI_NAME_RAW = "raw-" + ATTR_NAME_XUI_NAME;
 }

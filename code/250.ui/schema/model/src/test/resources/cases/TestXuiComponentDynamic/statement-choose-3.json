@@ -1,0 +1,26 @@
+{
+  "location": "[28:6:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+  "xui:name": "xui-template-root-node",
+  "$tag": "template",
+  "children": [
+    {
+      "location": "[40:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+      "xui:name": "text-1",
+      "$tag": "Text",
+      "value": "Text: Hello OTHERWISE"
+    },
+    {
+      "location": "[44:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+      "xui:name": "button-1",
+      "$tag": "Button",
+      "children": [
+        {
+          "location": "[56:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+          "xui:name": "text-1",
+          "$tag": "Text",
+          "value": "Text: Hello OTHERWISE"
+        }
+      ]
+    }
+  ]
+}

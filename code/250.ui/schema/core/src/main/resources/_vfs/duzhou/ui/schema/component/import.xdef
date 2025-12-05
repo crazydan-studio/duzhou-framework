@@ -19,15 +19,12 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件导入指令定义]
-> 单独定义，以支持在指定包下创建 `class`。
+<!-- [组件导入指令]
+>
 
-@as [导入的组件名称]
-    > (必填) 其名称需为首字母大写的驼峰形式（可包含下划线）
-@from [导入组件的 v-path 路径]
-    > (必填) 如果为 `native:{code}`
-    > 形式，则表示在解析模型时，需由运行环境提供标识为 `{code}` 的原生组件，
-    > 并由运行时构建器决定如何生成运行时产物；
+@as [导入组件的名字]
+    > 其名字必须为首字母大写的驼峰形式（可包含下划线）
+@from [导入组件的 vpath 路径]
 -->
 <import xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
         x:schema="/nop/schema/xdef.xdef"

@@ -1,0 +1,149 @@
+{
+  "location": "[28:6:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+  "xui:name": "xui-template-root-node",
+  "$tag": "template",
+  "children": [
+    {
+      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-text_0",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-text"
+      },
+      "value": "Number 1 #0"
+    },
+    {
+      "location": "[33:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-if-text_0",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-if-text"
+      },
+      "value": "IF1: Number 1 #0"
+    },
+    {
+      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-text_1",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-text"
+      },
+      "value": "Number 2 #1"
+    },
+    {
+      "location": "[33:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-if-text_1",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-if-text"
+      },
+      "value": "IF1: Number 2 #1"
+    },
+    {
+      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-text_2",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-text"
+      },
+      "value": "Number 3 #2"
+    },
+    {
+      "location": "[33:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-if-text_2",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-if-text"
+      },
+      "value": "IF1: Number 3 #2"
+    },
+    {
+      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-text_3",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-text"
+      },
+      "value": "Number 4 #3"
+    },
+    {
+      "location": "[33:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-1-if-text_3",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-1-if-text"
+      },
+      "value": "IF1: Number 4 #3"
+    },
+    {
+      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-2-text_0",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-2-text"
+      },
+      "value": "Item a #0"
+    },
+    {
+      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-2-text_1",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-2-text"
+      },
+      "value": "Item b #1"
+    },
+    {
+      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "for-2-text_2",
+      "$tag": "Text",
+      "attrs": {
+        "raw-xui:name": "for-2-text"
+      },
+      "value": "Item c #2"
+    },
+    {
+      "location": "[44:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+      "xui:name": "button-1",
+      "$tag": "Button",
+      "children": [
+        {
+          "location": "[47:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+          "xui:name": "for-1-text_0",
+          "$tag": "Text",
+          "attrs": {
+            "raw-xui:name": "for-1-text"
+          },
+          "value": "Number 1 #0"
+        },
+        {
+          "location": "[47:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+          "xui:name": "for-1-text_1",
+          "$tag": "Text",
+          "attrs": {
+            "raw-xui:name": "for-1-text"
+          },
+          "value": "Number 2 #1"
+        },
+        {
+          "location": "[47:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+          "xui:name": "for-1-text_2",
+          "$tag": "Text",
+          "attrs": {
+            "raw-xui:name": "for-1-text"
+          },
+          "value": "Number 3 #2"
+        },
+        {
+          "location": "[47:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+          "xui:name": "for-1-text_3",
+          "$tag": "Text",
+          "attrs": {
+            "raw-xui:name": "for-1-text"
+          },
+          "value": "Number 4 #3"
+        }
+      ]
+    }
+  ]
+}
