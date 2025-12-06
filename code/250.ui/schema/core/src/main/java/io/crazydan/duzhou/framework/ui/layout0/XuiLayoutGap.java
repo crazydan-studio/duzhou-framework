@@ -17,40 +17,42 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout;
+package io.crazydan.duzhou.framework.ui.layout0;
 
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.XuiExpression;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
-import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
 
 /**
- * 布局跨越量
+ * 布局间隔
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-14
  */
-public class XuiLayoutSpan implements MappableCodeSnippet {
+@DataBean
+public class XuiLayoutGap implements MappableCodeSnippet {
     private final SourceLocation loc;
 
-    /** 水平方向上可跨越的数量 */
-    public final XuiExpression<Integer> row;
-    /** 垂直方向上可跨越的数量 */
-    public final XuiExpression<Integer> col;
+    /** 水平方向上的间隔 */
+    public final XuiExpression<XuiSize> row;
+    /** 垂直方向上的间隔 */
+    public final XuiExpression<XuiSize> col;
 
-    XuiLayoutSpan(SourceLocation loc, XuiExpression<Integer> row, XuiExpression<Integer> col) {
+    XuiLayoutGap(SourceLocation loc, XuiExpression<XuiSize> row, XuiExpression<XuiSize> col) {
         this.loc = loc;
         this.row = row;
         this.col = col;
     }
 
     /**  */
-    public static XuiLayoutSpan create(ValueWithLocation vl) {
+    public static XuiLayoutGap create(ValueWithLocation vl) {
         if (vl == null) {
             return null;
         }
@@ -58,19 +60,19 @@ public class XuiLayoutSpan implements MappableCodeSnippet {
         SourceLocation loc = vl.getLocation();
         Object value = vl.getValue();
         if (value instanceof String || value == null) {
-            XuiExpression<Integer> val = expr(vl);
+            XuiExpression<XuiSize> size = XuiSize.expr(vl);
 
-            return new XuiLayoutSpan(loc, val, val);
+            return new XuiLayoutGap(loc, size, size);
         }
 
         assert value instanceof Map;
         // Note: ValueWithLocation 中的位置为值的开始位置
         Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        XuiExpression<Integer> row = expr(props.get("row"));
-        XuiExpression<Integer> col = expr(props.get("col"));
+        XuiExpression<XuiSize> row = XuiSize.expr(props.get("row"));
+        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
 
-        return new XuiLayoutSpan(loc, row, col);
+        return new XuiLayoutGap(loc, row, col);
     }
 
     @Override
@@ -82,9 +84,5 @@ public class XuiLayoutSpan implements MappableCodeSnippet {
     public void toMap(Map<String, Object> map) {
         ifNotNull(this.row, (v) -> map.put("row", v));
         ifNotNull(this.col, (v) -> map.put("col", v));
-    }
-
-    private static XuiExpression<Integer> expr(ValueWithLocation vl) {
-        return XuiExpression.create(Integer.class, vl, (loc, v) -> trimAndParseInt(v, 10));
     }
 }

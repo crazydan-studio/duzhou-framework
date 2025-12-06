@@ -23,9 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
-import io.crazydan.duzhou.framework.ui.XuiLayout;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
-import io.crazydan.duzhou.framework.ui.layout.parser.XuiLayoutLinearParser;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.parser.XuiLayoutLinearParser;
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.JsonTool;
@@ -94,7 +93,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
                 "v>[a1](padding: {row: ${props.padding}, left:.5u, col: .5u, bottom: ${props.padding}})<^");
         }};
 
-        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayout.LinearMode.column);
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayoutLinearParser.LinearMode.column);
         samples.forEach((name, text) -> {
             this.log.info("Raw text for {}=\n{}", name, text);
             XuiLayoutNode root = parser.parseFromText(null, text);
@@ -128,7 +127,7 @@ public class XuiLayoutLinearParserTest extends NopJunitTestCase {
             put("[a1](gap: gap)", ERR_DOMAIN_TYPE_UNKNOWN_SIZE);
         }};
 
-        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayout.LinearMode.column);
+        XuiLayoutLinearParser parser = new XuiLayoutLinearParser(XuiLayoutLinearParser.LinearMode.column);
         samples.forEach((text, code) -> {
             this.log.info("Raw text:\n{}", text);
 

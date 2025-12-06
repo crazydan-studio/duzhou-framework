@@ -19,7 +19,7 @@
 
 package io.crazydan.duzhou.framework.ui;
 
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -30,16 +30,4 @@ public interface XuiLayout {
     String getType();
 
     XuiLayoutNode getRoot();
-
-    enum Type {
-        /** 线性布局 */
-        linear,
-        /** 堆叠布局 */
-        stacked,
-    }
-
-    enum LinearMode {
-        column,
-        row,
-    }
 }

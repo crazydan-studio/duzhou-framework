@@ -1,7 +1,7 @@
 package io.crazydan.duzhou.framework.ui.schema.component.template;
 
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
-import io.crazydan.duzhou.framework.ui.layout.parser.XuiLayoutLinearParser;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.parser.XuiLayoutLinearParser;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeLayoutLinear;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.core.lang.json.IJsonHandler;

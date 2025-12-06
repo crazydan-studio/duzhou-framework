@@ -1,20 +1,21 @@
-package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
+package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/component/template.xdef <p>
- * 
+ * generate from /duzhou/ui/schema/layout.xdef <p>
+ * > 在行/列方向上布局组件，与 css flexbox 类似。
+ * >
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested {
+public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinearColumn {
     
 
     @Override
@@ -33,19 +34,19 @@ public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.frame
         
     }
 
-    public XuiComponentTemplateNode cloneInstance(){
-        XuiComponentTemplateNode instance = newInstance();
+    public XuiLayoutNodeLinear cloneInstance(){
+        XuiLayoutNodeLinear instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentTemplateNode instance){
+    protected void copyTo(XuiLayoutNodeLinear instance){
         super.copyTo(instance);
         
     }
 
-    protected XuiComponentTemplateNode newInstance(){
-        return (XuiComponentTemplateNode) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeLinear newInstance(){
+        return (XuiLayoutNodeLinear) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

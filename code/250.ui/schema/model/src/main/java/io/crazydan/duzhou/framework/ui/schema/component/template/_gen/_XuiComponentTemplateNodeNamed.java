@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode;
+import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,7 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested {
+public abstract class _XuiComponentTemplateNodeNamed extends io.nop.core.resource.component.AbstractComponentModel implements io.crazydan.duzhou.framework.ui.XuiNamed{
     
 
     @Override
@@ -33,19 +33,19 @@ public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.frame
         
     }
 
-    public XuiComponentTemplateNode cloneInstance(){
-        XuiComponentTemplateNode instance = newInstance();
+    public XuiComponentTemplateNodeNamed cloneInstance(){
+        XuiComponentTemplateNodeNamed instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentTemplateNode instance){
+    protected void copyTo(XuiComponentTemplateNodeNamed instance){
         super.copyTo(instance);
         
     }
 
-    protected XuiComponentTemplateNode newInstance(){
-        return (XuiComponentTemplateNode) ClassHelper.newInstance(getClass());
+    protected XuiComponentTemplateNodeNamed newInstance(){
+        return (XuiComponentTemplateNodeNamed) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

@@ -1,20 +1,20 @@
-package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
+package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/component/template.xdef <p>
+ * generate from /duzhou/ui/schema/layout.xdef <p>
  * 
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeNested extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
+public abstract class _XuiLayoutNode extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
     
     /**
      *  
@@ -28,7 +28,7 @@ public abstract class _XuiComponentTemplateNodeNested extends io.crazydan.duzhou
      * xml name: 
      * 
      */
-    private KeyedList<io.crazydan.duzhou.framework.ui.XuiNamed> _children = KeyedList.emptyList();
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> _children = KeyedList.emptyList();
     
     /**
      * 
@@ -55,20 +55,20 @@ public abstract class _XuiComponentTemplateNodeNested extends io.crazydan.duzhou
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.XuiNamed> getChildren(){
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> getChildren(){
       return _children;
     }
 
     
-    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.XuiNamed> value){
+    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> value){
         checkAllowChange();
         
-        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.XuiNamed::getXuiName);
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed::getXuiName);
            
     }
 
     
-    public io.crazydan.duzhou.framework.ui.XuiNamed getChild(String name){
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed getChild(String name){
         return this._children.getByKey(name);
     }
 
@@ -76,11 +76,11 @@ public abstract class _XuiComponentTemplateNodeNested extends io.crazydan.duzhou
         return this._children.containsKey(name);
     }
 
-    public void addChild(io.crazydan.duzhou.framework.ui.XuiNamed item) {
+    public void addChild(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed item) {
         checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.XuiNamed> list = this.getChildren();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> list = this.getChildren();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.XuiNamed::getXuiName);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed::getXuiName);
             setChildren(list);
         }
         list.add(item);
@@ -115,21 +115,21 @@ public abstract class _XuiComponentTemplateNodeNested extends io.crazydan.duzhou
         out.putNotNull("children",this.getChildren());
     }
 
-    public XuiComponentTemplateNodeNested cloneInstance(){
-        XuiComponentTemplateNodeNested instance = newInstance();
+    public XuiLayoutNode cloneInstance(){
+        XuiLayoutNode instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentTemplateNodeNested instance){
+    protected void copyTo(XuiLayoutNode instance){
         super.copyTo(instance);
         
         instance.set$tag(this.get$tag());
         instance.setChildren(this.getChildren());
     }
 
-    protected XuiComponentTemplateNodeNested newInstance(){
-        return (XuiComponentTemplateNodeNested) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNode newInstance(){
+        return (XuiLayoutNode) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

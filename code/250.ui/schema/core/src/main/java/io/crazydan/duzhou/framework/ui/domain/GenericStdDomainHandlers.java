@@ -22,6 +22,8 @@ package io.crazydan.duzhou.framework.ui.domain;
 import io.nop.commons.util.StringHelper;
 import io.nop.xlang.xdef.domain.CheckStdDomainHandler;
 
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_COMPONENT_NAME;
+
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-11
@@ -40,7 +42,7 @@ public class GenericStdDomainHandlers {
 
         @Override
         public String getName() {
-            return "component-name";
+            return STD_DOMAIN_COMPONENT_NAME;
         }
 
         @Override

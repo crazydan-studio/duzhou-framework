@@ -24,11 +24,14 @@ package io.crazydan.duzhou.framework.ui;
  * @date 2025-05-29
  */
 public interface XuiConstants {
+    String STD_DOMAIN_COMPONENT_NAME = "component-name";
     String STD_DOMAIN_XUI_STYLE = "xui-style";
     String STD_DOMAIN_XUI_EXPR = "xui-expr";
+    String STD_DOMAIN_XUI_SIZE = "xui-size";
 
     String XDSL_SCHEMA_APP = "/duzhou/ui/schema/app.xdef";
     String XDSL_SCHEMA_PAGE = "/duzhou/ui/schema/page.xdef";
+    String XDSL_SCHEMA_LAYOUT = "/duzhou/ui/schema/layout.xdef";
     String XDSL_SCHEMA_COMPONENT = "/duzhou/ui/schema/component.xdef";
     String XDSL_SCHEMA_COMPONENT_TEMPLATE = "/duzhou/ui/schema/component/template.xdef";
     String XDSL_SCHEMA_COMPONENT_IMPORT = "/duzhou/ui/schema/component/import.xdef";

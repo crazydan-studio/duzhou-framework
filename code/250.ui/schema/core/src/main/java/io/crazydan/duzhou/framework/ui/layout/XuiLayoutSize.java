@@ -19,114 +19,31 @@
 
 package io.crazydan.duzhou.framework.ui.layout;
 
-import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
-import io.crazydan.duzhou.framework.lang.CodeSnippet;
-import io.crazydan.duzhou.framework.ui.XuiExpression;
-import io.nop.api.core.annotations.data.DataBean;
-import io.nop.api.core.util.ISourceLocationGetter;
-import io.nop.api.core.util.SourceLocation;
-import io.nop.commons.util.objects.ValueWithLocation;
-import io.nop.core.lang.json.IJsonHandler;
-import io.nop.core.lang.json.IJsonSerializable;
+import io.crazydan.duzhou.framework.commons.StringHelper;
+import io.nop.api.core.annotations.core.Option;
+import io.nop.api.core.annotations.core.StaticFactoryMethod;
 
 /**
- * 布局尺寸
+ * 尺寸类型
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-04-26
+ * @date 2025-12-06
  */
-@DataBean
-public class XuiLayoutSize implements ISourceLocationGetter, IJsonSerializable, CodeSnippet {
-    private static final XuiLayoutSize match_parent = new XuiLayoutSize(Type.match_parent);
-    private static final XuiLayoutSize fill_remains = new XuiLayoutSize(Type.fill_remains);
-    private static final XuiLayoutSize wrap_content = new XuiLayoutSize(Type.wrap_content);
+public enum XuiLayoutSize {
+    /** 与父容器相同 */
+    @Option("match-parent") match_parent,
+    /** 占满父容器的剩余空间 */
+    @Option("fill-remains") fill_remains,
+    /** 自适应内容 */
+    @Option("wrap-content") wrap_content,
 
-    /** {@link XuiLayoutSize} 类型 */
-    public enum Type {
-        /** 与父容器相同 */
-        match_parent,
-        /** 占满剩余空间 */
-        fill_remains,
-        /** 自适应内容 */
-        wrap_content,
+    /** 设定值 */
+    @Option("value-specified") value_specified,
+    ;
 
-        /** 设定值 */
-        with_specified,
-    }
-
-    private final SourceLocation loc;
-
-    /** 类型 */
-    public final Type type;
-    /** {@link Type#with_specified} 对应的值 */
-    public final XuiExpression<XuiSize> value;
-
-    XuiLayoutSize(Type type) {
-        this.loc = null;
-        this.type = type;
-        this.value = null;
-    }
-
-    XuiLayoutSize(SourceLocation loc, XuiExpression<XuiSize> value) {
-        this.loc = loc;
-        this.type = Type.with_specified;
-        this.value = value;
-    }
-
-    public static XuiLayoutSize match_parent() {
-        return match_parent;
-    }
-
-    public static XuiLayoutSize fill_remains() {
-        return fill_remains;
-    }
-
-    public static XuiLayoutSize wrap_content() {
-        return wrap_content;
-    }
-
-    /**
-     * @param vl
-     *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
-     *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
-     *         <code>1u</code>、<code>50%</code> 等形式的尺寸常量，
-     *         但 {@link XuiSize#parse} 对其常量的解析结果不能为 <code>null</code>
-     */
-    public static XuiLayoutSize with_specified(ValueWithLocation vl) {
-        XuiExpression<XuiSize> value = XuiSize.expr(vl);
-        assert value != null;
-
-        return new XuiLayoutSize(vl.getLocation(), value);
-    }
-
-    @Override
-    public SourceLocation getLocation() {
-        return this.loc;
-    }
-
-    @Override
-    public String toCodeSnippet(char strQuote) {
-        if (this.type == Type.with_specified) {
-            assert this.value != null;
-
-            return this.value.toCodeSnippet(strQuote);
-        } else {
-            return strQuote + this.type.name() + strQuote;
-        }
-    }
-
-    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
-    @Override
-    public void serializeToJson(IJsonHandler out) {
-        out.stringValue(null, toString());
-    }
-
-    @Override
-    public String toString() {
-        if (this.type == Type.with_specified) {
-            assert this.value != null;
-            return this.value.toString();
-        }
-        return this.type.name();
+    @StaticFactoryMethod
+    public static XuiLayoutSize fromText(String text) {
+        return StringHelper.isBlank(text) //
+               ? null : valueOf(text.replace('-', '_'));
     }
 }

@@ -17,51 +17,40 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout;
+package io.crazydan.duzhou.framework.ui.layout0;
 
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.lang.MappableCodeSnippet;
-import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
 import io.crazydan.duzhou.framework.ui.XuiExpression;
-import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 
-import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+import static io.crazydan.duzhou.framework.commons.StringHelper.trimAndParseInt;
 
 /**
- * 布局空白
- * <p/>
- * 用于内边距、外边距的配置
+ * 布局跨越量
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-05-10
+ * @date 2025-05-14
  */
-@DataBean
-public class XuiLayoutSpacing implements MappableCodeSnippet {
+public class XuiLayoutSpan implements MappableCodeSnippet {
     private final SourceLocation loc;
 
-    public final XuiExpression<XuiSize> left;
-    public final XuiExpression<XuiSize> right;
-    public final XuiExpression<XuiSize> top;
-    public final XuiExpression<XuiSize> bottom;
+    /** 水平方向上可跨越的数量 */
+    public final XuiExpression<Integer> row;
+    /** 垂直方向上可跨越的数量 */
+    public final XuiExpression<Integer> col;
 
-    XuiLayoutSpacing(
-            SourceLocation loc, //
-            XuiExpression<XuiSize> left, XuiExpression<XuiSize> right, //
-            XuiExpression<XuiSize> top, XuiExpression<XuiSize> bottom
-    ) {
+    XuiLayoutSpan(SourceLocation loc, XuiExpression<Integer> row, XuiExpression<Integer> col) {
         this.loc = loc;
-        this.left = left;
-        this.right = right;
-        this.top = top;
-        this.bottom = bottom;
+        this.row = row;
+        this.col = col;
     }
 
     /**  */
-    public static XuiLayoutSpacing create(ValueWithLocation vl) {
+    public static XuiLayoutSpan create(ValueWithLocation vl) {
         if (vl == null) {
             return null;
         }
@@ -69,24 +58,19 @@ public class XuiLayoutSpacing implements MappableCodeSnippet {
         SourceLocation loc = vl.getLocation();
         Object value = vl.getValue();
         if (value instanceof String || value == null) {
-            XuiExpression<XuiSize> size = XuiSize.expr(vl);
+            XuiExpression<Integer> val = expr(vl);
 
-            return new XuiLayoutSpacing(loc, size, size, size, size);
+            return new XuiLayoutSpan(loc, val, val);
         }
 
         assert value instanceof Map;
         // Note: ValueWithLocation 中的位置为值的开始位置
         Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
-        XuiExpression<XuiSize> row = XuiSize.expr(props.get("row"));
-        XuiExpression<XuiSize> left = firstNonNull(XuiSize.expr(props.get("left")), row);
-        XuiExpression<XuiSize> right = firstNonNull(XuiSize.expr(props.get("right")), row);
+        XuiExpression<Integer> row = expr(props.get("row"));
+        XuiExpression<Integer> col = expr(props.get("col"));
 
-        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
-        XuiExpression<XuiSize> top = firstNonNull(XuiSize.expr(props.get("top")), col);
-        XuiExpression<XuiSize> bottom = firstNonNull(XuiSize.expr(props.get("bottom")), col);
-
-        return new XuiLayoutSpacing(loc, left, right, top, bottom);
+        return new XuiLayoutSpan(loc, row, col);
     }
 
     @Override
@@ -96,9 +80,11 @@ public class XuiLayoutSpacing implements MappableCodeSnippet {
 
     @Override
     public void toMap(Map<String, Object> map) {
-        ifNotNull(this.left, (v) -> map.put("left", v));
-        ifNotNull(this.right, (v) -> map.put("right", v));
-        ifNotNull(this.top, (v) -> map.put("top", v));
-        ifNotNull(this.bottom, (v) -> map.put("bottom", v));
+        ifNotNull(this.row, (v) -> map.put("row", v));
+        ifNotNull(this.col, (v) -> map.put("col", v));
+    }
+
+    private static XuiExpression<Integer> expr(ValueWithLocation vl) {
+        return XuiExpression.create(Integer.class, vl, (loc, v) -> trimAndParseInt(v, 10));
     }
 }

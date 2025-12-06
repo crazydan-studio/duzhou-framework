@@ -25,6 +25,7 @@
     const xdefs = [
         XuiConstants.XDSL_SCHEMA_APP,
         XuiConstants.XDSL_SCHEMA_PAGE,
+        XuiConstants.XDSL_SCHEMA_LAYOUT,
         //
         XuiConstants.XDSL_SCHEMA_COMPONENT,
         XuiConstants.XDSL_SCHEMA_COMPONENT_TEMPLATE,

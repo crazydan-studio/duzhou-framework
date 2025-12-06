@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout.parser;
+package io.crazydan.duzhou.framework.ui.layout0.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import io.crazydan.duzhou.framework.commons.TextScannerHelper;
-import io.crazydan.duzhou.framework.ui.XuiLayout;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutProps;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutAlign;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutProps;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutSize;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.text.tokenizer.TextScanner;
@@ -58,13 +57,18 @@ import static io.nop.xlang.XLangErrors.ARG_VALUE;
  * @date 2025-05-11
  */
 public class XuiLayoutLinearParser {
-    private final XuiLayout.LinearMode mode;
-
-    public XuiLayoutLinearParser(String mode) {
-        this.mode = XuiLayout.LinearMode.valueOf(mode);
+    public enum LinearMode {
+        column,
+        row,
     }
 
-    public XuiLayoutLinearParser(XuiLayout.LinearMode mode) {
+    private final LinearMode mode;
+
+    public XuiLayoutLinearParser(String mode) {
+        this.mode = LinearMode.valueOf(mode);
+    }
+
+    public XuiLayoutLinearParser(LinearMode mode) {
         this.mode = mode;
     }
 

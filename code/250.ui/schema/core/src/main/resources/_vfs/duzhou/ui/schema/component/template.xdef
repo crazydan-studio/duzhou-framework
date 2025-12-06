@@ -30,16 +30,9 @@
           xui:name="!~ns-name=xui-template-root-node"
 >
 
-    <!-- [组件模版树节点]
-    >
-
-    @xui:name [唯一标识]
-        > 在父节点内，该标识必须唯一
-    -->
+    <!-- [组件模版树节点] -->
     <xdef:define xdef:name="XuiComponentTemplateNode"
                  xdef:ref="XuiComponentTemplateNodeNested"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                 xui:name="!ns-name"
     >
         <!-- [布局控制]
         > 根据 `xui:name` 对其**直接子组件**（含 `<slot/>` 和 `<native/>`，但不含 `<if/>`、`<for/>` 等控制节点）进行布局控制。
@@ -48,6 +41,8 @@
         -->
         <layout xdef:name="XuiComponentTemplateNodeLayout"
                 xdef:ref="../layout.xdef"
+                xdef:bean-tag-prop="$tag"
+                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                 xdef:allow-multiple="false"
                 xui:name="!~ns-name=xui-layout"
         />
@@ -62,8 +57,8 @@
             > 以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据
         -->
         <dispatch xdef:name="XuiComponentTemplateNodeDispatch"
+                  xdef:ref="XuiComponentTemplateNodeNamed"
                   xdef:bean-tag-prop="$tag"
-                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                   xui:name="!~ns-name=@attr:msg"
                   msg="!component-name" events="!prop-name-set"
                   data="any"
@@ -73,6 +68,7 @@
     <!-- [组件模版树节点嵌套结构]
     -->
     <xdef:define xdef:name="XuiComponentTemplateNodeNested"
+                 xdef:ref="XuiComponentTemplateNodeNamed"
                  xdef:bean-tag-prop="$tag"
                  xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
@@ -114,16 +110,14 @@
         <!-- [文本内嵌组件]
         > 只包含文本内容的组件。必须通过 `<import/>` 显式导入。
 
-        @xui:name [唯一标识]
-            > 在父节点内，该标识必须唯一
         @xui:slot [对应的插槽名字]
             > 其将替换所在组件的 `<template/>` 中定义的同名 `<slot/>` 节点
         @as-html [是否为 HTML 片段]
             > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
         -->
         <Text xdef:name="XuiComponentTemplateNodeText"
+              xdef:ref="XuiComponentTemplateNodeNamed"
               xdef:bean-tag-prop="$tag"
-              xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
               xui:name="!ns-name" xui:slot="ns-name"
               as-html="boolean"
               xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="attrs"
@@ -149,28 +143,20 @@
             xdef:ref="XuiComponentTemplateNodeStatementCond"
             xui:name="!ns-name"
         />
-        <!-- [条件选择]
-        >
-
-        @xui:name [唯一标识]
-            > 在父节点内，该标识必须唯一
-        -->
+        <!-- [条件选择] -->
         <choose xdef:name="XuiComponentTemplateNodeStatementChoose"
+                xdef:ref="XuiComponentTemplateNodeNamed"
                 xdef:bean-tag-prop="$tag"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                 xui:name="!ns-name"
         >
-            <!-- [特定条件]
-            -->
+            <!-- [特定条件] -->
             <when xdef:name="XuiComponentTemplateNodeStatementChooseWhen"
                   xdef:ref="XuiComponentTemplateNodeStatementCond"
                   xdef:unique-attr="xui:name"
                   xdef:bean-prop="whens" xdef:bean-child-name="when"
                   xui:name="!ns-name"
             />
-            <!-- [缺省条件]
-            >
-            -->
+            <!-- [缺省条件] -->
             <otherwise xdef:name="XuiComponentTemplateNodeStatementChooseOtherwise"
                        xdef:ref="XuiComponentTemplateNode"
                        xdef:allow-multiple="false"
@@ -182,8 +168,6 @@
         <!-- [For 循环]
         >
 
-        @xui:name [唯一标识]
-            > 在父节点内，该标识必须唯一
         @items [待循环变量]
             > 如 `${props.users}`
         @var [循环元素的变量名]
@@ -193,7 +177,6 @@
         -->
         <for xdef:name="XuiComponentTemplateNodeStatementFor"
              xdef:ref="XuiComponentTemplateNodeNested"
-             xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
              xui:name="!ns-name"
              var="!var-name" index="var-name"
              items="string"
@@ -202,6 +185,16 @@
 
         <!-- End: 条件/循环控制 -->
     </xdef:define>
+
+    <!-- [组件模版树的命名节点]
+
+    @xui:name [唯一标识]
+        > 在父节点内，该标识必须唯一
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeNamed"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
+                 xui:name="!ns-name"
+    />
 
     <!-- [组件模版树可指定插槽的节点]
     >

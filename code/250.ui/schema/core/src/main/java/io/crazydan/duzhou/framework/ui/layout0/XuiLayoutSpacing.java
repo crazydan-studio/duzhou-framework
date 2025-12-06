@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout;
+package io.crazydan.duzhou.framework.ui.layout0;
 
 import java.util.Map;
 
@@ -28,31 +28,40 @@ import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
 
 /**
- * 布局间隔
+ * 布局空白
+ * <p/>
+ * 用于内边距、外边距的配置
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-05-14
+ * @date 2025-05-10
  */
 @DataBean
-public class XuiLayoutGap implements MappableCodeSnippet {
+public class XuiLayoutSpacing implements MappableCodeSnippet {
     private final SourceLocation loc;
 
-    /** 水平方向上的间隔 */
-    public final XuiExpression<XuiSize> row;
-    /** 垂直方向上的间隔 */
-    public final XuiExpression<XuiSize> col;
+    public final XuiExpression<XuiSize> left;
+    public final XuiExpression<XuiSize> right;
+    public final XuiExpression<XuiSize> top;
+    public final XuiExpression<XuiSize> bottom;
 
-    XuiLayoutGap(SourceLocation loc, XuiExpression<XuiSize> row, XuiExpression<XuiSize> col) {
+    XuiLayoutSpacing(
+            SourceLocation loc, //
+            XuiExpression<XuiSize> left, XuiExpression<XuiSize> right, //
+            XuiExpression<XuiSize> top, XuiExpression<XuiSize> bottom
+    ) {
         this.loc = loc;
-        this.row = row;
-        this.col = col;
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bottom;
     }
 
     /**  */
-    public static XuiLayoutGap create(ValueWithLocation vl) {
+    public static XuiLayoutSpacing create(ValueWithLocation vl) {
         if (vl == null) {
             return null;
         }
@@ -62,7 +71,7 @@ public class XuiLayoutGap implements MappableCodeSnippet {
         if (value instanceof String || value == null) {
             XuiExpression<XuiSize> size = XuiSize.expr(vl);
 
-            return new XuiLayoutGap(loc, size, size);
+            return new XuiLayoutSpacing(loc, size, size, size, size);
         }
 
         assert value instanceof Map;
@@ -70,9 +79,14 @@ public class XuiLayoutGap implements MappableCodeSnippet {
         Map<String, ValueWithLocation> props = (Map<String, ValueWithLocation>) value;
 
         XuiExpression<XuiSize> row = XuiSize.expr(props.get("row"));
-        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
+        XuiExpression<XuiSize> left = firstNonNull(XuiSize.expr(props.get("left")), row);
+        XuiExpression<XuiSize> right = firstNonNull(XuiSize.expr(props.get("right")), row);
 
-        return new XuiLayoutGap(loc, row, col);
+        XuiExpression<XuiSize> col = XuiSize.expr(props.get("col"));
+        XuiExpression<XuiSize> top = firstNonNull(XuiSize.expr(props.get("top")), col);
+        XuiExpression<XuiSize> bottom = firstNonNull(XuiSize.expr(props.get("bottom")), col);
+
+        return new XuiLayoutSpacing(loc, left, right, top, bottom);
     }
 
     @Override
@@ -82,7 +96,9 @@ public class XuiLayoutGap implements MappableCodeSnippet {
 
     @Override
     public void toMap(Map<String, Object> map) {
-        ifNotNull(this.row, (v) -> map.put("row", v));
-        ifNotNull(this.col, (v) -> map.put("col", v));
+        ifNotNull(this.left, (v) -> map.put("left", v));
+        ifNotNull(this.right, (v) -> map.put("right", v));
+        ifNotNull(this.top, (v) -> map.put("top", v));
+        ifNotNull(this.bottom, (v) -> map.put("bottom", v));
     }
 }
