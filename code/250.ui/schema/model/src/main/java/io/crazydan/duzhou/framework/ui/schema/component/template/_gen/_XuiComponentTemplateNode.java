@@ -1,6 +1,6 @@
 package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
 
-import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.nop.core.lang.json.IJsonHandler;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode;
 import io.nop.commons.util.ClassHelper;
@@ -14,8 +14,9 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested implements io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed{
-    
+public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested implements
+                                                                                                                                                 XuiNamed {
+
 
     @Override
     public void freeze(boolean cascade){
@@ -23,14 +24,14 @@ public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.frame
         super.freeze(cascade);
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
-        
+
         }
     }
 
     @Override
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
-        
+
     }
 
     public XuiComponentTemplateNode cloneInstance(){
@@ -41,7 +42,7 @@ public abstract class _XuiComponentTemplateNode extends io.crazydan.duzhou.frame
 
     protected void copyTo(XuiComponentTemplateNode instance){
         super.copyTo(instance);
-        
+
     }
 
     protected XuiComponentTemplateNode newInstance(){

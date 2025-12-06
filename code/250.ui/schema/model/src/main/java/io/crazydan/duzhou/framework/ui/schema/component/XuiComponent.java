@@ -5,7 +5,7 @@ import java.util.List;
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeAny;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed;
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChoose;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeText;
@@ -82,7 +82,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     }
 
     /** 加载标签对应的{@link XuiComponent 组件} */
-    public XuiComponent loadTagComponent(XuiComponentTemplateNodeNamed node) {
+    public XuiComponent loadTagComponent(XuiNamed node) {
         String tagName = getTagName(node);
         if (tagName == null) {
             return null;
@@ -99,7 +99,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     }
 
     /** 检查组件节点是否已显式通过 {@code <import/>} 导入 */
-    protected void checkImported(XuiComponentTemplateNodeNamed node) {
+    protected void checkImported(XuiNamed node) {
         if (node == null) {
             return;
         }
@@ -171,7 +171,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         return compileTool;
     }
 
-    private String getTagName(XuiComponentTemplateNodeNamed node) {
+    private String getTagName(XuiNamed node) {
         if (node instanceof XuiComponentTemplateNodeText) {
             return ((XuiComponentTemplateNodeText) node).get$tag();
         } //
@@ -181,7 +181,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         return null;
     }
 
-    protected static XNode cloneXNode(XNode node, XuiComponentTemplateNodeNamed bean) {
+    protected static XNode cloneXNode(XNode node, XuiNamed bean) {
         XNode copiedNode = node.cloneWithoutChildren();
 
         if (bean != null && copiedNode.getAttrCount() > 0) {
@@ -204,7 +204,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
 
         for (XNode child : node.getChildren()) {
             Object xuiName = child.getAttr(ATTR_NAME_XUI_NAME);
-            XuiComponentTemplateNodeNamed beanChild = null;
+            XuiNamed beanChild = null;
             if (bean instanceof XuiComponentTemplateNodeNested) {
                 beanChild = ((XuiComponentTemplateNodeNested) bean).getChild((String) xuiName);
             }

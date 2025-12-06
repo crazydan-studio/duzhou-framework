@@ -38,7 +38,7 @@
     -->
     <xdef:define xdef:name="XuiComponentTemplateNode"
                  xdef:ref="XuiComponentTemplateNodeNested"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                  xui:name="!ns-name"
     >
         <!-- [布局控制]
@@ -46,7 +46,8 @@
         >
         > 缺省将按照子组件声明顺序排列，并由 UI Vendor 做默认布局。
         -->
-        <layout xdef:ref="XuiComponentTemplateNodeLayout"
+        <layout xdef:name="XuiComponentTemplateNodeLayout"
+                xdef:ref="../layout.xdef"
                 xdef:allow-multiple="false"
                 xui:name="!~ns-name=xui-layout"
         />
@@ -62,7 +63,7 @@
         -->
         <dispatch xdef:name="XuiComponentTemplateNodeDispatch"
                   xdef:bean-tag-prop="$tag"
-                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
+                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                   xui:name="!~ns-name=@attr:msg"
                   msg="!component-name" events="!prop-name-set"
                   data="any"
@@ -75,7 +76,7 @@
                  xdef:bean-tag-prop="$tag"
                  xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
-                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed>"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.XuiNamed>"
                  xdef:bean-sub-type-prop="$tag"
     >
         <!-- Start: 组件模版树节点 -->
@@ -122,7 +123,7 @@
         -->
         <Text xdef:name="XuiComponentTemplateNodeText"
               xdef:bean-tag-prop="$tag"
-              xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
+              xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
               xui:name="!ns-name" xui:slot="ns-name"
               as-html="boolean"
               xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="attrs"
@@ -156,7 +157,7 @@
         -->
         <choose xdef:name="XuiComponentTemplateNodeStatementChoose"
                 xdef:bean-tag-prop="$tag"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
+                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                 xui:name="!ns-name"
         >
             <!-- [特定条件]
@@ -192,7 +193,7 @@
         -->
         <for xdef:name="XuiComponentTemplateNodeStatementFor"
              xdef:ref="XuiComponentTemplateNodeNested"
-             xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
+             xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
              xui:name="!ns-name"
              var="!var-name" index="var-name"
              items="string"
@@ -223,65 +224,4 @@
                  xdef:ref="XuiComponentTemplateNode"
                  test="string"
     />
-
-    <!-- [组件布局]
-    > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
-    > - 仅用于控制所在组件中的直接视图组件；
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeLayout"
-                 xdef:bean-tag-prop="$tag"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed"
-                 xdef:body-type="union"
-                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.XuiLayout"
-                 xdef:bean-body-prop="type"
-                 xdef:bean-sub-type-prop="$tag"
-                 xui:name="!ns-name"
-    >
-        <!-- [线性布局]
-        > 在水平和垂直方向上布局组件，且溢出内容不做换行处理。
-        >
-        > 线性布局使用文本标记语言：
-        > - `[comp]`: 指代 `xui:name` 属性值为 `comp` 的组件；
-        > - `<`: 表示左对齐；
-        > - `>`: 表示右对齐；
-        > - `^`: 表示顶部对齐；
-        > - `v`: 表示底部对齐；
-        > - `<[comp]>`: 表示使组件 `comp` 水平占满剩余空间，若未指定组件，则以空白占满剩余空间；
-        > - `>[comp]<`: 表示使组件 `comp` 水平居中对齐；
-        > - `^[comp]v`: 表示使组件 `comp` 垂直占满剩余空间，若未指定组件，则以空白占满剩余空间；
-        > - `v[comp]^`: 表示使组件 `comp` 垂直居中对齐；
-        > - `[comp1] [comp2]`: 表示左右放置组件 `comp1` 和 `comp2`；
-        > - `| [comp1] | [comp2] |`: 表示以表格形式放置组件 `comp1` 和 `comp2`，
-        >   也即，`comp1` 与 `comp2` 分别在同一行的两个单元格内。
-        >   上下相邻的以 `|` 为分隔符的多行属于同一个表格；
-        > - `[comp1]\n[comp2]`: 表示上下放置组件 `comp1` 和 `comp2`，其中，`\n` 为换行符，实际不可见，效果为上下两行；
-        > - `{xxx}`: 表示布局嵌套，可在内部反复应用前面的规则，其自身也是一个整体，可像组件一样对其应用水平和垂直布局；
-        > - `()`: 表示设置组件布局配置参数列表，在括号内以 `prop:value` 形式指定参数名和参数值，且参数间以逗号分隔，
-        >   如：`(width:10u,height:20u)` 表示设置宽为 `10u`，长为 `20u`。
-        >   参数列表只能紧跟在 `[comp]` 和 `{xxx}` 之后放置；
-        > - `//`: 表示行注释，其后均为注释内容；
-        > - 组件尺寸（宽高）默认均为自适应内容；
-        > - 根布局的尺寸始终与上层容器的尺寸相同；
-
-        @mode [布局模式]
-            > 缺省为 `column`
-        -->
-        <linear xdef:name="XuiComponentTemplateNodeLayoutLinear"
-                xdef:bean-tag-prop="$tag"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiLayout"
-                xdef:value="!string" xdef:bean-body-prop="value"
-                mode="!dict:duzhou/ui/layout-linear-mode=column"
-        />
-
-        <!-- [堆叠布局]
-        > - 包含至少两个布局子节点，且子节点可通过 `xui:when` 控制是否显示；
-        > - 该布局及其各个子节点的布局空间均占满当前组件；
-        > - 子节点之间为一层一层的堆叠效果，并通过属性 `layer` 来控制相对间的层级关系；
-        > - 弹出层、遮罩等，均通过该布局进行控制；
-        -->
-        <stacked
-        >
-            <!-- TODO 嵌套其他类型布局 -->
-        </stacked>
-    </xdef:define>
 </template>

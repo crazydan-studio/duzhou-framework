@@ -17,18 +17,19 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.schema.component.template;
+package io.crazydan.duzhou.framework.ui;
 
 import io.nop.core.reflect.hook.IExtensibleObject;
 
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_NAME;
 
 /**
+ * 通过 {@link XuiConstants#ATTR_NAME_XUI_NAME} 指定名字的命名对象
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-11-20
  */
-public interface XuiComponentTemplateNodeNamed extends IExtensibleObject {
+public interface XuiNamed extends IExtensibleObject {
 
     default String getXuiName() {
         return (String) prop_get(ATTR_NAME_XUI_NAME);

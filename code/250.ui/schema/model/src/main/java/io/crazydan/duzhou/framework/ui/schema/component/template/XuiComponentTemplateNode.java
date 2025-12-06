@@ -5,12 +5,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNode;
 import io.nop.commons.util.StringHelper;
 
 public class XuiComponentTemplateNode extends _XuiComponentTemplateNode {
-    private List<XuiComponentTemplateNodeNamed> customOrTextChildren;
-    private Map<String, XuiComponentTemplateNodeNamed> slottables;
+    private List<XuiNamed> customOrTextChildren;
+    private Map<String, XuiNamed> slottables;
 
     public XuiComponentTemplateNode() {
 
@@ -39,7 +40,7 @@ public class XuiComponentTemplateNode extends _XuiComponentTemplateNode {
     }
 
     /** 获取自定义或文本子节点 */
-    public List<XuiComponentTemplateNodeNamed> getCustomOrTextChildren() {
+    public List<XuiNamed> getCustomOrTextChildren() {
         if (this.customOrTextChildren == null) {
             this.customOrTextChildren = //
                     getChildren().stream()
@@ -51,7 +52,7 @@ public class XuiComponentTemplateNode extends _XuiComponentTemplateNode {
     }
 
     /** 获取命名插槽组件 */
-    public Map<String, XuiComponentTemplateNodeNamed> getSlottables() {
+    public Map<String, XuiNamed> getSlottables() {
         if (this.slottables == null) {
             this.slottables = getCustomOrTextChildren().stream()
                                                        .filter((child) -> child instanceof XuiComponentTemplateNodeSlottable)

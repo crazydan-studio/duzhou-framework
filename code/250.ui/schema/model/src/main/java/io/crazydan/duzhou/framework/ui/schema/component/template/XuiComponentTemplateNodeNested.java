@@ -3,6 +3,7 @@ package io.crazydan.duzhou.framework.ui.schema.component.template;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeNested;
 import io.nop.api.core.exceptions.NopException;
@@ -48,7 +49,7 @@ public class XuiComponentTemplateNodeNested extends _XuiComponentTemplateNodeNes
 
     protected void checkMultiLayouts() {
         boolean exists = false;
-        for (XuiComponentTemplateNodeNamed child : getChildren()) {
+        for (XuiNamed child : getChildren()) {
             if (child instanceof XuiComponentTemplateNodeLayout) {
                 XuiComponentTemplateNodeLayout layout = (XuiComponentTemplateNodeLayout) child;
                 if (exists) {
@@ -64,7 +65,7 @@ public class XuiComponentTemplateNodeNested extends _XuiComponentTemplateNodeNes
     protected void checkMultiDispatches() {
         List<String> messages = new ArrayList<>();
 
-        for (XuiComponentTemplateNodeNamed child : getChildren()) {
+        for (XuiNamed child : getChildren()) {
             if (child instanceof XuiComponentTemplateNodeDispatch) {
                 XuiComponentTemplateNodeDispatch dispatch = (XuiComponentTemplateNodeDispatch) child;
                 String msg = dispatch.getMsg();
@@ -91,7 +92,7 @@ public class XuiComponentTemplateNodeNested extends _XuiComponentTemplateNodeNes
     }
 
     private boolean hasSlotInDepth() {
-        for (XuiComponentTemplateNodeNamed child : getChildren()) {
+        for (XuiNamed child : getChildren()) {
             if (child instanceof XuiComponentTemplateNodeNested) {
                 if (((XuiComponentTemplateNodeNested) child).isSlot() //
                     || ((XuiComponentTemplateNodeNested) child).hasSlotInDepth() //
