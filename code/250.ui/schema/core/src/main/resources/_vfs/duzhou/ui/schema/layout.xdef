@@ -121,7 +121,10 @@
     <xdef:define xdef:name="XuiLayoutNodeItem"
                  xdef:ref="XuiLayoutNodeNamed"
                  pattern="!regex"
-    />
+    >
+        <!-- [布局项配置] -->
+        <props xdef:ref="XuiLayoutNodeProps" />
+    </xdef:define>
 
     <!-- [布局配置] -->
     <xdef:define xdef:name="XuiLayoutNodeProps"

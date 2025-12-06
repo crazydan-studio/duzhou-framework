@@ -68,6 +68,8 @@ public class XuiSize implements IJsonSerializable, CodeSnippet {
         Unit(String label) {this.label = label;}
     }
 
+    public static final XuiSize NONE = new XuiSize(0, Unit.base);
+
     /** 值 */
     public final float value;
     /** 单位 */

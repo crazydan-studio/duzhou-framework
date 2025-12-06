@@ -25,6 +25,13 @@ public abstract class _XuiLayoutNodeItem extends io.crazydan.duzhou.framework.ui
     private java.lang.String _pattern ;
     
     /**
+     *  布局项配置
+     * xml name: props
+     * 
+     */
+    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeProps _props ;
+    
+    /**
      * 布局项匹配模式
      * xml name: pattern
      *  > 用于匹配目标唯一名字 `xui:name` 的正则表达式。
@@ -44,6 +51,25 @@ public abstract class _XuiLayoutNodeItem extends io.crazydan.duzhou.framework.ui
     }
 
     
+    /**
+     * 布局项配置
+     * xml name: props
+     *  
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeProps getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeProps value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -52,6 +78,8 @@ public abstract class _XuiLayoutNodeItem extends io.crazydan.duzhou.framework.ui
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
+            
         }
     }
 
@@ -60,6 +88,7 @@ public abstract class _XuiLayoutNodeItem extends io.crazydan.duzhou.framework.ui
         super.outputJson(out);
         
         out.putNotNull("pattern",this.getPattern());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiLayoutNodeItem cloneInstance(){
@@ -72,6 +101,7 @@ public abstract class _XuiLayoutNodeItem extends io.crazydan.duzhou.framework.ui
         super.copyTo(instance);
         
         instance.setPattern(this.getPattern());
+        instance.setProps(this.getProps());
     }
 
     protected XuiLayoutNodeItem newInstance(){
