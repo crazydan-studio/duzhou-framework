@@ -1,0 +1,26 @@
+<layout>
+    <stacked>
+        <body>
+            <item layer="0" target="box-1" xui:name="item-1" />
+            <item layer="10" target="box-2" xui:name="item-2">
+                <props>
+                    <height type="value_specified" value="10.0u" />
+                    <padding bottom="0.0u" left="0.0u" right="0.0u" top="0.0u" />
+                    <self-align column="start" row="start" />
+                    <width type="wrap_content" />
+                </props>
+            </item>
+            <item layer="20" target="box-3" xui:name="item-3">
+                <props>
+                    <height type="match_parent" />
+                    <width type="match_parent" />
+                </props>
+            </item>
+        </body>
+        <props>
+            <height type="match_parent" />
+            <padding all="2.0u" bottom="2.0u" left="2.0u" right="2.0u" top="2.0u" />
+            <width type="match_parent" />
+        </props>
+    </stacked>
+</layout>

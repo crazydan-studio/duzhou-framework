@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNode;
 import io.nop.commons.util.StringHelper;
 
@@ -14,6 +15,15 @@ public class XuiComponentTemplateNode extends _XuiComponentTemplateNode {
 
     public XuiComponentTemplateNode() {
 
+    }
+
+    public XuiComponentTemplateNodeLayout getLayout() {
+        for (XuiNamed child : getChildren()) {
+            if (child instanceof XuiComponentTemplateNodeLayout) {
+                return (XuiComponentTemplateNodeLayout) child;
+            }
+        }
+        return null;
     }
 
     /** 获取该组件内嵌入的纯文本 */

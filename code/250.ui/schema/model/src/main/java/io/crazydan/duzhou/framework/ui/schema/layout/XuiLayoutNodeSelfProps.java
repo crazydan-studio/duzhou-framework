@@ -1,19 +1,14 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeProps;
+import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeSelfProps;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
 
-public class XuiLayoutNodeProps extends _XuiLayoutNodeProps {
-    public static final XuiLayoutNodeProps DEFAULT = new XuiLayoutNodeProps() {
+public class XuiLayoutNodeSelfProps extends _XuiLayoutNodeSelfProps {
+    public static final XuiLayoutNodeSelfProps DEFAULT = new XuiLayoutNodeSelfProps() {
         @Override
-        public XuiLayoutNodePropsAlign getAlign() {
+        public XuiLayoutNodePropsAlign getSelfAlign() {
             return XuiLayoutNodePropsAlign.DEFAULT;
-        }
-
-        @Override
-        public XuiLayoutNodePropsGap getGap() {
-            return XuiLayoutNodePropsGap.NONE;
         }
 
         @Override
@@ -32,17 +27,12 @@ public class XuiLayoutNodeProps extends _XuiLayoutNodeProps {
         }
     };
 
-    public XuiLayoutNodeProps() {
+    public XuiLayoutNodeSelfProps() {
     }
 
     @Override
-    public XuiLayoutNodePropsAlign getAlign() {
-        return firstNonNull(super.getAlign(), XuiLayoutNodePropsAlign.DEFAULT);
-    }
-
-    @Override
-    public XuiLayoutNodePropsGap getGap() {
-        return firstNonNull(super.getGap(), XuiLayoutNodePropsGap.NONE);
+    public XuiLayoutNodePropsAlign getSelfAlign() {
+        return firstNonNull(super.getSelfAlign(), XuiLayoutNodePropsAlign.DEFAULT);
     }
 
     @Override

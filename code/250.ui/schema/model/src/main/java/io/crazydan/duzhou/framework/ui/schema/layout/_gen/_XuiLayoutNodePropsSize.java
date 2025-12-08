@@ -19,23 +19,23 @@ public abstract class _XuiLayoutNodePropsSize extends io.nop.core.resource.compo
     /**
      *  类型
      * xml name: type
-     * > 注意，在 `type` 为 `value-specified` 时，必须指定该节点的值，
-     * > 如 `<width type="value-specified">12u</width>`
+     * > 注意，在 `type` 为 `value-specified` 时，必须配置 `value` 属性的值，
+     * > 如 `<width type="value-specified" value="12u"/>`
      */
     private io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize _type ;
     
     /**
-     *  
-     * xml name: 
-     * 
+     *  指定值
+     * xml name: value
+     * > 仅在 `type` 为 `value-specified` 时设定
      */
     private io.crazydan.duzhou.framework.ui.domain.type.XuiSize _value ;
     
     /**
      * 类型
      * xml name: type
-     *  > 注意，在 `type` 为 `value-specified` 时，必须指定该节点的值，
-     * > 如 `<width type="value-specified">12u</width>`
+     *  > 注意，在 `type` 为 `value-specified` 时，必须配置 `value` 属性的值，
+     * > 如 `<width type="value-specified" value="12u"/>`
      */
     
     public io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize getType(){
@@ -52,9 +52,9 @@ public abstract class _XuiLayoutNodePropsSize extends io.nop.core.resource.compo
 
     
     /**
-     * 
-     * xml name: 
-     *  
+     * 指定值
+     * xml name: value
+     *  > 仅在 `type` 为 `value-specified` 时设定
      */
     
     public io.crazydan.duzhou.framework.ui.domain.type.XuiSize getValue(){

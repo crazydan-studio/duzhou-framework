@@ -2,10 +2,10 @@ package io.crazydan.duzhou.framework.ui.schema.component;
 
 import java.util.List;
 
+import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeAny;
-import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChoose;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeText;

@@ -1,0 +1,89 @@
+<layout>
+    <linear type="column">
+        <body>
+            <node type="row" xui:name="node-1">
+                <body>
+                    <item pattern="a1" xui:name="item-1">
+                        <props>
+                            <height type="wrap_content" />
+                            <padding bottom="0.0u" left="0.0u" right="0.0u" top="0.0u" />
+                            <self-align column="end" row="start" />
+                        </props>
+                    </item>
+                    <item pattern="a2" xui:name="item-2">
+                        <props>
+                            <self-align column="center" row="center" />
+                        </props>
+                    </item>
+                    <item pattern="a3" xui:name="item-3">
+                        <props>
+                            <self-align column="start" row="end" />
+                        </props>
+                    </item>
+                </body>
+                <props>
+                    <height type="wrap_content" />
+                    <node-align column="start" row="start" />
+                    <node-gap column="0.0u" row="2.0u" />
+                    <width type="match_parent" />
+                </props>
+            </node>
+            <node type="column" xui:name="node-2">
+                <body>
+                    <node type="row" xui:name="node-1">
+                        <body>
+                            <item pattern="b1-.+" xui:name="item-1">
+                                <props />
+                            </item>
+                            <item pattern="b2-[\d]+" xui:name="item-2" />
+                        </body>
+                        <props>
+                            <node-gap column="0.0u" row="0.0u" />
+                            <width type="match_parent" />
+                        </props>
+                    </node>
+                    <node type="column" xui:name="node-2">
+                        <body>
+                            <item pattern="c1-1" xui:name="item-1" />
+                            <item pattern="c1-2" xui:name="item-2" />
+                        </body>
+                        <props>
+                            <height type="fill_remains" />
+                            <width type="match_parent" />
+                        </props>
+                    </node>
+                </body>
+                <props>
+                    <height type="value_specified" value="20.0u" />
+                    <self-align column="start" row="center" />
+                    <width type="wrap_content" />
+                </props>
+            </node>
+            <node type="row" xui:name="node-3">
+                <body>
+                    <item pattern="d1-1" xui:name="item-1">
+                        <props>
+                            <self-align column="start" row="start" />
+                        </props>
+                    </item>
+                    <item pattern="d1-2-.+" xui:name="item-2">
+                        <props>
+                            <self-align column="start" row="end" />
+                        </props>
+                    </item>
+                </body>
+                <props>
+                    <height type="fill_remains" />
+                    <node-align column="center" row="start" />
+                    <width type="match_parent" />
+                </props>
+            </node>
+        </body>
+        <props>
+            <height type="match_parent" />
+            <node-gap column="2.0u" row="1.0u" />
+            <padding bottom="2.0u" column="2.0u" left="1.0u" right="1.0u" row="1.0u" top="2.0u" />
+            <width type="match_parent" />
+        </props>
+    </linear>
+</layout>

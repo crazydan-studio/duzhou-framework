@@ -10,28 +10,28 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/layout.xdef <p>
- * > 控制行/列方向上的布局项之间的间隔。
+ * > 控制行/列方向上的节点之间的间隔。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiLayoutNodePropsGap extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  列内间隔
+     *  列方向上间隔
      * xml name: column
      * 
      */
     private io.crazydan.duzhou.framework.ui.domain.type.XuiSize _column ;
     
     /**
-     *  行内间隔
+     *  行方向上的间隔
      * xml name: row
      * 
      */
     private io.crazydan.duzhou.framework.ui.domain.type.XuiSize _row ;
     
     /**
-     * 列内间隔
+     * 列方向上间隔
      * xml name: column
      *  
      */
@@ -50,7 +50,7 @@ public abstract class _XuiLayoutNodePropsGap extends io.nop.core.resource.compon
 
     
     /**
-     * 行内间隔
+     * 行方向上的间隔
      * xml name: row
      *  
      */

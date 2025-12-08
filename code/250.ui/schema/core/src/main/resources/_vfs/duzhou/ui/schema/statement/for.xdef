@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [For 循环]
+>
+
+@var [循环元素的变量名]
+    > 如 `user`
+@index [循环元素序号的变量名]
+    > 如 `idx`
+
+@items [待循环变量]
+    > 列表类型的变量，依次遍历其中的元素，如 `${props.users}`
+
+@begin [循环起始值]
+    > 按数值循环时的初始值，如 `0`
+@end [循环结束值]
+    > 按数值循环时的结束值，如 `10`
+@step [循环步进值]
+    > 按数值循环时的步进值，如 `2`
+-->
+<for xmlns:x="/nop/schema/xdsl.xdef"
+     x:schema="/nop/schema/xdef.xdef"
+     var="!var-name" index="var-name"
+     items="string"
+     begin="int" end="int" step="int=1"
+/>

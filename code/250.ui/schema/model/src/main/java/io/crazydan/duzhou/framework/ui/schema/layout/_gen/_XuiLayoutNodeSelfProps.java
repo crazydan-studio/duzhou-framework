@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeProps;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,21 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
-    
-    /**
-     *  布局对齐模式
-     * xml name: align
-     * 
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign _align ;
-    
-    /**
-     *  布局项间隔
-     * xml name: gap
-     * > 控制行/列方向上的布局项之间的间隔。
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsGap _gap ;
+public abstract class _XuiLayoutNodeSelfProps extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
      *  高度
@@ -38,11 +24,18 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
     private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsSize _height ;
     
     /**
-     *  布局空白
+     *  内边距
      * xml name: padding
-     * 
+     * > 用于配置上/下/左/右的空白大小。
      */
     private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsSpacing _padding ;
+    
+    /**
+     *  对齐模式
+     * xml name: self-align
+     * > 节点自身在父节点中的对齐模式，其将覆盖父节点 `<node-align/>` 所设置的缺省配置。
+     */
+    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign _selfAlign ;
     
     /**
      *  宽度
@@ -50,44 +43,6 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
      * 
      */
     private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsSize _width ;
-    
-    /**
-     * 布局对齐模式
-     * xml name: align
-     *  
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign getAlign(){
-      return _align;
-    }
-
-    
-    public void setAlign(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign value){
-        checkAllowChange();
-        
-        this._align = value;
-           
-    }
-
-    
-    /**
-     * 布局项间隔
-     * xml name: gap
-     *  > 控制行/列方向上的布局项之间的间隔。
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsGap getGap(){
-      return _gap;
-    }
-
-    
-    public void setGap(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsGap value){
-        checkAllowChange();
-        
-        this._gap = value;
-           
-    }
-
     
     /**
      * 高度
@@ -109,9 +64,9 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
 
     
     /**
-     * 布局空白
+     * 内边距
      * xml name: padding
-     *  
+     *  > 用于配置上/下/左/右的空白大小。
      */
     
     public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsSpacing getPadding(){
@@ -123,6 +78,25 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
         checkAllowChange();
         
         this._padding = value;
+           
+    }
+
+    
+    /**
+     * 对齐模式
+     * xml name: self-align
+     *  > 节点自身在父节点中的对齐模式，其将覆盖父节点 `<node-align/>` 所设置的缺省配置。
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign getSelfAlign(){
+      return _selfAlign;
+    }
+
+    
+    public void setSelfAlign(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodePropsAlign value){
+        checkAllowChange();
+        
+        this._selfAlign = value;
            
     }
 
@@ -154,13 +128,11 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._align = io.nop.api.core.util.FreezeHelper.deepFreeze(this._align);
-            
-           this._gap = io.nop.api.core.util.FreezeHelper.deepFreeze(this._gap);
-            
            this._height = io.nop.api.core.util.FreezeHelper.deepFreeze(this._height);
             
            this._padding = io.nop.api.core.util.FreezeHelper.deepFreeze(this._padding);
+            
+           this._selfAlign = io.nop.api.core.util.FreezeHelper.deepFreeze(this._selfAlign);
             
            this._width = io.nop.api.core.util.FreezeHelper.deepFreeze(this._width);
             
@@ -171,31 +143,29 @@ public abstract class _XuiLayoutNodeProps extends io.crazydan.duzhou.framework.u
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("align",this.getAlign());
-        out.putNotNull("gap",this.getGap());
         out.putNotNull("height",this.getHeight());
         out.putNotNull("padding",this.getPadding());
+        out.putNotNull("selfAlign",this.getSelfAlign());
         out.putNotNull("width",this.getWidth());
     }
 
-    public XuiLayoutNodeProps cloneInstance(){
-        XuiLayoutNodeProps instance = newInstance();
+    public XuiLayoutNodeSelfProps cloneInstance(){
+        XuiLayoutNodeSelfProps instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutNodeProps instance){
+    protected void copyTo(XuiLayoutNodeSelfProps instance){
         super.copyTo(instance);
         
-        instance.setAlign(this.getAlign());
-        instance.setGap(this.getGap());
         instance.setHeight(this.getHeight());
         instance.setPadding(this.getPadding());
+        instance.setSelfAlign(this.getSelfAlign());
         instance.setWidth(this.getWidth());
     }
 
-    protected XuiLayoutNodeProps newInstance(){
-        return (XuiLayoutNodeProps) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeSelfProps newInstance(){
+        return (XuiLayoutNodeSelfProps) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

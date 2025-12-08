@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinearColumn;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseOtherwise;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,7 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutNodeLinearColumn extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinearLine {
+public abstract class _XuiLayoutStatementChooseOtherwise extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout {
     
 
     @Override
@@ -33,19 +33,19 @@ public abstract class _XuiLayoutNodeLinearColumn extends io.crazydan.duzhou.fram
         
     }
 
-    public XuiLayoutNodeLinearColumn cloneInstance(){
-        XuiLayoutNodeLinearColumn instance = newInstance();
+    public XuiLayoutStatementChooseOtherwise cloneInstance(){
+        XuiLayoutStatementChooseOtherwise instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutNodeLinearColumn instance){
+    protected void copyTo(XuiLayoutStatementChooseOtherwise instance){
         super.copyTo(instance);
         
     }
 
-    protected XuiLayoutNodeLinearColumn newInstance(){
-        return (XuiLayoutNodeLinearColumn) ClassHelper.newInstance(getClass());
+    protected XuiLayoutStatementChooseOtherwise newInstance(){
+        return (XuiLayoutStatementChooseOtherwise) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

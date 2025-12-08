@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+           x:schema="/duzhou/ui/schema/component.xdef"
+>
+    <template>
+        <layout>
+            <linear>
+                <props>
+                    <width type="match-parent" />
+                    <height type="match-parent" />
+                    <padding row="1u" column="2u" />
+
+                    <node-gap row="1u" column="2u" />
+                </props>
+
+                <body>
+                    <node xui:name="node-1" type="row">
+                        <props>
+                            <width type="match-parent" />
+                            <height type="wrap-content" />
+
+                            <node-gap row="2u" />
+                        </props>
+
+                        <body>
+                            <item xui:name="item-1" pattern="a1">
+                                <props>
+                                    <self-align row="start" column="end" />
+                                </props>
+                            </item>
+                            <item xui:name="item-2" pattern="a2">
+                                <props>
+                                    <self-align row="center" column="center" />
+                                </props>
+                            </item>
+                            <item xui:name="item-3" pattern="a3">
+                                <props>
+                                    <self-align row="end" column="start" />
+                                </props>
+                            </item>
+                        </body>
+                    </node>
+
+                    <node xui:name="node-2" type="column">
+                        <props>
+                            <width type="wrap-content" />
+                            <height type="value-specified" value="20u" />
+                            <self-align row="center" />
+                        </props>
+
+                        <body>
+                            <node xui:name="node-1" type="row">
+                                <props>
+                                    <width type="match-parent" />
+                                </props>
+
+                                <body>
+                                    <item xui:name="item-1" pattern="b1-.+" />
+                                    <item xui:name="item-2" pattern="b2-[\d]+" />
+                                </body>
+                            </node>
+                            <node xui:name="node-2" type="column">
+                                <props>
+                                    <width type="match-parent" />
+                                    <height type="fill-remains" />
+                                </props>
+
+                                <body>
+                                    <item xui:name="item-1" pattern="c1-1" />
+                                    <item xui:name="item-2" pattern="c1-2" />
+                                </body>
+                            </node>
+                        </body>
+                    </node>
+
+                    <node xui:name="node-3" type="row">
+                        <props>
+                            <width type="match-parent" />
+                            <height type="fill-remains" />
+
+                            <node-align column="center" />
+                        </props>
+
+                        <body>
+                            <item xui:name="item-1" pattern="d1-1">
+                                <props>
+                                    <self-align row="start" />
+                                </props>
+                            </item>
+                            <item xui:name="item-2" pattern="d1-2-.+">
+                                <props>
+                                    <self-align row="end" />
+                                </props>
+                            </item>
+                        </body>
+                    </node>
+                </body>
+            </linear>
+        </layout>
+    </template>
+</component>

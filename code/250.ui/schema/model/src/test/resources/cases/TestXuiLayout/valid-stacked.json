@@ -1,0 +1,97 @@
+{
+  "location": "[26:10:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+  "xui:name": "xui-layout",
+  "root": {
+    "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+    "$tag": "stacked",
+    "body": [
+      {
+        "location": "[35:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "$tag": "item",
+        "xui:name": "item-1",
+        "layer": 0,
+        "target": "box-1"
+      },
+      {
+        "location": "[36:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "$tag": "item",
+        "xui:name": "item-2",
+        "layer": 10,
+        "props": {
+          "location": "[37:26:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+          "height": {
+            "location": "[38:30:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+            "type": "value_specified",
+            "value": "10.0u"
+          },
+          "padding": {
+            "bottom": "0.0u",
+            "left": "0.0u",
+            "right": "0.0u",
+            "top": "0.0u"
+          },
+          "selfAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "width": {
+            "type": "wrap_content"
+          }
+        },
+        "target": "box-2"
+      },
+      {
+        "location": "[41:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "$tag": "item",
+        "xui:name": "item-3",
+        "layer": 20,
+        "props": {
+          "location": "[42:26:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+          "height": {
+            "location": "[44:30:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+            "type": "match_parent"
+          },
+          "padding": {
+            "bottom": "0.0u",
+            "left": "0.0u",
+            "right": "0.0u",
+            "top": "0.0u"
+          },
+          "selfAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "width": {
+            "location": "[43:30:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+            "type": "match_parent"
+          }
+        },
+        "target": "box-3"
+      }
+    ],
+    "props": {
+      "location": "[28:18:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+      "height": {
+        "location": "[30:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "type": "match_parent"
+      },
+      "padding": {
+        "location": "[31:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "all": "2.0u",
+        "bottom": "2.0u",
+        "left": "2.0u",
+        "right": "2.0u",
+        "top": "2.0u"
+      },
+      "selfAlign": {
+        "column": "start",
+        "row": "start"
+      },
+      "width": {
+        "location": "[29:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
+        "type": "match_parent"
+      }
+    }
+  },
+  "$tag": "layout"
+}

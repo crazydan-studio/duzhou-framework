@@ -3,6 +3,8 @@ package io.crazydan.duzhou.framework.ui.schema.component.template;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeStatementChoose;
 import io.nop.api.core.util.INeedInit;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNull;
+
 public class XuiComponentTemplateNodeStatementChoose extends _XuiComponentTemplateNodeStatementChoose
         implements INeedInit {
 
@@ -13,8 +15,6 @@ public class XuiComponentTemplateNodeStatementChoose extends _XuiComponentTempla
     @Override
     public void init() {
         getWhens().forEach(XuiComponentTemplateNodeNested::init);
-        if (getOtherwise() != null) {
-            getOtherwise().init();
-        }
+        ifNotNull(getOtherwise(), XuiComponentTemplateNodeNested::init);
     }
 }

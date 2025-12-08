@@ -1,0 +1,460 @@
+{
+  "location": "[26:10:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+  "xui:name": "xui-layout",
+  "root": {
+    "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+    "xui:name": "xui-layout-root-node",
+    "body": [
+      {
+        "location": "[37:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "$tag": "node",
+        "xui:name": "node-1",
+        "body": [
+          {
+            "location": "[46:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "xui:name": "item-1",
+            "pattern": "a1",
+            "props": {
+              "location": "[47:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "location": "[48:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "column": "end",
+                "row": "start"
+              },
+              "width": {
+                "type": "wrap_content"
+              }
+            },
+            "$tag": "item"
+          },
+          {
+            "location": "[51:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "xui:name": "item-2",
+            "pattern": "a2",
+            "props": {
+              "location": "[52:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "location": "[53:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "column": "center",
+                "row": "center"
+              },
+              "width": {
+                "type": "wrap_content"
+              }
+            },
+            "$tag": "item"
+          },
+          {
+            "location": "[56:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "xui:name": "item-3",
+            "pattern": "a3",
+            "props": {
+              "location": "[57:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "location": "[58:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "column": "start",
+                "row": "end"
+              },
+              "width": {
+                "type": "wrap_content"
+              }
+            },
+            "$tag": "item"
+          }
+        ],
+        "props": {
+          "location": "[38:26:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+          "height": {
+            "location": "[40:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "wrap_content"
+          },
+          "padding": {
+            "bottom": "0.0u",
+            "left": "0.0u",
+            "right": "0.0u",
+            "top": "0.0u"
+          },
+          "selfAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "width": {
+            "location": "[39:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "match_parent"
+          },
+          "nodeAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "nodeGap": {
+            "location": "[42:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "column": "0.0u",
+            "row": "2.0u"
+          }
+        },
+        "type": "row"
+      },
+      {
+        "location": "[64:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "$tag": "node",
+        "xui:name": "node-2",
+        "body": [
+          {
+            "location": "[72:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "$tag": "node",
+            "xui:name": "node-1",
+            "body": [
+              {
+                "location": "[78:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "xui:name": "item-1",
+                "pattern": "b1-.+",
+                "props": {
+                  "height": {
+                    "type": "wrap_content"
+                  },
+                  "padding": {
+                    "bottom": "0.0u",
+                    "left": "0.0u",
+                    "right": "0.0u",
+                    "top": "0.0u"
+                  },
+                  "selfAlign": {
+                    "column": "start",
+                    "row": "start"
+                  },
+                  "width": {
+                    "type": "wrap_content"
+                  }
+                },
+                "$tag": "item"
+              },
+              {
+                "location": "[79:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "xui:name": "item-2",
+                "pattern": "b2-[\\d]+",
+                "props": {
+                  "height": {
+                    "type": "wrap_content"
+                  },
+                  "padding": {
+                    "bottom": "0.0u",
+                    "left": "0.0u",
+                    "right": "0.0u",
+                    "top": "0.0u"
+                  },
+                  "selfAlign": {
+                    "column": "start",
+                    "row": "start"
+                  },
+                  "width": {
+                    "type": "wrap_content"
+                  }
+                },
+                "$tag": "item"
+              }
+            ],
+            "props": {
+              "location": "[73:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "column": "start",
+                "row": "start"
+              },
+              "width": {
+                "location": "[74:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "type": "match_parent"
+              },
+              "nodeAlign": {
+                "column": "start",
+                "row": "start"
+              },
+              "nodeGap": {
+                "column": "0.0u",
+                "row": "0.0u"
+              }
+            },
+            "type": "row"
+          },
+          {
+            "location": "[82:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "$tag": "node",
+            "xui:name": "node-2",
+            "body": [
+              {
+                "location": "[89:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "xui:name": "item-1",
+                "pattern": "c1-1",
+                "props": {
+                  "height": {
+                    "type": "wrap_content"
+                  },
+                  "padding": {
+                    "bottom": "0.0u",
+                    "left": "0.0u",
+                    "right": "0.0u",
+                    "top": "0.0u"
+                  },
+                  "selfAlign": {
+                    "column": "start",
+                    "row": "start"
+                  },
+                  "width": {
+                    "type": "wrap_content"
+                  }
+                },
+                "$tag": "item"
+              },
+              {
+                "location": "[90:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "xui:name": "item-2",
+                "pattern": "c1-2",
+                "props": {
+                  "height": {
+                    "type": "wrap_content"
+                  },
+                  "padding": {
+                    "bottom": "0.0u",
+                    "left": "0.0u",
+                    "right": "0.0u",
+                    "top": "0.0u"
+                  },
+                  "selfAlign": {
+                    "column": "start",
+                    "row": "start"
+                  },
+                  "width": {
+                    "type": "wrap_content"
+                  }
+                },
+                "$tag": "item"
+              }
+            ],
+            "props": {
+              "location": "[83:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "location": "[85:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "type": "fill_remains"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "column": "start",
+                "row": "start"
+              },
+              "width": {
+                "location": "[84:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "type": "match_parent"
+              },
+              "nodeAlign": {
+                "column": "start",
+                "row": "start"
+              },
+              "nodeGap": {
+                "column": "0.0u",
+                "row": "0.0u"
+              }
+            },
+            "type": "column"
+          }
+        ],
+        "props": {
+          "location": "[65:26:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+          "height": {
+            "location": "[67:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "value_specified",
+            "value": "20.0u"
+          },
+          "padding": {
+            "bottom": "0.0u",
+            "left": "0.0u",
+            "right": "0.0u",
+            "top": "0.0u"
+          },
+          "selfAlign": {
+            "location": "[68:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "column": "start",
+            "row": "center"
+          },
+          "width": {
+            "location": "[66:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "wrap_content"
+          },
+          "nodeAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "nodeGap": {
+            "column": "0.0u",
+            "row": "0.0u"
+          }
+        },
+        "type": "column"
+      },
+      {
+        "location": "[96:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "$tag": "node",
+        "xui:name": "node-3",
+        "body": [
+          {
+            "location": "[105:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "xui:name": "item-1",
+            "pattern": "d1-1",
+            "props": {
+              "location": "[106:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "location": "[107:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "column": "start",
+                "row": "start"
+              },
+              "width": {
+                "type": "wrap_content"
+              }
+            },
+            "$tag": "item"
+          },
+          {
+            "location": "[110:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "xui:name": "item-2",
+            "pattern": "d1-2-.+",
+            "props": {
+              "location": "[111:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+              "height": {
+                "type": "wrap_content"
+              },
+              "padding": {
+                "bottom": "0.0u",
+                "left": "0.0u",
+                "right": "0.0u",
+                "top": "0.0u"
+              },
+              "selfAlign": {
+                "location": "[112:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+                "column": "start",
+                "row": "end"
+              },
+              "width": {
+                "type": "wrap_content"
+              }
+            },
+            "$tag": "item"
+          }
+        ],
+        "props": {
+          "location": "[97:26:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+          "height": {
+            "location": "[99:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "fill_remains"
+          },
+          "padding": {
+            "bottom": "0.0u",
+            "left": "0.0u",
+            "right": "0.0u",
+            "top": "0.0u"
+          },
+          "selfAlign": {
+            "column": "start",
+            "row": "start"
+          },
+          "width": {
+            "location": "[98:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "type": "match_parent"
+          },
+          "nodeAlign": {
+            "location": "[101:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+            "column": "center",
+            "row": "start"
+          },
+          "nodeGap": {
+            "column": "0.0u",
+            "row": "0.0u"
+          }
+        },
+        "type": "row"
+      }
+    ],
+    "props": {
+      "location": "[28:18:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+      "height": {
+        "location": "[30:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "type": "match_parent"
+      },
+      "padding": {
+        "location": "[31:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "bottom": "2.0u",
+        "column": "2.0u",
+        "left": "1.0u",
+        "right": "1.0u",
+        "row": "1.0u",
+        "top": "2.0u"
+      },
+      "selfAlign": {
+        "column": "start",
+        "row": "start"
+      },
+      "width": {
+        "location": "[29:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "type": "match_parent"
+      },
+      "nodeAlign": {
+        "column": "start",
+        "row": "start"
+      },
+      "nodeGap": {
+        "location": "[33:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
+        "column": "2.0u",
+        "row": "1.0u"
+      }
+    },
+    "type": "column",
+    "$tag": "linear"
+  },
+  "$tag": "layout"
+}

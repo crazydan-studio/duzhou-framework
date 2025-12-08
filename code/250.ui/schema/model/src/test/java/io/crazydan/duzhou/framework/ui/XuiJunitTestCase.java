@@ -22,6 +22,7 @@ package io.crazydan.duzhou.framework.ui;
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout;
 import io.nop.core.lang.xml.XNode;
 
 /**
@@ -30,6 +31,10 @@ import io.nop.core.lang.xml.XNode;
  * @date 2025-11-22
  */
 public abstract class XuiJunitTestCase extends NopJunitTestCase {
+
+    protected XNode toXNode(XuiLayout layout) {
+        return toXNode(XuiConstants.XDSL_SCHEMA_LAYOUT, layout);
+    }
 
     protected XNode toXNode(XuiComponent component) {
         return toXNode(XuiConstants.XDSL_SCHEMA_COMPONENT, component);

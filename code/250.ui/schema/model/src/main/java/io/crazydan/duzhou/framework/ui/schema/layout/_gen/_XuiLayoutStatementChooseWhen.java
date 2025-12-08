@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,30 +14,30 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayout extends io.nop.core.resource.component.AbstractComponentModel {
+public abstract class _XuiLayoutStatementChooseWhen extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout implements io.crazydan.duzhou.framework.ui.XuiNamed{
     
     /**
-     *  
-     * xml name: 
-     * 
+     *  条件表达式
+     * xml name: test
+     * > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
      */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot _root ;
+    private java.lang.String _test ;
     
     /**
-     * 
-     * xml name: 
-     *  
+     * 条件表达式
+     * xml name: test
+     *  > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot getRoot(){
-      return _root;
+    public java.lang.String getTest(){
+      return _test;
     }
 
     
-    public void setRoot(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot value){
+    public void setTest(java.lang.String value){
         checkAllowChange();
         
-        this._root = value;
+        this._test = value;
            
     }
 
@@ -50,8 +50,6 @@ public abstract class _XuiLayout extends io.nop.core.resource.component.Abstract
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._root = io.nop.api.core.util.FreezeHelper.deepFreeze(this._root);
-            
         }
     }
 
@@ -59,23 +57,23 @@ public abstract class _XuiLayout extends io.nop.core.resource.component.Abstract
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("root",this.getRoot());
+        out.putNotNull("test",this.getTest());
     }
 
-    public XuiLayout cloneInstance(){
-        XuiLayout instance = newInstance();
+    public XuiLayoutStatementChooseWhen cloneInstance(){
+        XuiLayoutStatementChooseWhen instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayout instance){
+    protected void copyTo(XuiLayoutStatementChooseWhen instance){
         super.copyTo(instance);
         
-        instance.setRoot(this.getRoot());
+        instance.setTest(this.getTest());
     }
 
-    protected XuiLayout newInstance(){
-        return (XuiLayout) ClassHelper.newInstance(getClass());
+    protected XuiLayoutStatementChooseWhen newInstance(){
+        return (XuiLayoutStatementChooseWhen) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

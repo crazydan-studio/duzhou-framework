@@ -19,21 +19,21 @@ public abstract class _XuiLayoutNodePropsAlign extends io.nop.core.resource.comp
     /**
      *  列内对齐模式
      * xml name: column
-     * > 在列方向上的对齐模式
+     * > 在列方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
      */
     private io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign _column ;
     
     /**
      *  行内对齐模式
      * xml name: row
-     * > 在行方向上的对齐模式
+     * > 在行方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
      */
     private io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign _row ;
     
     /**
      * 列内对齐模式
      * xml name: column
-     *  > 在列方向上的对齐模式
+     *  > 在列方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
      */
     
     public io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign getColumn(){
@@ -52,7 +52,7 @@ public abstract class _XuiLayoutNodePropsAlign extends io.nop.core.resource.comp
     /**
      * 行内对齐模式
      * xml name: row
-     *  > 在行方向上的对齐模式
+     *  > 在行方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
      */
     
     public io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign getRow(){
