@@ -20,12 +20,16 @@
 package io.crazydan.duzhou.framework.ui.domain.type;
 
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.convert.ConvertHelper;
+import io.nop.api.core.convert.ITypeConverter;
+import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.commons.util.objects.ValueWithLocation;
@@ -35,7 +39,6 @@ import io.nop.core.lang.json.IJsonSerializable;
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
-import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
 /**
  * 尺寸
@@ -69,6 +72,12 @@ public class XuiSize implements IJsonSerializable, CodeSnippet {
     }
 
     public static final XuiSize NONE = new XuiSize(0, Unit.base);
+    public static final ITypeConverter TYPE_CONVERTER = (value, errorFactory) -> {
+        if (value instanceof XuiSize) {
+            return value;
+        }
+        return parse(value, errorFactory);
+    };
 
     /** 值 */
     public final float value;
@@ -96,8 +105,18 @@ public class XuiSize implements IJsonSerializable, CodeSnippet {
         return XuiExpression.create(XuiSize.class, vl, XuiSize::parse);
     }
 
-    public static XuiSize parse(SourceLocation loc, String s) {
-        UnitNumber nut = extractNumberAndUnit(s);
+    public static XuiSize parse(SourceLocation loc, Object s) {
+        return parse(s,
+                     (errorCode) -> new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).loc(loc)
+                                                                                  .param(ARG_NAMES,
+                                                                                         Arrays.stream(Unit.values())
+                                                                                               .map(u -> u.label)
+                                                                                               .collect(Collectors.joining(
+                                                                                                       ", "))));
+    }
+
+    public static XuiSize parse(Object s, Function<ErrorCode, NopException> errorFactory) {
+        UnitNumber nut = s != null ? extractNumberAndUnit(s.toString()) : null;
         if (nut == null) {
             return null;
         }
@@ -113,12 +132,7 @@ public class XuiSize implements IJsonSerializable, CodeSnippet {
             }
         }
 
-        throw new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).loc(loc)
-                                                            .param(ARG_VALUE, s)
-                                                            .param(ARG_NAMES,
-                                                                   Arrays.stream(Unit.values())
-                                                                         .map(u -> u.label)
-                                                                         .collect(Collectors.joining(", ")));
+        return ConvertHelper.handleError(ERR_DOMAIN_TYPE_UNKNOWN_SIZE, null, XuiSize.class, s, errorFactory);
     }
 
     @Override

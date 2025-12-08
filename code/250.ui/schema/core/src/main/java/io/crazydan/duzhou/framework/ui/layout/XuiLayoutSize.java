@@ -30,11 +30,11 @@ import io.nop.api.core.annotations.core.StaticFactoryMethod;
  * @date 2025-12-06
  */
 public enum XuiLayoutSize {
-    /** 与父容器相同 */
+    /** 与父容器尺寸相同 */
     @Option("match-parent") match_parent,
     /** 占满父容器的剩余空间 */
     @Option("fill-remains") fill_remains,
-    /** 自适应内容 */
+    /** 自适应内容尺寸 */
     @Option("wrap-content") wrap_content,
 
     /** 设定值 */

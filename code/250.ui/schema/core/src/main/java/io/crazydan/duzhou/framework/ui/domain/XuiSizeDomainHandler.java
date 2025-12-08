@@ -54,6 +54,6 @@ public class XuiSizeDomainHandler extends SimpleStdDomainHandler {
 
     @Override
     public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
-        return XuiSize.parse(loc, (String) text);
+        return XuiSize.parse(loc, text);
     }
 }

@@ -20,12 +20,17 @@
 package io.crazydan.duzhou.framework.ui.initialize;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.domain.XuiExprDomainHandler;
 import io.crazydan.duzhou.framework.ui.domain.XuiSizeDomainHandler;
 import io.crazydan.duzhou.framework.ui.domain.XuiStyleDomainHandler;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.nop.api.core.convert.ITypeConverter;
+import io.nop.api.core.convert.SysConverterRegistry;
 import io.nop.commons.lang.impl.Cancellable;
 import io.nop.core.CoreConstants;
 import io.nop.core.initialize.ICoreInitializer;
@@ -46,6 +51,16 @@ public class XuiCoreInitializer implements ICoreInitializer {
 
     @Override
     public void initialize() {
+        registerDomainHandlers();
+        registerTypeConverters();
+    }
+
+    @Override
+    public void destroy() {
+        this.cancellable.cancel();
+    }
+
+    private void registerDomainHandlers() {
         List<IStdDomainHandler> handlers = //
                 Arrays.asList( //
                                XuiSizeDomainHandler.INSTANCE,
@@ -61,8 +76,20 @@ public class XuiCoreInitializer implements ICoreInitializer {
         });
     }
 
-    @Override
-    public void destroy() {
-        this.cancellable.cancel();
+    private void registerTypeConverters() {
+        Map<Class<?>, ITypeConverter> converters = new HashMap<>() {{
+            put(XuiSize.class, XuiSize.TYPE_CONVERTER);
+        }};
+
+        SysConverterRegistry registry = SysConverterRegistry.instance();
+        converters.forEach((clz, converter) -> {
+            registry.registerConverter("to" + clz.getSimpleName(), clz, converter);
+        });
+
+        this.cancellable.appendOnCancelTask(() -> {
+            converters.forEach((clz, converter) -> {
+                registry.unregisterTypeConverter("to" + clz.getSimpleName(), clz, converter);
+            });
+        });
     }
 }
