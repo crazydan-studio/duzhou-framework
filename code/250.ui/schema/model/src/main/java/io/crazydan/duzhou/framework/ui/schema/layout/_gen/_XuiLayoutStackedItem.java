@@ -17,9 +17,17 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
     
     /**
+     *  
+     * xml name: 
+     * 
+     */
+    private java.lang.String _$tag ;
+    
+    /**
      *  层序号
      * xml name: layer
-     * > 布局项所处在的 z 轴位置。该值越大，则布局项在 UI 层面越靠近上层
+     * > 布局项所处在的 z 轴位置。该值越大，则布局项在 UI 层面越靠近上层。
+     * > 不同层的层序号不能相同，但可以不相邻
      */
     private int _layer ;
     
@@ -38,9 +46,29 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
     private java.lang.String _target ;
     
     /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.lang.String get$tag(){
+      return _$tag;
+    }
+
+    
+    public void set$tag(java.lang.String value){
+        checkAllowChange();
+        
+        this._$tag = value;
+           
+    }
+
+    
+    /**
      * 层序号
      * xml name: layer
-     *  > 布局项所处在的 z 轴位置。该值越大，则布局项在 UI 层面越靠近上层
+     *  > 布局项所处在的 z 轴位置。该值越大，则布局项在 UI 层面越靠近上层。
+     * > 不同层的层序号不能相同，但可以不相邻
      */
     
     public int getLayer(){
@@ -111,6 +139,7 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("layer",this.getLayer());
         out.putNotNull("props",this.getProps());
         out.putNotNull("target",this.getTarget());
@@ -125,6 +154,7 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
     protected void copyTo(XuiLayoutStackedItem instance){
         super.copyTo(instance);
         
+        instance.set$tag(this.get$tag());
         instance.setLayer(this.getLayer());
         instance.setProps(this.getProps());
         instance.setTarget(this.getTarget());

@@ -24,7 +24,7 @@
 >
     <template>
         <layout>
-            <linear>
+            <linear type="column">
                 <props>
                     <width type="match-parent" />
                     <height type="match-parent" />

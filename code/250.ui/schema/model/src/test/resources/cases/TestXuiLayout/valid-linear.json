@@ -4,12 +4,13 @@
   "root": {
     "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-linear.xui",
     "xui:name": "xui-layout-root-node",
-    "body": [
+    "$tag": "linear",
+    "children": [
       {
         "location": "[37:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-        "$tag": "node",
         "xui:name": "node-1",
-        "body": [
+        "$tag": "node",
+        "children": [
           {
             "location": "[46:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-1",
@@ -123,14 +124,14 @@
       },
       {
         "location": "[64:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-        "$tag": "node",
         "xui:name": "node-2",
-        "body": [
+        "$tag": "node",
+        "children": [
           {
             "location": "[72:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-            "$tag": "node",
             "xui:name": "node-1",
-            "body": [
+            "$tag": "node",
+            "children": [
               {
                 "location": "[78:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-1",
@@ -212,9 +213,9 @@
           },
           {
             "location": "[82:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-            "$tag": "node",
             "xui:name": "node-2",
-            "body": [
+            "$tag": "node",
+            "children": [
               {
                 "location": "[89:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-1",
@@ -331,9 +332,9 @@
       },
       {
         "location": "[96:22:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-        "$tag": "node",
         "xui:name": "node-3",
-        "body": [
+        "$tag": "node",
+        "children": [
           {
             "location": "[105:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-1",
@@ -453,8 +454,7 @@
         "row": "1.0u"
       }
     },
-    "type": "column",
-    "$tag": "linear"
+    "type": "column"
   },
   "$tag": "layout"
 }

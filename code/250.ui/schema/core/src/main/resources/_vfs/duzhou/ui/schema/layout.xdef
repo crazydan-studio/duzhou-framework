@@ -57,7 +57,7 @@
             <props xdef:ref="XuiLayoutNodeSelfProps" />
 
             <body xdef:body-type="list" xdef:key-attr="xui:name"
-                  xdef:bean-child-name="item"
+                  xdef:bean-prop="children" xdef:bean-child-name="child"
                   xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem>"
                   xdef:bean-sub-type-prop="$tag"
             >
@@ -116,14 +116,14 @@
     <xdef:define xdef:name="XuiLayoutLinearNode"
                  xdef:ref="XuiLayoutNodeNamed"
                  xdef:bean-tag-prop="$tag"
-                 type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type=column"
+                 type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type"
     >
         <!-- [节点配置] -->
         <props xdef:ref="XuiLayoutNodeNestedProps" />
 
         <!-- [子节点] -->
         <body xdef:body-type="list" xdef:key-attr="xui:name"
-              xdef:bean-child-name="node"
+              xdef:bean-prop="children" xdef:bean-child-name="child"
               xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
               xdef:bean-sub-type-prop="$tag"
         >

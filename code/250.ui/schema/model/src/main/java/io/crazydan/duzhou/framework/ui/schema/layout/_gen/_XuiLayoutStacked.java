@@ -30,7 +30,7 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
      * xml name: body
      * 
      */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> _body = KeyedList.emptyList();
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> _children = KeyedList.emptyList();
     
     /**
      *  布局配置
@@ -64,43 +64,43 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> getBody(){
-      return _body;
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> getChildren(){
+      return _children;
     }
 
     
-    public void setBody(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> value){
+    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> value){
         checkAllowChange();
         
-        this._body = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem::getXuiName);
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem::getXuiName);
            
     }
 
     
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem getItem(String name){
-        return this._body.getByKey(name);
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem getChild(String name){
+        return this._children.getByKey(name);
     }
 
-    public boolean hasItem(String name){
-        return this._body.containsKey(name);
+    public boolean hasChild(String name){
+        return this._children.containsKey(name);
     }
 
-    public void addItem(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem item) {
+    public void addChild(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem item) {
         checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> list = this.getBody();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> list = this.getChildren();
         if (list == null || list.isEmpty()) {
             list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem::getXuiName);
-            setBody(list);
+            setChildren(list);
         }
         list.add(item);
     }
     
-    public java.util.Set<String> keySet_body(){
-        return this._body.keySet();
+    public java.util.Set<String> keySet_children(){
+        return this._children.keySet();
     }
 
-    public boolean hasBody(){
-        return !this._body.isEmpty();
+    public boolean hasChildren(){
+        return !this._children.isEmpty();
     }
     
     /**
@@ -130,7 +130,7 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._body = io.nop.api.core.util.FreezeHelper.deepFreeze(this._body);
+           this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
             
            this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
@@ -142,7 +142,7 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         super.outputJson(out);
         
         out.putNotNull("$tag",this.get$tag());
-        out.putNotNull("body",this.getBody());
+        out.putNotNull("children",this.getChildren());
         out.putNotNull("props",this.getProps());
     }
 
@@ -156,7 +156,7 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         super.copyTo(instance);
         
         instance.set$tag(this.get$tag());
-        instance.setBody(this.getBody());
+        instance.setChildren(this.getChildren());
         instance.setProps(this.getProps());
     }
 

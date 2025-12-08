@@ -4,18 +4,18 @@
   "root": {
     "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
     "$tag": "stacked",
-    "body": [
+    "children": [
       {
         "location": "[35:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
-        "$tag": "item",
         "xui:name": "item-1",
+        "$tag": "item",
         "layer": 0,
         "target": "box-1"
       },
       {
         "location": "[36:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
-        "$tag": "item",
         "xui:name": "item-2",
+        "$tag": "item",
         "layer": 10,
         "props": {
           "location": "[37:26:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
@@ -42,8 +42,8 @@
       },
       {
         "location": "[41:22:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
-        "$tag": "item",
         "xui:name": "item-3",
+        "$tag": "item",
         "layer": 20,
         "props": {
           "location": "[42:26:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
