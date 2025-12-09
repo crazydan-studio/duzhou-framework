@@ -19,7 +19,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeItem {
+public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
     
     /**
      *  
@@ -27,6 +27,20 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
      * 
      */
     private java.lang.String _$tag ;
+    
+    /**
+     *  匹配规则
+     * xml name: pattern
+     * > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
+     */
+    private java.lang.String _pattern ;
+    
+    /**
+     *  布局项配置
+     * xml name: props
+     * 
+     */
+    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps _props ;
     
     /**
      * 
@@ -47,6 +61,44 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
     }
 
     
+    /**
+     * 匹配规则
+     * xml name: pattern
+     *  > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
+     */
+    
+    public java.lang.String getPattern(){
+      return _pattern;
+    }
+
+    
+    public void setPattern(java.lang.String value){
+        checkAllowChange();
+        
+        this._pattern = value;
+           
+    }
+
+    
+    /**
+     * 布局项配置
+     * xml name: props
+     *  
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -55,6 +107,8 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
+            
         }
     }
 
@@ -63,6 +117,8 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
         super.outputJson(out);
         
         out.putNotNull("$tag",this.get$tag());
+        out.putNotNull("pattern",this.getPattern());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiLayoutLinearItem cloneInstance(){
@@ -75,6 +131,8 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
         super.copyTo(instance);
         
         instance.set$tag(this.get$tag());
+        instance.setPattern(this.getPattern());
+        instance.setProps(this.getProps());
     }
 
     protected XuiLayoutLinearItem newInstance(){

@@ -127,11 +127,26 @@
               xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
               xdef:bean-sub-type-prop="$tag"
         >
+            <!-- [布局项]
+            > - 布局项本身也是**布局节点**，但其不可嵌套其他布局节点，其为布局树的终点；
+            > - 布局项所对应的是确定的**待布局目标**，比如组件；
+            > - 通过 `pattern` 其可以匹配多个待布局目标，且这些目标拥有相同的布局配置，
+            >   一般用于布局 `<for/>` 循环产生的节点；
+            > - 若 `pattern` 未匹配到任何待布局目标，则该布局项将被视为不存在，其不影响其他布局节点；
+            > - 若某个/某些待布局目标没有被任何布局项匹配，则其不参与布局，也不存在于 UI 树中；
+
+            @pattern [匹配规则]
+                > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
+            -->
             <item xdef:name="XuiLayoutLinearItem"
-                  xdef:ref="XuiLayoutNodeItem"
+                  xdef:ref="XuiLayoutNodeNamed"
                   xdef:bean-tag-prop="$tag"
                   xui:name="!ns-name"
-            />
+                  pattern="!regex"
+            >
+                <!-- [布局项配置] -->
+                <props xdef:ref="XuiLayoutNodeSelfProps" />
+            </item>
 
             <node xdef:ref="XuiLayoutLinearNode"
                   xui:name="!ns-name"
@@ -148,25 +163,6 @@
                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                  xui:name="!ns-name"
     />
-
-    <!-- [布局项]
-    > - 布局项本身也是**布局节点**，但其不可嵌套其他布局节点，其为布局树的终点；
-    > - 布局项所对应的是确定的**待布局目标**，比如组件；
-    > - 通过 `pattern` 其可以匹配多个待布局目标，且这些目标拥有相同的布局配置，
-    >   一般用于布局 `<for/>` 循环产生的节点；
-    > - 若 `pattern` 未匹配到任何待布局目标，则该布局项将被视为不存在，其不影响其他布局节点；
-    > - 若某个/某些待布局目标没有被任何布局项匹配，则其不参与布局，也不存在于 UI 树中；
-
-    @pattern [匹配规则]
-        > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
-    -->
-    <xdef:define xdef:name="XuiLayoutNodeItem"
-                 xdef:ref="XuiLayoutNodeNamed"
-                 pattern="!regex"
-    >
-        <!-- [布局项配置] -->
-        <props xdef:ref="XuiLayoutNodeSelfProps" />
-    </xdef:define>
 
     <!-- Start: 布局配置 -->
 

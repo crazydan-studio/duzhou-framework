@@ -92,7 +92,7 @@
                 xdef:ref="XuiComponentTemplateNodeSlottable"
                 xui:name="!ns-name"
                 name="#!ns-name"
-                xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="attrs"
+                xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
         <!-- [组件插槽]
         > 组件插槽用于控制其嵌套子组件的嵌入位置。
@@ -120,7 +120,7 @@
               xdef:bean-tag-prop="$tag"
               xui:name="!ns-name" xui:slot="ns-name"
               as-html="boolean"
-              xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="attrs"
+              xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
               xdef:value="string" xdef:bean-body-prop="value"
         />
 
@@ -131,7 +131,7 @@
         <xdef:unknown-tag xdef:name="XuiComponentTemplateNodeAny"
                           xdef:ref="XuiComponentTemplateNodeSlottable"
                           xui:name="!ns-name"
-                          xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="attrs"
+                          xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
 
         <!-- End: 组件模版树节点 -->

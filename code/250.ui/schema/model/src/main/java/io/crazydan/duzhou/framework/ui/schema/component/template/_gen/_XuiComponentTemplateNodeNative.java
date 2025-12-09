@@ -23,13 +23,6 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeSlottable {
     
     /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.util.Map<java.lang.String,java.lang.Object> _attrs ;
-    
-    /**
      *  原生组件名
      * xml name: name
      * 
@@ -37,27 +30,11 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     private java.lang.String _name ;
     
     /**
-     * 
-     * xml name: 
      *  
+     * xml name: 
+     * 
      */
-    
-    public java.util.Map<java.lang.String,java.lang.Object> getAttrs(){
-      return _attrs;
-    }
-
-    
-    public void setAttrs(java.util.Map<java.lang.String,java.lang.Object> value){
-        checkAllowChange();
-        
-        this._attrs = value;
-           
-    }
-
-    
-    public boolean hasAttrs(){
-        return this._attrs != null && !this._attrs.isEmpty();
-    }
+    private java.util.Map<java.lang.String,java.lang.Object> _props ;
     
     /**
      * 原生组件名
@@ -78,6 +55,29 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     }
 
     
+    /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.util.Map<java.lang.String,java.lang.Object> getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(java.util.Map<java.lang.String,java.lang.Object> value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
+    public boolean hasProps(){
+        return this._props != null && !this._props.isEmpty();
+    }
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -86,7 +86,7 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._attrs = io.nop.api.core.util.FreezeHelper.deepFreeze(this._attrs);
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
         }
     }
@@ -95,8 +95,8 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("attrs",this.getAttrs());
         out.putNotNull("name",this.getName());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiComponentTemplateNodeNative cloneInstance(){
@@ -108,8 +108,8 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     protected void copyTo(XuiComponentTemplateNodeNative instance){
         super.copyTo(instance);
         
-        instance.setAttrs(this.getAttrs());
         instance.setName(this.getName());
+        instance.setProps(this.getProps());
     }
 
     protected XuiComponentTemplateNodeNative newInstance(){

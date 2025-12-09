@@ -22,7 +22,7 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
      * xml name: 
      * 
      */
-    private java.util.Map<java.lang.String,java.lang.Object> _attrs ;
+    private java.util.Map<java.lang.String,java.lang.Object> _props ;
     
     /**
      * 
@@ -30,21 +30,21 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
      *  
      */
     
-    public java.util.Map<java.lang.String,java.lang.Object> getAttrs(){
-      return _attrs;
+    public java.util.Map<java.lang.String,java.lang.Object> getProps(){
+      return _props;
     }
 
     
-    public void setAttrs(java.util.Map<java.lang.String,java.lang.Object> value){
+    public void setProps(java.util.Map<java.lang.String,java.lang.Object> value){
         checkAllowChange();
         
-        this._attrs = value;
+        this._props = value;
            
     }
 
     
-    public boolean hasAttrs(){
-        return this._attrs != null && !this._attrs.isEmpty();
+    public boolean hasProps(){
+        return this._props != null && !this._props.isEmpty();
     }
     
 
@@ -55,7 +55,7 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._attrs = io.nop.api.core.util.FreezeHelper.deepFreeze(this._attrs);
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
         }
     }
@@ -64,7 +64,7 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("attrs",this.getAttrs());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiComponentTemplateNodeAny cloneInstance(){
@@ -76,7 +76,7 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
     protected void copyTo(XuiComponentTemplateNodeAny instance){
         super.copyTo(instance);
         
-        instance.setAttrs(this.getAttrs());
+        instance.setProps(this.getProps());
     }
 
     protected XuiComponentTemplateNodeAny newInstance(){

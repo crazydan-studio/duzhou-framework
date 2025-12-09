@@ -35,7 +35,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
      * xml name: 
      * 
      */
-    private java.util.Map<java.lang.String,java.lang.Object> _attrs ;
+    private java.util.Map<java.lang.String,java.lang.Object> _props ;
     
     /**
      *  
@@ -88,21 +88,21 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
      *  
      */
     
-    public java.util.Map<java.lang.String,java.lang.Object> getAttrs(){
-      return _attrs;
+    public java.util.Map<java.lang.String,java.lang.Object> getProps(){
+      return _props;
     }
 
     
-    public void setAttrs(java.util.Map<java.lang.String,java.lang.Object> value){
+    public void setProps(java.util.Map<java.lang.String,java.lang.Object> value){
         checkAllowChange();
         
-        this._attrs = value;
+        this._props = value;
            
     }
 
     
-    public boolean hasAttrs(){
-        return this._attrs != null && !this._attrs.isEmpty();
+    public boolean hasProps(){
+        return this._props != null && !this._props.isEmpty();
     }
     
     /**
@@ -132,7 +132,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._attrs = io.nop.api.core.util.FreezeHelper.deepFreeze(this._attrs);
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
         }
     }
@@ -143,7 +143,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
         
         out.putNotNull("$tag",this.get$tag());
         out.putNotNull("asHtml",this.getAsHtml());
-        out.putNotNull("attrs",this.getAttrs());
+        out.putNotNull("props",this.getProps());
         out.putNotNull("value",this.getValue());
     }
 
@@ -158,7 +158,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
         
         instance.set$tag(this.get$tag());
         instance.setAsHtml(this.getAsHtml());
-        instance.setAttrs(this.getAttrs());
+        instance.setProps(this.getProps());
         instance.setValue(this.getValue());
     }
 
