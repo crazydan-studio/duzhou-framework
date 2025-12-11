@@ -2,157 +2,169 @@
   "location": "[28:6:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
   "xui:name": "xui-template-root-node",
   "$tag": "template",
-  "children": [
-    {
-      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-1-text_0",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-1-text"
-      },
-      "value": "Number 1 #0"
-    },
-    {
-      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-1-text_1",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-1-text"
-      },
-      "value": "Number 2 #1"
-    },
-    {
-      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-1-text_2",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-1-text"
-      },
-      "value": "Number 3 #2"
-    },
-    {
-      "location": "[30:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-1-text_3",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-1-text"
-      },
-      "value": "Number 4 #3"
-    },
-    {
-      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-text_0",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-text"
-      },
-      "value": "Item 12 #0"
-    },
-    {
-      "location": "[40:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-if-text_0",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-if-text"
-      },
-      "value": "IF2: Item 12 #0"
-    },
-    {
-      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-text_1",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-text"
-      },
-      "value": "Item 15 #1"
-    },
-    {
-      "location": "[40:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-if-text_1",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-if-text"
-      },
-      "value": "IF2: Item 15 #1"
-    },
-    {
-      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-text_2",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-text"
-      },
-      "value": "Item 21 #2"
-    },
-    {
-      "location": "[40:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-if-text_2",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-if-text"
-      },
-      "value": "IF2: Item 21 #2"
-    },
-    {
-      "location": "[37:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-text_3",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-text"
-      },
-      "value": "Item 34 #3"
-    },
-    {
-      "location": "[40:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "for-2-if-text_3",
-      "$tag": "Text",
-      "attrs": {
-        "raw-xui:name": "for-2-if-text"
-      },
-      "value": "IF2: Item 34 #3"
-    },
-    {
-      "location": "[44:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-      "xui:name": "button-1",
-      "$tag": "Button",
-      "children": [
-        {
-          "location": "[52:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-          "xui:name": "for-2-text_0",
-          "$tag": "Text",
-          "attrs": {
-            "raw-xui:name": "for-2-text"
-          },
-          "value": "Item 12 #0"
+  "body": {
+    "location": "[29:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+    "xui:name": "xui-template-node-body",
+    "$tag": "body",
+    "children": [
+      {
+        "location": "[31:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-1-text_0",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-1-text"
         },
-        {
-          "location": "[52:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-          "xui:name": "for-2-text_1",
-          "$tag": "Text",
-          "attrs": {
-            "raw-xui:name": "for-2-text"
-          },
-          "value": "Item 15 #1"
+        "value": "Number 1 #0"
+      },
+      {
+        "location": "[31:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-1-text_1",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-1-text"
         },
-        {
-          "location": "[52:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-          "xui:name": "for-2-text_2",
-          "$tag": "Text",
-          "attrs": {
-            "raw-xui:name": "for-2-text"
-          },
-          "value": "Item 21 #2"
+        "value": "Number 2 #1"
+      },
+      {
+        "location": "[31:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-1-text_2",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-1-text"
         },
-        {
-          "location": "[52:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
-          "xui:name": "for-2-text_3",
-          "$tag": "Text",
-          "attrs": {
-            "raw-xui:name": "for-2-text"
-          },
-          "value": "Item 34 #3"
-        }
-      ]
-    }
-  ]
+        "value": "Number 3 #2"
+      },
+      {
+        "location": "[31:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-1-text_3",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-1-text"
+        },
+        "value": "Number 4 #3"
+      },
+      {
+        "location": "[38:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-text_0",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-text"
+        },
+        "value": "Item 12 #0"
+      },
+      {
+        "location": "[41:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-if-text_0",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-if-text"
+        },
+        "value": "IF2: Item 12 #0"
+      },
+      {
+        "location": "[38:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-text_1",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-text"
+        },
+        "value": "Item 15 #1"
+      },
+      {
+        "location": "[41:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-if-text_1",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-if-text"
+        },
+        "value": "IF2: Item 15 #1"
+      },
+      {
+        "location": "[38:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-text_2",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-text"
+        },
+        "value": "Item 21 #2"
+      },
+      {
+        "location": "[41:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-if-text_2",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-if-text"
+        },
+        "value": "IF2: Item 21 #2"
+      },
+      {
+        "location": "[38:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-text_3",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-text"
+        },
+        "value": "Item 34 #3"
+      },
+      {
+        "location": "[41:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "for-2-if-text_3",
+        "$tag": "Text",
+        "props": {
+          "raw-xui:name": "for-2-if-text"
+        },
+        "value": "IF2: Item 34 #3"
+      },
+      {
+        "location": "[45:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+        "xui:name": "button-1",
+        "$tag": "Button",
+        "body": {
+          "location": "[46:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+          "xui:name": "xui-template-node-body",
+          "$tag": "body",
+          "children": [
+            {
+              "location": "[54:30:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+              "xui:name": "for-2-text_0",
+              "$tag": "Text",
+              "props": {
+                "raw-xui:name": "for-2-text"
+              },
+              "value": "Item 12 #0"
+            },
+            {
+              "location": "[54:30:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+              "xui:name": "for-2-text_1",
+              "$tag": "Text",
+              "props": {
+                "raw-xui:name": "for-2-text"
+              },
+              "value": "Item 15 #1"
+            },
+            {
+              "location": "[54:30:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+              "xui:name": "for-2-text_2",
+              "$tag": "Text",
+              "props": {
+                "raw-xui:name": "for-2-text"
+              },
+              "value": "Item 21 #2"
+            },
+            {
+              "location": "[54:30:0:0]/duzhou/ui/test-dynamic-component-tree-statement-for.xui",
+              "xui:name": "for-2-text_3",
+              "$tag": "Text",
+              "props": {
+                "raw-xui:name": "for-2-text"
+              },
+              "value": "Item 34 #3"
+            }
+          ]
+        },
+        "dispatches": []
+      }
+    ]
+  },
+  "dispatches": []
 }

@@ -2,25 +2,37 @@
   "location": "[28:6:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
   "xui:name": "xui-template-root-node",
   "$tag": "template",
-  "children": [
-    {
-      "location": "[34:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
-      "xui:name": "text-1",
-      "$tag": "Text",
-      "value": "Text: Hello WHEN#2"
-    },
-    {
-      "location": "[44:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
-      "xui:name": "button-1",
-      "$tag": "Button",
-      "children": [
-        {
-          "location": "[50:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
-          "xui:name": "text-1",
-          "$tag": "Text",
-          "value": "Text: Hello WHEN#2"
-        }
-      ]
-    }
-  ]
+  "body": {
+    "location": "[29:10:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+    "xui:name": "xui-template-node-body",
+    "$tag": "body",
+    "children": [
+      {
+        "location": "[35:22:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+        "xui:name": "text-1",
+        "$tag": "Text",
+        "value": "Text: Hello WHEN#2"
+      },
+      {
+        "location": "[45:14:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+        "xui:name": "button-1",
+        "$tag": "Button",
+        "body": {
+          "location": "[46:18:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+          "xui:name": "xui-template-node-body",
+          "$tag": "body",
+          "children": [
+            {
+              "location": "[52:30:0:0]/duzhou/ui/test-dynamic-component-tree-statement-choose.xui",
+              "xui:name": "text-1",
+              "$tag": "Text",
+              "value": "Text: Hello WHEN#2"
+            }
+          ]
+        },
+        "dispatches": []
+      }
+    ]
+  },
+  "dispatches": []
 }

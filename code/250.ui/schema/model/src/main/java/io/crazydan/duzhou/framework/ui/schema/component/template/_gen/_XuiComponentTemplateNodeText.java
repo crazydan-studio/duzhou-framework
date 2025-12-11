@@ -17,13 +17,6 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
     
     /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
-    
-    /**
      *  是否为 HTML 片段
      * xml name: as-html
      * > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
@@ -43,25 +36,6 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
      * 
      */
     private java.lang.String _value ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
     
     /**
      * 是否为 HTML 片段
@@ -141,7 +115,6 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("asHtml",this.getAsHtml());
         out.putNotNull("props",this.getProps());
         out.putNotNull("value",this.getValue());
@@ -156,7 +129,6 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     protected void copyTo(XuiComponentTemplateNodeText instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
         instance.setAsHtml(this.getAsHtml());
         instance.setProps(this.getProps());
         instance.setValue(this.getValue());

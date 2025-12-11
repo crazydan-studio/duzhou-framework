@@ -16,6 +16,32 @@ import io.nop.commons.util.ClassHelper;
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentTemplateNodeNamed extends io.nop.core.resource.component.AbstractComponentModel implements io.crazydan.duzhou.framework.ui.XuiNamed{
     
+    /**
+     *  
+     * xml name: 
+     * 
+     */
+    private java.lang.String _$tag ;
+    
+    /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.lang.String get$tag(){
+      return _$tag;
+    }
+
+    
+    public void set$tag(java.lang.String value){
+        checkAllowChange();
+        
+        this._$tag = value;
+           
+    }
+
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -31,6 +57,7 @@ public abstract class _XuiComponentTemplateNodeNamed extends io.nop.core.resourc
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("$tag",this.get$tag());
     }
 
     public XuiComponentTemplateNodeNamed cloneInstance(){
@@ -42,6 +69,7 @@ public abstract class _XuiComponentTemplateNodeNamed extends io.nop.core.resourc
     protected void copyTo(XuiComponentTemplateNodeNamed instance){
         super.copyTo(instance);
         
+        instance.set$tag(this.get$tag());
     }
 
     protected XuiComponentTemplateNodeNamed newInstance(){

@@ -45,6 +45,13 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
     private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type _type ;
     
     /**
+     *  是否可换行
+     * xml name: wrap
+     * > 若为 `false`，则溢出节点将被隐藏，否则，溢出节点将自动换行显式。缺省为 `false`
+     */
+    private java.lang.Boolean _wrap ;
+    
+    /**
      * 
      * xml name: 
      *  
@@ -146,6 +153,25 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
     }
 
     
+    /**
+     * 是否可换行
+     * xml name: wrap
+     *  > 若为 `false`，则溢出节点将被隐藏，否则，溢出节点将自动换行显式。缺省为 `false`
+     */
+    
+    public java.lang.Boolean getWrap(){
+      return _wrap;
+    }
+
+    
+    public void setWrap(java.lang.Boolean value){
+        checkAllowChange();
+        
+        this._wrap = value;
+           
+    }
+
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -169,6 +195,7 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
         out.putNotNull("children",this.getChildren());
         out.putNotNull("props",this.getProps());
         out.putNotNull("type",this.getType());
+        out.putNotNull("wrap",this.getWrap());
     }
 
     public XuiLayoutLinearNode cloneInstance(){
@@ -184,6 +211,7 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
         instance.setChildren(this.getChildren());
         instance.setProps(this.getProps());
         instance.setType(this.getType());
+        instance.setWrap(this.getWrap());
     }
 
     protected XuiLayoutLinearNode newInstance(){

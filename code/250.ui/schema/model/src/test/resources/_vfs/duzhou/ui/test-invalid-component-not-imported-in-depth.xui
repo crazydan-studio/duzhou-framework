@@ -22,13 +22,19 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <import as="Box" from="/duzhou/ui/component/box.xui"/>
+    <import as="Box" from="/duzhou/ui/component/box.xui" />
 
     <template>
-        <slot xui:name="slot-1">
-            <Box xui:name="box-1">
-                <Button xui:name="button-1"/>
-            </Box>
-        </slot>
+        <body>
+            <slot xui:name="slot-1">
+                <body>
+                    <Box xui:name="box-1">
+                        <body>
+                            <Button xui:name="button-1" />
+                        </body>
+                    </Box>
+                </body>
+            </slot>
+        </body>
     </template>
 </component>

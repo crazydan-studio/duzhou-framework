@@ -1,6 +1,5 @@
 {
   "location": "[26:10:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
-  "xui:name": "xui-layout",
   "root": {
     "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-stacked.xui",
     "$tag": "stacked",
@@ -92,6 +91,5 @@
         "type": "match_parent"
       }
     }
-  },
-  "$tag": "layout"
+  }
 }

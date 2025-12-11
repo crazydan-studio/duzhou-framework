@@ -2,13 +2,12 @@ package io.crazydan.duzhou.framework.ui.schema.component;
 
 import java.util.List;
 
-import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeAny;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested;
+import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode;
+import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeBody;
+import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChoose;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeText;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.INeedInit;
@@ -65,7 +64,6 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     private IEvalAction templateEvalAction;
 
     public XuiComponent() {
-
     }
 
     @Override
@@ -82,7 +80,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     }
 
     /** 加载标签对应的{@link XuiComponent 组件} */
-    public XuiComponent loadTagComponent(XuiNamed node) {
+    public XuiComponent loadTagComponent(XuiComponentTemplateNodeNamed node) {
         String tagName = getTagName(node);
         if (tagName == null) {
             return null;
@@ -99,11 +97,15 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     }
 
     /** 检查组件节点是否已显式通过 {@code <import/>} 导入 */
-    protected void checkImported(XuiNamed node) {
+    protected void checkImported(XuiComponentTemplateNodeNamed node) {
         if (node == null) {
             return;
         }
-        if (node instanceof XuiComponentTemplateNodeStatementChoose) {
+
+        if (node instanceof XuiComponentTemplateNodeBody) {
+            ((XuiComponentTemplateNodeBody) node).getChildren().forEach(this::checkImported);
+        } //
+        else if (node instanceof XuiComponentTemplateNodeStatementChoose) {
             XuiComponentTemplateNodeStatementChoose choose = (XuiComponentTemplateNodeStatementChoose) node;
 
             choose.getWhens().forEach(this::checkImported);
@@ -113,12 +115,11 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
 
         String tagName = getTagName(node);
         if (tagName != null && !hasImport(tagName)) {
-            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source((ISourceLocationGetter) node)
-                                                                            .param(ARG_TAG_NAME, tagName);
+            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(node).param(ARG_TAG_NAME, tagName);
         }
 
-        if (node instanceof XuiComponentTemplateNodeNested) {
-            ((XuiComponentTemplateNodeNested) node).getChildren().forEach(this::checkImported);
+        if (node instanceof XuiComponentTemplateNode) {
+            checkImported(((XuiComponentTemplateNode) node).getBody());
         }
     }
 
@@ -171,17 +172,11 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         return compileTool;
     }
 
-    private String getTagName(XuiNamed node) {
-        if (node instanceof XuiComponentTemplateNodeText) {
-            return ((XuiComponentTemplateNodeText) node).get$tag();
-        } //
-        else if (node instanceof XuiComponentTemplateNodeAny) {
-            return ((XuiComponentTemplateNodeAny) node).get$tag();
-        }
-        return null;
+    private String getTagName(XuiComponentTemplateNodeNamed node) {
+        return node.isText() || node.isCustom() ? node.getTagName() : null;
     }
 
-    protected static XNode cloneXNode(XNode node, XuiNamed bean) {
+    protected static XNode cloneXNode(XNode node, XuiComponentTemplateNodeNamed bean) {
         XNode copiedNode = node.cloneWithoutChildren();
 
         if (bean != null && copiedNode.getAttrCount() > 0) {
@@ -203,10 +198,24 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         }
 
         for (XNode child : node.getChildren()) {
-            Object xuiName = child.getAttr(ATTR_NAME_XUI_NAME);
-            XuiNamed beanChild = null;
-            if (bean instanceof XuiComponentTemplateNodeNested) {
-                beanChild = ((XuiComponentTemplateNodeNested) bean).getChild((String) xuiName);
+            String xuiName = child.getAttr(ATTR_NAME_XUI_NAME).toString();
+
+            XuiComponentTemplateNodeNamed beanChild = null;
+            if (xuiName != null) {
+                if (bean instanceof XuiComponentTemplateNode) {
+                    beanChild = ((XuiComponentTemplateNode) bean).getChild(xuiName);
+                } //
+                else if (bean instanceof XuiComponentTemplateNodeBody) {
+                    beanChild = ((XuiComponentTemplateNodeBody) bean).getChild(xuiName);
+                } //
+                else if (bean instanceof XuiComponentTemplateNodeStatementChoose) {
+                    XuiComponentTemplateNodeStatementChoose choose = (XuiComponentTemplateNodeStatementChoose) bean;
+                    if (TAG_NAME_OTHERWISE.equals(child.getTagName())) {
+                        beanChild = choose.getOtherwise();
+                    } else {
+                        beanChild = choose.getWhen(xuiName);
+                    }
+                }
             }
 
             XNode copiedChild = cloneXNode(child, beanChild);

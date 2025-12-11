@@ -22,17 +22,25 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
+    <import as="Button" from="/duzhou/ui/component/button.xui" />
 
     <template>
-        <layout xui:name="layout-1">
-            <linear><![CDATA[
-                v>{}<^
-            ]]></linear>
-        </layout>
-        <layout xui:name="layout-2">
-            <linear><![CDATA[
-                v>{}<^
-            ]]></linear>
-        </layout>
+        <body>
+            <if xui:name="if-1" test="${a==1}">
+                <choose xui:name="choose-1">
+                    <when xui:name="when-1" test="${b==1}">
+                        <slot xui:name="slot-1">
+                            <body>
+                                <Button xui:name="button-1">
+                                    <body>
+                                        <slot xui:name="slot-1" name="text" />
+                                    </body>
+                                </Button>
+                            </body>
+                        </slot>
+                    </when>
+                </choose>
+            </if>
+        </body>
     </template>
 </component>

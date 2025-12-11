@@ -14,14 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeDispatch extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
+public abstract class _XuiComponentTemplateNodeDispatch extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
      *  消息所携带的数据
@@ -43,25 +36,6 @@ public abstract class _XuiComponentTemplateNodeDispatch extends io.crazydan.duzh
      * > 待派发的消息，如 `User_Login_Start`、`User_Login_Finish` 等
      */
     private java.lang.String _msg ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
     
     /**
      * 消息所携带的数据
@@ -135,7 +109,6 @@ public abstract class _XuiComponentTemplateNodeDispatch extends io.crazydan.duzh
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("data",this.getData());
         out.putNotNull("events",this.getEvents());
         out.putNotNull("msg",this.getMsg());
@@ -150,7 +123,6 @@ public abstract class _XuiComponentTemplateNodeDispatch extends io.crazydan.duzh
     protected void copyTo(XuiComponentTemplateNodeDispatch instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
         instance.setData(this.getData());
         instance.setEvents(this.getEvents());
         instance.setMsg(this.getMsg());

@@ -10,23 +10,23 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * >
+ * 
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNested {
+public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeBody {
     
     /**
-     *  
+     *  循环起始值
      * xml name: begin
-     * 
+     * > 按数值循环时的初始值，如 `0`
      */
     private java.lang.Integer _begin ;
     
     /**
-     *  
+     *  循环结束值
      * xml name: end
-     * 
+     * > 按数值循环时的结束值，如 `10`
      */
     private java.lang.Integer _end ;
     
@@ -40,9 +40,16 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
     /**
      *  待循环变量
      * xml name: items
-     * > 如 `${props.users}`
+     * > 列表类型的变量，依次遍历其中的元素，如 `${props.users}`
      */
     private java.lang.String _items ;
+    
+    /**
+     *  循环步进值
+     * xml name: step
+     * > 按数值循环时的步进值，如 `2`
+     */
+    private java.lang.Integer _step  = 1;
     
     /**
      *  循环元素的变量名
@@ -52,9 +59,9 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
     private java.lang.String _var ;
     
     /**
-     * 
+     * 循环起始值
      * xml name: begin
-     *  
+     *  > 按数值循环时的初始值，如 `0`
      */
     
     public java.lang.Integer getBegin(){
@@ -71,9 +78,9 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
 
     
     /**
-     * 
+     * 循环结束值
      * xml name: end
-     *  
+     *  > 按数值循环时的结束值，如 `10`
      */
     
     public java.lang.Integer getEnd(){
@@ -111,7 +118,7 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
     /**
      * 待循环变量
      * xml name: items
-     *  > 如 `${props.users}`
+     *  > 列表类型的变量，依次遍历其中的元素，如 `${props.users}`
      */
     
     public java.lang.String getItems(){
@@ -123,6 +130,25 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
         checkAllowChange();
         
         this._items = value;
+           
+    }
+
+    
+    /**
+     * 循环步进值
+     * xml name: step
+     *  > 按数值循环时的步进值，如 `2`
+     */
+    
+    public java.lang.Integer getStep(){
+      return _step;
+    }
+
+    
+    public void setStep(java.lang.Integer value){
+        checkAllowChange();
+        
+        this._step = value;
            
     }
 
@@ -165,6 +191,7 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
         out.putNotNull("end",this.getEnd());
         out.putNotNull("index",this.getIndex());
         out.putNotNull("items",this.getItems());
+        out.putNotNull("step",this.getStep());
         out.putNotNull("var",this.getVar());
     }
 
@@ -181,6 +208,7 @@ public abstract class _XuiComponentTemplateNodeStatementFor extends io.crazydan.
         instance.setEnd(this.getEnd());
         instance.setIndex(this.getIndex());
         instance.setItems(this.getItems());
+        instance.setStep(this.getStep());
         instance.setVar(this.getVar());
     }
 

@@ -9,12 +9,21 @@ public class XuiComponentTemplateNodeStatementChoose extends _XuiComponentTempla
         implements INeedInit {
 
     public XuiComponentTemplateNodeStatementChoose() {
-
     }
 
     @Override
     public void init() {
-        getWhens().forEach(XuiComponentTemplateNodeNested::init);
-        ifNotNull(getOtherwise(), XuiComponentTemplateNodeNested::init);
+        getWhens().forEach(XuiComponentTemplateNodeBody::init);
+        ifNotNull(getOtherwise(), XuiComponentTemplateNodeBody::init);
+    }
+
+    public boolean hasSlotInDepth() {
+        for (XuiComponentTemplateNodeStatementChooseWhen when : getWhens()) {
+            if (when.hasSlotInDepth()) {
+                return true;
+            }
+        }
+
+        return getOtherwise() != null && getOtherwise().hasSlotInDepth();
     }
 }

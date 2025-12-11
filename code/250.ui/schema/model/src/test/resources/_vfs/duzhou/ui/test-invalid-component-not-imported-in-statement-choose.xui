@@ -22,18 +22,22 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <import as="Box" from="/duzhou/ui/component/box.xui"/>
+    <import as="Box" from="/duzhou/ui/component/box.xui" />
 
     <template>
-        <choose xui:name="choose-1">
-            <when xui:name="when-1" test="${props.var == 1}">
-                <Box xui:name="box-1"/>
-            </when>
-            <when xui:name="when-2" test="${props.var == 2}">
-                <Box xui:name="box-1">
-                    <Button xui:name="button-1"/>
-                </Box>
-            </when>
-        </choose>
+        <body>
+            <choose xui:name="choose-1">
+                <when xui:name="when-1" test="${props.var == 1}">
+                    <Box xui:name="box-1" />
+                </when>
+                <when xui:name="when-2" test="${props.var == 2}">
+                    <Box xui:name="box-1">
+                        <body>
+                            <Button xui:name="button-1" />
+                        </body>
+                    </Box>
+                </when>
+            </choose>
+        </body>
     </template>
 </component>

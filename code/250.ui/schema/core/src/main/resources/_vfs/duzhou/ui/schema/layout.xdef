@@ -36,7 +36,9 @@
                  xdef:bean-sub-type-prop="$tag"
     >
         <!-- [线性布局]
-        > 在行/列方向上进行布局控制，与 css flexbox 类似。
+        > 在行/列方向上进行布局控制，与
+        > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+        > 类似。
         -->
         <linear xdef:name="XuiLayoutLinear"
                 xdef:ref="XuiLayoutLinearNode"
@@ -112,11 +114,14 @@
 
     @type [布局类型]
         > 指定其内部子节点的布局方式
+    @wrap [是否可换行]
+        > 若为 `false`，则溢出节点将被隐藏，否则，溢出节点将自动换行显式。缺省为 `false`
     -->
     <xdef:define xdef:name="XuiLayoutLinearNode"
                  xdef:ref="XuiLayoutNodeNamed"
                  xdef:bean-tag-prop="$tag"
                  type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type"
+                 wrap="boolean"
     >
         <!-- [节点配置] -->
         <props xdef:ref="XuiLayoutNodeNestedProps" />

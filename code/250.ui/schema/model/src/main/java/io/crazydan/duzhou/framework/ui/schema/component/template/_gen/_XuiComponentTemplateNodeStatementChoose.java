@@ -17,13 +17,6 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
     
     /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
-    
-    /**
      *  缺省条件
      * xml name: otherwise
      * 
@@ -36,25 +29,6 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
      * > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen> _whens = KeyedList.emptyList();
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
     
     /**
      * 缺省条件
@@ -139,7 +113,6 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("otherwise",this.getOtherwise());
         out.putNotNull("whens",this.getWhens());
     }
@@ -153,7 +126,6 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
     protected void copyTo(XuiComponentTemplateNodeStatementChoose instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
         instance.setOtherwise(this.getOtherwise());
         instance.setWhens(this.getWhens());
     }

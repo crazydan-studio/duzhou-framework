@@ -25,7 +25,6 @@ import java.util.Map;
 import io.crazydan.duzhou.framework.ui.XuiJunitTestCase;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
-import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.eval.IEvalAction;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.xml.XNode;
@@ -37,10 +36,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.crazydan.duzhou.framework.ui.XuiConstants.TAG_NAME_TEMPLATE;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.XDSL_SCHEMA_COMPONENT_TEMPLATE;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -134,46 +130,6 @@ public class TestXuiComponentDynamic extends XuiJunitTestCase {
 
     @Test
     public void test_invalid_tree() {
-        try {
-            XuiComponent component = //
-                    XuiHelper.loadComponent("/duzhou/ui/test-invalid-dynamic-component-multi-layout-in-statement-if.xui");
-            evalTemplate(component, Map.of("var", 2));
-
-            fail("multiple-layout");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
-        try {
-            XuiComponent component = //
-                    XuiHelper.loadComponent(
-                            "/duzhou/ui/test-invalid-dynamic-component-multi-layout-in-statement-for.xui");
-            evalTemplate(component, Map.of());
-
-            fail("multiple-layout");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
-
-        try {
-            XuiComponent component = //
-                    XuiHelper.loadComponent(
-                            "/duzhou/ui/test-invalid-dynamic-component-multi-dispatch-in-statement-if.xui");
-            evalTemplate(component, Map.of("var", 2));
-
-            fail("multiple-dispatch");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
-        try {
-            XuiComponent component = //
-                    XuiHelper.loadComponent(
-                            "/duzhou/ui/test-invalid-dynamic-component-multi-dispatch-in-statement-for.xui");
-            evalTemplate(component, Map.of());
-
-            fail("multiple-dispatch");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
     }
 
     private XuiComponentTemplate evalTemplate(XuiComponent component, Map<?, ?> props) {

@@ -1,6 +1,5 @@
 {
   "location": "[26:10:0:0]/duzhou/ui/test-valid-layout-linear.xui",
-  "xui:name": "xui-layout",
   "root": {
     "location": "[27:14:0:0]/duzhou/ui/test-valid-layout-linear.xui",
     "xui:name": "xui-layout-root-node",
@@ -14,6 +13,7 @@
           {
             "location": "[46:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-1",
+            "$tag": "item",
             "pattern": "a1",
             "props": {
               "location": "[47:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
@@ -34,12 +34,12 @@
               "width": {
                 "type": "wrap_content"
               }
-            },
-            "$tag": "item"
+            }
           },
           {
             "location": "[51:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-2",
+            "$tag": "item",
             "pattern": "a2",
             "props": {
               "location": "[52:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
@@ -60,12 +60,12 @@
               "width": {
                 "type": "wrap_content"
               }
-            },
-            "$tag": "item"
+            }
           },
           {
             "location": "[56:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-3",
+            "$tag": "item",
             "pattern": "a3",
             "props": {
               "location": "[57:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
@@ -86,8 +86,7 @@
               "width": {
                 "type": "wrap_content"
               }
-            },
-            "$tag": "item"
+            }
           }
         ],
         "props": {
@@ -135,6 +134,7 @@
               {
                 "location": "[78:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-1",
+                "$tag": "item",
                 "pattern": "b1-.+",
                 "props": {
                   "height": {
@@ -153,12 +153,12 @@
                   "width": {
                     "type": "wrap_content"
                   }
-                },
-                "$tag": "item"
+                }
               },
               {
                 "location": "[79:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-2",
+                "$tag": "item",
                 "pattern": "b2-[\\d]+",
                 "props": {
                   "height": {
@@ -177,8 +177,7 @@
                   "width": {
                     "type": "wrap_content"
                   }
-                },
-                "$tag": "item"
+                }
               }
             ],
             "props": {
@@ -219,6 +218,7 @@
               {
                 "location": "[89:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-1",
+                "$tag": "item",
                 "pattern": "c1-1",
                 "props": {
                   "height": {
@@ -237,12 +237,12 @@
                   "width": {
                     "type": "wrap_content"
                   }
-                },
-                "$tag": "item"
+                }
               },
               {
                 "location": "[90:38:0:0]/duzhou/ui/test-valid-layout-linear.xui",
                 "xui:name": "item-2",
+                "$tag": "item",
                 "pattern": "c1-2",
                 "props": {
                   "height": {
@@ -261,8 +261,7 @@
                   "width": {
                     "type": "wrap_content"
                   }
-                },
-                "$tag": "item"
+                }
               }
             ],
             "props": {
@@ -338,6 +337,7 @@
           {
             "location": "[105:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-1",
+            "$tag": "item",
             "pattern": "d1-1",
             "props": {
               "location": "[106:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
@@ -358,12 +358,12 @@
               "width": {
                 "type": "wrap_content"
               }
-            },
-            "$tag": "item"
+            }
           },
           {
             "location": "[110:30:0:0]/duzhou/ui/test-valid-layout-linear.xui",
             "xui:name": "item-2",
+            "$tag": "item",
             "pattern": "d1-2-.+",
             "props": {
               "location": "[111:34:0:0]/duzhou/ui/test-valid-layout-linear.xui",
@@ -384,8 +384,7 @@
               "width": {
                 "type": "wrap_content"
               }
-            },
-            "$tag": "item"
+            }
           }
         ],
         "props": {
@@ -455,6 +454,5 @@
       }
     },
     "type": "column"
-  },
-  "$tag": "layout"
+  }
 }

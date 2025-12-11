@@ -22,11 +22,13 @@
 <page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
       x:schema="/duzhou/ui/schema/page.xdef"
 >
-    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Text" from="/duzhou/ui/component/text.xui" />
 
     <template>
-        <Text xui:name="text-1"><![CDATA[
-            Text 1
-        ]]></Text>
+        <body>
+            <Text xui:name="text-1"><![CDATA[
+                Text 1
+            ]]></Text>
+        </body>
     </template>
 </page>

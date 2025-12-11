@@ -24,7 +24,7 @@
 >
 
     <template>
-        <dispatch xui:name="dispatch-1" msg="User_Add" events="click"/>
-        <dispatch xui:name="dispatch-2" msg="User_Add" events="click"/>
+        <dispatch msg="User_Add" events="click"/>
+        <dispatch msg="User_Add" events="click"/>
     </template>
 </component>

@@ -26,22 +26,7 @@
     <import as="Button" from="/duzhou/ui/component/button.xui" />
 
     <template>
-        <choose xui:name="choose-1">
-            <when xui:name="when-1" test="${props.var == 1}">
-                <Text xui:name="text-1">Text: ${props.msg1}</Text>
-            </when>
-            <when xui:name="when-2" test="${props.var == 2}">
-                <Text xui:name="text-1">Text: ${props.msg2}</Text>
-            </when>
-            <when xui:name="when-3" test="${props.var == 3}">
-                <Text xui:name="text-1">Text: ${props.msg3}</Text>
-            </when>
-            <otherwise>
-                <Text xui:name="text-1">Text: ${props.msg}</Text>
-            </otherwise>
-        </choose>
-
-        <Button xui:name="button-1">
+        <body>
             <choose xui:name="choose-1">
                 <when xui:name="when-1" test="${props.var == 1}">
                     <Text xui:name="text-1">Text: ${props.msg1}</Text>
@@ -56,6 +41,25 @@
                     <Text xui:name="text-1">Text: ${props.msg}</Text>
                 </otherwise>
             </choose>
-        </Button>
+
+            <Button xui:name="button-1">
+                <body>
+                    <choose xui:name="choose-1">
+                        <when xui:name="when-1" test="${props.var == 1}">
+                            <Text xui:name="text-1">Text: ${props.msg1}</Text>
+                        </when>
+                        <when xui:name="when-2" test="${props.var == 2}">
+                            <Text xui:name="text-1">Text: ${props.msg2}</Text>
+                        </when>
+                        <when xui:name="when-3" test="${props.var == 3}">
+                            <Text xui:name="text-1">Text: ${props.msg3}</Text>
+                        </when>
+                        <otherwise>
+                            <Text xui:name="text-1">Text: ${props.msg}</Text>
+                        </otherwise>
+                    </choose>
+                </body>
+            </Button>
+        </body>
     </template>
 </component>

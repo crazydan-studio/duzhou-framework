@@ -10,7 +10,9 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/layout.xdef <p>
- * > 在行/列方向上进行布局控制，与 css flexbox 类似。
+ * > 在行/列方向上进行布局控制，与
+ * > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+ * > 类似。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

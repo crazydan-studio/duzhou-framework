@@ -7,7 +7,6 @@ import static io.crazydan.duzhou.framework.commons.StringHelper.trimAllLinesByFi
 public class XuiComponentTemplateNodeText extends _XuiComponentTemplateNodeText {
 
     public XuiComponentTemplateNodeText() {
-
     }
 
     public String getInnerText() {

@@ -20,7 +20,7 @@
   -->
 
 <!-- [组件模版树]
-> - 所有节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一性属性，从而支持对任意节点的差量定制；
+> - 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，用以支持对任意节点的差量定制；
 -->
 <template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef" xmlns:xui="xui"
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
@@ -30,9 +30,9 @@
           xui:name="!~ns-name=xui-template-root-node"
 >
 
-    <!-- [组件模版树节点] -->
+    <!-- [节点] -->
     <xdef:define xdef:name="XuiComponentTemplateNode"
-                 xdef:ref="XuiComponentTemplateNodeNested"
+                 xdef:ref="XuiComponentTemplateNodeNamed"
     >
         <!-- [布局控制]
         > 根据 `xui:name` 对其**直接子组件**（含 `<slot/>` 和 `<native/>`，但不含 `<if/>`、`<for/>` 等控制节点）进行布局控制。
@@ -41,11 +41,10 @@
         -->
         <layout xdef:name="XuiComponentTemplateNodeLayout"
                 xdef:ref="../layout.xdef"
-                xdef:bean-tag-prop="$tag"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                xdef:allow-multiple="false"
-                xui:name="!~ns-name=xui-layout"
         />
+
+        <!--<style name="!ns-name" />-->
+
         <!-- [消息派发]
         > 监听指定的事件，在事件触发时派发指定的消息。
 
@@ -57,22 +56,55 @@
             > 以 `${xxx}` 形式构造数据，并可通过 `$event` 引用事件对象上的数据
         -->
         <dispatch xdef:name="XuiComponentTemplateNodeDispatch"
-                  xdef:ref="XuiComponentTemplateNodeNamed"
-                  xdef:bean-tag-prop="$tag"
-                  xui:name="!~ns-name=@attr:msg"
+                  xdef:unique-attr="msg"
+                  xdef:bean-prop="dispatches" xdef:bean-child-name="dispatch"
                   msg="!component-name" events="!prop-name-set"
                   data="any"
         />
+
+        <body xdef:ref="XuiComponentTemplateNodeBody"
+              xui:name="!~ns-name=xui-template-node-body"
+        />
     </xdef:define>
 
-    <!-- [组件模版树节点嵌套结构]
+    <!-- [命名节点]
+
+    @xui:name [唯一标识]
+        > 在父节点内，该标识必须唯一
     -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeNested"
-                 xdef:ref="XuiComponentTemplateNodeNamed"
+    <xdef:define xdef:name="XuiComponentTemplateNodeNamed"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                  xdef:bean-tag-prop="$tag"
+                 xui:name="!ns-name"
+    />
+
+    <!-- [支持插槽的节点]
+
+    @xui:slot [插槽名]
+        > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
+                 xdef:ref="XuiComponentTemplateNode"
+                 xui:slot="ns-name"
+    />
+
+    <!-- [条件判断节点]
+    > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
+
+    @test [条件表达式]
+        > 如 `${name != null}`
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeStatementCond"
+                 xdef:ref="XuiComponentTemplateNodeBody"
+                 test="string"
+    />
+
+    <!-- [节点结构树] -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeBody"
+                 xdef:ref="XuiComponentTemplateNodeNamed"
                  xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
-                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.XuiNamed>"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed>"
                  xdef:bean-sub-type-prop="$tag"
     >
         <!-- Start: 组件模版树节点 -->
@@ -94,12 +126,15 @@
                 name="#!ns-name"
                 xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
-        <!-- [组件插槽]
-        > 组件插槽用于控制其嵌套子组件的嵌入位置。
+        <!-- [插槽节点]
+        > 用于控制 `xui:slot` 节点的插入位置。
         >
         > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
         > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
-        > - 不支持在其缺省的内嵌结构中嵌入 `<slot/>`；
+        > - 不支持 `<slot/>` 嵌套使用；
+
+        @name [插槽名]
+            > 通过名字查找并确定所要插入的节点
         -->
         <slot xdef:name="XuiComponentTemplateNodeSlot"
               xdef:ref="XuiComponentTemplateNode"
@@ -107,17 +142,16 @@
               name="!ns-name=default" attrs="any"
         />
 
-        <!-- [文本内嵌组件]
+        <!-- [文本组件]
         > 只包含文本内容的组件。必须通过 `<import/>` 显式导入。
 
-        @xui:slot [对应的插槽名字]
-            > 其将替换所在组件的 `<template/>` 中定义的同名 `<slot/>` 节点
+        @xui:slot [插槽名]
+            > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点
         @as-html [是否为 HTML 片段]
             > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
         -->
         <Text xdef:name="XuiComponentTemplateNodeText"
               xdef:ref="XuiComponentTemplateNodeNamed"
-              xdef:bean-tag-prop="$tag"
               xui:name="!ns-name" xui:slot="ns-name"
               as-html="boolean"
               xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
@@ -143,10 +177,10 @@
             xdef:ref="XuiComponentTemplateNodeStatementCond"
             xui:name="!ns-name"
         />
+
         <!-- [条件选择] -->
         <choose xdef:name="XuiComponentTemplateNodeStatementChoose"
                 xdef:ref="XuiComponentTemplateNodeNamed"
-                xdef:bean-tag-prop="$tag"
                 xui:name="!ns-name"
         >
             <!-- [特定条件] -->
@@ -158,63 +192,37 @@
             />
             <!-- [缺省条件] -->
             <otherwise xdef:name="XuiComponentTemplateNodeStatementChooseOtherwise"
-                       xdef:ref="XuiComponentTemplateNode"
-                       xdef:allow-multiple="false"
+                       xdef:ref="XuiComponentTemplateNodeBody"
                        xui:name="!~ns-name=otherwise"
             />
         </choose>
 
         <!-- Note: 不允许在控制语句中修改控制变量，因此，不支持 while 循环 -->
         <!-- [For 循环]
-        >
 
-        @items [待循环变量]
-            > 如 `${props.users}`
         @var [循环元素的变量名]
             > 如 `user`
         @index [循环元素序号的变量名]
             > 如 `idx`
+
+        @items [待循环变量]
+            > 列表类型的变量，依次遍历其中的元素，如 `${props.users}`
+
+        @begin [循环起始值]
+            > 按数值循环时的初始值，如 `0`
+        @end [循环结束值]
+            > 按数值循环时的结束值，如 `10`
+        @step [循环步进值]
+            > 按数值循环时的步进值，如 `2`
         -->
         <for xdef:name="XuiComponentTemplateNodeStatementFor"
-             xdef:ref="XuiComponentTemplateNodeNested"
+             xdef:ref="XuiComponentTemplateNodeBody"
              xui:name="!ns-name"
              var="!var-name" index="var-name"
              items="string"
-             begin="int" end="int"
+             begin="int" end="int" step="int=1"
         />
 
         <!-- End: 条件/循环控制 -->
     </xdef:define>
-
-    <!-- [组件模版树的命名节点]
-
-    @xui:name [唯一标识]
-        > 在父节点内，该标识必须唯一
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeNamed"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                 xui:name="!ns-name"
-    />
-
-    <!-- [组件模版树可指定插槽的节点]
-    >
-
-    @xui:slot [对应的插槽名字]
-        > 其将替换所属组件在 `<template/>` 中定义的同名 `<slot/>` 节点
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
-                 xdef:ref="XuiComponentTemplateNode"
-                 xui:slot="ns-name"
-    />
-
-    <!-- [条件判断]
-    > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
-
-    @test [条件表达式]
-        > 如 `${name != null}`
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeStatementCond"
-                 xdef:ref="XuiComponentTemplateNode"
-                 test="string"
-    />
 </template>

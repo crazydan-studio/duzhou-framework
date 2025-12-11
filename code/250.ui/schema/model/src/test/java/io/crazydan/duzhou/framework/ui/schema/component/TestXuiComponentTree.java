@@ -26,10 +26,9 @@ import io.nop.core.lang.xml.XNode;
 import org.junit.jupiter.api.Test;
 
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_INVALID_TAG_NAME;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED;
+import static io.nop.xlang.XLangErrors.ERR_XDSL_MULTIPLE_NODE_HAS_SAME_UNIQUE_ATTR_VALUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -77,23 +76,10 @@ public class TestXuiComponentTree extends XuiJunitTestCase {
         }
 
         try {
-            XuiHelper.loadComponent("/duzhou/ui/test-invalid-component-multi-layout.xui");
-            fail("multiple-layout");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
-        try {
-            XuiHelper.loadComponent("/duzhou/ui/test-invalid-component-multi-layout-depth.xui");
-            fail("multiple-layout");
-        } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_LAYOUTS_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
-        }
-
-        try {
             XuiHelper.loadComponent("/duzhou/ui/test-invalid-component-multi-dispatch.xui");
             fail("multiple-dispatch");
         } catch (NopException e) {
-            assertEquals(ERR_COMPONENT_MULTIPLE_DISPATCHES_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
+            assertEquals(ERR_XDSL_MULTIPLE_NODE_HAS_SAME_UNIQUE_ATTR_VALUE.getErrorCode(), e.getErrorCode());
         }
 
         try {
@@ -104,6 +90,12 @@ public class TestXuiComponentTree extends XuiJunitTestCase {
         }
         try {
             XuiHelper.loadComponent("/duzhou/ui/test-invalid-component-slot-in-slot-depth.xui");
+            fail("slot-in-depth");
+        } catch (NopException e) {
+            assertEquals(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED.getErrorCode(), e.getErrorCode());
+        }
+        try {
+            XuiHelper.loadComponent("/duzhou/ui/test-invalid-component-slot-in-slot-depth-1.xui");
             fail("slot-in-depth");
         } catch (NopException e) {
             assertEquals(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED.getErrorCode(), e.getErrorCode());

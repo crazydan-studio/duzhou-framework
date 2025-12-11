@@ -22,36 +22,40 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <import as="Text" from="/duzhou/ui/component/text.xui"/>
-    <import as="Button" from="/duzhou/ui/component/button.xui"/>
+    <import as="Text" from="/duzhou/ui/component/text.xui" />
+    <import as="Button" from="/duzhou/ui/component/button.xui" />
 
     <template>
-        <for xui:name="for-1" begin="1" end="4" var="n" index="i">
-            <Text xui:name="for-1-text">Number ${n} #${i}</Text>
+        <body>
+            <for xui:name="for-1" begin="1" end="4" var="n" index="i">
+                <Text xui:name="for-1-text">Number ${n} #${i}</Text>
 
-            <if xui:name="if-1" test="${props.var == 1}">
-                <Text xui:name="for-1-if-text">IF1: Number ${n} #${i}</Text>
-            </if>
-        </for>
-        <for xui:name="for-2" items="${props.items}" var="item" index="i">
-            <Text xui:name="for-2-text">Item ${item} #${i}</Text>
+                <if xui:name="if-1" test="${props.var == 1}">
+                    <Text xui:name="for-1-if-text">IF1: Number ${n} #${i}</Text>
+                </if>
+            </for>
+            <for xui:name="for-2" items="${props.items}" var="item" index="i">
+                <Text xui:name="for-2-text">Item ${item} #${i}</Text>
 
-            <if xui:name="if-2" test="${props.var == 2}">
-                <Text xui:name="for-2-if-text">IF2: Item ${item} #${i}</Text>
-            </if>
-        </for>
+                <if xui:name="if-2" test="${props.var == 2}">
+                    <Text xui:name="for-2-if-text">IF2: Item ${item} #${i}</Text>
+                </if>
+            </for>
 
-        <Button xui:name="button-1">
-            <if xui:name="if-1" test="${props.var == 1}">
-                <for xui:name="for-1" begin="1" end="4" var="n" index="i">
-                    <Text xui:name="for-1-text">Number ${n} #${i}</Text>
-                </for>
-            </if>
-            <if xui:name="if-2" test="${props.var == 2}">
-                <for xui:name="for-2" items="${props.items}" var="item" index="i">
-                    <Text xui:name="for-2-text">Item ${item} #${i}</Text>
-                </for>
-            </if>
-        </Button>
+            <Button xui:name="button-1">
+                <body>
+                    <if xui:name="if-1" test="${props.var == 1}">
+                        <for xui:name="for-1" begin="1" end="4" var="n" index="i">
+                            <Text xui:name="for-1-text">Number ${n} #${i}</Text>
+                        </for>
+                    </if>
+                    <if xui:name="if-2" test="${props.var == 2}">
+                        <for xui:name="for-2" items="${props.items}" var="item" index="i">
+                            <Text xui:name="for-2-text">Item ${item} #${i}</Text>
+                        </for>
+                    </if>
+                </body>
+            </Button>
+        </body>
     </template>
 </component>

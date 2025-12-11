@@ -29,7 +29,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      *  组件树
      * xml name: template
-     * > - 所有节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一性属性，从而支持对任意节点的差量定制；
+     * > - 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，用以支持对任意节点的差量定制；
      */
     private io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate _template ;
     
@@ -81,7 +81,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     /**
      * 组件树
      * xml name: template
-     *  > - 所有节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一性属性，从而支持对任意节点的差量定制；
+     *  > - 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，用以支持对任意节点的差量定制；
      */
     
     public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate getTemplate(){

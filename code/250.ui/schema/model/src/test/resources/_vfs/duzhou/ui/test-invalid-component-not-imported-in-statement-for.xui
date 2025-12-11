@@ -22,13 +22,17 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <import as="Box" from="/duzhou/ui/component/box.xui"/>
+    <import as="Box" from="/duzhou/ui/component/box.xui" />
 
     <template>
-        <for xui:name="for-1" begin="0" end="3" var="n">
-            <Box xui:name="box-1">
-                <Button xui:name="button-1"/>
-            </Box>
-        </for>
+        <body>
+            <for xui:name="for-1" begin="0" end="3" var="n">
+                <Box xui:name="box-1">
+                    <body>
+                        <Button xui:name="button-1" />
+                    </body>
+                </Box>
+            </for>
+        </body>
     </template>
 </component>

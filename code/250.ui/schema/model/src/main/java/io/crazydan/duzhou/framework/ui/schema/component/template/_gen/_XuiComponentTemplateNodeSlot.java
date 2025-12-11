@@ -10,11 +10,11 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 组件插槽用于控制其嵌套子组件的嵌入位置。
+ * > 用于控制 `xui:slot` 节点的插入位置。
  * >
  * > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
  * > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
- * > - 不支持在其缺省的内嵌结构中嵌入 `<slot/>`；
+ * > - 不支持 `<slot/>` 嵌套使用；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -28,9 +28,9 @@ public abstract class _XuiComponentTemplateNodeSlot extends io.crazydan.duzhou.f
     private java.lang.Object _attrs ;
     
     /**
-     *  
+     *  插槽名
      * xml name: name
-     * 
+     * > 通过名字查找并确定所要插入的节点
      */
     private java.lang.String _name  = "default";
     
@@ -54,9 +54,9 @@ public abstract class _XuiComponentTemplateNodeSlot extends io.crazydan.duzhou.f
 
     
     /**
-     * 
+     * 插槽名
      * xml name: name
-     *  
+     *  > 通过名字查找并确定所要插入的节点
      */
     
     public java.lang.String getName(){

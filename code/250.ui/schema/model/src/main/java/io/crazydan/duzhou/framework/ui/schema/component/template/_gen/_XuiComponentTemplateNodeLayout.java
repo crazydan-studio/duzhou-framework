@@ -16,33 +16,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeLayout extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout implements io.crazydan.duzhou.framework.ui.XuiNamed{
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
+public abstract class _XuiComponentTemplateNodeLayout extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout {
     
 
     @Override
@@ -59,7 +33,6 @@ public abstract class _XuiComponentTemplateNodeLayout extends io.crazydan.duzhou
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
     }
 
     public XuiComponentTemplateNodeLayout cloneInstance(){
@@ -71,7 +44,6 @@ public abstract class _XuiComponentTemplateNodeLayout extends io.crazydan.duzhou
     protected void copyTo(XuiComponentTemplateNodeLayout instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
     }
 
     protected XuiComponentTemplateNodeLayout newInstance(){

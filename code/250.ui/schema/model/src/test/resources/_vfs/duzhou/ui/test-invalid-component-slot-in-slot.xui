@@ -24,8 +24,12 @@
 >
 
     <template>
-        <slot xui:name="slot-1">
-            <slot xui:name="slot-1" name="text"/>
-        </slot>
+        <body>
+            <slot xui:name="slot-1">
+                <body>
+                    <slot xui:name="slot-1" name="text" />
+                </body>
+            </slot>
+        </body>
     </template>
 </component>

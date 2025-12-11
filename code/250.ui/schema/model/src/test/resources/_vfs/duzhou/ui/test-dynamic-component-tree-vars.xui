@@ -22,17 +22,25 @@
 <component xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
            x:schema="/duzhou/ui/schema/component.xdef"
 >
-    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Text" from="/duzhou/ui/component/text.xui" />
 
     <template>
         <layout>
-            <linear><![CDATA[
-                v>[text-1](padding: ${props.padding})<^
-            ]]></linear>
+            <linear type="column">
+                <body>
+                    <item xui:name="item-1" pattern="text-1">
+                        <props>
+                            <padding all="${props.padding}" />
+                        </props>
+                    </item>
+                </body>
+            </linear>
         </layout>
 
-        <Text xui:name="text-1"><![CDATA[
-            Text: ${props.msg}
-        ]]></Text>
+        <body>
+            <Text xui:name="text-1"><![CDATA[
+                Text: ${props.msg}
+            ]]></Text>
+        </body>
     </template>
 </component>
