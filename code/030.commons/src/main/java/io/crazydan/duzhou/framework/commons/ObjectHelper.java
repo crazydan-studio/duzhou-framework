@@ -20,6 +20,7 @@
 package io.crazydan.duzhou.framework.commons;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -27,14 +28,22 @@ import java.util.function.Consumer;
  */
 public class ObjectHelper {
 
-    /** 在值不为 <code>null</code> 时，执行指定逻辑 */
+    /** 在值不为 {@code null} 时，执行指定逻辑 */
     public static <T> void ifNotNull(T obj, Consumer<T> consumer) {
         if (obj != null) {
             consumer.accept(obj);
         }
     }
 
-    /** 取第一个非 <code>null</code> 值 */
+    /** 在值不为 {@code null} 时，返回运算结果，否则，返回 {@code null} */
+    public static <T, R> R ifNotNullThenGet(T obj, Function<T, R> getter) {
+        if (obj != null) {
+            return getter.apply(obj);
+        }
+        return null;
+    }
+
+    /** 取第一个非 {@code null} 值 */
     @SafeVarargs
     public static <T> T firstNonNull(T... values) {
         for (T value : values) {

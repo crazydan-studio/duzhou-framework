@@ -30,7 +30,7 @@ import io.nop.api.core.config.IConfigReference;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.xlang.ast.Literal;
 
-import static com.google.common.base.MoreObjects.firstNonNull;
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.nop.api.core.config.AppConfig.varRef;
 
