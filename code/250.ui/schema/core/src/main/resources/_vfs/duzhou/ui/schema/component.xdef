@@ -20,7 +20,7 @@
   -->
 
 <!-- [UI 组件]
-> 一个视觉交互控件
+> 一个视觉交互控件。
 >
 > - 引用的变量名不能以 `$` 或 `_` 开头，否则，在动态生成组件树时，其会被视为全局变量，
 >   而全局变量需要通过 `EvalGlobalRegistry#registerVariable` 注册；
@@ -43,7 +43,7 @@
             as="!component-name"
     />
 
-    <!-- [组件树] -->
+    <!-- [组件结构] -->
     <template xdef:ref="component/template.xdef" />
 
     <!-- [组件消息列表] -->

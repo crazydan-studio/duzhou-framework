@@ -7,12 +7,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.ui.XuiConstants;
+import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeNamed;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.INeedInit;
 import io.nop.commons.util.StringHelper;
 
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_INVALID_TAG_NAME;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED;
@@ -26,6 +28,7 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
     @Override
     public void init() {
+        checkCustomTagName();
         checkMultipleSlots();
         checkSlotInSlot();
 
@@ -134,6 +137,20 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    /**
+     * 检查 {@link #isCustom()} 为 {@code true} 的节点的标签名是否符合
+     * {@link GenericStdDomainHandlers#isValidComponentName} 规范
+     */
+    protected void checkCustomTagName() {
+        if (isCustom()) {
+            String tagName = getTagName();
+
+            if (!GenericStdDomainHandlers.isValidComponentName(tagName)) {
+                throw new NopException(ERR_COMPONENT_INVALID_TAG_NAME).source(this).param(ARG_TAG_NAME, tagName);
+            }
+        }
+    }
 
     /** 在 {@code <slot/>} 标签内不能嵌套任意层级的 {@code <slot/>} */
     protected void checkSlotInSlot() {

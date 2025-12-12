@@ -19,8 +19,11 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件模版树]
-> - 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，用以支持对任意节点的差量定制；
+<!-- [组件结构树]
+> 用于定义组件的组成结构，以及对其结构中的子组件的布局控制和样式设定。
+>
+> 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，
+> 从而支持对任意节点的差量定制。
 -->
 <template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef" xmlns:xui="xui"
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
