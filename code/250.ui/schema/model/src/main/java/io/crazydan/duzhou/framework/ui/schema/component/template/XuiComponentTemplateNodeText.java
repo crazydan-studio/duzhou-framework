@@ -9,6 +9,7 @@ public class XuiComponentTemplateNodeText extends _XuiComponentTemplateNodeText 
     public XuiComponentTemplateNodeText() {
     }
 
+    @Override
     public String getInnerText() {
         return trimAllLinesByFirstNonBlankLine(getValue());
     }

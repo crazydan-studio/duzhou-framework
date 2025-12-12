@@ -4,10 +4,7 @@ import java.util.List;
 
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeBody;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChoose;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.INeedInit;
@@ -81,17 +78,17 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
 
     /** 加载标签对应的{@link XuiComponent 组件} */
     public XuiComponent loadTagComponent(XuiComponentTemplateNodeNamed node) {
-        String tagName = getTagName(node);
-        if (tagName == null) {
+        String componentName = getTagComponentName(node);
+        if (componentName == null) {
             return null;
         }
 
-        String dslPath = getImport(tagName).getFrom();
+        String dslPath = getImport(componentName).getFrom();
         try {
             return XuiHelper.loadComponent(dslPath);
         } catch (Exception e) {
             throw new NopException(ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED, e).source((ISourceLocationGetter) node)
-                                                                                 .param(ARG_TAG_NAME, tagName)
+                                                                                 .param(ARG_TAG_NAME, componentName)
                                                                                  .param(ARG_PATH, dslPath);
         }
     }
@@ -102,25 +99,13 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
             return;
         }
 
-        if (node instanceof XuiComponentTemplateNodeBody) {
-            ((XuiComponentTemplateNodeBody) node).getChildren().forEach(this::checkImported);
-        } //
-        else if (node instanceof XuiComponentTemplateNodeStatementChoose) {
-            XuiComponentTemplateNodeStatementChoose choose = (XuiComponentTemplateNodeStatementChoose) node;
-
-            choose.getWhens().forEach(this::checkImported);
-            checkImported(choose.getOtherwise());
-            return;
+        String componentName = getTagComponentName(node);
+        if (componentName != null && !hasImport(componentName)) {
+            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(node)
+                                                                            .param(ARG_TAG_NAME, componentName);
         }
 
-        String tagName = getTagName(node);
-        if (tagName != null && !hasImport(tagName)) {
-            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(node).param(ARG_TAG_NAME, tagName);
-        }
-
-        if (node instanceof XuiComponentTemplateNode) {
-            checkImported(((XuiComponentTemplateNode) node).getBody());
-        }
+        node.getChildren().forEach(this::checkImported);
     }
 
     protected XuiComponentTemplate doEvalTemplate(IEvalScope scope) {
@@ -172,7 +157,8 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         return compileTool;
     }
 
-    private String getTagName(XuiComponentTemplateNodeNamed node) {
+    /** 获取标签组件名，仅针对 {@code <Text/>} 和导入组件 */
+    private String getTagComponentName(XuiComponentTemplateNodeNamed node) {
         return node.isText() || node.isCustom() ? node.getTagName() : null;
     }
 
@@ -201,21 +187,8 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
             String xuiName = child.getAttr(ATTR_NAME_XUI_NAME).toString();
 
             XuiComponentTemplateNodeNamed beanChild = null;
-            if (xuiName != null) {
-                if (bean instanceof XuiComponentTemplateNode) {
-                    beanChild = ((XuiComponentTemplateNode) bean).getChild(xuiName);
-                } //
-                else if (bean instanceof XuiComponentTemplateNodeBody) {
-                    beanChild = ((XuiComponentTemplateNodeBody) bean).getChild(xuiName);
-                } //
-                else if (bean instanceof XuiComponentTemplateNodeStatementChoose) {
-                    XuiComponentTemplateNodeStatementChoose choose = (XuiComponentTemplateNodeStatementChoose) bean;
-                    if (TAG_NAME_OTHERWISE.equals(child.getTagName())) {
-                        beanChild = choose.getOtherwise();
-                    } else {
-                        beanChild = choose.getWhen(xuiName);
-                    }
-                }
+            if (xuiName != null && bean != null) {
+                beanChild = bean.getChild(xuiName);
             }
 
             XNode copiedChild = cloneXNode(child, beanChild);

@@ -24,18 +24,11 @@ public abstract class _XuiLayoutStatementChoose extends io.nop.core.resource.com
     private java.lang.String _$tag ;
     
     /**
-     *  缺省条件
-     * xml name: otherwise
+     *  
+     * xml name: 
      * 
      */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseOtherwise _otherwise ;
-    
-    /**
-     *  特定条件
-     * xml name: when
-     * 
-     */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen> _whens = KeyedList.emptyList();
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout> _children = KeyedList.emptyList();
     
     /**
      * 
@@ -57,67 +50,48 @@ public abstract class _XuiLayoutStatementChoose extends io.nop.core.resource.com
 
     
     /**
-     * 缺省条件
-     * xml name: otherwise
+     * 
+     * xml name: 
      *  
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseOtherwise getOtherwise(){
-      return _otherwise;
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout> getChildren(){
+      return _children;
     }
 
     
-    public void setOtherwise(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseOtherwise value){
+    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout> value){
         checkAllowChange();
         
-        this._otherwise = value;
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout::getXuiName);
            
     }
 
     
-    /**
-     * 特定条件
-     * xml name: when
-     *  
-     */
-    
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen> getWhens(){
-      return _whens;
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout getChild(String name){
+        return this._children.getByKey(name);
     }
 
-    
-    public void setWhens(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen> value){
+    public boolean hasChild(String name){
+        return this._children.containsKey(name);
+    }
+
+    public void addChild(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout item) {
         checkAllowChange();
-        
-        this._whens = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen::getXuiName);
-           
-    }
-
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen getWhen(String name){
-        return this._whens.getByKey(name);
-    }
-
-    public boolean hasWhen(String name){
-        return this._whens.containsKey(name);
-    }
-
-    public void addWhen(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen item) {
-        checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen> list = this.getWhens();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout> list = this.getChildren();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen::getXuiName);
-            setWhens(list);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout::getXuiName);
+            setChildren(list);
         }
         list.add(item);
     }
     
-    public java.util.Set<String> keySet_whens(){
-        return this._whens.keySet();
+    public java.util.Set<String> keySet_children(){
+        return this._children.keySet();
     }
 
-    public boolean hasWhens(){
-        return !this._whens.isEmpty();
+    public boolean hasChildren(){
+        return !this._children.isEmpty();
     }
     
 
@@ -128,9 +102,7 @@ public abstract class _XuiLayoutStatementChoose extends io.nop.core.resource.com
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._otherwise = io.nop.api.core.util.FreezeHelper.deepFreeze(this._otherwise);
-            
-           this._whens = io.nop.api.core.util.FreezeHelper.deepFreeze(this._whens);
+           this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
             
         }
     }
@@ -140,8 +112,7 @@ public abstract class _XuiLayoutStatementChoose extends io.nop.core.resource.com
         super.outputJson(out);
         
         out.putNotNull("$tag",this.get$tag());
-        out.putNotNull("otherwise",this.getOtherwise());
-        out.putNotNull("whens",this.getWhens());
+        out.putNotNull("children",this.getChildren());
     }
 
     public XuiLayoutStatementChoose cloneInstance(){
@@ -154,8 +125,7 @@ public abstract class _XuiLayoutStatementChoose extends io.nop.core.resource.com
         super.copyTo(instance);
         
         instance.set$tag(this.get$tag());
-        instance.setOtherwise(this.getOtherwise());
-        instance.setWhens(this.getWhens());
+        instance.setChildren(this.getChildren());
     }
 
     protected XuiLayoutStatementChoose newInstance(){

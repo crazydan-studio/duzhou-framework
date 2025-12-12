@@ -17,81 +17,55 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
     
     /**
-     *  缺省条件
-     * xml name: otherwise
+     *  
+     * xml name: 
      * 
      */
-    private io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseOtherwise _otherwise ;
+    private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed> _children = KeyedList.emptyList();
     
     /**
-     *  特定条件
-     * xml name: when
-     * > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
-     */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen> _whens = KeyedList.emptyList();
-    
-    /**
-     * 缺省条件
-     * xml name: otherwise
+     * 
+     * xml name: 
      *  
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseOtherwise getOtherwise(){
-      return _otherwise;
+    public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed> getChildren(){
+      return _children;
     }
 
     
-    public void setOtherwise(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseOtherwise value){
+    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed> value){
         checkAllowChange();
         
-        this._otherwise = value;
+        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed::getXuiName);
            
     }
 
     
-    /**
-     * 特定条件
-     * xml name: when
-     *  > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
-     */
-    
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen> getWhens(){
-      return _whens;
+    public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed getChild(String name){
+        return this._children.getByKey(name);
     }
 
-    
-    public void setWhens(java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen> value){
+    public boolean hasChild(String name){
+        return this._children.containsKey(name);
+    }
+
+    public void addChild(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed item) {
         checkAllowChange();
-        
-        this._whens = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen::getXuiName);
-           
-    }
-
-    
-    public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen getWhen(String name){
-        return this._whens.getByKey(name);
-    }
-
-    public boolean hasWhen(String name){
-        return this._whens.containsKey(name);
-    }
-
-    public void addWhen(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen item) {
-        checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen> list = this.getWhens();
+        java.util.List<io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed> list = this.getChildren();
         if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStatementChooseWhen::getXuiName);
-            setWhens(list);
+            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed::getXuiName);
+            setChildren(list);
         }
         list.add(item);
     }
     
-    public java.util.Set<String> keySet_whens(){
-        return this._whens.keySet();
+    public java.util.Set<String> keySet_children(){
+        return this._children.keySet();
     }
 
-    public boolean hasWhens(){
-        return !this._whens.isEmpty();
+    public boolean hasChildren(){
+        return !this._children.isEmpty();
     }
     
 
@@ -102,9 +76,7 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._otherwise = io.nop.api.core.util.FreezeHelper.deepFreeze(this._otherwise);
-            
-           this._whens = io.nop.api.core.util.FreezeHelper.deepFreeze(this._whens);
+           this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
             
         }
     }
@@ -113,8 +85,7 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("otherwise",this.getOtherwise());
-        out.putNotNull("whens",this.getWhens());
+        out.putNotNull("children",this.getChildren());
     }
 
     public XuiComponentTemplateNodeStatementChoose cloneInstance(){
@@ -126,8 +97,7 @@ public abstract class _XuiComponentTemplateNodeStatementChoose extends io.crazyd
     protected void copyTo(XuiComponentTemplateNodeStatementChoose instance){
         super.copyTo(instance);
         
-        instance.setOtherwise(this.getOtherwise());
-        instance.setWhens(this.getWhens());
+        instance.setChildren(this.getChildren());
     }
 
     protected XuiComponentTemplateNodeStatementChoose newInstance(){

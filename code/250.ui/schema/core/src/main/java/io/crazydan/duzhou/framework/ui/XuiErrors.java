@@ -23,6 +23,7 @@ import io.nop.api.core.exceptions.ErrorCode;
 
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_LEFT_PAIR;
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_RIGHT_PAIR;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
 import static io.nop.api.core.exceptions.ErrorCode.define;
 import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
@@ -93,9 +94,25 @@ public interface XuiErrors {
                    + "其需为字母、数字、下划线组成的驼峰形式，且首字母必须大写，"
                    + "如 Button、Button_Ext",
                    ARG_TAG_NAME);
+    ErrorCode ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED = //
+            define("duzhou.err.ui.component.multiple-same-name-slot-not-allowed",
+                   "不允许在 <{" + ARG_TAG_NAME + "}/> 标签中定义多个名字相同的 <slot name=\"{" + ARG_NAME + "}\"/>",
+                   ARG_TAG_NAME,
+                   ARG_NAME);
+    ErrorCode ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED = //
+            define("duzhou.err.ui.component.multiple-same-xui-slot-not-allowed",
+                   "不允许在 <{"
+                   + ARG_TAG_NAME
+                   + "}/> 标签中定义多个 ["
+                   + ATTR_NAME_XUI_SLOT
+                   + "] 属性值（=\""
+                   + ARG_VALUE
+                   + "\"）相同的节点",
+                   ARG_TAG_NAME,
+                   ARG_VALUE);
     ErrorCode ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED = //
             define("duzhou.err.ui.component.slot-in-depth-not-allowed", //
-                   "不允许在 <slot/> 标签内嵌套使用 slot");
+                   "不允许在 <slot/> 标签内嵌套使用 <slot/>");
     ErrorCode ERR_COMPONENT_DSL_NODE_NOT_BOUND = //
             define("duzhou.err.ui.component.dsl-node-not-bound", //
                    "组件未与其 XNode 节点绑定，建议在 xdef 元模型中的 <xdef:post-parse/> 脚本中做全局自动绑定，如：_dsl_model.setDslNode(_dsl_root)");

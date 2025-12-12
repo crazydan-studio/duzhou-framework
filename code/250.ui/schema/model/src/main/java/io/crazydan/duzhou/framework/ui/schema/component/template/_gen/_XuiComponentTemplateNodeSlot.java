@@ -10,11 +10,12 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 用于控制 `xui:slot` 节点的插入位置。
+ * > 用于控制配置了 `xui:slot` 属性的节点的插入位置。
  * >
  * > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
  * > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
  * > - 不支持 `<slot/>` 嵌套使用；
+ * > - 在同一层级内，不能出现同名的 `<slot/>`；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

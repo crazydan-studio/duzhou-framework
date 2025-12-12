@@ -81,7 +81,8 @@
     <!-- [支持插槽的节点]
 
     @xui:slot [插槽名]
-        > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点
+        > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点。
+        > 注意，在同一层级内，不能出现相同的插槽名
     -->
     <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
                  xdef:ref="XuiComponentTemplateNode"
@@ -127,11 +128,12 @@
                 xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
         <!-- [插槽节点]
-        > 用于控制 `xui:slot` 节点的插入位置。
+        > 用于控制配置了 `xui:slot` 属性的节点的插入位置。
         >
         > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
         > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
         > - 不支持 `<slot/>` 嵌套使用；
+        > - 在同一层级内，不能出现同名的 `<slot/>`；
 
         @name [插槽名]
             > 通过名字查找并确定所要插入的节点
@@ -146,7 +148,8 @@
         > 只包含文本内容的组件。必须通过 `<import/>` 显式导入。
 
         @xui:slot [插槽名]
-            > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点
+            > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点。
+            > 注意，在同一层级内，不能出现相同的插槽名
         @as-html [是否为 HTML 片段]
             > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
         -->
@@ -181,19 +184,21 @@
         <!-- [条件选择] -->
         <choose xdef:name="XuiComponentTemplateNodeStatementChoose"
                 xdef:ref="XuiComponentTemplateNodeNamed"
+                xdef:body-type="list" xdef:key-attr="xui:name"
+                xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed>"
+                xdef:bean-sub-type-prop="$tag"
                 xui:name="!ns-name"
         >
             <!-- [特定条件] -->
             <when xdef:name="XuiComponentTemplateNodeStatementChooseWhen"
                   xdef:ref="XuiComponentTemplateNodeStatementCond"
-                  xdef:unique-attr="xui:name"
-                  xdef:bean-prop="whens" xdef:bean-child-name="when"
                   xui:name="!ns-name"
             />
             <!-- [缺省条件] -->
             <otherwise xdef:name="XuiComponentTemplateNodeStatementChooseOtherwise"
                        xdef:ref="XuiComponentTemplateNodeBody"
-                       xui:name="!~ns-name=otherwise"
+                       xui:name="!ns-name=otherwise"
             />
         </choose>
 

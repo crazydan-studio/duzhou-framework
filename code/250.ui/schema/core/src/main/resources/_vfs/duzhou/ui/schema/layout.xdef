@@ -30,6 +30,7 @@
 >
 
     <xdef:define xdef:name="XuiLayout"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                  xdef:body-type="union"
                  xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
                  xdef:bean-body-prop="root"
@@ -87,6 +88,10 @@
         <choose xdef:name="XuiLayoutStatementChoose"
                 xdef:bean-tag-prop="$tag"
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
+                xdef:body-type="list" xdef:key-attr="xui:name"
+                xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout>"
+                xdef:bean-sub-type-prop="$tag"
         >
             <!-- [特定条件]
 
@@ -97,15 +102,13 @@
             -->
             <when xdef:name="XuiLayoutStatementChooseWhen"
                   xdef:ref="XuiLayout"
-                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                  xdef:unique-attr="xui:name"
-                  xdef:bean-prop="whens" xdef:bean-child-name="when"
                   xui:name="!ns-name"
                   test="string"
             />
             <!-- [缺省条件] -->
             <otherwise xdef:name="XuiLayoutStatementChooseOtherwise"
                        xdef:ref="XuiLayout"
+                       xui:name="!ns-name=otherwise"
             />
         </choose>
     </xdef:define>
