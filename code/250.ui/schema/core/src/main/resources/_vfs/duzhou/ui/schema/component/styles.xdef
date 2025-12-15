@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [组件样式]
+>
+-->
+<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.style"
+        xdef:name="XuiComponentStyles"
+        xdef:body-type="map"
+        xdef:bean-body-prop="children" xdef:bean-child-name="child"
+        xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyle>"
+        xdef:bean-sub-type-prop="$tag"
+>
+
+    <!-- [组件根样式]
+    > 特定作用于组件根节点的样式，其与样式只能作用于组件中指定的部件上。
+    -->
+    <root xdef:name="XuiComponentStyleRoot"
+          xdef:ref="../style/style-def.xdef"
+          xui:multiple="~boolean"
+    />
+
+    <!-- [组件部件样式]
+    >
+    > 标签名为 `layout__xxx` 形式的样式将被视为布局样式，仅可在布局节点中应用，且仅引用
+    > `xxx` 部分所代表的名字，如 `<styles> <xxx .../> </styles>`。
+    > 而 `xxx__hover`、`xxx__focus` 等形式的样式则会被视为针对组件部件的
+    > `hover`、`focus` 等状态所应用的样式，其中 `xxx` 部分代表的是组件部件的一般样式的名字，
+    > 如 `header` 部件所应用的样式 `<styles> <header .../> <header__hover .../> </styles>`。
+    -->
+    <xdef:unknown-tag xdef:name="XuiComponentStyleAny"
+                      xdef:ref="../style/style-def.xdef"
+                      xui:multiple="~boolean"
+    />
+</styles>

@@ -26,9 +26,9 @@
     > 其名字必须为首字母大写的驼峰形式（可包含下划线）
 @from [导入组件的 vpath 路径]
 -->
-<import xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
+<import xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
         x:schema="/nop/schema/xdef.xdef"
-        xdef:name="XuiComponentImport"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component"
+        xdef:name="XuiComponentImport"
         as="!component-name" from="!v-path"
 />

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [样式定义]
+> 以标签名作为样式名，定义样式的可配置属性及其组成。
+>
+> 每个样式定义最多包含两层组成结构，其中，第一层用于定义样式本身的组成，
+> 第二层则是用于覆盖第一层样式的内部结构，从而实现对第一层组成样式的部分定制。
+>
+> 不包含任何组成结构的样式，称为**原子样式**，即其结构不可拆分。
+> 而包含一层或两层结构的样式，则称为**复合样式**，即其由多个样式组合而成，
+> 其组成元素可以是原子样式，也可为其他复合样式，且第二层结构只能针对其复合样式元素做覆盖定制。
+
+@xui:multiple [是否可重复]
+    > 一般的样式只能在同一层级出现一次，只有当前值为 `true` 时，才可以多次使用，
+    > 且在其实例上必须通过 `xui:alias` 指定该样式名，而标签名依然必须唯一，如
+    > ```xml
+    > <styles>
+    >   <box-shadow xui:multiple="true" .../>
+    > </styles>
+    > ```
+    > ```xml
+    > <window>
+    >   <box-shadow-1 xui:alias="box-shadow" .../>
+    >   <box-shadow-2 xui:alias="box-shadow" .../>
+    > </window>
+    > ```
+-->
+<style-def xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
+           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
+           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
+           xdef:name="XuiStyle"
+           xdef:bean-tag-prop="$tag"
+           xdef:body-type="map"
+           xdef:bean-body-prop="children" xdef:bean-child-name="child"
+           xdef:bean-sub-type-prop="$tag"
+           xui:multiple="boolean"
+           xdef:unknown-attr="dict:duzhou/ui/style-types" xdef:bean-unknown-attrs-prop="props"
+>
+
+    <!-- [第一层组成节点] -->
+    <xdef:unknown-tag xdef:name="XuiStyleNode"
+                      xdef:ref="XuiStyleNodeBase"
+                      xdef:body-type="map"
+                      xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                      xdef:bean-sub-type-prop="$tag"
+                      xui:source="xpl-fn:(props)=>map"
+    >
+        <!-- [第二层组成节点] -->
+        <xdef:unknown-tag xdef:name="XuiStyleNodeNode"
+                          xdef:ref="XuiStyleNodeBase"
+        />
+    </xdef:unknown-tag>
+
+    <!-- [组成节点基本构成] -->
+    <xdef:define xdef:name="XuiStyleNodeBase"
+                 xdef:bean-tag-prop="$tag"
+                 xui:alias="ns-name"
+                 xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
+    />
+</style-def>

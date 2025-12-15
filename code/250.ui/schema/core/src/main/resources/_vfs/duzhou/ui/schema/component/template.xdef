@@ -19,13 +19,16 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件结构树]
-> 用于定义组件的组成结构，以及对其结构中的子组件的布局控制和样式设定。
+<!-- [组件结构]
+> 用于定义组件的组成结构，并对其部件进行布局控制和样式设定。
 >
-> 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，
-> 从而支持对任意节点的差量定制。
+> 组件组成结构 `<body/>` 中的节点称为**结构节点**，其包含 `<if/>`、`<for/>` 等**控制节点**，
+> 以及由导入的外部组件实例组成的**组件节点**，其中，组件节点也称为当前组件的组成**部件**。
+> 部件为组件的核心组成元素，其为组件的视觉呈现，并负责与用户的交互响应。
+>
+> 组件的结构节点均以 `xui:name` 作为唯一属性，以支持对其结构中的任意节点进行差量定制。
 -->
-<template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef" xmlns:xui="xui"
+<template xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
           x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
           xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.template"
           xdef:name="XuiComponentTemplate"
@@ -33,14 +36,20 @@
           xui:name="!~ns-name=xui-template-root-node"
 >
 
-    <!-- [节点] -->
+    <!-- [组件节点]
+    > 包含布局、消息、样式，及其内嵌结构。
+    -->
     <xdef:define xdef:name="XuiComponentTemplateNode"
                  xdef:ref="XuiComponentTemplateNodeNamed"
     >
         <!-- [布局控制]
-        > 根据 `xui:name` 对其**直接子组件**（含 `<slot/>` 和 `<native/>`，但不含 `<if/>`、`<for/>` 等控制节点）进行布局控制。
+        > 根据 `xui:name` 对组件结构树中的直接**部件**节点（含 `<slot/>` 和 `<native/>`）进行布局控制。
+        > 对于 `<body/>` 下的非直接部件节点，则需要在其所在的父节点中单独通过 `<layout/>` 进行控制，
+        > 也就是布局控制**不能跨层级**作用于部件。
         >
-        > 缺省将按照子组件声明顺序排列，并由 UI Vendor 做默认布局。
+        > 没有在布局中显式控制的组件将不会被布局，也就不会呈现出来。
+        >
+        > 缺省将按照部件的声明顺序排列，并由 UI Vendor 做默认布局。
         -->
         <layout xdef:name="XuiComponentTemplateNodeLayout"
                 xdef:ref="../layout.xdef"
@@ -49,7 +58,7 @@
         <!--<style name="!ns-name" />-->
 
         <!-- [消息派发]
-        > 监听指定的事件，在事件触发时派发指定的消息。
+        > 监听部件上的指定事件，并在事件触发时派发指定的消息。
 
         @msg [消息名]
             > 待派发的消息，如 `User_Login_Start`、`User_Login_Finish` 等
@@ -65,6 +74,7 @@
                   data="any"
         />
 
+        <!-- [内嵌结构] -->
         <body xdef:ref="XuiComponentTemplateNodeBody"
               xui:name="!~ns-name=xui-template-node-body"
         />
@@ -81,11 +91,10 @@
                  xui:name="!ns-name"
     />
 
-    <!-- [支持插槽的节点]
+    <!-- [支持插入插槽的节点]
 
     @xui:slot [插槽名]
-        > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点。
-        > 注意，在同一层级内，不能出现相同的插槽名
+        > 指定对应的插入点位置。注意，在同一层级内不能定义多个插槽名相同的组件节点
     -->
     <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
                  xdef:ref="XuiComponentTemplateNode"
@@ -103,7 +112,15 @@
                  test="string"
     />
 
-    <!-- [节点结构树] -->
+    <!-- [组成结构]
+    > 由导入的外部组件实例构成的结构树，其仅包含控制节点和组件节点。
+    >
+    > 控制节点根据组件内部状态和外部设定的属性数据控制组件节点在何种状态下挂载到结构树中，
+    > 从而支持**数据响应式**的组件渲染。
+    >
+    > 而组件节点仅表示当前组件由哪些元素组成，而以何种视觉效果呈现则由 `<layout/>` 单独控制，
+    > 在结构树中不包含与布局相关的节点和样式，组件节点之间的先后顺序也不代表其显示的位置。
+    -->
     <xdef:define xdef:name="XuiComponentTemplateNodeBody"
                  xdef:ref="XuiComponentTemplateNodeNamed"
                  xdef:body-type="list" xdef:key-attr="xui:name"
@@ -111,18 +128,18 @@
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed>"
                  xdef:bean-sub-type-prop="$tag"
     >
-        <!-- Start: 组件模版树节点 -->
+        <!-- Start: 部件 -->
 
         <!-- [原生组件]
-        > 原生组件一般**仅用在**基础组件内，并由 UI Vendor 根据组件配置提供具体的实现。
-        > 在基础组件之上扩展构造各种功能组件，再在功能组件之上定制业务组件。
+        > 本框架自身没有提供组件绘制能力，最终必须由实际运行环境提供底层基础组件的绘制能力，
+        > 比如，在 Web 运行时中，`<Input/>` 组件需要由 html 元素 `<input/>` 提供支持，而 `<Input/>`
+        > 组件自身则主要是对该原生组件的封装层，从而向上层组件屏蔽底层差异，实现对 UI 的跨平台支持。
         >
-        > - 可以在原生组件内嵌入其他组件（含基础组件、原生组件）；
-        > - 其内嵌结构支持条件、循环控制，以及消息派发和布局控制；
-        > - 除 `name` 外，由 UI Vendor 自行根据原生组件的支持情况添加额外的配置属性，
-        >   且可通过 `${xxx}` 表达式引用变量；
+        > 可在原生组件内嵌入包括控制节点在内的子结构，同时可配置布局和消息。
+        > 其子结构最终将以子节点形式传递给 `name` 属性所对应的原生组件，再由具体的原生组件负责处理。
 
         @name [原生组件名]
+            > 由运行时根据该名字注册原生组件
         -->
         <native xdef:name="XuiComponentTemplateNodeNative"
                 xdef:ref="XuiComponentTemplateNodeSlottable"
@@ -130,16 +147,22 @@
                 name="#!ns-name"
                 xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
-        <!-- [插槽节点]
-        > 用于控制配置了 `xui:slot` 属性的节点的插入位置。
+
+        <!-- [插槽]
+        > 对于其实例可嵌入子节点的组件，可通过 `<slot/>` 控制其实例的内嵌节点的插入位置。
+        > 其 `name` 与组件实例的子节点上的 `xui:slot` 相对应，最终，与 `name` 同值的
+        > `xui:slot` 节点将被嵌入在该 `<slot/>` 所在的位置，从而实现组件结构的动态性。
         >
-        > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
-        > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
+        > 在 `<slot/>` 内可提供缺省内容，在上层组件没有为该组件实例放置对应名字的
+        > `xui:slot` 节点时，将在该位置插入该缺省内容。
+        >
+        > 注意：
         > - 不支持 `<slot/>` 嵌套使用；
-        > - 在同一层级内，不能出现同名的 `<slot/>`；
+        > - 在同一层级内，不能出现相同 `name` 值的 `<slot/>`；
 
         @name [插槽名]
-            > 通过名字查找并确定所要插入的节点
+            > 通过名字查找并确定所要插入的节点。
+            > 缺省为 `default`，即组件实例内的所有子节点均按其定义顺序插入该位置
         -->
         <slot xdef:name="XuiComponentTemplateNodeSlot"
               xdef:ref="XuiComponentTemplateNode"
@@ -148,13 +171,14 @@
         />
 
         <!-- [文本组件]
-        > 只包含文本内容的组件。必须通过 `<import/>` 显式导入。
+        > 只包含文本内容的组件。在该组件内部只能内嵌文本，不能嵌入组件节点。
+        > 本框架只是在形式上约束其结构，并不提供具体实现，
+        > 因此，其与其他组件一样，必须通过 `<import/>` 显式导入封装了原生组件的 `<Text/>` 组件。
 
         @xui:slot [插槽名]
-            > 指定插入点位置，替换所属组件内部的同名 `<slot/>` 节点。
-            > 注意，在同一层级内，不能出现相同的插槽名
+            > 指定对应的插入点位置。注意，在同一层级内不能定义多个插槽名相同的组件节点
         @as-html [是否为 HTML 片段]
-            > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
+            > 若为 `true`，则将其文本视为 HTML 片段，对其内容不做转义，也不处理 XSS 攻击
         -->
         <Text xdef:name="XuiComponentTemplateNodeText"
               xdef:ref="XuiComponentTemplateNodeNamed"
@@ -164,9 +188,15 @@
               xdef:value="string" xdef:bean-body-prop="value"
         />
 
-        <!-- [任意内嵌组件]
-        > - 标签名需符合组件的命名规范（`component-name`）；
-        > - 标签名对应的是 `<import/>` 所引入的外部组件；
+        <!-- [组件节点]
+        > 对已导入组件的实例配置，成为组件结构中的组成部分。
+        >
+        > `<import/>` 导入的是组件的定义和引用名字，在 `<body/>` 中则是对导入组件的实例化，
+        > 以最终实现对当前组件的结构定义。
+        >
+        > 标签名对应的便是组件的导入名字，其必须符合 `component-name` 的命名规范要求。
+        > 在该标签上配置的属性，则必须与其组件定义的 `<props/>` 的名字和类型保持一致，
+        > 从而实现从上层组件向子组件传递数据的需求。
         -->
         <xdef:unknown-tag xdef:name="XuiComponentTemplateNodeAny"
                           xdef:ref="XuiComponentTemplateNodeSlottable"
@@ -174,7 +204,7 @@
                           xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
         />
 
-        <!-- End: 组件模版树节点 -->
+        <!-- End: 部件 -->
 
         <!-- Start: 条件/循环控制 -->
 
@@ -205,7 +235,7 @@
             />
         </choose>
 
-        <!-- Note: 不允许在控制语句中修改控制变量，因此，不支持 while 循环 -->
+        <!-- Note: 不允许在控制语句中修改控制变量，因此，不支持 while 循环，否则，其循环将无法结束 -->
         <!-- [For 循环]
 
         @var [循环元素的变量名]

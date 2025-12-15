@@ -19,23 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [UI 应用]
-> 一个独立的 UI 应用是系统中相关功能的集合体，比如，控制台、门户等
->
+<!-- [样式库]
 -->
-<app xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-     x:schema="/nop/schema/xdef.xdef"
-     xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.app"
-     xdef:name="XuiApp"
+<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
+        xdef:name="XuiStyles"
+        xdef:body-type="map"
+        xdef:bean-body-prop="children" xdef:bean-child-name="child"
+        xdef:bean-sub-type-prop="$tag"
+        theme="v-path"
 >
 
-    <pages xdef:name="XuiAppPages"
-           xdef:body-type="list" xdef:key-attr="url"
-           xdef:bean-body-prop="children" xdef:bean-child-name="child"
-           entry="!string"
-    >
-        <page xdef:name="XuiAppPage"
-              url="!string" path="!v-path"
-        />
-    </pages>
-</app>
+    <!-- [样式定义] -->
+    <xdef:unknown-tag xdef:ref="style/style-def.xdef" />
+</styles>

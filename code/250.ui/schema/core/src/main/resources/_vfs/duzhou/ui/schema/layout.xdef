@@ -213,7 +213,7 @@
         > 仅在 `type` 为 `value-specified` 时设定
     -->
     <xdef:define xdef:name="XuiLayoutNodePropsSize"
-                 type="!enum:io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize=wrap-content"
+                 type="!enum:io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize=fit-content"
                  value="xui-size"
     />
     <!-- [节点空白]

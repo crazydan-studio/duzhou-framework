@@ -25,8 +25,9 @@
 -->
 <page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:c="c"
       x:schema="/nop/schema/xdef.xdef"
+      xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.page"
+      xdef:name="XuiPage"
       xdef:ref="component.xdef"
-      xdef:name="XuiPage" xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.page"
 >
     <!-- Note: xdef:ref 引入的元模型中的 xdef:post-parse 脚本不会在加载 XuiPage 模型时执行 -->
     <xdef:post-parse>

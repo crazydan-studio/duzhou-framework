@@ -24,10 +24,10 @@
 @name [消息名]
     > 其名字必须为首字母大写的驼峰形式（可包含下划线）
 -->
-<message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="xdef"
+<message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
          x:schema="/nop/schema/xdef.xdef"
-         xdef:name="XuiComponentMessage"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.message"
+         xdef:name="XuiComponentMessage"
          name="!component-name"
 >
 
