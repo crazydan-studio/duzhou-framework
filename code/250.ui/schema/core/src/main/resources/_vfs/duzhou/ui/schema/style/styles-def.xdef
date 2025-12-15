@@ -19,18 +19,15 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [样式定义集]
+<!-- [样式应用]
 -->
-<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
-        xdef:name="XuiStyles"
-        xdef:body-type="map"
-        xdef:bean-body-prop="children" xdef:bean-child-name="child"
-        xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyle>"
-        xdef:bean-sub-type-prop="$tag"
+<styles-def xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+            x:schema="/nop/schema/xdef.xdef"
+            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
+            xdef:name="XuiStylesDef"
+            xdef:body-type="map"
+            xdef:bean-body-prop="children" xdef:bean-child-name="child"
+            xdef:bean-sub-type-prop="$tag"
 >
-
-    <!-- [样式定义] -->
-    <xdef:unknown-tag xdef:ref="style/style-def.xdef" />
-</styles>
+    <xdef:unknown-tag xdef:ref="style-use.xdef" />
+</styles-def>

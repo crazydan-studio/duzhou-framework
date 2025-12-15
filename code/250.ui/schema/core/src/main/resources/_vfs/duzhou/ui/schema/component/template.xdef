@@ -55,7 +55,13 @@
                 xdef:ref="../layout.xdef"
         />
 
-        <!--<style name="!ns-name" />-->
+        <!-- [样式应用]
+        > 在组件节点上应用在当前组件 `<styles/>` 中定义的样式，其子节点标签名必须与已定义的样式名一致，
+        > 且只能配置在该样式上所声明的属性。
+        -->
+        <styles xdef:name="XuiComponentTemplateNodeStyles"
+                xdef:ref="../style/styles-def.xdef"
+        />
 
         <!-- [消息派发]
         > 监听部件上的指定事件，并在事件触发时派发指定的消息。

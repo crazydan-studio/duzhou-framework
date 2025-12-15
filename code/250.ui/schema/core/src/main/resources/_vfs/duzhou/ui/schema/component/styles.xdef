@@ -19,17 +19,13 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件样式]
+<!-- [组件样式定义集]
 >
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
-        x:schema="/nop/schema/xdef.xdef"
+        x:schema="/nop/schema/xdef.xdef" x:extends="../styles.xdef"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.style"
         xdef:name="XuiComponentStyles"
-        xdef:body-type="map"
-        xdef:bean-body-prop="children" xdef:bean-child-name="child"
-        xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyle>"
-        xdef:bean-sub-type-prop="$tag"
 >
 
     <!-- [组件根样式]
@@ -37,7 +33,7 @@
     -->
     <root xdef:name="XuiComponentStyleRoot"
           xdef:ref="../style/style-def.xdef"
-          xui:multiple="~boolean"
+          xui:multiple="~any"
     />
 
     <!-- [组件部件样式]
@@ -49,7 +45,6 @@
     > 如 `header` 部件所应用的样式 `<styles> <header .../> <header__hover .../> </styles>`。
     -->
     <xdef:unknown-tag xdef:name="XuiComponentStyleAny"
-                      xdef:ref="../style/style-def.xdef"
-                      xui:multiple="~boolean"
+                      xui:multiple="~any"
     />
 </styles>

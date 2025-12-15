@@ -56,8 +56,8 @@
                  xdef:bean-tag-prop="$tag"
                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
         >
-            <!-- [布局配置] -->
-            <props xdef:ref="XuiLayoutNodeSelfProps" />
+            <!-- [布局样式] -->
+            <styles xdef:ref="XuiLayoutNodeStyles" />
 
             <body xdef:body-type="list" xdef:key-attr="xui:name"
                   xdef:bean-prop="children" xdef:bean-child-name="child"
@@ -78,8 +78,8 @@
                       xui:name="!ns-name"
                       target="!ns-name" layer="!int"
                 >
-                    <!-- [布局项配置] -->
-                    <props xdef:ref="XuiLayoutNodeSelfProps" />
+                    <!-- [布局样式] -->
+                    <styles xdef:ref="XuiLayoutNodeStyles" />
                 </item>
             </body>
         </stacked>
@@ -126,8 +126,8 @@
                  type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type"
                  wrap="boolean"
     >
-        <!-- [节点配置] -->
-        <props xdef:ref="XuiLayoutNodeNestedProps" />
+        <!-- [布局样式] -->
+        <styles xdef:ref="XuiLayoutNodeStyles" />
 
         <!-- [子节点] -->
         <body xdef:body-type="list" xdef:key-attr="xui:name"
@@ -152,8 +152,8 @@
                   xui:name="!ns-name"
                   pattern="!regex"
             >
-                <!-- [布局项配置] -->
-                <props xdef:ref="XuiLayoutNodeSelfProps" />
+                <!-- [布局样式] -->
+                <styles xdef:ref="XuiLayoutNodeStyles" />
             </item>
 
             <node xdef:ref="XuiLayoutLinearNode"
@@ -172,90 +172,11 @@
                  xui:name="!ns-name"
     />
 
-    <!-- Start: 布局配置 -->
-
-    <!-- [节点自身的布局配置] -->
-    <xdef:define xdef:name="XuiLayoutNodeSelfProps">
-        <!-- [宽度] -->
-        <width xdef:ref="XuiLayoutNodePropsSize" />
-        <!-- [高度] -->
-        <height xdef:ref="XuiLayoutNodePropsSize" />
-        <!-- [内边距] -->
-        <padding xdef:ref="XuiLayoutNodePropsSpacing" />
-
-        <!-- [对齐模式]
-        > 节点自身在父节点中的对齐模式，其将覆盖父节点 `<node-align/>` 所设置的缺省配置。
-        -->
-        <self-align xdef:ref="XuiLayoutNodePropsAlign" />
-    </xdef:define>
-    <!-- [可嵌套节点的布局配置]
-    > 对子节点整体进行布局控制。
+    <!-- [样式应用]
+    > 在布局节点上应用在当前组件 `<styles/>` 中定义的标签名以 `layout__` 开头的样式，
+    > 其子节点标签名必须与去掉 `layout__` 后的样式名一致，且只能配置在该样式上所声明的属性。
     -->
-    <xdef:define xdef:name="XuiLayoutNodeNestedProps"
-                 xdef:ref="XuiLayoutNodeSelfProps"
-    >
-        <!-- [子节点对齐模式]
-        > 用于配置子节点的缺省对齐模式，其可以被子节点的 `<self-align/>` 设置所覆盖。
-        -->
-        <node-align xdef:ref="XuiLayoutNodePropsAlign" />
-        <!-- [子节点间隔]
-        > 用于配置子节点之间的间隔。
-        -->
-        <node-gap xdef:ref="XuiLayoutNodePropsGap" />
-    </xdef:define>
-
-    <!-- [节点尺寸]
-
-    @type [类型]
-        > 注意，在 `type` 为 `value-specified` 时，必须配置 `value` 属性的值，
-        > 如 `<width type="value-specified" value="12u"/>`
-    @value [指定值]
-        > 仅在 `type` 为 `value-specified` 时设定
-    -->
-    <xdef:define xdef:name="XuiLayoutNodePropsSize"
-                 type="!enum:io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize=fit-content"
-                 value="xui-size"
+    <xdef:define xdef:name="XuiLayoutNodeStyles"
+                 xdef:ref="style/styles-def.xdef"
     />
-    <!-- [节点空白]
-    > 用于配置上/下/左/右的空白大小。
-
-    @left [左边空白大小]
-    @right [右边空白大小]
-    @top [顶部空白大小]
-    @bottom [底部空白大小]
-    @all [所有边空白大小]
-        > 统一设定上/下/左/右的空白大小，但可被其他属性的设定所覆盖
-    @row [行方向的空白大小]
-        > 用于设定左/右两侧的空白大小，其可被 `left`/`right` 的设定所覆盖
-    @column [列方向的空白大小]
-        > 用于设定上/下两边的空白大小，其可被 `top`/`bottom` 的设定所覆盖
-    -->
-    <xdef:define xdef:name="XuiLayoutNodePropsSpacing"
-                 left="xui-size" right="xui-size"
-                 top="xui-size" bottom="xui-size"
-                 all="xui-size"
-                 row="xui-size" column="xui-size"
-    />
-    <!-- [节点对齐模式]
-
-    @row [行内对齐模式]
-        > 在行方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
-    @column [列内对齐模式]
-        > 在列方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
-    -->
-    <xdef:define xdef:name="XuiLayoutNodePropsAlign"
-                 row="enum:io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign"
-                 column="enum:io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign"
-    />
-    <!-- [节点间隔]
-    > 控制行/列方向上的节点之间的间隔。
-
-    @row [行方向上的间隔]
-    @column [列方向上间隔]
-    -->
-    <xdef:define xdef:name="XuiLayoutNodePropsGap"
-                 row="xui-size" column="xui-size"
-    />
-
-    <!-- End: 布局配置 -->
 </layout>

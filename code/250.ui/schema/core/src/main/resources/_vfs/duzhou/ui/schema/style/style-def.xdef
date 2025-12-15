@@ -28,6 +28,9 @@
 > 不包含任何组成结构的样式，称为**原子样式**，即其结构不可拆分。
 > 而包含一层或两层结构的样式，则称为**复合样式**，即其由多个样式组合而成，
 > 其组成元素可以是原子样式，也可为其他复合样式，且第二层结构只能针对其复合样式元素做覆盖定制。
+>
+> 样式定义的组成结构最后将被展开为原子样式，并在展开过程中，将第二层结构的展开结果与第一层结构的展开结果做合并，
+> 合并规则为标签、属性同名覆盖，若属性值为 `null`，则移除该属性。
 
 @xui:multiple [是否可重复]
     > 一般的样式只能在同一层级出现一次，只有当前值为 `true` 时，才可以多次使用，
@@ -64,16 +67,17 @@
                       xdef:bean-sub-type-prop="$tag"
                       xui:source="xpl-fn:(props)=>map"
     >
-        <!-- [第二层组成节点] -->
-        <xdef:unknown-tag xdef:name="XuiStyleNodeNode"
+        <!-- [组成节点的补丁节点]
+        > 对第一层组成节点做覆盖定制，也即，该层展开后的原子样式的结果将覆盖第一层展开后的原子样式结果。
+        -->
+        <xdef:unknown-tag xdef:name="XuiStyleNodePatch"
                           xdef:ref="XuiStyleNodeBase"
         />
     </xdef:unknown-tag>
 
-    <!-- [组成节点基本构成] -->
+    <!-- [组成节点基本结构] -->
     <xdef:define xdef:name="XuiStyleNodeBase"
-                 xdef:bean-tag-prop="$tag"
+                 xdef:ref="style-use.xdef"
                  xui:alias="ns-name"
-                 xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
     />
 </style-def>
