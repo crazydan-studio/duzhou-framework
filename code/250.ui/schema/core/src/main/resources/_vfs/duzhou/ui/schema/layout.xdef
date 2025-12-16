@@ -44,7 +44,7 @@
         <linear xdef:name="XuiLayoutLinear"
                 xdef:ref="XuiLayoutLinearNode"
                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
-                xui:name="!~ns-name=xui-layout-root-node"
+                xui:name="~ns-name=xui-layout-root-node"
         />
 
         <!-- [堆叠布局]
@@ -53,12 +53,10 @@
         > 再对该容器组件与其他兄弟节点做堆叠布局。
         -->
         <stacked xdef:name="XuiLayoutStacked"
+                 xdef:ref="XuiLayoutNodeStyled"
                  xdef:bean-tag-prop="$tag"
                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
         >
-            <!-- [布局样式] -->
-            <styles xdef:ref="XuiLayoutNodeStyles" />
-
             <body xdef:body-type="list" xdef:key-attr="xui:name"
                   xdef:bean-prop="children" xdef:bean-child-name="child"
                   xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem>"
@@ -77,10 +75,7 @@
                       xdef:bean-tag-prop="$tag"
                       xui:name="!ns-name"
                       target="!ns-name" layer="!int"
-                >
-                    <!-- [布局样式] -->
-                    <styles xdef:ref="XuiLayoutNodeStyles" />
-                </item>
+                />
             </body>
         </stacked>
 
@@ -126,9 +121,6 @@
                  type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type"
                  wrap="boolean"
     >
-        <!-- [布局样式] -->
-        <styles xdef:ref="XuiLayoutNodeStyles" />
-
         <!-- [子节点] -->
         <body xdef:body-type="list" xdef:key-attr="xui:name"
               xdef:bean-prop="children" xdef:bean-child-name="child"
@@ -151,10 +143,7 @@
                   xdef:bean-tag-prop="$tag"
                   xui:name="!ns-name"
                   pattern="!regex"
-            >
-                <!-- [布局样式] -->
-                <styles xdef:ref="XuiLayoutNodeStyles" />
-            </item>
+            />
 
             <node xdef:ref="XuiLayoutLinearNode"
                   xui:name="!ns-name"
@@ -168,9 +157,15 @@
         > 在父节点内，该标识必须唯一
     -->
     <xdef:define xdef:name="XuiLayoutNodeNamed"
+                 xdef:ref="XuiLayoutNodeStyled"
                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
                  xui:name="!ns-name"
     />
+
+    <xdef:define xdef:name="XuiLayoutNodeStyled">
+        <!-- [布局样式] -->
+        <styles xdef:ref="XuiLayoutNodeStyles" />
+    </xdef:define>
 
     <!-- [样式引用]
     > 引用在当前组件 `<styles/>` 中所定义的**布局样式**（名字以 `layout__` 开头的标签），
