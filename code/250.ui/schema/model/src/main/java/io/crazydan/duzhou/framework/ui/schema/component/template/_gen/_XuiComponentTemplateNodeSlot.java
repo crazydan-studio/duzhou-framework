@@ -10,12 +10,16 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 用于控制配置了 `xui:slot` 属性的节点的插入位置。
+ * > 对于其实例可嵌入子节点的组件，可通过 `<slot/>` 控制其实例的内嵌节点的插入位置。
+ * > 其 `name` 与组件实例的子节点上的 `xui:slot` 相对应，最终，与 `name` 同值的
+ * > `xui:slot` 节点将被嵌入在该 `<slot/>` 所在的位置，从而实现组件结构的动态性。
  * >
- * > - 可以在插槽节点中嵌入其他组件（包括原生组件），用以作为该插槽位置的**缺省**嵌入内容；
- * > - 其缺省的内嵌结构同样支持条件、循环控制，以及消息派发和布局控制；
+ * > 在 `<slot/>` 内可提供缺省内容，在上层组件没有为该组件实例放置对应名字的
+ * > `xui:slot` 节点时，将在该位置插入该缺省内容。
+ * >
+ * > 注意：
  * > - 不支持 `<slot/>` 嵌套使用；
- * > - 在同一层级内，不能出现同名的 `<slot/>`；
+ * > - 在同一层级内，不能出现相同 `name` 值的 `<slot/>`；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -31,7 +35,8 @@ public abstract class _XuiComponentTemplateNodeSlot extends io.crazydan.duzhou.f
     /**
      *  插槽名
      * xml name: name
-     * > 通过名字查找并确定所要插入的节点
+     * > 通过名字查找并确定所要插入的节点。
+     * > 缺省为 `default`，即组件实例内的所有子节点均按其定义顺序插入该位置
      */
     private java.lang.String _name  = "default";
     
@@ -57,7 +62,8 @@ public abstract class _XuiComponentTemplateNodeSlot extends io.crazydan.duzhou.f
     /**
      * 插槽名
      * xml name: name
-     *  > 通过名字查找并确定所要插入的节点
+     *  > 通过名字查找并确定所要插入的节点。
+     * > 缺省为 `default`，即组件实例内的所有子节点均按其定义顺序插入该位置
      */
     
     public java.lang.String getName(){

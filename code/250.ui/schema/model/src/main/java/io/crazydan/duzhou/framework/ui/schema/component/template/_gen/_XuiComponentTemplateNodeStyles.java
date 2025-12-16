@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeSlottable;
+import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStyles;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -10,11 +10,12 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 包含布局、消息、样式，及其内嵌结构。
+ * > 引用在当前组件 `<styles/>` 中所定义的**部件样式**，其子节点标签名必须与已定义的样式名一致，
+ * > 且只能配置在该样式上所声明的属性。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeSlottable extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNode {
+public abstract class _XuiComponentTemplateNodeStyles extends io.crazydan.duzhou.framework.ui.schema.style.XuiStyleRefs {
     
 
     @Override
@@ -33,19 +34,19 @@ public abstract class _XuiComponentTemplateNodeSlottable extends io.crazydan.duz
         
     }
 
-    public XuiComponentTemplateNodeSlottable cloneInstance(){
-        XuiComponentTemplateNodeSlottable instance = newInstance();
+    public XuiComponentTemplateNodeStyles cloneInstance(){
+        XuiComponentTemplateNodeStyles instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentTemplateNodeSlottable instance){
+    protected void copyTo(XuiComponentTemplateNodeStyles instance){
         super.copyTo(instance);
         
     }
 
-    protected XuiComponentTemplateNodeSlottable newInstance(){
-        return (XuiComponentTemplateNodeSlottable) ClassHelper.newInstance(getClass());
+    protected XuiComponentTemplateNodeStyles newInstance(){
+        return (XuiComponentTemplateNodeStyles) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

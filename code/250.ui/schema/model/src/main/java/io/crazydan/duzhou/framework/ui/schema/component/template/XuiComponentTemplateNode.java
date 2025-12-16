@@ -21,4 +21,13 @@ public class XuiComponentTemplateNode extends _XuiComponentTemplateNode implemen
     public List<XuiComponentTemplateNodeNamed> getChildren() {
         return getBody() != null ? getBody().getChildren() : List.of();
     }
+
+    /** 始终不返回 {@code null} */
+    @Override
+    public XuiComponentTemplateNodeStyles getStyles() {
+        if (super.getStyles() == null) {
+            return XuiComponentTemplateNodeStyles.EMPTY;
+        }
+        return super.getStyles();
+    }
 }

@@ -10,13 +10,12 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 原生组件一般**仅用在**基础组件内，并由 UI Vendor 根据组件配置提供具体的实现。
- * > 在基础组件之上扩展构造各种功能组件，再在功能组件之上定制业务组件。
+ * > 本框架自身没有提供组件绘制能力，最终必须由实际运行环境提供底层基础组件的绘制能力，
+ * > 比如，在 Web 运行时中，`<Input/>` 组件需要由 html 元素 `<input/>` 提供支持，而 `<Input/>`
+ * > 组件自身则主要是对该原生组件的封装层，从而向上层组件屏蔽底层差异，实现对 UI 的跨平台支持。
  * >
- * > - 可以在原生组件内嵌入其他组件（含基础组件、原生组件）；
- * > - 其内嵌结构支持条件、循环控制，以及消息派发和布局控制；
- * > - 除 `name` 外，由 UI Vendor 自行根据原生组件的支持情况添加额外的配置属性，
- * >   且可通过 `${xxx}` 表达式引用变量；
+ * > 可在原生组件内嵌入包括控制节点在内的子结构，同时可配置布局和消息。
+ * > 其子结构最终将以子节点形式传递给 `name` 属性所对应的原生组件，再由具体的原生组件负责处理。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -25,7 +24,7 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     /**
      *  原生组件名
      * xml name: name
-     * 
+     * > 由运行时根据该名字注册原生组件
      */
     private java.lang.String _name ;
     
@@ -39,7 +38,7 @@ public abstract class _XuiComponentTemplateNodeNative extends io.crazydan.duzhou
     /**
      * 原生组件名
      * xml name: name
-     *  
+     *  > 由运行时根据该名字注册原生组件
      */
     
     public java.lang.String getName(){

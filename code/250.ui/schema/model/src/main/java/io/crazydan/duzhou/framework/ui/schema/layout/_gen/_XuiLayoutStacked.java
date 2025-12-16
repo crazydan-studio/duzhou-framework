@@ -16,7 +16,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.AbstractComponentModel implements io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot{
+public abstract class _XuiLayoutStacked extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeStyled implements io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot{
     
     /**
      *  
@@ -31,13 +31,6 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
      * 
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem> _children = KeyedList.emptyList();
-    
-    /**
-     *  布局配置
-     * xml name: props
-     * 
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps _props ;
     
     /**
      * 
@@ -103,25 +96,6 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         return !this._children.isEmpty();
     }
     
-    /**
-     * 布局配置
-     * xml name: props
-     *  
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps getProps(){
-      return _props;
-    }
-
-    
-    public void setProps(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps value){
-        checkAllowChange();
-        
-        this._props = value;
-           
-    }
-
-    
 
     @Override
     public void freeze(boolean cascade){
@@ -132,8 +106,6 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         
            this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
             
-           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
-            
         }
     }
 
@@ -143,7 +115,6 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         
         out.putNotNull("$tag",this.get$tag());
         out.putNotNull("children",this.getChildren());
-        out.putNotNull("props",this.getProps());
     }
 
     public XuiLayoutStacked cloneInstance(){
@@ -157,7 +128,6 @@ public abstract class _XuiLayoutStacked extends io.nop.core.resource.component.A
         
         instance.set$tag(this.get$tag());
         instance.setChildren(this.getChildren());
-        instance.setProps(this.getProps());
     }
 
     protected XuiLayoutStacked newInstance(){

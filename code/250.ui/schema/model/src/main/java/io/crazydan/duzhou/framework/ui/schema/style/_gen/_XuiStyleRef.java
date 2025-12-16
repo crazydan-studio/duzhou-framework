@@ -1,27 +1,27 @@
-package io.crazydan.duzhou.framework.ui.schema.component.template._gen;
+package io.crazydan.duzhou.framework.ui.schema.style._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeAny;
+import io.crazydan.duzhou.framework.ui.schema.style.XuiStyleRef;
 import io.nop.commons.util.ClassHelper;
 
 
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 对已导入组件的实例配置，成为组件结构中的组成部分。
- * >
- * > `<import/>` 导入的是组件的定义和引用名字，在 `<body/>` 中则是对导入组件的实例化，
- * > 以最终实现对当前组件的结构定义。
- * >
- * > 标签名对应的便是组件的导入名字，其必须符合 `component-name` 的命名规范要求。
- * > 在该标签上配置的属性，则必须与其组件定义的 `<props/>` 的名字和类型保持一致，
- * > 从而实现从上层组件向子组件传递数据的需求。
+ * generate from /duzhou/ui/schema/style/style-ref.xdef <p>
+ * > 对已定义样式的引用，如 `<header width="20u" height="match-parent" />`。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeSlottable {
+public abstract class _XuiStyleRef extends io.nop.core.resource.component.AbstractComponentModel {
+    
+    /**
+     *  
+     * xml name: 
+     * 
+     */
+    private java.lang.String _$tag ;
     
     /**
      *  
@@ -29,6 +29,25 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
      * 
      */
     private java.util.Map<java.lang.String,java.lang.Object> _props ;
+    
+    /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.lang.String get$tag(){
+      return _$tag;
+    }
+
+    
+    public void set$tag(java.lang.String value){
+        checkAllowChange();
+        
+        this._$tag = value;
+           
+    }
+
     
     /**
      * 
@@ -70,23 +89,25 @@ public abstract class _XuiComponentTemplateNodeAny extends io.crazydan.duzhou.fr
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("props",this.getProps());
     }
 
-    public XuiComponentTemplateNodeAny cloneInstance(){
-        XuiComponentTemplateNodeAny instance = newInstance();
+    public XuiStyleRef cloneInstance(){
+        XuiStyleRef instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiComponentTemplateNodeAny instance){
+    protected void copyTo(XuiStyleRef instance){
         super.copyTo(instance);
         
+        instance.set$tag(this.get$tag());
         instance.setProps(this.getProps());
     }
 
-    protected XuiComponentTemplateNodeAny newInstance(){
-        return (XuiComponentTemplateNodeAny) ClassHelper.newInstance(getClass());
+    protected XuiStyleRef newInstance(){
+        return (XuiStyleRef) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

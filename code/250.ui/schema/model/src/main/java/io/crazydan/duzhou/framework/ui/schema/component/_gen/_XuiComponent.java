@@ -20,24 +20,34 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponent extends io.nop.core.resource.component.AbstractComponentModel {
     
     /**
-     *  组件导入
+     *  组件导入指令
      * xml name: import
      * >
      */
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport> _imports = KeyedList.emptyList();
     
     /**
+     *  组件部件样式定义集
+     * xml name: styles
+     * > 为组件的部件定义相应的样式。
+     */
+    private io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles _styles ;
+    
+    /**
      *  组件结构
      * xml name: template
-     * > 用于定义组件的组成结构，以及对其结构中的子组件的布局控制和样式设定。
+     * > 用于定义组件的组成结构，并对其部件进行布局控制和样式设定。
      * >
-     * > 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，
-     * > 从而支持对任意节点的差量定制。
+     * > 组件组成结构 `<body/>` 中的节点称为**结构节点**，其包含 `<if/>`、`<for/>` 等**控制节点**，
+     * > 以及由导入的外部组件实例组成的**组件节点**，其中，组件节点也称为当前组件的组成**部件**。
+     * > 部件为组件的核心组成元素，其为组件的视觉呈现，并负责与用户的交互响应。
+     * >
+     * > 组件的结构节点均以 `xui:name` 作为唯一属性，以支持对其结构中的任意节点进行差量定制。
      */
     private io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate _template ;
     
     /**
-     * 组件导入
+     * 组件导入指令
      * xml name: import
      *  >
      */
@@ -82,12 +92,34 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     }
     
     /**
+     * 组件部件样式定义集
+     * xml name: styles
+     *  > 为组件的部件定义相应的样式。
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles getStyles(){
+      return _styles;
+    }
+
+    
+    public void setStyles(io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles value){
+        checkAllowChange();
+        
+        this._styles = value;
+           
+    }
+
+    
+    /**
      * 组件结构
      * xml name: template
-     *  > 用于定义组件的组成结构，以及对其结构中的子组件的布局控制和样式设定。
+     *  > 用于定义组件的组成结构，并对其部件进行布局控制和样式设定。
      * >
-     * > 其结构节点（包括 `<if/>`、`<for/>` 等控制节点）均以 `xui:name` 作为唯一属性，
-     * > 从而支持对任意节点的差量定制。
+     * > 组件组成结构 `<body/>` 中的节点称为**结构节点**，其包含 `<if/>`、`<for/>` 等**控制节点**，
+     * > 以及由导入的外部组件实例组成的**组件节点**，其中，组件节点也称为当前组件的组成**部件**。
+     * > 部件为组件的核心组成元素，其为组件的视觉呈现，并负责与用户的交互响应。
+     * >
+     * > 组件的结构节点均以 `xui:name` 作为唯一属性，以支持对其结构中的任意节点进行差量定制。
      */
     
     public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate getTemplate(){
@@ -113,6 +145,8 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         
            this._imports = io.nop.api.core.util.FreezeHelper.deepFreeze(this._imports);
             
+           this._styles = io.nop.api.core.util.FreezeHelper.deepFreeze(this._styles);
+            
            this._template = io.nop.api.core.util.FreezeHelper.deepFreeze(this._template);
             
         }
@@ -123,6 +157,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         super.outputJson(out);
         
         out.putNotNull("imports",this.getImports());
+        out.putNotNull("styles",this.getStyles());
         out.putNotNull("template",this.getTemplate());
     }
 
@@ -136,6 +171,7 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         super.copyTo(instance);
         
         instance.setImports(this.getImports());
+        instance.setStyles(this.getStyles());
         instance.setTemplate(this.getTemplate());
     }
 

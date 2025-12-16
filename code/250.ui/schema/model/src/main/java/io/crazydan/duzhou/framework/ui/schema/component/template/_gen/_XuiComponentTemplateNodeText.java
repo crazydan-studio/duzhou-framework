@@ -10,7 +10,9 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 只包含文本内容的组件。必须通过 `<import/>` 显式导入。
+ * > 只包含文本内容的组件。在该组件内部只能内嵌文本，不能嵌入组件节点。
+ * > 本框架只是在形式上约束其结构，并不提供具体实现，
+ * > 因此，其与其他组件一样，必须通过 `<import/>` 显式导入封装了原生组件的 `<Text/>` 组件。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -19,7 +21,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     /**
      *  是否为 HTML 片段
      * xml name: as-html
-     * > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
+     * > 若为 `true`，则将其文本视为 HTML 片段，对其内容不做转义，也不处理 XSS 攻击
      */
     private java.lang.Boolean _asHtml ;
     
@@ -40,7 +42,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     /**
      * 是否为 HTML 片段
      * xml name: as-html
-     *  > 若为 `true`，则将其文本作为 HTML 渲染，但需自行处理 XSS 攻击
+     *  > 若为 `true`，则将其文本视为 HTML 片段，对其内容不做转义，也不处理 XSS 攻击
      */
     
     public java.lang.Boolean getAsHtml(){

@@ -31,13 +31,6 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> _children = KeyedList.emptyList();
     
     /**
-     *  节点配置
-     * xml name: props
-     * > 对子节点整体进行布局控制。
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNestedProps _props ;
-    
-    /**
      *  布局类型
      * xml name: type
      * > 指定其内部子节点的布局方式
@@ -116,25 +109,6 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
     }
     
     /**
-     * 节点配置
-     * xml name: props
-     *  > 对子节点整体进行布局控制。
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNestedProps getProps(){
-      return _props;
-    }
-
-    
-    public void setProps(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNestedProps value){
-        checkAllowChange();
-        
-        this._props = value;
-           
-    }
-
-    
-    /**
      * 布局类型
      * xml name: type
      *  > 指定其内部子节点的布局方式
@@ -182,8 +156,6 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
         
            this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
             
-           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
-            
         }
     }
 
@@ -193,7 +165,6 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
         
         out.putNotNull("$tag",this.get$tag());
         out.putNotNull("children",this.getChildren());
-        out.putNotNull("props",this.getProps());
         out.putNotNull("type",this.getType());
         out.putNotNull("wrap",this.getWrap());
     }
@@ -209,7 +180,6 @@ public abstract class _XuiLayoutLinearNode extends io.crazydan.duzhou.framework.
         
         instance.set$tag(this.get$tag());
         instance.setChildren(this.getChildren());
-        instance.setProps(this.getProps());
         instance.setType(this.getType());
         instance.setWrap(this.getWrap());
     }

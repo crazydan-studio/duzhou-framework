@@ -32,13 +32,6 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
     private int _layer ;
     
     /**
-     *  布局项配置
-     * xml name: props
-     * 
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps _props ;
-    
-    /**
      *  待布局目标
      * xml name: target
      * > 对应目标的 `xui:name`
@@ -85,25 +78,6 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
 
     
     /**
-     * 布局项配置
-     * xml name: props
-     *  
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps getProps(){
-      return _props;
-    }
-
-    
-    public void setProps(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeSelfProps value){
-        checkAllowChange();
-        
-        this._props = value;
-           
-    }
-
-    
-    /**
      * 待布局目标
      * xml name: target
      *  > 对应目标的 `xui:name`
@@ -130,8 +104,6 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
-            
         }
     }
 
@@ -141,7 +113,6 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
         
         out.putNotNull("$tag",this.get$tag());
         out.putNotNull("layer",this.getLayer());
-        out.putNotNull("props",this.getProps());
         out.putNotNull("target",this.getTarget());
     }
 
@@ -156,7 +127,6 @@ public abstract class _XuiLayoutStackedItem extends io.crazydan.duzhou.framework
         
         instance.set$tag(this.get$tag());
         instance.setLayer(this.getLayer());
-        instance.setProps(this.getProps());
         instance.setTarget(this.getTarget());
     }
 

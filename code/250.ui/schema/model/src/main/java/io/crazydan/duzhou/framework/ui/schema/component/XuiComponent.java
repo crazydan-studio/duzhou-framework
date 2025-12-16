@@ -3,12 +3,12 @@ package io.crazydan.duzhou.framework.ui.schema.component;
 import java.util.List;
 
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
+import io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.INeedInit;
-import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.commons.util.StringHelper;
 import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.eval.IEvalAction;
@@ -71,6 +71,15 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         }
     }
 
+    /** 始终不返回 {@code null} */
+    @Override
+    public XuiComponentStyles getStyles() {
+        if (super.getStyles() == null) {
+            return XuiComponentStyles.EMPTY;
+        }
+        return super.getStyles();
+    }
+
     /** 动态生成组件模版树 */
     public XuiComponentTemplate evalTemplate(IEvalScope scope) {
         return doEvalTemplate(scope);
@@ -87,7 +96,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         try {
             return XuiHelper.loadComponent(dslPath);
         } catch (Exception e) {
-            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED, e).source((ISourceLocationGetter) node)
+            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED, e).source(node)
                                                                                  .param(ARG_TAG_NAME, componentName)
                                                                                  .param(ARG_PATH, dslPath);
         }

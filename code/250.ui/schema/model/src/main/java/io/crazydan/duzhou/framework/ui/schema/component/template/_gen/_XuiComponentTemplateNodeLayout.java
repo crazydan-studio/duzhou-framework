@@ -10,9 +10,13 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 根据 `xui:name` 对其**直接子组件**（含 `<slot/>` 和 `<native/>`，但不含 `<if/>`、`<for/>` 等控制节点）进行布局控制。
+ * > 根据 `xui:name` 对组件结构树中的直接**部件**节点（含 `<slot/>` 和 `<native/>`）进行布局控制。
+ * > 对于 `<body/>` 下的非直接部件节点，则需要在其所在的父节点中单独通过 `<layout/>` 进行控制，
+ * > 也就是布局控制**不能跨层级**作用于部件。
  * >
- * > 缺省将按照子组件声明顺序排列，并由 UI Vendor 做默认布局。
+ * > 没有在布局中显式控制的组件将不会被布局，也就不会呈现出来。
+ * >
+ * > 缺省将按照部件的声明顺序排列，并由 UI Vendor 做默认布局。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
