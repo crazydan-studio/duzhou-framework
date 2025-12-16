@@ -25,27 +25,31 @@
     <template>
         <layout>
             <stacked>
-                <props>
-                    <width type="match-parent" />
-                    <height type="match-parent" />
-                    <padding all="2u" />
-                </props>
+                <styles>
+                    <root />
+                </styles>
 
                 <body>
                     <item xui:name="item-1" target="box-1" layer="0" />
                     <item xui:name="item-2" target="box-2" layer="10">
-                        <props>
-                            <height type="value-specified" value="10u" />
-                        </props>
+                        <styles>
+                            <height value="10u" />
+                        </styles>
                     </item>
                     <item xui:name="item-3" target="box-3" layer="20">
-                        <props>
-                            <width type="match-parent" />
-                            <height type="match-parent" />
-                        </props>
+                        <styles>
+                            <size-fill-parent />
+                        </styles>
                     </item>
                 </body>
             </stacked>
         </layout>
     </template>
+
+    <styles>
+        <layout__root>
+            <size-fill-parent />
+            <padding all="2u" />
+        </layout__root>
+    </styles>
 </component>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [基础视觉样式库]
+> 针对组件部件的基础样式库。
+-->
+<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
+        x:schema="/duzhou/ui/schema/styles.xdef"
+        x:extends="base-common.styles.xui"
+>
+
+    <!-- [边框]
+
+    @color [颜色]
+    @size [尺寸]
+    @style [样式]
+    -->
+    <border-base x:abstract="true"
+                 color="xui-color" size="xui-size" style="xui-border-style"
+    />
+    <!-- [左边框] -->
+    <border-left x:prototype="border-base" />
+    <!-- [右边框] -->
+    <border-right x:prototype="border-base" />
+    <!-- [上边框] -->
+    <border-top x:prototype="border-base" />
+    <!-- [下边框] -->
+    <border-bottom x:prototype="border-base" />
+    <!-- 用于统一配置上/下/左/右四条边框的样式 -->
+    <border x:prototype="border-base">
+        <border-left color="${color}" size="${size}" style="${style}" />
+        <border-right color="${color}" size="${size}" style="${style}" />
+        <border-top color="${color}" size="${size}" style="${style}" />
+        <border-bottom color="${color}" size="${size}" style="${style}" />
+    </border>
+
+    <!-- [阴影]
+    > 可通过 `xui:alias` 重复该配置，以实现多重阴影效果，如：
+    > ```xml
+    > <button>
+    >   <box-shadow-1 xui:alias="box-shadow" .../>
+    >   <box-shadow-2 xui:alias="box-shadow" .../>
+    > </button>
+    > ```
+
+    @offset-x [水平偏移]
+        > 为正值时，向右偏移，为负值时，向左偏移
+    @offset-y [垂直偏移]
+        > 为正值时，向下偏移，为负值时，向上偏移
+    @blur-radius [模糊半径]
+        > 值越大越模糊
+    @color [阴影颜色]
+    -->
+    <shadow-base x:abstract="true" xui:multiple="true"
+                 offset-x="xui-size" offset-y="xui-size"
+                 blur-radius="xui-size"
+                 color="xui-color"
+    />
+    <!-- [文字阴影] -->
+    <text-shadow x:prototype="shadow-base" />
+    <!-- [盒子阴影]
+
+    @inset [阴影方向]
+        > 为 `true` 时，表示内阴影，否则均为外阴影
+    @spread-radius [扩展半径]
+        > 为正值时，扩大半径，为负值时，缩小半径
+    -->
+    <box-shadow x:prototype="shadow-base"
+                inset="boolean"
+                spread-radius="xui-size"
+    />
+    <!-- [投影]
+    > 针对元素的实际形状（包括透明部分），不支持多重阴影。
+    -->
+    <drop-shadow x:prototype="shadow-base"
+                 xui:multiple="false"
+    />
+</styles>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [基础布局样式库]
+> 针对组件布局的基础样式库。
+-->
+<styles xmlns:x="/nop/schema/xdsl.xdef"
+        x:schema="/duzhou/ui/schema/styles.xdef"
+        x:extends="base-common.styles.xui"
+>
+
+    <!-- [对齐模式]
+
+    @row [行对齐模式]
+        > 在行方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
+    @column [列对齐模式]
+        > 在列方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
+    -->
+    <align-base x:abstract="true"
+                row="xui-align" column="xui-align"
+    />
+    <!-- [布局项自对齐模式]
+    > 布局项自身在布局容器中的对齐模式，其将覆盖布局容器的 `<item-align/>` 所设置的缺省配置。
+    >
+    > 可应用于布局容器和纯粹的布局项。
+    -->
+    <self-align x:prototype="align-base" />
+    <!-- [布局项对齐模式]
+    > 用于配置布局项的缺省对齐模式，其可以被布局项的 `<self-align/>` 设置所覆盖。
+    >
+    > 仅应用于布局容器。
+    -->
+    <item-align x:prototype="align-base" />
+
+    <!-- [布局项间间隔]
+    > 控制行/列方向上的布局项之间的间隔。
+    >
+    > 仅应用于布局容器。
+
+    @row [行间隔]
+        > 在行方向上的布局项之间的间隔。
+    @column [列间隔]
+        > 在列方向上的布局项之间的间隔。
+    -->
+    <item-gap row="xui-align" column="xui-align" />
+</styles>

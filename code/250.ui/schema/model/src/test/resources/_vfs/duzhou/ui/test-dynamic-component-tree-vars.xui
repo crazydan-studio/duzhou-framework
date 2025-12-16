@@ -29,9 +29,9 @@
             <linear type="column">
                 <body>
                     <item xui:name="item-1" pattern="text-1">
-                        <props>
+                        <styles>
                             <padding all="${props.padding}" />
-                        </props>
+                        </styles>
                     </item>
                 </body>
             </linear>

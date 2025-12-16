@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [公共基础样式库]
+> 视觉样式与布局样式的共有的样式库。
+-->
+<styles xmlns:x="/nop/schema/xdsl.xdef"
+        x:schema="/duzhou/ui/schema/styles.xdef"
+>
+
+    <!-- [宽度] -->
+    <width value="xui-size" min="xui-size" max="xui-size" />
+    <!-- [高度] -->
+    <height value="xui-size" min="xui-size" max="xui-size" />
+    <!-- [尺寸]
+    > 用于同时配置高度和宽度。
+    -->
+    <size width="xui-size" height="xui-size">
+        <width value="${width}" />
+        <height value="${height}" />
+    </size>
+    <!-- [尺寸占满父容器]
+    > 即，高度和宽度均为 `match-parent`。
+    -->
+    <size-fill-parent>
+        <width value="match-parent" />
+        <height value="match-parent" />
+    </size-fill-parent>
+    <!-- [尺寸自适应内容]
+    > 即，高度和宽度均为 `fit-content`。
+    -->
+    <size-fit-content>
+        <width value="fit-content" />
+        <height value="fit-content" />
+    </size-fit-content>
+
+    <!-- [内边距]
+    > 用于配置容器内部上/下/左/右的边与内容的空白间隔。
+
+    @left [左部间隔]
+    @right [右部间隔]
+    @top [顶部间隔]
+    @bottom [底部间隔]
+    @all [四边间隔]
+        > 统一设定上/下/左/右的空白间隔，但可被其他属性的设定值所覆盖
+    @row [行方向的间隔]
+        > 用于设定左/右两侧的空白间隔，其可被 `left`/`right` 的设定值所覆盖
+    @column [列方向的间隔]
+        > 用于设定上/下两边的空白间隔，其可被 `top`/`bottom` 的设定值所覆盖
+    -->
+    <padding all="xui-size"
+             row="xui-size" column="xui-size"
+             left="xui-size" right="xui-size"
+             top="xui-size" bottom="xui-size"
+    />
+</styles>

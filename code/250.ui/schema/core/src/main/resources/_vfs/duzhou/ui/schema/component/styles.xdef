@@ -22,11 +22,13 @@
 <!-- [组件部件样式定义集]
 > 为组件的部件定义相应的样式。
 
-@base [基础样式库]
-    > 基础样式库的 vpath 资源路径，在部件样式定义（名字不以 `layout__` 开头的标签）中，
+@view [基础视觉样式库]
+    > 基础视觉样式库的 vpath 资源路径。仅针对部件样式，
+    > 在部件样式定义（名字不以 `layout__` 开头的标签）中，
     > 只能引用该样式库中预定义的样式，或者当前样式库中定义的部件样式
 @layout [基础布局样式库]
-    > 基础布局样式库的 vpath 资源路径，在布局样式定义（名字以 `layout__` 开头的标签）中，
+    > 基础布局样式库的 vpath 资源路径。仅针对布局样式，
+    > 在布局样式定义（名字以 `layout__` 开头的标签）中，
     > 只能引用该样式库中预定义的样式，或者当前样式库中定义的布局样式
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
@@ -34,11 +36,16 @@
         xdef:ref="../style/style-defs.xdef"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.style"
         xdef:name="XuiComponentStyles"
-        base="!v-path" layout="!v-path"
+        view="!v-path" layout="!v-path"
 >
 
     <!-- [组件根样式定义]
     > 特定作用于组件根节点的样式，其与样式只能作用于组件中指定的部件上。
+    >
+    > 不管组件内部有零个还是多个部件，其最终都会由唯一的根节点包裹其内部结构，
+    > 并可由上层组件在该根节点上定制样式，其内部配置的根样式也将作用于该根节点。
+    > 相当于 `component/template` 便是该根节点，因此，对根样式的缺省引用方式实际等价于
+    > `<component><template> <styles> <root/> </styles> </template></component>`。
     -->
     <root xdef:name="XuiComponentStyleRoot"
           xdef:ref="XuiComponentStyleBase"

@@ -27,9 +27,25 @@
 >
 
     <x:gen-extends xmlns:component="component">
-        <component:DefaultGenExtends xpl:lib="/duzhou/ui/xlib/component.xlib"/>
+        <component:DefaultGenExtends xpl:lib="/duzhou/ui/xlib/component.xlib" />
     </x:gen-extends>
     <x:post-extends xmlns:component="component">
-        <component:DefaultPostExtends xpl:lib="/duzhou/ui/xlib/component.xlib"/>
+        <component:DefaultPostExtends xpl:lib="/duzhou/ui/xlib/component.xlib" />
     </x:post-extends>
+
+    <template>
+        <!-- 对根样式的缺省引用 -->
+        <styles>
+            <root />
+        </styles>
+
+    </template>
+
+    <!-- 配置默认的基础视觉样式库和布局样式库 -->
+    <styles view="/duzhou/ui/component/base-view.styles.xui"
+            layout="/duzhou/ui/component/base-layout.styles.xui"
+    >
+        <!-- 定义空的根样式，以避免在 `<template/>` 中的根样式的引用为 `null` -->
+        <root />
+    </styles>
 </component>

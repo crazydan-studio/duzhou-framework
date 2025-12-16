@@ -17,45 +17,28 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiComponentStyles extends io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDefs {
     
     /**
-     *  基础样式库
-     * xml name: base
-     * > 基础样式库的 vpath 资源路径，在部件样式定义（名字不以 `layout__` 开头的标签）中，
-     * > 只能引用该样式库中预定义的样式，或者当前样式库中定义的部件样式
-     */
-    private java.lang.String _base ;
-    
-    /**
      *  基础布局样式库
      * xml name: layout
-     * > 基础布局样式库的 vpath 资源路径，在布局样式定义（名字以 `layout__` 开头的标签）中，
+     * > 基础布局样式库的 vpath 资源路径。仅针对布局样式，
+     * > 在布局样式定义（名字以 `layout__` 开头的标签）中，
      * > 只能引用该样式库中预定义的样式，或者当前样式库中定义的布局样式
      */
     private java.lang.String _layout ;
     
     /**
-     * 基础样式库
-     * xml name: base
-     *  > 基础样式库的 vpath 资源路径，在部件样式定义（名字不以 `layout__` 开头的标签）中，
+     *  基础视觉样式库
+     * xml name: view
+     * > 基础视觉样式库的 vpath 资源路径。仅针对部件样式，
+     * > 在部件样式定义（名字不以 `layout__` 开头的标签）中，
      * > 只能引用该样式库中预定义的样式，或者当前样式库中定义的部件样式
      */
-    
-    public java.lang.String getBase(){
-      return _base;
-    }
-
-    
-    public void setBase(java.lang.String value){
-        checkAllowChange();
-        
-        this._base = value;
-           
-    }
-
+    private java.lang.String _view ;
     
     /**
      * 基础布局样式库
      * xml name: layout
-     *  > 基础布局样式库的 vpath 资源路径，在布局样式定义（名字以 `layout__` 开头的标签）中，
+     *  > 基础布局样式库的 vpath 资源路径。仅针对布局样式，
+     * > 在布局样式定义（名字以 `layout__` 开头的标签）中，
      * > 只能引用该样式库中预定义的样式，或者当前样式库中定义的布局样式
      */
     
@@ -68,6 +51,27 @@ public abstract class _XuiComponentStyles extends io.crazydan.duzhou.framework.u
         checkAllowChange();
         
         this._layout = value;
+           
+    }
+
+    
+    /**
+     * 基础视觉样式库
+     * xml name: view
+     *  > 基础视觉样式库的 vpath 资源路径。仅针对部件样式，
+     * > 在部件样式定义（名字不以 `layout__` 开头的标签）中，
+     * > 只能引用该样式库中预定义的样式，或者当前样式库中定义的部件样式
+     */
+    
+    public java.lang.String getView(){
+      return _view;
+    }
+
+    
+    public void setView(java.lang.String value){
+        checkAllowChange();
+        
+        this._view = value;
            
     }
 
@@ -87,8 +91,8 @@ public abstract class _XuiComponentStyles extends io.crazydan.duzhou.framework.u
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("base",this.getBase());
         out.putNotNull("layout",this.getLayout());
+        out.putNotNull("view",this.getView());
     }
 
     public XuiComponentStyles cloneInstance(){
@@ -100,8 +104,8 @@ public abstract class _XuiComponentStyles extends io.crazydan.duzhou.framework.u
     protected void copyTo(XuiComponentStyles instance){
         super.copyTo(instance);
         
-        instance.setBase(this.getBase());
         instance.setLayout(this.getLayout());
+        instance.setView(this.getView());
     }
 
     protected XuiComponentStyles newInstance(){
