@@ -28,7 +28,7 @@
             xdef:name="XuiStyleDefs"
             xdef:body-type="map"
             xdef:bean-body-prop="children" xdef:bean-child-name="child"
-            xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef>"
+            xdef:bean-body-type="Map&lt;java.lang.String,io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef>"
             xdef:bean-sub-type-prop="$tag"
 >
 
