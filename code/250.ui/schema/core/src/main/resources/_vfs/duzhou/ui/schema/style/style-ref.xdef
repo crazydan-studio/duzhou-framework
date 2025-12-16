@@ -19,13 +19,13 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [样式应用]
-> 即，对已定义样式的使用，如 `<header width="20u" height="match-parent" />`。
+<!-- [样式引用]
+> 对已定义样式的引用，如 `<header width="20u" height="match-parent" />`。
 -->
-<style-use xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+<style-ref xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
            x:schema="/nop/schema/xdef.xdef"
            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
-           xdef:name="XuiStyleUse"
+           xdef:name="XuiStyleRef"
            xdef:bean-tag-prop="$tag"
            xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
 />

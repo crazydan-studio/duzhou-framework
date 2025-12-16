@@ -19,12 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [基础样式定义集]
-> 用于统一定义基础样式（含基础布局样式），方便在组件部件样式的定义中直接引用。
+<!-- [样式定义集]
+> 用于定义一组样式，便于引用。
 -->
-<styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
-        x:schema="/nop/schema/xdef.xdef"
-        xdef:ref="style/style-defs.xdef"
-        xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
-        xdef:name="XuiStyles"
-/>
+<style-defs xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+            x:schema="/nop/schema/xdef.xdef"
+            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
+            xdef:name="XuiStyleDefs"
+            xdef:body-type="map"
+            xdef:bean-body-prop="children" xdef:bean-child-name="child"
+            xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef>"
+            xdef:bean-sub-type-prop="$tag"
+>
+
+    <xdef:unknown-tag xdef:ref="style-def.xdef" />
+</style-defs>

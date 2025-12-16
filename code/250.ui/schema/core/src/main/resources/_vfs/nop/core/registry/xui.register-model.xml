@@ -37,5 +37,8 @@
         <xdsl-loader
                 fileType="page.xui"
                 schemaPath="/duzhou/ui/schema/page.xdef" />
+        <xdsl-loader
+                fileType="styles.xui"
+                schemaPath="/duzhou/ui/schema/styles.xdef" />
     </loaders>
 </model>

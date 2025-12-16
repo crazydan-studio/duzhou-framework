@@ -19,15 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [样式应用]
+<!-- [样式引用集]
+> 引用已定义样式并提供具体的配置参数，再向组件或布局应用所配置的样式。
 -->
-<styles-def xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+<style-refs xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
             x:schema="/nop/schema/xdef.xdef"
             xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
-            xdef:name="XuiStylesDef"
+            xdef:name="XuiStyleRefs"
             xdef:body-type="map"
             xdef:bean-body-prop="children" xdef:bean-child-name="child"
+            xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.style.XuiStyleRef>"
             xdef:bean-sub-type-prop="$tag"
 >
-    <xdef:unknown-tag xdef:ref="style-use.xdef" />
-</styles-def>
+
+    <xdef:unknown-tag xdef:ref="style-ref.xdef" />
+</style-refs>

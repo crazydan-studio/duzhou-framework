@@ -56,22 +56,21 @@
 <style-def xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
            x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
-           xdef:name="XuiStyle"
+           xdef:name="XuiStyleDef"
            xdef:bean-tag-prop="$tag"
            xdef:body-type="map"
            xdef:bean-body-prop="children" xdef:bean-child-name="child"
            xdef:bean-sub-type-prop="$tag"
-           xui:multiple="boolean"
+           xui:multiple="boolean" xui:source="xpl-fn:(props)=>map"
            xdef:unknown-attr="dict:duzhou/ui/style-types" xdef:bean-unknown-attrs-prop="props"
 >
 
     <!-- [第一层组成节点] -->
-    <xdef:unknown-tag xdef:name="XuiStyleNode"
-                      xdef:ref="XuiStyleNodeBase"
+    <xdef:unknown-tag xdef:name="XuiStyleDefNode"
+                      xdef:ref="XuiStyleDefNodeBase"
                       xdef:body-type="map"
                       xdef:bean-body-prop="children" xdef:bean-child-name="child"
                       xdef:bean-sub-type-prop="$tag"
-                      xui:source="xpl-fn:(props)=>map"
     >
         <!-- [组成节点的补丁节点]
         > 仅用于针对组件的部件的内部样式的定制修改，如：
@@ -89,14 +88,14 @@
         > 在样式 `win-info` 的第二层结构中 `<background/>` 的作用便是对样式
         > `win-info` 所作用的部件的内部的 `header` 样式做定制修改。
         -->
-        <xdef:unknown-tag xdef:name="XuiStyleNodePatch"
-                          xdef:ref="XuiStyleNodeBase"
+        <xdef:unknown-tag xdef:name="XuiStyleDefNodePatch"
+                          xdef:ref="XuiStyleDefNodeBase"
         />
     </xdef:unknown-tag>
 
     <!-- [组成节点基本结构] -->
-    <xdef:define xdef:name="XuiStyleNodeBase"
-                 xdef:ref="style-use.xdef"
+    <xdef:define xdef:name="XuiStyleDefNodeBase"
+                 xdef:ref="style-ref.xdef"
                  xui:alias="ns-name"
     />
 </style-def>

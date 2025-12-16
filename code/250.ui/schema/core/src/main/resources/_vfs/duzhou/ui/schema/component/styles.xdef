@@ -19,24 +19,32 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件样式定义集]
->
+<!-- [组件部件样式定义集]
+> 为组件的部件定义相应的样式。
+
+@base [基础样式库]
+    > 基础样式库的 vpath 资源路径，在部件样式定义（名字不以 `layout__` 开头的标签）中，
+    > 只能引用该样式库中预定义的样式，或者当前样式库中定义的部件样式
+@layout [基础布局样式库]
+    > 基础布局样式库的 vpath 资源路径，在布局样式定义（名字以 `layout__` 开头的标签）中，
+    > 只能引用该样式库中预定义的样式，或者当前样式库中定义的布局样式
 -->
 <styles xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
-        x:schema="/nop/schema/xdef.xdef" x:extends="../styles.xdef"
+        x:schema="/nop/schema/xdef.xdef"
+        xdef:ref="../style/style-defs.xdef"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.style"
         xdef:name="XuiComponentStyles"
+        base="!v-path" layout="!v-path"
 >
 
-    <!-- [组件根样式]
+    <!-- [组件根样式定义]
     > 特定作用于组件根节点的样式，其与样式只能作用于组件中指定的部件上。
     -->
     <root xdef:name="XuiComponentStyleRoot"
-          xdef:ref="../style/style-def.xdef"
-          xui:multiple="~any"
+          xdef:ref="XuiComponentStyleBase"
     />
 
-    <!-- [组件部件样式]
+    <!-- [组件部件样式定义]
     >
     > 标签名为 `layout__xxx` 形式的样式将被视为布局样式，仅可在布局节点中应用，且仅引用
     > `xxx` 部分所代表的名字，如 `<styles> <xxx .../> </styles>`。
@@ -45,6 +53,11 @@
     > 如 `header` 部件所应用的样式 `<styles> <header .../> <header__hover .../> </styles>`。
     -->
     <xdef:unknown-tag xdef:name="XuiComponentStyleAny"
-                      xui:multiple="~any"
+                      xdef:ref="XuiComponentStyleBase"
+    />
+
+    <xdef:define xdef:name="XuiComponentStyleBase"
+                 xdef:ref="../style/style-def.xdef"
+                 xui:multiple="~boolean" xui:source="~xpl-fn:(props)=>map"
     />
 </styles>

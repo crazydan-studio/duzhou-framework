@@ -172,11 +172,11 @@
                  xui:name="!ns-name"
     />
 
-    <!-- [样式应用]
-    > 在布局节点上应用在当前组件 `<styles/>` 中定义的标签名以 `layout__` 开头的样式，
+    <!-- [样式引用]
+    > 引用在当前组件 `<styles/>` 中所定义的**布局样式**（名字以 `layout__` 开头的标签），
     > 其子节点标签名必须与去掉 `layout__` 后的样式名一致，且只能配置在该样式上所声明的属性。
     -->
     <xdef:define xdef:name="XuiLayoutNodeStyles"
-                 xdef:ref="style/styles-def.xdef"
+                 xdef:ref="style/style-refs.xdef"
     />
 </layout>

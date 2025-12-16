@@ -37,19 +37,15 @@
         ]]></c:script>
     </xdef:post-parse>
 
-    <!-- [组件导入] -->
     <import xdef:ref="component/import.xdef"
             xdef:unique-attr="as"
             as="!component-name"
     />
 
-    <!-- [组件结构] -->
     <template xdef:ref="component/template.xdef" />
 
-    <!-- [组件样式] -->
     <styles xdef:ref="component/styles.xdef" />
 
-    <!-- [组件消息列表] -->
     <!--<messages xdef:bean-prop="messages"
               xdef:body-type="list" xdef:key-attr="name"
               xdef:bean-child-name="message"
