@@ -62,7 +62,7 @@
            xdef:bean-body-prop="children" xdef:bean-child-name="child"
            xdef:bean-sub-type-prop="$tag"
            xui:multiple="boolean" xui:source="xpl-fn:(props)=>map"
-           xdef:unknown-attr="dict:duzhou/ui/style-type" xdef:bean-unknown-attrs-prop="props"
+           xdef:unknown-attr="dict:duzhou/ui/std-type" xdef:bean-unknown-attrs-prop="props"
 >
 
     <!-- [第一层组成节点] -->

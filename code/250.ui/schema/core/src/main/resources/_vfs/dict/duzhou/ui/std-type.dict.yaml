@@ -1,10 +1,11 @@
 # Note: YAML 也支持差量
-label: 与样式相关的数据类型
+label: UI 相关的数据类型
 options:
-  - value: xui-null
-    label: null 属性，表示该属性需被移除
-  - value: xui-bool
-    label: Boolean 类型
+  - value: int
+    label: 整数值
+  - value: boolean
+    label: 布尔值
+
   - value: xui-color
     label: 颜色
     description: >
@@ -17,6 +18,7 @@ options:
     label: 对齐模式
     description: >
       其可选值为：start、center、end
+
   - value: xui-border-style
     label: 边框样式
     description: >

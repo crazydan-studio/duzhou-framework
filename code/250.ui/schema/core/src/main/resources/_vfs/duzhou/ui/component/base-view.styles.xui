@@ -84,7 +84,7 @@
         > 为正值时，扩大半径，为负值时，缩小半径
     -->
     <box-shadow x:prototype="shadow-base"
-                inset="xui-bool"
+                inset="boolean"
                 spread-radius="xui-size"
     />
     <!-- [投影]

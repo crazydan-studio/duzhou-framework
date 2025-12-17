@@ -21,6 +21,7 @@ package io.crazydan.duzhou.framework.ui.util;
 
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.page.XuiPage;
+import io.crazydan.duzhou.framework.ui.schema.style.XuiStyles;
 import io.nop.core.resource.component.ResourceComponentManager;
 
 /**
@@ -36,5 +37,9 @@ public class XuiHelper {
 
     public static XuiComponent loadComponent(String dslPath) {
         return (XuiComponent) ResourceComponentManager.instance().loadComponentModel(dslPath);
+    }
+
+    public static XuiStyles loadStyles(String dslPath) {
+        return (XuiStyles) ResourceComponentManager.instance().loadComponentModel(dslPath);
     }
 }

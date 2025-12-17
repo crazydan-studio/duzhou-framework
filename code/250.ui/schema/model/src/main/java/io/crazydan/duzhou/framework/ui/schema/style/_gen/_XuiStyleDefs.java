@@ -21,7 +21,7 @@ public abstract class _XuiStyleDefs extends io.nop.core.resource.component.Abstr
      * xml name: 
      * 
      */
-    private java.util.List<io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> _children ;
+    private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> _children = java.util.Collections.emptyMap();
     
     /**
      * 
@@ -29,18 +29,30 @@ public abstract class _XuiStyleDefs extends io.nop.core.resource.component.Abstr
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> getChildren(){
+    public java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> getChildren(){
       return _children;
     }
 
     
-    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> value){
+    public void setChildren(java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef> value){
         checkAllowChange();
         
         this._children = value;
            
     }
 
+    
+    public io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef getChild(String name){
+        return this._children.get(name);
+    }
+
+    public boolean hasChild(String name){
+        return this._children.containsKey(name);
+    }
+    
+    public boolean hasChildren(){
+        return this._children != null && !this._children.isEmpty();
+    }
     
 
     @Override

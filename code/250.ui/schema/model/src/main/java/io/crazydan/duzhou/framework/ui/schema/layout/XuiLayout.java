@@ -10,6 +10,7 @@ public class XuiLayout extends _XuiLayout implements INeedInit {
     public XuiLayout() {
     }
 
+    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
     @Override
     public void init() {
         XuiLayoutRoot root = getRoot();

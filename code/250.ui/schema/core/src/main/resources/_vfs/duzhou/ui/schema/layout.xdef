@@ -51,6 +51,7 @@
         > 在 z 轴上对**待布局目标**进行布局。
         > 若某层涉及复杂布局，则需要将该层组件全部放在同一个容器组件节点中，
         > 再对该容器组件与其他兄弟节点做堆叠布局。
+        > TODO 考虑在其内部可嵌入 linear 等布局，以避免使用不必要的容器组件
         -->
         <stacked xdef:name="XuiLayoutStacked"
                  xdef:ref="XuiLayoutNodeStyled"

@@ -7,6 +7,7 @@ public class XuiLayoutLinear extends _XuiLayoutLinear {
     public XuiLayoutLinear() {
     }
 
+    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
     @Override
     public void init() {
         //

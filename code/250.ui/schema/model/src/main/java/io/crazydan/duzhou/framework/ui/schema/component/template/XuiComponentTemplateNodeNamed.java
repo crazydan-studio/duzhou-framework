@@ -26,6 +26,7 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
     public XuiComponentTemplateNodeNamed() {
     }
 
+    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
     @Override
     public void init() {
         checkCustomTagName();

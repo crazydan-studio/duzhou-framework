@@ -63,12 +63,15 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     public XuiComponent() {
     }
 
+    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
     @Override
     public void init() {
         if (getTemplate() != null) {
             getTemplate().init();
             checkImported(getTemplate());
         }
+
+        getStyles().init();
     }
 
     /** 始终不返回 {@code null} */
