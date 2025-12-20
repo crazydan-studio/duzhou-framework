@@ -42,8 +42,8 @@
     </template>
 
     <!-- 配置默认的基础视觉样式库和布局样式库 -->
-    <styles view="/duzhou/ui/component/base-view.styles.xui"
-            layout="/duzhou/ui/component/base-layout.styles.xui"
+    <styles view="/duzhou/ui/component/styles/base-view.styles.xui"
+            layout="/duzhou/ui/component/styles/base-layout.styles.xui"
     >
         <!-- 定义空的根样式，以避免在 `<template/>` 中的根样式的引用为 `null` -->
         <root />
