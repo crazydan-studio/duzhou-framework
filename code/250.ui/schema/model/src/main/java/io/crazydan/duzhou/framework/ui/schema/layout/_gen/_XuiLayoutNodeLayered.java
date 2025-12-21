@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseOtherwise;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLayered;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -10,34 +10,34 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/layout.xdef <p>
- * 
+ * > 通过 `layer` 指定布局节点在 z 轴上的位置，从而实现不同布局层之间的堆叠效果。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutStatementChooseOtherwise extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout {
+public abstract class _XuiLayoutNodeLayered extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeStyled {
     
     /**
-     *  
-     * xml name: 
-     * 
+     *  层序号
+     * xml name: layer
+     * > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
      */
-    private java.lang.String _$tag ;
+    private int _layer  = 0;
     
     /**
-     * 
-     * xml name: 
-     *  
+     * 层序号
+     * xml name: layer
+     *  > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
      */
     
-    public java.lang.String get$tag(){
-      return _$tag;
+    public int getLayer(){
+      return _layer;
     }
 
     
-    public void set$tag(java.lang.String value){
+    public void setLayer(int value){
         checkAllowChange();
         
-        this._$tag = value;
+        this._layer = value;
            
     }
 
@@ -57,23 +57,23 @@ public abstract class _XuiLayoutStatementChooseOtherwise extends io.crazydan.duz
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
+        out.putNotNull("layer",this.getLayer());
     }
 
-    public XuiLayoutStatementChooseOtherwise cloneInstance(){
-        XuiLayoutStatementChooseOtherwise instance = newInstance();
+    public XuiLayoutNodeLayered cloneInstance(){
+        XuiLayoutNodeLayered instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutStatementChooseOtherwise instance){
+    protected void copyTo(XuiLayoutNodeLayered instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
+        instance.setLayer(this.getLayer());
     }
 
-    protected XuiLayoutStatementChooseOtherwise newInstance(){
-        return (XuiLayoutStatementChooseOtherwise) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeLayered newInstance(){
+        return (XuiLayoutNodeLayered) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

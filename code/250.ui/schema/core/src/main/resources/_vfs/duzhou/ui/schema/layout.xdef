@@ -26,14 +26,16 @@
 <layout xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
         x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.layout"
-        xdef:ref="XuiLayout"
+        xdef:name="XuiLayout"
+        xdef:ref="XuiLayoutNode"
+        xui:name="!~ns-name=xui-layout-root-node"
 >
 
-    <xdef:define xdef:name="XuiLayout"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                 xdef:body-type="union"
-                 xdef:bean-body-type="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
-                 xdef:bean-body-prop="root"
+    <xdef:define xdef:name="XuiLayoutNode"
+                 xdef:ref="XuiLayoutNodeNamed"
+                 xdef:body-type="list" xdef:key-attr="xui:name"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
                  xdef:bean-sub-type-prop="$tag"
     >
         <!-- [线性布局]
@@ -41,53 +43,18 @@
         > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
         > 类似。
         -->
-        <linear xdef:name="XuiLayoutLinear"
-                xdef:ref="XuiLayoutLinearNode"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
-                xui:name="~ns-name=xui-layout-root-node"
+        <linear xdef:ref="XuiLayoutNodeLinear"
+                xui:name="!ns-name=default"
         />
 
-        <!-- [堆叠布局]
-        > 在 z 轴上对**待布局目标**进行布局。
-        > 若某层涉及复杂布局，则需要将该层组件全部放在同一个容器组件节点中，
-        > 再对该容器组件与其他兄弟节点做堆叠布局。
-        > TODO 考虑在其内部可嵌入 linear 等布局，以避免使用不必要的容器组件
-        -->
-        <stacked xdef:name="XuiLayoutStacked"
-                 xdef:ref="XuiLayoutNodeStyled"
-                 xdef:bean-tag-prop="$tag"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
-        >
-            <body xdef:body-type="list" xdef:key-attr="xui:name"
-                  xdef:bean-prop="children" xdef:bean-child-name="child"
-                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStackedItem>"
-                  xdef:bean-sub-type-prop="$tag"
-            >
-                <!-- [布局项]
-
-                @target [待布局目标]
-                    > 对应目标的 `xui:name`
-                @layer [层序号]
-                    > 布局项所处在的 z 轴位置。该值越大，则布局项在 UI 层面越靠近上层。
-                    > 不同层的层序号不能相同，但可以不相邻
-                -->
-                <item xdef:name="XuiLayoutStackedItem"
-                      xdef:ref="XuiLayoutNodeNamed"
-                      xdef:bean-tag-prop="$tag"
-                      xui:name="!ns-name"
-                      target="!ns-name" layer="!int"
-                />
-            </body>
-        </stacked>
-
         <!-- [条件选择] -->
-        <choose xdef:name="XuiLayoutStatementChoose"
-                xdef:bean-tag-prop="$tag"
-                xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot"
+        <choose xdef:name="XuiLayoutNodeStatementChoose"
+                xdef:ref="XuiLayoutNodeNamed"
                 xdef:body-type="list" xdef:key-attr="xui:name"
                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
-                xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout>"
+                xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
                 xdef:bean-sub-type-prop="$tag"
+                xui:name="!ns-name"
         >
             <!-- [特定条件]
 
@@ -96,14 +63,14 @@
             @test [条件表达式]
                 > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
             -->
-            <when xdef:name="XuiLayoutStatementChooseWhen"
-                  xdef:ref="XuiLayout"
+            <when xdef:name="XuiLayoutNodeStatementChooseWhen"
+                  xdef:ref="XuiLayoutNode"
                   xui:name="!ns-name"
                   test="string"
             />
             <!-- [缺省条件] -->
-            <otherwise xdef:name="XuiLayoutStatementChooseOtherwise"
-                       xdef:ref="XuiLayout"
+            <otherwise xdef:name="XuiLayoutNodeStatementChooseOtherwise"
+                       xdef:ref="XuiLayoutNode"
                        xui:name="!ns-name=otherwise"
             />
         </choose>
@@ -114,13 +81,12 @@
     @type [布局类型]
         > 指定其内部子节点的布局方式
     @wrap [是否可换行]
-        > 若为 `false`，则溢出节点将被隐藏，否则，溢出节点将自动换行显式。缺省为 `false`
+        > 若为 `false`，则溢出节点将被隐藏，否则，溢出节点将自动换行显示。缺省为 `false`
     -->
-    <xdef:define xdef:name="XuiLayoutLinearNode"
-                 xdef:ref="XuiLayoutNodeNamed"
-                 xdef:bean-tag-prop="$tag"
-                 type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearNode.Type"
-                 wrap="boolean"
+    <xdef:define xdef:name="XuiLayoutNodeLinear"
+                 xdef:ref="XuiLayoutNodeLayered"
+                 type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear.Type"
+                 wrap="boolean=false"
     >
         <!-- [子节点] -->
         <body xdef:body-type="list" xdef:key-attr="xui:name"
@@ -139,15 +105,15 @@
             @pattern [匹配规则]
                 > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
             -->
-            <item xdef:name="XuiLayoutLinearItem"
-                  xdef:ref="XuiLayoutNodeNamed"
-                  xdef:bean-tag-prop="$tag"
+            <item xdef:name="XuiLayoutNodeLinearItem"
+                  xdef:ref="XuiLayoutNodeStyled"
                   xui:name="!ns-name"
                   pattern="!regex"
             />
 
-            <node xdef:ref="XuiLayoutLinearNode"
-                  xui:name="!ns-name"
+            <linear xdef:ref="XuiLayoutNodeLinear"
+                    xui:name="!ns-name"
+                    layer="!~int"
             />
         </body>
     </xdef:define>
@@ -158,15 +124,29 @@
         > 在父节点内，该标识必须唯一
     -->
     <xdef:define xdef:name="XuiLayoutNodeNamed"
-                 xdef:ref="XuiLayoutNodeStyled"
                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
+                 xdef:bean-tag-prop="$tag"
                  xui:name="!ns-name"
     />
 
-    <xdef:define xdef:name="XuiLayoutNodeStyled">
+    <!-- [支持样式配置的布局节点] -->
+    <xdef:define xdef:name="XuiLayoutNodeStyled"
+                 xdef:ref="XuiLayoutNodeNamed"
+    >
         <!-- [布局样式] -->
         <styles xdef:ref="XuiLayoutNodeStyles" />
     </xdef:define>
+
+    <!-- [分层的布局节点]
+    > 通过 `layer` 指定布局节点在 z 轴上的位置，从而实现不同布局层之间的堆叠效果。
+
+    @layer [层序号]
+        > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
+    -->
+    <xdef:define xdef:name="XuiLayoutNodeLayered"
+                 xdef:ref="XuiLayoutNodeStyled"
+                 layer="!int=0"
+    />
 
     <!-- [样式引用]
     > 引用在当前组件 `<styles/>` 中所定义的**布局样式**（名字以 `layout__` 开头的标签），

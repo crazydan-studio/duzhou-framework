@@ -30,7 +30,7 @@
                 </styles>
 
                 <body>
-                    <node xui:name="node-1" type="row">
+                    <linear xui:name="node-1" type="row">
                         <styles>
                             <size width="match-parent" height="fit-content" />
                         </styles>
@@ -52,16 +52,16 @@
                                 </styles>
                             </item>
                         </body>
-                    </node>
+                    </linear>
 
-                    <node xui:name="node-2" type="column">
+                    <linear xui:name="node-2" type="column">
                         <styles>
                             <size width="fit-content" height="20u" />
                             <self-align row="center" />
                         </styles>
 
                         <body>
-                            <node xui:name="node-1" type="row">
+                            <linear xui:name="node-1" type="row">
                                 <styles>
                                     <size width="match-parent" />
                                 </styles>
@@ -70,8 +70,8 @@
                                     <item xui:name="item-1" pattern="b1-.+" />
                                     <item xui:name="item-2" pattern="b2-[\d]+" />
                                 </body>
-                            </node>
-                            <node xui:name="node-2" type="column">
+                            </linear>
+                            <linear xui:name="node-2" type="column">
                                 <styles>
                                     <size width="match-parent" height="fill-remains" />
                                 </styles>
@@ -80,11 +80,11 @@
                                     <item xui:name="item-1" pattern="c1-1" />
                                     <item xui:name="item-2" pattern="c1-2" />
                                 </body>
-                            </node>
+                            </linear>
                         </body>
-                    </node>
+                    </linear>
 
-                    <node xui:name="node-3" type="row">
+                    <linear xui:name="node-3" type="row">
                         <styles>
                             <size width="match-parent" height="fill-remains" />
                             <item-align column="center" />
@@ -102,7 +102,7 @@
                                 </styles>
                             </item>
                         </body>
-                    </node>
+                    </linear>
                 </body>
             </linear>
         </layout>

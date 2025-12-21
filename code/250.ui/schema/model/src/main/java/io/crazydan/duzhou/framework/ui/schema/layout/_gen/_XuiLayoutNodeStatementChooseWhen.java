@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutStatementChooseWhen;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeStatementChooseWhen;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,14 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutStatementChooseWhen extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayout {
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
+public abstract class _XuiLayoutNodeStatementChooseWhen extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode {
     
     /**
      *  条件表达式
@@ -29,25 +22,6 @@ public abstract class _XuiLayoutStatementChooseWhen extends io.crazydan.duzhou.f
      * > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
      */
     private java.lang.String _test ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
     
     /**
      * 条件表达式
@@ -83,25 +57,23 @@ public abstract class _XuiLayoutStatementChooseWhen extends io.crazydan.duzhou.f
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("test",this.getTest());
     }
 
-    public XuiLayoutStatementChooseWhen cloneInstance(){
-        XuiLayoutStatementChooseWhen instance = newInstance();
+    public XuiLayoutNodeStatementChooseWhen cloneInstance(){
+        XuiLayoutNodeStatementChooseWhen instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutStatementChooseWhen instance){
+    protected void copyTo(XuiLayoutNodeStatementChooseWhen instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
         instance.setTest(this.getTest());
     }
 
-    protected XuiLayoutStatementChooseWhen newInstance(){
-        return (XuiLayoutStatementChooseWhen) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeStatementChooseWhen newInstance(){
+        return (XuiLayoutNodeStatementChooseWhen) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

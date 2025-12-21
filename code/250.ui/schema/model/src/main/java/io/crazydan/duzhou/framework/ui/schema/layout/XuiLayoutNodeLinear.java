@@ -1,8 +1,8 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutLinearNode;
+import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeLinear;
 
-public class XuiLayoutLinearNode extends _XuiLayoutLinearNode {
+public class XuiLayoutNodeLinear extends _XuiLayoutNodeLinear {
     public enum Type {
         /** 在行内布局节点，即，将节点挨个横向放置 */
         row,
@@ -10,6 +10,6 @@ public class XuiLayoutLinearNode extends _XuiLayoutLinearNode {
         column,
     }
 
-    public XuiLayoutLinearNode() {
+    public XuiLayoutNodeLinear() {
     }
 }

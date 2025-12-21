@@ -10,37 +10,12 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/layout.xdef <p>
- * 
+ * > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
+ * > - 一般可将布局根节点的高宽均设置为 `match-parent`，从而支持通过上层组件控制其实际尺寸；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayout extends io.nop.core.resource.component.AbstractComponentModel implements io.crazydan.duzhou.framework.ui.XuiNamed{
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot _root ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot getRoot(){
-      return _root;
-    }
-
-    
-    public void setRoot(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutRoot value){
-        checkAllowChange();
-        
-        this._root = value;
-           
-    }
-
+public abstract class _XuiLayout extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode {
     
 
     @Override
@@ -50,8 +25,6 @@ public abstract class _XuiLayout extends io.nop.core.resource.component.Abstract
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._root = io.nop.api.core.util.FreezeHelper.deepFreeze(this._root);
-            
         }
     }
 
@@ -59,7 +32,6 @@ public abstract class _XuiLayout extends io.nop.core.resource.component.Abstract
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("root",this.getRoot());
     }
 
     public XuiLayout cloneInstance(){
@@ -71,7 +43,6 @@ public abstract class _XuiLayout extends io.nop.core.resource.component.Abstract
     protected void copyTo(XuiLayout instance){
         super.copyTo(instance);
         
-        instance.setRoot(this.getRoot());
     }
 
     protected XuiLayout newInstance(){

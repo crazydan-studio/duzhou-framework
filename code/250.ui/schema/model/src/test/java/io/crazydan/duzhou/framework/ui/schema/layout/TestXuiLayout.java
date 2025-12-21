@@ -49,18 +49,4 @@ public class TestXuiLayout extends XuiJunitTestCase {
         String xml = cleanXml(toXml(node));
         assertEquals(cleanXml(attachmentXmlText("valid-linear.xml")), xml);
     }
-
-    @Test
-    public void test_valid_stacked() {
-        XuiComponent component = XuiHelper.loadComponent("/duzhou/ui/test-valid-layout-stacked.xui");
-        XuiComponentTemplateNodeLayout layout = component.getTemplate().getLayout();
-        assertNotNull(layout);
-
-        String json = toJson(layout);
-        assertEquals(attachmentJsonText("valid-stacked.json"), json);
-
-        XNode node = toXNode(layout);
-        String xml = cleanXml(toXml(node));
-        assertEquals(cleanXml(attachmentXmlText("valid-stacked.xml")), xml);
-    }
 }

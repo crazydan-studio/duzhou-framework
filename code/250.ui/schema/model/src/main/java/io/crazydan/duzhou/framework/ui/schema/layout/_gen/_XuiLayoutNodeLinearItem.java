@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutLinearItem;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinearItem;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -19,14 +19,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
-    private java.lang.String _$tag ;
+public abstract class _XuiLayoutNodeLinearItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeStyled {
     
     /**
      *  匹配规则
@@ -34,25 +27,6 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
      * > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
      */
     private java.lang.String _pattern ;
-    
-    /**
-     * 
-     * xml name: 
-     *  
-     */
-    
-    public java.lang.String get$tag(){
-      return _$tag;
-    }
-
-    
-    public void set$tag(java.lang.String value){
-        checkAllowChange();
-        
-        this._$tag = value;
-           
-    }
-
     
     /**
      * 匹配规则
@@ -88,25 +62,23 @@ public abstract class _XuiLayoutLinearItem extends io.crazydan.duzhou.framework.
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$tag",this.get$tag());
         out.putNotNull("pattern",this.getPattern());
     }
 
-    public XuiLayoutLinearItem cloneInstance(){
-        XuiLayoutLinearItem instance = newInstance();
+    public XuiLayoutNodeLinearItem cloneInstance(){
+        XuiLayoutNodeLinearItem instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutLinearItem instance){
+    protected void copyTo(XuiLayoutNodeLinearItem instance){
         super.copyTo(instance);
         
-        instance.set$tag(this.get$tag());
         instance.setPattern(this.getPattern());
     }
 
-    protected XuiLayoutLinearItem newInstance(){
-        return (XuiLayoutLinearItem) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeLinearItem newInstance(){
+        return (XuiLayoutNodeLinearItem) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON
