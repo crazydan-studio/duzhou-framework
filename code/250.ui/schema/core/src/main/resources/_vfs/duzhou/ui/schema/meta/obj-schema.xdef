@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
+  - Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [对象结构]
+>
+-->
+<obj-schema xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+            x:schema="/nop/schema/xdef.xdef"
+            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.meta"
+            xdef:ref="XuiObjSchema"
+>
+
+    <!-- [属性定义]
+    > - 对于 `String`、`Bool`、`Integer` 等基础类型的属性，其不包含结构，
+    >   故而，仅需配置 `type` 即可；
+    > - 对于结构化的属性，可以在子节点中分解其结构，也可以通过 `obj-meta` 指定对应的
+    >   xmeta 文件位置，并从中获取其完整的模型结构；
+    > - 解析规则
+    >   - 有子结构的，不可配置 `type` 和 `obj-meta`；
+    >   - 没有子结构的，`type` 和 `obj-meta` 必须且只能配置一个；
+    >   - `value` 可以为对象，如 `${{a: 1, b: 2}}`，用于为结构属性赋缺省值，
+    >     并且，在其子结构属性上设置的缺省值将与该缺省值做覆盖合并；
+    >   - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
+    >     并根据其结构构造当前属性的子结构；
+    >   - 节点名称必须为数据域 `prop-name` 所要求的形式；
+
+    @type [属性类型]
+        > 仅针对 `String`、`Boolean` 等基础数据类型的属性
+    @obj-meta [对象 XMeta 定义路径]
+        > 仅针对可复用的、结构化的属性
+    @bindable [是否双向绑定]
+        > 若为 `true`，则在组件内部对其值的修改对上层组件可见
+    @value [属性的缺省值]
+        > 一般以 `${props.xxx}` 形式引用组件的
+        > `props` 变量，或者以 `${false}` 形式指定常量
+    -->
+    <xdef:define xdef:name="XuiObjSchema"
+                 xdef:bean-tag-prop="$tag"
+                 xdef:body-type="map"
+                 xdef:bean-body-prop="children" xdef:bean-child-name="child"
+                 xdef:bean-sub-type-prop="$tag"
+                 type="generic-type" obj-meta="v-path"
+                 bindable="boolean=false" value="any"
+    >
+        <xdef:unknown-tag xdef:ref="XuiObjSchema" />
+    </xdef:define>
+</obj-schema>

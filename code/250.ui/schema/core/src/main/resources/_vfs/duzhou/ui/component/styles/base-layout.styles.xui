@@ -61,4 +61,24 @@
         > 在列方向上的布局项之间的间隔。
     -->
     <item-gap row="xui-align" column="xui-align" />
+
+    <!-- [滚动条]
+    > 配置滚动条颜色、大小以及滚动条何时显示，若不显示，则溢出内容将被隐藏。
+    >
+    > 滚动条均由布局节点控制，不管是文本还是其他组件，均不管滚动条，其尺寸始终为内容尺寸。
+
+    @when [显示时机]
+    @color [颜色]
+    @size [大小]
+    -->
+    <scrollbar-base x:abstract="true" when="string" color="xui-color" size="xui-size" />
+    <!-- [x 轴滚动条] -->
+    <scrollbar-x x:prototype="scrollbar-base" />
+    <!-- [y 轴滚动条] -->
+    <scrollbar-y x:prototype="scrollbar-base" />
+    <!-- [x 轴与 y 轴滚动条] -->
+    <scrollbar x:prototype="scrollbar-base">
+        <scrollbar-x when="${when}" color="${color}" size="${size}" />
+        <scrollbar-y when="${when}" color="${color}" size="${size}" />
+    </scrollbar>
 </styles>

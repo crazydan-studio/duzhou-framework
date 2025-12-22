@@ -26,10 +26,14 @@ import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_RIGHT_P
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
 import static io.nop.api.core.exceptions.ErrorCode.define;
 import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
+import static io.nop.xlang.XLangErrors.ARG_DEF_LOC;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
 import static io.nop.xlang.XLangErrors.ARG_PATH;
+import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
+import static io.nop.xlang.XLangErrors.ARG_TAG1;
+import static io.nop.xlang.XLangErrors.ARG_TAG2;
 import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
 
@@ -91,7 +95,7 @@ public interface XuiErrors {
     ErrorCode ERR_COMPONENT_INVALID_TAG_NAME = //
             define("duzhou.err.ui.component.invalid-tag-name",
                    ("组件标签名 [{" + ARG_TAG_NAME + "}] 不符合规范。")
-                   + "其需为字母、数字、下划线组成的驼峰形式，且首字母必须大写，"
+                   + "其须为字母、数字、下划线组成的驼峰形式，且首字母必须大写，"
                    + "如 Button、Button_Ext",
                    ARG_TAG_NAME);
     ErrorCode ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED = //
@@ -122,5 +126,33 @@ public interface XuiErrors {
     ErrorCode ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED = //
             define("duzhou.err.ui.component.tag-component-loading-failed", //
                    "标签 <{" + ARG_TAG_NAME + "}/> 对应的组件 [{" + ARG_PATH + "}] 加载失败", ARG_TAG_NAME, ARG_PATH);
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 样式
+    ErrorCode ERR_STYLES_INVALID_TAG_NAME = //
+            define("duzhou.err.ui.styles.invalid-tag-name",
+                   ("样式标签名 [{" + ARG_TAG_NAME + "}] 不符合规范。")
+                   + "其须由小写字母、数字、下划线、短横线组成，开头必须为字母，且短横线不能连续出现"
+                   + "如 button-blue、layout__root",
+                   ARG_TAG_NAME);
+    ErrorCode ERR_STYLES_PATCH_NODE_NOT_ALLOWED = //
+            define("duzhou.err.ui.styles.patch-node-not-allowed",
+                   "复合样式 <{"
+                   + ARG_TAG1
+                   + "}/> 只允许包含最多一层结构，因此，在 <{"
+                   + ARG_TAG2
+                   + "}/> 中不能包含子结构",
+                   ARG_TAG1,
+                   ARG_TAG2);
+    ErrorCode ERR_STYLES_UNDEFINED_STYLE = //
+            define("duzhou.err.ui.styles.undefined-style",
+                   "未在样式库 {" + ARG_DEF_LOC + "} 或其基础库中定义样式 <{" + ARG_TAG_NAME + "}/>",
+                   ARG_DEF_LOC,
+                   ARG_TAG_NAME);
+    ErrorCode ERR_STYLES_UNDEFINED_STYLE_PROP = //
+            define("duzhou.err.ui.styles.undefined-style-prop",
+                   "在样式 {" + ARG_DEF_LOC + "} 上未定义属性 {" + ARG_PROP_NAME + "}",
+                   ARG_DEF_LOC,
+                   ARG_PROP_NAME);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

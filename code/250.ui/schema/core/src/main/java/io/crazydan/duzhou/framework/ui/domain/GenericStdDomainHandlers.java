@@ -32,9 +32,18 @@ public class GenericStdDomainHandlers {
 
     /** 是否为有效的组件名，由字母、数字、下划线组成的驼峰形式，且必须首字母需大写，如：`Button`、`Button_Ext` */
     public static boolean isValidComponentName(String text) {
-        return StringHelper.isValidJavaVarName(text) //
+        return text.charAt(0) >= 'A' && text.charAt(0) <= 'Z' //
+               && StringHelper.isValidJavaVarName(text) //
                && !text.contains("$") //
-               && text.charAt(0) >= 'A' && text.charAt(0) <= 'Z';
+                ;
+    }
+
+    /** 是否为有效的样式名，其由小写字母、数字、下划线、短横线组成，开头必须为字母，且短横线不能连续出现 */
+    public static boolean isValidStyleName(String text) {
+        return text.charAt(0) >= 'a' && text.charAt(0) <= 'z' //
+               && StringHelper.isValidXmlNamespaceName(text) //
+               && !StringHelper.containsUpperCase(text) //
+                ;
     }
 
     /** 组件名类型：{@link #isValidComponentName} */

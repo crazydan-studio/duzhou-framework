@@ -9,6 +9,10 @@ import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.INeedInit;
 import io.nop.xlang.xpl.utils.XplParseHelper;
 
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_PATCH_NODE_NOT_ALLOWED;
+import static io.nop.xlang.XLangErrors.ARG_TAG1;
+import static io.nop.xlang.XLangErrors.ARG_TAG2;
+
 public class XuiStyleDefs extends _XuiStyleDefs implements INeedInit {
     private boolean allowPatchNode;
 
@@ -34,14 +38,17 @@ public class XuiStyleDefs extends _XuiStyleDefs implements INeedInit {
 
     protected void checkDefNodes() {
         for (XuiStyleDef def : getChildren().values()) {
+            def.checkTagName();
+
             for (XuiStyleDefNode defNode : def.getChildren().values()) {
                 String defNodeName = defNode.get$tag();
                 XuiStyleDef defNodeDef = getStyleDef(defNodeName);
 
                 if (defNode.hasChildren()) {
                     if (!this.allowPatchNode) {
-                        // TODO patch node not allowed
-                        throw new NopException();
+                        throw new NopException(ERR_STYLES_PATCH_NODE_NOT_ALLOWED).source(defNode)
+                                                                                 .param(ARG_TAG1, def.get$tag())
+                                                                                 .param(ARG_TAG2, defNodeName);
                     }
 
                     // TODO check parameters, then check patch node's reference and parameters
