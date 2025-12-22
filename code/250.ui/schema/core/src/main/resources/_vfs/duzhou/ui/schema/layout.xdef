@@ -141,7 +141,8 @@
     > 通过 `layer` 指定布局节点在 z 轴上的位置，从而实现不同布局层之间的堆叠效果。
 
     @layer [层序号]
-        > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
+        > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层。
+        > 不同布局层间的层序号可以相同，其将按声明顺序在同一层呈现
     -->
     <xdef:define xdef:name="XuiLayoutNodeLayered"
                  xdef:ref="XuiLayoutNodeStyled"

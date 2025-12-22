@@ -19,14 +19,16 @@ public abstract class _XuiLayoutNodeLayered extends io.crazydan.duzhou.framework
     /**
      *  层序号
      * xml name: layer
-     * > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
+     * > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层。
+     * > 不同布局层间的层序号可以相同，其将按声明顺序在同一层呈现
      */
     private int _layer  = 0;
     
     /**
      * 层序号
      * xml name: layer
-     *  > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层
+     *  > 布局节点在 z 轴上的序号，该值越大，则其越靠近顶层。
+     * > 不同布局层间的层序号可以相同，其将按声明顺序在同一层呈现
      */
     
     public int getLayer(){
