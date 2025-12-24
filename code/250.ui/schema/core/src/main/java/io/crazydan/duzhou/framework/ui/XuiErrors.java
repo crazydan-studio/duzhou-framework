@@ -32,10 +32,14 @@ import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
 import static io.nop.xlang.XLangErrors.ARG_PATH;
 import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
+import static io.nop.xlang.XLangErrors.ARG_REF_NAME;
 import static io.nop.xlang.XLangErrors.ARG_TAG1;
 import static io.nop.xlang.XLangErrors.ARG_TAG2;
 import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_VALUE;
+import static io.nop.xlang.XLangErrors.ARG_VAR_DECL1;
+import static io.nop.xlang.XLangErrors.ARG_VAR_DECL2;
+import static io.nop.xlang.XLangErrors.ARG_VAR_NAME;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -154,5 +158,33 @@ public interface XuiErrors {
                    "在样式 {" + ARG_DEF_LOC + "} 上未定义属性 {" + ARG_PROP_NAME + "}",
                    ARG_DEF_LOC,
                    ARG_PROP_NAME);
+    ErrorCode ERR_STYLES_UNDEFINED_REF_VAR = //
+            define("duzhou.err.ui.styles.undefined-ref-var",
+                   "在样式 {"
+                   + ARG_DEF_LOC
+                   + "} 上未定义属性 {"
+                   + ARG_PROP_NAME
+                   + "}，"
+                   + "不能以 ${{"
+                   + ARG_REF_NAME
+                   + "}} 形式引用",
+                   ARG_DEF_LOC,
+                   ARG_PROP_NAME,
+                   ARG_REF_NAME);
+    ErrorCode ERR_STYLES_REF_VAR_NOT_MATCH_DEF_PROP = //
+            define("duzhou.err.ui.styles.ref-var-not-match-def-prop",
+                   "属性 {"
+                   + ARG_PROP_NAME
+                   + "} 的定义类型（={"
+                   + ARG_VAR_DECL1
+                   + "}）与其引用的变量 {"
+                   + ARG_VAR_NAME
+                   + "} 的类型（={"
+                   + ARG_VAR_DECL2
+                   + "}）不一致",
+                   ARG_PROP_NAME,
+                   ARG_VAR_DECL1,
+                   ARG_VAR_NAME,
+                   ARG_VAR_DECL2);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

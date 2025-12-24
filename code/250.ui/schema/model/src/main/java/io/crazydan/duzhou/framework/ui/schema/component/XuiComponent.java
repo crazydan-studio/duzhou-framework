@@ -70,8 +70,6 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
             getTemplate().init();
             checkImported(getTemplate());
         }
-
-        getStyles().init();
     }
 
     /** 始终不返回 {@code null} */

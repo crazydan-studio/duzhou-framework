@@ -14,7 +14,6 @@ public class XuiComponentStyles extends _XuiComponentStyles {
     private XuiStyles layoutStyles;
 
     public XuiComponentStyles() {
-        setAllowPatchNode(true);
     }
 
     /** 重载接口，以支持从基础样式库中查找样式定义 */
