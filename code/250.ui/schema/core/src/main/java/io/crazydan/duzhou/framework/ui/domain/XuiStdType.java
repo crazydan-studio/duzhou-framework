@@ -17,37 +17,16 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout;
+package io.crazydan.duzhou.framework.ui.domain;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
-import io.nop.api.core.annotations.core.Option;
-import io.nop.api.core.annotations.core.StaticFactoryMethod;
+import io.nop.api.core.util.SourceLocation;
 
 /**
- * 尺寸类型
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-12-06
+ * @date 2025-12-16
  */
-public enum XuiLayoutSize {
-    /** 与视口尺寸相同 */
-    @Option("match-viewport") match_viewport,
+public interface XuiStdType {
 
-    /** 与父容器尺寸相同 */
-    @Option("match-parent") match_parent,
-    /** 占满父容器的剩余空间 */
-    @Option("fill-remains") fill_remains,
-
-    /** 自适应内容尺寸 */
-    @Option("fit-content") fit_content,
-
-    /** 设定值 */
-    @Option("value-specified") value_specified,
-    ;
-
-    @StaticFactoryMethod
-    public static XuiLayoutSize fromText(String text) {
-        return StringHelper.isBlank(text) //
-               ? null : valueOf(text.replace('-', '_'));
-    }
+    Object parseFromText(SourceLocation loc, String text);
 }

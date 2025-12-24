@@ -2,7 +2,6 @@ package io.crazydan.duzhou.framework.ui.schema.style;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleDefs;
 import io.nop.api.core.exceptions.NopException;
@@ -59,11 +58,11 @@ public class XuiStyleDefs extends _XuiStyleDefs implements INeedInit {
         }
     }
 
-    protected void checkRefNodeProps(XuiStyleRef style, XuiStyleDef styleDef, Set<String> availableRefProps) {
+    protected void checkRefNodeProps(XuiStyleRef styleRef, XuiStyleDef styleDef) {
         List<String> undefinedProps = new ArrayList<>();
 
-        style.getProps().forEach((prop, value) -> {
-            if (styleDef != null && !styleDef.getProps().containsKey(prop)) {
+        styleRef.getProps().forEach((prop, value) -> {
+            if (styleDef != null && !styleDef.hasProp(prop)) {
                 undefinedProps.add(prop);
             }
 

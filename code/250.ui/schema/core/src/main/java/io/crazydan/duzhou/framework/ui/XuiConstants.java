@@ -25,8 +25,6 @@ package io.crazydan.duzhou.framework.ui;
  */
 public interface XuiConstants {
     String STD_DOMAIN_COMPONENT_NAME = "component-name";
-    String STD_DOMAIN_XUI_STYLE = "xui-style";
-    String STD_DOMAIN_XUI_EXPR = "xui-expr";
     String STD_DOMAIN_XUI_SIZE = "xui-size";
 
     String XDSL_SCHEMA_APP = "/duzhou/ui/schema/app.xdef";
@@ -42,6 +40,7 @@ public interface XuiConstants {
     String XDSL_SCHEMA_STYLE_DEFS = "/duzhou/ui/schema/style/style-defs.xdef";
     String XDSL_SCHEMA_STYLE_REF = "/duzhou/ui/schema/style/style-ref.xdef";
     String XDSL_SCHEMA_STYLE_REFS = "/duzhou/ui/schema/style/style-refs.xdef";
+    String XDSL_SCHEMA_META_OBJ_SCHEMA = "/duzhou/ui/schema/meta/obj-schema.xdef";
 
     String TAG_NAME_TEMPLATE = "template";
     String TAG_NAME_IF = "if";

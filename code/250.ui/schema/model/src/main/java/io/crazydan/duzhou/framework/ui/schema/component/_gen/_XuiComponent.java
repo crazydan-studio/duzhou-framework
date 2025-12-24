@@ -27,6 +27,23 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     private KeyedList<io.crazydan.duzhou.framework.ui.schema.component.XuiComponentImport> _imports = KeyedList.emptyList();
     
     /**
+     *  组件属性
+     * xml name: props
+     * > - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
+     * > - 内置 `children` 属性，用于获取当前组件的嵌套节点；
+     */
+    private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProps _props ;
+    
+    /**
+     *  组件状态
+     * xml name: state
+     * > - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新；
+     * > - 对象结构的数据始终不为 `null`，自动按照其结构为各个属性初始化为指定的默认值：
+     * >   - 字符串类型默认为空，布尔类型默认为 `false` 等；
+     */
+    private io.crazydan.duzhou.framework.ui.schema.component.XuiComponentState _state ;
+    
+    /**
      *  组件部件样式定义集
      * xml name: styles
      * > 为组件的部件定义相应的样式。
@@ -92,6 +109,47 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
     }
     
     /**
+     * 组件属性
+     * xml name: props
+     *  > - 用于接受从外部传入的配置数据，其在组件内始终为只读的，且变更响应自上而下单向传递；
+     * > - 内置 `children` 属性，用于获取当前组件的嵌套节点；
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProps getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentProps value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
+    /**
+     * 组件状态
+     * xml name: state
+     *  > - 定义组件内部状态数据，仅组件内可读、可修改，响应式更新；
+     * > - 对象结构的数据始终不为 `null`，自动按照其结构为各个属性初始化为指定的默认值：
+     * >   - 字符串类型默认为空，布尔类型默认为 `false` 等；
+     */
+    
+    public io.crazydan.duzhou.framework.ui.schema.component.XuiComponentState getState(){
+      return _state;
+    }
+
+    
+    public void setState(io.crazydan.duzhou.framework.ui.schema.component.XuiComponentState value){
+        checkAllowChange();
+        
+        this._state = value;
+           
+    }
+
+    
+    /**
      * 组件部件样式定义集
      * xml name: styles
      *  > 为组件的部件定义相应的样式。
@@ -145,6 +203,10 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         
            this._imports = io.nop.api.core.util.FreezeHelper.deepFreeze(this._imports);
             
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
+            
+           this._state = io.nop.api.core.util.FreezeHelper.deepFreeze(this._state);
+            
            this._styles = io.nop.api.core.util.FreezeHelper.deepFreeze(this._styles);
             
            this._template = io.nop.api.core.util.FreezeHelper.deepFreeze(this._template);
@@ -157,6 +219,8 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         super.outputJson(out);
         
         out.putNotNull("imports",this.getImports());
+        out.putNotNull("props",this.getProps());
+        out.putNotNull("state",this.getState());
         out.putNotNull("styles",this.getStyles());
         out.putNotNull("template",this.getTemplate());
     }
@@ -171,6 +235,8 @@ public abstract class _XuiComponent extends io.nop.core.resource.component.Abstr
         super.copyTo(instance);
         
         instance.setImports(this.getImports());
+        instance.setProps(this.getProps());
+        instance.setState(this.getState());
         instance.setStyles(this.getStyles());
         instance.setTemplate(this.getTemplate());
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNode;
 import io.nop.api.core.util.INeedInit;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNullThenGet;
 
 public class XuiComponentTemplateNode extends _XuiComponentTemplateNode implements INeedInit {
@@ -25,9 +26,6 @@ public class XuiComponentTemplateNode extends _XuiComponentTemplateNode implemen
     /** 始终不返回 {@code null} */
     @Override
     public XuiComponentTemplateNodeStyles getStyles() {
-        if (super.getStyles() == null) {
-            return XuiComponentTemplateNodeStyles.EMPTY;
-        }
-        return super.getStyles();
+        return firstNonNull(super.getStyles(), XuiComponentTemplateNodeStyles.EMPTY);
     }
 }

@@ -71,7 +71,10 @@
     @color [颜色]
     @size [大小]
     -->
-    <scrollbar-base x:abstract="true" when="string" color="xui-color" size="xui-size" />
+    <scrollbar-base x:abstract="true"
+                    when="!dict:duzhou/ui/style-scrollbar-when"
+                    color="xui-color" size="xui-size"
+    />
     <!-- [x 轴滚动条] -->
     <scrollbar-x x:prototype="scrollbar-base" />
     <!-- [y 轴滚动条] -->

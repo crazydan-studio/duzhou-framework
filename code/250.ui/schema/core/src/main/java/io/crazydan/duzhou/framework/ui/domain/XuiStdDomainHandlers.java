@@ -21,8 +21,6 @@ package io.crazydan.duzhou.framework.ui.domain;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
- * @date 2025-03-05
+ * @date 2025-03-03
  */
-public class XuiStyleTypes {
-    public static final String NULL = "xui:null";
-}
+public class XuiStdDomainHandlers {}

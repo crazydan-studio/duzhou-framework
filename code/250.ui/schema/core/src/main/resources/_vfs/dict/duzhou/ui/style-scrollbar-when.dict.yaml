@@ -1,0 +1,9 @@
+# Note: YAML 也支持差量
+label: 滚动条显示时机
+options:
+  - value: always
+    label: 始终显示
+  - value: never
+    label: 从不显示
+  - value: overflow
+    label: 溢出时显示

@@ -26,6 +26,8 @@
         XuiConstants.XDSL_SCHEMA_APP,
         XuiConstants.XDSL_SCHEMA_PAGE,
         //
+        XuiConstants.XDSL_SCHEMA_META_OBJ_SCHEMA,
+        //
         XuiConstants.XDSL_SCHEMA_STYLES,
         XuiConstants.XDSL_SCHEMA_STYLE_DEF,
         XuiConstants.XDSL_SCHEMA_STYLE_DEFS,

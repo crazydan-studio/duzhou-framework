@@ -34,7 +34,6 @@ import io.nop.core.type.utils.JavaGenericTypeBuilder;
 import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.xdef.IStdDomainHandler;
 
-import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_EXPR;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_FORMAT;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_OPTIONS;
 import static io.nop.api.core.util.ApiStringHelper.isBlank;
@@ -62,7 +61,7 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
 
     @Override
     public String getName() {
-        return STD_DOMAIN_XUI_EXPR;
+        return "xui-expr";
     }
 
     @Override
@@ -74,7 +73,7 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
     @Override
     public IGenericType getGenericType(boolean mandatory, String options) {
         if (isBlank(options)) {
-            String value = (mandatory ? XDEF_TYPE_PREFIX_MANDATORY : "") + STD_DOMAIN_XUI_EXPR;
+            String value = (mandatory ? XDEF_TYPE_PREFIX_MANDATORY : "") + "xui-expr";
 
             throw new NopException(ERR_DOMAIN_TYPE_INVALID_FORMAT).param(ARG_VALUE, value)
                                                                   .param(ARG_ALLOWED_VALUES,
@@ -89,7 +88,7 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
 
         StdDataType type = StdDataType.fromStdName(options);
         if (type == null) {
-            throw new NopException(ERR_DOMAIN_TYPE_INVALID_OPTIONS).param(ARG_NAME, STD_DOMAIN_XUI_EXPR)
+            throw new NopException(ERR_DOMAIN_TYPE_INVALID_OPTIONS).param(ARG_NAME, "xui-expr")
                                                                    .param(ARG_VALUE, options)
                                                                    .param(ARG_OPTIONS,
                                                                           Arrays.stream(StdDataType.values())

@@ -1,7 +1,5 @@
 package io.crazydan.duzhou.framework.ui.schema.style;
 
-import java.util.Map;
-
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleRefs;
 import io.nop.api.core.exceptions.NopException;
 
@@ -15,8 +13,8 @@ public class XuiStyleRefs extends _XuiStyleRefs {
     }
 
     /** 根据{@link XuiStyleDefs 样式定义集}校验并初始化当前的 XuiStyleRefs */
-    public void init(XuiStyleDefs styleDefs, String stylePrefix, Map<String, Object> varDefs) {
-        // TODO 循环引用检查
+    public void init(XuiStyleDefs styleDefs, String stylePrefix) {
+        // Note: 在样式引用集中，引用的样式必须已定义，且只能包含定义的属性，但属性值可通过表达式 ${xxx} 引用组件变量
         getChildren().forEach((styleName, styleRef) -> {
             String newStyleName = stylePrefix != null ? stylePrefix + styleName : styleName;
             XuiStyleDef styleDef = styleDefs.getStyleDef(newStyleName);
@@ -26,7 +24,7 @@ public class XuiStyleRefs extends _XuiStyleRefs {
                                                                   .param(ARG_TAG_NAME, newStyleName);
             }
 
-            styleRef.init(styleDef, varDefs);
+            styleRef.init(styleDef);
 
             // TODO 根据组件定义检查组件部件样式的引用
         });
