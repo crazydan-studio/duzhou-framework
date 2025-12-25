@@ -2,6 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.component;
 
 import java.util.List;
 
+import io.crazydan.duzhou.framework.ui.XuiErrorCollector;
 import io.crazydan.duzhou.framework.ui.schema.component._gen._XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
@@ -29,6 +30,7 @@ import io.nop.xlang.xpl.tags.ForTagCompiler;
 import io.nop.xlang.xpl.tags.IfTagCompiler;
 import io.nop.xlang.xpl.utils.XplParseHelper;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_NAME;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_NAME_RAW;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.TAG_NAME_CHOOSE;
@@ -40,7 +42,6 @@ import static io.crazydan.duzhou.framework.ui.XuiConstants.TAG_NAME_WHEN;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.XDSL_SCHEMA_COMPONENT_TEMPLATE;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_DSL_NODE_NOT_BOUND;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED;
 import static io.nop.xlang.XLangErrors.ARG_PATH;
 import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 import static io.nop.xlang.xpl.XplConstants.INDEX_NAME;
@@ -66,19 +67,19 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
     /** Note: init 函数将在 {@link #freeze} 之前被调用 */
     @Override
     public void init() {
-        if (getTemplate() != null) {
-            getTemplate().init();
-            checkImported(getTemplate());
-        }
+        validate();
+    }
+
+    /** 始终不返回 {@code null} */
+    @Override
+    public XuiComponentTemplate getTemplate() {
+        return firstNonNull(super.getTemplate(), XuiComponentTemplate.EMPTY);
     }
 
     /** 始终不返回 {@code null} */
     @Override
     public XuiComponentStyles getStyles() {
-        if (super.getStyles() == null) {
-            return XuiComponentStyles.EMPTY;
-        }
-        return super.getStyles();
+        return firstNonNull(super.getStyles(), XuiComponentStyles.EMPTY);
     }
 
     /** 动态生成组件模版树 */
@@ -88,7 +89,7 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
 
     /** 加载标签对应的{@link XuiComponent 组件} */
     public XuiComponent loadTagComponent(XuiComponentTemplateNodeNamed node) {
-        String componentName = getTagComponentName(node);
+        String componentName = node.getTagComponentName();
         if (componentName == null) {
             return null;
         }
@@ -103,19 +104,15 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         }
     }
 
-    /** 检查组件节点是否已显式通过 {@code <import/>} 导入 */
-    protected void checkImported(XuiComponentTemplateNodeNamed node) {
-        if (node == null) {
-            return;
-        }
+    /** 校验当前组件的有效性 */
+    protected void validate() {
+        XuiErrorCollector collector = new XuiErrorCollector();
 
-        String componentName = getTagComponentName(node);
-        if (componentName != null && !hasImport(componentName)) {
-            throw new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(node)
-                                                                            .param(ARG_TAG_NAME, componentName);
-        }
+        getTemplate().validate(this, collector);
 
-        node.getChildren().forEach(this::checkImported);
+        getStyles().validate(collector);
+
+        collector.throwErrors();
     }
 
     protected XuiComponentTemplate doEvalTemplate(IEvalScope scope) {
@@ -165,11 +162,6 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         // TODO 定义 slot 标签函数
 
         return compileTool;
-    }
-
-    /** 获取标签组件名，仅针对 {@code <Text/>} 和导入组件 */
-    private String getTagComponentName(XuiComponentTemplateNodeNamed node) {
-        return node.isText() || node.isCustom() ? node.getTagName() : null;
     }
 
     protected static XNode cloneXNode(XNode node, XuiComponentTemplateNodeNamed bean) {

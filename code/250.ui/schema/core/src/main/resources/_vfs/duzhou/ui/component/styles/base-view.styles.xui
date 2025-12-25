@@ -61,17 +61,17 @@
     > </button>
     > ```
 
-    @offset-x [水平偏移]
+    @offsetX [水平偏移]
         > 为正值时，向右偏移，为负值时，向左偏移
-    @offset-y [垂直偏移]
+    @offsetY [垂直偏移]
         > 为正值时，向下偏移，为负值时，向上偏移
-    @blur-radius [模糊半径]
+    @blurRadius [模糊半径]
         > 值越大越模糊
     @color [阴影颜色]
     -->
     <shadow-base x:abstract="true" xui:multiple="true"
-                 offset-x="xui-size" offset-y="xui-size"
-                 blur-radius="xui-size"
+                 offsetX="xui-size" offsetY="xui-size"
+                 blurRadius="xui-size"
                  color="xui-color"
     />
     <!-- [文字阴影] -->
@@ -80,12 +80,12 @@
 
     @inset [阴影方向]
         > 为 `true` 时，表示内阴影，否则均为外阴影
-    @spread-radius [扩展半径]
+    @spreadRadius [扩展半径]
         > 为正值时，扩大半径，为负值时，缩小半径
     -->
     <box-shadow x:prototype="shadow-base"
                 inset="boolean"
-                spread-radius="xui-size"
+                spreadRadius="xui-size"
     />
     <!-- [投影]
     > 针对元素的实际形状（包括透明部分），不支持多重阴影。

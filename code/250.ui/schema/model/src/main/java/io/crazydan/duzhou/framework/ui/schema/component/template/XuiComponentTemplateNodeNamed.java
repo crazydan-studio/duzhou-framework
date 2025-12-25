@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.ui.XuiConstants;
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
+import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeNamed;
 import io.nop.api.core.exceptions.NopException;
-import io.nop.api.core.util.INeedInit;
+import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.commons.util.StringHelper;
 
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
@@ -18,22 +19,27 @@ import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_INVALID_TA
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 
-public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeNamed implements INeedInit {
+public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeNamed {
 
     public XuiComponentTemplateNodeNamed() {
     }
 
-    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
-    @Override
-    public void init() {
-        checkCustomTagName();
-        checkMultipleSlots();
-        checkSlotInSlot();
+    /** 校验当前节点及其子节点的有效性 */
+    public void validate(XuiComponent component, IValidationErrorCollector collector) {
+        checkTagComponentName(collector);
+        checkTagComponentImported(component, collector);
 
-        getChildren().forEach(XuiComponentTemplateNodeNamed::init);
+        // TODO 争取在遍历子节点的过程中完成 slot 检查
+        checkMultipleSlots(collector);
+        checkSlotInSlot(collector);
+
+        getChildren().forEach(child -> {
+            child.validate(component, collector);
+        });
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -78,6 +84,11 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
     /** 获取当前节点的标签名 */
     public String getTagName() {
         return get$tag();
+    }
+
+    /** 获取当前节点的标签组件名，仅针对{@link #isText() 文本组件}和{@link #isCustom() 自定义组件} */
+    public String getTagComponentName() {
+        return isText() || isCustom() ? getTagName() : null;
     }
 
     /** 获取插槽节点的插槽名，仅针对 {@link #isSlot()} 为 {@code true} 的节点 */
@@ -139,24 +150,42 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+    /** 检查{@link #isText() 文本组件}和{@link #isCustom() 自定义组件}是否已显式通过 {@code <import/>} 导入 */
+    protected void checkTagComponentImported(XuiComponent component, IValidationErrorCollector collector) {
+        if (isText() || isCustom()) {
+            String tagName = getTagName();
+
+            if (!component.hasImport(tagName)) {
+                NopException e = //
+                        new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(this)
+                                                                                  .param(ARG_TAG_NAME, tagName);
+                collector.addException(e);
+            }
+        }
+    }
+
     /**
-     * 检查 {@link #isCustom()} 为 {@code true} 的节点的标签名是否符合
+     * 检查{@link #isCustom() 自定义组件}的标签名是否符合
      * {@link GenericStdDomainHandlers#isValidComponentName} 规范
      */
-    protected void checkCustomTagName() {
+    protected void checkTagComponentName(IValidationErrorCollector collector) {
         if (isCustom()) {
             String tagName = getTagName();
 
             if (!GenericStdDomainHandlers.isValidComponentName(tagName)) {
-                throw new NopException(ERR_COMPONENT_INVALID_TAG_NAME).source(this).param(ARG_TAG_NAME, tagName);
+                NopException e = //
+                        new NopException(ERR_COMPONENT_INVALID_TAG_NAME).source(this).param(ARG_TAG_NAME, tagName);
+                collector.addException(e);
             }
         }
     }
 
     /** 在 {@code <slot/>} 标签内不能嵌套任意层级的 {@code <slot/>} */
-    protected void checkSlotInSlot() {
+    protected void checkSlotInSlot(IValidationErrorCollector collector) {
         if (isSlot() && hasSlotInDepth()) {
-            throw new NopException(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED).source(this);
+            NopException e = //
+                    new NopException(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED).source(this);
+            collector.addException(e);
         }
     }
 
@@ -165,7 +194,7 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
      * <p/>
      * 仅检查直接子节点，不做深度遍历
      */
-    protected void checkMultipleSlots() {
+    protected void checkMultipleSlots(IValidationErrorCollector collector) {
         List<String> slots = new ArrayList<>(getChildren().size());
         List<String> xuiSlots = new ArrayList<>(getChildren().size());
 
@@ -175,20 +204,25 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
             if (slotName != null) {
                 if (slots.contains(slotName)) {
-                    throw new NopException(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED).source(this)
-                                                                                             .param(ARG_TAG_NAME,
-                                                                                                    getTagName())
-                                                                                             .param(ARG_NAME, slotName);
+                    NopException e = //
+                            new NopException(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED).source(this)
+                                                                                               .param(ARG_TAG_NAME,
+                                                                                                      getTagName())
+                                                                                               .param(ARG_NAME,
+                                                                                                      slotName);
+                    collector.addException(e);
                 } else {
                     slots.add(slotName);
                 }
             } //
             else if (xuiSlot != null) {
                 if (xuiSlots.contains(xuiSlot)) {
-                    throw new NopException(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED).source(this)
-                                                                                            .param(ARG_TAG_NAME,
-                                                                                                   getTagName())
-                                                                                            .param(ARG_NAME, xuiSlot);
+                    NopException e = //
+                            new NopException(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED).source(this)
+                                                                                              .param(ARG_TAG_NAME,
+                                                                                                     getTagName())
+                                                                                              .param(ARG_NAME, xuiSlot);
+                    collector.addException(e);
                 } else {
                     xuiSlots.add(xuiSlot);
                 }

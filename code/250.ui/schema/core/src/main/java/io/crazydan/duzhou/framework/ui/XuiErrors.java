@@ -158,6 +158,10 @@ public interface XuiErrors {
                    "在样式 {" + ARG_DEF_LOC + "} 上未定义属性 {" + ARG_PROP_NAME + "}",
                    ARG_DEF_LOC,
                    ARG_PROP_NAME);
+    ErrorCode ERR_STYLES_MANDATORY_STYLE_PROP = //
+            define("duzhou.err.ui.styles.mandatory-style-prop",
+                   "属性 {" + ARG_PROP_NAME + "} 的值不能为空",
+                   ARG_PROP_NAME);
     ErrorCode ERR_STYLES_UNDEFINED_REF_VAR = //
             define("duzhou.err.ui.styles.undefined-ref-var",
                    "在样式 {"

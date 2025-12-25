@@ -24,7 +24,9 @@ import io.nop.api.core.util.SourceLocation;
 import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.ast.Expression;
-import io.nop.xlang.xdef.XDefTypeDecl;
+import io.nop.xlang.ast.Identifier;
+import io.nop.xlang.ast.Literal;
+import io.nop.xlang.expr.ExprPhase;
 import io.nop.xlang.xpl.IXplCompiler;
 
 /**
@@ -38,23 +40,47 @@ public class XuiExpr implements ISourceLocationGetter {
 
     private final SourceLocation loc;
 
-    public final XDefTypeDecl type;
     public final Expression expr;
-
-    XuiExpr(SourceLocation loc, XDefTypeDecl type, Expression expr) {
-        this.loc = loc;
-        this.type = type;
-        this.expr = expr;
-    }
-
-    public static XuiExpr create(SourceLocation loc, XDefTypeDecl type, String source) {
-        Expression expr = cp.parseSimpleExpr(loc, source, scope);
-
-        return new XuiExpr(loc, type, expr);
-    }
 
     public static boolean isExpr(String s) {
         return s != null && s.endsWith("}") && s.startsWith("${");
+    }
+
+    /** @return 若 {@code source} 不是表达式，则将其构造为字面量表达式 */
+    public static XuiExpr create(SourceLocation loc, String source) {
+        Expression expr;
+        if (!isExpr(source)) {
+            expr = Literal.valueOf(loc, source);
+        } else {
+            expr = cp.parseTemplateExpr(loc, source, true, ExprPhase.eval, scope);
+        }
+
+        return new XuiExpr(loc, expr);
+    }
+
+    XuiExpr(SourceLocation loc, Expression expr) {
+        this.loc = loc;
+        this.expr = expr;
+    }
+
+    /** 是否为变量名 */
+    public boolean isIdentifier() {
+        return this.expr instanceof Identifier;
+    }
+
+    /** 获取变量的名字 */
+    public String getIdentifierName() {
+        return isIdentifier() ? ((Identifier) this.expr).getName() : null;
+    }
+
+    /** 是否为字面量 */
+    public boolean isLiteral() {
+        return this.expr instanceof Literal;
+    }
+
+    /** 获取字面量的值（字符串） */
+    public String getLiteralValue() {
+        return isLiteral() ? ((Literal) this.expr).getStringValue() : null;
     }
 
     @Override
