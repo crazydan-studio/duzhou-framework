@@ -191,8 +191,10 @@
               xui:name="!ns-name" xui:slot="ns-name"
               as-html="boolean"
               xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
-              xdef:value="string" xdef:bean-body-prop="value"
-        />
+              xdef:bean-body-prop="value"
+        >
+            string
+        </Text>
 
         <!-- [组件节点]
         > 对已导入组件的实例配置，成为组件结构中的组成部分。

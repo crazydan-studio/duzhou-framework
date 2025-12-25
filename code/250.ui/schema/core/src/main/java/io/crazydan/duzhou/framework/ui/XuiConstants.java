@@ -34,7 +34,7 @@ public interface XuiConstants {
     String XDSL_SCHEMA_COMPONENT_TEMPLATE = "/duzhou/ui/schema/component/template.xdef";
     String XDSL_SCHEMA_COMPONENT_IMPORT = "/duzhou/ui/schema/component/import.xdef";
     String XDSL_SCHEMA_COMPONENT_STYLES = "/duzhou/ui/schema/component/styles.xdef";
-    String XDSL_SCHEMA_COMPONENT_MESSAGE = "/duzhou/ui/schema/component/message.xdef";
+    String XDSL_SCHEMA_COMPONENT_ACTIONS = "/duzhou/ui/schema/component/actions.xdef";
     String XDSL_SCHEMA_STYLES = "/duzhou/ui/schema/styles.xdef";
     String XDSL_SCHEMA_STYLE_DEF = "/duzhou/ui/schema/style/style-def.xdef";
     String XDSL_SCHEMA_STYLE_DEFS = "/duzhou/ui/schema/style/style-defs.xdef";

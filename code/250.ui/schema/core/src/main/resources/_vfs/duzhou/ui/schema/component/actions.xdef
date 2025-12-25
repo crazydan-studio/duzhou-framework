@@ -19,16 +19,18 @@
   - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
   -->
 
-<!-- [组件消息定义]
-
-@name [消息名]
-    > 其名字必须为首字母大写的驼峰形式（可包含下划线）
+<!-- [组件动作集]
+> 定义数据处理逻辑。
 -->
-<message xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+<actions xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
          x:schema="/nop/schema/xdef.xdef"
-         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.message"
-         xdef:name="XuiComponentMessage"
-         name="!component-name"
+         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.action"
+         xdef:name="XuiComponentActions"
+         xdef:body-type="list"
+         xdef:bean-body-prop="children" xdef:bean-child-name="child"
+         xdef:bean-sub-type-prop="$tag"
 >
 
-</message>
+    <action xdef:name="XuiComponentAction">
+    </action>
+</actions>

@@ -40,7 +40,7 @@
         XuiConstants.XDSL_SCHEMA_COMPONENT_TEMPLATE,
         XuiConstants.XDSL_SCHEMA_COMPONENT_IMPORT,
         XuiConstants.XDSL_SCHEMA_COMPONENT_STYLES,
-        //XuiConstants.XDSL_SCHEMA_COMPONENT_MESSAGE,
+        //XuiConstants.XDSL_SCHEMA_COMPONENT_ACTIONS,
     ];
 
     for (let i = 0; i < xdefs.length; i++) {

@@ -58,13 +58,5 @@
 
     <styles xdef:ref="component/styles.xdef" />
 
-    <!--<messages xdef:bean-prop="messages"
-              xdef:body-type="list" xdef:key-attr="name"
-              xdef:bean-child-name="message"
-    >
-        &lt;!&ndash; [组件消息] &ndash;&gt;
-        <message xdef:ref="component/message.xdef"
-                 name="!component-name"
-        />
-    </messages>-->
+    <!--<actions xdef:ref="component/actions.xdef" />-->
 </component>

@@ -22,6 +22,7 @@ import io.nop.commons.util.ClassHelper;
  * >   - `obj-meta` 对应的 xmeta 将在 `x:gen-extends` 中加载，
  * >     并根据其结构构造当前属性的子结构；
  * >   - 节点名称必须为数据域 `prop-name` 所要求的形式；
+ * > - TODO 对于 obj-meta 如何支持 List/Map？
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
