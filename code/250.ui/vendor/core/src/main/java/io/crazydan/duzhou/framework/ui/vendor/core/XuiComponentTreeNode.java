@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.crazydan.duzhou.framework.ui.XuiLayout;
 import io.crazydan.duzhou.framework.ui.XuiNamed;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplate;
@@ -36,6 +35,7 @@ import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTem
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeLayout;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNative;
 import io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeText;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
@@ -55,7 +55,7 @@ public class XuiComponentTreeNode implements IJsonSerializable {
     public static final String VAR_PROP_NAME_INNER_TEXT = "$innerText";
 
     public final String key;
-    public final XuiLayout layout;
+    public final XuiLayoutNode layout;
     public final List<XuiComponentTreeNode> children;
 
     public final String nativeName;
@@ -74,7 +74,7 @@ public class XuiComponentTreeNode implements IJsonSerializable {
 
     XuiComponentTreeNode(
             String key, //
-            XuiLayout layout, List<XuiComponentTreeNode> children, //
+            XuiLayoutNode layout, List<XuiComponentTreeNode> children, //
             String nativeName, Map<String, Object> nativeProps
     ) {
         this.key = key;
@@ -108,12 +108,12 @@ public class XuiComponentTreeNode implements IJsonSerializable {
             XuiComponentTemplateNode templateNode, XuiComponent component, //
             String nativeName, Map<String, Object> nativeProps
     ) {
-        XuiLayout layout = null;
+        XuiLayoutNode layout = null;
         List<XuiComponentTreeNode> treeNodes = new ArrayList<>();
 
         for (XuiNamed templateNodeChild : templateNode.getChildren()) {
             if (templateNodeChild instanceof XuiComponentTemplateNodeLayout) {
-                layout = ((XuiComponentTemplateNodeLayout) templateNodeChild).getType();
+                layout = ((XuiComponentTemplateNodeLayout) templateNodeChild).getRoot();
             } //
             else if (templateNodeChild instanceof XuiComponentTemplateNodeDispatch) {
                 XuiComponentTemplateNodeDispatch dispatch = (XuiComponentTemplateNodeDispatch) templateNodeChild;
@@ -171,13 +171,13 @@ public class XuiComponentTreeNode implements IJsonSerializable {
 
     protected static Map<String, Object> getUnknownAttrs(XuiNamed node) {
         if (node instanceof XuiComponentTemplateNodeNative) {
-            return ((XuiComponentTemplateNodeNative) node).getAttrs();
+            return ((XuiComponentTemplateNodeNative) node).getProps();
         } //
         else if (node instanceof XuiComponentTemplateNodeText) {
-            return ((XuiComponentTemplateNodeText) node).getAttrs();
+            return ((XuiComponentTemplateNodeText) node).getProps();
         } //
         else if (node instanceof XuiComponentTemplateNodeAny) {
-            return ((XuiComponentTemplateNodeAny) node).getAttrs();
+            return ((XuiComponentTemplateNodeAny) node).getProps();
         }
         return null;
     }
@@ -216,7 +216,7 @@ public class XuiComponentTreeNode implements IJsonSerializable {
                 if (isText) {
                     return List.of();
                 }
-                return ((XuiComponentTemplateNode) this.node).getCustomOrTextChildren();
+                return ((XuiComponentTemplateNode) this.node).getChildren();
             } //
             else if (VAR_PROP_NAME_SLOT.equals(key)) {
                 if (isText) {

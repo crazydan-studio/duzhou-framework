@@ -21,8 +21,8 @@
 <page xmlns:x="/nop/schema/xdsl.xdef" xmlns:xui="xui"
       x:schema="/duzhou/ui/schema/page.xdef"
 >
-    <import as="Button" from="/duzhou/ui/component/button.xui"/>
-    <import as="Text" from="/duzhou/ui/component/text.xui"/>
+    <import as="Button" from="/duzhou/ui/component/button.xui" />
+    <import as="Text" from="/duzhou/ui/component/text.xui" />
 
     <template>
         <choose xui:name="choose-person-init-or-not">
@@ -82,17 +82,4 @@
             </otherwise>
         </choose>
     </template>
-
-    <!--<messages>
-        <message name="Route_to_Person_Edit_Page">
-            <route to="/person/edit" data="${data}"/>
-        </message>
-        <message name="Route_to_Person_Management_Page">
-            <route to="/person/management" data="${data}"/>
-        </message>
-
-        <message name="Route_to_App_Settings_Page">
-            <route to="/app/settings" data="${data}"/>
-        </message>
-    </messages>-->
 </page>

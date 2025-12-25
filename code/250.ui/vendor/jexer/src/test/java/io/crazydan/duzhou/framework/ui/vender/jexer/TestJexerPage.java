@@ -30,15 +30,15 @@ import org.junit.jupiter.api.Test;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-11-25
  */
-public class TestJexerApp extends NopJunitTestCase {
+public class TestJexerPage extends NopJunitTestCase {
 
     @Test
-    public void test_render_page() throws Exception {
+    public void test_layout() throws Exception {
         JexerApp app = new JexerApp();
         app.addToolMenu();
 
         Object data = Map.of("me", Map.of("notExist", true));
-        app.asyncRender("/duzhou/ui/page/main.page.xui", data);
+        app.asyncRender("/duzhou/ui/test-page-layout.page.xui", data);
 
         // 等待退出
         app.run();

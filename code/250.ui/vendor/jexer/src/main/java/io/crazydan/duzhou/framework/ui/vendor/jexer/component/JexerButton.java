@@ -19,7 +19,7 @@
 
 package io.crazydan.duzhou.framework.ui.vendor.jexer.component;
 
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
 import io.crazydan.duzhou.framework.ui.vendor.core.XuiComponentTreeNode;
 import io.crazydan.duzhou.framework.ui.vendor.jexer.JexerComponent;
 import jexer.TAction;

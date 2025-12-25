@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutProps;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.layout0.XuiLayoutProps;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.vendor.web.model.ImportedLib;
 import io.nop.api.core.util.SourceLocation;
