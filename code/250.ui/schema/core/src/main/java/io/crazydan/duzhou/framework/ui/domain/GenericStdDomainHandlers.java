@@ -30,7 +30,10 @@ import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_COMPONENT_
  */
 public class GenericStdDomainHandlers {
 
-    /** 是否为有效的组件名，由字母、数字、下划线组成的驼峰形式，且必须首字母需大写，如：`Button`、`Button_Ext` */
+    /**
+     * 是否为有效的组件名，由字母、数字、下划线组成的驼峰形式，且必须首字母需大写，
+     * 如 {@code Button}、{@code Button_Ext}`
+     */
     public static boolean isValidComponentName(String text) {
         return text.charAt(0) >= 'A' && text.charAt(0) <= 'Z' //
                && StringHelper.isValidJavaVarName(text) //
@@ -43,6 +46,14 @@ public class GenericStdDomainHandlers {
         return text.charAt(0) >= 'a' && text.charAt(0) <= 'z' //
                && StringHelper.isValidXmlNamespaceName(text) //
                && !StringHelper.containsUpperCase(text) //
+                ;
+    }
+
+    /** 是否为有效的样式属性名，其由字母、数字组成的驼峰形式，且开头必须为小写字母，如 {@code textColor} */
+    public static boolean isValidStylePropName(String text) {
+        return text.charAt(0) >= 'a' && text.charAt(0) <= 'z' //
+               && StringHelper.isValidPropName(text) //
+               && !text.contains("_") //
                 ;
     }
 

@@ -4,7 +4,6 @@ import io.crazydan.duzhou.framework.ui.schema.component.style._gen._XuiComponent
 import io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef;
 import io.crazydan.duzhou.framework.ui.schema.style.XuiStyles;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
-import io.nop.api.core.validate.IValidationErrorCollector;
 
 public class XuiComponentStyles extends _XuiComponentStyles {
     public static final XuiComponentStyles EMPTY = new XuiComponentStyles() {{
@@ -17,9 +16,7 @@ public class XuiComponentStyles extends _XuiComponentStyles {
     public XuiComponentStyles() {
     }
 
-    public void validate(IValidationErrorCollector collector) {
-        //
-    }
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     /** 重载接口，以支持从基础样式库中查找样式定义 */
     @Override

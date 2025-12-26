@@ -109,7 +109,6 @@ public class XuiComponent extends _XuiComponent implements INeedInit {
         XuiErrorCollector collector = new XuiErrorCollector();
 
         getTemplate().validate(this, collector);
-
         getStyles().validate(collector);
 
         collector.throwErrors();

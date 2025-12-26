@@ -144,6 +144,12 @@ public interface XuiErrors {
                    + "其须由小写字母、数字、下划线、短横线组成，开头必须为字母，且短横线不能连续出现"
                    + "如 button-blue、layout__root",
                    ARG_TAG_NAME);
+    ErrorCode ERR_STYLES_INVALID_PROP_NAME = //
+            define("duzhou.err.ui.styles.invalid-prop-name",
+                   ("样式属性名 [{" + ARG_PROP_NAME + "}] 不符合规范。")
+                   + "其须为由字母、数字组成的驼峰形式，且以小写字母开头，"
+                   + "如 textColor、boxWidth",
+                   ARG_PROP_NAME);
     ErrorCode ERR_STYLES_PATCH_NODE_NOT_ALLOWED = //
             define("duzhou.err.ui.styles.patch-node-not-allowed",
                    "复合样式 <{"

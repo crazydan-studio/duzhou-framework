@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import io.crazydan.duzhou.framework.ui.domain.type.XuiExpr;
-import io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles;
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleRef;
 import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.xlang.api.XLang;
@@ -33,14 +32,39 @@ public class XuiStyleRef extends _XuiStyleRef {
     public XuiStyleRef() {
     }
 
+    /**
+     * 检查引用样式的定义是否存在，并检查定义的属性与其配置的属性是否一致
+     *
+     * @param ownerStyleDef
+     *         当前引用样式所属的定义样式。若该值不为 {@code null}，
+     *         则检查当前引用样式的属性值中的 {@code ${var}} 表达式所引用的变量 {@code var}
+     *         是否在 {@code ownerStyleDef} 上定义
+     */
+    public void validate(XuiStyleDefs styleDefs, XuiStyleDef ownerStyleDef, IValidationErrorCollector collector) {
+        validate(styleDefs, ownerStyleDef, null, collector);
+    }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
     /** @return 始终不返回 {@code null} */
     public Map<String, String> getProps() {
         return firstNonNull(get$props(), Map.of());
     }
 
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    protected void validate(
+            XuiStyleDefs styleDefs, XuiStyleDef ownerStyleDef, String styleNamePrefix,
+            IValidationErrorCollector collector
+    ) {
+        XuiStyleDef styleDef = checkStyleDef(styleDefs, styleNamePrefix, collector);
+        checkStyleProps(ownerStyleDef, styleDef, collector);
+    }
+
     /** 检查引用样式的定义是否存在 */
-    public XuiStyleDef checkStyleDef(XuiComponentStyles styleDefs, IValidationErrorCollector collector) {
-        String styleName = get$tag();
+    protected XuiStyleDef checkStyleDef(
+            XuiStyleDefs styleDefs, String styleNamePrefix, IValidationErrorCollector collector) {
+        String styleName = (styleNamePrefix != null ? styleNamePrefix : "") + get$tag();
 
         XuiStyleDef styleDef = styleDefs.getStyleDef(styleName);
         if (styleDef == null) {
@@ -64,7 +88,7 @@ public class XuiStyleRef extends _XuiStyleRef {
      *         当前引用样式所对应的样式定义，通过 {@link #checkStyleDef} 得到。
      *         若该值不为 {@code null}，则检查当前引用样式的属性及其值类型是否与 {@code myStyleDef} 定义的一致
      */
-    public void checkStyleProps(
+    protected void checkStyleProps(
             XuiStyleDef ownerStyleDef, XuiStyleDef myStyleDef, IValidationErrorCollector collector) {
         if (ownerStyleDef == null && myStyleDef == null) {
             return;
@@ -113,6 +137,7 @@ public class XuiStyleRef extends _XuiStyleRef {
         nullProps.forEach(getProps()::remove);
     }
 
+    /** 检查配置的属性是否存在，以及其值是否与定义类型一致 */
     protected XDefTypeDecl checkStylePropType(
             String propName, String propValue, boolean isPropExpr,
             XuiStyleDef styleDef, IValidationErrorCollector collector

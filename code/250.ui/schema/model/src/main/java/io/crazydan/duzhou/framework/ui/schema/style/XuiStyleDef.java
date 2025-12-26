@@ -8,12 +8,9 @@ import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.xlang.xdef.XDefTypeDecl;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_INVALID_PROP_NAME;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_INVALID_TAG_NAME;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_PATCH_NODE_NOT_ALLOWED;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_UNDEFINED_STYLE;
-import static io.nop.xlang.XLangErrors.ARG_DEF_LOC;
-import static io.nop.xlang.XLangErrors.ARG_TAG1;
-import static io.nop.xlang.XLangErrors.ARG_TAG2;
+import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
 import static io.nop.xlang.XLangErrors.ARG_TAG_NAME;
 
 public class XuiStyleDef extends _XuiStyleDef {
@@ -21,46 +18,24 @@ public class XuiStyleDef extends _XuiStyleDef {
     public XuiStyleDef() {
     }
 
-    /** 检查当前样式的标签名规范 */
-    public void checkTagName(IValidationErrorCollector collector) {
-        String tagName = get$tag();
-        if (!GenericStdDomainHandlers.isValidStyleName(tagName)) {
-            collector.buildError(ERR_STYLES_INVALID_TAG_NAME)
-                     .loc(getLocation())
-                     .param(ARG_TAG_NAME, tagName)
-                     .addToCollector(collector);
-        }
+    /** 检查当前样式的有效性 */
+    public void validate(XuiStyleDefs styleDefs, IValidationErrorCollector collector) {
+        checkTagName(collector);
+        checkPropNames(collector);
 
-        // TODO 属性名必须为驼峰形式
+        checkChildRefs(styleDefs, collector);
     }
 
-    /** 检查子节点引用及其配置 */
-    public void checkChildRefs(XuiStyles styles, IValidationErrorCollector collector) {
-        String tagName = get$tag();
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-        getChildren().forEach((refTagName, ref) -> {
-            // 在独立的样式定义集中，样式只能包含一层结构
-            if (ref.hasChildren()) {
-                collector.buildError(ERR_STYLES_PATCH_NODE_NOT_ALLOWED)
-                         .loc(getLocation())
-                         .param(ARG_TAG1, tagName)
-                         .param(ARG_TAG2, refTagName)
-                         .addToCollector(collector);
-                return;
-            }
+    /** 是否为原子样式 */
+    public boolean isAtom() {
+        return getChildren().isEmpty();
+    }
 
-            XuiStyleDef refDef = styles.getStyleDef(refTagName);
-            if (refDef == null) {
-                collector.buildError(ERR_STYLES_UNDEFINED_STYLE)
-                         .loc(ref.getLocation())
-                         .param(ARG_DEF_LOC, styles.getLocation())
-                         .param(ARG_TAG_NAME, refTagName)
-                         .addToCollector(collector);
-                return;
-            }
-
-            ref.checkStyleProps(this, refDef, collector);
-        });
+    /** 是否为复合样式 */
+    public boolean isComposite() {
+        return !isAtom();
     }
 
     /** @return 始终不返回 {@code null} */
@@ -76,5 +51,37 @@ public class XuiStyleDef extends _XuiStyleDef {
     /** 获取指定属性的类型 */
     public XDefTypeDecl getPropType(String propName) {
         return getPropTypes().get(propName);
+    }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    /** 检查当前样式的标签名是否符合规范 */
+    protected void checkTagName(IValidationErrorCollector collector) {
+        String tagName = get$tag();
+        if (!GenericStdDomainHandlers.isValidStyleName(tagName)) {
+            collector.buildError(ERR_STYLES_INVALID_TAG_NAME)
+                     .loc(getLocation())
+                     .param(ARG_TAG_NAME, tagName)
+                     .addToCollector(collector);
+        }
+    }
+
+    /** 检查当前样式的属性名是否符合规范 */
+    protected void checkPropNames(IValidationErrorCollector collector) {
+        getPropTypes().forEach((propName, propType) -> {
+            if (!GenericStdDomainHandlers.isValidStylePropName(propName)) {
+                collector.buildError(ERR_STYLES_INVALID_PROP_NAME)
+                         .loc(getLocation())
+                         .param(ARG_PROP_NAME, propName)
+                         .addToCollector(collector);
+            }
+        });
+    }
+
+    /** 检查子节点引用及其配置 */
+    protected void checkChildRefs(XuiStyleDefs styleDefs, IValidationErrorCollector collector) {
+        getChildren().forEach((name, ref) -> {
+            ref.validate(styleDefs, this, collector);
+        });
     }
 }

@@ -48,6 +48,7 @@ public interface XuiConstants {
     String TAG_NAME_CHOOSE = "choose";
     String TAG_NAME_WHEN = "when";
     String TAG_NAME_OTHERWISE = "otherwise";
+    String TAG_NAME_LAYOUT_PREFIX = "layout__";
 
     String ATTR_NAME_XUI_SLOT = "xui:slot";
     String ATTR_NAME_XUI_NAME = "xui:name";
