@@ -25,6 +25,7 @@ package io.crazydan.duzhou.framework.ui;
  */
 public interface XuiConstants {
     String STD_DOMAIN_COMPONENT_NAME = "component-name";
+    String STD_DOMAIN_XUI_EXPR = "xui-expr";
     String STD_DOMAIN_XUI_SIZE = "xui-size";
 
     String XDSL_SCHEMA_APP = "/duzhou/ui/schema/app.xdef";

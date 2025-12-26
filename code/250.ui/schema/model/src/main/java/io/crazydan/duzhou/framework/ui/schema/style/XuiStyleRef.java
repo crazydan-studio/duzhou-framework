@@ -7,11 +7,7 @@ import java.util.Set;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiExpr;
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleRef;
 import io.nop.api.core.validate.IValidationErrorCollector;
-import io.nop.xlang.api.XLang;
-import io.nop.xlang.api.XLangCompileTool;
-import io.nop.xlang.xdef.IStdDomainHandler;
 import io.nop.xlang.xdef.XDefTypeDecl;
-import io.nop.xlang.xdef.domain.StdDomainRegistry;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_MANDATORY_STYLE_PROP;
@@ -47,8 +43,9 @@ public class XuiStyleRef extends _XuiStyleRef {
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     /** @return 始终不返回 {@code null} */
-    public Map<String, String> getProps() {
-        return firstNonNull(get$props(), Map.of());
+    @Override
+    public Map<String, XuiExpr> getProps() {
+        return firstNonNull(super.getProps(), Map.of());
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -95,27 +92,22 @@ public class XuiStyleRef extends _XuiStyleRef {
         }
 
         Set<String> nullProps = new HashSet<>();
-        getProps().forEach((propName, propValue) -> {
-            XuiExpr expr = XuiExpr.create(getLocation(), propValue);
-            if (expr.isLiteral()) {
-                propValue = expr.getLiteralValue();
-            }
-
-            if (propValue == null) {
+        getProps().forEach((propName, prop) -> {
+            if (prop.isLiteral() && prop.getLiteralValue() == null) {
                 nullProps.add(propName);
                 return;
             }
 
-            XDefTypeDecl propType = checkStylePropType(propName, propValue, !expr.isLiteral(), myStyleDef, collector);
+            XDefTypeDecl propType = checkStylePropType(propName, prop, myStyleDef, collector);
 
             // 检查对其所属的定义样式的属性的引用
-            if (ownerStyleDef != null && expr.isIdentifier()) {
-                String propRefName = expr.getIdentifierName();
+            if (ownerStyleDef != null && prop.isIdentifier()) {
+                String propRefName = prop.getIdentifierName();
 
                 XDefTypeDecl propRefType = ownerStyleDef.getPropType(propRefName);
                 if (propRefType == null) {
                     collector.buildError(ERR_STYLES_UNDEFINED_REF_VAR)
-                             .loc(getLocation())
+                             .loc(prop.getLocation())
                              .param(ARG_DEF_LOC, ownerStyleDef)
                              .param(ARG_PROP_NAME, propRefName)
                              .param(ARG_REF_NAME, propRefName)
@@ -123,7 +115,7 @@ public class XuiStyleRef extends _XuiStyleRef {
                 } //
                 else if (propType != null && !propRefType.getStdDomain().equals(propType.getStdDomain())) {
                     collector.buildError(ERR_STYLES_REF_VAR_NOT_MATCH_DEF_PROP)
-                             .loc(getLocation())
+                             .loc(prop.getLocation())
                              .param(ARG_PROP_NAME, propName)
                              .param(ARG_VAR_DECL1, propType.getStdDomain())
                              .param(ARG_VAR_NAME, propRefName)
@@ -139,8 +131,8 @@ public class XuiStyleRef extends _XuiStyleRef {
 
     /** 检查配置的属性是否存在，以及其值是否与定义类型一致 */
     protected XDefTypeDecl checkStylePropType(
-            String propName, String propValue, boolean isPropExpr,
-            XuiStyleDef styleDef, IValidationErrorCollector collector
+            String propName, XuiExpr prop, XuiStyleDef styleDef,
+            IValidationErrorCollector collector
     ) {
         if (styleDef == null) {
             return null;
@@ -149,26 +141,24 @@ public class XuiStyleRef extends _XuiStyleRef {
         XDefTypeDecl propType = styleDef.getPropType(propName);
         if (propType == null) {
             collector.buildError(ERR_STYLES_UNDEFINED_STYLE_PROP)
-                     .loc(getLocation())
+                     .loc(prop.getLocation())
                      .param(ARG_DEF_LOC, styleDef)
                      .param(ARG_PROP_NAME, propName)
                      .addToCollector(collector);
         }
-        // Note: 表达式的实际值类型需在运行时确定，故而，仅对字面量做检查
-        else if (!isPropExpr) {
+        // Note: 非字面量表达式的实际值类型需在运行时确定，故而，仅对字面量做检查
+        else if (!prop.isLiteral()) {
+            String propValue = prop.getLiteralValue();
             if (propValue.isEmpty()) {
                 if (propType.isMandatory()) {
                     collector.buildError(ERR_STYLES_MANDATORY_STYLE_PROP)
-                             .loc(getLocation())
+                             .loc(prop.getLocation())
                              .param(ARG_PROP_NAME, propName)
                              .addToCollector(collector);
                 }
             } else {
-                IStdDomainHandler handler = StdDomainRegistry.instance().getStdDomainHandler(propType.getStdDomain());
-
-                XLangCompileTool cp = XLang.newCompileTool();
                 try {
-                    handler.parseProp(propType.getOptions(), getLocation(), propName, propValue, cp);
+                    prop.parseValue(propType, propName, propValue);
                 } catch (Exception e) {
                     collector.addException(e);
                 }

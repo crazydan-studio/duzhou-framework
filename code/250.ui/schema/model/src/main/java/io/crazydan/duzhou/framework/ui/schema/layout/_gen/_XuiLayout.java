@@ -12,6 +12,7 @@ import io.nop.commons.util.ClassHelper;
  * generate from /duzhou/ui/schema/layout.xdef <p>
  * > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
  * > - 一般可将布局根节点的高宽均设置为 `match-parent`，从而支持通过上层组件控制其实际尺寸；
+ * > - TODO 各类布局均可嵌套其他布局类型；
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})

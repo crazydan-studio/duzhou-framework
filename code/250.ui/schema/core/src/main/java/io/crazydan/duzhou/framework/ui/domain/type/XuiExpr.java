@@ -21,20 +21,30 @@ package io.crazydan.duzhou.framework.ui.domain.type;
 
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.core.lang.json.IJsonSerializable;
 import io.nop.xlang.api.IXLangCompileScope;
 import io.nop.xlang.api.XLang;
+import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.ast.Expression;
 import io.nop.xlang.ast.Identifier;
 import io.nop.xlang.ast.Literal;
 import io.nop.xlang.expr.ExprPhase;
+import io.nop.xlang.xdef.IStdDomainHandler;
+import io.nop.xlang.xdef.XDefTypeDecl;
+import io.nop.xlang.xdef.domain.StdDomainRegistry;
 import io.nop.xlang.xpl.IXplCompiler;
 
 /**
+ * 构造字面量或变量引用表达式
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-12-22
  */
-public class XuiExpr implements ISourceLocationGetter {
+public class XuiExpr implements ISourceLocationGetter, IJsonSerializable {
+    public static final String PREFIX = "${";
+    public static final String SUFFIX = "}";
+
     private static final IXplCompiler cp = XLang.newXplCompiler();
     private static final IXLangCompileScope scope = cp.newCompileScope();
 
@@ -43,7 +53,7 @@ public class XuiExpr implements ISourceLocationGetter {
     public final Expression expr;
 
     public static boolean isExpr(String s) {
-        return s != null && s.endsWith("}") && s.startsWith("${");
+        return s != null && s.endsWith(SUFFIX) && s.startsWith(PREFIX);
     }
 
     /** @return 若 {@code source} 不是表达式，则将其构造为字面量表达式 */
@@ -70,7 +80,7 @@ public class XuiExpr implements ISourceLocationGetter {
 
     /** 获取变量的名字 */
     public String getIdentifierName() {
-        return isIdentifier() ? ((Identifier) this.expr).getName() : null;
+        return ((Identifier) this.expr).getName();
     }
 
     /** 是否为字面量 */
@@ -80,11 +90,44 @@ public class XuiExpr implements ISourceLocationGetter {
 
     /** 获取字面量的值（字符串） */
     public String getLiteralValue() {
-        return isLiteral() ? ((Literal) this.expr).getStringValue() : null;
+        return ((Literal) this.expr).getStringValue();
     }
 
     @Override
     public SourceLocation getLocation() {
         return this.loc;
+    }
+
+    /** 根据类型解析字符串的真实类型值 */
+    public <T> T parseValue(XDefTypeDecl type, String name, String value) {
+        XLangCompileTool cp = XLang.newCompileTool();
+        IStdDomainHandler handler = StdDomainRegistry.instance().getStdDomainHandler(type.getStdDomain());
+
+        return (T) handler.parseProp(type.getOptions(), getLocation(), name, value, cp);
+    }
+
+    /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */
+    @Override
+    public void serializeToJson(IJsonHandler out) {
+        Object value;
+        if (isLiteral()) {
+            value = ((Literal) this.expr).getValue();
+        } else {
+            value = PREFIX + this.expr.toExprString() + SUFFIX;
+        }
+
+        if (value instanceof IJsonSerializable) {
+            ((IJsonSerializable) value).serializeToJson(out);
+        } else {
+            out.rawValue(this.loc, value);
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (isLiteral()) {
+            return getLiteralValue();
+        }
+        return this.expr.toExprString();
     }
 }

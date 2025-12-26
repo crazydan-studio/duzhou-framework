@@ -48,6 +48,7 @@ public class TestXuiExpr extends NopJunitTestCase {
             put("${1}", "1");
             put("true", "\"true\"");
             put("${true}", "true");
+            put("match-parent", "\"match-parent\"");
             put("${'match-parent'}", "\"match-parent\"");
         }};
 

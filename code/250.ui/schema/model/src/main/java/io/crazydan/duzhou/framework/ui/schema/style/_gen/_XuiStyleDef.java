@@ -10,7 +10,7 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/style/style-def.xdef <p>
- * > 以标签名作为样式名，定义样式的可配置属性及其组成。
+ * > 以标签名作为样式名（小写字母且以短横线分隔），定义样式的可配置属性（驼峰形式）及其组成。
  * >
  * > 每个样式定义最多包含两层组成结构，其中，第一层用于定义样式本身的组成，
  * > 第二层则是用于调整第一层样式的内部结构。
@@ -37,13 +37,6 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
      * xml name: 
      * 
      */
-    private java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> _$props ;
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
     private java.lang.String _$tag ;
     
     /**
@@ -54,27 +47,11 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
     private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDefNode> _children = java.util.Collections.emptyMap();
     
     /**
-     * 
-     * xml name: 
      *  
+     * xml name: 
+     * 
      */
-    
-    public java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> get$props(){
-      return _$props;
-    }
-
-    
-    public void set$props(java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> value){
-        checkAllowChange();
-        
-        this._$props = value;
-           
-    }
-
-    
-    public boolean has$props(){
-        return this._$props != null && !this._$props.isEmpty();
-    }
+    private java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> _props ;
     
     /**
      * 
@@ -126,6 +103,29 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
         return this._children != null && !this._children.isEmpty();
     }
     
+    /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(java.util.Map<java.lang.String,io.nop.xlang.xdef.XDefTypeDecl> value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
+    public boolean hasProps(){
+        return this._props != null && !this._props.isEmpty();
+    }
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -134,9 +134,9 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._$props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._$props);
-            
            this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
+            
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
         }
     }
@@ -145,9 +145,9 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$props",this.get$props());
         out.putNotNull("$tag",this.get$tag());
         out.putNotNull("children",this.getChildren());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiStyleDef cloneInstance(){
@@ -159,9 +159,9 @@ public abstract class _XuiStyleDef extends io.nop.core.resource.component.Abstra
     protected void copyTo(XuiStyleDef instance){
         super.copyTo(instance);
         
-        instance.set$props(this.get$props());
         instance.set$tag(this.get$tag());
         instance.setChildren(this.getChildren());
+        instance.setProps(this.getProps());
     }
 
     protected XuiStyleDef newInstance(){

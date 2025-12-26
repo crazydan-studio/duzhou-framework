@@ -22,11 +22,37 @@ import io.nop.commons.util.ClassHelper;
 public abstract class _XuiLayoutNodeLinearItem extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeStyled {
     
     /**
+     *  保持状态
+     * xml name: keep-state
+     * > 在不同布局层中引用相同布局项时，通过该配置指定是否保持其状态
+     */
+    private java.lang.Boolean _keepState ;
+    
+    /**
      *  匹配规则
      * xml name: pattern
      * > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
      */
     private java.lang.String _pattern ;
+    
+    /**
+     * 保持状态
+     * xml name: keep-state
+     *  > 在不同布局层中引用相同布局项时，通过该配置指定是否保持其状态
+     */
+    
+    public java.lang.Boolean getKeepState(){
+      return _keepState;
+    }
+
+    
+    public void setKeepState(java.lang.Boolean value){
+        checkAllowChange();
+        
+        this._keepState = value;
+           
+    }
+
     
     /**
      * 匹配规则
@@ -62,6 +88,7 @@ public abstract class _XuiLayoutNodeLinearItem extends io.crazydan.duzhou.framew
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
+        out.putNotNull("keepState",this.getKeepState());
         out.putNotNull("pattern",this.getPattern());
     }
 
@@ -74,6 +101,7 @@ public abstract class _XuiLayoutNodeLinearItem extends io.crazydan.duzhou.framew
     protected void copyTo(XuiLayoutNodeLinearItem instance){
         super.copyTo(instance);
         
+        instance.setKeepState(this.getKeepState());
         instance.setPattern(this.getPattern());
     }
 

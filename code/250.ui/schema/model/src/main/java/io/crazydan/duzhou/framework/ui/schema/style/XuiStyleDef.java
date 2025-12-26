@@ -39,18 +39,19 @@ public class XuiStyleDef extends _XuiStyleDef {
     }
 
     /** @return 始终不返回 {@code null} */
-    public Map<String, XDefTypeDecl> getPropTypes() {
-        return firstNonNull(get$props(), Map.of());
+    @Override
+    public Map<String, XDefTypeDecl> getProps() {
+        return firstNonNull(super.getProps(), Map.of());
     }
 
     /** 是否存在指定名字的属性 */
     public boolean hasProp(String propName) {
-        return getPropTypes().containsKey(propName);
+        return getProps().containsKey(propName);
     }
 
     /** 获取指定属性的类型 */
     public XDefTypeDecl getPropType(String propName) {
-        return getPropTypes().get(propName);
+        return getProps().get(propName);
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -68,11 +69,11 @@ public class XuiStyleDef extends _XuiStyleDef {
 
     /** 检查当前样式的属性名是否符合规范 */
     protected void checkPropNames(IValidationErrorCollector collector) {
-        getPropTypes().forEach((propName, propType) -> {
-            if (!GenericStdDomainHandlers.isValidStylePropName(propName)) {
+        getProps().forEach((name, type) -> {
+            if (!GenericStdDomainHandlers.isValidStylePropName(name)) {
                 collector.buildError(ERR_STYLES_INVALID_PROP_NAME)
                          .loc(getLocation())
-                         .param(ARG_PROP_NAME, propName)
+                         .param(ARG_PROP_NAME, name)
                          .addToCollector(collector);
             }
         });

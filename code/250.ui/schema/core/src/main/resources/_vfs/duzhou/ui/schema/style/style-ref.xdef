@@ -27,5 +27,5 @@
            xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.style"
            xdef:name="XuiStyleRef"
            xdef:bean-tag-prop="$tag"
-           xdef:unknown-attr="string" xdef:bean-unknown-attrs-prop="$props"
+           xdef:unknown-attr="xui-expr" xdef:bean-unknown-attrs-prop="props"
 />

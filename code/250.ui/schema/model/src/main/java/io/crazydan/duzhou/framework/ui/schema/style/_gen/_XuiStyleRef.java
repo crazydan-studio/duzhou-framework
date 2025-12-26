@@ -21,37 +21,14 @@ public abstract class _XuiStyleRef extends io.nop.core.resource.component.Abstra
      * xml name: 
      * 
      */
-    private java.util.Map<java.lang.String,java.lang.String> _$props ;
-    
-    /**
-     *  
-     * xml name: 
-     * 
-     */
     private java.lang.String _$tag ;
     
     /**
-     * 
-     * xml name: 
      *  
+     * xml name: 
+     * 
      */
-    
-    public java.util.Map<java.lang.String,java.lang.String> get$props(){
-      return _$props;
-    }
-
-    
-    public void set$props(java.util.Map<java.lang.String,java.lang.String> value){
-        checkAllowChange();
-        
-        this._$props = value;
-           
-    }
-
-    
-    public boolean has$props(){
-        return this._$props != null && !this._$props.isEmpty();
-    }
+    private java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.domain.type.XuiExpr> _props ;
     
     /**
      * 
@@ -72,6 +49,29 @@ public abstract class _XuiStyleRef extends io.nop.core.resource.component.Abstra
     }
 
     
+    /**
+     * 
+     * xml name: 
+     *  
+     */
+    
+    public java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.domain.type.XuiExpr> getProps(){
+      return _props;
+    }
+
+    
+    public void setProps(java.util.Map<java.lang.String,io.crazydan.duzhou.framework.ui.domain.type.XuiExpr> value){
+        checkAllowChange();
+        
+        this._props = value;
+           
+    }
+
+    
+    public boolean hasProps(){
+        return this._props != null && !this._props.isEmpty();
+    }
+    
 
     @Override
     public void freeze(boolean cascade){
@@ -80,7 +80,7 @@ public abstract class _XuiStyleRef extends io.nop.core.resource.component.Abstra
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._$props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._$props);
+           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
             
         }
     }
@@ -89,8 +89,8 @@ public abstract class _XuiStyleRef extends io.nop.core.resource.component.Abstra
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("$props",this.get$props());
         out.putNotNull("$tag",this.get$tag());
+        out.putNotNull("props",this.getProps());
     }
 
     public XuiStyleRef cloneInstance(){
@@ -102,8 +102,8 @@ public abstract class _XuiStyleRef extends io.nop.core.resource.component.Abstra
     protected void copyTo(XuiStyleRef instance){
         super.copyTo(instance);
         
-        instance.set$props(this.get$props());
         instance.set$tag(this.get$tag());
+        instance.setProps(this.getProps());
     }
 
     protected XuiStyleRef newInstance(){

@@ -19,39 +19,20 @@
 
 package io.crazydan.duzhou.framework.ui.domain;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import io.crazydan.duzhou.framework.ui.XuiConstants;
-import io.crazydan.duzhou.framework.ui.XuiExpression;
-import io.nop.api.core.exceptions.NopException;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiExpr;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.api.core.validate.IValidationErrorCollector;
-import io.nop.commons.type.StdDataType;
-import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.type.IGenericType;
 import io.nop.core.type.utils.JavaGenericTypeBuilder;
 import io.nop.xlang.api.XLangCompileTool;
 import io.nop.xlang.xdef.IStdDomainHandler;
 
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_FORMAT;
-import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_INVALID_OPTIONS;
-import static io.nop.api.core.util.ApiStringHelper.isBlank;
-import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
-import static io.nop.xlang.XLangErrors.ARG_NAME;
-import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
-import static io.nop.xlang.XLangErrors.ARG_VALUE;
-import static io.nop.xlang.xdef.XDefConstants.XDEF_TYPE_PREFIX_MANDATORY;
-import static io.nop.xlang.xdef.XDefConstants.XDEF_TYPE_PREFIX_OPTIONS;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_EXPR;
 
 /**
  * 数据域 {@link XuiConstants#STD_DOMAIN_XUI_EXPR xui-expr}，
  * 用于限定属性值只能为字面量或 <code>${xxx}</code> 形式的变量引用
- * <p/>
- * 使用案例：
- * <pre>
- * xui:when="!xui-expr:boolean"
- * </pre>
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-05-29
@@ -61,7 +42,7 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
 
     @Override
     public String getName() {
-        return "xui-expr";
+        return STD_DOMAIN_XUI_EXPR;
     }
 
     @Override
@@ -69,58 +50,17 @@ public class XuiExprDomainHandler implements IStdDomainHandler {
         return true;
     }
 
-    /** 确定对应的模型属性类型，如 <code>XuiExpression&lt;String&gt;</code> */
     @Override
     public IGenericType getGenericType(boolean mandatory, String options) {
-        if (isBlank(options)) {
-            String value = (mandatory ? XDEF_TYPE_PREFIX_MANDATORY : "") + "xui-expr";
-
-            throw new NopException(ERR_DOMAIN_TYPE_INVALID_FORMAT).param(ARG_VALUE, value)
-                                                                  .param(ARG_ALLOWED_VALUES,
-                                                                         value
-                                                                         + XDEF_TYPE_PREFIX_OPTIONS
-                                                                         + StdDataType.STRING.getName());
-        }
-
-        if ("html-text".equals(options)) {
-            options = "string";
-        }
-
-        StdDataType type = StdDataType.fromStdName(options);
-        if (type == null) {
-            throw new NopException(ERR_DOMAIN_TYPE_INVALID_OPTIONS).param(ARG_NAME, "xui-expr")
-                                                                   .param(ARG_VALUE, options)
-                                                                   .param(ARG_OPTIONS,
-                                                                          Arrays.stream(StdDataType.values())
-                                                                                .map(StdDataType::getName)
-                                                                                .collect(Collectors.joining(", ")));
-        }
-
-        return JavaGenericTypeBuilder.buildParameterizedType(XuiExpression.class, type.getJavaClass());
+        return JavaGenericTypeBuilder.buildGenericType(XuiExpr.class);
     }
 
     @Override
     public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
-        if ("html-text".equals(options)) {
-            options = "string";
-            if (text != null) {
-                text = text.toString().trim()
-                           // 将 HTML 多行文本转为单行
-                           .replaceAll("(?m)^\\s+", "")
-                           // 还原空格
-                           .replaceAll("&nbsp;", " ");
-            }
+        if (text instanceof XuiExpr) {
+            return text;
         }
-
-        // TODO 对于 boolean、int、float 等原始类型，待解析的值必须为具体值或者纯表达式，而不能为模板表达式
-
-        StdDataType type = StdDataType.fromStdName(options);
-        ValueWithLocation value = ValueWithLocation.of(loc, text);
-
-        // Note: 对表达式所引用变量类型的检查只能在组件模型中进行，这里无法得到引用变量的信息
-        // TODO 向 cp 的 scope 注入当前组件对象？
-
-        return XuiExpression.create(type, value);
+        return XuiExpr.create(loc, text != null ? text.toString() : null);
     }
 
     @Override
