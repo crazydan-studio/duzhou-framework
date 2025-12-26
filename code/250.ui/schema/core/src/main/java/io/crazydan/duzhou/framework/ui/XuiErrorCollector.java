@@ -19,38 +19,42 @@
 
 package io.crazydan.duzhou.framework.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import io.nop.api.core.beans.ErrorBean;
-import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
-import io.nop.api.core.validate.IValidationErrorCollector;
-import jakarta.ws.rs.NotSupportedException;
+import io.nop.api.core.exceptions.NopRebuildException;
+import io.nop.api.core.validate.ListValidationErrorCollector;
+import io.nop.core.exceptions.ErrorMessageManager;
+
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_ERRORS_COLLECTED;
+import static io.nop.xlang.XLangErrors.ARG_DETAIL;
 
 /**
- * 收集 {@link NopException} 以便于格式化 {@link ErrorCode} 信息
+ * 收集错误信息，以便于一次性{@link #throwErrors() 抛出}
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-12-25
  */
-public class XuiErrorCollector implements IValidationErrorCollector {
-    private final List<Throwable> errors = new ArrayList<>();
-
-    @Override
-    public void addError(ErrorBean error) {
-        throw new NotSupportedException("Use addException() instead of!");
-    }
+public class XuiErrorCollector extends ListValidationErrorCollector {
 
     @Override
     public void addException(Throwable e) {
-        this.errors.add(e);
+        ErrorBean error = ErrorMessageManager.instance().buildErrorMessage(null, e, false, false, false);
+        addError(error);
     }
 
     public void throwErrors() {
-        if (this.errors.isEmpty()) {
+        if (isEmpty()) {
             return;
+        } else if (getErrors().size() == 1) {
+            throw NopRebuildException.rebuild(getErrors().get(0));
         }
-        // TODO 抛出收集到的异常信息
+
+        String msg = "0. " + getErrors().stream()
+                                        .map(NopRebuildException::rebuild)
+                                        .map(NopException::getMessage)
+                                        .collect(Collectors.joining("\n0. "));
+        throw new NopException(ERR_ERRORS_COLLECTED).param(ARG_DETAIL, msg);
     }
 }

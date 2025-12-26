@@ -27,6 +27,7 @@ import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
 import static io.nop.api.core.exceptions.ErrorCode.define;
 import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
 import static io.nop.xlang.XLangErrors.ARG_DEF_LOC;
+import static io.nop.xlang.XLangErrors.ARG_DETAIL;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
@@ -46,6 +47,10 @@ import static io.nop.xlang.XLangErrors.ARG_VAR_NAME;
  * @date 2025-05-09
  */
 public interface XuiErrors {
+    ErrorCode ERR_ERRORS_COLLECTED = //
+            define("duzhou.err.errors.collected", //
+                   "收集到的异常信息如下：\n{" + ARG_DETAIL + "}", ARG_DETAIL);
+
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
     ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = //
             define("duzhou.err.xui.domain-type.invalid-format",

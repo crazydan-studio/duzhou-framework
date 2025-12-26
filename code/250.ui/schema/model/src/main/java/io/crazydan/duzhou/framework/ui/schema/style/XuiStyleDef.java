@@ -4,7 +4,6 @@ import java.util.Map;
 
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleDef;
-import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.xlang.xdef.XDefTypeDecl;
 
@@ -26,9 +25,10 @@ public class XuiStyleDef extends _XuiStyleDef {
     public void checkTagName(IValidationErrorCollector collector) {
         String tagName = get$tag();
         if (!GenericStdDomainHandlers.isValidStyleName(tagName)) {
-            NopException e = //
-                    new NopException(ERR_STYLES_INVALID_TAG_NAME).source(this).param(ARG_TAG_NAME, tagName);
-            collector.addException(e);
+            collector.buildError(ERR_STYLES_INVALID_TAG_NAME)
+                     .loc(getLocation())
+                     .param(ARG_TAG_NAME, tagName)
+                     .addToCollector(collector);
         }
 
         // TODO 属性名必须为驼峰形式
@@ -41,21 +41,21 @@ public class XuiStyleDef extends _XuiStyleDef {
         getChildren().forEach((refTagName, ref) -> {
             // 在独立的样式定义集中，样式只能包含一层结构
             if (ref.hasChildren()) {
-                NopException e = //
-                        new NopException(ERR_STYLES_PATCH_NODE_NOT_ALLOWED).source(this)
-                                                                           .param(ARG_TAG1, tagName)
-                                                                           .param(ARG_TAG2, refTagName);
-                collector.addException(e);
+                collector.buildError(ERR_STYLES_PATCH_NODE_NOT_ALLOWED)
+                         .loc(getLocation())
+                         .param(ARG_TAG1, tagName)
+                         .param(ARG_TAG2, refTagName)
+                         .addToCollector(collector);
                 return;
             }
 
             XuiStyleDef refDef = styles.getStyleDef(refTagName);
             if (refDef == null) {
-                NopException e = //
-                        new NopException(ERR_STYLES_UNDEFINED_STYLE).source(ref)
-                                                                    .param(ARG_DEF_LOC, styles.getLocation())
-                                                                    .param(ARG_TAG_NAME, refTagName);
-                collector.addException(e);
+                collector.buildError(ERR_STYLES_UNDEFINED_STYLE)
+                         .loc(ref.getLocation())
+                         .param(ARG_DEF_LOC, styles.getLocation())
+                         .param(ARG_TAG_NAME, refTagName)
+                         .addToCollector(collector);
                 return;
             }
 

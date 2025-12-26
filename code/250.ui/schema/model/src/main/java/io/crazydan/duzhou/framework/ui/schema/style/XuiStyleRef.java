@@ -7,7 +7,6 @@ import java.util.Set;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiExpr;
 import io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles;
 import io.crazydan.duzhou.framework.ui.schema.style._gen._XuiStyleRef;
-import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.xlang.api.XLang;
 import io.nop.xlang.api.XLangCompileTool;
@@ -45,11 +44,11 @@ public class XuiStyleRef extends _XuiStyleRef {
 
         XuiStyleDef styleDef = styleDefs.getStyleDef(styleName);
         if (styleDef == null) {
-            NopException e = //
-                    new NopException(ERR_STYLES_UNDEFINED_STYLE).source(this)
-                                                                .param(ARG_DEF_LOC, styleDefs.getLocation())
-                                                                .param(ARG_TAG_NAME, styleName);
-            collector.addException(e);
+            collector.buildError(ERR_STYLES_UNDEFINED_STYLE)
+                     .loc(getLocation())
+                     .param(ARG_DEF_LOC, styleDefs.getLocation())
+                     .param(ARG_TAG_NAME, styleName)
+                     .addToCollector(collector);
         }
         return styleDef;
     }
@@ -91,23 +90,21 @@ public class XuiStyleRef extends _XuiStyleRef {
 
                 XDefTypeDecl propRefType = ownerStyleDef.getPropType(propRefName);
                 if (propRefType == null) {
-                    NopException e = //
-                            new NopException(ERR_STYLES_UNDEFINED_REF_VAR).source(this)
-                                                                          .param(ARG_DEF_LOC, ownerStyleDef)
-                                                                          .param(ARG_PROP_NAME, propRefName)
-                                                                          .param(ARG_REF_NAME, propRefName);
-                    collector.addException(e);
+                    collector.buildError(ERR_STYLES_UNDEFINED_REF_VAR)
+                             .loc(getLocation())
+                             .param(ARG_DEF_LOC, ownerStyleDef)
+                             .param(ARG_PROP_NAME, propRefName)
+                             .param(ARG_REF_NAME, propRefName)
+                             .addToCollector(collector);
                 } //
                 else if (propType != null && !propRefType.getStdDomain().equals(propType.getStdDomain())) {
-                    NopException e = //
-                            new NopException(ERR_STYLES_REF_VAR_NOT_MATCH_DEF_PROP).source(this)
-                                                                                   .param(ARG_PROP_NAME, propName)
-                                                                                   .param(ARG_VAR_DECL1,
-                                                                                          propType.getStdDomain())
-                                                                                   .param(ARG_VAR_NAME, propRefName)
-                                                                                   .param(ARG_VAR_DECL2,
-                                                                                          propRefType.getStdDomain());
-                    collector.addException(e);
+                    collector.buildError(ERR_STYLES_REF_VAR_NOT_MATCH_DEF_PROP)
+                             .loc(getLocation())
+                             .param(ARG_PROP_NAME, propName)
+                             .param(ARG_VAR_DECL1, propType.getStdDomain())
+                             .param(ARG_VAR_NAME, propRefName)
+                             .param(ARG_VAR_DECL2, propRefType.getStdDomain())
+                             .addToCollector(collector);
                 }
             }
         });
@@ -126,20 +123,20 @@ public class XuiStyleRef extends _XuiStyleRef {
 
         XDefTypeDecl propType = styleDef.getPropType(propName);
         if (propType == null) {
-            NopException e = //
-                    new NopException(ERR_STYLES_UNDEFINED_STYLE_PROP).source(this)
-                                                                     .param(ARG_DEF_LOC, styleDef)
-                                                                     .param(ARG_PROP_NAME, propName);
-            collector.addException(e);
+            collector.buildError(ERR_STYLES_UNDEFINED_STYLE_PROP)
+                     .loc(getLocation())
+                     .param(ARG_DEF_LOC, styleDef)
+                     .param(ARG_PROP_NAME, propName)
+                     .addToCollector(collector);
         }
         // Note: 表达式的实际值类型需在运行时确定，故而，仅对字面量做检查
         else if (!isPropExpr) {
             if (propValue.isEmpty()) {
                 if (propType.isMandatory()) {
-                    NopException e = //
-                            new NopException(ERR_STYLES_MANDATORY_STYLE_PROP).source(this)
-                                                                             .param(ARG_PROP_NAME, propName);
-                    collector.addException(e);
+                    collector.buildError(ERR_STYLES_MANDATORY_STYLE_PROP)
+                             .loc(getLocation())
+                             .param(ARG_PROP_NAME, propName)
+                             .addToCollector(collector);
                 }
             } else {
                 IStdDomainHandler handler = StdDomainRegistry.instance().getStdDomainHandler(propType.getStdDomain());

@@ -10,7 +10,6 @@ import io.crazydan.duzhou.framework.ui.XuiConstants;
 import io.crazydan.duzhou.framework.ui.domain.GenericStdDomainHandlers;
 import io.crazydan.duzhou.framework.ui.schema.component.XuiComponent;
 import io.crazydan.duzhou.framework.ui.schema.component.template._gen._XuiComponentTemplateNodeNamed;
-import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.commons.util.StringHelper;
 
@@ -156,10 +155,10 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
             String tagName = getTagName();
 
             if (!component.hasImport(tagName)) {
-                NopException e = //
-                        new NopException(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED).source(this)
-                                                                                  .param(ARG_TAG_NAME, tagName);
-                collector.addException(e);
+                collector.buildError(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED)
+                         .loc(getLocation())
+                         .param(ARG_TAG_NAME, tagName)
+                         .addToCollector(collector);
             }
         }
     }
@@ -173,9 +172,10 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
             String tagName = getTagName();
 
             if (!GenericStdDomainHandlers.isValidComponentName(tagName)) {
-                NopException e = //
-                        new NopException(ERR_COMPONENT_INVALID_TAG_NAME).source(this).param(ARG_TAG_NAME, tagName);
-                collector.addException(e);
+                collector.buildError(ERR_COMPONENT_INVALID_TAG_NAME)
+                         .loc(getLocation())
+                         .param(ARG_TAG_NAME, tagName)
+                         .addToCollector(collector);
             }
         }
     }
@@ -183,9 +183,7 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
     /** 在 {@code <slot/>} 标签内不能嵌套任意层级的 {@code <slot/>} */
     protected void checkSlotInSlot(IValidationErrorCollector collector) {
         if (isSlot() && hasSlotInDepth()) {
-            NopException e = //
-                    new NopException(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED).source(this);
-            collector.addException(e);
+            collector.buildError(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED).loc(getLocation()).addToCollector(collector);
         }
     }
 
@@ -204,25 +202,22 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
             if (slotName != null) {
                 if (slots.contains(slotName)) {
-                    NopException e = //
-                            new NopException(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED).source(this)
-                                                                                               .param(ARG_TAG_NAME,
-                                                                                                      getTagName())
-                                                                                               .param(ARG_NAME,
-                                                                                                      slotName);
-                    collector.addException(e);
+                    collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED)
+                             .loc(getLocation())
+                             .param(ARG_TAG_NAME, getTagName())
+                             .param(ARG_NAME, slotName)
+                             .addToCollector(collector);
                 } else {
                     slots.add(slotName);
                 }
             } //
             else if (xuiSlot != null) {
                 if (xuiSlots.contains(xuiSlot)) {
-                    NopException e = //
-                            new NopException(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED).source(this)
-                                                                                              .param(ARG_TAG_NAME,
-                                                                                                     getTagName())
-                                                                                              .param(ARG_NAME, xuiSlot);
-                    collector.addException(e);
+                    collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED)
+                             .loc(getLocation())
+                             .param(ARG_TAG_NAME, getTagName())
+                             .param(ARG_NAME, xuiSlot)
+                             .addToCollector(collector);
                 } else {
                     xuiSlots.add(xuiSlot);
                 }
