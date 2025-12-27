@@ -2,7 +2,7 @@ package io.crazydan.duzhou.framework.ui.schema.layout._gen;
 
 import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
 import io.nop.core.lang.json.IJsonHandler;
-import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNode;
+import io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody;
 import io.nop.commons.util.ClassHelper;
 
 
@@ -14,7 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutNode extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
+public abstract class _XuiLayoutNodeBody extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed {
     
     /**
      *  
@@ -88,20 +88,20 @@ public abstract class _XuiLayoutNode extends io.crazydan.duzhou.framework.ui.sch
         out.putNotNull("children",this.getChildren());
     }
 
-    public XuiLayoutNode cloneInstance(){
-        XuiLayoutNode instance = newInstance();
+    public XuiLayoutNodeBody cloneInstance(){
+        XuiLayoutNodeBody instance = newInstance();
         this.copyTo(instance);
         return instance;
     }
 
-    protected void copyTo(XuiLayoutNode instance){
+    protected void copyTo(XuiLayoutNodeBody instance){
         super.copyTo(instance);
         
         instance.setChildren(this.getChildren());
     }
 
-    protected XuiLayoutNode newInstance(){
-        return (XuiLayoutNode) ClassHelper.newInstance(getClass());
+    protected XuiLayoutNodeBody newInstance(){
+        return (XuiLayoutNodeBody) ClassHelper.newInstance(getClass());
     }
 }
  // resume CPD analysis - CPD-ON

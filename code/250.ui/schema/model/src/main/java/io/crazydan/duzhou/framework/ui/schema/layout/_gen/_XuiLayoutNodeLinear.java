@@ -10,25 +10,27 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/layout.xdef <p>
- * > 通过 `layer` 指定布局节点在 z 轴上的位置，从而实现不同布局层之间的堆叠效果。
+ * > 在行/列方向上进行布局控制，与
+ * > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+ * > 类似。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLayered {
     
     /**
-     *  子节点
+     *  布局命名节点
      * xml name: body
      * 
      */
-    private KeyedList<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> _children = KeyedList.emptyList();
+    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody _body ;
     
     /**
      *  布局类型
      * xml name: type
      * > 指定其内部子节点的布局方式
      */
-    private io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear.Type _type ;
+    private java.lang.String _type ;
     
     /**
      *  是否可换行
@@ -38,49 +40,23 @@ public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.
     private java.lang.Boolean _wrap  = false;
     
     /**
-     * 子节点
+     * 布局命名节点
      * xml name: body
      *  
      */
     
-    public java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> getChildren(){
-      return _children;
+    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody getBody(){
+      return _body;
     }
 
     
-    public void setChildren(java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> value){
+    public void setBody(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody value){
         checkAllowChange();
         
-        this._children = KeyedList.fromList(value, io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed::getXuiName);
+        this._body = value;
            
     }
 
-    
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed getChild(String name){
-        return this._children.getByKey(name);
-    }
-
-    public boolean hasChild(String name){
-        return this._children.containsKey(name);
-    }
-
-    public void addChild(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed item) {
-        checkAllowChange();
-        java.util.List<io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed> list = this.getChildren();
-        if (list == null || list.isEmpty()) {
-            list = new KeyedList<>(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed::getXuiName);
-            setChildren(list);
-        }
-        list.add(item);
-    }
-    
-    public java.util.Set<String> keySet_children(){
-        return this._children.keySet();
-    }
-
-    public boolean hasChildren(){
-        return !this._children.isEmpty();
-    }
     
     /**
      * 布局类型
@@ -88,12 +64,12 @@ public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.
      *  > 指定其内部子节点的布局方式
      */
     
-    public io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear.Type getType(){
+    public java.lang.String getType(){
       return _type;
     }
 
     
-    public void setType(io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear.Type value){
+    public void setType(java.lang.String value){
         checkAllowChange();
         
         this._type = value;
@@ -128,7 +104,7 @@ public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._children = io.nop.api.core.util.FreezeHelper.deepFreeze(this._children);
+           this._body = io.nop.api.core.util.FreezeHelper.deepFreeze(this._body);
             
         }
     }
@@ -137,7 +113,7 @@ public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("children",this.getChildren());
+        out.putNotNull("body",this.getBody());
         out.putNotNull("type",this.getType());
         out.putNotNull("wrap",this.getWrap());
     }
@@ -151,7 +127,7 @@ public abstract class _XuiLayoutNodeLinear extends io.crazydan.duzhou.framework.
     protected void copyTo(XuiLayoutNodeLinear instance){
         super.copyTo(instance);
         
-        instance.setChildren(this.getChildren());
+        instance.setBody(this.getBody());
         instance.setType(this.getType());
         instance.setWrap(this.getWrap());
     }

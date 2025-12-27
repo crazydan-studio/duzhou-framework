@@ -1,13 +1,13 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
-import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeLinearItem;
+import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeItem;
 import io.nop.commons.text.regex.IRegex;
 import io.nop.commons.text.regex.RegexHelper;
 
-public class XuiLayoutNodeLinearItem extends _XuiLayoutNodeLinearItem {
+public class XuiLayoutNodeItem extends _XuiLayoutNodeItem {
     private IRegex regex;
 
-    public XuiLayoutNodeLinearItem() {
+    public XuiLayoutNodeItem() {
     }
 
     /** 是否匹配该布局节点 */

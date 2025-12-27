@@ -1,0 +1,11 @@
+# Note: YAML 也支持差量
+label: 线性布局类型
+options:
+  - value: row
+    label: 横向布局
+    description: >
+      在行内布局节点，即，将节点挨个横向放置
+  - value: column
+    label: 纵向布局
+    description: >
+      在列内布局节点，即，将节点挨个纵向放置

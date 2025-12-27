@@ -1,15 +1,23 @@
 package io.crazydan.duzhou.framework.ui.schema.layout;
 
+import java.util.List;
+
 import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeLinear;
 
+import static io.crazydan.duzhou.framework.commons.ObjectHelper.ifNotNullThenGet;
+
 public class XuiLayoutNodeLinear extends _XuiLayoutNodeLinear {
-    public enum Type {
-        /** 在行内布局节点，即，将节点挨个横向放置 */
-        row,
-        /** 在列内布局节点，即，将节点挨个纵向放置 */
-        column,
-    }
 
     public XuiLayoutNodeLinear() {
+    }
+
+    @Override
+    public XuiLayoutNodeNamed getChild(String name) {
+        return ifNotNullThenGet(getBody(), (body) -> body.getChild(name));
+    }
+
+    @Override
+    public List<XuiLayoutNodeNamed> getChildren() {
+        return getBody() != null ? getBody().getChildren() : List.of();
     }
 }

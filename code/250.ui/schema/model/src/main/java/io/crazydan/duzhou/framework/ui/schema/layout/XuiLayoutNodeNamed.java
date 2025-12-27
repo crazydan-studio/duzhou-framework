@@ -16,6 +16,10 @@ public class XuiLayoutNodeNamed extends _XuiLayoutNodeNamed implements INeedInit
         getChildren().forEach(XuiLayoutNodeNamed::init);
     }
 
+    public XuiLayoutNodeNamed getChild(String name) {
+        return null;
+    }
+
     public List<XuiLayoutNodeNamed> getChildren() {
         return List.of();
     }

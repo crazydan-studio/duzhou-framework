@@ -22,31 +22,23 @@
 <!-- [布局控制]
 > - 布局将影响运行时的节点嵌套关系，从而保证布局的准确性；
 > - 一般可将布局根节点的高宽均设置为 `match-parent`，从而支持通过上层组件控制其实际尺寸；
-> - TODO 各类布局均可嵌套其他布局类型；
 -->
 <layout xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef" xmlns:xui="xui"
         x:schema="/nop/schema/xdef.xdef" xdef:check-ns="xui"
         xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.layout"
         xdef:name="XuiLayout"
-        xdef:ref="XuiLayoutNode"
+        xdef:ref="XuiLayoutNodeBody"
         xui:name="!~ns-name=xui-layout-root-node"
 >
 
-    <xdef:define xdef:name="XuiLayoutNode"
+    <xdef:define xdef:name="XuiLayoutNodeBody"
                  xdef:ref="XuiLayoutNodeNamed"
                  xdef:body-type="list" xdef:key-attr="xui:name"
                  xdef:bean-body-prop="children" xdef:bean-child-name="child"
                  xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
                  xdef:bean-sub-type-prop="$tag"
     >
-        <!-- [线性布局]
-        > 在行/列方向上进行布局控制，与
-        > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-        > 类似。
-        -->
-        <linear xdef:ref="XuiLayoutNodeLinear"
-                xui:name="!ns-name=default"
-        />
+        <linear xdef:ref="XuiLayoutNodeLinear" xui:name="!ns-name" />
 
         <!-- [条件选择] -->
         <choose xdef:name="XuiLayoutNodeStatementChoose"
@@ -65,19 +57,22 @@
                 > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
             -->
             <when xdef:name="XuiLayoutNodeStatementChooseWhen"
-                  xdef:ref="XuiLayoutNode"
+                  xdef:ref="XuiLayoutNodeBody"
                   xui:name="!ns-name"
                   test="string"
             />
             <!-- [缺省条件] -->
             <otherwise xdef:name="XuiLayoutNodeStatementChooseOtherwise"
-                       xdef:ref="XuiLayoutNode"
+                       xdef:ref="XuiLayoutNodeBody"
                        xui:name="!ns-name=otherwise"
             />
         </choose>
     </xdef:define>
 
     <!-- [线性布局节点]
+    > 在行/列方向上进行布局控制，与
+    > [css flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+    > 类似。
 
     @type [布局类型]
         > 指定其内部子节点的布局方式
@@ -86,40 +81,31 @@
     -->
     <xdef:define xdef:name="XuiLayoutNodeLinear"
                  xdef:ref="XuiLayoutNodeLayered"
-                 type="!enum:io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeLinear.Type"
+                 type="!dict:duzhou/ui/layout-linear-type"
                  wrap="boolean=false"
     >
-        <!-- [子节点] -->
-        <body xdef:body-type="list" xdef:key-attr="xui:name"
-              xdef:bean-prop="children" xdef:bean-child-name="child"
-              xdef:bean-body-type="List&lt;io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeNamed>"
-              xdef:bean-sub-type-prop="$tag"
-        >
-            <!-- [布局项]
-            > - 布局项本身也是**布局节点**，但其不可嵌套其他布局节点，其为布局树的终点；
-            > - 布局项所对应的是确定的**待布局目标**，比如组件；
-            > - 通过 `pattern` 其可以匹配多个待布局目标，且这些目标拥有相同的布局配置，
-            >   一般用于布局 `<for/>` 循环产生的节点；
-            > - 若 `pattern` 未匹配到任何待布局目标，则该布局项将被视为不存在，其不影响其他布局节点；
-            > - 若某个/某些待布局目标没有被任何布局项匹配，则其不参与布局，也不存在于 UI 树中；
-
-            @pattern [匹配规则]
-                > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
-            @keep-state [保持状态]
-                > 在不同布局层中引用相同布局项时，通过该配置指定是否保持其状态
-            -->
-            <item xdef:name="XuiLayoutNodeLinearItem"
-                  xdef:ref="XuiLayoutNodeStyled"
-                  xui:name="!ns-name"
-                  pattern="!regex" keep-state="boolean"
-            />
-
-            <linear xdef:ref="XuiLayoutNodeLinear"
-                    xui:name="!ns-name"
-                    layer="!~int"
-            />
+        <body xdef:ref="XuiLayoutNodeBody" xui:name="!~ns-name=xui-layout-node-body">
+            <item xdef:ref="XuiLayoutNodeItem" xui:name="!ns-name" />
         </body>
     </xdef:define>
+
+    <!-- [布局项]
+    > - 布局项本身也是**布局节点**，但其不可嵌套其他布局节点，其为布局树的终点；
+    > - 布局项所对应的是确定的**待布局目标**，比如组件；
+    > - 通过 `pattern` 其可以匹配多个待布局目标，且这些目标拥有相同的布局配置，
+    >   一般用于布局 `<for/>` 循环产生的节点；
+    > - 若 `pattern` 未匹配到任何待布局目标，则该布局项将被视为不存在，其不影响其他布局节点；
+    > - 若某个/某些待布局目标没有被任何布局项匹配，则其不参与布局，也不存在于 UI 树中；
+
+    @pattern [匹配规则]
+        > 用于匹配待布局目标唯一名字 `xui:name` 的**正则表达式**
+    @keep-state [保持状态]
+        > 在不同布局层中引用相同布局项时，通过该配置指定是否保持其状态
+    -->
+    <xdef:define xdef:name="XuiLayoutNodeItem"
+                 xdef:ref="XuiLayoutNodeStyled"
+                 pattern="!regex" keep-state="boolean"
+    />
 
     <!-- [布局命名节点]
 
