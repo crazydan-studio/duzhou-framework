@@ -18,23 +18,20 @@ public class XuiComponentStyles extends _XuiComponentStyles {
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    /** 重载接口，以支持从基础样式库中查找样式定义 */
+    /** 重载接口，以支持从基础视觉样式库中查找样式定义 */
     @Override
     public XuiStyleDef getStyleDef(String name) {
         // 先从当前定义集中查找
         XuiStyleDef def = super.getStyleDef(name);
+
         // 再从基础视觉样式库中查找
         if (def == null) {
             def = getViewStyles().getStyleDef(name);
         }
-        // 最后从基础布局样式库中查找
-        if (def == null) {
-            def = getLayoutStyles().getStyleDef(name);
-        }
-
         return def;
     }
 
+    /** 获取基础视觉样式库 */
     public XuiStyles getViewStyles() {
         if (this.viewStyles == null) {
             this.viewStyles = XuiHelper.loadStyles(getView());
@@ -42,6 +39,7 @@ public class XuiComponentStyles extends _XuiComponentStyles {
         return this.viewStyles;
     }
 
+    /** 获取基础布局样式库 */
     public XuiStyles getLayoutStyles() {
         if (this.layoutStyles == null) {
             this.layoutStyles = XuiHelper.loadStyles(getLayout());

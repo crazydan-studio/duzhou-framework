@@ -40,6 +40,15 @@ public class XuiStyleRef extends _XuiStyleRef {
         validate(styleDefs, ownerStyleDef, null, collector);
     }
 
+    /** @see #validate(XuiStyleDefs, XuiStyleDef, IValidationErrorCollector) */
+    public void validate(
+            XuiStyleDefs styleDefs, XuiStyleDef ownerStyleDef, String styleNamePrefix,
+            IValidationErrorCollector collector
+    ) {
+        XuiStyleDef styleDef = checkStyleDef(styleDefs, styleNamePrefix, collector);
+        checkStyleProps(ownerStyleDef, styleDef, collector);
+    }
+
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     /** @return 始终不返回 {@code null} */
@@ -49,14 +58,6 @@ public class XuiStyleRef extends _XuiStyleRef {
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-    protected void validate(
-            XuiStyleDefs styleDefs, XuiStyleDef ownerStyleDef, String styleNamePrefix,
-            IValidationErrorCollector collector
-    ) {
-        XuiStyleDef styleDef = checkStyleDef(styleDefs, styleNamePrefix, collector);
-        checkStyleProps(ownerStyleDef, styleDef, collector);
-    }
 
     /** 检查引用样式的定义是否存在 */
     protected XuiStyleDef checkStyleDef(

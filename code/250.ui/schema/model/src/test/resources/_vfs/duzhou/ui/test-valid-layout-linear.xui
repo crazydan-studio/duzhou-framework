@@ -24,7 +24,7 @@
 >
     <template>
         <layout>
-            <linear type="column">
+            <linear xui:name="layout-1" type="column">
                 <styles>
                     <root />
                 </styles>
@@ -103,6 +103,8 @@
                             </item>
                         </body>
                     </linear>
+
+                    <item xui:name="node-4" pattern="e1-.*" />
                 </body>
             </linear>
         </layout>

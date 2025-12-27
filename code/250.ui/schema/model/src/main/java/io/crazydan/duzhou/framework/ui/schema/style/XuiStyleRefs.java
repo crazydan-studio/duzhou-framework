@@ -10,10 +10,10 @@ public class XuiStyleRefs extends _XuiStyleRefs {
     }
 
     /** 检查当前组件引用样式的有效性 */
-    protected void validate(XuiComponentStyles styleDefs, String styleNamePrefix, IValidationErrorCollector collector) {
+    public void validate(XuiComponentStyles styleDefs, IValidationErrorCollector collector) {
         getChildren().forEach((name, ref) -> {
             // Note: 在样式引用集中不检查样式属性值的引用
-            ref.validate(styleDefs, null, styleNamePrefix, collector);
+            ref.validate(styleDefs, null, collector);
         });
     }
 }
