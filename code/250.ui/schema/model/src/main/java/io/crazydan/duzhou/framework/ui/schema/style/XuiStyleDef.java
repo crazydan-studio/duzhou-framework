@@ -8,6 +8,7 @@ import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.xlang.xdef.XDefTypeDecl;
 
 import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_MULTIPLE;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_INVALID_PROP_NAME;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_STYLES_INVALID_TAG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
@@ -36,6 +37,11 @@ public class XuiStyleDef extends _XuiStyleDef {
     /** 是否为复合样式 */
     public boolean isComposite() {
         return !isAtom();
+    }
+
+    /** 是否可重复引用 */
+    public boolean canBeMultiple() {
+        return Boolean.TRUE.equals(prop_get(ATTR_NAME_XUI_MULTIPLE));
     }
 
     /** @return 始终不返回 {@code null} */

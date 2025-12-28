@@ -64,7 +64,14 @@ public class XuiStyleRef extends _XuiStyleRef {
             XuiStyleDefs styleDefs, String styleNamePrefix, IValidationErrorCollector collector) {
         String styleName = (styleNamePrefix != null ? styleNamePrefix : "") + get$tag();
 
+        return checkStyleDefByName(styleDefs, styleName, collector);
+    }
+
+    /** 检查引用样式的定义是否存在 */
+    protected XuiStyleDef checkStyleDefByName(
+            XuiStyleDefs styleDefs, String styleName, IValidationErrorCollector collector) {
         XuiStyleDef styleDef = styleDefs.getStyleDef(styleName);
+
         if (styleDef == null) {
             collector.buildError(ERR_STYLES_UNDEFINED_STYLE)
                      .loc(getLocation())

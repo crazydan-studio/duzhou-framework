@@ -55,4 +55,7 @@ public interface XuiConstants {
     String ATTR_NAME_XUI_NAME = "xui:name";
     /** 用于记录在 Xpl &lt;for/> 标签中组件的原始 {@link #ATTR_NAME_XUI_NAME 唯一标识} */
     String ATTR_NAME_XUI_NAME_RAW = "raw-" + ATTR_NAME_XUI_NAME;
+    String ATTR_NAME_XUI_MULTIPLE = "xui:multiple";
+    String ATTR_NAME_XUI_ALIAS = "xui:alias";
+    String ATTR_NAME_XUI_SOURCE = "xui:source";
 }

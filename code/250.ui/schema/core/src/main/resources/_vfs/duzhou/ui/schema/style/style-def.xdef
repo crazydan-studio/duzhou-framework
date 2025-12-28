@@ -40,7 +40,7 @@
 
 @xui:multiple [是否可重复]
     > 一般的样式只能在同一层级出现一次，只有当前值为 `true` 时，才可以多次使用，
-    > 且在其实例上必须通过 `xui:alias` 指定该样式名，而标签名依然必须唯一，如
+    > 且在其对应的引用样式上必须通过 `xui:alias` 指定该样式名，而标签名依然必须唯一，如
     > ```xml
     > <styles>
     >   <box-shadow xui:multiple="true" .../>
@@ -93,7 +93,13 @@
         />
     </xdef:unknown-tag>
 
-    <!-- [组成节点基本结构] -->
+    <!-- [组成节点基本结构]
+
+    @xui:alias [节点样式别名]
+        > 对于可重复引用的样式（`xui:multiple="true"`），如 `box-shadow`，在需要重复引用时，
+        > 需要通过 `xui:alias` 指定该样式名，
+        > 从而在确保其所在标签的名字唯一性的前提下实现对可重复样式的多次引用
+    -->
     <xdef:define xdef:name="XuiStyleDefNodeBase"
                  xdef:ref="style-ref.xdef"
                  xui:alias="ns-name"

@@ -4,6 +4,10 @@ import io.crazydan.duzhou.framework.ui.schema.component.style._gen._XuiComponent
 import io.crazydan.duzhou.framework.ui.schema.style.XuiStyleDef;
 import io.crazydan.duzhou.framework.ui.schema.style.XuiStyles;
 import io.crazydan.duzhou.framework.ui.util.XuiHelper;
+import io.nop.api.core.validate.IValidationErrorCollector;
+
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_STYLES_LAYOUT_NOT_SPECIFIED;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_COMPONENT_STYLES_VIEW_NOT_SPECIFIED;
 
 public class XuiComponentStyles extends _XuiComponentStyles {
     public static final XuiComponentStyles EMPTY = new XuiComponentStyles() {{
@@ -14,6 +18,20 @@ public class XuiComponentStyles extends _XuiComponentStyles {
     private XuiStyles layoutStyles;
 
     public XuiComponentStyles() {
+    }
+
+    @Override
+    public void validate(IValidationErrorCollector collector) {
+        if (getView() == null) {
+            collector.buildError(ERR_COMPONENT_STYLES_VIEW_NOT_SPECIFIED) //
+                     .loc(getLocation()).addToCollector(collector);
+        }
+        if (getLayout() == null) {
+            collector.buildError(ERR_COMPONENT_STYLES_LAYOUT_NOT_SPECIFIED) //
+                     .loc(getLocation()).addToCollector(collector);
+        }
+
+        super.validate(collector);
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

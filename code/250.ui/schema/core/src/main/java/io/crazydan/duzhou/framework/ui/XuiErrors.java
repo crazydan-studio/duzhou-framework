@@ -25,12 +25,11 @@ import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_LEFT_PA
 import static io.crazydan.duzhou.framework.commons.TextScannerHelper.ARG_RIGHT_PAIR;
 import static io.crazydan.duzhou.framework.ui.XuiConstants.ATTR_NAME_XUI_SLOT;
 import static io.nop.api.core.exceptions.ErrorCode.define;
-import static io.nop.xlang.XLangErrors.ARG_ALLOWED_VALUES;
+import static io.nop.xlang.XLangErrors.ARG_ATTR_NAME;
 import static io.nop.xlang.XLangErrors.ARG_DEF_LOC;
 import static io.nop.xlang.XLangErrors.ARG_DETAIL;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 import static io.nop.xlang.XLangErrors.ARG_NAMES;
-import static io.nop.xlang.XLangErrors.ARG_OPTIONS;
 import static io.nop.xlang.XLangErrors.ARG_PATH;
 import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
 import static io.nop.xlang.XLangErrors.ARG_REF_NAME;
@@ -56,18 +55,6 @@ public interface XuiErrors {
                    "条件选择 when 未配置属性 test");
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
-    ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = //
-            define("duzhou.err.xui.domain-type.invalid-format",
-                   "无效的格式 [{" + ARG_VALUE + "}]，其格式必须为 [{" + ARG_ALLOWED_VALUES + "}] 形式",
-                   ARG_VALUE,
-                   ARG_ALLOWED_VALUES);
-    ErrorCode ERR_DOMAIN_TYPE_INVALID_OPTIONS = //
-            define("duzhou.err.xui.domain-type.invalid-options",
-                   "类型 [{" + ARG_NAME + "}] 的扩展选项 [{" + ARG_VALUE + "}] 不在选项列表 [{" + ARG_OPTIONS + "}] 中",
-                   ARG_NAME,
-                   ARG_VALUE,
-                   ARG_OPTIONS);
-
     ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = //
             define("duzhou.err.xui.domain-type.unknown-size",
                    "未识别的尺寸数据 [{" + ARG_VALUE + "}]，仅 [{" + ARG_NAMES + "}] 才是有效的尺寸单位",
@@ -146,6 +133,12 @@ public interface XuiErrors {
     ErrorCode ERR_COMPONENT_TAG_COMPONENT_LOADING_FAILED = //
             define("duzhou.err.ui.component.tag-component-loading-failed", //
                    "标签 <{" + ARG_TAG_NAME + "}/> 对应的组件 [{" + ARG_PATH + "}] 加载失败", ARG_TAG_NAME, ARG_PATH);
+    ErrorCode ERR_COMPONENT_STYLES_VIEW_NOT_SPECIFIED = //
+            define("duzhou.err.ui.component.styles-view-not-specified", //
+                   "组件样式 <styles/> 未配置属性 view");
+    ErrorCode ERR_COMPONENT_STYLES_LAYOUT_NOT_SPECIFIED = //
+            define("duzhou.err.ui.component.styles-layout-not-specified", //
+                   "组件样式 <styles/> 未配置属性 layout");
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 样式
@@ -175,6 +168,11 @@ public interface XuiErrors {
                    "未在样式库 {" + ARG_DEF_LOC + "} 或其基础库中定义样式 <{" + ARG_TAG_NAME + "}/>",
                    ARG_DEF_LOC,
                    ARG_TAG_NAME);
+    ErrorCode ERR_STYLES_NOT_ALLOWED_PROP = //
+            define("duzhou.err.ui.styles.not-allowed-prop",
+                   "在样式 <{" + ARG_TAG_NAME + "}/> 上不允许设置属性 {" + ARG_PROP_NAME + "}",
+                   ARG_TAG_NAME,
+                   ARG_PROP_NAME);
     ErrorCode ERR_STYLES_UNDEFINED_STYLE_PROP = //
             define("duzhou.err.ui.styles.undefined-style-prop",
                    "在样式 {" + ARG_DEF_LOC + "} 上未定义属性 {" + ARG_PROP_NAME + "}",
@@ -212,5 +210,17 @@ public interface XuiErrors {
                    ARG_VAR_DECL1,
                    ARG_VAR_NAME,
                    ARG_VAR_DECL2);
+    ErrorCode ERR_STYLES_ALIAS_STYLE_NOT_SUPPORT_MULTIPLE = //
+            define("duzhou.err.ui.styles.alias-style-not-support-multiple",
+                   "样式 <{"
+                   + ARG_TAG_NAME
+                   + "}/> 未设置 {"
+                   + ARG_PROP_NAME
+                   + "}=\"true\"，不能通过别名 {"
+                   + ARG_ATTR_NAME
+                   + "} 引用该样式",
+                   ARG_TAG_NAME,
+                   ARG_PROP_NAME,
+                   ARG_ATTR_NAME);
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
