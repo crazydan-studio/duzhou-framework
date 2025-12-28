@@ -115,7 +115,8 @@
     -->
     <xdef:define xdef:name="XuiComponentTemplateNodeStatementCond"
                  xdef:ref="XuiComponentTemplateNodeBody"
-                 test="string"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.statement.XuiStatementCond"
+                 test="!xui-expr"
     />
 
     <!-- [组成结构]
@@ -263,10 +264,11 @@
         -->
         <for xdef:name="XuiComponentTemplateNodeStatementFor"
              xdef:ref="XuiComponentTemplateNodeBody"
+             xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.statement.XuiStatementFor"
              xui:name="!ns-name"
              var="!var-name" index="var-name"
-             items="string"
-             begin="int" end="int" step="int=1"
+             items="xui-expr"
+             begin="xui-expr" end="xui-expr" step="xui-expr"
         />
 
         <!-- End: 条件/循环控制 -->

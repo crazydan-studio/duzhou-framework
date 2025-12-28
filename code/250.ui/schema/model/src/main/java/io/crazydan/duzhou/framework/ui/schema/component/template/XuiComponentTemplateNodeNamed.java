@@ -183,7 +183,8 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
     /** 在 {@code <slot/>} 标签内不能嵌套任意层级的 {@code <slot/>} */
     protected void checkSlotInSlot(IValidationErrorCollector collector) {
         if (isSlot() && hasSlotInDepth()) {
-            collector.buildError(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED).loc(getLocation()).addToCollector(collector);
+            collector.buildError(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED) //
+                     .loc(getLocation()).addToCollector(collector);
         }
     }
 

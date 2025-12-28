@@ -47,12 +47,25 @@ import static io.nop.xlang.XLangErrors.ARG_VAR_NAME;
  */
 public interface XuiErrors {
     ErrorCode ERR_ERRORS_COLLECTED = //
-            define("duzhou.err.errors.collected", //
+            define("duzhou.err.xui.errors-collected", //
                    "收集到的异常信息如下：\n{" + ARG_DETAIL + "}", ARG_DETAIL);
 
+    ErrorCode ERR_TAG_ATTR_REQUIRED = //
+            define("duzhou.err.xui.tag-attr-required", //
+                   "标签 <{" + ARG_TAG_NAME + "}/> 必须配置属性 {" + ARG_ATTR_NAME + "}", //
+                   ARG_TAG_NAME, ARG_ATTR_NAME);
     ErrorCode ERR_CHOOSE_WHEN_NO_TEST_SPECIFIED = //
             define("duzhou.err.xui.choose-when.no-test-specified", //
                    "条件选择 when 未配置属性 test");
+    ErrorCode ERR_FOR_ONLY_ITEMS_OR_BEGIN_END_ALLOWED = //
+            define("duzhou.err.xui.for-only-items-or-begin-end-allowed", //
+                   "for 循环中的属性 items 或 begin+end 只能二选一，不能同时配置");
+    ErrorCode ERR_FOR_AT_LEAST_ITEMS_OR_BEGIN_END_ALLOWED = //
+            define("duzhou.err.xui.for-at-least-items-or-begin-end-allowed", //
+                   "for 循环中的属性 items 或 begin+end 必须配置其中一个");
+    ErrorCode ERR_FOR_BEGIN_END_SHOULD_BE_PAIRED = //
+            define("duzhou.err.xui.for-begin-end-should-be-paired", //
+                   "for 循环中的属性 begin 与 end 必须成对配置");
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
     ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = //

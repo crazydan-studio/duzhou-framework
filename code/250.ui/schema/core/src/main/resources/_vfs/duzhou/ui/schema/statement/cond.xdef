@@ -27,5 +27,5 @@
 -->
 <cond xmlns:x="/nop/schema/xdsl.xdef"
       x:schema="/nop/schema/xdef.xdef"
-      test="string"
+      test="!xui-expr"
 />

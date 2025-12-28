@@ -14,7 +14,7 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiLayoutNodeStatementChooseWhen extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody {
+public abstract class _XuiLayoutNodeStatementChooseWhen extends io.crazydan.duzhou.framework.ui.schema.layout.XuiLayoutNodeBody implements io.crazydan.duzhou.framework.ui.statement.XuiStatementCond{
     
     /**
      *  条件表达式

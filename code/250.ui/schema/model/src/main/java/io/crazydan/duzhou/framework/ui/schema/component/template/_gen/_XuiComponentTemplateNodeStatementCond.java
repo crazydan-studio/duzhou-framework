@@ -14,14 +14,14 @@ import io.nop.commons.util.ClassHelper;
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
-public abstract class _XuiComponentTemplateNodeStatementCond extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeBody {
+public abstract class _XuiComponentTemplateNodeStatementCond extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeBody implements io.crazydan.duzhou.framework.ui.statement.XuiStatementCond{
     
     /**
      *  条件表达式
      * xml name: test
      * > 如 `${name != null}`
      */
-    private java.lang.String _test ;
+    private io.crazydan.duzhou.framework.ui.domain.type.XuiExpr _test ;
     
     /**
      * 条件表达式
@@ -29,12 +29,12 @@ public abstract class _XuiComponentTemplateNodeStatementCond extends io.crazydan
      *  > 如 `${name != null}`
      */
     
-    public java.lang.String getTest(){
+    public io.crazydan.duzhou.framework.ui.domain.type.XuiExpr getTest(){
       return _test;
     }
 
     
-    public void setTest(java.lang.String value){
+    public void setTest(io.crazydan.duzhou.framework.ui.domain.type.XuiExpr value){
         checkAllowChange();
         
         this._test = value;

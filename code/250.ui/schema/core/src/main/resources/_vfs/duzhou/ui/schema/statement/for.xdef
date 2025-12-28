@@ -40,6 +40,6 @@
 <for xmlns:x="/nop/schema/xdsl.xdef"
      x:schema="/nop/schema/xdef.xdef"
      var="!var-name" index="var-name"
-     items="string"
-     begin="int" end="int" step="int=1"
+     items="xui-expr"
+     begin="xui-expr" end="xui-expr" step="xui-expr"
 />

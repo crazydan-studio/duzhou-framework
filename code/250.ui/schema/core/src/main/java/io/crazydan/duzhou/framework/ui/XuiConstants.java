@@ -51,6 +51,11 @@ public interface XuiConstants {
     String TAG_NAME_OTHERWISE = "otherwise";
     String TAG_NAME_LAYOUT_STYLE_PREFIX = "layout__";
 
+    String ATTR_NAME_NAME = "name";
+    String ATTR_NAME_VAR = "var";
+    String ATTR_NAME_ITEMS = "items";
+    String ATTR_NAME_BEGIN = "begin";
+    String ATTR_NAME_END = "end";
     String ATTR_NAME_XUI_SLOT = "xui:slot";
     String ATTR_NAME_XUI_NAME = "xui:name";
     /** 用于记录在 Xpl &lt;for/> 标签中组件的原始 {@link #ATTR_NAME_XUI_NAME 唯一标识} */

@@ -58,6 +58,7 @@
             -->
             <when xdef:name="XuiLayoutNodeStatementChooseWhen"
                   xdef:ref="XuiLayoutNodeBody"
+                  xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.statement.XuiStatementCond"
                   xui:name="!ns-name"
                   test="!xui-expr"
             />
