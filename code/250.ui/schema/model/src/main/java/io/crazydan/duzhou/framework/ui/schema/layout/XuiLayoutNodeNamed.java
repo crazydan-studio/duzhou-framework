@@ -2,19 +2,23 @@ package io.crazydan.duzhou.framework.ui.schema.layout;
 
 import java.util.List;
 
+import io.crazydan.duzhou.framework.ui.schema.component.style.XuiComponentStyles;
 import io.crazydan.duzhou.framework.ui.schema.layout._gen._XuiLayoutNodeNamed;
-import io.nop.api.core.util.INeedInit;
+import io.nop.api.core.validate.IValidationErrorCollector;
 
-public class XuiLayoutNodeNamed extends _XuiLayoutNodeNamed implements INeedInit {
+public class XuiLayoutNodeNamed extends _XuiLayoutNodeNamed {
 
     public XuiLayoutNodeNamed() {
     }
 
-    /** Note: init 函数将在 {@link #freeze} 之前被调用 */
-    @Override
-    public void init() {
-        getChildren().forEach(XuiLayoutNodeNamed::init);
+    /** 检查组件布局的有效性 */
+    public void validate(XuiComponentStyles styleDefs, IValidationErrorCollector collector) {
+        getChildren().forEach((child) -> {
+            child.validate(styleDefs, collector);
+        });
     }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     public XuiLayoutNodeNamed getChild(String name) {
         return null;

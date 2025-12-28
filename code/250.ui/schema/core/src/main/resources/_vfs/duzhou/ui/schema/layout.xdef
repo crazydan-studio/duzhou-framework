@@ -59,7 +59,7 @@
             <when xdef:name="XuiLayoutNodeStatementChooseWhen"
                   xdef:ref="XuiLayoutNodeBody"
                   xui:name="!ns-name"
-                  test="string"
+                  test="!xui-expr"
             />
             <!-- [缺省条件] -->
             <otherwise xdef:name="XuiLayoutNodeStatementChooseOtherwise"

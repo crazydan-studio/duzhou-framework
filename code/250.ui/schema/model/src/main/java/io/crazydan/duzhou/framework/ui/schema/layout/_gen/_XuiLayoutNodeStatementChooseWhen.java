@@ -21,7 +21,7 @@ public abstract class _XuiLayoutNodeStatementChooseWhen extends io.crazydan.duzh
      * xml name: test
      * > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
      */
-    private java.lang.String _test ;
+    private io.crazydan.duzhou.framework.ui.domain.type.XuiExpr _test ;
     
     /**
      * 条件表达式
@@ -29,12 +29,12 @@ public abstract class _XuiLayoutNodeStatementChooseWhen extends io.crazydan.duzh
      *  > 如 `${name != null}`。若其结果为 `true` 则获得其子节点
      */
     
-    public java.lang.String getTest(){
+    public io.crazydan.duzhou.framework.ui.domain.type.XuiExpr getTest(){
       return _test;
     }
 
     
-    public void setTest(java.lang.String value){
+    public void setTest(io.crazydan.duzhou.framework.ui.domain.type.XuiExpr value){
         checkAllowChange();
         
         this._test = value;

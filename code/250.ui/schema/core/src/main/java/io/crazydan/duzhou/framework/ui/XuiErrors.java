@@ -51,6 +51,10 @@ public interface XuiErrors {
             define("duzhou.err.errors.collected", //
                    "收集到的异常信息如下：\n{" + ARG_DETAIL + "}", ARG_DETAIL);
 
+    ErrorCode ERR_CHOOSE_WHEN_NO_TEST_SPECIFIED = //
+            define("duzhou.err.xui.choose-when.no-test-specified", //
+                   "条件选择 when 未配置属性 test");
+
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
     ErrorCode ERR_DOMAIN_TYPE_INVALID_FORMAT = //
             define("duzhou.err.xui.domain-type.invalid-format",
@@ -72,8 +76,15 @@ public interface XuiErrors {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<< 布局
+    ErrorCode ERR_LAYOUT_NO_ITEM_PATTERN_SPECIFIED = //
+            define("duzhou.err.xui.layout.no-item-pattern-specified", //
+                   "布局项未配置属性 pattern");
+    ErrorCode ERR_LAYOUT_NO_LINEAR_TYPE_SPECIFIED = //
+            define("duzhou.err.xui.layout.no-linear-type-specified", //
+                   "线性布局未配置属性 type");
+
     ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_LINEAR_MODE = //
-            define("duzhou.err.xui.layout-linear.unknown-linear-mode",
+            define("duzhou.err.xui.layout.no-linear-type-specified",
                    "未知的线性布局模式 [{" + ARG_VALUE + "}]",
                    ARG_VALUE);
     ErrorCode ERR_LAYOUT_LINEAR_UNKNOWN_MARK = //
