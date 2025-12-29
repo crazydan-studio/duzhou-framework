@@ -18,8 +18,3 @@ options:
     label: 对齐模式
     description: >
       其可选值为：start、center、end
-
-  - value: xui-border-style
-    label: 边框样式
-    description: >
-      其可选值为：solid、dot、dash

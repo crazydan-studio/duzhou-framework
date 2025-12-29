@@ -34,7 +34,8 @@
     @style [样式]
     -->
     <border-base x:abstract="true"
-                 color="xui-color" size="xui-size" style="xui-border-style"
+                 color="xui-color" size="xui-size"
+                 style="dict:duzhou/ui/style-border-style"
     />
     <!-- [左边框] -->
     <border-left x:prototype="border-base" />

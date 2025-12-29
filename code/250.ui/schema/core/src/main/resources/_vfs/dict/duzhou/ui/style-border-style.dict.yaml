@@ -1,0 +1,9 @@
+# Note: YAML 也支持差量
+label: 边框样式
+options:
+  - value: solid
+    label: 实线
+  - value: dot
+    label: 点线
+  - value: dash
+    label: 破折线
