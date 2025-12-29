@@ -42,26 +42,8 @@
     <xdef:define xdef:name="XuiComponentTemplateNode"
                  xdef:ref="XuiComponentTemplateNodeNamed"
     >
-        <!-- [布局控制]
-        > 根据 `xui:name` 对组件结构树中的直接**部件**节点（含 `<slot/>` 和 `<native/>`）进行布局控制。
-        > 对于 `<body/>` 下的非直接部件节点，则需要在其所在的父节点中单独通过 `<layout/>` 进行控制，
-        > 也就是布局控制**不能跨层级**作用于部件。
-        >
-        > 没有在布局中显式控制的组件将不会被布局，也就不会呈现出来。
-        >
-        > 缺省将按照部件的声明顺序排列，并由 UI Vendor 做默认布局。
-        -->
-        <layout xdef:name="XuiComponentTemplateNodeLayout"
-                xdef:ref="../layout.xdef"
-        />
-
-        <!-- [部件样式]
-        > 引用在当前组件 `<styles/>` 中所定义的**部件样式**，其子节点标签名必须与已定义的样式名一致，
-        > 且只能配置在该样式上所声明的属性。
-        -->
-        <styles xdef:name="XuiComponentTemplateNodeStyles"
-                xdef:ref="../style/style-refs.xdef"
-        />
+        <layout xdef:ref="XuiComponentTemplateNodeLayout" />
+        <styles xdef:ref="XuiComponentTemplateNodeStyles" />
 
         <!-- [消息派发]
         > 监听部件上的指定事件，并在事件触发时派发指定的消息。
@@ -85,39 +67,6 @@
               xui:name="!~ns-name=xui-template-node-body"
         />
     </xdef:define>
-
-    <!-- [命名节点]
-
-    @xui:name [唯一标识]
-        > 在父节点内，该标识必须唯一
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeNamed"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
-                 xdef:bean-tag-prop="$tag"
-                 xui:name="!ns-name"
-    />
-
-    <!-- [支持插入插槽的节点]
-
-    @xui:slot [插槽名]
-        > 指定对应的插入点位置。注意，在同一层级内不能定义多个插槽名相同的组件节点
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
-                 xdef:ref="XuiComponentTemplateNode"
-                 xui:slot="ns-name"
-    />
-
-    <!-- [条件判断节点]
-    > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
-
-    @test [条件表达式]
-        > 如 `${name != null}`
-    -->
-    <xdef:define xdef:name="XuiComponentTemplateNodeStatementCond"
-                 xdef:ref="XuiComponentTemplateNodeBody"
-                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.statement.XuiStatementCond"
-                 test="!xui-expr"
-    />
 
     <!-- [组成结构]
     > 由导入的外部组件实例构成的结构树，其仅包含控制节点和组件节点。
@@ -178,8 +127,7 @@
         />
 
         <!-- [文本]
-        > 用于在组件内放置文本内容，与文本相关的样式、事件等均由上层组件负责处理，
-        > 其自身仅负责承载非结构化的文本字符串。
+        > 用于在组件内放置文本内容。
 
         @xui:slot [插槽名]
             > 指定对应的插入点位置。注意，在同一层级内不能定义多个插槽名相同的组件节点
@@ -191,10 +139,10 @@
               xdef:ref="XuiComponentTemplateNodeNamed"
               xui:name="!ns-name" xui:slot="ns-name"
               as-xml="boolean"
-              xdef:unknown-attr="any" xdef:bean-unknown-attrs-prop="props"
-              xdef:bean-body-prop="value"
         >
-            string
+            <styles xdef:ref="XuiComponentTemplateNodeStyles" />
+
+            <body xdef:bean-prop="value">string</body>
         </text>
 
         <!-- [组件节点]
@@ -273,4 +221,57 @@
 
         <!-- End: 条件/循环控制 -->
     </xdef:define>
+
+    <!-- [命名节点]
+
+    @xui:name [唯一标识]
+        > 在父节点内，该标识必须唯一
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeNamed"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.XuiNamed"
+                 xdef:bean-tag-prop="$tag"
+                 xui:name="!ns-name"
+    />
+
+    <!-- [支持插入插槽的节点]
+
+    @xui:slot [插槽名]
+        > 指定对应的插入点位置。注意，在同一层级内不能定义多个插槽名相同的组件节点
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeSlottable"
+                 xdef:ref="XuiComponentTemplateNode"
+                 xui:slot="ns-name"
+    />
+
+    <!-- [条件判断节点]
+    > 在 `test` 表达式的结果为 `true` 时，获得其子节点。
+
+    @test [条件表达式]
+        > 如 `${name != null}`
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeStatementCond"
+                 xdef:ref="XuiComponentTemplateNodeBody"
+                 xdef:bean-implements-types="io.crazydan.duzhou.framework.ui.statement.XuiStatementCond"
+                 test="!xui-expr"
+    />
+
+    <!-- [部件样式]
+    > 引用在当前组件 `<styles/>` 中所定义的**部件样式**，其子节点标签名必须与已定义的样式名一致，
+    > 且只能配置在该样式上所声明的属性。
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeStyles"
+                 xdef:ref="../style/style-refs.xdef"
+    />
+    <!-- [布局控制]
+    > 根据 `xui:name` 对组件结构树中的直接**部件**节点（含 `<slot/>` 和 `<native/>`）进行布局控制。
+    > 对于 `<body/>` 下的非直接部件节点，则需要在其所在的父节点中单独通过 `<layout/>` 进行控制，
+    > 也就是布局控制**不能跨层级**作用于部件。
+    >
+    > 没有在布局中显式控制的组件将不会被布局，也就不会呈现出来。
+    >
+    > 缺省将按照部件的声明顺序排列，并由 UI Vendor 做默认布局。
+    -->
+    <xdef:define xdef:name="XuiComponentTemplateNodeLayout"
+                 xdef:ref="../layout.xdef"
+    />
 </template>

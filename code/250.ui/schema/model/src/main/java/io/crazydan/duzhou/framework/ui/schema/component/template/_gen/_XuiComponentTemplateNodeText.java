@@ -10,8 +10,7 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 用于在组件内放置文本内容，与文本相关的样式、事件等均由上层组件负责处理，
- * > 其自身仅负责承载非结构化的文本字符串。
+ * > 用于在组件内放置文本内容。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
@@ -26,15 +25,16 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     private java.lang.Boolean _asXml ;
     
     /**
-     *  
-     * xml name: 
-     * 
+     *  部件样式
+     * xml name: styles
+     * > 引用在当前组件 `<styles/>` 中所定义的**部件样式**，其子节点标签名必须与已定义的样式名一致，
+     * > 且只能配置在该样式上所声明的属性。
      */
-    private java.util.Map<java.lang.String,java.lang.Object> _props ;
+    private io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStyles _styles ;
     
     /**
      *  
-     * xml name: 
+     * xml name: body
      * 
      */
     private java.lang.String _value ;
@@ -60,31 +60,28 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
 
     
     /**
-     * 
-     * xml name: 
-     *  
+     * 部件样式
+     * xml name: styles
+     *  > 引用在当前组件 `<styles/>` 中所定义的**部件样式**，其子节点标签名必须与已定义的样式名一致，
+     * > 且只能配置在该样式上所声明的属性。
      */
     
-    public java.util.Map<java.lang.String,java.lang.Object> getProps(){
-      return _props;
+    public io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStyles getStyles(){
+      return _styles;
     }
 
     
-    public void setProps(java.util.Map<java.lang.String,java.lang.Object> value){
+    public void setStyles(io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeStyles value){
         checkAllowChange();
         
-        this._props = value;
+        this._styles = value;
            
     }
 
     
-    public boolean hasProps(){
-        return this._props != null && !this._props.isEmpty();
-    }
-    
     /**
      * 
-     * xml name: 
+     * xml name: body
      *  
      */
     
@@ -109,7 +106,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
 
         if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
         
-           this._props = io.nop.api.core.util.FreezeHelper.deepFreeze(this._props);
+           this._styles = io.nop.api.core.util.FreezeHelper.deepFreeze(this._styles);
             
         }
     }
@@ -119,7 +116,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
         super.outputJson(out);
         
         out.putNotNull("asXml",this.getAsXml());
-        out.putNotNull("props",this.getProps());
+        out.putNotNull("styles",this.getStyles());
         out.putNotNull("value",this.getValue());
     }
 
@@ -133,7 +130,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
         super.copyTo(instance);
         
         instance.setAsXml(this.getAsXml());
-        instance.setProps(this.getProps());
+        instance.setStyles(this.getStyles());
         instance.setValue(this.getValue());
     }
 

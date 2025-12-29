@@ -24,7 +24,7 @@
 >
     <template>
         <layout>
-            <linear xui:name="layout-1" type="column">
+            <linear xui:name="layer-1" type="column">
                 <styles>
                     <root />
                 </styles>
