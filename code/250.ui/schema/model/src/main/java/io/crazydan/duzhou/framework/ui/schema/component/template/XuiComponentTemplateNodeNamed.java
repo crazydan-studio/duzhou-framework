@@ -29,16 +29,14 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
     /** 校验当前节点及其子节点的有效性 */
     public void validate(XuiComponent component, IValidationErrorCollector collector) {
+        validate(component, false, collector);
+    }
+
+    protected void validate(XuiComponent component, boolean inSlot, IValidationErrorCollector collector) {
         checkTagComponentName(collector);
         checkTagComponentImported(component, collector);
 
-        // TODO 争取在遍历子节点的过程中完成 slot 检查
-        checkMultipleSlots(collector);
-        checkSlotInSlot(collector);
-
-        getChildren().forEach(child -> {
-            child.validate(component, collector);
-        });
+        validateChildren(component, inSlot, collector);
     }
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -68,16 +66,6 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
         return this instanceof XuiComponentTemplateNodeSlottable || isText();
     }
 
-    /** 是否内嵌 {@code <slot/>} 标签（不限层级） */
-    public boolean hasSlotInDepth() {
-        for (XuiComponentTemplateNodeNamed child : getChildren()) {
-            if (child.isSlot() || child.hasSlotInDepth()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     /** 获取当前节点的标签名 */
@@ -85,9 +73,9 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
         return get$tag();
     }
 
-    /** 获取当前节点的标签组件名，仅针对{@link #isText() 文本组件}和{@link #isCustom() 自定义组件} */
+    /** 获取当前节点的标签组件名，仅针对{@link #isCustom() 自定义组件}，其与组件均返回 {@code null} */
     public String getTagComponentName() {
-        return isText() || isCustom() ? getTagName() : null;
+        return isCustom() ? getTagName() : null;
     }
 
     /** 获取插槽节点的插槽名，仅针对 {@link #isSlot()} 为 {@code true} 的节点 */
@@ -149,17 +137,38 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    /** 检查{@link #isText() 文本组件}和{@link #isCustom() 自定义组件}是否已显式通过 {@code <import/>} 导入 */
-    protected void checkTagComponentImported(XuiComponent component, IValidationErrorCollector collector) {
-        if (isText() || isCustom()) {
-            String tagName = getTagName();
+    /** 校验子节点的有效性 */
+    protected void validateChildren(XuiComponent component, boolean inSlot, IValidationErrorCollector collector) {
+        // <slot/> 不允许嵌套
+        if (inSlot && isSlot()) {
+            collector.buildError(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED) //
+                     .loc(getLocation()).addToCollector(collector);
+            return; // 被嵌套的 <slot/> 整体无效，无需继续校验
+        }
 
-            if (!component.hasImport(tagName)) {
-                collector.buildError(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED)
-                         .loc(getLocation())
-                         .param(ARG_TAG_NAME, tagName)
-                         .addToCollector(collector);
-            }
+        List<String> slots = new ArrayList<>(getChildren().size());
+        List<String> slottables = new ArrayList<>(getChildren().size());
+
+        getChildren().forEach(child -> {
+            // slot/xui:slot 不允许同名
+            checkMultipleSlots(child, slots, slottables, collector);
+
+            child.validate(component, inSlot || isSlot(), collector);
+        });
+    }
+
+    /** 检查{@link #isCustom() 自定义组件}是否已显式通过 {@code <import/>} 导入 */
+    protected void checkTagComponentImported(XuiComponent component, IValidationErrorCollector collector) {
+        if (!isCustom()) {
+            return;
+        }
+
+        String tagName = getTagName();
+        if (!component.hasImport(tagName)) {
+            collector.buildError(ERR_COMPONENT_TAG_COMPONENT_NOT_IMPORTED)
+                     .loc(getLocation())
+                     .param(ARG_TAG_NAME, tagName)
+                     .addToCollector(collector);
         }
     }
 
@@ -168,60 +177,48 @@ public class XuiComponentTemplateNodeNamed extends _XuiComponentTemplateNodeName
      * {@link GenericStdDomainHandlers#isValidComponentName} 规范
      */
     protected void checkTagComponentName(IValidationErrorCollector collector) {
-        if (isCustom()) {
-            String tagName = getTagName();
+        if (!isCustom()) {
+            return;
+        }
 
-            if (!GenericStdDomainHandlers.isValidComponentName(tagName)) {
-                collector.buildError(ERR_COMPONENT_INVALID_TAG_NAME)
+        String tagName = getTagName();
+        if (!GenericStdDomainHandlers.isValidComponentName(tagName)) {
+            collector.buildError(ERR_COMPONENT_INVALID_TAG_NAME)
+                     .loc(getLocation())
+                     .param(ARG_TAG_NAME, tagName)
+                     .addToCollector(collector);
+        }
+    }
+
+    /** 在当前节点中不能定义多个同名的 {@code <slot/>} 或 {@code xui:slot} */
+    protected void checkMultipleSlots(
+            XuiComponentTemplateNodeNamed child, //
+            List<String> slots, List<String> slottables, //
+            IValidationErrorCollector collector
+    ) {
+        String slot = child.getSlotName();
+        String slottable = child.getXuiSlot();
+
+        if (slot != null) {
+            if (slots.contains(slot)) {
+                collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED)
                          .loc(getLocation())
-                         .param(ARG_TAG_NAME, tagName)
+                         .param(ARG_TAG_NAME, getTagName())
+                         .param(ARG_NAME, slot)
                          .addToCollector(collector);
+            } else {
+                slots.add(slot);
             }
-        }
-    }
-
-    /** 在 {@code <slot/>} 标签内不能嵌套任意层级的 {@code <slot/>} */
-    protected void checkSlotInSlot(IValidationErrorCollector collector) {
-        if (isSlot() && hasSlotInDepth()) {
-            collector.buildError(ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED) //
-                     .loc(getLocation()).addToCollector(collector);
-        }
-    }
-
-    /**
-     * 在当前节点中不能定义多个同名的 {@code <slot/>} 或 {@code xui:slot}
-     * <p/>
-     * 仅检查直接子节点，不做深度遍历
-     */
-    protected void checkMultipleSlots(IValidationErrorCollector collector) {
-        List<String> slots = new ArrayList<>(getChildren().size());
-        List<String> xuiSlots = new ArrayList<>(getChildren().size());
-
-        for (XuiComponentTemplateNodeNamed child : getChildren()) {
-            String xuiSlot = child.getXuiSlot();
-            String slotName = child.getSlotName();
-
-            if (slotName != null) {
-                if (slots.contains(slotName)) {
-                    collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_NAME_SLOT_NOT_ALLOWED)
-                             .loc(getLocation())
-                             .param(ARG_TAG_NAME, getTagName())
-                             .param(ARG_NAME, slotName)
-                             .addToCollector(collector);
-                } else {
-                    slots.add(slotName);
-                }
-            } //
-            else if (xuiSlot != null) {
-                if (xuiSlots.contains(xuiSlot)) {
-                    collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED)
-                             .loc(getLocation())
-                             .param(ARG_TAG_NAME, getTagName())
-                             .param(ARG_NAME, xuiSlot)
-                             .addToCollector(collector);
-                } else {
-                    xuiSlots.add(xuiSlot);
-                }
+        } //
+        else if (slottable != null) {
+            if (slottables.contains(slottable)) {
+                collector.buildError(ERR_COMPONENT_MULTIPLE_SAME_XUI_SLOT_NOT_ALLOWED)
+                         .loc(getLocation())
+                         .param(ARG_TAG_NAME, getTagName())
+                         .param(ARG_NAME, slottable)
+                         .addToCollector(collector);
+            } else {
+                slottables.add(slottable);
             }
         }
     }

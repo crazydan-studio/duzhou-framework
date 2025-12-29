@@ -10,20 +10,20 @@ import io.nop.commons.util.ClassHelper;
 // tell cpd to start ignoring code - CPD-OFF
 /**
  * generate from /duzhou/ui/schema/component/template.xdef <p>
- * > 只包含文本内容的组件。在该组件内部只能内嵌文本，不能嵌入组件节点。
- * > 本框架只是在形式上约束其结构，并不提供具体实现，
- * > 因此，其与其他组件一样，必须通过 `<import/>` 显式导入封装了原生组件的 `<Text/>` 组件。
+ * > 用于在组件内放置文本内容，与文本相关的样式、事件等均由上层组件负责处理，
+ * > 其自身仅负责承载非结构化的文本字符串。
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
     "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
 public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.framework.ui.schema.component.template.XuiComponentTemplateNodeNamed {
     
     /**
-     *  是否为 HTML 片段
-     * xml name: as-html
-     * > 若为 `true`，则将其文本视为 HTML 片段，对其内容不做转义，也不处理 XSS 攻击
+     *  是否为 XML 片段
+     * xml name: as-xml
+     * > 若为 `true`，则将其文本视为 XML 片段，在渲染时对其内容不做转义，
+     * > 在 Web 运行环境下需自行处理 XSS 攻击防护
      */
-    private java.lang.Boolean _asHtml ;
+    private java.lang.Boolean _asXml ;
     
     /**
      *  
@@ -40,20 +40,21 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     private java.lang.String _value ;
     
     /**
-     * 是否为 HTML 片段
-     * xml name: as-html
-     *  > 若为 `true`，则将其文本视为 HTML 片段，对其内容不做转义，也不处理 XSS 攻击
+     * 是否为 XML 片段
+     * xml name: as-xml
+     *  > 若为 `true`，则将其文本视为 XML 片段，在渲染时对其内容不做转义，
+     * > 在 Web 运行环境下需自行处理 XSS 攻击防护
      */
     
-    public java.lang.Boolean getAsHtml(){
-      return _asHtml;
+    public java.lang.Boolean getAsXml(){
+      return _asXml;
     }
 
     
-    public void setAsHtml(java.lang.Boolean value){
+    public void setAsXml(java.lang.Boolean value){
         checkAllowChange();
         
-        this._asHtml = value;
+        this._asXml = value;
            
     }
 
@@ -117,7 +118,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     protected void outputJson(IJsonHandler out){
         super.outputJson(out);
         
-        out.putNotNull("asHtml",this.getAsHtml());
+        out.putNotNull("asXml",this.getAsXml());
         out.putNotNull("props",this.getProps());
         out.putNotNull("value",this.getValue());
     }
@@ -131,7 +132,7 @@ public abstract class _XuiComponentTemplateNodeText extends io.crazydan.duzhou.f
     protected void copyTo(XuiComponentTemplateNodeText instance){
         super.copyTo(instance);
         
-        instance.setAsHtml(this.getAsHtml());
+        instance.setAsXml(this.getAsXml());
         instance.setProps(this.getProps());
         instance.setValue(this.getValue());
     }

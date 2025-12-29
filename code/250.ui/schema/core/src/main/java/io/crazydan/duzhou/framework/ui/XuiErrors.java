@@ -136,7 +136,7 @@ public interface XuiErrors {
                    ARG_VALUE);
     ErrorCode ERR_COMPONENT_SLOT_IN_DEPTH_NOT_ALLOWED = //
             define("duzhou.err.ui.component.slot-in-depth-not-allowed", //
-                   "不允许在 <slot/> 标签内嵌套使用 <slot/>");
+                   "<slot/> 标签不能被上层 <slot/> 嵌套");
     ErrorCode ERR_COMPONENT_DSL_NODE_NOT_BOUND = //
             define("duzhou.err.ui.component.dsl-node-not-bound", //
                    "组件未与其 XNode 节点绑定，建议在 xdef 元模型中的 <xdef:post-parse/> 脚本中做全局自动绑定，如：_dsl_model.setDslNode(_dsl_root)");
