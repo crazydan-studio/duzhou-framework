@@ -25,6 +25,7 @@ import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
 import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSizeUnit;
 import io.nop.api.core.annotations.core.Description;
 import io.nop.api.core.config.IConfigReference;
 import io.nop.api.core.util.SourceLocation;
@@ -58,9 +59,9 @@ public abstract class XuiGenConfig {
 
     /** 字体尺寸 */
     private UnitNumber fontSize;
-    /** 一个 {@link XuiSize.Unit#base} 单位对应的尺寸 */
+    /** 一个 {@link XuiSizeUnit#base} 单位对应的尺寸 */
     private UnitNumber baseSize;
-    /** 一个 {@link XuiSize.Unit#a_line} 单位对应的尺寸 */
+    /** 一个 {@link XuiSizeUnit#a_line} 单位对应的尺寸 */
     private UnitNumber lineSize;
 
     public XuiGenConfig() {

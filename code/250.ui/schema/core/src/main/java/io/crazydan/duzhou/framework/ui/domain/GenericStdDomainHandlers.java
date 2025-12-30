@@ -19,16 +19,30 @@
 
 package io.crazydan.duzhou.framework.ui.domain;
 
+import io.crazydan.duzhou.framework.ui.domain.type.XuiExpr;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSize;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.api.core.validate.IValidationErrorCollector;
 import io.nop.commons.util.StringHelper;
+import io.nop.core.type.IGenericType;
+import io.nop.core.type.utils.JavaGenericTypeBuilder;
+import io.nop.xlang.api.XLangCompileTool;
+import io.nop.xlang.xdef.IStdDomainHandler;
 import io.nop.xlang.xdef.domain.CheckStdDomainHandler;
+import io.nop.xlang.xdef.domain.SimpleStdDomainHandler;
 
 import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_COMPONENT_NAME;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_EXPR;
+import static io.crazydan.duzhou.framework.ui.XuiConstants.STD_DOMAIN_XUI_SIZE;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-04-11
  */
 public class GenericStdDomainHandlers {
+    public static final ComponentNameDomainHandler HANDLER_COMPONENT_NAME = new ComponentNameDomainHandler();
+    public static final XuiSizeDomainHandler HANDLER_XUI_SIZE = new XuiSizeDomainHandler();
+    public static final XuiExprDomainHandler HANDLER_XUI_EXPR = new XuiExprDomainHandler();
 
     /**
      * 是否为有效的组件名，由字母、数字、下划线组成的驼峰形式，且必须首字母需大写，
@@ -58,7 +72,7 @@ public class GenericStdDomainHandlers {
     }
 
     /** 组件名类型：{@link #isValidComponentName} */
-    public static class ComponentNameType extends CheckStdDomainHandler {
+    public static class ComponentNameDomainHandler extends CheckStdDomainHandler {
 
         @Override
         public String getName() {
@@ -68,6 +82,60 @@ public class GenericStdDomainHandlers {
         @Override
         protected boolean isValid(String text) {
             return isValidComponentName(text);
+        }
+    }
+
+    /** 尺寸类型 */
+    public static class XuiSizeDomainHandler extends SimpleStdDomainHandler {
+
+        @Override
+        public String getName() {
+            return STD_DOMAIN_XUI_SIZE;
+        }
+
+        @Override
+        public boolean isFixedType() {
+            return true;
+        }
+
+        /** 确定对应的模型属性类型 */
+        @Override
+        public IGenericType getGenericType(boolean mandatory, String options) {
+            return JavaGenericTypeBuilder.buildRawType(XuiSize.class);
+        }
+
+        @Override
+        public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
+            return XuiSize.parse(loc, text);
+        }
+    }
+
+    /** {@code ${xxx}} 表达式 */
+    public static class XuiExprDomainHandler implements IStdDomainHandler {
+
+        @Override
+        public String getName() {
+            return STD_DOMAIN_XUI_EXPR;
+        }
+
+        @Override
+        public boolean isFixedType() {
+            return true;
+        }
+
+        @Override
+        public IGenericType getGenericType(boolean mandatory, String options) {
+            return JavaGenericTypeBuilder.buildGenericType(XuiExpr.class);
+        }
+
+        @Override
+        public Object parseProp(String options, SourceLocation loc, String propName, Object text, XLangCompileTool cp) {
+            return XuiExpr.parse(loc, text);
+        }
+
+        @Override
+        public void validate(SourceLocation loc, String propName, Object value, IValidationErrorCollector collector) {
+            // Note: 该校验仅在 SimpleSchemaValidator 中被调用，解析 XDSL 模型时不会被调用
         }
     }
 }

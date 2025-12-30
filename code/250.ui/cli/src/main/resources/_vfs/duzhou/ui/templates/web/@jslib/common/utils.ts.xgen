@@ -21,7 +21,7 @@
 
 <c:unit xmlns:c="c" xmlns:xpl="xpl" xpl:outputMode="text">
     <c:script><![CDATA[
-        import io.crazydan.duzhou.framework.ui.domain.type.XuiSize.Unit;
+        import io.crazydan.duzhou.framework.ui.domain.type.XuiSizeUnit;
     ]]></c:script>
 
     <c:unit><![CDATA[

@@ -53,7 +53,7 @@ public class TestXuiExpr extends NopJunitTestCase {
         }};
 
         samples.forEach((sample, expected) -> {
-            Expression expr = XuiExpr.create(null, sample).expr;
+            Expression expr = XuiExpr.parse(null, sample).expr;
             String actual = expr.toExprString();
 
             Assertions.assertEquals(expected, actual);

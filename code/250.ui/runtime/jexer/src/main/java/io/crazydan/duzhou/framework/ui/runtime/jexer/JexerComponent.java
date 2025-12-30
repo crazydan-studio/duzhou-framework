@@ -32,7 +32,7 @@ import io.crazydan.duzhou.framework.ui.layout.XuiLayoutAlign;
 import io.crazydan.duzhou.framework.ui.layout.XuiLayoutGap;
 import io.crazydan.duzhou.framework.ui.layout.XuiLayoutNode;
 import io.crazydan.duzhou.framework.ui.layout.XuiLayoutProps;
-import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize;
+import io.crazydan.duzhou.framework.ui.domain.type.XuiSizeType;
 import io.crazydan.duzhou.framework.ui.layout.XuiLayoutSpacing;
 import io.crazydan.duzhou.framework.ui.runtime.core.XuiComponentTreeNode;
 import io.crazydan.duzhou.framework.ui.runtime.jexer.component.JexerBox;
@@ -40,8 +40,8 @@ import io.nop.api.core.exceptions.NopException;
 import io.nop.xlang.ast.Literal;
 import jexer.TWidget;
 
-import static io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize.Type.fill_remains;
-import static io.crazydan.duzhou.framework.ui.layout.XuiLayoutSize.Type.wrap_content;
+import static io.crazydan.duzhou.framework.ui.domain.type.XuiSizeType.Type.fill_remains;
+import static io.crazydan.duzhou.framework.ui.domain.type.XuiSizeType.Type.wrap_content;
 import static io.crazydan.duzhou.framework.ui.runtime.core.XuiVendorErrors.ERR_COMPONENT_NATIVE_NOT_REGISTERED;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
 
@@ -387,10 +387,10 @@ public abstract class JexerComponent {
     }
 
     /**
-     * 对于 {@link XuiLayoutSize.Type#fill_remains fill_remains}，
+     * 对于 {@link XuiSizeType.Type#fill_remains fill_remains}，
      * 直接返回视口尺寸，而其具体值则由父节点决定
      */
-    protected static int calculateLayoutSize(XuiLayoutSize size, int viewportSize, int contentSize) {
+    protected static int calculateLayoutSize(XuiSizeType size, int viewportSize, int contentSize) {
         switch (size.type) {
             case fill_remains:
             case match_parent: {

@@ -17,37 +17,48 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.ui.layout;
+package io.crazydan.duzhou.framework.ui.domain.type;
 
-import io.crazydan.duzhou.framework.commons.StringHelper;
 import io.nop.api.core.annotations.core.Option;
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
 
 /**
- * 尺寸类型
+ * {@link XuiSize} 的类型
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-12-06
  */
-public enum XuiLayoutSize {
+public enum XuiSizeType {
     /** 与视口尺寸相同 */
-    @Option("match-viewport") match_viewport,
+    @Option("match-viewport") match_viewport("match-viewport"),
 
     /** 与父容器尺寸相同 */
-    @Option("match-parent") match_parent,
+    @Option("match-parent") match_parent("match-parent"),
     /** 占满父容器的剩余空间 */
-    @Option("fill-remains") fill_remains,
+    @Option("fill-remaining") fill_remaining("fill-remaining"),
 
     /** 自适应内容尺寸 */
-    @Option("fit-content") fit_content,
+    @Option("fit-content") fit_content("fit-content"),
 
     /** 设定值 */
-    @Option("value-specified") value_specified,
+    @Option("value-specified") value_specified("value-specified"),
     ;
 
+    public final String code;
+
+    XuiSizeType(String code) {
+        this.code = code;
+    }
+
     @StaticFactoryMethod
-    public static XuiLayoutSize fromText(String text) {
-        return StringHelper.isBlank(text) //
-               ? null : valueOf(text.replace('-', '_'));
+    public static XuiSizeType fromText(String text) {
+        if (text != null) {
+            for (XuiSizeType v : values()) {
+                if (v.code.equals(text) || v.name().equals(text)) {
+                    return v;
+                }
+            }
+        }
+        return null;
     }
 }

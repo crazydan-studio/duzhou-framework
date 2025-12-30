@@ -1,0 +1,9 @@
+# Note: YAML 也支持差量
+label: 布局对齐模式
+options:
+  - value: start
+    label: 向起始位置对齐
+  - value: center
+    label: 向中心位置对齐
+  - value: end
+    label: 向终止位置对齐

@@ -29,7 +29,6 @@ import static io.nop.xlang.XLangErrors.ARG_ATTR_NAME;
 import static io.nop.xlang.XLangErrors.ARG_DEF_LOC;
 import static io.nop.xlang.XLangErrors.ARG_DETAIL;
 import static io.nop.xlang.XLangErrors.ARG_NAME;
-import static io.nop.xlang.XLangErrors.ARG_NAMES;
 import static io.nop.xlang.XLangErrors.ARG_PATH;
 import static io.nop.xlang.XLangErrors.ARG_PROP_NAME;
 import static io.nop.xlang.XLangErrors.ARG_REF_NAME;
@@ -70,9 +69,15 @@ public interface XuiErrors {
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 数据域
     ErrorCode ERR_DOMAIN_TYPE_UNKNOWN_SIZE = //
             define("duzhou.err.xui.domain-type.unknown-size",
-                   "未识别的尺寸数据 [{" + ARG_VALUE + "}]，仅 [{" + ARG_NAMES + "}] 才是有效的尺寸单位",
-                   ARG_VALUE,
-                   ARG_NAMES);
+                   "未识别的尺寸数据 [{"
+                   + ARG_VALUE
+                   + "}]，"
+                   + "仅 [match-parent,fill-remaining,fit-content,match-viewport]"
+                   + " 或 12u、50%、2i 等才是有效的尺寸",
+                   ARG_VALUE);
+    ErrorCode ERR_DOMAIN_TYPE_XUI_SIZE_VALUE_SPECIFIED_NOT_ALLOWED = //
+            define("duzhou.err.xui.domain-type.xui-size.value-specified-not-allowed", //
+                   "不允许设置 [value-specified]，必须配置具体的尺寸数据，如 12u、25% 等");
     // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<< 布局

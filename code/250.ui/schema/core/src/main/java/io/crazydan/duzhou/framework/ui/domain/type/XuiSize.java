@@ -19,26 +19,23 @@
 
 package io.crazydan.duzhou.framework.ui.domain.type;
 
-import java.util.Arrays;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import io.crazydan.duzhou.framework.commons.UnitNumber;
 import io.crazydan.duzhou.framework.lang.CodeSnippet;
-import io.crazydan.duzhou.framework.ui.XuiExpression;
 import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.convert.ConvertHelper;
 import io.nop.api.core.convert.ITypeConverter;
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;
+import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
-import io.nop.commons.util.objects.ValueWithLocation;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.lang.json.IJsonSerializable;
 
 import static io.crazydan.duzhou.framework.commons.StringHelper.extractNumberAndUnit;
 import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_UNKNOWN_SIZE;
-import static io.nop.xlang.XLangErrors.ARG_NAMES;
+import static io.crazydan.duzhou.framework.ui.XuiErrors.ERR_DOMAIN_TYPE_XUI_SIZE_VALUE_SPECIFIED_NOT_ALLOWED;
 
 /**
  * 尺寸
@@ -47,92 +44,68 @@ import static io.nop.xlang.XLangErrors.ARG_NAMES;
  * @date 2025-05-14
  */
 @DataBean
-public class XuiSize implements IJsonSerializable, CodeSnippet {
-    /** {@link XuiSize} 的单位 */
-    public enum Unit {
-        /**
-         * 统一的基准尺寸单位
-         * <p/>
-         * 在不同平台，可根据其最佳规范将该单位的尺寸进行转换，如：
-         * - 移动端（Native）：1u = 8dp（Android）/ 8pt（iOS）；
-         * - Web端（HTML/CSS）：1u = 0.5rem（默认 1rem = 16px，即 1u = 8px）；
-         */
-        base("u"),
+public class XuiSize implements ISourceLocationGetter, IJsonSerializable, CodeSnippet {
+    public static final ITypeConverter TYPE_CONVERTER = //
+            (value, errorFactory) -> parse(null, value, errorFactory);
 
-        /** 百分比 */
-        percent("%"),
+    private final SourceLocation loc;
 
-        /** 线条单位：代表最细的线条宽度 */
-        a_line("i"),
-        ;
+    /** 类型 */
+    public final XuiSizeType type;
+    /** 值：{@code [float, unit]} */
+    public final Object[] value;
 
-        public final String label;
-
-        Unit(String label) {this.label = label;}
+    public static XuiSize parse(SourceLocation loc, Object source) {
+        return parse(loc, source, (errorCode) -> new NopException(errorCode).loc(loc));
     }
 
-    public static final XuiSize NONE = new XuiSize(0, Unit.base);
-    public static final ITypeConverter TYPE_CONVERTER = (value, errorFactory) -> {
-        if (value instanceof XuiSize) {
-            return value;
-        }
-        return parse(value, errorFactory);
-    };
-
-    /** 值 */
-    public final float value;
-    /** 单位 */
-    public final Unit unit;
-
-    XuiSize(float value, Unit unit) {
-        this.value = value;
-        this.unit = unit;
-    }
-
-    public static XuiSize create(float value, Unit unit) {
-        return new XuiSize(value, unit);
-    }
-
-    /**
-     * @param vl
-     *         其 {@link ValueWithLocation#getValue()} 只能为 {@link String} 类型，
-     *         且其可以为 <code>${a.b.c}</code> 形式的动态表达式，也可以为
-     *         <code>1u</code>、<code>50%</code> 等形式的尺寸常量
-     * @return 在 {@link #parse} 对 {@link ValueWithLocation#getValue()}
-     * 的解析结果为 <code>null</code> 时，返回 <code>null</code>
-     */
-    public static XuiExpression<XuiSize> expr(ValueWithLocation vl) {
-        return XuiExpression.create(XuiSize.class, vl, XuiSize::parse);
-    }
-
-    public static XuiSize parse(SourceLocation loc, Object s) {
-        return parse(s,
-                     (errorCode) -> new NopException(ERR_DOMAIN_TYPE_UNKNOWN_SIZE).loc(loc)
-                                                                                  .param(ARG_NAMES,
-                                                                                         Arrays.stream(Unit.values())
-                                                                                               .map(u -> u.label)
-                                                                                               .collect(Collectors.joining(
-                                                                                                       ", "))));
-    }
-
-    public static XuiSize parse(Object s, Function<ErrorCode, NopException> errorFactory) {
-        UnitNumber nut = s != null ? extractNumberAndUnit(s.toString()) : null;
-        if (nut == null) {
+    public static XuiSize parse(SourceLocation loc, Object source, Function<ErrorCode, NopException> errorFactory) {
+        if (source == null) {
             return null;
+        } else if (source instanceof XuiSize) {
+            return (XuiSize) source;
         }
 
-        if (nut.number != null && nut.unit != null) {
-            for (Unit unit : Unit.values()) {
-                if (!unit.label.equals(nut.unit)) {
-                    continue;
-                }
+        String s = source.toString();
+        XuiSizeType type = XuiSizeType.fromText(s);
+        if (type == XuiSizeType.value_specified) {
+            return ConvertHelper.handleError(ERR_DOMAIN_TYPE_XUI_SIZE_VALUE_SPECIFIED_NOT_ALLOWED,
+                                             null,
+                                             XuiSize.class,
+                                             source,
+                                             errorFactory);
+        }
 
+        if (type == null) {
+            UnitNumber nut = extractNumberAndUnit(s);
+            if (nut != null && nut.number != null && nut.unit != null) {
+                XuiSizeUnit unit = XuiSizeUnit.fromText(nut.unit);
                 float value = nut.number.floatValue();
-                return create(value, unit);
-            }
-        }
 
-        return ConvertHelper.handleError(ERR_DOMAIN_TYPE_UNKNOWN_SIZE, null, XuiSize.class, s, errorFactory);
+                return new XuiSize(loc, XuiSizeType.value_specified, value, unit);
+            }
+
+            return ConvertHelper.handleError(ERR_DOMAIN_TYPE_UNKNOWN_SIZE, null, XuiSize.class, source, errorFactory);
+        } else {
+            return new XuiSize(loc, type, 0, null);
+        }
+    }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    XuiSize(SourceLocation loc, XuiSizeType type, float value, XuiSizeUnit unit) {
+        this.loc = loc;
+        this.type = type;
+        this.value = type == XuiSizeType.value_specified //
+                     ? new Object[] { value, unit } //
+                     : new Object[2];
+    }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     @Override
@@ -148,6 +121,9 @@ public class XuiSize implements IJsonSerializable, CodeSnippet {
 
     @Override
     public String toString() {
-        return this.value + this.unit.label;
+        if (this.type == XuiSizeType.value_specified) {
+            return this.value[0] + ((XuiSizeUnit) this.value[1]).code;
+        }
+        return this.type.code;
     }
 }

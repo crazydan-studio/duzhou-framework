@@ -19,6 +19,7 @@
 
 package io.crazydan.duzhou.framework.ui.domain.type;
 
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;
 import io.nop.core.lang.json.IJsonHandler;
@@ -41,6 +42,7 @@ import io.nop.xlang.xpl.IXplCompiler;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-12-22
  */
+@DataBean
 public class XuiExpr implements ISourceLocationGetter, IJsonSerializable {
     public static final String PREFIX = "${";
     public static final String SUFFIX = "}";
@@ -56,17 +58,24 @@ public class XuiExpr implements ISourceLocationGetter, IJsonSerializable {
         return s != null && s.endsWith(SUFFIX) && s.startsWith(PREFIX);
     }
 
-    /** @return 若 {@code source} 不是表达式，则将其构造为字面量表达式 */
-    public static XuiExpr create(SourceLocation loc, String source) {
+    /** @return 若 {@code source} 不是表达式（含 {@code null}），则将其构造为字面量表达式 */
+    public static XuiExpr parse(SourceLocation loc, Object source) {
+        if (source instanceof XuiExpr) {
+            return (XuiExpr) source;
+        }
+
+        String s = source != null ? source.toString() : null;
         Expression expr;
-        if (!isExpr(source)) {
+        if (!isExpr(s)) {
             expr = Literal.valueOf(loc, source);
         } else {
-            expr = cp.parseTemplateExpr(loc, source, true, ExprPhase.eval, scope);
+            expr = cp.parseTemplateExpr(loc, s, true, ExprPhase.eval, scope);
         }
 
         return new XuiExpr(loc, expr);
     }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     XuiExpr(SourceLocation loc, Expression expr) {
         this.loc = loc;
@@ -93,17 +102,19 @@ public class XuiExpr implements ISourceLocationGetter, IJsonSerializable {
         return ((Literal) this.expr).getStringValue();
     }
 
-    @Override
-    public SourceLocation getLocation() {
-        return this.loc;
-    }
-
     /** 根据类型解析字符串的真实类型值 */
     public <T> T parseValue(XDefTypeDecl type, String name, String value) {
         XLangCompileTool cp = XLang.newCompileTool();
         IStdDomainHandler handler = StdDomainRegistry.instance().getStdDomainHandler(type.getStdDomain());
 
         return (T) handler.parseProp(type.getOptions(), getLocation(), name, value, cp);
+    }
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @Override
+    public SourceLocation getLocation() {
+        return this.loc;
     }
 
     /** Note: 在无公共的无参构造函数时，必须实现 {@link IJsonSerializable} 接口 */

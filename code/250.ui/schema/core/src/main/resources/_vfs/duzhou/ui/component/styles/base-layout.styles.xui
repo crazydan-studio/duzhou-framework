@@ -35,7 +35,8 @@
         > 在列方向上的对齐模式。仅用于控制其朝向，其布局顺序不会变化，且不会发生重叠
     -->
     <align-base x:abstract="true"
-                row="xui-align" column="xui-align"
+                row="dict:duzhou/ui/layout-align-mode"
+                column="dict:duzhou/ui/layout-align-mode"
     />
     <!-- [布局项自对齐模式]
     > 布局项自身在布局容器中的对齐模式，其将覆盖布局容器的 `<item-align/>` 所设置的缺省配置。
@@ -60,7 +61,7 @@
     @column [列间隔]
         > 在列方向上的布局项之间的间隔。
     -->
-    <item-gap row="xui-align" column="xui-align" />
+    <item-gap row="xui-size" column="xui-size" />
 
     <!-- [滚动条]
     > 配置滚动条颜色、大小以及滚动条何时显示，若不显示，则溢出内容将被隐藏。
