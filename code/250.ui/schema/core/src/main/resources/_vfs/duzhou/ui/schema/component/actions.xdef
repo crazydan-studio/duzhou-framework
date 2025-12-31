@@ -26,11 +26,17 @@
          x:schema="/nop/schema/xdef.xdef"
          xdef:bean-package="io.crazydan.duzhou.framework.ui.schema.component.action"
          xdef:name="XuiComponentActions"
-         xdef:body-type="list"
+         xdef:body-type="list" xdef:key-attr="name"
          xdef:bean-body-prop="children" xdef:bean-child-name="child"
          xdef:bean-sub-type-prop="$tag"
 >
 
-    <action xdef:name="XuiComponentAction">
+    <!-- [动作函数]
+    > - 为便于支持跨平台，函数体内只能调用内置的函数，不能导入任何 class；
+    -->
+    <action xdef:name="XuiComponentAction"
+            name="!var-name"
+    >
+        eval-code
     </action>
 </actions>
