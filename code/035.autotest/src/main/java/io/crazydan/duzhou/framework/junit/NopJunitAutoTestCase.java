@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 
 import io.nop.autotest.junit.JunitAutoTestCase;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-04-22
  */
+@ExtendWith({ NopJunitExtension.class })
 public abstract class NopJunitAutoTestCase extends JunitAutoTestCase {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

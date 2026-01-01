@@ -27,6 +27,7 @@ import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.lang.xml.parse.XNodeParser;
 import io.nop.xlang.xdsl.DslModelHelper;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-03-01
  */
+@ExtendWith({ NopJunitExtension.class })
 public abstract class NopJunitTestCase extends JunitBaseTestCase {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
