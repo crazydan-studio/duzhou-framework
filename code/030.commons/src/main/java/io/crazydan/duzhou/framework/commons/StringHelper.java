@@ -19,6 +19,7 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import io.nop.api.core.annotations.lang.Deterministic;
 import io.nop.commons.text.MutableString;
 import io.nop.commons.text.tokenizer.TextScanner;
 
@@ -30,10 +31,12 @@ import static io.crazydan.duzhou.framework.commons.ObjectHelper.firstNonNull;
  */
 public class StringHelper extends io.nop.commons.util.StringHelper {
 
+    @Deterministic
     public static String trimToNull(String str) {
         return trimToNull(str, null);
     }
 
+    @Deterministic
     public static String trimToNull(String str, String defaultValue) {
         str = strip(str);
         str = emptyAsNull(str);
@@ -41,10 +44,12 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         return firstNonNull(str, defaultValue);
     }
 
+    @Deterministic
     public static Integer trimAndParseInt(String str, int radix) {
         return trimAndParseInt(str, radix, null);
     }
 
+    @Deterministic
     public static Integer trimAndParseInt(String str, int radix, Integer defaultValue) {
         str = trimToNull(str);
         Integer n = parseInt(str, radix);
@@ -52,6 +57,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
         return firstNonNull(n, defaultValue);
     }
 
+    @Deterministic
     public static UnitNumber extractNumberAndUnit(String str) {
         str = trimToNull(str);
         if (str == null) {
@@ -75,6 +81,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
     /**
      * @see #snakeCase(String, boolean, boolean)
      */
+    @Deterministic
     public static String snakeCase(String str) {
         return snakeCase(str, false, false);
     }
@@ -84,6 +91,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
      *         是否全部转为大写
      * @see #snakeCase(String, boolean, boolean)
      */
+    @Deterministic
     public static String snakeCase(String str, boolean upper) {
         return snakeCase(str, upper, false);
     }
@@ -106,6 +114,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
      * @param hyphen
      *         是否使用短横线分隔
      */
+    @Deterministic
     public static String snakeCase(String str, boolean upper, boolean hyphen) {
         if (str == null) {
             return null;
@@ -119,6 +128,7 @@ public class StringHelper extends io.nop.commons.util.StringHelper {
     }
 
     /** 对于多行字符串，按照首个非空白行的空白数，将剩余行开头的同等数量的空白移除 */
+    @Deterministic
     public static String trimAllLinesByFirstNonBlankLine(String str) {
         if (str == null || str.isEmpty()) {
             return str;

@@ -19,9 +19,12 @@
 
 package io.crazydan.duzhou.framework.initializer;
 
+import io.crazydan.duzhou.framework.commons.StringHelper;
 import io.nop.commons.lang.impl.Cancellable;
+import io.nop.core.CoreConstants;
 import io.nop.core.initialize.ICoreInitializer;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
+import io.nop.core.lang.eval.global.StaticClassGlobalVariableDefinition;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -32,7 +35,11 @@ public class NopExtInitializer implements ICoreInitializer {
 
     @Override
     public void initialize() {
-        this.cleanup.append(EvalGlobalRegistry.instance().registerStaticFunctions(NopExtFunctions.class));
+        EvalGlobalRegistry registry = EvalGlobalRegistry.instance();
+        registry.registerVariable(CoreConstants.GLOBAL_VAR_STRING,
+                                  new StaticClassGlobalVariableDefinition(StringHelper.class));
+
+        this.cleanup.append(registry.registerStaticFunctions(NopExtFunctions.class));
     }
 
     @Override
