@@ -21,6 +21,7 @@
 <lib xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c"
      x:schema="/nop/schema/xlib.xdef"
 >
+
     <tags>
         <ToSnakeCase outputMode="none">
             <attr name="str" type="java.lang.String" />
@@ -29,9 +30,7 @@
 
             <source>
                 <c:script><![CDATA[
-                    import io.crazydan.duzhou.framework.commons.StringHelper;
-
-                    return StringHelper.snakeCase(str, upper, hyphen);
+                    return $String.snakeCase(str, upper, hyphen);
                 ]]></c:script>
             </source>
         </ToSnakeCase>

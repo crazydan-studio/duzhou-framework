@@ -42,6 +42,8 @@ public abstract class NopJunitTestCase extends JunitBaseTestCase {
     public NopJunitTestCase() {
         // 统一设置测试样例数据位置为当前用例目录下
         try {
+            getTargetDir(); // 初始化 target 目录
+
             File dir = FileHelper.getClassPathFile("cases/" + getClass().getSimpleName());
             setAttachmentDir(dir);
         } catch (Exception ignore) {
