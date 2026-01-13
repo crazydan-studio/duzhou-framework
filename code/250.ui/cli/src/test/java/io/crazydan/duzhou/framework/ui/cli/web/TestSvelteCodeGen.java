@@ -21,9 +21,9 @@ package io.crazydan.duzhou.framework.ui.cli.web;
 
 import java.io.File;
 
+import io.crazydan.duzhou.framework.commons.FileHelper;
 import io.crazydan.duzhou.framework.junit.NopJunitTestCase;
 import io.nop.codegen.XCodeGenerator;
-import io.nop.commons.util.FileHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.resource.component.ResourceComponentManager;
 import io.nop.xlang.api.XLang;
@@ -55,7 +55,7 @@ public class TestSvelteCodeGen extends NopJunitTestCase {
 
     private void genApp(String appDslPath, File targetDir) {
         // 确保目标目录已创建
-        FileHelper.assureParent(new File(targetDir, "/any"));
+        FileHelper.assureDirExists(targetDir);
 
         Object appDslModel = ResourceComponentManager.instance().loadComponentModel(appDslPath);
 

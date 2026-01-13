@@ -19,12 +19,25 @@
 
 package io.crazydan.duzhou.framework.initializer;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import io.crazydan.duzhou.framework.commons.ResourceHelper;
 import io.crazydan.duzhou.framework.commons.StringHelper;
+import io.crazydan.duzhou.framework.store.CustomNamespaceHandler;
 import io.nop.commons.lang.impl.Cancellable;
 import io.nop.core.CoreConstants;
 import io.nop.core.initialize.ICoreInitializer;
 import io.nop.core.lang.eval.global.EvalGlobalRegistry;
 import io.nop.core.lang.eval.global.StaticClassGlobalVariableDefinition;
+import io.nop.core.resource.IResourceNamespaceHandler;
+import io.nop.core.resource.IVirtualFileSystem;
+import io.nop.core.resource.VirtualFileSystem;
+
+import static io.crazydan.duzhou.framework.CommonConfigs.CFG_NOP_VFS_CUSTOM_NS_MAPPINGS;
+import static io.nop.core.CoreConstants.INITIALIZER_PRIORITY_REGISTER_COMPONENT;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
@@ -34,16 +47,54 @@ public class NopExtInitializer implements ICoreInitializer {
     private final Cancellable cleanup = new Cancellable();
 
     @Override
-    public void initialize() {
-        EvalGlobalRegistry registry = EvalGlobalRegistry.instance();
-        registry.registerVariable(CoreConstants.GLOBAL_VAR_STRING,
-                                  new StaticClassGlobalVariableDefinition(StringHelper.class));
+    public int order() {
+        return INITIALIZER_PRIORITY_REGISTER_COMPONENT;
+    }
 
-        this.cleanup.append(registry.registerStaticFunctions(NopExtFunctions.class));
+    @Override
+    public void initialize() {
+        registerVfs();
+        registerFunctions();
     }
 
     @Override
     public void destroy() {
         this.cleanup.cancel();
+    }
+
+    private void registerVfs() {
+        Set<String> mappings = CFG_NOP_VFS_CUSTOM_NS_MAPPINGS.get();
+        if (mappings == null) {
+            return;
+        }
+
+        IVirtualFileSystem vfs = VirtualFileSystem.instance();
+        List<IResourceNamespaceHandler> handlers = mappings.stream().map((mapping) -> {
+            String ns = StringHelper.getNamespace(mapping);
+            if (ns == null) {
+                return null;
+            }
+
+            String rootDir = ResourceHelper.removeNamespace(mapping, ns);
+            if (!StringHelper.isValidFilePath(rootDir)) {
+                return null;
+            }
+
+            rootDir = StringHelper.normalizePath(rootDir);
+            return new CustomNamespaceHandler(ns, rootDir);
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+
+        handlers.forEach(vfs::registerNamespaceHandler);
+        this.cleanup.appendOnCancelTask(() -> {
+            handlers.forEach(vfs::unregisterNamespaceHandler);
+        });
+    }
+
+    private void registerFunctions() {
+        EvalGlobalRegistry registry = EvalGlobalRegistry.instance();
+        registry.registerVariable(CoreConstants.GLOBAL_VAR_STRING,
+                                  new StaticClassGlobalVariableDefinition(StringHelper.class));
+
+        this.cleanup.append(registry.registerStaticFunctions(NopExtFunctions.class));
     }
 }

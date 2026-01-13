@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - 精卫（JingWei） - 衔木石填沧海，筑屏障护安全
+  - Copyright (C) 2026 Crazydan Studio <https://studio.crazydan.org>
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Lesser General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU Lesser General Public License for more details.
+  -
+  - You should have received a copy of the GNU Lesser General Public License
+  - along with this program.
+  - If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
+  -->
+
+<!-- [图编辑器]
+> 通用的、有关节点和连线的图编辑器。
+>
+-->
+<graph-editor xmlns:x="/nop/schema/xdsl.xdef" xmlns:xdef="/nop/schema/xdef.xdef"
+              x:schema="/nop/schema/xdef.xdef"
+>
+    <nodes xdef:body-type="list" xdef:key-attr="id">
+        <node id="!ns-name"
+              x="float" y="float"
+              width="float" height="float"
+              label="string"
+        >
+            <props>
+                <!-- []
+
+                @primary [是否为主要属性]
+                    > 主要属性将直接显示在节点中，其余属性则只会出现在节点的配置界面中
+                -->
+                <prop name="!var-name" displayName="string"
+                      stdDomain="!std-domain" primary="!boolean"
+                />
+            </props>
+        </node>
+    </nodes>
+
+    <edges xdef:body-type="list" xdef:key-attr="id">
+        <edge id="!ns-name">
+        </edge>
+    </edges>
+</graph-editor>
