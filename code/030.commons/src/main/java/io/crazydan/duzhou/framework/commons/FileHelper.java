@@ -35,4 +35,21 @@ public class FileHelper extends io.nop.commons.util.FileHelper {
     public static void assureDirExists(String path) {
         assureDirExists(new File(path));
     }
+
+    /** 递归删除目录，对于目录的软链接仅直接删除其本身，不做遍历 */
+    public static boolean removeDir(File dir) {
+        // 首先尝试直接删除文件、软链接、空目录
+        if (dir.delete()) {
+            return true;
+        }
+        // 再尝试删除其中的文件
+        File[] subs = dir.listFiles();
+        if (subs != null) {
+            for (File sub : subs) {
+                removeDir(sub);
+            }
+        }
+
+        return dir.delete();
+    }
 }
