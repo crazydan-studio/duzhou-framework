@@ -20,6 +20,10 @@
 package io.crazydan.duzhou.framework.commons;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import io.nop.codegen.XCodeGenerator;
 
 /**
  *
@@ -37,7 +41,7 @@ public class FileHelper extends io.nop.commons.util.FileHelper {
     }
 
     /** 递归删除目录，对于目录的软链接仅直接删除其本身，不做遍历 */
-    public static boolean removeDir(File dir) {
+    public static boolean deleteDir(File dir) {
         // 首先尝试直接删除文件、软链接、空目录
         if (dir.delete()) {
             return true;
@@ -46,10 +50,38 @@ public class FileHelper extends io.nop.commons.util.FileHelper {
         File[] subs = dir.listFiles();
         if (subs != null) {
             for (File sub : subs) {
-                removeDir(sub);
+                deleteDir(sub);
             }
         }
 
         return dir.delete();
+    }
+
+    /** 将源目录中的文件移至目标目录下，并删除源目录 */
+    public static void moveDirFilesTo(File source, File target) {
+        copyWithFilter(source, target, null);
+
+        deleteDir(source);
+    }
+
+    /** 创建符号链接 */
+    public static void createSymbolLink(File link, File target) {
+        try {
+            Files.createSymbolicLink(link.toPath(), getAbsoluteFile(target).toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**  */
+    public static File getAbsoluteFile(File dir, String path) {
+        File file = new File(dir, path);
+        return getAbsoluteFile(file);
+    }
+
+    /** 获取 {@link XCodeGenerator} 所处的 Maven 项目根目录 */
+    public static File getMavenProjectRoot(XCodeGenerator codeGenerator) {
+        // Note: codeGenerator.getTargetRootPath() 得到的是带 file: 前缀的 url 路径，需要移除该前缀
+        return resolveFile(codeGenerator.getTargetRootPath());
     }
 }

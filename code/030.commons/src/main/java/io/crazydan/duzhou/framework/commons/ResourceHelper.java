@@ -19,6 +19,8 @@
 
 package io.crazydan.duzhou.framework.commons;
 
+import java.util.Map;
+
 import io.nop.commons.bytes.ByteString;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
@@ -65,5 +67,16 @@ public class ResourceHelper extends io.nop.core.resource.ResourceHelper {
     /** 判断指定的资源是否为文件 */
     public static boolean isFile(IResource resource) {
         return resource != null && resource.exists() && !resource.isDirectory();
+    }
+
+    /**
+     * 向 {@code source} 中的 {@code ${xxx}} 占位符注入真实数据，并将结果保存到 {@code target} 中。
+     * 若占位符引用的数据不存在，则其将被置为空
+     */
+    public static void injectData(IResource source, IResource target, Map<String, Object> data) {
+        String content = ResourceHelper.readText(source);
+        String result = StringHelper.renderTemplate(content, "${", "}", data::get);
+
+        ResourceHelper.writeText(target, result);
     }
 }
