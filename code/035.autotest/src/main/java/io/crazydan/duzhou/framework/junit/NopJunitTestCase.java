@@ -26,6 +26,7 @@ import io.nop.commons.util.FileHelper;
 import io.nop.core.lang.json.JsonTool;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.lang.xml.parse.XNodeParser;
+import io.nop.core.resource.IResource;
 import io.nop.xlang.xdsl.DslModelHelper;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -50,8 +51,17 @@ public abstract class NopJunitTestCase extends JunitBaseTestCase {
         }
     }
 
-    protected XNode loadNode(String dslPath) {
-        return XNodeParser.instance().parseFromVirtualPath(dslPath);
+    protected XNode attachmentXNode(String name) {
+        IResource resource = attachmentResource(name);
+        return loadNode(resource);
+    }
+
+    protected XNode loadNode(String vPath) {
+        return XNodeParser.instance().parseFromVirtualPath(vPath);
+    }
+
+    protected XNode loadNode(IResource resource) {
+        return XNodeParser.instance().parseFromResource(resource);
     }
 
     protected String toJson(Object obj) {
