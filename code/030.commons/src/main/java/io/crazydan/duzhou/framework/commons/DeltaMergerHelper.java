@@ -20,14 +20,26 @@
 package io.crazydan.duzhou.framework.commons;
 
 import io.nop.core.lang.xml.XNode;
+import io.nop.xlang.delta.DeltaMerger;
+import io.nop.xlang.xdef.IXDefinition;
 import io.nop.xlang.xdef.XDefOverride;
 import io.nop.xlang.xdsl.XDslKeys;
+import io.nop.xlang.xmeta.SchemaLoader;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-04-13
  */
 public class DeltaMergerHelper {
+
+    /** 差量合并 */
+    public static void merge(XNode targetNode, XNode deltaNode, String xdefPath) {
+        IXDefinition xdef = SchemaLoader.loadXDefinition(xdefPath);
+        XDslKeys keys = XDslKeys.of(targetNode);
+
+        DeltaMerger merger = new DeltaMerger(keys);
+        merger.merge(targetNode, deltaNode, xdef.getRootNode(), false);
+    }
 
     /** 清除虚拟节点、扩展删除节点、抽象节点 */
     public static void cleanNode(XNode node) {

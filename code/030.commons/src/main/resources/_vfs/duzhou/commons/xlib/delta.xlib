@@ -49,9 +49,6 @@
 
             <source>
                 <c:script><![CDATA[
-                    import io.nop.xlang.delta.DeltaMerger;
-                    import io.nop.xlang.xmeta.SchemaLoader;
-                    import io.nop.xlang.xdsl.XDslKeys;
                     import io.crazydan.duzhou.framework.commons.DeltaMergerHelper;
 
                     let xdefPath = targetNode.getAttr('x:schema');
@@ -59,12 +56,7 @@
                         xdefPath = defaultXDefPath;
                     }
 
-                    const xdef = SchemaLoader.loadXDefinition(xdefPath);
-                    const keys = XDslKeys.of(targetNode);
-
-                    const merger = new DeltaMerger(keys);
-                    merger.merge(targetNode, deltaNode, xdef.getRootNode(), false);
-
+                    DeltaMergerHelper.merge(targetNode, deltaNode, xdefPath);
                     DeltaMergerHelper.cleanNode(targetNode);
                 ]]></c:script>
             </source>
