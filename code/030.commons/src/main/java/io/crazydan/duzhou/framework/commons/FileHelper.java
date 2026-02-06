@@ -22,7 +22,6 @@ package io.crazydan.duzhou.framework.commons;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Map;
 
 import io.nop.codegen.XCodeGenerator;
 import io.nop.core.lang.json.JsonTool;
@@ -88,17 +87,17 @@ public class FileHelper extends io.nop.commons.util.FileHelper {
     }
 
     /** 读取 Json 文件 */
-    public static Map<String, Object> readJson(File file, String encoding) {
+    public static <T> T readJson(File file, String encoding) {
         String json = readText(file, encoding);
 
-        return JsonTool.parseMap(json);
+        return (T) JsonTool.parseNonStrict(json);
     }
 
     /** 写入 Json */
-    public static void writeJson(File file, Map<String, Object> json, String encoding) {
-        String text = JsonTool.stringify(json);
+    public static void writeJson(File file, Object obj, String encoding) {
+        String json = JsonTool.stringify(obj);
 
-        writeText(file, text, encoding);
+        writeText(file, json, encoding);
     }
 
     public static void copyFiles(File targetDir, File... sources) {

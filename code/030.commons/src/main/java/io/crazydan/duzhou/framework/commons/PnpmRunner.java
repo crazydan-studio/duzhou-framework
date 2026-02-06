@@ -22,6 +22,8 @@ package io.crazydan.duzhou.framework.commons;
 import java.io.File;
 import java.util.Collection;
 
+import io.nop.commons.util.ArrayHelper;
+
 import static io.crazydan.duzhou.framework.CommonConfigs.CFG_CLI_PNPM_PATH;
 
 /**
@@ -46,22 +48,32 @@ public class PnpmRunner {
         this.distDir = distDir;
     }
 
-    /** 运行 {@code package.json} 中定义的脚本，不遍历执行 workspace 中的脚本 */
+    /** @see #runScript(String, String[]) */
     public PnpmRunner runScript(String scriptName) {
-        return runScript(scriptName, false);
+        return runScript(scriptName, new String[0]);
+    }
+
+    /** 运行 {@code package.json} 中定义的脚本，不遍历执行 workspace 中的脚本 */
+    public PnpmRunner runScript(String scriptName, String[] args) {
+        return runScript(scriptName, false, args);
+    }
+
+    /** @see #runScript(String, boolean, String[]) */
+    public PnpmRunner runScript(String scriptName, boolean recursive) {
+        return runScript(scriptName, recursive, new String[0]);
     }
 
     /** 运行 {@code package.json} 中定义的脚本 */
-    public PnpmRunner runScript(String scriptName, boolean recursive) {
+    public PnpmRunner runScript(String scriptName, boolean recursive, String[] args) {
         if (!this.disableInstall) {
             execPnpm("install");
         }
 
-        execPnpm("run", scriptName);
+        execPnpm((String[]) ArrayHelper.concat(new String[] { "run", scriptName }, args));
         if (recursive) {
             // Note: -r 仅构建子工作空间，--include-workspace-root 才包含根工作空间，
             // 但其默认是并发构建的，在涉及清空产物的情况下，容易导致根工作空间最后构建而丢失子工作空间的构建产物
-            execPnpm("run", "-r", scriptName);
+            execPnpm((String[]) ArrayHelper.concat(new String[] { "run", "-r", scriptName }, args));
         }
 
         return this;
