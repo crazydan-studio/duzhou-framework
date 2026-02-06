@@ -329,6 +329,35 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                            <configuration>
+                                <excludes>
+                                    <exclude>application-local.yaml</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>application-local.yaml</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
@@ -344,7 +373,7 @@
                         <!-- attach为false表示在安装和部署时，不将可执行包发布/部署到仓库 -->
                         <!-- https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/#repackage -->
                         <attach>false</attach>
-                        <mainClass>${start-class}</mainClass>
+                        <mainClass>${exec-main-class}</mainClass>
                         <!-- 指定可执行包的分类名称以区分普通jar包 -->
                         <classifier>exec</classifier>
                         <excludes>
@@ -381,7 +410,7 @@
                                 <transformers>
                                     <transformer
                                             implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                        <mainClass>${start-class}</mainClass>
+                                        <mainClass>${exec-main-class}</mainClass>
                                     </transformer>
                                     <!--
                                     META-INF/services/ 中会存在同名文件，需将其内容合并，以确保
