@@ -41,4 +41,9 @@ public interface CommonConfigs {
     @Description("自定义的 vfs 名字空间与根路径的映射，其格式为 'ns1:/path/to/dir1,ns2:/path/to/dir2'")
     IConfigReference<Set> CFG_NOP_VFS_CUSTOM_NS_MAPPINGS = //
             withPlaceholder(varRef(s_loc, "nop.vfs.custom.ns-mappings", Set.class, null));
+
+    /** 通过 {@code pnpm store path} 可查看 pnpm 的包存储位置 */
+    @Description("pnpm 可执行文件路径。缺省为 pnpm，即在环境变量 PATH 中搜索名为 pnpm 的可执行文件")
+    IConfigReference<String> CFG_CLI_PNPM_PATH = //
+            varRef(s_loc, "duzhou.cli.pnpm.path", String.class, "pnpm");
 }

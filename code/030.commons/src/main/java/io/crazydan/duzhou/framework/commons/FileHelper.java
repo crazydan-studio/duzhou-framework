@@ -22,8 +22,10 @@ package io.crazydan.duzhou.framework.commons;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
 
 import io.nop.codegen.XCodeGenerator;
+import io.nop.core.lang.json.JsonTool;
 
 /**
  *
@@ -83,5 +85,27 @@ public class FileHelper extends io.nop.commons.util.FileHelper {
     public static File getMavenProjectRoot(XCodeGenerator codeGenerator) {
         // Note: codeGenerator.getTargetRootPath() 得到的是带 file: 前缀的 url 路径，需要移除该前缀
         return resolveFile(codeGenerator.getTargetRootPath());
+    }
+
+    /** 读取 Json 文件 */
+    public static Map<String, Object> readJson(File file, String encoding) {
+        String json = readText(file, encoding);
+
+        return JsonTool.parseMap(json);
+    }
+
+    /** 写入 Json */
+    public static void writeJson(File file, Map<String, Object> json, String encoding) {
+        String text = JsonTool.stringify(json);
+
+        writeText(file, text, encoding);
+    }
+
+    public static void copyFiles(File targetDir, File... sources) {
+        for (File src : sources) {
+            File target = new File(targetDir, src.getName());
+
+            copyFile(src, target);
+        }
     }
 }
