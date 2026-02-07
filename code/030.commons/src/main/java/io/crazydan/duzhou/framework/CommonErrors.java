@@ -24,18 +24,25 @@ import io.nop.api.core.exceptions.ErrorCode;
 import static io.nop.api.core.exceptions.ErrorCode.define;
 import static io.nop.xlang.XLangErrors.ARG_ACTUAL_TYPE;
 import static io.nop.xlang.XLangErrors.ARG_ALLOWED_NAMES;
+import static io.nop.xlang.XLangErrors.ARG_NAME;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-06-01
  */
 public interface CommonErrors {
-    ErrorCode ERR_CODE_SNIPPET_UNSUPPORTED_DATA_TYPE = define("duzhou.err.commons.code-snippet.unsupported-data-type",
-                                                              "不支持转换为代码片段的数据类型 [{"
-                                                              + ARG_ACTUAL_TYPE
-                                                              + "}]，仅支持类型 [{"
-                                                              + ARG_ALLOWED_NAMES
-                                                              + "}]",
-                                                              ARG_ACTUAL_TYPE,
-                                                              ARG_ALLOWED_NAMES);
+
+    ErrorCode ERR_CFG_VALUE_NOT_SPECIFIED = //
+            define("duzhou.err.commons.cfg.value-not-specified", //
+                   "配置项 {" + ARG_NAME + "} 未指定有效值", ARG_NAME);
+
+    ErrorCode ERR_CODE_SNIPPET_UNSUPPORTED_DATA_TYPE = //
+            define("duzhou.err.commons.code-snippet.unsupported-data-type",
+                   "不支持转换为代码片段的数据类型 [{"
+                   + ARG_ACTUAL_TYPE
+                   + "}]，仅支持类型 [{"
+                   + ARG_ALLOWED_NAMES
+                   + "}]",
+                   ARG_ACTUAL_TYPE,
+                   ARG_ALLOWED_NAMES);
 }
