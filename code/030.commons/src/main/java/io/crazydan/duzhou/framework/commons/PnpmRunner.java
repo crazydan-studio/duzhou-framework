@@ -48,23 +48,13 @@ public class PnpmRunner {
         this.distDir = distDir;
     }
 
-    /** @see #runScript(String, String[]) */
-    public PnpmRunner runScript(String scriptName) {
-        return runScript(scriptName, new String[0]);
-    }
-
     /** 运行 {@code package.json} 中定义的脚本，不遍历执行 workspace 中的脚本 */
-    public PnpmRunner runScript(String scriptName, String[] args) {
+    public PnpmRunner runScript(String scriptName, String... args) {
         return runScript(scriptName, false, args);
     }
 
-    /** @see #runScript(String, boolean, String[]) */
-    public PnpmRunner runScript(String scriptName, boolean recursive) {
-        return runScript(scriptName, recursive, new String[0]);
-    }
-
     /** 运行 {@code package.json} 中定义的脚本 */
-    public PnpmRunner runScript(String scriptName, boolean recursive, String[] args) {
+    public PnpmRunner runScript(String scriptName, boolean recursive, String... args) {
         if (!this.disableInstall) {
             execPnpm("install");
         }

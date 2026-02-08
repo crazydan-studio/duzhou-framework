@@ -1,6 +1,6 @@
 /*
  * 渡舟平台 - 致力于构建自运维、自监控、可演化的应用生产平台
- * Copyright (C) 2025 Crazydan Studio <https://studio.crazydan.org>
+ * Copyright (C) 2026 Crazydan Studio <https://studio.crazydan.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,13 +17,29 @@
  * If not, see <https://www.gnu.org/licenses/lgpl-3.0.en.html#license-text>.
  */
 
-package io.crazydan.duzhou.framework.gateway.core;
+package io.crazydan.duzhou.framework.commons;
 
-import io.nop.http.api.server.IHttpServerFilter;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
 
-public interface GatewayConstants {
-    /** API 过滤器：其需优先于 {@link #PRIORITY_WEB_SITE_FILTER Web 站点过滤器} */
-    int PRIORITY_API_FILTER = IHttpServerFilter.NORMAL_PRIORITY + 100;
-    /** Web 站点过滤器 */
-    int PRIORITY_WEB_SITE_FILTER = IHttpServerFilter.LOW_PRIORITY + 100;
+/**
+ *
+ * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
+ * @date 2026-02-08
+ */
+public class ZipHelper {
+
+    /** 对字符串做 gzip 压缩，并返回压缩后的二进制 */
+    public static byte[] gzip(String str) throws IOException {
+        if (str == null || str.isEmpty()) {
+            return null;
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (GZIPOutputStream gzip = new GZIPOutputStream(out)) {
+            gzip.write(str.getBytes());
+        }
+        return out.toByteArray();
+    }
 }
