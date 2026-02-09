@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2025-06-01
  */
-public class CodeSnippetPrinterTest {
+public class TestCodeSnippetPrinter {
 
     @Test
     public void test_print_Expression() {

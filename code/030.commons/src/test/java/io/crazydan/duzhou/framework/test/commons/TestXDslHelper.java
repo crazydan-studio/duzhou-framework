@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-03-01
  */
-public class XDslHelperTest extends NopJunitTestCase {
+public class TestXDslHelper extends NopJunitTestCase {
 
     @Test
     public void test_Json_to_XNode() {

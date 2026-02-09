@@ -26,13 +26,21 @@ import org.junit.jupiter.api.Test;
 
 import static io.crazydan.duzhou.framework.commons.StringHelper.snakeCase;
 import static io.crazydan.duzhou.framework.commons.StringHelper.trimAllLinesByFirstNonBlankLine;
+import static io.nop.commons.util.StringHelper.normalizePath;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2024-05-03
  */
-public class StringHelperTest {
+public class TestStringHelper {
+
+    @Test
+    public void test_normalizePath() {
+        assertEquals("abc", normalizePath("../../abc"));
+        assertEquals("/abc", normalizePath("/../../abc"));
+        assertEquals("./abc", normalizePath("./abc"));
+    }
 
     @Test
     public void test_snakeCase() {
