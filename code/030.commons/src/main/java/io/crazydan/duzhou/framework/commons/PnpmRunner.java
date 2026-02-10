@@ -48,25 +48,19 @@ public class PnpmRunner {
         this.distDir = distDir;
     }
 
-    // Note: 避免定义带可变参数的重载方法，确保其在 xpl 脚本中可被正确调用
+    // Note: 避免定义参数个数相同的重载方法（若必须，则定义不同方法名），确保其在 xpl 脚本中可被正确调用
 
-    /** @see #runScript(String, String[]) */
-    public PnpmRunner runScript(String scriptName) {
-        return runScript(scriptName, new String[0]);
+    /** 运行根目录 {@code package.json} 中定义的脚本，不遍历执行 workspace 中的脚本 */
+    public PnpmRunner runScript(String scriptName, String... args) {
+        return doRunScript(scriptName, false, args);
     }
 
-    /** 运行 {@code package.json} 中定义的脚本，不遍历执行 workspace 中的脚本 */
-    public PnpmRunner runScript(String scriptName, String[] args) {
-        return runScript(scriptName, false, args);
+    /** 运行 {@code package.json}（含子目录）中定义的脚本 */
+    public PnpmRunner runScriptRecursive(String scriptName, String... args) {
+        return doRunScript(scriptName, true, args);
     }
 
-    /** @see #runScript(String, boolean, String[]) */
-    public PnpmRunner runScript(String scriptName, boolean recursive) {
-        return runScript(scriptName, recursive, new String[0]);
-    }
-
-    /** 运行 {@code package.json} 中定义的脚本 */
-    public PnpmRunner runScript(String scriptName, boolean recursive, String[] args) {
+    private PnpmRunner doRunScript(String scriptName, boolean recursive, String[] args) {
         if (!this.disableInstall) {
             execPnpm("install");
         }
