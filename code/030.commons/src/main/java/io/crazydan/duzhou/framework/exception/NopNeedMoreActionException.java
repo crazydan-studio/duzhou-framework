@@ -25,6 +25,8 @@ import io.nop.api.core.exceptions.NopException;
 import io.nop.core.lang.json.JsonTool;
 
 /**
+ * 将 Need More Action 的表单 json 附加到 {@link #getDescription()} 中，
+ * 可以从 GraphQL 的响应结果 {@code errors} 中获取该表单
  *
  * @author <a href="mailto:flytreeleft@crazydan.org">flytreeleft</a>
  * @date 2026-02-10
